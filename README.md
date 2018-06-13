@@ -1,4 +1,4 @@
-![ORMBr Framework.png](https://bitbucket.org/repo/eKn5nG/images/1658780227-ORMBr%20Framework.png)
+![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)
 
 # ORMBr
 ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
@@ -27,6 +27,6 @@ Embarcadero Delphi XE e superior.
 ### Versão Atual ###
 1.0.0 (20 Jul 2016)
 
-[![pageseguro.png](https://bitbucket.org/repo/eKn5nG/images/3617955287-pageseguro.png)](https://pag.ae/bglQrWD)
+[![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD)
 
 Copyright (c) 2016 ORMBr Framework Team
