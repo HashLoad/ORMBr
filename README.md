@@ -1,4 +1,4 @@
-![ORMBr Framework.png](https://bitbucket.org/repo/eKn5nG/images/1658780227-ORMBr%20Framework.png)
+![ORMBr Framework.png](http://www.ormbr.com.br/help/lib/title_logo1.png)
 
 # ORMBr
 ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
