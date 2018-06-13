@@ -1,0 +1,509 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: SQLiteTable3: Interface ISQLitePreparedStatement</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="ISQLitePreparedStatement"></a><h1 class="cio">Interface ISQLitePreparedStatement</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td>Campos</td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="SQLiteTable3.html">SQLiteTable3</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type ISQLitePreparedStatement = interface(IInterface)</code></p>
+<h2 class="description">Descrição</h2>
+<p>
+ SQLite prepared statement interface - Linas Naginionis </p>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">IInterface</li>
+<li class="thisitem">ISQLitePreparedStatement</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParams">GetParams</a></b>(index: Integer): <a  href="SQLiteTable3.TSQliteParam.html">TSQliteParam</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParamCount">GetParamCount</a></b>: Integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ClearParams">ClearParams</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamInt">SetParamInt</a></b>(const name: string; value: int64); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamFloat">SetParamFloat</a></b>(const name: string; value: double); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamText">SetParamText</a></b>(const name: string; const value: string); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamNull">SetParamNull</a></b>(const name: string); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamInt">SetParamInt</a></b>(const I: Integer; value: int64); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamFloat">SetParamFloat</a></b>(const I: Integer; value: double); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamText">SetParamText</a></b>(const I: Integer; const value: string); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamNull">SetParamNull</a></b>(const I: Integer); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamDateTime">SetParamDateTime</a></b>(const I: Integer; const Value: TDateTime); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamDateTime">SetParamDateTime</a></b>(const name: string; const Value: TDateTime); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamDate">SetParamDate</a></b>(const I: Integer; const Value: TDate); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamDate">SetParamDate</a></b>(const name: string; const Value: TDate); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamVariant">SetParamVariant</a></b>(const I: Integer; const Value: Variant); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamVariant">SetParamVariant</a></b>(const name: string; const Value: Variant); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamBlob">SetParamBlob</a></b>(const I: Integer; const Value: TStream); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#SetParamBlob">SetParamBlob</a></b>(const name: string; const Value: TStream); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQuery">ExecQuery</a></b>(): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQuery">ExecQuery</a></b>(const SQL: string): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQuery">ExecQuery</a></b>(const SQL: string; const Params: array of TVarRec): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQueryIntf">ExecQueryIntf</a></b>(): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQueryIntf">ExecQueryIntf</a></b>(const SQL: string): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecQueryIntf">ExecQueryIntf</a></b>(const SQL: string; const Params: array of TVarRec): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecSQL">ExecSQL</a></b>(): Boolean; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecSQL">ExecSQL</a></b>(const SQL: string): Boolean; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecSQL">ExecSQL</a></b>(var RowsAffected: Integer): Boolean; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecSQL">ExecSQL</a></b>(const SQL: string; var RowsAffected: Integer): Boolean; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ExecSQL">ExecSQL</a></b>(const SQL: string; const Params: array of TVarRec): Boolean; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#PrepareStatement">PrepareStatement</a></b>(const SQL: string = ''); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#PrepareStatement">PrepareStatement</a></b>(const SQL: string; const Params: array of TVarRec); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#BindParameterCount">BindParameterCount</a></b>: Integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#BindParameterName">BindParameterName</a></b>(const i: Integer): string;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#Params">Params</a></b>[index:Integer]: <a  href="SQLiteTable3.TSQliteParam.html">TSQliteParam</a> read <a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParams">GetParams</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.ISQLitePreparedStatement.html#ParamCount">ParamCount</a></b>: Integer read <a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParamCount">GetParamCount</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetParams"></a><code>function <b>GetParams</b>(index: Integer): <a  href="SQLiteTable3.TSQliteParam.html">TSQliteParam</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetParamCount"></a><code>function <b>GetParamCount</b>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ClearParams"></a><code>procedure <b>ClearParams</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamInt"></a><code>procedure <b>SetParamInt</b>(const name: string; value: int64); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamFloat"></a><code>procedure <b>SetParamFloat</b>(const name: string; value: double); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamText"></a><code>procedure <b>SetParamText</b>(const name: string; const value: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamNull"></a><code>procedure <b>SetParamNull</b>(const name: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamInt"></a><code>procedure <b>SetParamInt</b>(const I: Integer; value: int64); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamFloat"></a><code>procedure <b>SetParamFloat</b>(const I: Integer; value: double); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamText"></a><code>procedure <b>SetParamText</b>(const I: Integer; const value: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamNull"></a><code>procedure <b>SetParamNull</b>(const I: Integer); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamDateTime"></a><code>procedure <b>SetParamDateTime</b>(const I: Integer; const Value: TDateTime); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamDateTime"></a><code>procedure <b>SetParamDateTime</b>(const name: string; const Value: TDateTime); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamDate"></a><code>procedure <b>SetParamDate</b>(const I: Integer; const Value: TDate); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamDate"></a><code>procedure <b>SetParamDate</b>(const name: string; const Value: TDate); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamVariant"></a><code>procedure <b>SetParamVariant</b>(const I: Integer; const Value: Variant); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamVariant"></a><code>procedure <b>SetParamVariant</b>(const name: string; const Value: Variant); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamBlob"></a><code>procedure <b>SetParamBlob</b>(const I: Integer; const Value: TStream); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetParamBlob"></a><code>procedure <b>SetParamBlob</b>(const name: string; const Value: TStream); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQuery"></a><code>function <b>ExecQuery</b>(): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Executes query which returns unidirectional <a class="normal" href="ormbr.mapping.attributes.Table.html">table</a> </p>
+<p>
+ </p>
+<h6 class="description_section">Retornos</h6>
+<p class="return"><a class="normal" href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a> instance</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQuery"></a><code>function <b>ExecQuery</b>(const SQL: string): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQuery"></a><code>function <b>ExecQuery</b>(const SQL: string; const Params: array of TVarRec): <a  href="SQLiteTable3.TSQLiteUniTable.html">TSQLiteUniTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQueryIntf"></a><code>function <b>ExecQueryIntf</b>(): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQueryIntf"></a><code>function <b>ExecQueryIntf</b>(const SQL: string): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecQueryIntf"></a><code>function <b>ExecQueryIntf</b>(const SQL: string; const Params: array of TVarRec): <a  href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecSQL"></a><code>function <b>ExecSQL</b>(): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Executes SQL statement which should not return resultset </p>
+<p>
+ @returns</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecSQL"></a><code>function <b>ExecSQL</b>(const SQL: string): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecSQL"></a><code>function <b>ExecSQL</b>(var RowsAffected: Integer): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecSQL"></a><code>function <b>ExecSQL</b>(const SQL: string; var RowsAffected: Integer): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExecSQL"></a><code>function <b>ExecSQL</b>(const SQL: string; const Params: array of TVarRec): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PrepareStatement"></a><code>procedure <b>PrepareStatement</b>(const SQL: string = ''); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Prepares new SQL statement. Useful when using same <a class="normal" href="SQLiteTable3.TSQLitePreparedStatement.html">TSQLitePreparedStatement</a> with different queries </p>
+<p>
+ </p>
+<h6 class="description_section">Parâmetros</h6>
+<dl class="parameters">
+<dt>SQLSQL</dt>
+<dd>statement</dd>
+</dl>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PrepareStatement"></a><code>procedure <b>PrepareStatement</b>(const SQL: string; const Params: array of TVarRec); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="BindParameterCount"></a><code>function <b>BindParameterCount</b>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="BindParameterName"></a><code>function <b>BindParameterName</b>(const i: Integer): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Params"></a><code>property <b>Params</b>[index:Integer]: <a  href="SQLiteTable3.TSQliteParam.html">TSQliteParam</a> read <a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParams">GetParams</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ParamCount"></a><code>property <b>ParamCount</b>: Integer read <a  href="SQLiteTable3.ISQLitePreparedStatement.html#GetParamCount">GetParamCount</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

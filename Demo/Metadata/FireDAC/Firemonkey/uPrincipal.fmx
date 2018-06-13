@@ -1,0 +1,78 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Form4'
+  ClientHeight = 551
+  ClientWidth = 761
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Button1: TButton
+    Position.X = 12.000000000000000000
+    Position.Y = 524.000000000000000000
+    Size.Width = 149.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Compare Metadata'
+    OnClick = Button1Click
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 10.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 741.000000000000000000
+    Size.Height = 511.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Viewport.Width = 737.000000000000000000
+    Viewport.Height = 507.000000000000000000
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'FMX'
+    Left = 234
+    Top = 26
+  end
+  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
+    Left = 344
+    Top = 26
+  end
+  object FDPhysPgDriverLink1: TFDPhysPgDriverLink
+    Left = 340
+    Top = 80
+  end
+  object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
+    Left = 340
+    Top = 140
+  end
+  object FDPhysFBDriverLink1: TFDPhysFBDriverLink
+    Left = 338
+    Top = 204
+  end
+  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
+    Left = 338
+    Top = 256
+  end
+  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
+    Left = 338
+    Top = 314
+  end
+  object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
+    Left = 338
+    Top = 376
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Server=LG-ALLINONE\SQLExpress,1433'
+      'Database=database'
+      'OSAuthent=Yes'
+      'DriverID=MSSQL')
+    LoginPrompt = False
+    Left = 80
+    Top = 56
+  end
+end

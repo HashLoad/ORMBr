@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: ormbr.command.factory: Classe TDMLCommandFactory</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TDMLCommandFactory"></a><h1 class="cio">Classe TDMLCommandFactory</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ormbr.command.factory.html">ormbr.command.factory</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type TDMLCommandFactory = class(<a class="normal" href="ormbr.command.factory.TDMLCommandFactoryAbstract.html">TDMLCommandFactoryAbstract</a>)</code></p>
+<h2 class="description">Descrição</h2>
+<div class="nodescription">no description available, TDMLCommandFactoryAbstract description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="ormbr.command.factory.TDMLCommandFactoryAbstract.html">TDMLCommandFactoryAbstract</a></li>
+<li class="thisitem">TDMLCommandFactory</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.factory.TDMLCommandFactory.html#FConnection">FConnection</a></b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.factory.TDMLCommandFactory.html#FCommandSelecter">FCommandSelecter</a></b>: <a  href="ormbr.command.selecter.TCommandSelecter.html">TCommandSelecter</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.factory.TDMLCommandFactory.html#FCommandInserter">FCommandInserter</a></b>: <a  href="ormbr.command.inserter.TCommandInserter.html">TCommandInserter</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.factory.TDMLCommandFactory.html#FCommandUpdater">FCommandUpdater</a></b>: <a  href="ormbr.command.updater.TCommandUpdater.html">TCommandUpdater</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.factory.TDMLCommandFactory.html#FCommandDeleter">FCommandDeleter</a></b>: <a  href="ormbr.command.deleter.TCommandDeleter.html">TCommandDeleter</a>;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#Create">Create</a></b>(const AObject: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelectID">GeneratorSelectID</a></b>(AClass: TClass; AID: TValue): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelect">GeneratorSelect</a></b>(ASQL: String; APageSize: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelectOneToOne">GeneratorSelectOneToOne</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelectOneToMany">GeneratorSelectOneToMany</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorSelectWhere">GeneratorSelectWhere</a></b>(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorNextPacket">GeneratorNextPacket</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GetDMLCommand">GetDMLCommand</a></b>: string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#ExistSequence">ExistSequence</a></b>: Boolean; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorUpdate">GeneratorUpdate</a></b>(AObject: TObject; AModifiedFields: TList&lt;string&gt;); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorInsert">GeneratorInsert</a></b>(AObject: TObject); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.command.factory.TDMLCommandFactory.html#GeneratorDelete">GeneratorDelete</a></b>(AObject: TObject); override;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FConnection"></a><code><b>FConnection</b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FCommandSelecter"></a><code><b>FCommandSelecter</b>: <a  href="ormbr.command.selecter.TCommandSelecter.html">TCommandSelecter</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FCommandInserter"></a><code><b>FCommandInserter</b>: <a  href="ormbr.command.inserter.TCommandInserter.html">TCommandInserter</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FCommandUpdater"></a><code><b>FCommandUpdater</b>: <a  href="ormbr.command.updater.TCommandUpdater.html">TCommandUpdater</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FCommandDeleter"></a><code><b>FCommandDeleter</b>: <a  href="ormbr.command.deleter.TCommandDeleter.html">TCommandDeleter</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AObject: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectID"></a><code>function <b>GeneratorSelectID</b>(AClass: TClass; AID: TValue): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelect"></a><code>function <b>GeneratorSelect</b>(ASQL: String; APageSize: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectOneToOne"></a><code>function <b>GeneratorSelectOneToOne</b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectOneToMany"></a><code>function <b>GeneratorSelectOneToMany</b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectWhere"></a><code>function <b>GeneratorSelectWhere</b>(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorNextPacket"></a><code>function <b>GeneratorNextPacket</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetDMLCommand"></a><code>function <b>GetDMLCommand</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExistSequence"></a><code>function <b>ExistSequence</b>: Boolean; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorUpdate"></a><code>procedure <b>GeneratorUpdate</b>(AObject: TObject; AModifiedFields: TList&lt;string&gt;); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorInsert"></a><code>procedure <b>GeneratorInsert</b>(AObject: TObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorDelete"></a><code>procedure <b>GeneratorDelete</b>(AObject: TObject); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

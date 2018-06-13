@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: ormbr.mapping.popular: Classe TMappingPopular</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TMappingPopular"></a><h1 class="cio">Classe TMappingPopular</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ormbr.mapping.popular.html">ormbr.mapping.popular</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type TMappingPopular = class(TObject)</code></p>
+<h2 class="description">Descrição</h2>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="thisitem">TMappingPopular</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.popular.TMappingPopular.html#FMappingExplorerStrategy">FMappingExplorerStrategy</a></b>: <a  href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a>;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.popular.TMappingPopular.html#Create">Create</a></b>(AMappingExplorerStrategy: <a  href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularTable">PopularTable</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularSequence">PopularSequence</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularPrimaryKey">PopularPrimaryKey</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularForeignKey">PopularForeignKey</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularIndexe">PopularIndexe</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularCheck">PopularCheck</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularColumn">PopularColumn</a></b>(ARttiType: TRttiType; AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularAssociation">PopularAssociation</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularJoinColumn">PopularJoinColumn</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularTrigger">PopularTrigger</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.popular.TMappingPopular.html#PopularView">PopularView</a></b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FMappingExplorerStrategy"></a><code><b>FMappingExplorerStrategy</b>: <a  href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AMappingExplorerStrategy: <a  href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularTable"></a><code>function <b>PopularTable</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularSequence"></a><code>function <b>PopularSequence</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularPrimaryKey"></a><code>function <b>PopularPrimaryKey</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularForeignKey"></a><code>function <b>PopularForeignKey</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularIndexe"></a><code>function <b>PopularIndexe</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularCheck"></a><code>function <b>PopularCheck</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularColumn"></a><code>function <b>PopularColumn</b>(ARttiType: TRttiType; AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularAssociation"></a><code>function <b>PopularAssociation</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularJoinColumn"></a><code>function <b>PopularJoinColumn</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularTrigger"></a><code>function <b>PopularTrigger</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="PopularView"></a><code>function <b>PopularView</b>(ARttiType: TRttiType): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

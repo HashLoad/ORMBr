@@ -1,0 +1,144 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Cascade</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Cascade");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Cascade</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="Mapeamento.html">Mapeamento</a> &rsaquo;&rsaquo; <a href="Atributos.html">Atributos</a> &rsaquo;&rsaquo; <a href="AtributosdeProriedades.html">Atributos de Proriedades</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="AtributosdeProriedades.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="CalcField.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="Modelos.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts22">Descrição :</span></p>
+<p class="rvps2"><span class="rvts11">O atributo Cascade, define para o ORMBr o controle de manutenção de dados em cascata, sendo ele para Insert, Update ou Delete, esse atributo deve ser usado em conjunto com </span><a class="rvts12" href="Association.html">Association</a><span class="rvts11"> dando a ele a responsabilidade de gerenciar a execuçãi das condições definidas nesse atributo.</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Parametros :</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="1" style="border-width: 0px; border-spacing: 1px;">
+<tr valign="top">
+<td width="142" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">CascadeActions</span></p>
+</td>
+<td width="906" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Opções de parâmetros são:</span></p>
+<p class="rvps2"><span class="rvts11">CascadeAutoInc - Atualiza o Autoinc gerado na classe pai para a classe filha</span></p>
+<p class="rvps2"><span class="rvts11">CascadeInsert - Ao inserir o registro da classe pai, percorre a lista das classes filhas para inserir os registros das filhas também</span></p>
+<p class="rvps2"><span class="rvts11">CascadeUpdate - Ao aplicar a alteração feita na classe pai, percorre a lista das classes filhas para caso tenha havido alguma alteração ou inserção de um novo registro </span></p>
+<p class="rvps2"><span class="rvts11">CascadeDelete - Ao aplicar a deleção na classe pai, percorre antes a lista de classes filhas executando a exclusão</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Exemplo :</span></p>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">[Association(OneToMany, 'master_id', 'detail', 'master_id')]</span></p>
+<p class="rvps2"><span class="rvts11">[CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]</span></p>
+<p class="rvps2"><span class="rvts22">property</span><span class="rvts11"> detail: TObjectList&lt;Tdetail&gt; read Fdetail;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com">Free HTML Help documentation generator</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

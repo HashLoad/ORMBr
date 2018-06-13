@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: SQLite3: record sqlite3_module</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="sqlite3_module"></a><h1 class="cio">record sqlite3_module</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td>Hierarquia</td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td>Métodos</td><td>Properties</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="SQLite3.html">SQLite3</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type sqlite3_module = record</code></p>
+<h2 class="description">Descrição</h2>
+<p>
+Virtual <a class="normal" href="ormbr.mapping.attributes.Table.html">table</a> of this cursor Virtual <a class="normal" href="ormbr.mapping.attributes.Table.html">table</a> implementations will typically add additional fields</p>
+<h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#iVersion">iVersion</a></b>: Integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xCreate">xCreate</a></b>: function(db: <a  href="SQLite3.html#TSQLiteDB">TSQLiteDB</a>; pAux: Pointer; argc: Integer; argv: PPAnsiChar; out ppVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; out pzErr: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xConnect">xConnect</a></b>: function(db: <a  href="SQLite3.html#TSQLiteDB">TSQLiteDB</a>; pAux: Pointer; argc: Integer; argv: PPAnsiChar; var ppVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; out pzErr: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xBestIndex">xBestIndex</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; pIndexInfo: <a  href="SQLite3.html#Psqlite3_index_info">Psqlite3_index_info</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xDisconnect">xDisconnect</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xDestroy">xDestroy</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xOpen">xOpen</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; var ppCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xClose">xClose</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xFilter">xFilter</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; idxNum: Integer; idxStr: PAnsiChar; argc: Integer; argv: <a  href="SQLite3.html#PPsqlite3_value">PPsqlite3_value</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xNext">xNext</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xEof">xEof</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): LongBool; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xColumn">xColumn</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; pContext: <a  href="SQLite3.html#Psqlite3_context">Psqlite3_context</a>; N: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xRowid">xRowid</a></b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; out pRowid: <a  href="SQLite3.html#sqlite3_int64">sqlite3_int64</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xUpdate">xUpdate</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; argc: Integer; argv: <a  href="SQLite3.html#PPsqlite3_value">PPsqlite3_value</a>; var pRowId: <a  href="SQLite3.html#sqlite3_int64">sqlite3_int64</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xBegin">xBegin</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xSync">xSync</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xCommit">xCommit</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xRollback">xRollback</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xFindFunction">xFindFunction</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; nArg: Integer; zName: PAnsiChar; out pxFunc: <a  href="SQLite3.html#TxFunc">TxFunc</a>; out ppArg: Pointer): LongBool; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xRename">xRename</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; zNew: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xSavepoint">xSavepoint</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xRelease">xRelease</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="SQLite3.sqlite3_module.html#xRollbackTo">xRollbackTo</a></b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="iVersion"></a><code><b>iVersion</b>: Integer;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xCreate"></a><code><b>xCreate</b>: function(db: <a  href="SQLite3.html#TSQLiteDB">TSQLiteDB</a>; pAux: Pointer; argc: Integer; argv: PPAnsiChar; out ppVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; out pzErr: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xConnect"></a><code><b>xConnect</b>: function(db: <a  href="SQLite3.html#TSQLiteDB">TSQLiteDB</a>; pAux: Pointer; argc: Integer; argv: PPAnsiChar; var ppVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; out pzErr: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xBestIndex"></a><code><b>xBestIndex</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; pIndexInfo: <a  href="SQLite3.html#Psqlite3_index_info">Psqlite3_index_info</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xDisconnect"></a><code><b>xDisconnect</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xDestroy"></a><code><b>xDestroy</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xOpen"></a><code><b>xOpen</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; var ppCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xClose"></a><code><b>xClose</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xFilter"></a><code><b>xFilter</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; idxNum: Integer; idxStr: PAnsiChar; argc: Integer; argv: <a  href="SQLite3.html#PPsqlite3_value">PPsqlite3_value</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xNext"></a><code><b>xNext</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xEof"></a><code><b>xEof</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>): LongBool; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xColumn"></a><code><b>xColumn</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; pContext: <a  href="SQLite3.html#Psqlite3_context">Psqlite3_context</a>; N: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xRowid"></a><code><b>xRowid</b>: function(pCursor: <a  href="SQLite3.html#Psqlite3_vtab_cursor">Psqlite3_vtab_cursor</a>; out pRowid: <a  href="SQLite3.html#sqlite3_int64">sqlite3_int64</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xUpdate"></a><code><b>xUpdate</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; argc: Integer; argv: <a  href="SQLite3.html#PPsqlite3_value">PPsqlite3_value</a>; var pRowId: <a  href="SQLite3.html#sqlite3_int64">sqlite3_int64</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xBegin"></a><code><b>xBegin</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xSync"></a><code><b>xSync</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xCommit"></a><code><b>xCommit</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xRollback"></a><code><b>xRollback</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xFindFunction"></a><code><b>xFindFunction</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; nArg: Integer; zName: PAnsiChar; out pxFunc: <a  href="SQLite3.html#TxFunc">TxFunc</a>; out ppArg: Pointer): LongBool; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xRename"></a><code><b>xRename</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; zNew: PAnsiChar): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xSavepoint"></a><code><b>xSavepoint</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+<p>
+The methods above are in version 1 of the sqlite_module object. Those ** below are for version 2 and greater.</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xRelease"></a><code><b>xRelease</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="xRollbackTo"></a><code><b>xRollbackTo</b>: function(pVTab: <a  href="SQLite3.html#Psqlite3_vtab">Psqlite3_vtab</a>; savepoint: Integer): Integer; cdecl;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

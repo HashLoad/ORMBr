@@ -1,0 +1,233 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Modelo Completo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("ModeloCompleto");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Modelo Completo</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="Modelos.html">Modelos</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="Modelos.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="Modelos.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="TrabalhandocomObjetos.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts22">unit</span><span class="rvts11"> ormbr.model.master;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">interface</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">uses</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Classes, </span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;DB, </span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;SysUtils, </span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Generics.Collections, </span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;/// orm </span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.mapping.attributes,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.types.mapping,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.types.lazy,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.model.detail,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.model.client,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.mapping.register;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">type</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;[Entity]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;[Table('master','')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;[PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;[Sequence('master')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;[OrderBy('description DESC')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Tmaster = class</span></p>
+<p class="rvps2"><span class="rvts22"> &nbsp;private</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;{ Private declarations }</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fmaster_id: Integer;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fdescription: String;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fregisterdate: TDateTime;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fupdatedate: TDateTime;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fclient_id: Integer;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fclient_name: string;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fdetail: TObjectList&lt;Tdetail&gt;;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Fclient: Tclient;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;function GetTotal: Double;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;</span><span class="rvts22">public</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;{ Public declarations }</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">constructor</span><span class="rvts11"> Create;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">destructor</span><span class="rvts11"> Destroy; </span><span class="rvts22">override</span><span class="rvts11">;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NoUpdate, NotNull])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('master_id', ftInteger)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('master_Id','Mensagem de validação','0','','',taCenter)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> master_id: Integer Index 0 read Fmaster_id write Fmaster_id;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('description', ftString, 60)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('description','Mensagem de validação','','','',taLeftJustify)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> description: String Index 1 read Fdescription write Fdescription;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NotNull])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('registerdate', ftDate)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> registerdate: TDateTime Index 2 read Fregisterdate write Fregisterdate;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NotNull])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('updatedate', ftDate)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('updatedate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> updatedate: TDateTime Index 3 read Fupdatedate write Fupdatedate;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NotNull])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('client_id', ftInteger)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('client_id','Mensagem de validação','','','',taCenter)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> client_id: Integer Index 4 read Fclient_id write Fclient_id;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NoInsert, NoUpdate])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Column('client_name', ftString, 60)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin)]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Dictionary('Nome do Cliente')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> client_name: string index 5 read fclient_name write fclient_name;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Association(OneToOne, 'client_id', 'client', 'client_id', 'client_name'{; client_foto'})]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> client: Tclient read Fclient write Fclient;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Association(OneToMany, 'master_id', 'detail', 'master_id')]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> detail: TObjectList&lt;Tdetail&gt; read Fdetail; // write Fdetail;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;[Restrictions([NoInsert, NoUpdate])]</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;</span><span class="rvts22">property</span><span class="rvts11"> total: Double read GetTotal;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;</span><span class="rvts22">end;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">implementation</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">{ Tmaster }</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">constructor</span><span class="rvts11"> Tmaster.Create;</span></p>
+<p class="rvps2"><span class="rvts22">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; Fdetail := TObjectList&lt;Tdetail&gt;.Create;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; Fclient := Tclient.Create;</span></p>
+<p class="rvps2"><span class="rvts22">end;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">destructor</span><span class="rvts11"> Tmaster.Destroy;</span></p>
+<p class="rvps2"><span class="rvts22">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Fdetail.Free;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Fclient.Free;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;inherited;</span></p>
+<p class="rvps2"><span class="rvts22">end;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">function</span><span class="rvts11"> Tmaster.GetTotal: Double;</span></p>
+<p class="rvps2"><span class="rvts22">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;iFor: Integer;</span></p>
+<p class="rvps2"><span class="rvts22">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;Result := 0;</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;</span><span class="rvts22">for</span><span class="rvts11"> iFor := 0 </span><span class="rvts22">to</span><span class="rvts11"> Fdetail.Count -1 </span><span class="rvts22">do</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; &nbsp;Result := Result + Fdetail.Items[iFor].price;</span></p>
+<p class="rvps2"><span class="rvts22">end;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">initialization</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;TRegisterClass.RegisterEntity(Tmaster);</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">end.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com">Free PDF documentation generator</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

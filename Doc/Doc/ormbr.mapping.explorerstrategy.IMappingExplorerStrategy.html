@@ -1,0 +1,242 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: ormbr.mapping.explorerstrategy: Interface IMappingExplorerStrategy</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="IMappingExplorerStrategy"></a><h1 class="cio">Interface IMappingExplorerStrategy</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td>Campos</td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ormbr.mapping.explorerstrategy.html">ormbr.mapping.explorerstrategy</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type IMappingExplorerStrategy = interface(IInterface)</code></p>
+<h2 class="description">Descrição</h2>
+<h6 class="description_section">Attributes</h6>
+<dl class="attributes">
+  <dt>GUID['{8CE16E15-B26C-4A3F-A05D-7BA1B4FB3FAB}']</dt>
+  <dd></dd>
+</dl>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">IInterface</li>
+<li class="thisitem">IMappingExplorerStrategy</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetRepositoryMapping">GetRepositoryMapping</a></b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingTable">GetMappingTable</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingPrimaryKey">GetMappingPrimaryKey</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingForeignKey">GetMappingForeignKey</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingColumn">GetMappingColumn</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingAssociation">GetMappingAssociation</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingJoinColumn">GetMappingJoinColumn</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingIndexe">GetMappingIndexe</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingCheck">GetMappingCheck</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingSequence">GetMappingSequence</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingTrigger">GetMappingTrigger</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingView">GetMappingView</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetColumnByName">GetColumnByName</a></b>(AClass: TClass; AColumnName: string): <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetMappingRestriction">GetMappingRestriction</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TRestrictionMappingList.html">TRestrictionMappingList</a>;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#Repository">Repository</a></b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a> read <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetRepositoryMapping">GetRepositoryMapping</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetRepositoryMapping"></a><code>function <b>GetRepositoryMapping</b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingTable"></a><code>function <b>GetMappingTable</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingPrimaryKey"></a><code>function <b>GetMappingPrimaryKey</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingForeignKey"></a><code>function <b>GetMappingForeignKey</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingColumn"></a><code>function <b>GetMappingColumn</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingAssociation"></a><code>function <b>GetMappingAssociation</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingJoinColumn"></a><code>function <b>GetMappingJoinColumn</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingIndexe"></a><code>function <b>GetMappingIndexe</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingCheck"></a><code>function <b>GetMappingCheck</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingSequence"></a><code>function <b>GetMappingSequence</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingTrigger"></a><code>function <b>GetMappingTrigger</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingView"></a><code>function <b>GetMappingView</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetColumnByName"></a><code>function <b>GetColumnByName</b>(AClass: TClass; AColumnName: string): <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingRestriction"></a><code>function <b>GetMappingRestriction</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TRestrictionMappingList.html">TRestrictionMappingList</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Repository"></a><code>property <b>Repository</b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a> read <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html#GetRepositoryMapping">GetRepositoryMapping</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

@@ -1,0 +1,159 @@
+﻿
+
+<html>
+	
+<head>
+	<title>JoinColumn</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("JoinColumn");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">JoinColumn</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="Mapeamento.html">Mapeamento</a> &rsaquo;&rsaquo; <a href="Atributos.html">Atributos</a> &rsaquo;&rsaquo; <a href="AtributosdeProriedades.html">Atributos de Proriedades</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="AtributosdeProriedades.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="ForeignKey.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="CalcField.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts22">Descrição :</span></p>
+<p class="rvps2"><span class="rvts11">O atributo JoinColumn, define para o ORMBr informações sobre JOINs entre tabelas, é ele quem será usado para identificar no banco colunas de tabelas que devem fazer parte no SELECT, trazendo assim as colunas da tabela principal e as colunas necessárias de outras tabelas para visualização de dados.</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Parametros :</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="1" style="border-width: 0px; border-spacing: 1px;">
+<tr valign="top">
+<td width="195" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">ColumnName</span></p>
+</td>
+<td width="856" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Nome da coluna da tabela externa que fará parte do select principal</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="195" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">ReferencedTableName</span></p>
+</td>
+<td width="856" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Nome da tabela externa que fornecerá a coluna da "</span><span class="rvts24">ColumnName"</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="195" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">ReferencedColumnName</span></p>
+</td>
+<td width="856" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Nome da coluna que será usado na escrita SQL INNER JOIN para buscar a coluna em "</span><span class="rvts24">ColumnName"</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="195" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">Join</span></p>
+</td>
+<td width="856" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Tipo do JOIN a ser executado (InnerJoin, LeftJoin, RightJoin, FullJoin);</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts25">Nota :</span><span class="rvts11"> Se for preciso mais de um campo de uma tabela externa, deve ser criado uma propriedade na classe para cada uma, assim teremos como buscar informaçoes, pela prorpiedade da classe que se referencia a uma determinada coluna.</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Exemplo :</span></p>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">[JoinColumn('client_name','client','client_id',InnerJoin)]</span></p>
+<p class="rvps2"><span class="rvts22">property</span><span class="rvts11"> client_name: string index 0 read fclient_name write fclient_name;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com/feature-tour/create-help-files-for-the-qt-help-framework">Produce online help for Qt applications</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

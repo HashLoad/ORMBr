@@ -1,0 +1,175 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Dictionary</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Dictionary");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Dictionary</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="Mapeamento.html">Mapeamento</a> &rsaquo;&rsaquo; <a href="Atributos.html">Atributos</a> &rsaquo;&rsaquo; <a href="AtributosdeProriedades.html">Atributos de Proriedades</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="AtributosdeProriedades.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="Column.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="Association.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts22">Descrição :</span></p>
+<p class="rvps2"><span class="rvts11">O atributo Dictionary, define para o ORMBr informações sobre cada coluna da tabelas, é ele quem será usado para configurar todas as colunas da tabela no DataSet.</span></p>
+<p class="rvps2"><span class="rvts11">Ao ser instânciado o ORMBr irá criar no DataSet em runtima todos os TFields referente a tabela selecionada, e parametrizar cada um conforme descrito no atributo Dictionary, fazendo assim que cada TField tenha informações necessárias e caracteristicas de cada coluna.</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Parametros :</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="1" cellspacing="1" style="border-width: 0px; border-spacing: 1px;">
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">DisplayLabel</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Descrição que será mostrado nos componentes Datawere, que podem identificar o que representa a informação.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">DefaultExpression</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Valor padrão a ser alimentado ao campo, toda vez que for inserir um registro novo, evitando assim que alguma coluna vá sem infromação para a tabela no banco de dados ou deixe a coluna = null.</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">Definindo 'Date' a coluna será preenchida com a data atual do sistema operacional.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">ConstraintErrorMessage</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Mensagem de alerta quando houver a validação de rejeição de uma informação na coluna.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">DisplayFormat</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Define-se como os dados serão mostrados nos componentes Dataware para o usuário final.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">EditMask</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Define-se um formato dos dados que serão digitados nos componentes Dataware pelo o usuário final.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="175" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts24">Alignment</span></p>
+</td>
+<td width="876" style="border-width : 1px; border-color: #000000; border-style: solid; padding: 1px;"><p class="rvps2"><span class="rvts11">Define-se a posição que o dado será posicionado no componente Dataware na tela para o usuário final.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Exemplos :</span></p>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">[Dictionary('updatedate', 'Mensagem de validação', 'Date', '', '!##/##/####;1;_', taCenter)]</span></p>
+<p class="rvps2"><span class="rvts22">property</span><span class="rvts11"> updatedate: TDateTime Index 0 read Fupdatedate write Fupdatedate;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">[Dictionary('Preço Unitário', 'Mensagem de validação', '0','#,###,##0.00', '', taRightJustify)]</span></p>
+<p class="rvps2"><span class="rvts22">property</span><span class="rvts11"> price: Double Index 1 read Fprice write Fprice;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com/feature-tour/iphone-website-generation">Easily create iPhone documentation</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

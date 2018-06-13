@@ -1,0 +1,474 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: ormbr.database.factory: Classe TDatabaseFactory</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TDatabaseFactory"></a><h1 class="cio">Classe TDatabaseFactory</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td>Campos</td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ormbr.database.factory.html">ormbr.database.factory</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type TDatabaseFactory = class(<a class="normal" href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>)</code></p>
+<h2 class="description">Descrição</h2>
+<div class="nodescription">no description available, TDatabaseAbstract description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
+<li class="ancestor"><a class="normal" href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a></li>
+<li class="thisitem">TDatabaseFactory</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareTables">CompareTables</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareViews">CompareViews</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareSequences">CompareSequences</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareColumns">CompareColumns</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ComparePrimaryKey">ComparePrimaryKey</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareForeignKeys">CompareForeignKeys</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareIndexes">CompareIndexes</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareTriggers">CompareTriggers</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareChecks">CompareChecks</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateTable">ActionCreateTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateIndexe">ActionCreateIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateCheck">ActionCreateCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreatePrimaryKey">ActionCreatePrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateColumn">ActionCreateColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateSequence">ActionCreateSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateForeignKey">ActionCreateForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropTable">ActionDropTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropColumn">ActionDropColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropPrimaryKey">ActionDropPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropSequence">ActionDropSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropIndexe">ActionDropIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropForeignKey">ActionDropForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropCheck">ActionDropCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionAlterColumn">ActionAlterColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionEnableForeignKeys">ActionEnableForeignKeys</a></b>(AEnable: Boolean);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionEnableTriggers">ActionEnableTriggers</a></b>(AEnable: Boolean);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsColumn">DeepEqualsColumn</a></b>(AMasterColumn, ATargetColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKey">DeepEqualsForeignKey</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKeyFromColumns">DeepEqualsForeignKeyFromColumns</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKeyToColumns">DeepEqualsForeignKeyToColumns</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsIndexe">DeepEqualsIndexe</a></b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsIndexeColumns">DeepEqualsIndexeColumns</a></b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#GetFieldTypeValid">GetFieldTypeValid</a></b>(AFieldType: TFieldType): TFieldType; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#GenerateDDLCommands">GenerateDDLCommands</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#BuildDatabase">BuildDatabase</a></b>; override;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareTables"></a><code>procedure <b>CompareTables</b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareViews"></a><code>procedure <b>CompareViews</b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareSequences"></a><code>procedure <b>CompareSequences</b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareColumns"></a><code>procedure <b>CompareColumns</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ComparePrimaryKey"></a><code>procedure <b>ComparePrimaryKey</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareForeignKeys"></a><code>procedure <b>CompareForeignKeys</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareIndexes"></a><code>procedure <b>CompareIndexes</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareTriggers"></a><code>procedure <b>CompareTriggers</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareChecks"></a><code>procedure <b>CompareChecks</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateTable"></a><code>procedure <b>ActionCreateTable</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateIndexe"></a><code>procedure <b>ActionCreateIndexe</b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateCheck"></a><code>procedure <b>ActionCreateCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreatePrimaryKey"></a><code>procedure <b>ActionCreatePrimaryKey</b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateColumn"></a><code>procedure <b>ActionCreateColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateSequence"></a><code>procedure <b>ActionCreateSequence</b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateForeignKey"></a><code>procedure <b>ActionCreateForeignKey</b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropTable"></a><code>procedure <b>ActionDropTable</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropColumn"></a><code>procedure <b>ActionDropColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropPrimaryKey"></a><code>procedure <b>ActionDropPrimaryKey</b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropSequence"></a><code>procedure <b>ActionDropSequence</b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropIndexe"></a><code>procedure <b>ActionDropIndexe</b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropForeignKey"></a><code>procedure <b>ActionDropForeignKey</b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropCheck"></a><code>procedure <b>ActionDropCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionAlterColumn"></a><code>procedure <b>ActionAlterColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionEnableForeignKeys"></a><code>procedure <b>ActionEnableForeignKeys</b>(AEnable: Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionEnableTriggers"></a><code>procedure <b>ActionEnableTriggers</b>(AEnable: Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsColumn"></a><code>function <b>DeepEqualsColumn</b>(AMasterColumn, ATargetColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsForeignKey"></a><code>function <b>DeepEqualsForeignKey</b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsForeignKeyFromColumns"></a><code>function <b>DeepEqualsForeignKeyFromColumns</b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsForeignKeyToColumns"></a><code>function <b>DeepEqualsForeignKeyToColumns</b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsIndexe"></a><code>function <b>DeepEqualsIndexe</b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsIndexeColumns"></a><code>function <b>DeepEqualsIndexeColumns</b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetFieldTypeValid"></a><code>function <b>GetFieldTypeValid</b>(AFieldType: TFieldType): TFieldType; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GenerateDDLCommands"></a><code>procedure <b>GenerateDDLCommands</b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="BuildDatabase"></a><code>procedure <b>BuildDatabase</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

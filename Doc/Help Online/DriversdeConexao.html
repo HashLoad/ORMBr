@@ -1,0 +1,227 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Drivers de Conex&atilde;o</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("DriversdeConexao");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Drivers de Conex&atilde;o</h1>
+				
+				
+				<div id="topic_breadcrumb">
+					<a href="ConexaoDatabase.html">Conex&atilde;o Database</a> &rsaquo;&rsaquo; 
+				</div>
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="ConexaoDatabase.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				
+				
+				<a href="ConexaoDatabase.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="BancosdeDadosSuportados.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<p class="rvps2"><span class="rvts6">O ORMBr é aberto a ter N drivers de conexão, isso só depende do engine funcionar no Delphi. Hoje temos os seguintes engines de conexão a banco de dados:</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">FireDAC</span></li>
+<li class="rvps2"><span class="rvts6">DBExpress</span></li>
+<li class="rvps2"><span class="rvts6">Zeos</span></li>
+<li class="rvps2"><span class="rvts6">AbsoluteDB</span></li>
+<li class="rvps2"><span class="rvts6">Ado</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts22">Exemplos :</span></p>
+<p class="rvps2"><span class="rvts22"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Units requeridas</span></p>
+<p class="rvps2"><span class="rvts11">uses</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.factory.interfaces,</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;ormbr.types.database;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Unit requerida</span></p>
+<p class="rvps2"><span class="rvts11">ormbr.factor.firedac;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">// Conexão </span><span class="rvts22">FireDAC.</span></p>
+<p class="rvps2"><span class="rvts11">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;oConnection: IDBConnection; </span></p>
+<p class="rvps2"><span class="rvts11">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; oConnection := TFactoryFireDAC.Create(FDConnection1, dnSQLite);</span></p>
+<p class="rvps2"><span class="rvts11">end;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Unit requerida</span></p>
+<p class="rvps2"><span class="rvts11">ormbr.factor.dbexpress;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">// Conexão </span><span class="rvts22">DBExpress.</span></p>
+<p class="rvps2"><span class="rvts11">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;oConnection: IDBConnection; </span></p>
+<p class="rvps2"><span class="rvts11">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; oConnection := TFactoryDBExpress.Create(SQLConnection1, dnSQLite);</span></p>
+<p class="rvps2"><span class="rvts11">end;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Unit requerida</span></p>
+<p class="rvps2"><span class="rvts11">ormbr.factor.zeos;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">// Conexão </span><span class="rvts22">ZeosLib.</span></p>
+<p class="rvps2"><span class="rvts11">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;oConnection: IDBConnection; </span></p>
+<p class="rvps2"><span class="rvts11">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; oConnection := TFactoryZeos.Create(ZConnection1, dnSQLite);</span></p>
+<p class="rvps2"><span class="rvts11">end;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Unit requerida</span></p>
+<p class="rvps2"><span class="rvts11">ormbr.factory.absolutedb;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">// Conexão </span><span class="rvts22">AbsoluteDB.</span></p>
+<p class="rvps2"><span class="rvts11">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;oConnection: IDBConnection; </span></p>
+<p class="rvps2"><span class="rvts11">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; oConnection := TFactoryZeos.Create(ABSDatabase1, dnSQLite);</span></p>
+<p class="rvps2"><span class="rvts11">end;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<div class="rvps2"><table width="100%" border="0" cellpadding="5" cellspacing="0" style="border-width: 0px; border-spacing: 0px;">
+<tr valign="top">
+<td width="1" style="padding: 5px; background-color: #008000;"><p class="rvps2"><span class="rvts11"><br/></span></p>
+</td>
+<td width="1053" style="padding: 5px; background-color: #ccffcc;"><p class="rvps2"><span class="rvts11">// Unit requerida</span></p>
+<p class="rvps2"><span class="rvts11">ormbr.factory.ado;</span></p>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p class="rvps2"><span class="rvts11">// Conexão </span><span class="rvts22">ADO.</span></p>
+<p class="rvps2"><span class="rvts11">var</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp;oConnection: IDBConnection; </span></p>
+<p class="rvps2"><span class="rvts11">begin</span></p>
+<p class="rvps2"><span class="rvts11"> &nbsp; oConnection := TFactoryADO.Create(ADODatabase1, dnSQLite);</span></p>
+<p class="rvps2"><span class="rvts11">end;</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts11"><br/></span></p>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com/feature-tour">Full-featured Help generator</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+

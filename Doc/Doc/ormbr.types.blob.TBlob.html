@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: ormbr.types.blob: record TBlob</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TBlob"></a><h1 class="cio">record TBlob</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td>Hierarquia</td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="ormbr.types.blob.html">ormbr.types.blob</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type TBlob = record</code></p>
+<h2 class="description">Descrição</h2>
+&nbsp;<h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBase64String">FBase64String</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBase64Bytes">FBase64Bytes</a></b>: TBytes;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBlobField">FBlobField</a></b>: TBlobField;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#StreamToByteArray">StreamToByteArray</a></b>(AStream: TStream): TBytes;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#FindGraphicClass">FindGraphicClass</a></b>(const ABuffer; const ABufferSize: Int64; out AGraphicClass: TGraphicClass): Boolean; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#FindGraphicClass">FindGraphicClass</a></b>(AStream: TStream; out AGraphicClass: TGraphicClass): Boolean; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#CompressStream">CompressStream</a></b>(ASource, ATarget: TStream);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#DecompressStream">DecompressStream</a></b>(ASource, ATarget: TStream);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#BuildBlobFieldToStream">BuildBlobFieldToStream</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#SetBlobField">SetBlobField</a></b>(const Value: TBlobField);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#SetBytes">SetBytes</a></b>(const Value: TBytes);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#LoadFromFile">LoadFromFile</a></b>(const AFileName: string);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#SaveToFile">SaveToFile</a></b>(const FileName: string);</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#ToPicture">ToPicture</a></b>(APicture: TPicture);</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytes">ToBytes</a></b>: TBytes;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytesString">ToBytesString</a></b>: string; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytesString">ToBytesString</a></b>(const AString: string): Boolean; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToString">ToString</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToSize">ToSize</a></b>: Integer;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FBase64String"></a><code><b>FBase64String</b>: string;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FBase64Bytes"></a><code><b>FBase64Bytes</b>: TBytes;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FBlobField"></a><code><b>FBlobField</b>: TBlobField;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="StreamToByteArray"></a><code>function <b>StreamToByteArray</b>(AStream: TStream): TBytes;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FindGraphicClass"></a><code>function <b>FindGraphicClass</b>(const ABuffer; const ABufferSize: Int64; out AGraphicClass: TGraphicClass): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="FindGraphicClass"></a><code>function <b>FindGraphicClass</b>(AStream: TStream; out AGraphicClass: TGraphicClass): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="CompressStream"></a><code>procedure <b>CompressStream</b>(ASource, ATarget: TStream);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="DecompressStream"></a><code>procedure <b>DecompressStream</b>(ASource, ATarget: TStream);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="BuildBlobFieldToStream"></a><code>procedure <b>BuildBlobFieldToStream</b>;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="SetBlobField"></a><code>procedure <b>SetBlobField</b>(const Value: TBlobField);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="SetBytes"></a><code>procedure <b>SetBytes</b>(const Value: TBytes);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="LoadFromFile"></a><code>procedure <b>LoadFromFile</b>(const AFileName: string);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="SaveToFile"></a><code>procedure <b>SaveToFile</b>(const FileName: string);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToPicture"></a><code>procedure <b>ToPicture</b>(APicture: TPicture);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToBytes"></a><code>function <b>ToBytes</b>: TBytes;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToBytesString"></a><code>function <b>ToBytesString</b>: string; overload;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToBytesString"></a><code>function <b>ToBytesString</b>(const AString: string): Boolean; overload;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToString"></a><code>function <b>ToString</b>: string;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="ToSize"></a><code>function <b>ToSize</b>: Integer;</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

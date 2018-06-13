@@ -1,0 +1,687 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html>
+<head>
+<title>ORM Brasil Framework: SQLiteTable3: Classe TSQLiteUniTable</title>
+<meta name="generator" content="PasDoc 0.14.0">
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch_data.js"></script>
+<link rel="stylesheet" type="text/css" href="tipuesearch/tipuesearch.css">
+<script type="text/javascript" src="tipuesearch/tipuesearch_set.js"></script>
+<script type="text/javascript" src="tipuesearch/tipuesearch.js"></script>
+
+<link rel="StyleSheet" type="text/css" href="pasdoc.css">
+</head>
+<body>
+<table class="container"><tr><td class="navigation">
+<h2>ORM Brasil Framework</h2><p><a href="AllUnits.html" class="navigation">Units</a></p><p><a href="ClassHierarchy.html" class="navigation">Hierarquia de Classes</a></p><p><a href="AllClasses.html" class="navigation">Classes, Interfaces, Objetos e Registros</a></p><p><a href="AllTypes.html" class="navigation">Tipos</a></p><p><a href="AllVariables.html" class="navigation">Variáveis</a></p><p><a href="AllConstants.html" class="navigation">Constantes</a></p><p><a href="AllFunctions.html" class="navigation">Funções e Procedimentos</a></p><p><a href="AllIdentifiers.html" class="navigation">Identificadores</a></p><p><form class="search-form" action="_tipue_results.html"><div class="search-input"><input type="text" name="q" id="tipue_search_input"></div><div class="search-button"><input type="button" id="tipue_search_button" onclick="this.form.submit();"></div></form>
+<div style="clear: both"></div>
+
+<script>
+$(document).ready(function() {
+    $('#tipue_search_input').tipuesearch({
+        /* 10 items to display seems standard */
+        'show': 10,
+        /* For PasDoc docs, showing urls is not very useful,
+           since the page title already shows the unit and identifier. */
+        'showURL': false
+    });
+});
+</script>
+</p></td><td class="content">
+<a name="TSQLiteUniTable"></a><h1 class="cio">Classe TSQLiteUniTable</h1>
+<table class="sections wide_list">
+<tr>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
+<p class="unitlink">
+<a  href="SQLiteTable3.html">SQLiteTable3</a></p>
+<h2 class="declaration">Declaração</h2>
+<p class="declaration">
+<code>type TSQLiteUniTable = class(TInterfacedObject, <a class="normal" href="SQLiteTable3.ISQLiteTable.html">ISQLiteTable</a>)</code></p>
+<h2 class="description">Descrição</h2>
+<p>
+ Unidirectional SQLite <a class="normal" href="ormbr.mapping.attributes.Table.html">table</a> for fastest data access and very small memory footprint </p>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
+<li class="thisitem">TSQLiteUniTable</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fColCount">fColCount</a></b>: Cardinal;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fCols">fCols</a></b>: TDictionary&lt;string,Integer&gt;;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#FColTypes">FColTypes</a></b>: array of Integer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#FColNames">FColNames</a></b>: array of string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#FFields">FFields</a></b>: TObjectList&lt;<a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>&gt;;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fRow">fRow</a></b>: Cardinal;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fEOF">fEOF</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fStmt">fStmt</a></b>: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fDB">fDB</a></b>: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="SQLiteTable3.TSQLiteUniTable.html#fSQL">fSQL</a></b>: string;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsAsString">GetFieldsAsString</a></b>(I: Cardinal): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetColumns">GetColumns</a></b>(I: integer): string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByNameAsString">GetFieldByNameAsString</a></b>(const FieldName: string): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldIndex">GetFieldIndex</a></b>(const FieldName: string): integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByName">GetFieldByName</a></b>(const FieldName: string): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetDataTypes">GetDataTypes</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetField">GetField</a></b>(I: Integer): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldCount">GetFieldCount</a></b>: Cardinal;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetRow">GetRow</a></b>: Cardinal;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetEOF">GetEOF</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetCurrentRec">GetCurrentRec</a></b>: Variant;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsVal">GetFieldsVal</a></b>(I: Cardinal): Variant; virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Create">Create</a></b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Create">Create</a></b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>; hStmt: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a>); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Create">Create</a></b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>; const SQL: string); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#GetEnumerator">GetEnumerator</a></b>: <a  href="SQLiteTable3.TUniTableEnumerator.html">TUniTableEnumerator</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FindField">FindField</a></b>(const AFieldName: string): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsInteger">FieldAsInteger</a></b>(I: Cardinal): int64;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsBlob">FieldAsBlob</a></b>(I: Cardinal): TMemoryStream;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsBlobPtr">FieldAsBlobPtr</a></b>(I: Cardinal; out iNumBytes: integer): Pointer;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsBlobText">FieldAsBlobText</a></b>(I: Cardinal): string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsBlobVariant">FieldAsBlobVariant</a></b>(I: Cardinal): Variant;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldIsNull">FieldIsNull</a></b>(I: Cardinal): Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsString">FieldAsString</a></b>(I: Cardinal): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldAsDouble">FieldAsDouble</a></b>(I: Cardinal): double;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Next">Next</a></b>: Boolean;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#CurrentRec">CurrentRec</a></b>: Variant read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetCurrentRec">GetCurrentRec</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#EOF">EOF</a></b>: Boolean read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetEOF">GetEOF</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldCount">FieldCount</a></b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldCount">GetFieldCount</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldsAsString">FieldsAsString</a></b>[I:Cardinal]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsAsString">GetFieldsAsString</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Fields">Fields</a></b>[I:Integer]: <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetField">GetField</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldsVal">FieldsVal</a></b>[I:Cardinal]: Variant read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsVal">GetFieldsVal</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldByName">FieldByName</a></b>[constFieldName:string]: <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByName">GetFieldByName</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldByNameAsString">FieldByNameAsString</a></b>[constFieldName:string]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByNameAsString">GetFieldByNameAsString</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#FieldIndex">FieldIndex</a></b>[constFieldName:string]: integer read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldIndex">GetFieldIndex</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Columns">Columns</a></b>[I:integer]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetColumns">GetColumns</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#ColCount">ColCount</a></b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldCount">GetFieldCount</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Row">Row</a></b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetRow">GetRow</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#SQL">SQL</a></b>: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#fSQL">fSQL</a> write <a  href="SQLiteTable3.TSQLiteUniTable.html#fSQL">fSQL</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="SQLiteTable3.TSQLiteUniTable.html#Stmt">Stmt</a></b>: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#fStmt">FStmt</a>;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fColCount"></a><code><b>fColCount</b>: Cardinal;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fCols"></a><code><b>fCols</b>: TDictionary&lt;string,Integer&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FColTypes"></a><code><b>FColTypes</b>: array of Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FColNames"></a><code><b>FColNames</b>: array of string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FFields"></a><code><b>FFields</b>: TObjectList&lt;<a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fRow"></a><code><b>fRow</b>: Cardinal;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fEOF"></a><code><b>fEOF</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fStmt"></a><code><b>fStmt</b>: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fDB"></a><code><b>fDB</b>: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="fSQL"></a><code><b>fSQL</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetFieldsAsString"></a><code>function <b>GetFieldsAsString</b>(I: Cardinal): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetColumns"></a><code>function <b>GetColumns</b>(I: integer): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetFieldByNameAsString"></a><code>function <b>GetFieldByNameAsString</b>(const FieldName: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetFieldIndex"></a><code>function <b>GetFieldIndex</b>(const FieldName: string): integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetFieldByName"></a><code>function <b>GetFieldByName</b>(const FieldName: string): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetDataTypes"></a><code>procedure <b>GetDataTypes</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetField"></a><code>function <b>GetField</b>(I: Integer): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetFieldCount"></a><code>function <b>GetFieldCount</b>: Cardinal;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetRow"></a><code>function <b>GetRow</b>: Cardinal;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetEOF"></a><code>function <b>GetEOF</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetCurrentRec"></a><code>function <b>GetCurrentRec</b>: Variant;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetFieldsVal"></a><code>function <b>GetFieldsVal</b>(I: Cardinal): Variant; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>; hStmt: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a>); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+use with caution!</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const DB: <a  href="SQLiteTable3.TSQLiteDatabase.html">TSQLiteDatabase</a>; const SQL: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetEnumerator"></a><code>function <b>GetEnumerator</b>: <a  href="SQLiteTable3.TUniTableEnumerator.html">TUniTableEnumerator</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FindField"></a><code>function <b>FindField</b>(const AFieldName: string): <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Checks if fieldname exists </p>
+<p>
+  </p>
+<h6 class="description_section">Parâmetros</h6>
+<dl class="parameters">
+<dt>AFieldNamename</dt>
+<dd>of the field</dd>
+</dl>
+<h6 class="description_section">Retornos</h6>
+<p class="return">if field exists, returns <a class="normal" href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a> instance, else returns nil</p></td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsInteger"></a><code>function <b>FieldAsInteger</b>(I: Cardinal): int64;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsBlob"></a><code>function <b>FieldAsBlob</b>(I: Cardinal): TMemoryStream;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsBlobPtr"></a><code>function <b>FieldAsBlobPtr</b>(I: Cardinal; out iNumBytes: integer): Pointer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsBlobText"></a><code>function <b>FieldAsBlobText</b>(I: Cardinal): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsBlobVariant"></a><code>function <b>FieldAsBlobVariant</b>(I: Cardinal): Variant;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldIsNull"></a><code>function <b>FieldIsNull</b>(I: Cardinal): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsString"></a><code>function <b>FieldAsString</b>(I: Cardinal): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldAsDouble"></a><code>function <b>FieldAsDouble</b>(I: Cardinal): double;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Next"></a><code>function <b>Next</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Properties</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CurrentRec"></a><code>property <b>CurrentRec</b>: Variant read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetCurrentRec">GetCurrentRec</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="EOF"></a><code>property <b>EOF</b>: Boolean read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetEOF">GetEOF</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldCount"></a><code>property <b>FieldCount</b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldCount">GetFieldCount</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldsAsString"></a><code>property <b>FieldsAsString</b>[I:Cardinal]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsAsString">GetFieldsAsString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Fields"></a><code>property <b>Fields</b>[I:Integer]: <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetField">GetField</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldsVal"></a><code>property <b>FieldsVal</b>[I:Cardinal]: Variant read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldsVal">GetFieldsVal</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldByName"></a><code>property <b>FieldByName</b>[constFieldName:string]: <a  href="SQLiteTable3.TSQLiteField.html">TSQLiteField</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByName">GetFieldByName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldByNameAsString"></a><code>property <b>FieldByNameAsString</b>[constFieldName:string]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldByNameAsString">GetFieldByNameAsString</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldIndex"></a><code>property <b>FieldIndex</b>[constFieldName:string]: integer read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldIndex">GetFieldIndex</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Columns"></a><code>property <b>Columns</b>[I:integer]: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetColumns">GetColumns</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ColCount"></a><code>property <b>ColCount</b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetFieldCount">GetFieldCount</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Row"></a><code>property <b>Row</b>: Cardinal read <a  href="SQLiteTable3.TSQLiteUniTable.html#GetRow">GetRow</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SQL"></a><code>property <b>SQL</b>: string read <a  href="SQLiteTable3.TSQLiteUniTable.html#fSQL">fSQL</a> write <a  href="SQLiteTable3.TSQLiteUniTable.html#fSQL">fSQL</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Stmt"></a><code>property <b>Stmt</b>: <a  href="SQLite3.html#TSQLiteStmt">TSQLiteStmt</a> read <a  href="SQLiteTable3.TSQLiteUniTable.html#fStmt">FStmt</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+</span>
+</td></tr></table></body></html>

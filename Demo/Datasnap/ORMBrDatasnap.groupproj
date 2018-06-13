@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D0027D40-ACA8-46EF-8EC8-3831A5EB811D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Server\ORMBrServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client\ORMBrFireDAC.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ORMBrServer">
+        <MSBuild Projects="Server\ORMBrServer.dproj"/>
+    </Target>
+    <Target Name="ORMBrServer:Clean">
+        <MSBuild Projects="Server\ORMBrServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrServer:Make">
+        <MSBuild Projects="Server\ORMBrServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrFireDAC">
+        <MSBuild Projects="Client\ORMBrFireDAC.dproj"/>
+    </Target>
+    <Target Name="ORMBrFireDAC:Clean">
+        <MSBuild Projects="Client\ORMBrFireDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrFireDAC:Make">
+        <MSBuild Projects="Client\ORMBrFireDAC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ORMBrServer;ORMBrFireDAC"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ORMBrServer:Clean;ORMBrFireDAC:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ORMBrServer:Make;ORMBrFireDAC:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

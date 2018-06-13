@@ -1,0 +1,252 @@
+﻿
+
+<html>
+	
+<head>
+	<title>Hist&oacute;rico de vers&otilde;es</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="generator" content="HelpNDoc Personal Edition 5.1.0.217">
+	<meta name="keywords" content="">
+	
+	
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "help.html?" + sTopicUrl;
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Historicodeversoes");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	
+</head>
+
+<body>
+
+
+
+	
+		<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Hist&oacute;rico de vers&otilde;es</h1>
+				
+				
+			</div>
+			
+			<div id="topic_header_nav">
+				
+				
+				<a href="Sejabemvindo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				
+				
+				<a href="Introducao.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	
+	
+	<div id="topic_content">
+		
+<p></p>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.7.1 (Jul 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts20"> </span><span class="rvts6">- Adicionado recurso para uso de Enumeration nos modelos, novo Atributo Enumeration().</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Refatoração.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.7.0 (Jul 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado Driver DataSnap para acesso a dados como o ORMBr, simplesmente facil de usar, como se tivese o C/S, demo na pasta Demo\DataSnap a App Server e App Client</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Refatorações para o Driver DataSnap</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Removida a exigência de colocar a palavra reservada INDEX ? nas propriedades do modelo.</span></li>
+<li class="rvps2"><span class="rvts16">Molhorias</span><span class="rvts6"> - Rataforações, Compilação de todos os Demos para verificação se com as alterações continuam compilando 100%.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.6.2 (Jun 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Novo atributo Cascade, para auto gerenciamento de execução de comandos em cascata, quando se usa ObjectSet.</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Muita rafatoração de código sempre, para melhorar principalmente peformance</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Implementação mostrando o uso por completo do ORMBr em uma aplicação Datasnap.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.6.1 (Jun 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - BUG na ordem dos parametros no comando Update em todos os Drivers, motivo que ocasionava a não gravação de multiplos registros alteredos.</span></li>
+<li class="rvps2"><span class="rvts16">Correção </span><span class="rvts6">- BUG não tava gravando conteudo do campo BLOB</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Sintaxe do comando SQL para Select no Oracle ao ter paginação trazia a coluna ROWINI como 1a da lista, tive que mudar para o último da lista.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Ajuste na unit ormbr.types.blob.pas para compilar no FMX</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Compatibilidade com o D2010 unit ormbr.types.blob.pas</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Adicionado diretiva de compilação FMX no ormbr.inc para compilarção com Firemonkey, por default fica desabilitado {.$DEFINE FMX}, para habilitar remova o ponto do inicio</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Criado dois novos atributos </span><a class="rvts19" href="AggregateField.html">AggregateField</a><span class="rvts6"> e </span><a class="rvts19" href="CalcField.html">CalcField</a><span class="rvts6"> </span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Mudado o nome do diretiva FMX para FML no arquivo ormbr.inc, motivo do Delphi por um motivo não detectado não considerar uma classe do tipo TPersistent no método ResgisterClass()</span></li>
+<li class="rvps2"><span class="rvts16">Correçao</span><span class="rvts6"> - Sintaxe de paginação no banco Oracle</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Atribuido recuso para que a propriedade usado para campo calculado, não receba valor pelo TField pois a mesma receberá via o método Get dela.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado propriedade na interface IDBConnction de nome AutoManageConnection valor padrão True, o parametro da total responsabilidade ao desenvlvedor de abrir e fechar a conexão com o banco de dados se seu valor for mudado para False.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Criação de tabela no SQLite não estava considerando a definição AutoInc para criar o campo na tabela como Autoincement</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Na execução dos scripts usando FireDAC, ocorria um erro dizendo que não existia um transação aberta, foi feito um checagem antes de chamar os métodos Commit e Rollback para não ocorrer mais a exceção.</span></li>
+<li class="rvps2"><span class="rvts16">Melhorias</span><span class="rvts6"> - Refatoração no código.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.6.0 (Jun 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - BUG no atributo Association() que não carregava a classe com os dados do ResultSet, quando era para trazer todos os campos da tabela.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração e implementações de novas regras de checagem</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.5.1 (Mai 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Descontinuado os métodos OpenWhere e FindWhere foi substituído por Open() e Find(), nesses é possivél passar o filtro "WHERE" e a ordem ORDER BY.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts20"> - </span><span class="rvts6">Refatoração em toda comada de metadada</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado driver Oracle.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - BUG que não estava trazendo os dados ta tabela com relacionamento OneToOne.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - BUG nos comando Update, Insert e Delete usando FireDAC com SQLite, se colocar o nome da tabela antes do campo "Table.Column" da erro, foi removido o nome da tabela deixando somente o nome da coluna.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado a interface IDatabaseCompare, ela pode ser instânciada para comparar matedata do database usando Model x Database ou Database x Database.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - O ORMBr agora tem um tipo nativo, TBlob para trabalhar com campo BLOB.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Erro de TypeCast ao pegar o valor de um propriedade com Nullable&lt;&gt;.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Tipos de campos no Oracle para comparação do metadata.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração, removendo class singleton e a unit ormbr.types.fields.pas</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Adicionado no ContainerDataSet os métodos Find do ContainerObjectSet, finalidade para quem usa DataSet poder usar Object sem precisar instânciar um ContainerObjectSet para isso.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Alterado atributos Association() e ForeignKey() para atender a multicolunas, pois estava aceitando relacionamento somente por um campo.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado um atributo OrderBy(), para que o select feito pelo ORMBr internamente possa ser ordenado com base no atributo.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Paginação no banco de dados MSSQL.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.3.4 (Abr 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Correção </span><span class="rvts6">-</span><span class="rvts16"> </span><span class="rvts6">[DCC Fatal Error] ormbr.bind.base.pas(991): F2084 Internal Error: URW1111, no Delphi 2010.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração sempre.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Assinatura de Interface para todas as class Singleton.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Removida propriedades das classes de mapeamento de objectos e substituido pelo attributo correspondente, o qual tem todas informações passadas no atributo usado no modelo.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração na Unit "ormbr.json.pas", com base na classe de gerar JSON do mORMot Framework, fiz a conversão para nova RTTi, para que o ORMBr consiga ler informações da classe na declaração </span><span class="rvts16">Public</span><span class="rvts20">,</span><span class="rvts16"> </span><span class="rvts6">pois o mORMot usa RTTi antiga que só enxerga em </span><span class="rvts16">Published.</span></li>
+</ul>
+<p class="rvps8"><span class="rvts6">Ela foi escolhida após bastante pesquisa na internet, onde encontrei o artigo </span><a class="rvts19" href="http://blog.synopse.info/post/json-benchmark-delphi-mormot-superobject-dwsjson-dbxjson" target="_blank">New sample for JSON performance: mORMot vs SuperObject/XSuperObject/dwsJSON/DBXJSON</a><span class="rvts6">, escrito pelo Autor do mORMot.</span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Units "ormbr.rest.json.pas" para REST Full e "ormbr.jsonutils.datasnap.pas" para uso com DataSnap.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Demo simples usando recurso de JSON e REST Full com Datasnap, está na pasta "..\ORMBr\Demo\Datasnap".</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Driver ADO para acesso a dados.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Demo mostrando o basico de como usar o ORMBr com Datasnap.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Demo trabalhando como JSON no ORMBr.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Método NextPacket, agora deve passar o parâmetro do tipo TObjectList&lt;T&gt; que receberá os registros do proxímo pacote internamente.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.3.3 (Abr 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Implementado recurso para atualizar dados da tabela externa com relacionamento OneToOne quando a coluna chave de relacionamento for mudada.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Otimização no método Open(), para que o SELECT seja construído somente uma vez.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração nos métodos Open() e Find(), para aceitarem o parâmetro ASQL como String.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Renomeado método GetNextPacket para NextPacket.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Liberado o método NextPacket, para ser chamado pela aplicação, caso a propriedade AutoNextPacket = False;</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração nos métodos DisableDataSetEvents e EnableDataSetEvents.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Grande refatoração para aumento de performance, passando a usar mais informações mapeadas do objeto e menos RTTI.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Ajuste feito para respeitar a paginação de registros, quando passado um comando SELECT pelo método Open() e Find() direto, não estava sendo feito paginação nenhuma.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Atualização do demo que não usa dataset, mostrando como criar um campo Aggregate, direto na class totalizando determinado campo.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado método FindWhere(AWhere: string), esse método adiciona a clausula WHERE ao final do comando SELECT montado, passando assim um filtro para restringir o retorno de registros do banco de dados em um TObjectList&lt;M&gt;</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado método OpenWhere(AWhere: string), esse método adiciona a clausula WHERE ao final do comando SELECT montado, passando assim um filtro para restringir o retorno de registros do banco de dados em um IDBResultSet.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado a propriedade AutoNextPacket, para que o método NextPacket possa ser controlado pela aplicação, valor padrão é TRUE;</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado interface ICommandMonitor que irá monitorar todos os comandos executado pelo ORMBr e mostrar em uma tela o que foi executado. Funcionalidade mostrada no demo na pasta ..\ORMBr\Demo\Data\FireDAC.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Driver TFactorySQLite para acesso nativo ao SQLite, o driver usa componente de terceiro, as units agora fazem parte do projeto ORMBr e está na pasta ..\ORMBr\Source\External\SQLite, podem ser usadas sem precisar instalar o componente na IDE, basta instânciar o componente direto na aplicação.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Exemplo :</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;FDatabase := TSQLiteDatabase.Create(Self);</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;FDatabase.Filename := '..\Database\database.db3';</span></p>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.3.2 (Abr 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração para corrigir erro no D2010.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Mudado o método de clonar o Object passado pelo Modify(), para manter compatibilidade com D2010, que dava erro usando Json da classe TORMBrJSon.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.3.1 (Abr 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado método Modify(AObject: M) clona o objeto no seu estado atual, para no Update() identificar o que foi mudado.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Exemplo :</span></p>
+<p class="rvps2"><span class="rvts6">var</span></p>
+<p class="rvps2"><span class="rvts6">oMasterUpd: Tmaster;</span></p>
+<p class="rvps2"><span class="rvts6">begin</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;oMasterUpd := Tmaster.Create;</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;try</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;// Faz uma cópia do objeto antes dele sofre as mudanças necessárias</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;oMaster.Modify(oMasterUpd);</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;oMasterUpd.master_id := 1;</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;oMasterUpd.description := 'Nome alterado';</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;// Altera o registro no Banco</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;oMaster.Update(oMasterUpd);</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;finally</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp; &nbsp;oMasterUpd.Free;</span></p>
+<p class="rvps2"><span class="rvts6"> &nbsp;end;</span></p>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Resolvido vazamento de memória ao usar o método TORMBrJson.JsonToObject&lt;M&gt;</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Mudanças para solucionar erro de compilação no Delphi 2010.</span></li>
+<li class="rvps2"><span class="rvts16">Molhoria</span><span class="rvts6"> - &nbsp;Removida a propriedade UseDataSet da classe TSessionAbstract, ficou sem utilidade.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - &nbsp;Foi alterado o tipo, lugar e forma de criar a lista de campos alterados, para atender tanto usando DataSet quanto usando Object Direto.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Mudados o nome da class TJson para TORMBrJson</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.3 (Abr 2017)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Suporte ao Engine AbsoluteDB.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado método para ler os FieldDefs do dataset interno, para necessidade de criar um dataset em memoria com a mesma estrutura.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Criado propriedade FieldDefs no IDBResultSet, para atander necessidade de criar um Dataset em memória avulso, sem precisar criar modelo para ele.</span></li>
+<li class="rvps2"><span class="rvts16">Correção</span><span class="rvts6"> - Criado metodo "Close" nos drivers IDBResultSet, para que o ORMBr feche o Dataset interno e limpe os registros capturados no último SELECT, o Dataset estáva ficando popular.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Refatoração nos métodos Find da classe TObjectManager&lt;M&gt;.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Chamada do método novo "Close" após cada chamada "Open" e "Find" que limpará os registros do dataset interno.</span></li>
+<li class="rvps2"><span class="rvts16">Melhoria</span><span class="rvts6"> - Criado métodos abstract na classe TDMLCommandFactoryAbstract, pensando na criação dos drivers DataSnap.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.2 (Nov-2016)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Camada beta de recurso para atualização de banco de dados para Firebird e MySQL.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts17">versão 1.1 (Out-2016)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Camada beta de recurso para atualização de banco de dados, nesse momento SQLite e SQLServer.</span></li>
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Interface IDBResultSet, foi criado o método RecordCount.</span></li>
+</ul>
+<h3 class="rvps7"><span class="rvts0"><span class="rvts18">versão 1.0 (Jul-2016)</span></span></h3>
+<ul style="text-indent: 0px; padding: 0; margin: 0 0 0 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts16">Novo</span><span class="rvts6"> - Primeira versão publicada para a comunidade Delphi.</span></li>
+</ul>
+<p></p>
+<p class="rvps6" style="clear: both;"><span class="rvts14">Created with the Personal Edition of HelpNDoc: </span><a class="rvts15" href="https://www.helpndoc.com">Full-featured Documentation generator</a></p>
+
+	</div>
+	
+	
+		<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; &lt;2017&gt; by &lt;Isaque Pinheiro&gt;. All Rights Reserved.
+			</div>
+		</div>
+	
+	
+
+	
+</body>
+	
+</html>
+
