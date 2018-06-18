@@ -218,7 +218,7 @@ function TManagerDataSet.NextPacket<T>: TManagerDataSet;
 var
   LObjectList: TObjectList<T>;
 begin
-  LObjectList := FDataList.Items[TClass(T).ClassName];
+  LObjectList := TObjectList<T>(FDataList.Items[TClass(T).ClassName]);
   Resolver<T>.NextPacket(LObjectList);
   Result := Self;
 end;
