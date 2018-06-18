@@ -65,7 +65,7 @@ type
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
 //    procedure OpenAssociation(const AObject: TObject); override;
     procedure NextPacket; override;
-    procedure RefreshRecord(const AColumnName: string); override;
+    procedure RefreshRecord(const AColumns: TParams); override;
   end;
 
 implementation
@@ -135,13 +135,21 @@ begin
   OpenSQL(FManager.SelectInternalWhere(AWhere, AOrderBy));
 end;
 
-procedure TSessionDataSet<M>.RefreshRecord(const AColumnName: string);
+procedure TSessionDataSet<M>.RefreshRecord(const AColumns: TParams);
 var
   LDBResultSet: IDBResultSet;
+  LWhere: String;
+  LFor: Integer;
 begin
   inherited;
-  LDBResultSet := FManager
-                    .SelectInternalID(FOwner.FOrmDataSet.FieldByName(AColumnName).AsInteger);
+  LWhere := '';
+  for LFor := 0 to AColumns.Count -1 do
+  begin
+    LWhere := LWhere + AColumns[LFor].Name + '=' + AColumns[LFor].AsString;
+    if LFor < AColumns.Count -1 then
+      LWhere := LWhere + ' AND ';
+  end;
+  LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(LWhere, ''));
   /// Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin

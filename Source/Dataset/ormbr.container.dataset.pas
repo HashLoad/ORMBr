@@ -75,16 +75,16 @@ type
                              ALookupResultField: string;
                              ADisplayLabel: string = '');
     procedure NextPacket; virtual;
-    /// ObjectSet
-    function Find: TObjectList<M>; overload;
-    function Find(const AID: Integer): M; overload;
-    function Find(const AID: String): M; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
     function DataSet: TDataSet;
     function MasterObject: TDataSetBaseAdapter<M>;
     function This: TDataSetBaseAdapter<M>;
     function Current: M;
     property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
+    /// ObjectSet
+    function Find: TObjectList<M>; overload;
+    function Find(const AID: Integer): M; overload;
+    function Find(const AID: String): M; overload;
+    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
   end;
 
 implementation
@@ -207,7 +207,7 @@ end;
 
 procedure TContainerDataSet<M>.Open;
 begin
-  FDataSetAdapter.Open;
+  FDataSetAdapter.OpenSQLInternal('');
 end;
 
 procedure TContainerDataSet<M>.OpenWhere(const AWhere, AOrderBy: string);
@@ -217,7 +217,7 @@ end;
 
 procedure TContainerDataSet<M>.Open(const AID: String);
 begin
-  FDataSetAdapter.Open(AID);
+  FDataSetAdapter.OpenIDInternal(AID);
 end;
 
 procedure TContainerDataSet<M>.OpenSQL(const ASQL: String);
@@ -227,7 +227,7 @@ end;
 
 procedure TContainerDataSet<M>.Open(const AID: Integer);
 begin
-  FDataSetAdapter.Open(AID);
+  FDataSetAdapter.OpenIDInternal(AID);
 end;
 
 procedure TContainerDataSet<M>.Post;

@@ -35,7 +35,7 @@ uses
   DB,
   Classes,
   SysUtils,
-  {$IFDEF FML}
+  {$IFDEF HAS_FMX}
   FMX.Graphics,
   {$ELSE}
   AnsiStrings,
@@ -44,7 +44,7 @@ uses
   JPEG,
   PngImage,
   pnglang,
-  {$ENDIF FML}
+  {$ENDIF}
   ZLib,
   ormbr.encddecd;
 
@@ -55,12 +55,12 @@ type
     FBase64Bytes: TBytes;
     FBlobField: TBlobField;
     function StreamToByteArray(AStream: TStream): TBytes;
-    {$IFNDEF FML}
+    {$IFNDEF HAS_FMX}
     function FindGraphicClass(const ABuffer; const ABufferSize: Int64;
       out AGraphicClass: TGraphicClass): Boolean; overload;
     function FindGraphicClass(AStream: TStream;
       out AGraphicClass: TGraphicClass): Boolean; overload;
-    {$ENDIF FML}
+    {$ENDIF}
     procedure CompressStream(ASource, ATarget: TStream);
     procedure DecompressStream(ASource, ATarget: TStream);
     procedure BuildBlobFieldToStream;
@@ -69,9 +69,9 @@ type
     procedure SetBytes(const Value: TBytes);
     procedure LoadFromFile(const AFileName: string);
     procedure SaveToFile(const FileName: string);
-    {$IFNDEF FML}
+    {$IFNDEF HAS_FMX}
     procedure ToPicture(APicture: TPicture);
-    {$ENDIF FML}
+    {$ENDIF}
     function ToBytes: TBytes;
     function ToBytesString: string; overload;
     function ToBytesString(const AString: string): Boolean; overload;
@@ -152,7 +152,7 @@ begin
     SetLength(Result, 0);
 end;
 
-{$IFNDEF FML}
+{$IFNDEF HAS_FMX}
 procedure TBlob.ToPicture(APicture: TPicture);
 var
   LGraphic: TGraphic;
@@ -171,10 +171,10 @@ begin
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
 //    DecompressStream(LSourceStream, LTargetStream);
-    {$IFNDEF FML}
+    {$IFNDEF HAS_FMX}
     if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
       raise EInvalidGraphic.Create('Invalid image');
-    {$ENDIF FML}
+    {$ENDIF}
     LGraphic := LGraphicClass.Create;
     LSourceStream.Position := 0;
     LGraphic.LoadFromStream(LSourceStream);
@@ -185,7 +185,7 @@ begin
     LGraphic.Free;
   end;
 end;
-{$ENDIF FML}
+{$ENDIF}
 
 function TBlob.ToSize: Integer;
 begin
@@ -208,7 +208,7 @@ begin
   Result := FBase64String;
 end;
 
-{$IFNDEF FML}
+{$IFNDEF HAS_FMX}
 function TBlob.FindGraphicClass(const ABuffer; const ABufferSize: Int64;
   out AGraphicClass: TGraphicClass): Boolean;
 var
@@ -261,7 +261,7 @@ begin
     FreeMem(LBuffer);
   end;
 end;
-{$ENDIF FML}
+{$ENDIF}
 
 procedure TBlob.LoadFromFile(const AFileName: string);
 var

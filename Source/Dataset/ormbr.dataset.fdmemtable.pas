@@ -173,14 +173,16 @@ end;
 procedure TFDMemTableAdapter<M>.EmptyDataSetChilds;
 var
   LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LDataSet: TFDMemTable;
 begin
   inherited;
   if FMasterObject.Count > 0 then
   begin
     for LChild in FMasterObject do
     begin
-      if TFDMemTableAdapter<M>(LChild.Value).FOrmDataSet.Active then
-        TFDMemTableAdapter<M>(LChild.Value).FOrmDataSet.EmptyDataSet;
+      LDataSet := TFDMemTableAdapter<M>(LChild.Value).FOrmDataSet;
+      if LDataSet.Active then
+        LDataSet.EmptyDataSet;
     end;
   end;
 end;
@@ -346,7 +348,6 @@ procedure TFDMemTableAdapter<M>.OpenIDInternal(const AID: Variant);
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   FOrmDataSet.DisableConstraints;
   DisableDataSetEvents;
@@ -355,6 +356,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenID(AID);
@@ -380,7 +382,6 @@ procedure TFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   FOrmDataSet.DisableConstraints;
   DisableDataSetEvents;
@@ -389,6 +390,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenSQL(ASQL);
@@ -414,7 +416,6 @@ procedure TFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   FOrmDataSet.DisableConstraints;
   DisableDataSetEvents;
@@ -423,6 +424,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);

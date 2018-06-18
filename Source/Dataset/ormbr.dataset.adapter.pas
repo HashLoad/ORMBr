@@ -59,24 +59,17 @@ type
   private
     function GetRelationFields(ATable: TTableMapping;
       ADetail: TDataSetBaseAdapter<M>; var ACriteria: ICriteria): Boolean;
-    procedure ExecuteCheckValidate;
+    procedure ExecuteCheckNotNull;
   protected
     FConnection: IDBConnection;
     procedure OpenDataSetChilds; override;
     procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
     procedure DoAfterScroll(DataSet: TDataSet); override;
-    procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
+    procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoNewRecord(DataSet: TDataSet); override;
-    procedure CancelUpdates; override;
     procedure NextPacket; override;
-    procedure RefreshRecord; override;
     procedure LoadLazy(const AOwner: M); override;
-    function Find: TObjectList<M>; overload; override;
-    function Find(const AID: Integer): M; overload; override;
-    function Find(const AID: string): M; overload; override;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; override;
   public
     constructor Create(AConnection: IDBConnection; ADataSet:
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
@@ -94,13 +87,6 @@ uses
   ormbr.mapping.exceptions;
 
 { TDataSetAdapter<M> }
-
-procedure TDataSetAdapter<M>.CancelUpdates;
-begin
-  FSession
-    .ModifiedFields
-      .Items[M.ClassName].Clear;
-end;
 
 constructor TDataSetAdapter<M>.Create(AConnection: IDBConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
@@ -138,20 +124,18 @@ var
   LDataSet: TDataSet;
   LFor: Integer;
 begin
-  inherited;
-  /// <summary>
-  /// Alimenta a lista com registros deletados
-  /// </summary>
+  inherited DoBeforeDelete(DataSet);
+  /// <summary> Alimenta a lista com registros deletados </summary>
   FSession.DeleteList.Add(M.Create);
   TBindObject
     .GetInstance
       .SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
-  /// <summary>
-  /// Deleta registros de todos os DataSet filhos
-  /// </summary>
+
+  /// <summary> Deleta registros de todos os DataSet filhos </summary>
   EmptyDataSetChilds;
   /// <summary>
   /// Exclui os registros dos NestedDataSets linkados ao FOrmDataSet
+  /// Recurso usado em banco NoSQL
   /// </summary>
   for LFor := 0 to TDataSetHack(FOrmDataSet).NestedDataSets.Count - 1 do
   begin
@@ -174,10 +158,10 @@ begin
   /// <summary>
   /// Rotina de validação se o campo foi deixado null
   /// </summary>
-  ExecuteCheckValidate;
+  ExecuteCheckNotNull;
 end;
 
-procedure TDataSetAdapter<M>.ExecuteCheckValidate;
+procedure TDataSetAdapter<M>.ExecuteCheckNotNull;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -203,27 +187,6 @@ begin
       raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
                                   FOrmDataSet.FieldByName(LColumn.ColumnName).ConstraintErrorMessage);
   end;
-end;
-
-function TDataSetAdapter<M>.Find: TObjectList<M>;
-begin
-  Result := FSession.Find;
-end;
-
-function TDataSetAdapter<M>.Find(const AID: Integer): M;
-begin
-  Result := FSession.Find(AID);
-end;
-
-function TDataSetAdapter<M>.Find(const AID: string): M;
-begin
-  Result := FSession.Find(AID);
-end;
-
-function TDataSetAdapter<M>.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<M>;
-begin
-  Result := FSession.FindWhere(AWhere, AOrderBy);
 end;
 
 procedure TDataSetAdapter<M>.OpenDataSetChilds;
@@ -442,30 +405,10 @@ begin
   end;
 end;
 
-procedure TDataSetAdapter<M>.RefreshRecord;
-var
-  LPrimaryKey: TPrimaryKeyMapping;
-begin
-  inherited;
-  LPrimaryKey := FSession
-                   .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
-  if LPrimaryKey <> nil then
-  begin
-    FOrmDataSet.DisableControls;
-    DisableDataSetEvents;
-    try
-      FSession.RefreshRecord(LPrimaryKey.Columns[0]);
-    finally
-      FOrmDataSet.EnableControls;
-      EnableDataSetEvents;
-    end;
-  end;
-end;
-
 procedure TDataSetAdapter<M>.DoNewRecord(DataSet: TDataSet);
 begin
   /// <summary>
-  /// Limpa os datasets em memória para receberem novos valores
+  /// Limpa registros do dataset em memória antes de receber os novos registros
   /// </summary>
   EmptyDataSetChilds;
   inherited DoNewRecord(DataSet);

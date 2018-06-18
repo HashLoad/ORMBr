@@ -47,7 +47,6 @@ type
     /// Instancia a class que mapea todas as class do tipo Entity
     /// </summary>
     FExplorer: IMappingExplorerStrategy;
-    function SelectInternalWhere(const AWhere: string; const AOrderBy: string): string; virtual; abstract;
     function FindSQLInternal(const ASQL: String): TObjectList<M>; virtual; abstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); virtual; abstract;
@@ -56,10 +55,10 @@ type
   public
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const APageSize: Integer); virtual; abstract;
-    destructor Destroy; override;
     procedure InsertInternal(const AObject: M); virtual; abstract;
     procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TList<string>); virtual; abstract;
     procedure DeleteInternal(const AObject: M); virtual; abstract;
+    function SelectInternalWhere(const AWhere: string; const AOrderBy: string): string; virtual; abstract;
     function SelectInternalAll: IDBResultSet; virtual; abstract;
     function SelectInternalID(const AID: Variant): IDBResultSet; virtual; abstract;
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
@@ -67,7 +66,7 @@ type
     function GetDMLCommand: string; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Variant): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<M>; virtual; abstract;
+    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function NextPacket: IDBResultSet; overload; virtual; abstract;
     function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
@@ -80,12 +79,5 @@ type
   end;
 
 implementation
-
-{ TObjectManagerAbstract<M> }
-
-destructor TObjectManagerAbstract<M>.Destroy;
-begin
-  inherited;
-end;
 
 end.

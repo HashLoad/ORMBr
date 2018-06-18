@@ -65,21 +65,12 @@ type
       const AAssociation: TAssociationMapping);
     procedure PopularDataSetOneToMany(const AObjectList: TObjectList<TObject>);
   protected
-    procedure EmptyDataSetChilds; override;
-    procedure DoAfterScroll(DataSet: TDataSet); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoAfterDelete(DataSet: TDataSet); override;
-    procedure CancelUpdates; override;
-    procedure RefreshRecord; override;
     procedure ApplyInserter(const MaxErros: Integer); override;
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
-    function Find: TObjectList<M>; overload; override;
-    function Find(const AID: Integer): M; overload; override;
-    function Find(const AID: String): M; overload; override;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; override;
   public
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; virtual;
@@ -140,7 +131,7 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   inherited;
-  /// Filtar somente os registros inseridos
+  /// <summary> Filtar somente os registros inseridos </summary>
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsInsert));
   FOrmDataSet.Filtered := True;
   FOrmDataSet.First;
@@ -222,19 +213,6 @@ begin
   end;
 end;
 
-procedure TRESTDataSetAdapter<M>.CancelUpdates;
-begin
-  inherited CancelUpdates;
-  FSession.ModifiedFields.Items[M.ClassName].Clear;
-end;
-
-procedure TRESTDataSetAdapter<M>.DoAfterScroll(DataSet: TDataSet);
-begin
-//  inherited DoAfterScroll(DataSet);
-  if Assigned(FDataSetEvents.AfterScroll) then
-    FDataSetEvents.AfterScroll(DataSet);
-end;
-
 procedure TRESTDataSetAdapter<M>.DoAfterDelete(DataSet: TDataSet);
 begin
   inherited DoAfterDelete(DataSet);
@@ -284,58 +262,32 @@ begin
   ExecuteCheckNotNull;
 end;
 
-procedure TRESTDataSetAdapter<M>.EmptyDataSetChilds;
-var
-  LChild: TDataSetBaseAdapter<M>;
-  LDataSet: TDataSet;
-begin
-  inherited;
-  if FMasterObject.Count > 0 then
-  begin
-    for LChild in FMasterObject.Values do
-    begin
-      LDataSet := TRESTDataSetAdapter<M>(LChild).FOrmDataSet;
-      if LDataSet.Active then
-        while not LDataSet.Eof do
-          LDataSet.Delete;
-    end;
-  end;
-end;
-
 procedure TRESTDataSetAdapter<M>.ExecuteCheckNotNull;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := FSession.Explorer.GetMappingColumn(FCurrentInternal.ClassType);
+  LColumns := FSession
+                .Explorer.GetMappingColumn(FCurrentInternal.ClassType);
   for LColumn in LColumns do
   begin
+    if LColumn.IsNoInsert then
+      Continue;
+    if LColumn.IsNoUpdate then
+      Continue;
     if LColumn.IsJoinColumn then
       Continue;
-    if LColumn.IsNotNull then
-      if FOrmDataSet.FieldByName(LColumn.ColumnName).Value = Null then
-        raise EFieldNotNull.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName);
+    if LColumn.IsNoValidate then
+      Continue;
+    if LColumn.PropertyRtti.IsNullable then
+      Continue;
+    if LColumn.FieldType in [ftDataSet, ftADT] then
+      Continue;
+
+    if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
+      raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
+                                  FOrmDataSet.FieldByName(LColumn.ColumnName).ConstraintErrorMessage);
   end;
-end;
-
-function TRESTDataSetAdapter<M>.Find: TObjectList<M>;
-begin
-  Result := FSession.Find;
-end;
-
-function TRESTDataSetAdapter<M>.Find(const AID: Integer): M;
-begin
-  Result := FSession.Find(AID);
-end;
-
-function TRESTDataSetAdapter<M>.Find(const AID: String): M;
-begin
-  Result := FSession.Find(AID);
-end;
-
-function TRESTDataSetAdapter<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
-begin
-  Result := FSession.FindWhere(AWhere, AOrderBy);
 end;
 
 procedure TRESTDataSetAdapter<M>.PopularDataSet(const AObject: TObject);
@@ -450,25 +402,6 @@ begin
     finally
       LDataSetChild.FOrmDataSet.EnableControls;
       LDataSetChild.EnableDataSetEvents;
-    end;
-  end;
-end;
-
-procedure TRESTDataSetAdapter<M>.RefreshRecord;
-var
-  LPrimaryKey: TPrimaryKeyMapping;
-begin
-  inherited;
-  LPrimaryKey := FSession.Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
-  if LPrimaryKey <> nil then
-  begin
-    FOrmDataSet.DisableControls;
-    DisableDataSetEvents;
-    try
-      FSession.RefreshRecord(LPrimaryKey.Columns[0]);
-    finally
-      FOrmDataSet.EnableControls;
-      EnableDataSetEvents;
     end;
   end;
 end;

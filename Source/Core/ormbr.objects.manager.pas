@@ -366,7 +366,9 @@ begin
     while LResultSet.NotEof do
     begin
       AObjectList.Add(M.Create);
-      TBindObject.GetInstance.SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      TBindObject
+        .GetInstance
+          .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       /// <summary>
       /// Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>

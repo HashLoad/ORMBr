@@ -67,15 +67,16 @@ type
                              ALookupResultField: string;
                              ADisplayLabel: string = '');
     procedure NextPacket;
+    function DataSet: TDataSet;
+    function MasterObject: TDataSetBaseAdapter<M>; deprecated 'Use This';
+    function This: TDataSetBaseAdapter<M>;
+    function Current: M;
     /// ObjectSet
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
-    function DataSet: TDataSet;
-    function MasterObject: TDataSetBaseAdapter<M>; deprecated 'Use This';
-    function This: TDataSetBaseAdapter<M>;
-    function Current: M;
+    /// DataSet
     property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
   end;
 

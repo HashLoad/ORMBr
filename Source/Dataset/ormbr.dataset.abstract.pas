@@ -45,16 +45,16 @@ type
   protected
     FSession: TSessionAbstract<M>;
     /// <summary>
-    /// Objeto interface com o DataSet passado pela interface.
-    /// </summary>
-    FOrmDataSet: TDataSet;
-    /// <summary>
     /// Objeto para controle de estado do registro
     /// </summary>
     FOrmDataSource: TDataSource;
     procedure RefreshDataSetOneToOneChilds(AFieldName: string); virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
   public
+    /// <summary>
+    /// Objeto interface com o DataSet passado pela interface.
+    /// </summary>
+    FOrmDataSet: TDataSet;
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; virtual;
     destructor Destroy; override;

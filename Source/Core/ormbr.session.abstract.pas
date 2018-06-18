@@ -69,7 +69,7 @@ type
     procedure OpenSQL(const ASQL: string); virtual; abstract;
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure NextPacket; overload; virtual; abstract;
-    procedure RefreshRecord(const AColumnName: string); virtual; abstract;
+    procedure RefreshRecord(const AColumns: TParams); virtual; abstract;
 //    procedure OpenAssociation(const AObject: TObject); virtual; abstract;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;

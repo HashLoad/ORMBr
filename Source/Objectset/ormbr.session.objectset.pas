@@ -39,6 +39,7 @@ uses
   Generics.Collections,
   /// orm
   ormbr.objects.manager,
+  ormbr.objectset.bind,
   ormbr.mapping.explorerstrategy,
   ormbr.session.abstract,
   ormbr.factory.interfaces;
@@ -56,6 +57,7 @@ type
     destructor Destroy; override;
     procedure NextPacket(const AObjectList: TObjectList<M>); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
+    procedure RefreshRecord(const AColumns: TParams); override;
   end;
 
 implementation
@@ -86,6 +88,32 @@ begin
   inherited;
   if not FManager.FetchingRecords then
     FManager.NextPacketList(AObjectList);
+end;
+
+procedure TSessionObjectSet<M>.RefreshRecord(const AColumns: TParams);
+var
+  LWhere: String;
+  LFor: Integer;
+  LDataList: TObjectList<M>;
+begin
+  inherited;
+  LWhere := '';
+  for LFor := 0 to AColumns.Count -1 do
+  begin
+    LWhere := LWhere + AColumns[LFor].Name + '=' + AColumns[LFor].AsString;
+    if LFor < AColumns.Count -1 then
+      LWhere := LWhere + ' AND ';
+  end;
+  LDataList := FManager.FindWhere(LWhere);
+  if LDataList <> nil then
+  begin
+    if LDataList.Count > 0 then
+    begin
+//      TBindObject
+//        .GetInstance
+//          .
+    end;
+  end;
 end;
 
 end.

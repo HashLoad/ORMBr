@@ -86,13 +86,15 @@ type
     procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
     procedure FilterDataSetChilds;
   protected
+    procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
-    procedure Open; override;
     procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenSQLInternal(const ASQL: string); override;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
+    procedure EmptyDataSet; override;
   public
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; override;
@@ -156,6 +158,33 @@ procedure TRESTFDMemTableAdapter<M>.DoBeforeApplyUpdates(DataSet: TFDDataSet);
 begin
   if Assigned(FMemTableEvents.BeforeApplyUpdates) then
     FMemTableEvents.BeforeApplyUpdates(DataSet);
+end;
+
+procedure TRESTFDMemTableAdapter<M>.EmptyDataSet;
+begin
+  inherited;
+  FOrmDataSet.EmptyDataSet;
+  /// <summary>
+  /// Lista os registros das tabelas filhas relacionadas
+  /// </summary>
+  EmptyDataSetChilds;
+end;
+
+procedure TRESTFDMemTableAdapter<M>.EmptyDataSetChilds;
+var
+  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LDataSet: TFDMemTable;
+begin
+  inherited;
+  if FMasterObject.Count > 0 then
+  begin
+    for LChild in FMasterObject do
+    begin
+      LDataSet := TRESTFDMemTableAdapter<M>(LChild.Value).FOrmDataSet;
+      if LDataSet.Active then
+        LDataSet.EmptyDataSet;
+    end;
+  end;
 end;
 
 procedure TRESTFDMemTableAdapter<M>.FilterDataSetChilds;
@@ -223,12 +252,11 @@ begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   try
-    FOrmDataSet.EmptyDataSet;
+    /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+    EmptyDataSet;
     inherited;
     FSession.OpenID(AID);
-    /// <summary>
-    /// Filtra os registros nas sub-tabelas
-    /// </summary>
+    /// <summary> Filtra os registros nas sub-tabelas </summary>
     if FOwnerMasterObject = nil then
       FilterDataSetChilds;
   finally
@@ -240,18 +268,18 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.Open;
+procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
 begin
 //  FOrmDataSet.BeginBatch;
   FOrmDataSet.DisableConstraints;
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   try
-    FOrmDataSet.EmptyDataSet;
+    /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+    EmptyDataSet;
+    inherited;
     FSession.Open;
-    /// <summary>
-    /// Filtra os registros nas sub-tabelas
-    /// </summary>
+    /// <summary> Filtra os registros nas sub-tabelas </summary>
     if FOwnerMasterObject = nil then
       FilterDataSetChilds;
   finally
@@ -270,12 +298,11 @@ begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   try
-    FOrmDataSet.EmptyDataSet;
+    /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+    EmptyDataSet;
     inherited;
     FSession.OpenWhere(AWhere, AOrderBy);
-    /// <summary>
-    /// Filtra os registros nas sub-tabelas
-    /// </summary>
+    /// <summary> Filtra os registros nas sub-tabelas </summary>
     if FOwnerMasterObject = nil then
       FilterDataSetChilds;
   finally

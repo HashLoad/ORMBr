@@ -159,14 +159,16 @@ end;
 procedure TClientDataSetAdapter<M>.EmptyDataSetChilds;
 var
   LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LDataSet: TClientDataSet;
 begin
   inherited;
   if FMasterObject.Count > 0 then
   begin
     for LChild in FMasterObject do
     begin
-      if TClientDataSetAdapter<M>(LChild.Value).FOrmDataSet.Active then
-        TClientDataSetAdapter<M>(LChild.Value).FOrmDataSet.EmptyDataSet;
+      LDataSet := TClientDataSetAdapter<M>(LChild.Value).FOrmDataSet;
+      if LDataSet.Active then
+        LDataSet.EmptyDataSet;
     end;
   end;
 end;
@@ -184,7 +186,6 @@ procedure TClientDataSetAdapter<M>.OpenIDInternal(const AID: Variant);
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   LIsConnected := FConnection.IsConnected;
@@ -192,6 +193,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenID(AID);
@@ -216,7 +218,6 @@ procedure TClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: string);
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   LIsConnected := FConnection.IsConnected;
@@ -224,6 +225,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenSQL(ASQL);
@@ -248,7 +250,6 @@ procedure TClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: str
 var
   LIsConnected: Boolean;
 begin
-  inherited;
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   LIsConnected := FConnection.IsConnected;
@@ -256,6 +257,7 @@ begin
     FConnection.Connect;
   try
     try
+      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);

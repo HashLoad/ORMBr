@@ -88,9 +88,6 @@ type
     FInternalIndex: Integer;
     FAutoNextPacket: Boolean;
     FExplorer: IMappingExplorerStrategy;
-    procedure SetMasterObject(const AValue: TObject);
-    procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>;
-      AObject: M);
     procedure DoBeforeScroll(DataSet: TDataSet); virtual;
     procedure DoAfterScroll(DataSet: TDataSet); virtual;
     procedure DoBeforeOpen(DataSet: TDataSet); virtual;
@@ -118,14 +115,9 @@ type
     procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
     procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
     procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
-    procedure RefreshRecord; virtual; abstract;
-    procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
-    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
-    procedure LoadLazy(const AOwner: M); virtual; abstract;
-    procedure Open; overload; virtual;
-    procedure Open(const AID: Integer); overload; virtual;
-    procedure Open(const AID: String); overload; virtual;
+//    procedure Open; overload; virtual;
+//    procedure Open(const AID: Integer); overload; virtual;
+//    procedure Open(const AID: String); overload; virtual;
     procedure Insert; virtual;
     procedure Append; virtual;
     procedure Post; virtual;
@@ -133,36 +125,43 @@ type
     procedure Delete; virtual;
     procedure Close; virtual;
     procedure Cancel; virtual;
-    procedure EmptyDataSet; virtual; abstract;
-    procedure CancelUpdates; virtual; abstract;
-    procedure Save(AObject: M); virtual;
-    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
-    procedure AddLookupField(AFieldName: string;
-                             AKeyFields: string;
-                             ALookupDataSet: TObject;
-                             ALookupKeyFields: string;
-                             ALookupResultField: string;
-                             ADisplayLabel: string = '');
-    procedure NextPacket; virtual; abstract;
     procedure SetAutoIncValueChilds; virtual;
+    procedure SetMasterObject(const AValue: TObject);
+    procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>; AObject: M);
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
       AColumnsNameRef: string): Boolean; virtual;
-    /// ObjectSet
-    function Find: TObjectList<M>; overload; virtual; abstract;
-    function Find(const AID: Integer): M; overload; virtual; abstract;
-    function Find(const AID: String): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; virtual; abstract;
     /// <summary>
     /// Uso na interface para ler, gravar e alterar dados do registro atual
     /// no dataset, pelo objeto.
     /// </summary>
-    function Current: M;
-    property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; override;
     destructor Destroy; override;
+    procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
+    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
+    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure RefreshRecord; virtual;
+    procedure NextPacket; virtual; abstract;
+    procedure Save(AObject: M); virtual;
+    procedure LoadLazy(const AOwner: M); virtual; abstract;
+    procedure EmptyDataSet; virtual; abstract;
+    procedure CancelUpdates; virtual;
+    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
+    procedure AddLookupField(const AFieldName: string;
+                             const AKeyFields: string;
+                             const ALookupDataSet: TObject;
+                             const ALookupKeyFields: string;
+                             const ALookupResultField: string;
+                             const ADisplayLabel: string = '');
+    function Current: M;
+    /// ObjectSet
+    function Find: TObjectList<M>; overload; virtual;
+    function Find(const AID: Integer): M; overload; virtual;
+    function Find(const AID: String): M; overload; virtual;
+    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual;
+    /// Property
+    property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
   end;
 
 implementation
@@ -224,9 +223,7 @@ end;
 
 procedure TDataSetBaseAdapter<M>.Save(AObject: M);
 begin
-  /// <summary>
-  /// Aualiza o DataSet com os dados a variável interna
-  /// </summary>
+  /// <summary> Aualiza o DataSet com os dados a variável interna </summary>
   FOrmDataSet.Edit;
   TBindDataSet
     .GetInstance
@@ -239,17 +236,22 @@ begin
   FOrmDataSet.Cancel;
 end;
 
+procedure TDataSetBaseAdapter<M>.CancelUpdates;
+begin
+  FSession.ModifiedFields.Items[M.ClassName].Clear;
+end;
+
 procedure TDataSetBaseAdapter<M>.Close;
 begin
   FOrmDataSet.Close;
 end;
 
-procedure TDataSetBaseAdapter<M>.AddLookupField(AFieldName: string;
-                                                AKeyFields: string;
-                                                ALookupDataSet: TObject;
-                                                ALookupKeyFields: string;
-                                                ALookupResultField: string;
-                                                ADisplayLabel: string);
+procedure TDataSetBaseAdapter<M>.AddLookupField(const AFieldName: string;
+                                                const AKeyFields: string;
+                                                const ALookupDataSet: TObject;
+                                                const ALookupKeyFields: string;
+                                                const ALookupResultField: string;
+                                                const ADisplayLabel: string);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -285,7 +287,7 @@ begin
         /// <summary>
         /// Abre a tabela do TLookupField
         /// </summary>
-        FLookupsField.Last.Open;
+        FLookupsField.Last.OpenSQLInternal('');
       end;
     end;
   end;
@@ -449,6 +451,16 @@ begin
   end;
 end;
 
+function TDataSetBaseAdapter<M>.Find: TObjectList<M>;
+begin
+  Result := FSession.Find;
+end;
+
+function TDataSetBaseAdapter<M>.Find(const AID: Integer): M;
+begin
+  Result := FSession.Find(AID);
+end;
+
 function TDataSetBaseAdapter<M>.FindEvents(AEventName: string): Boolean;
 begin
   Result := MatchStr(AEventName, ['AfterCancel'   ,'AfterClose'   ,'AfterDelete' ,
@@ -459,6 +471,12 @@ begin
                                   'BeforePost'    ,'BeforeRefresh','BeforeScroll',
                                   'OnCalcFields'  ,'OnDeleteError','OnEditError' ,
                                   'OnFilterRecord','OnNewRecord'  ,'OnPostError']);
+end;
+
+function TDataSetBaseAdapter<M>.FindWhere(const AWhere,
+  AOrderBy: string): TObjectList<M>;
+begin
+  Result := FSession.FindWhere(AWhere, AOrderBy);
 end;
 
 procedure TDataSetBaseAdapter<M>.DoAfterClose(DataSet: TDataSet);
@@ -728,24 +746,60 @@ begin
   Result := FCurrentInternal;
 end;
 
-procedure TDataSetBaseAdapter<M>.Open(const AID: String);
-begin
-  OpenIDInternal(AID);
-end;
+//procedure TDataSetBaseAdapter<M>.Open(const AID: String);
+//begin
+//  OpenIDInternal(AID);
+//end;
 
-procedure TDataSetBaseAdapter<M>.Open;
-begin
-  OpenSQLInternal('');
-end;
+//procedure TDataSetBaseAdapter<M>.Open;
+//begin
+//  OpenSQLInternal('');
+//end;
 
-procedure TDataSetBaseAdapter<M>.Open(const AID: Integer);
-begin
-  OpenIDInternal(AID);
-end;
+//procedure TDataSetBaseAdapter<M>.Open(const AID: Integer);
+//begin
+//  OpenIDInternal(AID);
+//end;
 
 procedure TDataSetBaseAdapter<M>.Post;
 begin
   FOrmDataSet.Post;
+end;
+
+procedure TDataSetBaseAdapter<M>.RefreshRecord;
+var
+  LPrimaryKey: TPrimaryKeyMapping;
+  LParams: TParams;
+  lFor: Integer;
+begin
+  inherited;
+  LPrimaryKey := FSession
+                   .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+  if LPrimaryKey <> nil then
+  begin
+    FOrmDataSet.DisableControls;
+    DisableDataSetEvents;
+    LParams := TParams.Create(nil);
+    try
+      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+      begin
+        with LParams.Add as TParam do
+        begin
+          Name := LParams[LFor].Name;
+          ParamType := ptInput;
+          DataType := FOrmDataSet.FieldByName(LParams[LFor].Name).DataType;
+          Value := FOrmDataSet.FieldByName(LParams[LFor].Name).Value;
+        end;
+      end;
+      if LParams.Count > 0 then
+        FSession.RefreshRecord(LParams);
+    finally
+      LParams.Clear;
+      LParams.Free;
+      FOrmDataSet.EnableControls;
+      EnableDataSetEvents;
+    end;
+  end;
 end;
 
 procedure TDataSetBaseAdapter<M>.SetAutoIncValueChilds;
@@ -864,6 +918,11 @@ begin
 
     FOwnerMasterObject := AValue;
   end;
+end;
+
+function TDataSetBaseAdapter<M>.Find(const AID: String): M;
+begin
+  Result := FSession.Find(AID);
 end;
 
 end.
