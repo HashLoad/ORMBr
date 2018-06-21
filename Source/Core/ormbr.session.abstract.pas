@@ -50,6 +50,7 @@ type
     FDeleteList: TObjectList<M>;
     FExplorer: IMappingExplorerStrategy;
     FManager: TObjectManagerAbstract<M>;
+    FResultParams: TParams;
     /// <summary>
     /// ObjectSet
     /// </summary>
@@ -71,6 +72,7 @@ type
     procedure NextPacket; overload; virtual; abstract;
     procedure RefreshRecord(const AColumns: TParams); virtual; abstract;
 //    procedure OpenAssociation(const AObject: TObject); virtual; abstract;
+    function ResultParams: TParams;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
@@ -106,6 +108,7 @@ begin
   FModifiedFields := TObjectDictionary<string, TList<string>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<M>.Create;
   FExplorer := TMappingExplorer.GetInstance;
+  FResultParams := TParams.Create;
   /// <summary>
   /// Inicia uma lista interna para gerenciar campos alterados
   /// </summary>
@@ -120,6 +123,8 @@ begin
   FDeleteList.Free;
   FModifiedFields.Clear;
   FModifiedFields.Free;
+  FResultParams.Clear;
+  FResultParams.Free;
   inherited;
 end;
 
@@ -244,6 +249,11 @@ begin
   except
     raise;
   end;
+end;
+
+function TSessionAbstract<M>.ResultParams: TParams;
+begin
+  Result := FResultParams;
 end;
 
 procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: string);

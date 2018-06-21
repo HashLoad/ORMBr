@@ -133,6 +133,7 @@ begin
   Memo1.Lines.Clear;
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
+  // Monitor
   oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
 
   oManager := TManagerDataSet.Create(oConn);
@@ -147,7 +148,7 @@ begin
                                             'Descrição Lookup');
   oManager.Open<Tmaster>;
 
-  oManager.FindWhere<Tmaster>('master_id > 0');
+  oManager.FindWhere<Tmaster>('master_id = 83');
   if oManager.DataList<Tmaster>.Count > 0 then
   begin
     oManager.DataList<Tmaster>.First;

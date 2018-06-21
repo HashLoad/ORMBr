@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 729
+  ClientHeight = 649
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -227,9 +227,9 @@ object Form3: TForm3
   object Memo1: TMemo
     AlignWithMargins = True
     Left = 3
-    Top = 469
+    Top = 468
     Width = 858
-    Height = 257
+    Height = 178
     Align = alBottom
     Lines.Strings = (
       'Memo1')

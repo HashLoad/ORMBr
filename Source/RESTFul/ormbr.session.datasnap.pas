@@ -60,7 +60,7 @@ type
   public
     constructor Create(const AOwner: TDataSetBaseAdapter<M>); overload;
     destructor Destroy; override;
-    procedure Insert(const AObjectList: TObjectList<M>); overload; override;
+    procedure Insert(const AObject: M); overload; override;
     procedure Update(const AObjectList: TObjectList<M>); overload; override;
     procedure Delete(const AID: Integer); overload; override;
     procedure Open; override;
@@ -195,19 +195,19 @@ begin
   Result := TORMBrJson.JsonToObjectList<M>(LJSON);
 end;
 
-procedure TSessionDataSnap<M>.Insert(const AObjectList: TObjectList<M>);
+procedure TSessionDataSnap<M>.Insert(const AObject: M);
 var
-  FJSON: TJSONArray;
+  FJSON: String;
 begin
-  FJSON := TORMBrJSONUtil.JSONStringToJSONArray<M>(AObjectList);
+  FJSON := TORMBrJson.ObjectToJsonString(AObject);
   try
     FRESTRequest.ResetToDefaults;
     FRESTRequest.Resource := '/' + FResource;
     FRESTRequest.Method := TRESTRequestMethod.rmPUT;
     {$IFDEF DELPHI22_UP}
-    FRESTRequest.AddBody(FJSON.ToJSON, ContentTypeFromString('application/json'));
+    FRESTRequest.AddBody(FJSON, ContentTypeFromString('application/json'));
     {$ELSE}
-    FRESTRequest.Body.Add(FJSON.ToJSON, ContentTypeFromString('application/json'));
+    FRESTRequest.Body.Add(FJSON, ContentTypeFromString('application/json'));
     {$ENDIF}
     FRESTRequest.Execute;
   finally

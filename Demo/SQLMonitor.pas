@@ -4,16 +4,13 @@ interface
 
 uses
   DB,
-  Windows,
-  Messages,
+  Forms,
+  Classes,
+  Controls,
   SysUtils,
   Variants,
-  Classes,
-  Graphics,
-  Controls,
-  Forms,
-  Dialogs,
   StdCtrls,
+  TypInfo,
   ormbr.monitor;
 
 type
@@ -28,16 +25,14 @@ type
     procedure Command(ASQL: string; AParams: TParams);
   public
     { Public declarations }
+    class destructor Destroy;
     class function GetInstance: TFSQLMonitor;
   end;
 
-var
-  FSQLMonitor: TFSQLMonitor;
+//var
+//  FSQLMonitor: TFSQLMonitor;
 
 implementation
-
-uses
-  TypInfo;
 
 {$R *.dfm}
 
@@ -55,28 +50,37 @@ var
 begin
   MemoSQL.Lines.Add('');
   MemoSQL.Lines.Add(ASQL);
-  for iFor := 0 to AParams.Count -1 do
+  if AParams <> nil then
   begin
-    if AParams.Items[iFor].Value = Variants.Null then
-      AsValue := 'NULL'
-    else
-    if AParams.Items[iFor].DataType = ftDateTime then
-      AsValue := '"' + DateTimeToStr(AParams.Items[iFor].Value) + '"'
-    else
-    if AParams.Items[iFor].DataType = ftDate then
-      AsValue := '"' + DateToStr(AParams.Items[iFor].Value) + '"'
-    else
-      AsValue := '"' + VarToStr(AParams.Items[iFor].Value) + '"';
+    for iFor := 0 to AParams.Count -1 do
+    begin
+      if AParams.Items[iFor].Value = Variants.Null then
+        AsValue := 'NULL'
+      else
+      if AParams.Items[iFor].DataType = ftDateTime then
+        AsValue := '"' + DateTimeToStr(AParams.Items[iFor].Value) + '"'
+      else
+      if AParams.Items[iFor].DataType = ftDate then
+        AsValue := '"' + DateToStr(AParams.Items[iFor].Value) + '"'
+      else
+        AsValue := '"' + VarToStr(AParams.Items[iFor].Value) + '"';
 
-    MemoSQL.Lines.Add(AParams.Items[iFor].Name + ' = ' + AsValue + ' (' +
-          GetEnumName(TypeInfo(TFieldType), Ord(AParams.Items[iFor].DataType)) + ')');
+      MemoSQL.Lines.Add(AParams.Items[iFor].Name + ' = ' + AsValue + ' (' +
+            GetEnumName(TypeInfo(TFieldType), Ord(AParams.Items[iFor].DataType)) + ')');
+    end;
   end;
+end;
+
+class destructor TFSQLMonitor.Destroy;
+begin
+  if Assigned(FInstance) then
+    FreeAndNil(FInstance);
 end;
 
 class function TFSQLMonitor.GetInstance: TFSQLMonitor;
 begin
   if FInstance = nil then
-    FInstance := TFSQLMonitor.Create(Application);
+    FInstance := TFSQLMonitor.Create(nil);
   Result := FInstance;
 end;
 

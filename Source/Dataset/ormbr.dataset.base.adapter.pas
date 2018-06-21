@@ -773,31 +773,34 @@ var
   lFor: Integer;
 begin
   inherited;
-  LPrimaryKey := FSession
-                   .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
-  if LPrimaryKey <> nil then
+  if FOrmDataSet.RecordCount > 0 then
   begin
-    FOrmDataSet.DisableControls;
-    DisableDataSetEvents;
-    LParams := TParams.Create(nil);
-    try
-      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
-      begin
-        with LParams.Add as TParam do
+    LPrimaryKey := FSession
+                     .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+    if LPrimaryKey <> nil then
+    begin
+      FOrmDataSet.DisableControls;
+      DisableDataSetEvents;
+      LParams := TParams.Create(nil);
+      try
+        for LFor := 0 to LPrimaryKey.Columns.Count -1 do
         begin
-          Name := LParams[LFor].Name;
-          ParamType := ptInput;
-          DataType := FOrmDataSet.FieldByName(LParams[LFor].Name).DataType;
-          Value := FOrmDataSet.FieldByName(LParams[LFor].Name).Value;
+          with LParams.Add as TParam do
+          begin
+            Name := LPrimaryKey.Columns.Items[LFor];
+            ParamType := ptInput;
+            DataType := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).DataType;
+            Value := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).Value;
+          end;
         end;
+        if LParams.Count > 0 then
+          FSession.RefreshRecord(LParams);
+      finally
+        LParams.Clear;
+        LParams.Free;
+        FOrmDataSet.EnableControls;
+        EnableDataSetEvents;
       end;
-      if LParams.Count > 0 then
-        FSession.RefreshRecord(LParams);
-    finally
-      LParams.Clear;
-      LParams.Free;
-      FOrmDataSet.EnableControls;
-      EnableDataSetEvents;
     end;
   end;
 end;
@@ -837,7 +840,10 @@ begin
                       .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
                         FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
                   LDataSetChild.FOrmDataSet.Post;
-                  LDataSetChild.FOrmDataSet.Next;
+                  /// <summary>
+                  /// Não deve executar o NEXT aqui, o dataset está com filtro
+                  /// que faz a navegação ao mudar o valor do campo.
+                  /// </summary>
                 end;
               finally
                 LDataSetChild.FOrmDataSet.First;
