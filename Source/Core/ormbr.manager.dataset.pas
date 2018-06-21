@@ -63,10 +63,10 @@ type
     FConnection: IDBConnection;
     {$ENDIF}
     FRepository: TDictionary<string, TObject>;
-    FDataList: TDictionary<string, TObjectList<TObject>>;
+    FNestedList: TDictionary<string, TObjectList<TObject>>;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
     procedure RepositoryListFree;
-    procedure DataListFree;
+    procedure NestedListFree;
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection);
@@ -103,7 +103,7 @@ type
     function Find<T: class, constructor>(const AID: String): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TManagerDataSet;
-    function DataList<T: class>: TObjectList<T>;
+    function NestedList<T: class>: TObjectList<T>;
   end;
 
 implementation
@@ -117,7 +117,7 @@ constructor TManagerDataSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRES
 begin
   FConnection := AConnection;
   FRepository := TDictionary<string, TObject>.Create;
-  FDataList := TDictionary<string, TObjectList<TObject>>.Create;
+  FNestedList := TDictionary<string, TObjectList<TObject>>.Create;
 end;
 
 function TManagerDataSet.Current<T>: T;
@@ -125,20 +125,20 @@ begin
   Result := Resolver<T>.Current;
 end;
 
-function TManagerDataSet.DataList<T>: TObjectList<T>;
+function TManagerDataSet.NestedList<T>: TObjectList<T>;
 var
   LClassName: String;
 begin
   LClassName := TClass(T).ClassName;
-  if FDataList.ContainsKey(LClassName) then
-    Result := TObjectList<T>(FDataList.Items[LClassName]);
+  if FNestedList.ContainsKey(LClassName) then
+    Result := TObjectList<T>(FNestedList.Items[LClassName]);
 end;
 
-procedure TManagerDataSet.DataListFree;
+procedure TManagerDataSet.NestedListFree;
 var
   LObjectList: TObjectList<TObject>;
 begin
-  for LObjectList in FDataList.Values do
+  for LObjectList in FNestedList.Values do
   begin
     LObjectList.Clear;
     LObjectList.Free;
@@ -152,9 +152,9 @@ end;
 
 destructor TManagerDataSet.Destroy;
 begin
-  DataListFree;
+  NestedListFree;
   RepositoryListFree;
-  FDataList.Free;
+  FNestedList.Free;
   FRepository.Free;
   inherited;
 end;
@@ -181,8 +181,8 @@ var
 begin
   LObjectList := Resolver<T>.Find;
   /// <summary> Limpa a lista de objectos </summary>
-  DataListFree;
-  FDataList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
+  NestedListFree;
+  FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
 
@@ -364,8 +364,8 @@ var
 begin
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   /// <summary> Limpa a lista de objectos </summary>
-  DataListFree;
-  FDataList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
+  NestedListFree;
+  FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
 

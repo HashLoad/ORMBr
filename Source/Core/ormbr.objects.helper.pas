@@ -43,7 +43,8 @@ type
   TObjectHelper = class helper for TObject
   public
     function GetTable: Table;
-    function GetResource: Resource;
+    function GetResourceName: String;
+    function GetSubResourceName: String;
     function &GetType(out AType: TRttiType): Boolean;
     function GetSequence: Sequence;
     function GetPrimaryKey: TArray<TColumnMapping>;
@@ -110,22 +111,22 @@ begin
   end;
 end;
 
-function TObjectHelper.GetResource: Resource;
+function TObjectHelper.GetResourceName: String;
 var
   LType: TRttiType;
   LAttribute: TCustomAttribute;
 begin
-  Result := nil;
+  Result := '';
   if &GetType(LType) then
   begin
     for LAttribute in LType.GetAttributes do // Resource
     begin
       if LAttribute is Resource then
-        Exit(Resource(LAttribute));
+        Exit(Resource(LAttribute).Name);
     end;
   end;
-  if Result = nil then
-    Exit(Resource(GetTable));
+  if Result = '' then
+    Exit(Table(GetTable).Name);
 end;
 
 function TObjectHelper.GetSequence: Sequence;
@@ -144,6 +145,22 @@ begin
   end
   else
     Exit(nil);
+end;
+
+function TObjectHelper.GetSubResourceName: String;
+var
+  LType: TRttiType;
+  LAttribute: TCustomAttribute;
+begin
+  Result := '';
+  if &GetType(LType) then
+  begin
+    for LAttribute in LType.GetAttributes do // SubResource
+    begin
+      if LAttribute is SubResource then
+        Exit(SubResource(LAttribute).Name);
+    end;
+  end;
 end;
 
 function TObjectHelper.GetTable: Table;

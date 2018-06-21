@@ -61,6 +61,14 @@ type
     property Name: String Read FName;
   end;
 
+  SubResource = class(TCustomAttribute)
+  private
+    FName: String;
+  public
+    constructor Create(AName: String);
+    property Name: String Read FName;
+  end;
+
   Table = class(TCustomAttribute)
   private
     FName: String;
@@ -777,6 +785,13 @@ end;
 { Resource }
 
 constructor Resource.Create(AName: String);
+begin
+  FName := AName;
+end;
+
+{ SubResource }
+
+constructor SubResource.Create(AName: String);
 begin
   FName := AName;
 end;

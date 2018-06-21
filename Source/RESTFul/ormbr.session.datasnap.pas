@@ -112,7 +112,7 @@ begin
   /// </summary>
   LObject := TObject(M.Create);
   try
-    FResource := LObject.GetResource.Name;
+    FResource := LObject.GetResourceName;
   finally
     LObject.Free;
   end;
