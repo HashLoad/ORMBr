@@ -37,26 +37,45 @@ uses
   Generics.Collections,
   {$IFDEF USEFDMEMTABLE}
   FireDAC.Comp.Client,
-  ormbr.dataset.fdmemtable,
+    {$IFDEF DRIVERRESTFUL}
+    ormbr.restdataset.fdmemtable,
+    {$ELSE}
+    ormbr.dataset.fdmemtable,
+    {$ENDIF}
   {$ELSEIF USECLIENTDATASET}
   DBClient,
-  ormbr.dataset.clientdataset,
+    {$IFDEF DRIVERRESTFUL}
+    ormbr.restdataset.clientdataset,
+    {$ELSE}
+    ormbr.dataset.clientdataset,
+    {$ENDIF}
   {$ENDIF}
-  /// ORMBr
+  /// ORMBr Interface
   ormbr.factory.interfaces,
   ormbr.dataset.base.adapter;
 
 type
   TManagerDataSet = class
   private
+    {$IFDEF DRIVERRESTFUL}
+    FConnection: IRESTConnection;
+    {$ELSE}
     FConnection: IDBConnection;
+    {$ENDIF}
     FRepository: TDictionary<string, TObject>;
     FDataList: TDictionary<string, TObjectList<TObject>>;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
     procedure RepositoryListFree;
     procedure DataListFree;
   public
+    {$IFDEF DRIVERRESTFUL}
+    constructor Create(const AConnection: IRESTConnection);
+    {$ELSE}
     constructor Create(const AConnection: IDBConnection);
+    function NextPacket<T: class, constructor>: TManagerDataSet;
+    function GetAutoNextPacket<T: class, constructor>: Boolean;
+    procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
+    {$ENDIF}
     destructor Destroy; override;
     function AddAdapter<T: class, constructor>(ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
@@ -66,7 +85,6 @@ type
     function Open<T: class, constructor>(const AID: String): TManagerDataSet; overload;
     function OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = ''): TManagerDataSet;
     function Save<T: class, constructor>(AObject: T): TManagerDataSet;
-    function NextPacket<T: class, constructor>: TManagerDataSet;
     function LoadLazy<T: class, constructor>(const AOwner: T): TManagerDataSet;
     function RefreshRecord<T: class, constructor>: TManagerDataSet;
     function EmptyDataSet<T: class, constructor>: TManagerDataSet;
@@ -79,8 +97,6 @@ type
                                                       const ADisplayLabel: string = ''): TManagerDataSet;
     function Current<T: class, constructor>: T;
     function DataSet<T: class, constructor>: TDataSet;
-    function GetAutoNextPacket<T: class, constructor>: Boolean;
-    procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
     /// ObjectSet
     function Find<T: class, constructor>: TManagerDataSet; overload;
     function Find<T: class, constructor>(const AID: Integer): T; overload;
@@ -94,7 +110,10 @@ implementation
 
 { TManagerDataSet }
 
-constructor TManagerDataSet.Create(const AConnection: IDBConnection);
+
+constructor TManagerDataSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
+                                                      {$ELSE}IDBConnection);
+                                                      {$ENDIF}
 begin
   FConnection := AConnection;
   FRepository := TDictionary<string, TObject>.Create;
@@ -167,11 +186,6 @@ begin
   Result := Self;
 end;
 
-function TManagerDataSet.GetAutoNextPacket<T>: Boolean;
-begin
-  Result := Resolver<T>.AutoNextPacket;
-end;
-
 function TManagerDataSet.CancelUpdates<T>: TManagerDataSet;
 begin
   Resolver<T>.CancelUpdates;
@@ -181,12 +195,6 @@ end;
 function TManagerDataSet.LoadLazy<T>(const AOwner: T): TManagerDataSet;
 begin
   Resolver<T>.LoadLazy(AOwner);
-  Result := Self;
-end;
-
-function TManagerDataSet.NextPacket<T>: TManagerDataSet;
-begin
-  Resolver<T>.NextPacket;
   Result := Self;
 end;
 
@@ -209,12 +217,20 @@ begin
         /// <summary> Checagem do tipo do dataset definido para uso </summary>
         {$IFDEF USEFDMEMTABLE}
           if ADataSet is TFDMemTable then
+            {$IFDEF DRIVERRESTFUL}
+            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, LMaster)
+            {$ELSE}
             LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+            {$ENDIF}
           else
             raise Exception.Create('Is not TFDMemTable type');
         {$ELSEIF USECLIENTDATASET}
           if ADataSet is TClientDataSet then
+            {$IFDEF DRIVERRESTFUL}
+            LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
+            {$ELSE}
             LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+            {$ENDIF}
           else
             raise Exception.Create('Is not TClientDataSet type');
         {$ELSE}
@@ -239,12 +255,20 @@ begin
   begin
     {$IFDEF USEFDMEMTABLE}
       if ADataSet is TFDMemTable then
+        {$IFDEF DRIVERRESTFUL}
+        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, nil)
+        {$ELSE}
         LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+        {$ENDIF}
       else
         raise Exception.Create('Is not TFDMemTable type');
     {$ELSEIF USECLIENTDATASET}
       if ADataSet is TClientDataSet then
-        LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+        {$IFDEF DRIVERRESTFUL}
+        LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
+        {$ELSE}
+        LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, nil)
+        {$ENDIF}
       else
         raise Exception.Create('Is not TClientDataSet type');
     {$ELSE}
@@ -334,11 +358,6 @@ begin
   Result := Self;
 end;
 
-procedure TManagerDataSet.SetAutoNextPacket<T>(const AValue: Boolean);
-begin
-  Resolver<T>.AutoNextPacket := AValue;
-end;
-
 function TManagerDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TManagerDataSet;
 var
   LObjectList: TObjectList<T>;
@@ -349,5 +368,23 @@ begin
   FDataList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
+
+{$IFNDEF DRIVERRESTFUL}
+function TManagerDataSet.NextPacket<T>: TManagerDataSet;
+begin
+  Resolver<T>.NextPacket;
+  Result := Self;
+end;
+
+function TManagerDataSet.GetAutoNextPacket<T>: Boolean;
+begin
+  Result := Resolver<T>.AutoNextPacket;
+end;
+
+procedure TManagerDataSet.SetAutoNextPacket<T>(const AValue: Boolean);
+begin
+  Resolver<T>.AutoNextPacket := AValue;
+end;
+{$ENDIF}
 
 end.

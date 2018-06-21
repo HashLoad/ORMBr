@@ -30,26 +30,13 @@ unit ormbr.monitor;
 interface
 
 uses
-  DB,
-  Generics.Collections;
+  DB;
 
 type
   ICommandMonitor = interface
     procedure Command(ASQL: string; AParams: TParams);
   end;
 
-  TCommandMonitor = class abstract(TInterfacedObject, ICommandMonitor)
-  public
-    procedure Command(ASQL: string; AParams: TParams); virtual;
-  end;
-
 implementation
-
-{ TCommandMonitor }
-
-procedure TCommandMonitor.Command(ASQL: string; AParams: TParams);
-begin
-
-end;
 
 end.

@@ -72,8 +72,13 @@ type
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
   public
+    {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; virtual;
+    procedure RefreshRecord(const AObject: TObject);
+    {$ELSE}
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; virtual;
+    {$ENDIF}
     destructor Destroy; override;
     procedure PopularDataSet(const AObject: TObject);
     procedure PopularDataSetList(const AObjectList: TObjectList<M>);
@@ -88,20 +93,25 @@ uses
   ormbr.session.datasnap,
   {$ENDIF}
   ormbr.objects.helper,
-  ormbr.rtti.helper;
+  ormbr.rtti.helper,
+  ormbr.mapping.explorer;
 
 { TRESTDataSetAdapter<M> }
 
+{$IFDEF DRIVERRESTFUL}
 constructor TRESTDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; AMasterObject: TObject);
 begin
   inherited Create(ADataSet, -1, AMasterObject);
-  {$IFDEF DRIVERRESTFUL}
   FSession := TSessionRest<M>.Create(AConnection, Self);
-  {$ELSE}
-  FSession := TSessionDataSnap<M>.Create(Self);
-  {$ENDIF}
 end;
+{$ELSE}
+constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; AMasterObject: TObject);
+begin
+  inherited Create(ADataSet, -1, AMasterObject);
+  FSession := TSessionDataSnap<M>.Create(Self);
+end;
+{$ENDIF}
 
 destructor TRESTDataSetAdapter<M>.Destroy;
 begin
@@ -127,15 +137,16 @@ procedure TRESTDataSetAdapter<M>.ApplyInserter(const MaxErros: Integer);
 var
   LObject: TObject;
   LProperty: TRttiProperty;
-  LInsertList: TObjectList<M>;
   LDataSetChild: TDataSetBaseAdapter<M>;
+  LFor: Integer;
+  LField: TField;
+  LParam: TParam;
 begin
   inherited;
   /// <summary> Filtar somente os registros inseridos </summary>
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsInsert));
   FOrmDataSet.Filtered := True;
   FOrmDataSet.First;
-  LInsertList := TObjectList<M>.Create;
   try
     while not FOrmDataSet.Eof do
     begin
@@ -143,34 +154,40 @@ begin
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
        begin
          LObject := M.Create;
-         TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
-         for LDataSetChild in FMasterObject.Values do
-           LDataSetChild.FillMastersClass(LDataSetChild, LObject);
-         ///
-         LInsertList.Add(LObject);
-         FOrmDataSet.Edit;
-//         if FSession.ExistSequence then
-//         begin
-//           for LProperty in LObject.GetPrimaryKey do
-//           begin
-//             FOrmDataSet.Fields[LProperty.GetIndex].Value := LProperty.GetValue(TObject(LObject)).AsVariant;
-//             /// <summary>
-//             /// Atualiza o valor do AutoInc nas sub tabelas
-//             /// </summary>
-//             SetAutoIncValueChilds(FOrmDataSet.Fields[LProperty.GetIndex]);
-//           end;
-//         end;
-         FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
-         FOrmDataSet.Post;
+         try
+           TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+           for LDataSetChild in FMasterObject.Values do
+             LDataSetChild.FillMastersClass(LDataSetChild, LObject);
+           ///
+           FSession.Insert(LObject);
+           FOrmDataSet.Edit;
+           if FSession.ExistSequence then
+           begin
+             if FSession.ResultParams.Count > 0 then
+             begin
+               for LFor := 0 to FSession.ResultParams.Count -1 do
+               begin
+                 LParam := FSession.ResultParams.Items[LFor];
+                 LField := FOrmDataSet.FindField(LParam.Name);
+                 if LField <> nil then
+                   LField.Value := LParam.Value;
+               end;
+               /// <summary>
+               /// Atualiza o valor do AutoInc nas sub tabelas
+               /// </summary>
+               SetAutoIncValueChilds;
+             end;
+           end;
+           FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
+           FOrmDataSet.Post;
+         finally
+           LObject.Free;
+         end;
        end;
     end;
-    if LInsertList.Count > 0 then
-      FSession.Insert(LInsertList);
   finally
     FOrmDataSet.Filtered := False;
     FOrmDataSet.Filter := '';
-    LInsertList.Clear;
-    LInsertList.Free;
   end;
 end;
 
@@ -295,10 +312,9 @@ begin
   FOrmDataSet.Append;
   TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
-  /// <summary>
-  /// Popula Associations
-  /// </summary>
-  PopularDataSetChilds(AObject);
+  /// <summary> Popula Associations </summary>
+  if FMasterObject.Count > 0 then
+    PopularDataSetChilds(AObject);
 end;
 
 procedure TRESTDataSetAdapter<M>.PopularDataSetList(const AObjectList: TObjectList<M>);
@@ -361,6 +377,7 @@ begin
             .SetPropertyToField(LObjectChild, LDataSetChild.FOrmDataSet);
         LDataSetChild.FOrmDataSet.Post;
       finally
+        LDataSetChild.FOrmDataSet.First;
         LDataSetChild.FOrmDataSet.EnableControls;
         LDataSetChild.EnableDataSetEvents;
       end;
@@ -400,11 +417,43 @@ begin
         LDataSetChild.FOrmDataSet.Post;
       end;
     finally
+      LDataSetChild.FOrmDataSet.First;
       LDataSetChild.FOrmDataSet.EnableControls;
       LDataSetChild.EnableDataSetEvents;
     end;
   end;
 end;
+
+{$IFDEF DRIVERRESTFUL}
+procedure TRESTDataSetAdapter<M>.RefreshRecord(const AObject: TObject);
+var
+  LChildDataSet: TDataSetBaseAdapter<M>;
+begin
+  FOrmDataSet.DisableControls;
+  try
+    FOrmDataSet.Edit;
+    TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
+    FOrmDataSet.Post;
+    /// <summary> Limpa todos os registros filhos para serem atualizados </summary>
+    for LChildDataSet in FMasterObject.Values do
+    begin
+      LChildDataSet.FOrmDataSet.DisableControls;
+      try
+        LChildDataSet.FOrmDataSet.First;
+        while not LChildDataSet.FOrmDataSet.Eof do
+          LChildDataSet.FOrmDataSet.Delete;
+      finally
+        LChildDataSet.FOrmDataSet.EnableControls;
+      end;
+    end;
+    /// <summary> Popula Associations </summary>
+    if FMasterObject.Count > 0 then
+      PopularDataSetChilds(AObject);
+  finally
+    FOrmDataSet.EnableControls;
+  end;
+end;
+{$ENDIF}
 
 procedure TRESTDataSetAdapter<M>.SetMasterDataSetStateEdit;
 var

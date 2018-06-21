@@ -27,6 +27,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.restdataset.clientdataset;
 
 interface
@@ -87,8 +89,12 @@ type
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
   public
+    {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; override;
+    {$ELSE}
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
+    {$ENDIF}
     destructor Destroy; override;
   end;
 
@@ -101,10 +107,17 @@ uses
 
 { TRESTClientDataSetAdapter<M> }
 
+{$IFDEF DRIVERRESTFUL}
 constructor TRESTClientDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; AMasterObject: TObject);
 begin
   inherited Create(Aconnection, ADataSet, AMasterObject);
+{$ELSE}
+constructor TRESTClientDataSetAdapter<M>.Create(ADataSet: TDataSet;
+  AMasterObject: TObject);
+begin
+  inherited Create(ADataSet, AMasterObject);
+{$ENDIF}
   /// <summary>
   /// Captura o component TClientDataset da IDE passado como parâmetro
   /// </summary>

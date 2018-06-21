@@ -31,58 +31,51 @@ interface
 
 uses
   DB,
-  Rtti,
   SysUtils,
-  Generics.Collections,
   FireDAC.Comp.Client,
   /// ormbr
-  ormbr.rest.types,
   ormbr.session.dataset,
   ormbr.container.dataset,
-  ormbr.container.dataset.interfaces,
   ormbr.factory.interfaces,
   ormbr.restdataset.fdmemtable;
 
 type
   TContainerRESTFDMemTable<M: class, constructor> = class(TContainerDataSet<M>)
   public
-    constructor Create(const AConnection: IRESTConnection; const ADataSet: TDataSet;
-      const AMasterObject: TObject); overload;
-    constructor Create(const AConnection: IRESTConnection; const ADataSet: TDataSet); overload;
-    constructor Create(const ADataSet: TDataSet; const AMasterObject: TObject); overload;
-    constructor Create(const ADataSet: TDataSet); overload;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer); overload;
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload;
+    constructor Create(ADataSet: TDataSet); overload;
     destructor Destroy; override;
-    procedure NextPacket; override; deprecated 'Unsupported feature';
   end;
 
 implementation
 
 { TContainerRESTFDMemTable<M> }
 
-constructor TContainerRESTFDMemTable<M>.Create(const AConnection: IRESTConnection;
-  const ADataSet: TDataSet; const AMasterObject: TObject);
+constructor TContainerRESTFDMemTable<M>.Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
   if ADataSet is TFDMemTable then
-    FDataSetAdapter := TRESTFDMemTableAdapter<M>.Create(AConnection, ADataSet, AMasterObject)
+    FDataSetAdapter := TRESTFDMemTableAdapter<M>.Create(ADataSet, APageSize, AMasterObject)
   else
     raise Exception.Create('Is not TFDMemTable type');
 end;
 
-constructor TContainerRESTFDMemTable<M>.Create(const AConnection: IRESTConnection;
-  const ADataSet: TDataSet);
+constructor TContainerRESTFDMemTable<M>.Create(ADataSet: TDataSet;
+  APageSize: Integer);
 begin
-  Create(AConnection, ADataSet, nil);
+  Create(ADataSet, APageSize, nil);
 end;
 
-constructor TContainerRESTFDMemTable<M>.Create(const ADataSet: TDataSet);
+constructor TContainerRESTFDMemTable<M>.Create(ADataSet: TDataSet;
+  AMasterObject: TObject);
 begin
-  Create(nil, ADataSet, nil);
+  Create(ADataSet, -1, AMasterObject);
 end;
 
-constructor TContainerRESTFDMemTable<M>.Create(const ADataSet: TDataSet;
-  const AMasterObject: TObject);
+constructor TContainerRESTFDMemTable<M>.Create(ADataSet: TDataSet);
 begin
-  Create(nil, ADataSet, AMasterObject);
+  Create(ADataSet, -1, nil);
 end;
 
 destructor TContainerRESTFDMemTable<M>.Destroy;
@@ -91,9 +84,5 @@ begin
   inherited;
 end;
 
-procedure TContainerRESTFDMemTable<M>.NextPacket;
-begin
-  raise Exception.Create('Unsupported feature');
-end;
-
 end.
+

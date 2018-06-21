@@ -24,6 +24,12 @@ object FSQLMonitor: TFSQLMonitor
     Height = 311
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 0
   end

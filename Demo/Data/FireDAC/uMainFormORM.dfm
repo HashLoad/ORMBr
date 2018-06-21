@@ -246,7 +246,7 @@ object Form3: TForm3
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 154
-    Top = 42
+    Top = 44
   end
   object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
     Left = 218
