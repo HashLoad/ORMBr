@@ -72,14 +72,16 @@ type
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
   public
+    {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; virtual;
+    procedure RefreshRecord(const AObject: TObject);
+    {$ELSE}
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; virtual;
+    {$ENDIF}
     destructor Destroy; override;
     procedure PopularDataSet(const AObject: TObject);
     procedure PopularDataSetList(const AObjectList: TObjectList<M>);
-    {$IFDEF DRIVERRESTFUL}
-    procedure RefreshRecord(const AObject: TObject);
-    {$ENDIF}
   end;
 
 implementation
@@ -96,16 +98,20 @@ uses
 
 { TRESTDataSetAdapter<M> }
 
+{$IFDEF DRIVERRESTFUL}
 constructor TRESTDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; AMasterObject: TObject);
 begin
   inherited Create(ADataSet, -1, AMasterObject);
-  {$IFDEF DRIVERRESTFUL}
   FSession := TSessionRest<M>.Create(AConnection, Self);
-  {$ELSE}
-  FSession := TSessionDataSnap<M>.Create(Self);
-  {$ENDIF}
 end;
+{$ELSE}
+constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; AMasterObject: TObject);
+begin
+  inherited Create(ADataSet, -1, AMasterObject);
+  FSession := TSessionDataSnap<M>.Create(Self);
+end;
+{$ENDIF}
 
 destructor TRESTDataSetAdapter<M>.Destroy;
 begin

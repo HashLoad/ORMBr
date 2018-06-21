@@ -27,6 +27,8 @@
   ormbr Brasil é um ormbr simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.restdataset.fdmemtable;
 
 interface
@@ -96,8 +98,12 @@ type
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
   public
+    {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       AMasterObject: TObject); overload; override;
+    {$ELSE}
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
+    {$ENDIF}
     destructor Destroy; override;
   end;
 
@@ -109,10 +115,17 @@ uses
 
 { TRESTFDMemTableAdapter<M> }
 
+{$IFDEF DRIVERRESTFUL}
 constructor TRESTFDMemTableAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; AMasterObject: TObject);
 begin
   inherited Create(AConnection, ADataSet, AMasterObject);
+{$ELSE}
+constructor TRESTFDMemTableAdapter<M>.Create(ADataSet: TDataSet;
+  AMasterObject: TObject);
+begin
+  inherited Create(ADataSet, AMasterObject);
+{$ENDIF}
   /// <summary>
   /// Captura o component TFDMemTable da IDE passado como parâmetro
   /// </summary>

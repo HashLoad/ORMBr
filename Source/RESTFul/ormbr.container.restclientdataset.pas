@@ -42,30 +42,41 @@ uses
 type
   TContainerRESTClientDataSet<M: class, constructor> = class(TContainerDataSet<M>)
   public
-    constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
-      AMasterObject: TObject); overload;
-    constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet); overload;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer); overload;
+    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload;
+    constructor Create(ADataSet: TDataSet); overload;
     destructor Destroy; override;
-    procedure NextPacket; override; deprecated 'Unsupported feature';
   end;
 
 implementation
 
 { TContainerRESTClientDataSet<M> }
 
-constructor TContainerRESTClientDataSet<M>.Create(const AConnection: IRESTConnection;
-  ADataSet: TDataSet; AMasterObject: TObject);
+constructor TContainerRESTClientDataSet<M>.Create(ADataSet: TDataSet;
+  APageSize: Integer; AMasterObject: TObject);
 begin
   if ADataSet is TClientDataSet then
-    FDataSetAdapter := TRESTClientDataSetAdapter<M>.Create(AConnection, ADataSet, AMasterObject)
+    FDataSetAdapter := TRESTClientDataSetAdapter<M>.Create(ADataSet, APageSize, AMasterObject)
   else
     raise Exception.Create('Is not TClientDataSet type');
 end;
 
-constructor TContainerRESTClientDataSet<M>.Create(const AConnection: IRESTConnection;
-  ADataSet: TDataSet);
+constructor TContainerRESTClientDataSet<M>.Create(ADataSet: TDataSet;
+  APageSize: Integer);
 begin
-  Create(AConnection, ADataSet, nil);
+  Create(ADataSet, APageSize, nil);
+end;
+
+constructor TContainerRESTClientDataSet<M>.Create(ADataSet: TDataSet);
+begin
+  Create(ADataSet, -1, nil);
+end;
+
+constructor TContainerRESTClientDataSet<M>.Create(ADataSet: TDataSet;
+  AMasterObject: TObject);
+begin
+  Create(ADataSet, -1, AMasterObject);
 end;
 
 destructor TContainerRESTClientDataSet<M>.Destroy;
@@ -74,9 +85,5 @@ begin
   inherited;
 end;
 
-procedure TContainerRESTClientDataSet<M>.NextPacket;
-begin
-  raise Exception.Create('Unsupported feature');
-end;
-
 end.
+

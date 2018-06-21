@@ -200,19 +200,16 @@ var
   FJSON: String;
 begin
   FJSON := TORMBrJson.ObjectToJsonString(AObject);
-  try
-    FRESTRequest.ResetToDefaults;
-    FRESTRequest.Resource := '/' + FResource;
-    FRESTRequest.Method := TRESTRequestMethod.rmPUT;
-    {$IFDEF DELPHI22_UP}
-    FRESTRequest.AddBody(FJSON, ContentTypeFromString('application/json'));
-    {$ELSE}
-    FRESTRequest.Body.Add(FJSON, ContentTypeFromString('application/json'));
-    {$ENDIF}
-    FRESTRequest.Execute;
-  finally
-    FJSON.Free;
-  end;
+
+  FRESTRequest.ResetToDefaults;
+  FRESTRequest.Resource := '/' + FResource;
+  FRESTRequest.Method := TRESTRequestMethod.rmPUT;
+  {$IFDEF DELPHI22_UP}
+  FRESTRequest.AddBody(FJSON, ContentTypeFromString('application/json'));
+  {$ELSE}
+  FRESTRequest.Body.Add(FJSON, ContentTypeFromString('application/json'));
+  {$ENDIF}
+  FRESTRequest.Execute;
 end;
 
 procedure TSessionDataSnap<M>.Update(const AObjectList: TObjectList<M>);

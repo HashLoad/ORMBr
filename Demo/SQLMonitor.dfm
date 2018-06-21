@@ -27,7 +27,7 @@ object FSQLMonitor: TFSQLMonitor
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
-    Font.Name = 'Courier'
+    Font.Name = 'Courier New'
     Font.Style = []
     ParentFont = False
     ScrollBars = ssVertical
