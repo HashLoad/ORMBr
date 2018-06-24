@@ -1,10 +1,5 @@
- 
-
-
-
-Right     | Left   | Center 
-:----------------------------------------------------------------------| ----------------------------------------------------------------------------------------: |:-----:
-![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)  | [![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD) | one
+:----------------------------------------------------------------------| ----------------------------------------------------------------------------------------: |
+![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)  | [![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD) |
 
 
 # ORMBr
