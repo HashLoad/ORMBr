@@ -1,12 +1,10 @@
-![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png) 
+ 
 
-[![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD)
+
 
 Right     | Left   | Center 
----------:| :----- |:-----:
-Computer  |  $1600 | one
-Phone     |    $12 | three
-Pipe      |     $1 | eleven
+:----------------------------------------------------------------------| ----------------------------------------------------------------------------------------: |:-----:
+![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)  | [![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD) | one
 
 
 # ORMBr
