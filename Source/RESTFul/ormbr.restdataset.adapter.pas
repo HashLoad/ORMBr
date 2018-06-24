@@ -71,17 +71,18 @@ type
     procedure ApplyInserter(const MaxErros: Integer); override;
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
+    procedure PopularDataSet(const AObject: TObject);
+    procedure PopularDataSetList(const AObjectList: TObjectList<M>);
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
-      AMasterObject: TObject); overload; virtual;
-    procedure RefreshRecord(const AObject: TObject);
+      APageSize: Integer; AMasterObject: TObject); overload; virtual;
+    procedure RefreshRecordInternal(const AObject: TObject);
     {$ELSE}
     constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; virtual;
     {$ENDIF}
     destructor Destroy; override;
-    procedure PopularDataSet(const AObject: TObject);
-    procedure PopularDataSetList(const AObjectList: TObjectList<M>);
+    procedure NextPacket; override;
   end;
 
 implementation
@@ -100,10 +101,10 @@ uses
 
 {$IFDEF DRIVERRESTFUL}
 constructor TRESTDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
-  ADataSet: TDataSet; AMasterObject: TObject);
+  ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(ADataSet, -1, AMasterObject);
-  FSession := TSessionRest<M>.Create(AConnection, Self);
+  inherited Create(ADataSet, APageSize, AMasterObject);
+  FSession := TSessionRest<M>.Create(AConnection, Self, APageSize);
 end;
 {$ELSE}
 constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; AMasterObject: TObject);
@@ -284,8 +285,9 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := FSession
-                .Explorer.GetMappingColumn(FCurrentInternal.ClassType);
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(FCurrentInternal.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsNoInsert then
@@ -304,6 +306,28 @@ begin
     if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
       raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
                                   FOrmDataSet.FieldByName(LColumn.ColumnName).ConstraintErrorMessage);
+  end;
+end;
+
+procedure TRESTDataSetAdapter<M>.NextPacket;
+var
+  LBookMark: TBookmark;
+  LObjectList: TObjectList<M>;
+begin
+  inherited;
+  FOrmDataSet.DisableControls;
+  DisableDataSetEvents;
+  LBookMark := FOrmDataSet.Bookmark;
+  LObjectList := FSession.NextPacketList;
+  try
+    if LObjectList <> nil then
+      PopularDataSetList(LObjectList);
+  finally
+    LObjectList.Clear;
+    LObjectList.Free;
+    FOrmDataSet.GotoBookmark(LBookMark);
+    FOrmDataSet.EnableControls;
+    EnableDataSetEvents;
   end;
 end;
 
@@ -425,7 +449,7 @@ begin
 end;
 
 {$IFDEF DRIVERRESTFUL}
-procedure TRESTDataSetAdapter<M>.RefreshRecord(const AObject: TObject);
+procedure TRESTDataSetAdapter<M>.RefreshRecordInternal(const AObject: TObject);
 var
   LChildDataSet: TDataSetBaseAdapter<M>;
 begin

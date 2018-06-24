@@ -227,7 +227,9 @@ function TDMLGeneratorAbstract.GeneratorPageNext(ACommandSelect: string;
   APageSize: Integer; APageNext: Integer): string;
 begin
   if APageSize > -1 then
-     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)]);
+    Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorSelect(ACriteria: ICriteria): string;

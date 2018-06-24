@@ -34,9 +34,10 @@ uses
   Rtti,
   TypInfo,
   Generics.Collections,
-  ormbr.mapping.classes,
-  ormbr.factory.interfaces,
-  ormbr.mapping.explorerstrategy,
+  /// ORMBr
+  ormbr.rtti.helper,
+  ormbr.types.blob,
+  ormbr.mapping.attributes,
   ormbr.objects.manager.abstract;
 
 type
@@ -46,11 +47,19 @@ type
   TSessionAbstract<M: class, constructor> = class abstract
   protected
     FPageSize: Integer;
+    FPageNext: Integer;
     FModifiedFields: TDictionary<string, TList<string>>;
     FDeleteList: TObjectList<M>;
-    FExplorer: IMappingExplorerStrategy;
     FManager: TObjectManagerAbstract<M>;
     FResultParams: TParams;
+    FFindWhereUsed: Boolean;
+    FWhere: String;
+    FOrderBy: String;
+  public
+    constructor Create(const APageSize: Integer = -1); overload; virtual;
+    destructor Destroy; override;
+    function ExistSequence: Boolean; virtual;
+    function ModifiedFields: TDictionary<string, TList<string>>; virtual;
     /// <summary>
     /// ObjectSet
     /// </summary>
@@ -60,8 +69,11 @@ type
     procedure Update(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
-    procedure NextPacket(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual; abstract;
+    function NextPacketList: TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     /// <summary>
     /// DataSet
     /// </summary>
@@ -73,9 +85,6 @@ type
     procedure RefreshRecord(const AColumns: TParams); virtual; abstract;
 //    procedure OpenAssociation(const AObject: TObject); virtual; abstract;
     function ResultParams: TParams;
-  public
-    constructor Create(const APageSize: Integer = -1); overload; virtual;
-    destructor Destroy; override;
     /// <summary>
     /// DataSet e ObjectSet
     /// </summary>
@@ -86,20 +95,12 @@ type
     function Find(const AID: string): M; overload; virtual;
     function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
-
-    function ExistSequence: Boolean; virtual;
-    function ModifiedFields: TDictionary<string, TList<string>>; virtual;
-    function Explorer: IMappingExplorerStrategy; virtual;
   end;
 
 implementation
 
 uses
-  ormbr.objects.helper,
-  ormbr.rtti.helper,
-  ormbr.types.blob,
-  ormbr.mapping.attributes,
-  ormbr.mapping.explorer;
+  ormbr.objects.helper;
 
 { TSessionAbstract<M> }
 constructor TSessionAbstract<M>.Create(const APageSize: Integer = -1);
@@ -107,7 +108,6 @@ begin
   FPageSize := APageSize;
   FModifiedFields := TObjectDictionary<string, TList<string>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<M>.Create;
-  FExplorer := TMappingExplorer.GetInstance;
   FResultParams := TParams.Create;
   /// <summary>
   /// Inicia uma lista interna para gerenciar campos alterados
@@ -118,7 +118,6 @@ end;
 
 destructor TSessionAbstract<M>.Destroy;
 begin
-  FExplorer := nil;
   FDeleteList.Clear;
   FDeleteList.Free;
   FModifiedFields.Clear;
@@ -148,29 +147,34 @@ begin
   Result := FManager.ExistSequence;
 end;
 
-function TSessionAbstract<M>.Explorer: IMappingExplorerStrategy;
-begin
-  Result := FExplorer;
-end;
-
 function TSessionAbstract<M>.Find(const AID: string): M;
 begin
+  FFindWhereUsed := False;
   Result := FManager.Find(AID);
 end;
 
-function TSessionAbstract<M>.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<M>;
+function TSessionAbstract<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
 begin
-  Result := FManager.FindWhere(AWhere, AOrderBy);
+  FFindWhereUsed := True;
+  FWhere := AWhere;
+  FOrderBy := AOrderBy;
+  if FPageSize > -1 then
+  begin
+    Result := NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext);
+    Exit;
+  end;
+  Result := FManager.FindWhere(FWhere, FOrderBy);
 end;
 
 function TSessionAbstract<M>.Find(const AID: Integer): M;
 begin
+  FFindWhereUsed := False;
   Result := FManager.Find(AID);
 end;
 
 function TSessionAbstract<M>.Find: TObjectList<M>;
 begin
+  FFindWhereUsed := False;
   Result := FManager.Find;
 end;
 

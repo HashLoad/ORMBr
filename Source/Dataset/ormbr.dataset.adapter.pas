@@ -68,8 +68,8 @@ type
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoNewRecord(DataSet: TDataSet); override;
-    procedure NextPacket; override;
     procedure LoadLazy(const AOwner: M); override;
+    procedure NextPacket; override;
   public
     constructor Create(AConnection: IDBConnection; ADataSet:
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
@@ -166,8 +166,9 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := FSession
-                .Explorer.GetMappingColumn(FCurrentInternal.ClassType);
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(FCurrentInternal.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsNoInsert then

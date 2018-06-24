@@ -117,12 +117,14 @@ type
   IRESTConnection = interface
     ['{A5974AAA-1B36-46F2-AF8D-51C4E69BC072}']
     function GetBaseURL: String;
-    function GetSelect: String;
-    function GetSelectID: String;
-    function GetSelectWhere: String;
-    function GetInsert: String;
-    function GetUpdate: String;
-    function GetDelete: String;
+    function GetMethodSelect: String;
+    function GetMethodSelectID: String;
+    function GetMethodSelectWhere: String;
+    function GetMethodInsert: String;
+    function GetMethodUpdate: String;
+    function GetMethodDelete: String;
+    function GetMethodNextPacket: String;
+    function GetMethodNextPacketWhere: String;
     ///
     procedure SetCommandMonitor(AMonitor: ICommandMonitor);
     function CommandMonitor: ICommandMonitor;
@@ -132,16 +134,17 @@ type
       const AParams: TProc = nil): String; overload;
     procedure AddParam(AValue: String);
     property BaseURL: String read GetBaseURL;
-    property Select: String read GetSelect;
-    property SelectID: String read GetSelectID;
-    property SelectWhere: String read GetSelectWhere;
-    property Insert: String read GetInsert;
-    property Update: String read GetUpdate;
-    property Delete: String read GetDelete;
+    property MethodSelect: String read GetMethodSelect;
+    property MethodSelectID: String read GetMethodSelectID;
+    property MethodSelectWhere: String read GetMethodSelectWhere;
+    property MethodInsert: String read GetMethodInsert;
+    property MethodUpdate: String read GetMethodUpdate;
+    property MethodDelete: String read GetMethodDelete;
+    property MethodNextPacket: String read GetMethodNextPacket;
+    property MethodNextPacketWhere: String read GetMethodNextPacketWhere;
   end;
 {$ENDIF}
 
 implementation
 
 end.
-

@@ -115,9 +115,6 @@ type
     procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
     procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
     procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
-//    procedure Open; overload; virtual;
-//    procedure Open(const AID: Integer); overload; virtual;
-//    procedure Open(const AID: String); overload; virtual;
     procedure Insert; virtual;
     procedure Append; virtual;
     procedure Post; virtual;
@@ -142,7 +139,7 @@ type
     procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure RefreshRecord; virtual;
-    procedure NextPacket; virtual; abstract;
+    procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;
     procedure LoadLazy(const AOwner: M); virtual; abstract;
     procedure EmptyDataSet; virtual; abstract;
@@ -746,21 +743,6 @@ begin
   Result := FCurrentInternal;
 end;
 
-//procedure TDataSetBaseAdapter<M>.Open(const AID: String);
-//begin
-//  OpenIDInternal(AID);
-//end;
-
-//procedure TDataSetBaseAdapter<M>.Open;
-//begin
-//  OpenSQLInternal('');
-//end;
-
-//procedure TDataSetBaseAdapter<M>.Open(const AID: Integer);
-//begin
-//  OpenIDInternal(AID);
-//end;
-
 procedure TDataSetBaseAdapter<M>.Post;
 begin
   FOrmDataSet.Post;
@@ -775,8 +757,9 @@ begin
   inherited;
   if FOrmDataSet.RecordCount > 0 then
   begin
-    LPrimaryKey := FSession
-                     .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+    LPrimaryKey := TMappingExplorer
+                     .GetInstance
+                       .GetMappingPrimaryKey(FCurrentInternal.ClassType);
     if LPrimaryKey <> nil then
     begin
       FOrmDataSet.DisableControls;

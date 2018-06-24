@@ -37,7 +37,7 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
-  /// orm
+  /// ORMBr
   ormbr.objects.manager,
   ormbr.objectset.bind,
   ormbr.mapping.explorerstrategy,
@@ -49,15 +49,16 @@ type
   /// M - Sessão Abstract
   /// </summary>
   TSessionObjectSet<M: class, constructor> = class(TSessionAbstract<M>)
-  private
   protected
     FConnection: IDBConnection;
   public
     constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
     destructor Destroy; override;
-    procedure NextPacket(const AObjectList: TObjectList<M>); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
-    procedure RefreshRecord(const AColumns: TParams); override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
+    function NextPacketList: TObjectList<M>; overload; override;
+    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
   end;
 
 implementation
@@ -77,43 +78,57 @@ begin
   FManager.LoadLazy(AOwner, AObject);
 end;
 
+function TSessionObjectSet<M>.NextPacketList(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): TObjectList<M>;
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext)
+  else
+    Result := nil;
+end;
+
+function TSessionObjectSet<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+    Result := FManager.NextPacketList(APageSize, APageNext)
+  else
+    Result := nil;
+end;
+
 destructor TSessionObjectSet<M>.Destroy;
 begin
   FManager.Free;
   inherited;
 end;
 
-procedure TSessionObjectSet<M>.NextPacket(const AObjectList: TObjectList<M>);
+procedure TSessionObjectSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
 begin
   inherited;
   if not FManager.FetchingRecords then
-    FManager.NextPacketList(AObjectList);
+  begin
+    FPageNext := FPageNext + FPageSize;
+    if FFindWhereUsed then
+      FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+    else
+      FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+  end;
 end;
 
-procedure TSessionObjectSet<M>.RefreshRecord(const AColumns: TParams);
-var
-  LWhere: String;
-  LFor: Integer;
-  LDataList: TObjectList<M>;
+function TSessionObjectSet<M>.NextPacketList: TObjectList<M>;
 begin
   inherited;
-  LWhere := '';
-  for LFor := 0 to AColumns.Count -1 do
+  if not FManager.FetchingRecords then
   begin
-    LWhere := LWhere + AColumns[LFor].Name + '=' + AColumns[LFor].AsString;
-    if LFor < AColumns.Count -1 then
-      LWhere := LWhere + ' AND ';
-  end;
-  LDataList := FManager.FindWhere(LWhere);
-  if LDataList <> nil then
-  begin
-    if LDataList.Count > 0 then
-    begin
-//      TBindObject
-//        .GetInstance
-//          .
-    end;
-  end;
+    FPageNext := FPageNext + FPageSize;
+    if FFindWhereUsed then
+      Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+    else
+      Result := FManager.NextPacketList(FPageSize, FPageNext);
+  end
+  else
+    Result := nil;
 end;
 
 end.

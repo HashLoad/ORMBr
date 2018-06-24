@@ -100,7 +100,7 @@ type
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
-      AMasterObject: TObject); overload; override;
+      APageSize: Integer; AMasterObject: TObject); override;
     {$ELSE}
     constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
     {$ENDIF}
@@ -117,9 +117,9 @@ uses
 
 {$IFDEF DRIVERRESTFUL}
 constructor TRESTFDMemTableAdapter<M>.Create(const AConnection: IRESTConnection;
-  ADataSet: TDataSet; AMasterObject: TObject);
+  ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(AConnection, ADataSet, AMasterObject);
+  inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
 {$ELSE}
 constructor TRESTFDMemTableAdapter<M>.Create(ADataSet: TDataSet;
   AMasterObject: TObject);
@@ -259,6 +259,8 @@ begin
 end;
 
 procedure TRESTFDMemTableAdapter<M>.OpenIDInternal(const AID: Variant);
+var
+  LObject: M;
 begin
 //  FOrmDataSet.BeginBatch;
   FOrmDataSet.DisableConstraints;
@@ -268,10 +270,18 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.OpenID(AID);
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    LObject := FSession.Find(VarToStr(AID));
+    if LObject <> nil then
+    begin
+      try
+        PopularDataSet(LObject);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObject.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;
@@ -282,6 +292,8 @@ begin
 end;
 
 procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
+var
+  LObjectList: TObjectList<M>;
 begin
 //  FOrmDataSet.BeginBatch;
   FOrmDataSet.DisableConstraints;
@@ -291,10 +303,19 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.Open;
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    LObjectList := FSession.Find;
+    if LObjectList <> nil then
+    begin
+      try
+        PopularDataSetList(LObjectList);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObjectList.Clear;
+        LObjectList.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;
@@ -305,6 +326,8 @@ begin
 end;
 
 procedure TRESTFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+var
+  LObjectList: TObjectList<M>;
 begin
 //  FOrmDataSet.BeginBatch;
   FOrmDataSet.DisableConstraints;
@@ -314,10 +337,19 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.OpenWhere(AWhere, AOrderBy);
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    LObjectList := FSession.FindWhere(AWhere, AOrderBy);
+    if LObjectList <> nil then
+    begin
+      try
+        PopularDataSetList(LObjectList);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObjectList.Clear;
+        LObjectList.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;

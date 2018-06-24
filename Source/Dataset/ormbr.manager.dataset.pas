@@ -57,21 +57,19 @@ uses
 type
   TManagerDataSet = class
   private
-    {$IFDEF DRIVERRESTFUL}
-    FConnection: IRESTConnection;
-    {$ELSE}
-    FConnection: IDBConnection;
-    {$ENDIF}
+    FConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection;
+                 {$ELSE}IDBConnection;
+                 {$ENDIF}
     FRepository: TDictionary<string, TObject>;
     FNestedList: TDictionary<string, TObjectList<TObject>>;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
     procedure RepositoryListFree;
     procedure NestedListFree;
   public
-    {$IFDEF DRIVERRESTFUL}
-    constructor Create(const AConnection: IRESTConnection);
-    {$ELSE}
-    constructor Create(const AConnection: IDBConnection);
+    constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
+                                          {$ELSE}IDBConnection);
+                                          {$ENDIF}
+    {$IFNDEF DRIVERRESTFUL}
     function NextPacket<T: class, constructor>: TManagerDataSet;
     function GetAutoNextPacket<T: class, constructor>: Boolean;
     procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
@@ -218,7 +216,7 @@ begin
         {$IFDEF USEFDMEMTABLE}
           if ADataSet is TFDMemTable then
             {$IFDEF DRIVERRESTFUL}
-            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, LMaster)
+            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ELSE}
             LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ENDIF}
@@ -256,7 +254,7 @@ begin
     {$IFDEF USEFDMEMTABLE}
       if ADataSet is TFDMemTable then
         {$IFDEF DRIVERRESTFUL}
-        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, nil)
+        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ELSE}
         LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ENDIF}

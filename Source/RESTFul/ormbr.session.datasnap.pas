@@ -52,20 +52,16 @@ type
   /// </summary>
   TSessionDataSnap<M: class, constructor> = class(TSessionAbstract<M>)
   private
-    FOwner: TDataSetBaseAdapter<M>;
     FRESTResponse: TRESTResponse;
     FRESTRequest: TRESTRequest;
     FRESTClient: TRESTClient;
     FResource: String;
   public
-    constructor Create(const AOwner: TDataSetBaseAdapter<M>); overload;
+    constructor Create(const APageSize: Integer = -1); override;
     destructor Destroy; override;
     procedure Insert(const AObject: M); overload; override;
     procedure Update(const AObjectList: TObjectList<M>); overload; override;
     procedure Delete(const AID: Integer); overload; override;
-    procedure Open; override;
-    procedure OpenID(const AID: Variant); override;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Integer): M; overload; override;
     function Find(const AID: String): M; overload; override;
@@ -86,13 +82,12 @@ uses
 
 { TSessionDataSnap<M> }
 
-constructor TSessionDataSnap<M>.Create(const AOwner: TDataSetBaseAdapter<M>);
+constructor TSessionDataSnap<M>.Create(const APageSize: Integer = -1);
 var
   LObject: TObject;
   ABaseURL: String;
 begin
-  inherited Create;
-  FOwner := AOwner;
+  inherited Create(APageSize);
   /// <summary>
   ///  Verifica se foi informado a URL no Singleton
   /// </summary>
@@ -229,59 +224,6 @@ begin
     FRESTRequest.Execute;
   finally
     FJSON.Free;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.OpenID(const AID: Variant);
-var
-  LObject: M;
-begin
-  LObject := Find(Integer(AID));
-  if LObject <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSet(LObject);
-    finally
-      LObject.Free;
-    end;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.Open;
-var
-  LObjectList: TObjectList<M>;
-begin
-  LObjectList := Find;
-  /// <summary>
-  /// Popula do DataSet
-  /// </summary>
-  if LObjectList <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSetList(LObjectList);
-    finally
-      LObjectList.Clear;
-      LObjectList.Free;
-    end;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.OpenWhere(const AWhere, AOrderBy: string);
-var
-  LObjectList: TObjectList<M>;
-begin
-  LObjectList := FindWhere(AWhere, AOrderBy);
-  /// <summary>
-  /// Popula do DataSet
-  /// </summary>
-  if LObjectList <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSetList(LObjectList);
-    finally
-      LObjectList.Clear;
-      LObjectList.Free;
-    end;
   end;
 end;
 

@@ -82,7 +82,8 @@ implementation
 
 uses
   ormbr.mapping.explorer,
-  ormbr.rtti.helper;
+  ormbr.rtti.helper,
+  ormbr.objects.helper;
 
 { TRttiSingleton }
 
@@ -107,17 +108,17 @@ end;
 function TRttiSingleton.Clone(AObject: TObject): TObject;
 var
   LRttiType: TRttiType;
-  LField: TRttiField;
-  LMaster, LCloned: TObject;
-  LSrc: TObject;
+  LProperty: TRttiProperty;
+  LCloned: TObject;
+  LValue: TObject;
   LSourceStream: TStream;
   LSavedPosition: Int64;
   LTargetStream: TStream;
-  LTargetCollection: TObjectList<TObject>;
-  SourceCollection: TObjectList<TObject>;
-  LFor: Integer;
   LSourceObject: TObject;
   LTargetObject: TObject;
+  LTargetList: TObjectList<TObject>;
+  LSourceList: TObjectList<TObject>;
+  LFor: Integer;
 begin
   Result := nil;
   if not Assigned(AObject) then
@@ -125,65 +126,62 @@ begin
 
   LRttiType := FContext.GetType(AObject.ClassType);
   LCloned := CreateObject(LRttiType);
-  LMaster := AObject;
-  for LField in LRttiType.GetFields do
+  for LProperty in LRttiType.GetProperties do
   begin
-    if not LField.FieldType.IsInstance then
-      LField.SetValue(LCloned, LField.GetValue(LMaster))
+    if not LProperty.PropertyType.IsInstance then
+    begin
+      if LProperty.IsWritable then
+        LProperty.SetValue(LCloned, LProperty.GetValue(AObject));
+    end
     else
     begin
-      LSrc := LField.GetValue(AObject).AsObject;
-      if LSrc is TStream then
+      LValue := LProperty.GetNullableValue(AObject).AsObject;
+      if LValue is TStream then
       begin
-        LSourceStream := TStream(LSrc);
+        LSourceStream := TStream(LValue);
         LSavedPosition := LSourceStream.Position;
         LSourceStream.Position := 0;
-//        if LField.GetValue(LCloned).IsEmpty then
-        if LField.GetValue(LCloned).AsType<Variant> = Null then
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
         begin
           LTargetStream := TMemoryStream.Create;
-          LField.SetValue(LCloned, LTargetStream);
+          LProperty.SetValue(LCloned, LTargetStream);
         end
         else
-          LTargetStream := LField.GetValue(LCloned).AsObject as TStream;
+          LTargetStream := LProperty.GetValue(LCloned).AsObject as TStream;
         LTargetStream.Position := 0;
         LTargetStream.CopyFrom(LSourceStream, LSourceStream.Size);
         LTargetStream.Position := LSavedPosition;
         LSourceStream.Position := LSavedPosition;
       end
       else
-      if LSrc is TObjectList<TObject> then
+      if LProperty.IsList then
       begin
-        SourceCollection := TObjectList<TObject>(LSrc);
-//        if LField.GetValue(LCloned).IsEmpty then
-        if LField.GetValue(LCloned).AsType<Variant> = Null then
+        LSourceList := TObjectList<TObject>(LValue);
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
         begin
-          LTargetCollection := TObjectList<TObject>.Create;
-          LField.SetValue(LCloned, LTargetCollection);
+          LTargetList := TObjectList<TObject>.Create;
+          LProperty.SetValue(LCloned, LTargetList);
         end
         else
-          LTargetCollection := LField.GetValue(LCloned).AsObject as TObjectList<TObject>;
+          LTargetList := TObjectList<TObject>(LProperty.GetValue(LCloned).AsObject);
 
-        for LFor := 0 to SourceCollection.Count - 1 do
-        begin
-          LTargetCollection.Add(Clone(SourceCollection[LFor]));
-        end;
+        for LFor := 0 to LSourceList.Count - 1 do
+          LTargetList.Add(Clone(LSourceList[LFor]));
       end
       else
       begin
-        LSourceObject := LSrc;
-//        if LField.GetValue(LCloned).IsEmpty then
-        if LField.GetValue(LCloned).AsType<Variant> = Null then
+        LSourceObject := LValue;
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
         begin
           LTargetObject := Clone(LSourceObject);
-          LField.SetValue(LCloned, LTargetObject);
+          LProperty.SetValue(LCloned, LTargetObject);
         end
         else
         begin
-          LTargetObject := LField.GetValue(LCloned).AsObject;
+          LTargetObject := LProperty.GetValue(LCloned).AsObject;
           CopyObject(LSourceObject, LTargetObject);
         end;
-        LField.SetValue(LCloned, LTargetObject);
+        LProperty.SetValue(LCloned, LTargetObject);
       end;
     end;
   end;
@@ -193,75 +191,76 @@ end;
 procedure TRttiSingleton.CopyObject(ASourceObject, ATargetObject: TObject);
 var
   LRttiType: TRttiType;
-  LRttiField: TRttiField;
-  LMaster, LCloned: TObject;
-  LSrc: TObject;
+  LProperty: TRttiProperty;
+  LCloned: TObject;
+  LValue: TObject;
   LSourceStream: TStream;
   LSavedPosition: Int64;
   LTargetStream: TStream;
   LSourceObject: TObject;
   LTargetObject: TObject;
-//  targetCollection: IWrappedList;
-//  sourceCollection: IWrappedList;
-//  LTar: TObject;
-//  LFor: Integer;
+  LTargetList: TObjectList<TObject>;
+  LSourceList: TObjectList<TObject>;
+  LFor: Integer;
 begin
   if not Assigned(ATargetObject) then
     Exit;
 
   LRttiType := FContext.GetType(ASourceObject.ClassType);
   LCloned := ATargetObject;
-  LMaster := ASourceObject;
-  for LRttiField in LRttiType.GetFields do
+  for LProperty in LRttiType.GetProperties do
   begin
-    if not LRttiField.FieldType.IsInstance then
-      LRttiField.SetValue(LCloned, LRttiField.GetValue(LMaster))
+    if not LProperty.PropertyType.IsInstance then
+    begin
+      if LProperty.IsWritable then
+        LProperty.SetValue(LCloned, LProperty.GetValue(ASourceObject));
+    end
     else
     begin
-      LSrc := LRttiField.GetValue(ASourceObject).AsObject;
-      if LSrc is TStream then
+      LValue := LProperty.GetValue(ASourceObject).AsObject;
+      if LValue is TStream then
       begin
-        LSourceStream := TStream(LSrc);
+        LSourceStream := TStream(LValue);
         LSavedPosition := LSourceStream.Position;
         LSourceStream.Position := 0;
-//        if LRttiField.GetValue(LCloned).IsEmpty then
-        if LRttiField.GetValue(LCloned).AsType<Variant> = Null then
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
         begin
           LTargetStream := TMemoryStream.Create;
-          LRttiField.SetValue(LCloned, LTargetStream);
+          LProperty.SetValue(LCloned, LTargetStream);
         end
         else
-          LTargetStream := LRttiField.GetValue(LCloned).AsObject as TStream;
+          LTargetStream := LProperty.GetValue(LCloned).AsObject as TStream;
         LTargetStream.Position := 0;
         LTargetStream.CopyFrom(LSourceStream, LSourceStream.Size);
         LTargetStream.Position := LSavedPosition;
         LSourceStream.Position := LSavedPosition;
       end
-//      else if TDuckTypedList.CanBeWrappedAsList(LSrc) then
-//      begin
-//        sourceCollection := WrapAsList(LSrc);
-//        LTar := LRttiField.GetValue(LCloned).AsObject;
-//        if Assigned(LTar) then
-//        begin
-//          targetCollection := WrapAsList(LTar);
-//          targetCollection.Clear;
-//          for LFor := 0 to sourceCollection.Count - 1 do
-//            targetCollection.Add(TRTTIUtils.Clone(sourceCollection.GetItem(LFor)));
-//        end;
-//      end
+      else
+      if LProperty.IsList then
+      begin
+        LSourceList := TObjectList<TObject>(LValue);
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
+        begin
+          LTargetList := TObjectList<TObject>.Create;
+          LProperty.SetValue(LCloned, LTargetList);
+        end
+        else
+          LTargetList := TObjectList<TObject>(LProperty.GetValue(LCloned).AsObject);
+
+        for LFor := 0 to LSourceList.Count - 1 do
+          LTargetList.Add(Clone(LSourceList[LFor]));
+      end
       else
       begin
-        LSourceObject := LSrc;
-
-//        if LRttiField.GetValue(LCloned).IsEmpty then
-        if LRttiField.GetValue(LCloned).AsType<Variant> = Null then
+        LSourceObject := LValue;
+        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
         begin
           LTargetObject := Clone(LSourceObject);
-          LRttiField.SetValue(LCloned, LTargetObject);
+          LProperty.SetValue(LCloned, LTargetObject);
         end
         else
         begin
-          LTargetObject := LRttiField.GetValue(LCloned).AsObject;
+          LTargetObject := LProperty.GetValue(LCloned).AsObject;
           CopyObject(LSourceObject, LTargetObject);
         end;
       end;
