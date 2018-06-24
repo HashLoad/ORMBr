@@ -1,5 +1,5 @@
-:----------------------------------------------------------------------|----------------------------------------------------------------------------------------:|
-![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)  |[![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD)|
+:----------------------------------------------------------------------| ----------------------------------------------------------------------------------------: |:-:
+![ORMBr Framework.png](http://www.ormbr.com.br/images/title_logo.png)  | [![pageseguro.png](http://www.ormbr.com.br/images/pagseguro.png)](https://pag.ae/bglQrWD) |
 
 
 # ORMBr
