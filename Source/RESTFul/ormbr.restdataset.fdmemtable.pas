@@ -51,12 +51,14 @@ uses
   FireDAC.DApt,
   FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
-  /// ormbr
+  /// ORMBr
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ENDIF}
   ormbr.criteria,
   ormbr.restdataset.adapter,
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
-  ormbr.factory.interfaces,
   ormbr.types.mapping,
   ormbr.mapping.classes,
   ormbr.rtti.helper,

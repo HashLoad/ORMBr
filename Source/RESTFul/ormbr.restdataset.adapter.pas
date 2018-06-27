@@ -42,6 +42,9 @@ uses
   StrUtils,
   Variants,
   Generics.Collections,
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ENDIF}
   ormbr.criteria,
   ormbr.objectset.bind,
   ormbr.dataset.bind,
@@ -49,8 +52,7 @@ uses
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.mapping.exceptions,
-  ormbr.dataset.base.adapter,
-  ormbr.factory.interfaces;
+  ormbr.dataset.base.adapter;
 
 type
   /// <summary>

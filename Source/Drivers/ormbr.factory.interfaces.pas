@@ -25,8 +25,6 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-{$INCLUDE ..\ormbr.inc}
-
 unit ormbr.factory.interfaces;
 
 interface
@@ -35,9 +33,6 @@ uses
   DB,
   Classes,
   SysUtils,
-  {$IFDEF DRIVERRESTFUL}
-  ormbr.rest.methods,
-  {$ENDIF}
   ormbr.monitor;
 
 type
@@ -112,38 +107,6 @@ type
     procedure Rollback;
     function InTransaction: Boolean;
   end;
-
-{$IFDEF DRIVERRESTFUL}
-  IRESTConnection = interface
-    ['{A5974AAA-1B36-46F2-AF8D-51C4E69BC072}']
-    function GetBaseURL: String;
-    function GetMethodSelect: String;
-    function GetMethodSelectID: String;
-    function GetMethodSelectWhere: String;
-    function GetMethodInsert: String;
-    function GetMethodUpdate: String;
-    function GetMethodDelete: String;
-    function GetMethodNextPacket: String;
-    function GetMethodNextPacketWhere: String;
-    ///
-    procedure SetCommandMonitor(AMonitor: ICommandMonitor);
-    function CommandMonitor: ICommandMonitor;
-    function Execute(const AResource, ASubResource: String;
-      const ARequestMethod: TRESTRequestMethodType; const AParams: TProc = nil): String; overload;
-    function Execute(const AResource: String; const ARequestMethod: TRESTRequestMethodType;
-      const AParams: TProc = nil): String; overload;
-    procedure AddParam(AValue: String);
-    property BaseURL: String read GetBaseURL;
-    property MethodSelect: String read GetMethodSelect;
-    property MethodSelectID: String read GetMethodSelectID;
-    property MethodSelectWhere: String read GetMethodSelectWhere;
-    property MethodInsert: String read GetMethodInsert;
-    property MethodUpdate: String read GetMethodUpdate;
-    property MethodDelete: String read GetMethodDelete;
-    property MethodNextPacket: String read GetMethodNextPacket;
-    property MethodNextPacketWhere: String read GetMethodNextPacketWhere;
-  end;
-{$ENDIF}
 
 implementation
 

@@ -40,9 +40,9 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
-  /// orm
+  /// ORMBr
   ormbr.objectset.base.adapter,
-  ormbr.factory.interfaces,
+  ormbr.client.interfaces,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.objects.helper;
@@ -62,6 +62,9 @@ type
     procedure Insert(const AObject: M); override;
     procedure Update(const AObject: M); override;
     procedure Delete(const AObject: M); override;
+    {$IFDEF DRIVERRESTFUL}
+    function Find(const AMethodName: String; const AParams: array of string): TObjectList<M>; overload; override;
+    {$ENDIF}
   end;
 
 implementation
@@ -164,5 +167,14 @@ begin
     LObjectList.Free;
   end;
 end;
+
+{$IFDEF DRIVERRESTFUL}
+function TRESTObjectSetAdapter<M>.Find(const AMethodName: String;
+  const AParams: array of string): TObjectList<M>;
+begin
+  inherited;
+  Result := FSession.Find(AMethodName, AParams);
+end;
+{$ENDIF}
 
 end.

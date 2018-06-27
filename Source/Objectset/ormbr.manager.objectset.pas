@@ -34,13 +34,14 @@ interface
 uses
   Generics.Collections,
   /// ORMBr
-  ormbr.objectset.base.adapter,
   {$IFDEF DRIVERRESTFUL}
   ormbr.restobjectset.adapter,
+  ormbr.client.interfaces,
   {$ELSE}
   ormbr.objectset.adapter,
+  ormbr.factory.interfaces,
   {$ENDIF}
-  ormbr.factory.interfaces;
+  ormbr.objectset.base.adapter;
 
 type
   TManagerObjectSet = class
@@ -64,6 +65,9 @@ type
     function Find<T: class, constructor>: TManagerObjectSet; overload;
     function Find<T: class, constructor>(const AID: Integer): T; overload;
     function Find<T: class, constructor>(const AID: String): T; overload;
+    {$IFDEF DRIVERRESTFUL}
+    function Find<T: class, constructor>(const AMethodName: String; const AParams: array of string): TManagerObjectSet; overload;
+    {$ENDIF}
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
@@ -237,5 +241,19 @@ begin
   Resolver<T>.NextPacket(LObjectList);
   Result := Self;
 end;
+
+{$IFDEF DRIVERRESTFUL}
+function TManagerObjectSet.Find<T>(const AMethodName: String;
+  const AParams: array of string): TManagerObjectSet;
+var
+  LObjectList: TObjectList<T>;
+begin
+  LObjectList := Resolver<T>.Find(AMethodName, AParams);
+  /// <summary> Limpa a lista de objectos </summary>
+  NestedListFree;
+  FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
+  Result := Self;
+end;
+{$ENDIF}
 
 end.

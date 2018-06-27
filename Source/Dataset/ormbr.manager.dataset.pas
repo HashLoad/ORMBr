@@ -51,7 +51,11 @@ uses
     {$ENDIF}
   {$ENDIF}
   /// ORMBr Interface
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ELSE}
   ormbr.factory.interfaces,
+  {$ENDIF}
   ormbr.dataset.base.adapter;
 
 type

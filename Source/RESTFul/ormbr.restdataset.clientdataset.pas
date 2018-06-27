@@ -41,12 +41,14 @@ uses
   DBClient,
   Variants,
   Generics.Collections,
-  /// orm
+  /// ORMBr
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ENDIF}
   ormbr.criteria,
   ormbr.dataset.base.adapter,
   ormbr.restdataset.adapter,
   ormbr.dataset.events,
-  ormbr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.objects.helper,

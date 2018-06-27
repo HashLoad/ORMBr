@@ -66,7 +66,6 @@ type
     /// Controle de paginação vindo do banco de dados
     /// </summary>
     FPageSize: Integer;
-
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
@@ -355,7 +354,7 @@ end;
 
 function TObjectManager<M>.NextPacket(const APageSize, APageNext: Integer): IDBResultSet;
 begin
-  Result := FDMLCommandFactory.GeneratorNextPacket(M, APageSize, APageNext);
+  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), APageSize, APageNext);
   if Result.FetchingAll then
     FFetchingRecords := True;
 end;
@@ -388,7 +387,7 @@ end;
 function TObjectManager<M>.NextPacket(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): IDBResultSet;
 begin
-  Result := FDMLCommandFactory.GeneratorNextPacket(M, AWhere, AOrderBy, APageSize, APageNext);
+  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), AWhere, AOrderBy, APageSize, APageNext);
   if Result.FetchingAll then
     FFetchingRecords := True;
 end;

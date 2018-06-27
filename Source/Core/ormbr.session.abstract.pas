@@ -25,6 +25,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.session.abstract;
 
 interface
@@ -93,6 +95,9 @@ type
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Integer): M; overload; virtual;
     function Find(const AID: string): M; overload; virtual;
+    {$IFDEF DRIVERRESTFUL}
+    function Find(const AMethodName: String; const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    {$ENDIF}
     function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
   end;

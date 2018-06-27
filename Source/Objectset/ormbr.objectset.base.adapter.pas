@@ -27,6 +27,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.objectset.base.adapter;
 
 interface
@@ -83,6 +85,9 @@ type
     function NextPacket: TObjectList<M>; overload; virtual;
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
     function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
+    {$IFDEF DRIVERRESTFUL}
+    function Find(const AMethodName: String; const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    {$ENDIF}
   end;
 
 implementation
