@@ -52,8 +52,6 @@ type
     FRepository: TDictionary<string, TObject>;
     FNestedList: TDictionary<string, TObjectList<TObject>>;
     function Resolver<T: class, constructor>: TObjectSetBaseAdapter<T>;
-    procedure NestedListFree;
-    procedure RepositoryListFree;
   public
 
     constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
@@ -90,8 +88,15 @@ constructor TManagerObjectSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IR
                                                         {$ENDIF}
 begin
   FConnection := AConnection;
-  FRepository := TDictionary<string, TObject>.Create;
-  FNestedList := TDictionary<string, TObjectList<TObject>>.Create;
+  FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
+  FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
+end;
+
+destructor TManagerObjectSet.Destroy;
+begin
+  FNestedList.Free;
+  FRepository.Free;
+  inherited;
 end;
 
 function TManagerObjectSet.NestedList<T>: TObjectList<T>;
@@ -105,30 +110,10 @@ begin
   end;
 end;
 
-procedure TManagerObjectSet.NestedListFree;
-var
-  LObjectList: TObjectList<TObject>;
-begin
-  for LObjectList in FNestedList.Values do
-  begin
-    LObjectList.Clear;
-    LObjectList.Free;
-  end;
-end;
-
 function TManagerObjectSet.Delete<T>(const AObject: T): TManagerObjectSet;
 begin
   Resolver<T>.Delete(AObject);
   Result := Self;
-end;
-
-destructor TManagerObjectSet.Destroy;
-begin
-  NestedListFree;
-  RepositoryListFree;
-  FNestedList.Free;
-  FRepository.Free;
-  inherited;
 end;
 
 function TManagerObjectSet.ExistSequence<T>: Boolean;
@@ -171,17 +156,8 @@ var
 begin
   LObjectList := Resolver<T>.Find;
   /// <summary> Limpa a lista de objectos </summary>
-  NestedListFree;
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
-end;
-
-procedure TManagerObjectSet.RepositoryListFree;
-var
-  LObject: TObject;
-begin
-  for LObject in FRepository.Values do
-    LObject.Free;
 end;
 
 function TManagerObjectSet.Resolver<T>: TObjectSetBaseAdapter<T>;
@@ -205,7 +181,6 @@ var
 begin
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   /// <summary> Limpa a lista de objectos </summary>
-  NestedListFree;
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
@@ -250,7 +225,6 @@ var
 begin
   LObjectList := Resolver<T>.Find(AMethodName, AParams);
   /// <summary> Limpa a lista de objectos </summary>
-  NestedListFree;
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;

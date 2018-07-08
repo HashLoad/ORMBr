@@ -30,6 +30,7 @@ unit ormbr.dml.generator.absolutedb;
 interface
 
 uses
+  Classes,
   SysUtils,
   StrUtils,
   Rtti,
@@ -53,6 +54,7 @@ type
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
     function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
     function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
   end;
@@ -84,11 +86,48 @@ end;
 function TDMLGeneratorAbsoluteDB.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
+  LTable: TTableMapping;
   LCriteria: ICriteria;
+  LOrderBy: TOrderByMapping;
+  LOrderByList: TStringList;
+  LFor: Integer;
 begin
+  LTable := TMappingExplorer
+              .GetInstance
+                .GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
+  /// OrderBy
+  LOrderBy := TMappingExplorer
+                .GetInstance
+                  .GetMappingOrderBy(AClass);
+  if LOrderBy <> nil then
+  begin
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+    finally
+      LOrderByList.Free;
+    end;
+  end;
   if APageSize > -1 then
      Result := GetGeneratorSelect(LCriteria)
+  else
+     Result := LCriteria.AsString;
+end;
+
+function TDMLGeneratorAbsoluteDB.GeneratorSelectWhere(AClass: TClass; AWhere,
+  AOrderBy: string; APageSize: Integer): string;
+var
+  LCriteria: ICriteria;
+begin
+  LCriteria := GetCriteriaSelect(AClass, -1);
+  LCriteria.Where(AWhere);
+  LCriteria.OrderBy(AOrderBy);
+  if APageSize > -1 then
+     Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
   else
      Result := LCriteria.AsString;
 end;

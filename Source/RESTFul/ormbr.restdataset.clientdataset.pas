@@ -95,7 +95,8 @@ type
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); overload; override;
     {$ELSE}
-    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer;
+      AMasterObject: TObject); overload; override;
     {$ENDIF}
     destructor Destroy; override;
   end;
@@ -115,10 +116,10 @@ constructor TRESTClientDataSetAdapter<M>.Create(const AConnection: IRESTConnecti
 begin
   inherited Create(Aconnection, ADataSet, APageSize, AMasterObject);
 {$ELSE}
-constructor TRESTClientDataSetAdapter<M>.Create(ADataSet: TDataSet;
-  AMasterObject: TObject);
+constructor TRESTFDMemTableAdapter<M>.Create(ADataSet: TDataSet;
+  APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(ADataSet, AMasterObject);
+  inherited Create(ADataSet, APageSize, AMasterObject);
 {$ENDIF}
   /// <summary>
   /// Captura o component TClientDataset da IDE passado como parâmetro

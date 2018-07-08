@@ -138,6 +138,7 @@ type
     procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
     procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure RefreshRecordInternal(const AObject: TObject); virtual; abstract;
     procedure RefreshRecord; virtual;
     procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;

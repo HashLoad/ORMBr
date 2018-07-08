@@ -1,4 +1,4 @@
-unit SQLMonitor;
+unit ormbr.form.monitor;
 
 interface
 
@@ -14,23 +14,20 @@ uses
   ormbr.monitor;
 
 type
-  TFSQLMonitor = class(TForm, ICommandMonitor)
+  TCommandMonitor = class(TForm, ICommandMonitor)
     MemoSQL: TMemo;
     Button1: TButton;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     class var
-      FInstance: TFSQLMonitor;
+      FInstance: TCommandMonitor;
     procedure Command(ASQL: string; AParams: TParams);
   public
     { Public declarations }
     class destructor Destroy;
-    class function GetInstance: TFSQLMonitor;
+    class function GetInstance: TCommandMonitor;
   end;
-
-//var
-//  FSQLMonitor: TFSQLMonitor;
 
 implementation
 
@@ -38,12 +35,12 @@ implementation
 
 { TFSQLMonitor }
 
-procedure TFSQLMonitor.Button1Click(Sender: TObject);
+procedure TCommandMonitor.Button1Click(Sender: TObject);
 begin
   MemoSQL.Lines.Clear;
 end;
 
-procedure TFSQLMonitor.Command(ASQL: string; AParams: TParams);
+procedure TCommandMonitor.Command(ASQL: string; AParams: TParams);
 var
   iFor: Integer;
   AsValue: string;
@@ -71,16 +68,16 @@ begin
   end;
 end;
 
-class destructor TFSQLMonitor.Destroy;
+class destructor TCommandMonitor.Destroy;
 begin
   if Assigned(FInstance) then
     FreeAndNil(FInstance);
 end;
 
-class function TFSQLMonitor.GetInstance: TFSQLMonitor;
+class function TCommandMonitor.GetInstance: TCommandMonitor;
 begin
   if FInstance = nil then
-    FInstance := TFSQLMonitor.Create(nil);
+    FInstance := TCommandMonitor.Create(nil);
   Result := FInstance;
 end;
 

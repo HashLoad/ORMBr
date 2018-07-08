@@ -104,7 +104,8 @@ type
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); override;
     {$ELSE}
-    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer;
+      AMasterObject: TObject); overload; override;
     {$ENDIF}
     destructor Destroy; override;
   end;
@@ -124,9 +125,9 @@ begin
   inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
 {$ELSE}
 constructor TRESTFDMemTableAdapter<M>.Create(ADataSet: TDataSet;
-  AMasterObject: TObject);
+  APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(ADataSet, AMasterObject);
+  inherited Create(ADataSet, APageSize, AMasterObject);
 {$ENDIF}
   /// <summary>
   /// Captura o component TFDMemTable da IDE passado como parâmetro
@@ -209,8 +210,8 @@ var
   LAssociation: TAssociationMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
-  LFields: string;
   LIndexFields: string;
+  LFields: string;
 begin
   if FOrmDataSet.Active then
   begin
@@ -227,18 +228,18 @@ begin
         if FMasterObject.ContainsKey(LRttiType.AsInstance.MetaclassType.ClassName) then
         begin
           LDataSetChild := FMasterObject.Items[LRttiType.AsInstance.MetaclassType.ClassName];
-          LFields := '';
           LIndexFields := '';
+          LFields := '';
           try
             TFDMemTable(LDataSetChild.FOrmDataSet).MasterSource := FOrmDataSource;
             for LFor := 0 to LAssociation.ColumnsName.Count -1 do
             begin
-              LFields := LFields + LAssociation.ColumnsNameRef[LFor];
-              LIndexFields := LIndexFields + LAssociation.ColumnsName[LFor];
+              LIndexFields := LIndexFields + LAssociation.ColumnsNameRef[LFor];
+              LFields := LFields + LAssociation.ColumnsName[LFor];
               if LAssociation.ColumnsName.Count -1 > LFor then
               begin
-                LFields := LFields + '; ';
                 LIndexFields := LIndexFields + '; ';
+                LFields := LFields + '; ';
               end;
             end;
             TFDMemTable(LDataSetChild.FOrmDataSet).IndexFieldNames := LIndexFields;
@@ -302,7 +303,7 @@ begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   try
-    /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+    /// <summary> Limpa registro do dataset antes de buscar os novos </summary>
     EmptyDataSet;
     inherited;
     LObjectList := FSession.Find;

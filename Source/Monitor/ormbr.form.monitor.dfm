@@ -1,7 +1,7 @@
-object FSQLMonitor: TFSQLMonitor
+object CommandMonitor: TCommandMonitor
   Left = 0
   Top = 0
-  Caption = 'FSQLMonitor'
+  Caption = 'ORMBr - Monitor'
   ClientHeight = 346
   ClientWidth = 477
   Color = clBtnFace

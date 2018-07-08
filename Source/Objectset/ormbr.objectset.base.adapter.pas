@@ -54,8 +54,6 @@ type
     procedure AddObjectState(const ASourceObject: TObject);
     procedure UpdateInternal(const AObject: TObject);
   protected
-    FSession: TSessionAbstract<M>;
-    FObjectState: TDictionary<string, TObject>;
     function GenerateKey(const AObject: TObject): string;
     procedure CascadeActionsExecute(const AObject: TObject; const ACascadeAction: TCascadeAction);
     procedure OneToOneCascadeActionsExecute(const AObject: TObject;

@@ -67,6 +67,7 @@ type
       const AAssociation: TAssociationMapping);
     procedure PopularDataSetOneToMany(const AObjectList: TObjectList<TObject>);
   protected
+    procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoAfterDelete(DataSet: TDataSet); override;
@@ -79,9 +80,9 @@ type
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); overload; virtual;
-    procedure RefreshRecordInternal(const AObject: TObject);
+    procedure RefreshRecordInternal(const AObject: TObject); override;
     {$ELSE}
-    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; virtual;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload; virtual;
     {$ENDIF}
     destructor Destroy; override;
     procedure NextPacket; override;
@@ -109,10 +110,10 @@ begin
   FSession := TSessionRest<M>.Create(AConnection, Self, APageSize);
 end;
 {$ELSE}
-constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; AMasterObject: TObject);
+constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(ADataSet, -1, AMasterObject);
-  FSession := TSessionDataSnap<M>.Create(Self);
+  inherited Create(ADataSet, APageSize, AMasterObject);
+  FSession := TSessionDataSnap<M>.Create(APageSize);
 end;
 {$ENDIF}
 
@@ -436,6 +437,7 @@ begin
       end;
       LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
       LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
+      /// <summary> Evitar duplicidade de registro em memória </summary>
       if not LDataSetChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
       begin
         LDataSetChild.FOrmDataSet.Append;
@@ -446,6 +448,38 @@ begin
       LDataSetChild.FOrmDataSet.First;
       LDataSetChild.FOrmDataSet.EnableControls;
       LDataSetChild.EnableDataSetEvents;
+    end;
+  end;
+end;
+
+procedure TRESTDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
+var
+  LAssociations: TAssociationMappingList;
+  LAssociation: TAssociationMapping;
+  LDataSetChild: TDataSetBaseAdapter<M>;
+begin
+  inherited;
+  if FOrmDataSet.Active then
+  begin
+    LAssociations := FExplorer
+                       .GetMappingAssociation(FCurrentInternal.ClassType);
+    if LAssociations <> nil then
+    begin
+      for LAssociation in LAssociations do
+      begin
+        if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+        begin
+          if LAssociation.ColumnsName.IndexOf(AFieldName) > -1 then
+          begin
+            if FMasterObject.ContainsKey(LAssociation.ClassNameRef) then
+            begin
+              LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
+              if LDataSetChild <> nil then
+                LDataSetChild.FOrmDataSet.Refresh;
+            end;
+          end;
+        end;
+      end;
     end;
   end;
 end;

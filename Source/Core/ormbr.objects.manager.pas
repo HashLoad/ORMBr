@@ -40,7 +40,6 @@ uses
   Variants,
   Generics.Collections,
   /// ormbr
-  ormbr.criteria,
   ormbr.types.mapping,
   ormbr.mapping.classes,
   ormbr.command.factory,
@@ -116,10 +115,7 @@ implementation
 
 uses
   ormbr.objectset.bind,
-  ormbr.types.database,
   ormbr.objects.helper,
-  ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils,
   ormbr.session.abstract,
   ormbr.rtti.helper;
 
@@ -132,7 +128,7 @@ begin
   FPageSize := APageSize;
   if not (AOwner is TSessionAbstract<M>) then
     raise Exception
-            .Create('O Object Manager não deve ser instênciada diretamente, use as classes TSessionObject<M> ou TSessionDataSet<M>');
+            .Create('O Object Manager não deve ser instânciada diretamente, use as classes TSessionObject<M> ou TSessionDataSet<M>');
   FConnection := AConnection;
   FExplorer := TMappingExplorer.GetInstance;
   FObjectInternal := M.Create;
