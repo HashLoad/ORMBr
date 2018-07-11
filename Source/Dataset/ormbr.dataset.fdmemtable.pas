@@ -287,7 +287,7 @@ begin
        /// Edit
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
        begin
-         if (FSession.ModifiedFields.Count > 0) or
+         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
             (FConnection.GetDriverName in [dnMongoDB]) then
          begin
            FSession.Update(Current, M.ClassName);

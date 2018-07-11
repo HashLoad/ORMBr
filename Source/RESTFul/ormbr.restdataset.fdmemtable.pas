@@ -90,6 +90,8 @@ type
     procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
     procedure FilterDataSetChilds;
   protected
+    procedure PopularDataSetOneToOne(const AObject: TObject;
+      const AAssociation: TAssociationMapping); override;
     procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
@@ -114,7 +116,8 @@ implementation
 
 uses
   ormbr.objectset.bind,
-  ormbr.dataset.fields;
+  ormbr.dataset.fields,
+  ormbr.dataset.bind;
 
 { TRESTFDMemTableAdapter<M> }
 
@@ -180,9 +183,7 @@ procedure TRESTFDMemTableAdapter<M>.EmptyDataSet;
 begin
   inherited;
   FOrmDataSet.EmptyDataSet;
-  /// <summary>
-  /// Lista os registros das tabelas filhas relacionadas
-  /// </summary>
+  /// <summary> Lista os registros das tabelas filhas relacionadas </summary>
   EmptyDataSetChilds;
 end;
 
@@ -208,10 +209,11 @@ var
   LRttiType: TRttiType;
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
-  LDataSetChild: TDataSetBaseAdapter<M>;
+  LChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
   LIndexFields: string;
   LFields: string;
+  LClassName: String;
 begin
   if FOrmDataSet.Active then
   begin
@@ -225,27 +227,25 @@ begin
         else
           LRttiType := LAssociation.PropertyRtti.PropertyType;
 
-        if FMasterObject.ContainsKey(LRttiType.AsInstance.MetaclassType.ClassName) then
+        LClassName := LRttiType.AsInstance.MetaclassType.ClassName;
+        if FMasterObject.ContainsKey(LClassName) then
         begin
-          LDataSetChild := FMasterObject.Items[LRttiType.AsInstance.MetaclassType.ClassName];
+          LChild := FMasterObject.Items[LClassName];
           LIndexFields := '';
           LFields := '';
-          try
-            TFDMemTable(LDataSetChild.FOrmDataSet).MasterSource := FOrmDataSource;
-            for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+          TFDMemTable(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+          for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+          begin
+            LIndexFields := LIndexFields + LAssociation.ColumnsNameRef[LFor];
+            LFields := LFields + LAssociation.ColumnsName[LFor];
+            if LAssociation.ColumnsName.Count -1 > LFor then
             begin
-              LIndexFields := LIndexFields + LAssociation.ColumnsNameRef[LFor];
-              LFields := LFields + LAssociation.ColumnsName[LFor];
-              if LAssociation.ColumnsName.Count -1 > LFor then
-              begin
-                LIndexFields := LIndexFields + '; ';
-                LFields := LFields + '; ';
-              end;
+              LIndexFields := LIndexFields + '; ';
+              LFields := LFields + '; ';
             end;
-            TFDMemTable(LDataSetChild.FOrmDataSet).IndexFieldNames := LIndexFields;
-            TFDMemTable(LDataSetChild.FOrmDataSet).MasterFields := LFields;
-          finally
           end;
+          TFDMemTable(LChild.FOrmDataSet).IndexFieldNames := LIndexFields;
+          TFDMemTable(LChild.FOrmDataSet).MasterFields := LFields;
         end;
       end;
     end;
@@ -359,6 +359,49 @@ begin
     FOrmDataSet.EnableControls;
     FOrmDataSet.EnableConstraints;
 //    FOrmDataSet.EndBatch;
+  end;
+end;
+
+procedure TRESTFDMemTableAdapter<M>.PopularDataSetOneToOne(
+  const AObject: TObject; const AAssociation: TAssociationMapping);
+var
+  LRttiType: TRttiType;
+  LChild: TDataSetBaseAdapter<M>;
+  LField: string;
+  LKeyFields: string;
+  LKeyValues: string;
+begin
+  inherited;
+  if FMasterObject.ContainsKey(AObject.ClassName) then
+  begin
+    LChild := FMasterObject.Items[AObject.ClassName];
+    LChild.FOrmDataSet.DisableControls;
+    LChild.DisableDataSetEvents;
+    TFDMemTable(LChild.FOrmDataSet).MasterSource := nil;
+    try
+      AObject.GetType(LRttiType);
+      LKeyFields := '';
+      LKeyValues := '';
+      for LField in AAssociation.ColumnsNameRef do
+      begin
+        LKeyFields := LKeyFields + LField + ', ';
+        LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
+      end;
+      LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
+      LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
+      /// <summary> Evitar duplicidade de registro em memória </summary>
+      if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
+      begin
+        LChild.FOrmDataSet.Append;
+        TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+        LChild.FOrmDataSet.Post;
+      end;
+    finally
+      TFDMemTable(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+      LChild.FOrmDataSet.First;
+      LChild.FOrmDataSet.EnableControls;
+      LChild.EnableDataSetEvents;
+    end;
   end;
 end;
 

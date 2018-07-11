@@ -96,7 +96,9 @@ function TDMLGeneratorMSSql.GeneratorPageNext(ACommandSelect: string;
   APageSize, APageNext: Integer): string;
 begin
   if APageSize > -1 then
-     Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)]);
+    Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;

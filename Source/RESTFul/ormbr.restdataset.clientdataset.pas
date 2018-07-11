@@ -81,6 +81,8 @@ type
     procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
     procedure FilterDataSetChilds;
   protected
+    procedure PopularDataSetOneToOne(const AObject: TObject;
+      const AAssociation: TAssociationMapping); override;
     procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
@@ -334,6 +336,49 @@ begin
     EnableDataSetEvents;
     FOrmDataSet.First;
     FOrmDataSet.EnableControls;
+  end;
+end;
+
+procedure TRESTClientDataSetAdapter<M>.PopularDataSetOneToOne(
+  const AObject: TObject; const AAssociation: TAssociationMapping);
+var
+  LRttiType: TRttiType;
+  LChild: TDataSetBaseAdapter<M>;
+  LField: string;
+  LKeyFields: string;
+  LKeyValues: string;
+begin
+  inherited;
+  if FMasterObject.ContainsKey(AObject.ClassName) then
+  begin
+    LChild := FMasterObject.Items[AObject.ClassName];
+    LChild.FOrmDataSet.DisableControls;
+    LChild.DisableDataSetEvents;
+    TClientDataSet(LChild.FOrmDataSet).MasterSource := nil;
+    try
+      AObject.GetType(LRttiType);
+      LKeyFields := '';
+      LKeyValues := '';
+      for LField in AAssociation.ColumnsNameRef do
+      begin
+        LKeyFields := LKeyFields + LField + ', ';
+        LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
+      end;
+      LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
+      LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
+      /// <summary> Evitar duplicidade de registro em memória </summary>
+      if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
+      begin
+        LChild.FOrmDataSet.Append;
+        TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+        LChild.FOrmDataSet.Post;
+      end;
+    finally
+      TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+      LChild.FOrmDataSet.First;
+      LChild.FOrmDataSet.EnableControls;
+      LChild.EnableDataSetEvents;
+    end;
   end;
 end;
 

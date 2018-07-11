@@ -118,6 +118,7 @@ begin
   /// Inicia uma lista interna para gerenciar campos alterados
   /// </summary>
   FModifiedFields.Clear;
+  FModifiedFields.TrimExcess;
   FModifiedFields.Add(M.ClassName, TList<string>.Create);
 end;
 

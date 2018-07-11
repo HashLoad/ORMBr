@@ -63,10 +63,10 @@ type
     procedure SetMasterDataSetStateEdit;
     procedure ExecuteCheckNotNull;
     procedure PopularDataSetChilds(const AObject: TObject);
-    procedure PopularDataSetOneToOne(const AObject: TObject;
-      const AAssociation: TAssociationMapping);
     procedure PopularDataSetOneToMany(const AObjectList: TObjectList<TObject>);
   protected
+    procedure PopularDataSetOneToOne(const AObject: TObject;
+      const AAssociation: TAssociationMapping); virtual; abstract;
     procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
@@ -76,6 +76,7 @@ type
     procedure ApplyDeleter(const MaxErros: Integer); override;
     procedure PopularDataSet(const AObject: TObject);
     procedure PopularDataSetList(const AObjectList: TObjectList<M>);
+    procedure DeleteDataSetChilds; virtual;
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
@@ -98,7 +99,9 @@ uses
   {$ENDIF}
   ormbr.objects.helper,
   ormbr.rtti.helper,
-  ormbr.mapping.explorer;
+  ormbr.mapping.explorer,
+  ormbr.mapping.attributes,
+  ormbr.mapping.rttiutils;
 
 { TRESTDataSetAdapter<M> }
 
@@ -123,18 +126,63 @@ begin
   inherited;
 end;
 
+procedure TRESTDataSetAdapter<M>.DeleteDataSetChilds;
+var
+  LAssociations: TAssociationMappingList;
+  LAssociation: TAssociationMapping;
+  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+begin
+  inherited;
+  if FMasterObject.Count > 0 then
+  begin
+    LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+    if LAssociations <> nil then
+    begin
+      for LChild in FMasterObject do
+      begin
+        for LAssociation in LAssociations do
+        begin
+          if LAssociation.ClassNameRef = LChild.Value.FCurrentInternal.ClassName then
+          begin
+            if CascadeDelete in LAssociation.CascadeActions then
+            begin
+              if LChild.Value.FOrmDataSet.Active then
+              begin
+                LChild.Value.FOrmDataSet.DisableControls;
+                try
+                  while not LChild.Value.FOrmDataSet.Eof do
+                    LChild.Value.FOrmDataSet.Delete;
+                finally
+                  LChild.Value.FOrmDataSet.EnableControls;
+                end;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
 procedure TRESTDataSetAdapter<M>.ApplyDeleter(const MaxErros: Integer);
 var
+  {$IFNDEF DRIVERRESTFUL}
   LColumn: TColumnMapping;
+  {$ENDIF}
   LObject: TObject;
 begin
   inherited;
   /// <summary>
   /// Varre a lista de objetos excluídos e passa para a sessão REST
   /// </summary>
+  {$IFDEF DRIVERRESTFUL}
+  for LObject in FSession.DeleteList do
+    FSession.Delete(LObject);
+  {$ELSE}
   for LObject in FSession.DeleteList do
     for LColumn in LObject.GetPrimaryKey do
       FSession.Delete(LColumn.PropertyRtti.GetValue(LObject).AsInteger);
+  {$ENDIF}
 end;
 
 procedure TRESTDataSetAdapter<M>.ApplyInserter(const MaxErros: Integer);
@@ -247,26 +295,23 @@ end;
 procedure TRESTDataSetAdapter<M>.DoBeforeDelete(DataSet: TDataSet);
 var
   LObject: TObject;
-  LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   inherited DoBeforeDelete(DataSet);
   /// <summary>
   /// 1o - Instância um novo objeto do tipo
-  /// 2o - Polupa ele e suas sub-classes com os dados do dataset
+  /// 2o - Popula ele e suas sub-classes com os dados do dataset
   /// 3o - Adiciona o objeto na lista de registros excluídos
   /// </summary>
   if FOwnerMasterObject = nil then
   begin
     LObject := M.Create;
     TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
-    for LDataSetChild in FMasterObject.Values do
-      LDataSetChild.FillMastersClass(LDataSetChild, LObject);
     FSession.DeleteList.Add(LObject);
   end;
   /// <summary>
   /// Deleta registros de todos os DataSet filhos
   /// </summary>
-  EmptyDataSetChilds;
+  DeleteDataSetChilds;
 end;
 
 procedure TRESTDataSetAdapter<M>.DoBeforePost(DataSet: TDataSet);
@@ -408,46 +453,6 @@ begin
         LDataSetChild.FOrmDataSet.EnableControls;
         LDataSetChild.EnableDataSetEvents;
       end;
-    end;
-  end;
-end;
-
-procedure TRESTDataSetAdapter<M>.PopularDataSetOneToOne(const AObject: TObject;
-  const AAssociation: TAssociationMapping);
-var
-  LRttiType: TRttiType;
-  LDataSetChild: TDataSetBaseAdapter<M>;
-  LField: string;
-  LKeyFields: string;
-  LKeyValues: string;
-begin
-  if FMasterObject.ContainsKey(AObject.ClassName) then
-  begin
-    LDataSetChild := FMasterObject.Items[AObject.ClassName];
-    LDataSetChild.FOrmDataSet.DisableControls;
-    LDataSetChild.DisableDataSetEvents;
-    try
-      AObject.GetType(LRttiType);
-      LKeyFields := '';
-      LKeyValues := '';
-      for LField in AAssociation.ColumnsNameRef do
-      begin
-        LKeyFields := LKeyFields + LField + ', ';
-        LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
-      end;
-      LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
-      LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
-      /// <summary> Evitar duplicidade de registro em memória </summary>
-      if not LDataSetChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
-      begin
-        LDataSetChild.FOrmDataSet.Append;
-        TBindDataSet.GetInstance.SetPropertyToField(AObject, LDataSetChild.FOrmDataSet);
-        LDataSetChild.FOrmDataSet.Post;
-      end;
-    finally
-      LDataSetChild.FOrmDataSet.First;
-      LDataSetChild.FOrmDataSet.EnableControls;
-      LDataSetChild.EnableDataSetEvents;
     end;
   end;
 end;

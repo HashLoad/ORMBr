@@ -74,9 +74,10 @@ uses
   REST.Types,
   IPPeerClient,
   DBXJSONReflect,
-  System.JSON,
+  JSON,
   ormbr.rest.json,
   ormbr.objects.helper,
+  ormbr.mapping.attributes,
   ormbr.restdataset.adapter,
   ormbr.json.utils;
 
@@ -86,6 +87,8 @@ constructor TSessionDataSnap<M>.Create(const APageSize: Integer = -1);
 var
   LObject: TObject;
   ABaseURL: String;
+  LTable: TCustomAttribute;
+  LResource: TCustomAttribute;
 begin
   inherited Create(APageSize);
   /// <summary>
@@ -107,7 +110,16 @@ begin
   /// </summary>
   LObject := TObject(M.Create);
   try
-    FResource := LObject.GetResourceName;
+    LResource := LObject.GetResource;
+    if LResource <> nil then
+      FResource := Resource(LResource).Name;
+
+    if FResource = '' then
+    begin
+      LTable := LObject.GetTable;
+      if LTable <> nil then
+        FResource := Table(LTable).Name;
+    end;
   finally
     LObject.Free;
   end;

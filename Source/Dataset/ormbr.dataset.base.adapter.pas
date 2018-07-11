@@ -332,19 +332,19 @@ procedure TDataSetBaseAdapter<M>.FillMastersClass(
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
-  LAttrProperty: TCustomAttribute;
+  LAssociation: TCustomAttribute;
 begin
   LRttiType := TRttiSingleton.GetInstance.GetRttiType(AObject.ClassType);
   for LProperty in LRttiType.GetProperties do
   begin
-    for LAttrProperty in LProperty.GetAttributes do
+    for LAssociation in LProperty.GetAttributes do
     begin
-      if LAttrProperty is Association then // Association
+      if LAssociation is Association then // Association
       begin
-        if Association(LAttrProperty).Multiplicity in [OneToOne, ManyToOne] then
+        if Association(LAssociation).Multiplicity in [OneToOne, ManyToOne] then
           ExecuteOneToOne(AObject, LProperty, ADatasetBase)
         else
-        if Association(LAttrProperty).Multiplicity in [OneToMany, ManyToMany] then
+        if Association(LAssociation).Multiplicity in [OneToMany, ManyToMany] then
           ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
       end;
     end;
@@ -360,18 +360,24 @@ begin
      AProperty.PropertyType.AsInstance.MetaclassType then
   begin
     LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-    while not ADatasetBase.FOrmDataSet.Eof do
-    begin
-      /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(ADatasetBase.FOrmDataSet,
-                              AProperty.GetNullableValue(TObject(AObject)).AsObject);
-      /// Próximo registro
-      ADatasetBase.FOrmDataSet.Next;
+    ADatasetBase.FOrmDataSet.DisableControls;
+    ADatasetBase.FOrmDataSet.First;
+    try
+      while not ADatasetBase.FOrmDataSet.Eof do
+      begin
+        /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
+        TBindObject
+          .GetInstance
+            .SetFieldToProperty(ADatasetBase.FOrmDataSet,
+                                AProperty.GetNullableValue(TObject(AObject)).AsObject);
+        /// Próximo registro
+        ADatasetBase.FOrmDataSet.Next;
+      end;
+    finally
+      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
+      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
+      ADatasetBase.FOrmDataSet.EnableControls;
     end;
-    ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-    ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
   end;
 end;
 
