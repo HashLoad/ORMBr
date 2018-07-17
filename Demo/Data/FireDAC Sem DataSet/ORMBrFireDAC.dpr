@@ -8,7 +8,6 @@ uses
   ormbr.model.detail in '..\Models\ormbr.model.detail.pas',
   ormbr.model.lookup in '..\Models\ormbr.model.lookup.pas',
   ormbr.model.master in '..\Models\ormbr.model.master.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.container.objectset.interfaces in '..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas',
   ormbr.container.objectset in '..\..\..\Source\Objectset\ormbr.container.objectset.pas',
   ormbr.objectset.abstract in '..\..\..\Source\Objectset\ormbr.objectset.abstract.pas',
@@ -56,7 +55,8 @@ uses
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
-  ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas';
+  ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor};
 
 {$R *.res}
 

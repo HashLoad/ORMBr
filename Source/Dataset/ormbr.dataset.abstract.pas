@@ -80,7 +80,7 @@ end;
 
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 begin
-  if FOrmDataSet.State in [dsEdit] then
+  if FOrmDataSet.State in [dsInsert, dsEdit] then
   begin
     if Field <> nil then
     begin
@@ -88,10 +88,14 @@ begin
       begin
         if Field.FieldName <> cInternalField then
         begin
-          with FSession.ModifiedFields.Items[M.ClassName] do
+          /// <summary> Só adiciona a lista se for edição </summary>
+          if FOrmDataSet.State in [dsEdit] then
           begin
-            if IndexOf(Field.FieldName) = -1 then
-              Add(Field.FieldName);
+            with FSession.ModifiedFields.Items[M.ClassName] do
+            begin
+              if IndexOf(Field.FieldName) = -1 then
+                Add(Field.FieldName);
+            end;
           end;
           /// <summary>
           /// Atualiza o registro da tabela externa, se o campo alterado

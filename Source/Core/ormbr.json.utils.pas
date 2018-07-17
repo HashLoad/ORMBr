@@ -57,7 +57,7 @@ implementation
 
 class function TORMBrJSONUtil.JSONStringToJSONArray(AJson: string): TJSONArray;
 begin
-  Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(AJson), 0) as TJSONArray;
+  Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0) as TJSONArray;
 end;
 
 class function TORMBrJSONUtil.JSONObjectListToJSONArray<T>(
@@ -82,7 +82,7 @@ end;
 
 class function TORMBrJSONUtil.JSONStringToJSONValue(AJson: string): TJSONValue;
 begin
-  Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(AJson), 0);
+  Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0);
 end;
 
 end.

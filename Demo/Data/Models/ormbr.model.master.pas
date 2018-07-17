@@ -25,7 +25,8 @@ type
   [Table('master','')]
   [PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]
   [Sequence('seq_master')]
-  [OrderBy('description DESC')]
+//  [OrderBy('description DESC')]
+  [OrderBy('master_id')]
   Tmaster = class
   private
     { Private declarations }
@@ -46,7 +47,7 @@ type
 
     [Restrictions([NoUpdate, NotNull])]
     [Column('master_id', ftInteger)]
-    [Dictionary('master_Id','Mensagem de validação','','','',taCenter)]
+    [Dictionary('master_id','Mensagem de validação','','','',taCenter)]
     property master_id: Integer read Fmaster_id write Fmaster_id;
 
     [Column('description', ftString, 60)]
@@ -65,7 +66,7 @@ type
 
     [Restrictions([NotNull])]
     [Column('client_id', ftInteger)]
-    [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]
+    [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'id')]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
     property client_id: Integer read Fclient_id write Fclient_id;
 
@@ -74,11 +75,11 @@ type
 
     [Restrictions([NoInsert, NoUpdate])]
     [Column('client_name', ftString, 60)]
-    [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin)]
+    [JoinColumn('client_id', 'client', 'id', 'client_name', InnerJoin)]
     [Dictionary('Nome do Cliente')]
     property client_name: string read fclient_name write fclient_name;
 
-    [Association(OneToOne, 'client_id', 'client', 'client_id')]
+    [Association(OneToOne, 'client_id', 'client', 'id')]
     property client: Tclient read Fclient write Fclient;
 
     [Association(OneToMany, 'master_id', 'detail', 'master_id')]

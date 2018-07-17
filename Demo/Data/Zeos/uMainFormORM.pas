@@ -96,7 +96,8 @@ var
 implementation
 
 uses
-  SQLMonitor,
+  ormbr.monitor,
+  ormbr.form.monitor,
   ormbr.criteria,
   TypInfo;
 
@@ -126,7 +127,7 @@ end;
 
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button6Click(Sender: TObject);
@@ -156,7 +157,7 @@ procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryZeos.Create(ZConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   /// Class Adapter
   /// Parâmetros: (IDBConnection, TClientDataSet)

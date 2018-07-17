@@ -94,7 +94,7 @@ var
 implementation
 
 uses
-  SQLMonitor;
+  ormbr.monitor, ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -122,7 +122,7 @@ end;
 
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
@@ -131,7 +131,7 @@ begin
   FDatabase.Filename := '..\Database\database.db3';
 
   oConn := TFactorySQLite.Create(FDatabase, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 10);
   oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.MasterObject);

@@ -188,8 +188,8 @@ begin
     LIdx := FindClassForJSON(LName);
     if LIdx>=0 then
       Continue;
-    LIdx := length(RegisteredClass);
-    SetLength(RegisteredClass,LIdx+1);
+    LIdx := Length(RegisteredClass);
+    SetLength(RegisteredClass, LIdx +1);
     RegisteredClass[LIdx].ClassName := LName;
     RegisteredClass[LIdx].ClassType := AClasses[LFor];
   end;
@@ -273,12 +273,8 @@ begin
 end;
 
 class procedure TJSONObjectORMBr.AppendChar(var AStr: String; AChr: Char);
-var
-  LLen: Integer;
 begin
-  LLen := Length(AStr);
-  SetLength(AStr, LLen + 1);
-  AStr[LLen] := AChr;
+  AStr := AStr + String(AChr);
 end;
 
 class function TJSONObjectORMBr.StringToJSON(const AText: String): String;
@@ -328,12 +324,10 @@ begin
   AResult := FloatToStr(AValue, FSettingsUS);
 end;
 
-/// <summary>
-/// // "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss"
-/// </summary>
+/// <summary> "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss" </summary>
 class function TJSONObjectORMBr.DateTimeToJSON(AValue: TDateTime): String;
 begin
-  Result := '"' + TUtilSingleton.GetInstance.DateTimeToIso8601(AValue) + '"';
+  Result := AnsiQuotedStr(TUtilSingleton.GetInstance.DateTimeToIso8601(AValue), '"');
 end;
 
 class function TJSONObjectORMBr.ValueToJSON(const AValue: Variant): String;

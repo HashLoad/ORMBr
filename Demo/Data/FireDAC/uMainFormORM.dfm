@@ -210,7 +210,6 @@ object Form3: TForm3
     BorderStyle = bsNone
     Ctl3D = True
     DataField = 'client_foto'
-    DataSource = DataSource3
     ParentColor = True
     ParentCtl3D = False
     TabOrder = 3

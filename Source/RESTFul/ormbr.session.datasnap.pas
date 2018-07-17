@@ -62,6 +62,7 @@ type
     procedure Insert(const AObject: M); overload; override;
     procedure Update(const AObjectList: TObjectList<M>); overload; override;
     procedure Delete(const AID: Integer); overload; override;
+    procedure Delete(const AObject: M); overload; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Integer): M; overload; override;
     function Find(const AID: String): M; overload; override;
@@ -77,6 +78,7 @@ uses
   JSON,
   ormbr.rest.json,
   ormbr.objects.helper,
+  ormbr.mapping.classes,
   ormbr.mapping.attributes,
   ormbr.restdataset.adapter,
   ormbr.json.utils;
@@ -123,6 +125,14 @@ begin
   finally
     LObject.Free;
   end;
+end;
+
+procedure TSessionDataSnap<M>.Delete(const AObject: M);
+var
+  LColumn: TColumnMapping;
+begin
+  for LColumn in AObject.GetPrimaryKey do
+    Delete(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsInteger);
 end;
 
 destructor TSessionDataSnap<M>.Destroy;
@@ -223,7 +233,7 @@ procedure TSessionDataSnap<M>.Update(const AObjectList: TObjectList<M>);
 var
   FJSON: TJSONArray;
 begin
-  FJSON := TORMBrJSONUtil.JSONStringToJSONArray<M>(AObjectList);
+  FJSON := TORMBrJSONUtil.JSONObjectListToJSONArray<M>(AObjectList);
   try
     FRESTRequest.ResetToDefaults;
     FRESTRequest.Resource := '/' + FResource;

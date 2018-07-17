@@ -77,6 +77,7 @@ type
     procedure PopularDataSet(const AObject: TObject);
     procedure PopularDataSetList(const AObjectList: TObjectList<M>);
     procedure DeleteDataSetChilds; virtual;
+    procedure SetAutoIncValueChilds; override;
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
@@ -166,23 +167,14 @@ end;
 
 procedure TRESTDataSetAdapter<M>.ApplyDeleter(const MaxErros: Integer);
 var
-  {$IFNDEF DRIVERRESTFUL}
-  LColumn: TColumnMapping;
-  {$ENDIF}
   LObject: TObject;
 begin
   inherited;
   /// <summary>
   /// Varre a lista de objetos excluídos e passa para a sessão REST
   /// </summary>
-  {$IFDEF DRIVERRESTFUL}
   for LObject in FSession.DeleteList do
     FSession.Delete(LObject);
-  {$ELSE}
-  for LObject in FSession.DeleteList do
-    for LColumn in LObject.GetPrimaryKey do
-      FSession.Delete(LColumn.PropertyRtti.GetValue(LObject).AsInteger);
-  {$ENDIF}
 end;
 
 procedure TRESTDataSetAdapter<M>.ApplyInserter(const MaxErros: Integer);
@@ -519,6 +511,58 @@ begin
   end;
 end;
 {$ENDIF}
+
+procedure TRESTDataSetAdapter<M>.SetAutoIncValueChilds;
+var
+  LAssociation: TAssociationMapping;
+  LAssociations: TAssociationMappingList;
+  LDataSetChild: TDataSetBaseAdapter<M>;
+  LFor: Integer;
+begin
+  /// Association
+  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  if LAssociations <> nil then
+  begin
+    for LAssociation in LAssociations do
+    begin
+      if CascadeAutoInc in LAssociation.CascadeActions then
+      begin
+        LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
+        if LDataSetChild <> nil then
+        begin
+          for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+          begin
+            if LDataSetChild
+                 .FOrmDataSet
+                   .FindField(LAssociation.ColumnsNameRef[LFor]) <> nil then
+            begin
+              LDataSetChild.FOrmDataSet.DisableControls;
+              LDataSetChild.FOrmDataSet.First;
+              try
+                while not LDataSetChild.FOrmDataSet.Eof do
+                begin
+                  LDataSetChild.FOrmDataSet.Edit;
+                  LDataSetChild
+                    .FOrmDataSet
+                      .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
+                        FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
+                  LDataSetChild.FOrmDataSet.Post;
+                  /// <summary>
+                  /// Não deve executar o NEXT aqui, o dataset está com filtro
+                  /// que faz a navegação ao mudar o valor do campo.
+                  /// </summary>
+                end;
+              finally
+                LDataSetChild.FOrmDataSet.First;
+                LDataSetChild.FOrmDataSet.EnableControls;
+              end;
+            end;
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
 
 procedure TRESTDataSetAdapter<M>.SetMasterDataSetStateEdit;
 var

@@ -830,10 +830,7 @@ begin
                       .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
                         FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
                   LDataSetChild.FOrmDataSet.Post;
-                  /// <summary>
-                  /// Não deve executar o NEXT aqui, o dataset está com filtro
-                  /// que faz a navegação ao mudar o valor do campo.
-                  /// </summary>
+                  LDataSetChild.FOrmDataSet.Next;
                 end;
               finally
                 LDataSetChild.FOrmDataSet.First;

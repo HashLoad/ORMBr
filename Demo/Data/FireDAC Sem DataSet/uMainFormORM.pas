@@ -77,6 +77,7 @@ type
     btnUpdate: TButton;
     Button2: TButton;
     imgClient_Foto: TImage;
+    Button3: TButton;
     procedure btnOpenClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -87,15 +88,12 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnUpdateClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
     oMaster: IContainerObjectSet<Tmaster>;
-
     oMasterList: TObjectList<Tmaster>;
-
-    FPageSize, FPageNext: Integer;
-
     procedure MasterStringGridFill(AMasterList: TObjectList<Tmaster>; AIndex: Integer = 0);
     procedure MasterStringGridDefinitions;
     procedure MasterStinggGridAddRow(AObject: Tmaster);
@@ -113,9 +111,40 @@ var
 implementation
 
 uses
-  StrUtils, SQLMonitor;
+  StrUtils, ormbr.form.monitor,
+  ormbr.mapping.explorer,
+  ormbr.objects.helper;
 
 {$R *.dfm}
+
+procedure TForm3.FormCreate(Sender: TObject);
+var
+  CanSelect: Boolean;
+begin
+  MasterStringGridDefinitions;
+  DetailStringGridDefinitions;
+  /// <summary>
+  /// Variaveis declaradas em { Private declarations } acima.
+  /// </summary>
+  // Instância da class de conexão via FireDAC
+  oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
+  /// Class Adapter
+  /// Parâmetros: (IDBConnection, TClientDataSet)
+  /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
+  /// defina o quanto achar melhor para sua necessiade
+  oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 2);
+  oMasterList := oMaster.Find;
+//  oMasterList := oMaster.FindWhere('master_id > 0 and master_id <> 6');
+  /// <summary>
+  /// Preenche o grid
+  /// </summary>
+  MasterStringGridFill(oMasterList);
+  /// <summary>
+  /// Dispara o evento onde abre as sub-tabelas
+  /// </summary>
+  StringGridMaster.OnSelectCell(StringGridMaster, 0, 1, CanSelect);
+end;
 
 procedure TForm3.Button1Click(Sender: TObject);
 var
@@ -129,7 +158,20 @@ end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
+end;
+
+procedure TForm3.Button3Click(Sender: TObject);
+var
+  LObject: TObject;
+begin
+  LObject :=  TMappingExplorer
+                .GetInstance
+                  .Repository
+                    .FindEntityByName('T' + 'master').Create;
+  LObject.MethodCall('Create', []);
+
+
 end;
 
 procedure TForm3.btnOpenClick(Sender: TObject);
@@ -259,34 +301,6 @@ procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   oMasterList.Clear;
   oMasterList.Free;
-end;
-
-procedure TForm3.FormCreate(Sender: TObject);
-var
-  CanSelect: Boolean;
-begin
-  MasterStringGridDefinitions;
-  DetailStringGridDefinitions;
-  /// <summary>
-  /// Variaveis declaradas em { Private declarations } acima.
-  /// </summary>
-  // Instância da class de conexão via FireDAC
-  oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
-  /// Class Adapter
-  /// Parâmetros: (IDBConnection, TClientDataSet)
-  /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
-  /// defina o quanto achar melhor para sua necessiade
-  oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 10);
-  oMasterList := oMaster.Find;
-  /// <summary>
-  /// Preenche o grid
-  /// </summary>
-  MasterStringGridFill(oMasterList);
-  /// <summary>
-  /// Dispara o evento onde abre as sub-tabelas
-  /// </summary>
-  StringGridMaster.OnSelectCell(StringGridMaster, 0, 1, CanSelect);
 end;
 
 procedure TForm3.SetValuesEdits(AIndex: Integer);

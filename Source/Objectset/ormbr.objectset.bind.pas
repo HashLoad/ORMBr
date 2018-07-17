@@ -209,7 +209,7 @@ begin
       if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
         LProperty.SetValue(AObject, AField.AsDateTime)
       else
-        LProperty.SetValue(AObject, AField.AsCurrency)
+        LProperty.SetValue(AObject, AField.AsFloat)
     end;
   tkRecord:
     begin

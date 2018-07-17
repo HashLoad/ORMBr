@@ -227,7 +227,6 @@ object Form3: TForm3
     Height = 105
     BorderStyle = bsNone
     Ctl3D = True
-    DataField = 'client_foto'
     DataSource = DataSource3
     ParentColor = True
     ParentCtl3D = False
@@ -277,7 +276,7 @@ object Form3: TForm3
   object ADOConnection1: TADOConnection
     ConnectionString = 
       'Provider=MSDASQL.1;Persist Security Info=False;Data Source=SQLit' +
-      'e3 Datasource'
+      'e3 Datasource;'
     LoginPrompt = False
     Provider = 'MSDASQL.1'
     Left = 140

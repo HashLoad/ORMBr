@@ -39,7 +39,6 @@ uses
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.container.objectset.interfaces in '..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas',
   ormbr.container.objectset in '..\..\..\Source\Objectset\ormbr.container.objectset.pas',
@@ -52,6 +51,5 @@ begin
   ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TFSQLMonitor, FSQLMonitor);
   Application.Run;
 end.

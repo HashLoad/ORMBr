@@ -91,7 +91,8 @@ var
 implementation
 
 uses
-  SQLMonitor;
+  ormbr.monitor,
+  ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -119,7 +120,7 @@ end;
 
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
@@ -130,7 +131,7 @@ begin
   ADOConnection1.ConnectionString := 'Provider=MSDASQL.1;Persist Security Info=False;Data Source=SQLite3 Datasource';
   // Instância da class de conexão via FireDAC
   oConn := TFactoryADO.Create(ADOConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
   /// Class Adapter
   /// Parâmetros: (IDBConnection, TClientDataSet)
   /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,

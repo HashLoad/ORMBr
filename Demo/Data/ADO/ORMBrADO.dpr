@@ -43,7 +43,6 @@ uses
   ormbr.driver.connection in '..\..\..\Source\Drivers\ormbr.driver.connection.pas',
   ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
   ormbr.factory.interfaces in '..\..\..\Source\Drivers\ormbr.factory.interfaces.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.driver.ado in '..\..\..\Source\Drivers\ormbr.driver.ado.pas',
   ormbr.driver.ado.transaction in '..\..\..\Source\Drivers\ormbr.driver.ado.transaction.pas',
   ormbr.factory.ado in '..\..\..\Source\Drivers\ormbr.factory.ado.pas',

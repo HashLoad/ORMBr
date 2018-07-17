@@ -46,7 +46,6 @@ uses
   ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
   ormbr.factory.interfaces in '..\..\..\Source\Drivers\ormbr.factory.interfaces.pas',
   ormbr.factory.zeos in '..\..\..\Source\Drivers\ormbr.factory.zeos.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.dml.generator.oracle in '..\..\..\Source\Core\ormbr.dml.generator.oracle.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',

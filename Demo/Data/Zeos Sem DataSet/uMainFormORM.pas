@@ -106,7 +106,7 @@ var
 implementation
 
 uses
-  StrUtils, SQLMonitor;
+  StrUtils, ormbr.monitor, ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -122,7 +122,7 @@ end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button3Click(Sender: TObject);
@@ -270,7 +270,7 @@ begin
   DetailStringGridDefinitions;
 
   oConn := TFactoryZeos.Create(ZConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 10);
   oMasterList := oMaster.Find;

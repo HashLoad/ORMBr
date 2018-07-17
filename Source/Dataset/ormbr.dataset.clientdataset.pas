@@ -37,6 +37,7 @@ uses
   MidasLib,
   Classes,
   SysUtils,
+  StrUtils,
   DBClient,
   Variants,
   Generics.Collections,
@@ -71,6 +72,7 @@ type
     FClientDataSetEvents: TClientDataSetEvents;
     procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
     procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
+    function GetIndexFieldNames(AOrderBy: String): String;
   protected
     procedure EmptyDataSetChilds; override;
     procedure OpenIDInternal(const AID: Variant); override;
@@ -96,7 +98,8 @@ uses
   ormbr.objects.helper,
   ormbr.rtti.helper,
   ormbr.dataset.bind,
-  ormbr.dataset.fields;
+  ormbr.dataset.fields,
+  ormbr.mapping.explorer;
 
 { TClientDataSetAdapter<M> }
 
@@ -182,6 +185,29 @@ begin
     FClientDataSetEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
 end;
 
+function TClientDataSetAdapter<M>.GetIndexFieldNames(AOrderBy: String): String;
+var
+  LFields: TOrderByMapping;
+  LOrderBy: String;
+begin
+  Result := '';
+  LOrderBy := AOrderBy;
+  if LOrderBy = '' then
+  begin
+    LFields := TMappingExplorer
+                  .GetInstance
+                    .GetMappingOrderBy(TClass(M));
+    if LFields <> nil then
+      LOrderBy := LFields.ColumnsName;
+  end;
+  if LOrderBy <> '' then
+  begin
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' ASC' , '', [rfReplaceAll]);
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' DESC', '', [rfReplaceAll]);
+    Result := LOrderBy;
+  end;
+end;
+
 procedure TClientDataSetAdapter<M>.OpenIDInternal(const AID: Variant);
 var
   LIsConnected: Boolean;
@@ -203,6 +229,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>
@@ -235,6 +263,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>
@@ -267,6 +297,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>
@@ -368,7 +400,7 @@ begin
        /// Edit
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
        begin
-         if (FSession.ModifiedFields.Count > 0) or
+         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
             (FConnection.GetDriverName in [dnMongoDB]) then
          begin
            FSession.Update(Current, M.ClassName);
