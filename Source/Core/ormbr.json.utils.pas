@@ -33,10 +33,11 @@ interface
 
 uses
   SysUtils,
-  DBXJSON,
   {$IFDEF DELPHI15_UP}
   JSON,
-  {$ENDIF DELPHI15_UP}
+  {$ELSE}
+  DBXJSON,
+  {$ENDIF}
   Generics.Collections,
   ormbr.rest.json;
 
@@ -44,8 +45,9 @@ type
   TORMBrJSONUtil = class
   public
     class function JSONStringToJSONValue(AJson: string): TJSONValue;
-    class function JSONStringToJSONArray(AJson: string): TJSONArray; overload;
-    class function JSONStringToJSONArray<T: class>(AObjectList: TObjectList<T>): TJSONArray; overload;
+    class function JSONObjectToJSONValue(AObject: TObject): TJSONValue;
+    class function JSONStringToJSONArray(AJson: string): TJSONArray;
+    class function JSONObjectListToJSONArray<T: class>(AObjectList: TObjectList<T>): TJSONArray;
     class function JSONStringToJSONObject(AJson: string): TJSONObject;
   end;
 
@@ -55,10 +57,10 @@ implementation
 
 class function TORMBrJSONUtil.JSONStringToJSONArray(AJson: string): TJSONArray;
 begin
-  Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(AJson), 0) as TJSONArray;
+  Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0) as TJSONArray;
 end;
 
-class function TORMBrJSONUtil.JSONStringToJSONArray<T>(
+class function TORMBrJSONUtil.JSONObjectListToJSONArray<T>(
   AObjectList: TObjectList<T>): TJSONArray;
 var
   LItem: T;
@@ -73,9 +75,14 @@ begin
   Result := JSONStringToJSONValue(AJson) as TJSONObject;
 end;
 
+class function TORMBrJSONUtil.JSONObjectToJSONValue(AObject: TObject): TJSONValue;
+begin
+  Result := JSONStringToJSONValue(TORMBrJson.ObjectToJsonString(AObject));
+end;
+
 class function TORMBrJSONUtil.JSONStringToJSONValue(AJson: string): TJSONValue;
 begin
-  Result := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(AJson), 0);
+  Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0);
 end;
 
 end.

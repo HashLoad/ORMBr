@@ -40,7 +40,6 @@ uses
   Variants,
   Generics.Collections,
   /// ormbr
-  ormbr.criteria,
   ormbr.types.mapping,
   ormbr.mapping.classes,
   ormbr.command.factory,
@@ -66,7 +65,6 @@ type
     /// Controle de paginação vindo do banco de dados
     /// </summary>
     FPageSize: Integer;
-
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
@@ -84,9 +82,12 @@ type
     procedure InsertInternal(const AObject: M); override;
     procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TList<string>); override;
     procedure DeleteInternal(const AObject: M); override;
-    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
-    procedure NextPacketList(const AObjectList: TObjectList<M>; const APageSize, APageNext: Integer); overload; override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>; const APageSize, APageNext: Integer); overload; override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; override;
+    function NextPacketList: TObjectList<M>; overload; override;
+    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     /// <summary>
     /// Functions
     /// </summary>
@@ -100,6 +101,7 @@ type
     function SelectInternal(const ASQL: String): IDBResultSet; override;
     function NextPacket: IDBResultSet; overload; override;
     function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
 //    function SelectInternalAssociation(const AObject: TObject): IDBResultSet; override;
     /// <summary>
     /// ObjectSet
@@ -113,10 +115,7 @@ implementation
 
 uses
   ormbr.objectset.bind,
-  ormbr.types.database,
   ormbr.objects.helper,
-  ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils,
   ormbr.session.abstract,
   ormbr.rtti.helper;
 
@@ -129,7 +128,7 @@ begin
   FPageSize := APageSize;
   if not (AOwner is TSessionAbstract<M>) then
     raise Exception
-            .Create('O Object Manager não deve ser instênciada diretamente, use as classes TSessionObject<M> ou TSessionDataSet<M>');
+            .Create('O Object Manager não deve ser instânciada diretamente, use as classes TSessionObject<M> ou TSessionDataSet<M>');
   FConnection := AConnection;
   FExplorer := TMappingExplorer.GetInstance;
   FObjectInternal := M.Create;
@@ -351,9 +350,91 @@ end;
 
 function TObjectManager<M>.NextPacket(const APageSize, APageNext: Integer): IDBResultSet;
 begin
-  Result := FDMLCommandFactory.GeneratorNextPacket(APageSize, APageNext);
+  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), APageSize, APageNext);
   if Result.FetchingAll then
     FFetchingRecords := True;
+end;
+
+function TObjectManager<M>.NextPacketList: TObjectList<M>;
+var
+ LResultSet: IDBResultSet;
+ LObjectList: TObjectList<M>;
+begin
+  LObjectList := TObjectList<M>.Create;
+  LResultSet := NextPacket;
+  try
+    while LResultSet.NotEof do
+    begin
+      LObjectList.Add(M.Create);
+      TBindObject
+        .GetInstance
+          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
+      /// <summary>
+      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      /// </summary>
+      FillAssociation(LObjectList.Last);
+    end;
+    Result := LObjectList;
+  finally
+    LResultSet.Close;
+  end;
+end;
+
+function TObjectManager<M>.NextPacket(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): IDBResultSet;
+begin
+  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), AWhere, AOrderBy, APageSize, APageNext);
+  if Result.FetchingAll then
+    FFetchingRecords := True;
+end;
+
+function TObjectManager<M>.NextPacketList(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): TObjectList<M>;
+var
+ LResultSet: IDBResultSet;
+ LObjectList: TObjectList<M>;
+begin
+  LObjectList := TObjectList<M>.Create;
+  LResultSet := NextPacket(AWhere, AOrderBy, APageSize, APageNext);
+  try
+    while LResultSet.NotEof do
+    begin
+      LObjectList.Add(M.Create);
+      TBindObject
+        .GetInstance
+          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
+      /// <summary>
+      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      /// </summary>
+      FillAssociation(LObjectList.Last);
+    end;
+    Result := LObjectList;
+  finally
+    LResultSet.Close;
+  end;
+end;
+
+procedure TObjectManager<M>.NextPacketList(const AObjectList: TObjectList<M>;
+  const AWhere, AOrderBy: String; const APageSize, APageNext: Integer);
+var
+ LResultSet: IDBResultSet;
+begin
+  LResultSet := NextPacket(AWhere, AOrderBy, APageSize, APageNext);
+  try
+    while LResultSet.NotEof do
+    begin
+      AObjectList.Add(M.Create);
+      TBindObject
+        .GetInstance
+          .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      /// <summary>
+      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      /// </summary>
+      FillAssociation(AObjectList.Last);
+    end;
+  finally
+    LResultSet.Close;
+  end;
 end;
 
 procedure TObjectManager<M>.NextPacketList(const AObjectList: TObjectList<M>;
@@ -379,23 +460,26 @@ begin
   end;
 end;
 
-procedure TObjectManager<M>.NextPacketList(const AObjectList: TObjectList<M>);
+function TObjectManager<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
 var
- LResultSet: IDBResultSet;
+  LResultSet: IDBResultSet;
+  LObjectList: TObjectList<M>;
 begin
-  LResultSet := NextPacket;
+  LObjectList := TObjectList<M>.Create;
+  LResultSet := NextPacket(APageSize, APageNext);
   try
     while LResultSet.NotEof do
     begin
-      AObjectList.Add(M.Create);
+      LObjectList.Add(M.Create);
       TBindObject
         .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
       /// Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
-      FillAssociation(AObjectList.Last);
+      FillAssociation(LObjectList.Last);
     end;
+    Result := LObjectList;
   finally
     LResultSet.Close;
   end;

@@ -188,8 +188,8 @@ begin
     LIdx := FindClassForJSON(LName);
     if LIdx>=0 then
       Continue;
-    LIdx := length(RegisteredClass);
-    SetLength(RegisteredClass,LIdx+1);
+    LIdx := Length(RegisteredClass);
+    SetLength(RegisteredClass, LIdx +1);
     RegisteredClass[LIdx].ClassName := LName;
     RegisteredClass[LIdx].ClassType := AClasses[LFor];
   end;
@@ -273,12 +273,8 @@ begin
 end;
 
 class procedure TJSONObjectORMBr.AppendChar(var AStr: String; AChr: Char);
-var
-  LLen: Integer;
 begin
-  LLen := Length(AStr);
-  SetLength(AStr, LLen + 1);
-  AStr[LLen] := AChr;
+  AStr := AStr + String(AChr);
 end;
 
 class function TJSONObjectORMBr.StringToJSON(const AText: String): String;
@@ -328,12 +324,10 @@ begin
   AResult := FloatToStr(AValue, FSettingsUS);
 end;
 
-/// <summary>
-/// // "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss"
-/// </summary>
+/// <summary> "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss" </summary>
 class function TJSONObjectORMBr.DateTimeToJSON(AValue: TDateTime): String;
 begin
-  Result := '"' + TUtilSingleton.GetInstance.DateTimeToIso8601(AValue) + '"';
+  Result := AnsiQuotedStr(TUtilSingleton.GetInstance.DateTimeToIso8601(AValue), '"');
 end;
 
 class function TJSONObjectORMBr.ValueToJSON(const AValue: Variant): String;
@@ -1020,12 +1014,12 @@ begin
   Init;
 end;
 
-procedure TJSONVariantData.AddNameValue(const AName: String;
-  const AValue: Variant);
+procedure TJSONVariantData.AddNameValue(const AName: String; const AValue: Variant);
 begin
   if FVKind = jvUndefined then
     FVKind := jvObject
-  else if FVKind <> jvObject then
+  else
+  if FVKind <> jvObject then
     raise EJSONException.CreateFmt('AddNameValue(%s) over array', [AName]);
   if FVCount <= Length(FValues) then
   begin
@@ -1041,7 +1035,8 @@ procedure TJSONVariantData.AddValue(const AValue: Variant);
 begin
   if FVKind = jvUndefined then
     FVKind := jvArray
-  else if FVKind <> jvArray then
+  else
+  if FVKind <> jvArray then
     raise EJSONException.Create('AddValue() over object');
   if FVCount <= Length(FValues) then
     SetLength(FValues, FVCount + FVCount shr 3 + 32);
@@ -1256,7 +1251,7 @@ var
   LIdx, LFor: Integer;
 begin
   Result := nil;
-  if (Kind <> jvObject) or (Count = 0) then
+  if (FVKind <> jvObject) or (Count = 0) then
     Exit;
 
   LIdx := NameIndex('ClassName');
@@ -1296,7 +1291,7 @@ begin
   Result := False;
   if AObject = nil then
     Exit;
-  case Kind of
+  case FVKind of
     jvObject:
       begin
         AObject.GetType(LListType);

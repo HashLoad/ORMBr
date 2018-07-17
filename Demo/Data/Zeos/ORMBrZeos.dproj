@@ -111,9 +111,6 @@
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.zeos.pas"/>
-        <DCCReference Include="..\..\SQLMonitor.pas">
-            <Form>FSQLMonitor</Form>
-        </DCCReference>
         <DCCReference Include="..\..\..\Source\Core\ormbr.utils.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.oracle.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>

@@ -102,7 +102,7 @@ var
 implementation
 
 uses
-  StrUtils, SQLMonitor;
+  StrUtils, ormbr.monitor, ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -118,7 +118,7 @@ end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.btnOpenClick(Sender: TObject);
@@ -244,7 +244,7 @@ begin
   /// </summary>
   // Instância da class de conexão via FireDAC
   oConn := TFactoryDBExpress.Create(SQLConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
   /// Class Adapter
   /// Parâmetros: (IDBConnection, TClientDataSet)
   /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,

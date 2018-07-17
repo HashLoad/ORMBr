@@ -48,7 +48,6 @@ uses
   ormbr.factory.sqlite3 in '..\..\..\Source\Drivers\ormbr.factory.sqlite3.pas',
   ormbr.driver.sqlite3 in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.pas',
   ormbr.driver.sqlite3.transaction in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.transaction.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas',
   ormbr.container.clientdataset in '..\..\..\Source\Dataset\ormbr.container.clientdataset.pas',
   ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',

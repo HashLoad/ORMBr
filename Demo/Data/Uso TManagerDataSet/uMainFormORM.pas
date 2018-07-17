@@ -98,7 +98,7 @@ var
 implementation
 
 uses
-  SQLMonitor;
+  ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -118,7 +118,7 @@ end;
 
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button4Click(Sender: TObject);
@@ -133,26 +133,25 @@ begin
   Memo1.Lines.Clear;
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
-  // Monitor
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oManager := TManagerDataSet.Create(oConn);
-  oManager.AddAdapter<Tmaster>(FDMaster);
-  oManager.AddAdapter<Tdetail, Tmaster>(FDDetail);
-  oManager.AddAdapter<Tclient, Tmaster>(FDClient);
-  oManager.AddAdapter<Tlookup>(FDLookup);
-  oManager.AddLookupField<Tdetail, Tlookup>('fieldname',
+  oManager.AddAdapter<Tmaster>(FDMaster)
+          .AddAdapter<Tdetail, Tmaster>(FDDetail)
+          .AddAdapter<Tclient, Tmaster>(FDClient)
+          .AddAdapter<Tlookup>(FDLookup)
+          .AddLookupField<Tdetail, Tlookup>('fieldname',
                                             'lookup_id',
                                             'lookup_id',
                                             'lookup_description',
-                                            'Descrição Lookup');
-  oManager.Open<Tmaster>;
+                                            'Descrição Lookup')
+  .Open<Tmaster>;
 
   oManager.FindWhere<Tmaster>('master_id = 83');
-  if oManager.DataList<Tmaster>.Count > 0 then
+  if oManager.NestedList<Tmaster>.Count > 0 then
   begin
-    oManager.DataList<Tmaster>.First;
-    for LMaster in oManager.DataList<Tmaster> do
+    oManager.NestedList<Tmaster>.First;
+    for LMaster in oManager.NestedList<Tmaster> do
     begin
       if LMaster <> nil then
         Memo1.Lines.Add(TORMBrJson.ObjectToJsonString(LMaster));

@@ -50,14 +50,16 @@ type
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
-    procedure SetPageSize(APageSize: Integer);
-    function GenerateSelectAll(AClass: TClass): string;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string): string;
-    function GenerateSelectID(AClass: TClass; AID: Variant): string;
-    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string;
-    function GenerateSelectOneToMany(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string;
+    procedure SetPageSize(const APageSize: Integer);
+    function GenerateSelectAll(const AClass: TClass): string;
+    function GeneratorSelectWhere(const AClass: TClass; const AWhere, AOrderBy: string): string;
+    function GenerateSelectID(const AClass: TClass; const AID: Variant): string;
+    function GenerateSelectOneToOne(const AOwner: TObject; const AClass: TClass; const AAssociation: TAssociationMapping): string;
+    function GenerateSelectOneToMany(const AOwner: TObject; const AClass: TClass; const AAssociation: TAssociationMapping): string;
     function GenerateNextPacket: string; overload;
-    function GenerateNextPacket(const APageSize, APageNext: Integer): string; overload;
+    function GenerateNextPacket(const AClass: TClass; const APageSize, APageNext: Integer): string; overload;
+    function GenerateNextPacket(const AClass: TClass; const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): string; overload;
   end;
 
 implementation
@@ -81,18 +83,12 @@ begin
   Result := FCommand;
 end;
 
-function TCommandSelecter.GenerateNextPacket(const APageSize, APageNext: Integer): string;
-begin
-  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, APageSize, APageNext);
-  Result := FCommand;
-end;
-
-procedure TCommandSelecter.SetPageSize(APageSize: Integer);
+procedure TCommandSelecter.SetPageSize(const APageSize: Integer);
 begin
   FPageSize := APageSize;
 end;
 
-function TCommandSelecter.GenerateSelectAll(AClass: TClass): string;
+function TCommandSelecter.GenerateSelectAll(const AClass: TClass): string;
 begin
   FPageNext := 0;
   /// <summary>
@@ -102,49 +98,70 @@ begin
     FCommandSelectAll := FGeneratorCommand.GeneratorSelectAll(AClass, FPageSize, -1);
 
   FCommandSelect := FCommandSelectAll;
-  if FPageSize > -1 then
-     FCommand := Format(FCommandSelect, [IntToStr(FPageSize), IntToStr(FPageNext)])
-  else
-     FCommand := FCommandSelect;
+  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, FPageSize, FPageNext);
   Result := FCommand;
 end;
 
-function TCommandSelecter.GenerateSelectOneToMany(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+function TCommandSelecter.GenerateSelectOneToMany(const AOwner: TObject;
+  const AClass: TClass; const AAssociation: TAssociationMapping): string;
 begin
   FCommand := FGeneratorCommand.GenerateSelectOneToOneMany(AOwner, AClass, AAssociation);
   Result := FCommand;
 end;
 
-function TCommandSelecter.GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
-  AAssociation: TAssociationMapping): string;
+function TCommandSelecter.GenerateSelectOneToOne(const AOwner: TObject;
+  const AClass: TClass; const AAssociation: TAssociationMapping): string;
 begin
   FCommand := FGeneratorCommand.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
   Result := FCommand;
 end;
 
-function TCommandSelecter.GeneratorSelectWhere(AClass: TClass; AWhere: string;
-  AOrderBy: string): string;
+function TCommandSelecter.GeneratorSelectWhere(const AClass: TClass;
+  const AWhere, AOrderBy: string): string;
+var
+  LWhere: String;
 begin
   FPageNext := 0;
-  AWhere := StringReplace(AWhere,'%', '$', [rfReplaceAll]);
-  /// <summary>
-  /// Se o SELECT não foi contruido, constroi, se foi, retorna o já existente.
-  /// </summary>
-  FCommandSelect := FGeneratorCommand.GeneratorSelectWhere(AClass, AWhere, AOrderBy, FPageSize);
-  if FPageSize > -1 then
-     FCommand := Format(FCommandSelect, [IntToStr(FPageSize), IntToStr(FPageNext)])
-  else
-     FCommand := FCommandSelect;
+  LWhere := StringReplace(AWhere,'%', '$', [rfReplaceAll]);
+
+  FCommandSelect := FGeneratorCommand.GeneratorSelectWhere(AClass, LWhere, AOrderBy, FPageSize);
+  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, FPageSize, FPageNext);
   FCommand := StringReplace(FCommand, '$', '%', [rfReplaceAll]);
   Result := FCommand;
 end;
 
-function TCommandSelecter.GenerateSelectID(AClass: TClass; AID: Variant): string;
+function TCommandSelecter.GenerateSelectID(const AClass: TClass; const AID: Variant): string;
 begin
   FPageNext := 0;
   FCommandSelect := FGeneratorCommand.GeneratorSelectAll(AClass, -1, AID);
   FCommand := FCommandSelect;
+  Result := FCommand;
+end;
+
+function TCommandSelecter.GenerateNextPacket(const AClass: TClass;
+  const APageSize, APageNext: Integer): string;
+begin
+  /// <summary>
+  /// Se o SELECT não foi contruido, constroi, se foi, retorna o já existente.
+  /// </summary>
+  if Length(FCommandSelectAll) = 0 then
+    FCommandSelectAll := FGeneratorCommand.GeneratorSelectAll(AClass, APageSize, -1);
+
+  FCommandSelect := FCommandSelectAll;
+  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, APageSize, APageNext);
+  Result := FCommand;
+end;
+
+function TCommandSelecter.GenerateNextPacket(const AClass: TClass; const AWhere,
+  AOrderBy: String; const APageSize, APageNext: Integer): string;
+var
+  LWhere: String;
+begin
+  LWhere := StringReplace(AWhere,'%', '$', [rfReplaceAll]);
+  FCommandSelect := FGeneratorCommand.GeneratorSelectWhere(AClass, AWhere, AOrderBy, APageSize);
+
+  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, APageSize, APageNext);
+  FCommand := StringReplace(FCommand, '$', '%', [rfReplaceAll]);
   Result := FCommand;
 end;
 

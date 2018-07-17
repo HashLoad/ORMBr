@@ -100,7 +100,8 @@ implementation
 
 uses
   StrUtils,
-  SQLMonitor;
+  ormbr.monitor,
+  ormbr.form.monitor;
 
 {$R *.dfm}
 
@@ -120,7 +121,7 @@ end;
 
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button4Click(Sender: TObject);
@@ -132,9 +133,9 @@ procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
   // Master
-  oContainerMaster := TContainerFDMemTable<Tmaster>.Create(oConn, FDMaster);
+  oContainerMaster := TContainerFDMemTable<Tmaster>.Create(oConn, FDMaster, 3);
   // Detail
   oContainerDetail := TContainerFDMemTable<Tdetail>.Create(oConn, FDDetail, oContainerMaster.This);
   // Client

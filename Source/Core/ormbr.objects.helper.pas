@@ -44,6 +44,7 @@ type
   public
     function GetTable: Table;
     function GetResource: Resource;
+    function GetSubResource: SubResource;
     function &GetType(out AType: TRttiType): Boolean;
     function GetSequence: Sequence;
     function GetPrimaryKey: TArray<TColumnMapping>;
@@ -115,7 +116,6 @@ var
   LType: TRttiType;
   LAttribute: TCustomAttribute;
 begin
-  Result := nil;
   if &GetType(LType) then
   begin
     for LAttribute in LType.GetAttributes do // Resource
@@ -123,9 +123,8 @@ begin
       if LAttribute is Resource then
         Exit(Resource(LAttribute));
     end;
+    Exit(nil);
   end;
-  if Result = nil then
-    Exit(Resource(GetTable));
 end;
 
 function TObjectHelper.GetSequence: Sequence;
@@ -139,6 +138,24 @@ begin
     begin
       if LAttribute is Sequence then // Sequence
         Exit(Sequence(LAttribute));
+    end;
+    Exit(nil);
+  end
+  else
+    Exit(nil);
+end;
+
+function TObjectHelper.GetSubResource: SubResource;
+var
+  LType: TRttiType;
+  LAttribute: TCustomAttribute;
+begin
+  if &GetType(LType) then
+  begin
+    for LAttribute in LType.GetAttributes do // SubResource
+    begin
+      if LAttribute is SubResource then
+        Exit(SubResource(LAttribute));
     end;
     Exit(nil);
   end

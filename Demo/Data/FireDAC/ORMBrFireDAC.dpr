@@ -46,7 +46,6 @@ uses
   ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
   ormbr.factory.firedac in '..\..\..\Source\Drivers\ormbr.factory.firedac.pas',
   ormbr.factory.interfaces in '..\..\..\Source\Drivers\ormbr.factory.interfaces.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',
   ormbr.container.fdmemtable in '..\..\..\Source\Dataset\ormbr.container.fdmemtable.pas',
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',

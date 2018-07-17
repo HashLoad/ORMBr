@@ -80,7 +80,9 @@ function TDMLGeneratorOracle.GeneratorPageNext(ACommandSelect: string;
   APageSize: Integer; APageNext: Integer): string;
 begin
   if APageSize > -1 then
-     Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)]);
+    Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
 end;
 
 function TDMLGeneratorOracle.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;

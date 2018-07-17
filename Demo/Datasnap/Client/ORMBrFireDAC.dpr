@@ -62,17 +62,17 @@ uses
   ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas',
   ormbr.session.objectset in '..\..\..\Source\Objectset\ormbr.session.objectset.pas',
   ormbr.objects.manager.abstract in '..\..\..\Source\Core\ormbr.objects.manager.abstract.pas',
-  ormbr.restdataset.fdmemtable in '..\..\..\Source\RESTFull\ormbr.restdataset.fdmemtable.pas',
-  ormbr.container.restfdmemtable in '..\..\..\Source\RESTFull\ormbr.container.restfdmemtable.pas',
+  ormbr.restdataset.fdmemtable in '..\..\..\Source\RESTFul\ormbr.restdataset.fdmemtable.pas',
   ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas',
-  ormbr.restdataset.adapter in '..\..\..\Source\RESTFull\ormbr.restdataset.adapter.pas',
-  ormbr.session.datasnap in '..\..\..\Source\RESTFull\ormbr.session.datasnap.pas',
+  ormbr.restdataset.adapter in '..\..\..\Source\RESTFul\ormbr.restdataset.adapter.pas',
+  ormbr.session.datasnap in '..\..\..\Source\RESTFul\ormbr.session.datasnap.pas',
   ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
   ormbr.model.client in '..\..\Data\Models\ormbr.model.client.pas',
   ormbr.model.detail in '..\..\Data\Models\ormbr.model.detail.pas',
   ormbr.model.lookup in '..\..\Data\Models\ormbr.model.lookup.pas',
   ormbr.model.master in '..\..\Data\Models\ormbr.model.master.pas',
-  ormbr.session.baseurl in '..\..\..\Source\RESTFull\ormbr.session.baseurl.pas';
+  ormbr.session.baseurl in '..\..\..\Source\RESTFul\ormbr.session.baseurl.pas',
+  ormbr.container.restfdmemtable in '..\..\..\Source\RESTFul\ormbr.container.restfdmemtable.pas';
 
 {$R *.res}
 

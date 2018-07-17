@@ -36,6 +36,7 @@ uses
   Rtti,
   Classes,
   SysUtils,
+  StrUtils,
   Variants,
   Generics.Collections,
   FireDAC.Stan.Intf,
@@ -80,6 +81,7 @@ type
     FMemTableEvents: TFDMemTableEvents;
     procedure DoBeforeApplyUpdates(DataSet: TFDDataSet);
     procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+    function GetIndexFieldNames(AOrderBy: String): String;
   protected
     procedure EmptyDataSetChilds; override;
     procedure OpenIDInternal(const AID: Variant); override;
@@ -105,7 +107,8 @@ uses
   ormbr.dataset.bind,
   ormbr.rtti.helper,
   ormbr.objects.helper,
-  ormbr.dataset.fields;
+  ormbr.dataset.fields,
+  ormbr.mapping.explorer;
 
 { TFDMemTableAdapter<M> }
 
@@ -194,6 +197,31 @@ begin
     FMemTableEvents.BeforeApplyUpdates := FOrmDataSet.BeforeApplyUpdates;
   if Assigned(FOrmDataSet.AfterApplyUpdates)  then
     FMemTableEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
+end;
+
+function TFDMemTableAdapter<M>.GetIndexFieldNames(AOrderBy: String): String;
+var
+  LFields: TOrderByMapping;
+  LOrderBy: String;
+  LPosD: Integer;
+begin
+  Result := '';
+  LOrderBy := AOrderBy;
+  if LOrderBy = '' then
+  begin
+    LFields := TMappingExplorer
+                  .GetInstance
+                    .GetMappingOrderBy(TClass(M));
+    if LFields <> nil then
+      LOrderBy := LFields.ColumnsName;
+  end;
+  if LOrderBy <> '' then
+  begin
+    LPosD := Pos(' DESC', UpperCase(LOrderBy));
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' ASC' , '', [rfReplaceAll]);
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' DESC', '', [rfReplaceAll]);
+    Result := LOrderBy + ifThen(LPosD > 0, ':D', ':A');
+  end;
 end;
 
 procedure TFDMemTableAdapter<M>.ApplyInternal(const MaxErros: Integer);
@@ -287,7 +315,7 @@ begin
        /// Edit
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
        begin
-         if (FSession.ModifiedFields.Count > 0) or
+         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
             (FConnection.GetDriverName in [dnMongoDB]) then
          begin
            FSession.Update(Current, M.ClassName);
@@ -366,6 +394,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>
@@ -400,6 +430,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>
@@ -415,6 +447,8 @@ end;
 procedure TFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
 var
   LIsConnected: Boolean;
+  LOrderBy: String;
+  LPosD: Integer;
 begin
   FOrmDataSet.DisableControls;
   FOrmDataSet.DisableConstraints;
@@ -434,6 +468,8 @@ begin
     end;
   finally
     EnableDataSetEvents;
+    /// <summary> Define a order no dataset </summary>
+    FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
     /// <summary>
     /// Erro interno do FireDAC se no método First se o dataset estiver vazio
     /// </summary>

@@ -40,7 +40,6 @@ uses
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   SQLite3 in '..\..\..\Source\External\SQLite3\SQLite3.pas',
   SQLiteTable3 in '..\..\..\Source\External\SQLite3\SQLiteTable3.pas',
   ormbr.driver.sqlite3 in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.pas',
@@ -55,6 +54,5 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TFSQLMonitor, FSQLMonitor);
   Application.Run;
 end.

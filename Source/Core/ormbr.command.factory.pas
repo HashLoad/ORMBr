@@ -60,7 +60,8 @@ type
     function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
       const AOrderBy: string; const APageSize: Integer): string; virtual; abstract;
     function GeneratorNextPacket: IDBResultSet; overload; virtual; abstract;
-    function GeneratorNextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function GeneratorNextPacket(const AClass: TClass; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); virtual; abstract;
@@ -88,7 +89,8 @@ type
     function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
       const AOrderBy: string; const APageSize: Integer): string; override;
     function GeneratorNextPacket: IDBResultSet; overload; override;
-    function GeneratorNextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function GeneratorNextPacket(const AClass: TClass; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
     procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); override;
@@ -166,11 +168,28 @@ begin
   FConnection.ExecuteDirect(LSQLText, FCommandInserter.Params);
 end;
 
-function TDMLCommandFactory.GeneratorNextPacket(const APageSize, APageNext: Integer): IDBResultSet;
+function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
+  const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet;
 var
   LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateNextPacket(APageSize, APageNext);
+  LSQLText := FCommandSelecter.GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
+  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  /// <summary>
+  /// Envia comando para tela do monitor.
+  /// </summary>
+  if FConnection.CommandMonitor <> nil then
+    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+
+  Result := FConnection.ExecuteSQL(LSQLText);
+end;
+
+function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
+  const APageSize, APageNext: Integer): IDBResultSet;
+var
+  LSQLText: String;
+begin
+  LSQLText := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
   /// Envia comando para tela do monitor.

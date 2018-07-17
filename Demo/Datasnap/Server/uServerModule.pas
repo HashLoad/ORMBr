@@ -172,7 +172,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONStringToJSONArray<Tlookup>(LLookupList);
+    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tlookup>(LLookupList);
   finally
     LLookupList.Free;
   end;
@@ -193,7 +193,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONStringToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;
@@ -254,7 +254,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONStringToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;

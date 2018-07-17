@@ -31,6 +31,7 @@ interface
 
 uses
   Rtti,
+  Classes,
   SysUtils,
   Variants,
   ormbr.dml.generator,
@@ -75,9 +76,32 @@ end;
 
 function TDMLGeneratorMySQL.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
 var
+  LTable: TTableMapping;
   LCriteria: ICriteria;
+  LOrderBy: TOrderByMapping;
+  LOrderByList: TStringList;
+  LFor: Integer;
 begin
+  LTable := TMappingExplorer
+              .GetInstance
+                .GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
+  /// OrderBy
+  LOrderBy := TMappingExplorer
+                .GetInstance
+                  .GetMappingOrderBy(AClass);
+  if LOrderBy <> nil then
+  begin
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+    finally
+      LOrderByList.Free;
+    end;
+  end;
   if APageSize > -1 then
      Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
   else

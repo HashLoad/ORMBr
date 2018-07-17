@@ -227,7 +227,9 @@ function TDMLGeneratorAbstract.GeneratorPageNext(ACommandSelect: string;
   APageSize: Integer; APageNext: Integer): string;
 begin
   if APageSize > -1 then
-     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)]);
+    Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorSelect(ACriteria: ICriteria): string;
@@ -238,13 +240,10 @@ end;
 function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria;
 var
   LTable: TTableMapping;
-  LOrderBy: TOrderByMapping;
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
   LCriteria: ICriteria;
-  LOrderByList: TStringList;
-  LFor: Integer;
 begin
   /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
@@ -269,20 +268,6 @@ begin
         LCriteria.Where(LPrimaryKey.Columns[0] + ' = ' + IntToStr(AID))
       else
         LCriteria.Where(LPrimaryKey.Columns[0] + ' = ' + QuotedStr(AID));
-    end;
-  end;
-  /// OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
-  if LOrderBy <> nil then
-  begin
-    LOrderByList := TStringList.Create;
-    try
-      LOrderByList.Duplicates := dupError;
-      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
-      for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
-    finally
-      LOrderByList.Free;
     end;
   end;
   Result := LCriteria;

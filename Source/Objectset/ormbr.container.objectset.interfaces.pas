@@ -47,6 +47,9 @@ type
     procedure Modify(const AObject: M);
     procedure LoadLazy(const AOwner, AObject: TObject);
     procedure NextPacket(const AObjectList: TObjectList<M>); overload;
+    function NextPacket: TObjectList<M>; overload;
+    function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload;
+    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload;
   end;
 
 implementation

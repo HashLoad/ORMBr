@@ -232,6 +232,15 @@ object Form3: TForm3
     TabOrder = 14
     OnClick = Button2Click
   end
+  object Button3: TButton
+    Left = 552
+    Top = 419
+    Width = 110
+    Height = 25
+    Caption = 'Button3'
+    TabOrder = 15
+    OnClick = Button3Click
+  end
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=..\Database\database.db3'

@@ -41,12 +41,14 @@ uses
   DBClient,
   Variants,
   Generics.Collections,
-  /// orm
+  /// ORMBr
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ENDIF}
   ormbr.criteria,
   ormbr.dataset.base.adapter,
   ormbr.restdataset.adapter,
   ormbr.dataset.events,
-  ormbr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.objects.helper,
@@ -79,6 +81,8 @@ type
     procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
     procedure FilterDataSetChilds;
   protected
+    procedure PopularDataSetOneToOne(const AObject: TObject;
+      const AAssociation: TAssociationMapping); override;
     procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
@@ -91,9 +95,10 @@ type
   public
     {$IFDEF DRIVERRESTFUL}
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
-      AMasterObject: TObject); overload; override;
+      APageSize: Integer; AMasterObject: TObject); overload; override;
     {$ELSE}
-    constructor Create(ADataSet: TDataSet; AMasterObject: TObject); overload; override;
+    constructor Create(ADataSet: TDataSet; APageSize: Integer;
+      AMasterObject: TObject); overload; override;
     {$ENDIF}
     destructor Destroy; override;
   end;
@@ -109,14 +114,14 @@ uses
 
 {$IFDEF DRIVERRESTFUL}
 constructor TRESTClientDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
-  ADataSet: TDataSet; AMasterObject: TObject);
+  ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(Aconnection, ADataSet, AMasterObject);
+  inherited Create(Aconnection, ADataSet, APageSize, AMasterObject);
 {$ELSE}
-constructor TRESTClientDataSetAdapter<M>.Create(ADataSet: TDataSet;
-  AMasterObject: TObject);
+constructor TRESTFDMemTableAdapter<M>.Create(ADataSet: TDataSet;
+  APageSize: Integer; AMasterObject: TObject);
 begin
-  inherited Create(ADataSet, AMasterObject);
+  inherited Create(ADataSet, APageSize, AMasterObject);
 {$ENDIF}
   /// <summary>
   /// Captura o component TClientDataset da IDE passado como parâmetro
@@ -246,6 +251,8 @@ begin
 end;
 
 procedure TRESTClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: string);
+var
+  LObjectList: TObjectList<M>;
 begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
@@ -253,10 +260,19 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.Open;
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    LObjectList := FSession.Find;
+    if LObjectList <> nil then
+    begin
+      try
+        PopularDataSetList(LObjectList);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObjectList.Clear;
+        LObjectList.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;
@@ -265,6 +281,8 @@ begin
 end;
 
 procedure TRESTClientDataSetAdapter<M>.OpenIDInternal(const AID: Variant);
+var
+  LObject: M;
 begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
@@ -272,10 +290,18 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.OpenID(AID);
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    FSession.Find(VarToStr(AID));
+    if LObject <> nil then
+    begin
+      try
+        PopularDataSet(LObject);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObject.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;
@@ -283,8 +309,9 @@ begin
   end;
 end;
 
-procedure TRESTClientDataSetAdapter<M>.OpenWhereInternal(const AWhere,
-  AOrderBy: string);
+procedure TRESTClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+var
+  LObjectList: TObjectList<M>;
 begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
@@ -292,14 +319,66 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.OpenWhere(AWhere, AOrderBy);
-    /// <summary> Filtra os registros nas sub-tabelas </summary>
-    if FOwnerMasterObject = nil then
-      FilterDataSetChilds;
+    LObjectList := FSession.FindWhere(AWhere, AOrderBy);
+    if LObjectList <> nil then
+    begin
+      try
+        PopularDataSetList(LObjectList);
+        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        if FOwnerMasterObject = nil then
+          FilterDataSetChilds;
+      finally
+        LObjectList.Clear;
+        LObjectList.Free;
+      end;
+    end;
   finally
     EnableDataSetEvents;
     FOrmDataSet.First;
     FOrmDataSet.EnableControls;
+  end;
+end;
+
+procedure TRESTClientDataSetAdapter<M>.PopularDataSetOneToOne(
+  const AObject: TObject; const AAssociation: TAssociationMapping);
+var
+  LRttiType: TRttiType;
+  LChild: TDataSetBaseAdapter<M>;
+  LField: string;
+  LKeyFields: string;
+  LKeyValues: string;
+begin
+  inherited;
+  if FMasterObject.ContainsKey(AObject.ClassName) then
+  begin
+    LChild := FMasterObject.Items[AObject.ClassName];
+    LChild.FOrmDataSet.DisableControls;
+    LChild.DisableDataSetEvents;
+    TClientDataSet(LChild.FOrmDataSet).MasterSource := nil;
+    try
+      AObject.GetType(LRttiType);
+      LKeyFields := '';
+      LKeyValues := '';
+      for LField in AAssociation.ColumnsNameRef do
+      begin
+        LKeyFields := LKeyFields + LField + ', ';
+        LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
+      end;
+      LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
+      LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
+      /// <summary> Evitar duplicidade de registro em memória </summary>
+      if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
+      begin
+        LChild.FOrmDataSet.Append;
+        TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+        LChild.FOrmDataSet.Post;
+      end;
+    finally
+      TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+      LChild.FOrmDataSet.First;
+      LChild.FOrmDataSet.EnableControls;
+      LChild.EnableDataSetEvents;
+    end;
   end;
 end;
 

@@ -52,20 +52,17 @@ type
   /// </summary>
   TSessionDataSnap<M: class, constructor> = class(TSessionAbstract<M>)
   private
-    FOwner: TDataSetBaseAdapter<M>;
     FRESTResponse: TRESTResponse;
     FRESTRequest: TRESTRequest;
     FRESTClient: TRESTClient;
     FResource: String;
   public
-    constructor Create(const AOwner: TDataSetBaseAdapter<M>); overload;
+    constructor Create(const APageSize: Integer = -1); override;
     destructor Destroy; override;
     procedure Insert(const AObject: M); overload; override;
     procedure Update(const AObjectList: TObjectList<M>); overload; override;
     procedure Delete(const AID: Integer); overload; override;
-    procedure Open; override;
-    procedure OpenID(const AID: Variant); override;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure Delete(const AObject: M); overload; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Integer): M; overload; override;
     function Find(const AID: String): M; overload; override;
@@ -78,21 +75,24 @@ uses
   REST.Types,
   IPPeerClient,
   DBXJSONReflect,
-  System.JSON,
+  JSON,
   ormbr.rest.json,
   ormbr.objects.helper,
+  ormbr.mapping.classes,
+  ormbr.mapping.attributes,
   ormbr.restdataset.adapter,
   ormbr.json.utils;
 
 { TSessionDataSnap<M> }
 
-constructor TSessionDataSnap<M>.Create(const AOwner: TDataSetBaseAdapter<M>);
+constructor TSessionDataSnap<M>.Create(const APageSize: Integer = -1);
 var
   LObject: TObject;
   ABaseURL: String;
+  LTable: TCustomAttribute;
+  LResource: TCustomAttribute;
 begin
-  inherited Create;
-  FOwner := AOwner;
+  inherited Create(APageSize);
   /// <summary>
   ///  Verifica se foi informado a URL no Singleton
   /// </summary>
@@ -112,10 +112,27 @@ begin
   /// </summary>
   LObject := TObject(M.Create);
   try
-    FResource := LObject.GetResource.Name;
+    LResource := LObject.GetResource;
+    if LResource <> nil then
+      FResource := Resource(LResource).Name;
+
+    if FResource = '' then
+    begin
+      LTable := LObject.GetTable;
+      if LTable <> nil then
+        FResource := Table(LTable).Name;
+    end;
   finally
     LObject.Free;
   end;
+end;
+
+procedure TSessionDataSnap<M>.Delete(const AObject: M);
+var
+  LColumn: TColumnMapping;
+begin
+  for LColumn in AObject.GetPrimaryKey do
+    Delete(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsInteger);
 end;
 
 destructor TSessionDataSnap<M>.Destroy;
@@ -216,7 +233,7 @@ procedure TSessionDataSnap<M>.Update(const AObjectList: TObjectList<M>);
 var
   FJSON: TJSONArray;
 begin
-  FJSON := TORMBrJSONUtil.JSONStringToJSONArray<M>(AObjectList);
+  FJSON := TORMBrJSONUtil.JSONObjectListToJSONArray<M>(AObjectList);
   try
     FRESTRequest.ResetToDefaults;
     FRESTRequest.Resource := '/' + FResource;
@@ -229,59 +246,6 @@ begin
     FRESTRequest.Execute;
   finally
     FJSON.Free;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.OpenID(const AID: Variant);
-var
-  LObject: M;
-begin
-  LObject := Find(Integer(AID));
-  if LObject <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSet(LObject);
-    finally
-      LObject.Free;
-    end;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.Open;
-var
-  LObjectList: TObjectList<M>;
-begin
-  LObjectList := Find;
-  /// <summary>
-  /// Popula do DataSet
-  /// </summary>
-  if LObjectList <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSetList(LObjectList);
-    finally
-      LObjectList.Clear;
-      LObjectList.Free;
-    end;
-  end;
-end;
-
-procedure TSessionDataSnap<M>.OpenWhere(const AWhere, AOrderBy: string);
-var
-  LObjectList: TObjectList<M>;
-begin
-  LObjectList := FindWhere(AWhere, AOrderBy);
-  /// <summary>
-  /// Popula do DataSet
-  /// </summary>
-  if LObjectList <> nil then
-  begin
-    try
-      TRESTDataSetAdapter<M>(FOwner).PopularDataSetList(LObjectList);
-    finally
-      LObjectList.Clear;
-      LObjectList.Free;
-    end;
   end;
 end;
 

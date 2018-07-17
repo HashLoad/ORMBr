@@ -46,7 +46,6 @@ uses
   ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
   ormbr.factory.firedac in '..\..\..\Source\Drivers\ormbr.factory.firedac.pas',
   ormbr.factory.interfaces in '..\..\..\Source\Drivers\ormbr.factory.interfaces.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',
   ormbr.container.fdmemtable in '..\..\..\Source\Dataset\ormbr.container.fdmemtable.pas',
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
@@ -65,14 +64,15 @@ uses
   ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
   ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
-  ormbr.manager.dataset in '..\..\..\Source\Core\ormbr.manager.dataset.pas',
-  ormbr.manager.objectset in '..\..\..\Source\Core\ormbr.manager.objectset.pas';
+  ormbr.manager.objectset in '..\..\..\Source\Core\ormbr.manager.objectset.pas',
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor},
+  ormbr.manager.dataset in '..\..\..\Source\Dataset\ormbr.manager.dataset.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
+  ReportMemoryLeaksOnShutdown := True;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm3, Form3);
   Application.Run;

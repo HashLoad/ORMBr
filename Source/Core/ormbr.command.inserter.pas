@@ -103,7 +103,7 @@ begin
   /// </summary>
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
-    raise Exception.Create('Falta definir o atributo [Column()] nas propriedades no modelo [' + AObject.ClassName + ']');
+    raise Exception.Create('Falta definir o atributo [Column()] nas propriedades da classe [' + AObject.ClassName + ']');
 
   LPrimaryKey := TMappingExplorer
                    .GetInstance

@@ -243,8 +243,12 @@ object Form3: TForm3
   end
   object ZConnection1: TZConnection
     ControlsCodePage = cCP_UTF16
+    Catalog = ''
+    HostName = ''
     Port = 0
     Database = '..\Database\database.db3'
+    User = ''
+    Password = ''
     Protocol = 'sqlite-3'
     Left = 56
     Top = 46

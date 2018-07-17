@@ -115,9 +115,6 @@ type
     procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
     procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
     procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
-//    procedure Open; overload; virtual;
-//    procedure Open(const AID: Integer); overload; virtual;
-//    procedure Open(const AID: String); overload; virtual;
     procedure Insert; virtual;
     procedure Append; virtual;
     procedure Post; virtual;
@@ -141,8 +138,9 @@ type
     procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
     procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure RefreshRecordInternal(const AObject: TObject); virtual; abstract;
     procedure RefreshRecord; virtual;
-    procedure NextPacket; virtual; abstract;
+    procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;
     procedure LoadLazy(const AOwner: M); virtual; abstract;
     procedure EmptyDataSet; virtual; abstract;
@@ -334,19 +332,19 @@ procedure TDataSetBaseAdapter<M>.FillMastersClass(
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
-  LAttrProperty: TCustomAttribute;
+  LAssociation: TCustomAttribute;
 begin
   LRttiType := TRttiSingleton.GetInstance.GetRttiType(AObject.ClassType);
   for LProperty in LRttiType.GetProperties do
   begin
-    for LAttrProperty in LProperty.GetAttributes do
+    for LAssociation in LProperty.GetAttributes do
     begin
-      if LAttrProperty is Association then // Association
+      if LAssociation is Association then // Association
       begin
-        if Association(LAttrProperty).Multiplicity in [OneToOne, ManyToOne] then
+        if Association(LAssociation).Multiplicity in [OneToOne, ManyToOne] then
           ExecuteOneToOne(AObject, LProperty, ADatasetBase)
         else
-        if Association(LAttrProperty).Multiplicity in [OneToMany, ManyToMany] then
+        if Association(LAssociation).Multiplicity in [OneToMany, ManyToMany] then
           ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
       end;
     end;
@@ -362,18 +360,24 @@ begin
      AProperty.PropertyType.AsInstance.MetaclassType then
   begin
     LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-    while not ADatasetBase.FOrmDataSet.Eof do
-    begin
-      /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(ADatasetBase.FOrmDataSet,
-                              AProperty.GetNullableValue(TObject(AObject)).AsObject);
-      /// Próximo registro
-      ADatasetBase.FOrmDataSet.Next;
+    ADatasetBase.FOrmDataSet.DisableControls;
+    ADatasetBase.FOrmDataSet.First;
+    try
+      while not ADatasetBase.FOrmDataSet.Eof do
+      begin
+        /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
+        TBindObject
+          .GetInstance
+            .SetFieldToProperty(ADatasetBase.FOrmDataSet,
+                                AProperty.GetNullableValue(TObject(AObject)).AsObject);
+        /// Próximo registro
+        ADatasetBase.FOrmDataSet.Next;
+      end;
+    finally
+      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
+      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
+      ADatasetBase.FOrmDataSet.EnableControls;
     end;
-    ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-    ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
   end;
 end;
 
@@ -746,21 +750,6 @@ begin
   Result := FCurrentInternal;
 end;
 
-//procedure TDataSetBaseAdapter<M>.Open(const AID: String);
-//begin
-//  OpenIDInternal(AID);
-//end;
-
-//procedure TDataSetBaseAdapter<M>.Open;
-//begin
-//  OpenSQLInternal('');
-//end;
-
-//procedure TDataSetBaseAdapter<M>.Open(const AID: Integer);
-//begin
-//  OpenIDInternal(AID);
-//end;
-
 procedure TDataSetBaseAdapter<M>.Post;
 begin
   FOrmDataSet.Post;
@@ -775,8 +764,9 @@ begin
   inherited;
   if FOrmDataSet.RecordCount > 0 then
   begin
-    LPrimaryKey := FSession
-                     .Explorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+    LPrimaryKey := TMappingExplorer
+                     .GetInstance
+                       .GetMappingPrimaryKey(FCurrentInternal.ClassType);
     if LPrimaryKey <> nil then
     begin
       FOrmDataSet.DisableControls;
@@ -840,10 +830,7 @@ begin
                       .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
                         FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
                   LDataSetChild.FOrmDataSet.Post;
-                  /// <summary>
-                  /// Não deve executar o NEXT aqui, o dataset está com filtro
-                  /// que faz a navegação ao mudar o valor do campo.
-                  /// </summary>
+                  LDataSetChild.FOrmDataSet.Next;
                 end;
               finally
                 LDataSetChild.FOrmDataSet.First;

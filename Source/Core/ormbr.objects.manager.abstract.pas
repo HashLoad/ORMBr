@@ -70,9 +70,12 @@ type
     function ExistSequence: Boolean; virtual; abstract;
     function NextPacket: IDBResultSet; overload; virtual; abstract;
     function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
-    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual; abstract;
-    procedure NextPacketList(const AObjectList: TObjectList<M>;
-      const APageSize, APageNext: Integer); overload; virtual; abstract;
+    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function NextPacketList: TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>; const APageSize, APageNext: Integer); overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
     property Explorer: IMappingExplorerStrategy read FExplorer;
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;

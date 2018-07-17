@@ -30,11 +30,13 @@ unit ormbr.dml.generator.mssql;
 interface
 
 uses
+  Classes,
   SysUtils,
   StrUtils,
   Rtti,
   ormbr.dml.generator,
   ormbr.mapping.classes,
+  ormbr.mapping.explorer,
   ormbr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
@@ -94,18 +96,43 @@ function TDMLGeneratorMSSql.GeneratorPageNext(ACommandSelect: string;
   APageSize, APageNext: Integer): string;
 begin
   if APageSize > -1 then
-     Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)]);
+    Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
 var
+  LTable: TTableMapping;
   LCriteria: ICriteria;
+  LOrderBy: TOrderByMapping;
+  LOrderByList: TStringList;
+  LFor: Integer;
 begin
-   LCriteria := GetCriteriaSelect(AClass, AID);
-   if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria)
-   else
-      Result := LCriteria.AsString;
+  LTable := TMappingExplorer
+              .GetInstance
+                .GetMappingTable(AClass);
+  LCriteria := GetCriteriaSelect(AClass, AID);
+  /// OrderBy
+  LOrderBy := TMappingExplorer
+                .GetInstance
+                  .GetMappingOrderBy(AClass);
+  if LOrderBy <> nil then
+  begin
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+    finally
+      LOrderByList.Free;
+    end;
+  end;
+  if APageSize > -1 then
+    Result := GetGeneratorSelect(LCriteria)
+  else
+    Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: string;

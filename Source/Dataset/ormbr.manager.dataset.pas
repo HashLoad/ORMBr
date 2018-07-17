@@ -51,27 +51,27 @@ uses
     {$ENDIF}
   {$ENDIF}
   /// ORMBr Interface
+  {$IFDEF DRIVERRESTFUL}
+  ormbr.client.interfaces,
+  {$ELSE}
   ormbr.factory.interfaces,
+  {$ENDIF}
   ormbr.dataset.base.adapter;
 
 type
   TManagerDataSet = class
   private
-    {$IFDEF DRIVERRESTFUL}
-    FConnection: IRESTConnection;
-    {$ELSE}
-    FConnection: IDBConnection;
-    {$ENDIF}
+    FConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection;
+                 {$ELSE}IDBConnection;
+                 {$ENDIF}
     FRepository: TDictionary<string, TObject>;
-    FDataList: TDictionary<string, TObjectList<TObject>>;
+    FNestedList: TDictionary<string, TObjectList<TObject>>;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
-    procedure RepositoryListFree;
-    procedure DataListFree;
   public
-    {$IFDEF DRIVERRESTFUL}
-    constructor Create(const AConnection: IRESTConnection);
-    {$ELSE}
-    constructor Create(const AConnection: IDBConnection);
+    constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
+                                          {$ELSE}IDBConnection);
+                                          {$ENDIF}
+    {$IFNDEF DRIVERRESTFUL}
     function NextPacket<T: class, constructor>: TManagerDataSet;
     function GetAutoNextPacket<T: class, constructor>: Boolean;
     procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
@@ -103,21 +103,27 @@ type
     function Find<T: class, constructor>(const AID: String): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TManagerDataSet;
-    function DataList<T: class>: TObjectList<T>;
+    function NestedList<T: class>: TObjectList<T>;
   end;
 
 implementation
 
 { TManagerDataSet }
 
-
 constructor TManagerDataSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
                                                       {$ELSE}IDBConnection);
                                                       {$ENDIF}
 begin
   FConnection := AConnection;
-  FRepository := TDictionary<string, TObject>.Create;
-  FDataList := TDictionary<string, TObjectList<TObject>>.Create;
+  FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
+  FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
+end;
+
+destructor TManagerDataSet.Destroy;
+begin
+  FNestedList.Free;
+  FRepository.Free;
+  inherited;
 end;
 
 function TManagerDataSet.Current<T>: T;
@@ -125,38 +131,18 @@ begin
   Result := Resolver<T>.Current;
 end;
 
-function TManagerDataSet.DataList<T>: TObjectList<T>;
+function TManagerDataSet.NestedList<T>: TObjectList<T>;
 var
   LClassName: String;
 begin
   LClassName := TClass(T).ClassName;
-  if FDataList.ContainsKey(LClassName) then
-    Result := TObjectList<T>(FDataList.Items[LClassName]);
-end;
-
-procedure TManagerDataSet.DataListFree;
-var
-  LObjectList: TObjectList<TObject>;
-begin
-  for LObjectList in FDataList.Values do
-  begin
-    LObjectList.Clear;
-    LObjectList.Free;
-  end;
+  if FNestedList.ContainsKey(LClassName) then
+    Result := TObjectList<T>(FNestedList.Items[LClassName]);
 end;
 
 function TManagerDataSet.DataSet<T>: TDataSet;
 begin
   Result := Resolver<T>.FOrmDataSet;
-end;
-
-destructor TManagerDataSet.Destroy;
-begin
-  DataListFree;
-  RepositoryListFree;
-  FDataList.Free;
-  FRepository.Free;
-  inherited;
 end;
 
 function TManagerDataSet.EmptyDataSet<T>: TManagerDataSet;
@@ -181,8 +167,7 @@ var
 begin
   LObjectList := Resolver<T>.Find;
   /// <summary> Limpa a lista de objectos </summary>
-  DataListFree;
-  FDataList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
+  FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
 
@@ -218,7 +203,7 @@ begin
         {$IFDEF USEFDMEMTABLE}
           if ADataSet is TFDMemTable then
             {$IFDEF DRIVERRESTFUL}
-            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, LMaster)
+            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ELSE}
             LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ENDIF}
@@ -256,7 +241,7 @@ begin
     {$IFDEF USEFDMEMTABLE}
       if ADataSet is TFDMemTable then
         {$IFDEF DRIVERRESTFUL}
-        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, nil)
+        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ELSE}
         LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ENDIF}
@@ -335,14 +320,6 @@ begin
   Result := Self;
 end;
 
-procedure TManagerDataSet.RepositoryListFree;
-var
-  LObject: TObject;
-begin
-  for LObject in FRepository.Values do
-    LObject.Free;
-end;
-
 function TManagerDataSet.Resolver<T>: TDataSetBaseAdapter<T>;
 var
   LClassName: String;
@@ -364,8 +341,7 @@ var
 begin
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   /// <summary> Limpa a lista de objectos </summary>
-  DataListFree;
-  FDataList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
+  FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
 

@@ -157,10 +157,6 @@
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.interfaces.pas"/>
-        <DCCReference Include="..\..\SQLMonitor.pas">
-            <Form>FSQLMonitor</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.fdmemtable.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.adapter.pas"/>

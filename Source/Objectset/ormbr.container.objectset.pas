@@ -12,7 +12,6 @@ uses
 
 type
   TContainerObjectSet<M: class, constructor> = class(TInterfacedObject, IContainerObjectSet<M>)
-  private
   protected
     FObjectSetAdapter: TObjectSetAdapter<M>;
     FConnection: IDBConnection;
@@ -30,7 +29,10 @@ uses
     procedure Delete(const AObject: M);
     procedure Modify(const AObject: M);
     procedure LoadLazy(const AOwner, AObject: TObject);
-    procedure NextPacket(const AObjectList: TObjectList<M>); virtual;
+    procedure NextPacket(const AObjectList: TObjectList<M>); overload; virtual;
+    function NextPacket: TObjectList<M>; overload; virtual;
+    function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
+    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
   end;
 
 implementation
@@ -107,6 +109,17 @@ begin
   FObjectSetAdapter.Modify(AObject);
 end;
 
+function TContainerObjectSet<M>.NextPacket(const APageSize, APageNext: Integer): TObjectList<M>;
+begin
+  Result := FObjectSetAdapter.NextPacket(APageSize, APageNext);
+end;
+
+function TContainerObjectSet<M>.NextPacket(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): TObjectList<M>;
+begin
+  Result := FObjectSetAdapter.NextPacket(AWhere, AOrderBy, APageSize, APageNext);
+end;
+
 procedure TContainerObjectSet<M>.NextPacket(const AObjectList: TObjectList<M>);
 begin
   inherited;
@@ -117,6 +130,11 @@ procedure TContainerObjectSet<M>.Update(const AObject: M);
 begin
   inherited;
   FObjectSetAdapter.Update(AObject);
+end;
+
+function TContainerObjectSet<M>.NextPacket: TObjectList<M>;
+begin
+  Result := FObjectSetAdapter.NextPacket;
 end;
 
 end.

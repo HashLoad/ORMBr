@@ -25,8 +25,6 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-{$INCLUDE ..\ormbr.inc}
-
 unit ormbr.factory.interfaces;
 
 interface
@@ -35,9 +33,6 @@ uses
   DB,
   Classes,
   SysUtils,
-  {$IFDEF DRIVERRESTFUL}
-  ormbr.rest.methods,
-  {$ENDIF}
   ormbr.monitor;
 
 type
@@ -113,35 +108,6 @@ type
     function InTransaction: Boolean;
   end;
 
-{$IFDEF DRIVERRESTFUL}
-  IRESTConnection = interface
-    ['{A5974AAA-1B36-46F2-AF8D-51C4E69BC072}']
-    function GetBaseURL: String;
-    function GetSelect: String;
-    function GetSelectID: String;
-    function GetSelectWhere: String;
-    function GetInsert: String;
-    function GetUpdate: String;
-    function GetDelete: String;
-    ///
-    procedure SetCommandMonitor(AMonitor: ICommandMonitor);
-    function CommandMonitor: ICommandMonitor;
-    function Execute(const AResource, ASubResource: String;
-      const ARequestMethod: TRESTRequestMethodType; const AParams: TProc = nil): String; overload;
-    function Execute(const AResource: String; const ARequestMethod: TRESTRequestMethodType;
-      const AParams: TProc = nil): String; overload;
-    procedure AddParam(AValue: String);
-    property BaseURL: String read GetBaseURL;
-    property Select: String read GetSelect;
-    property SelectID: String read GetSelectID;
-    property SelectWhere: String read GetSelectWhere;
-    property Insert: String read GetInsert;
-    property Update: String read GetUpdate;
-    property Delete: String read GetDelete;
-  end;
-{$ENDIF}
-
 implementation
 
 end.
-
