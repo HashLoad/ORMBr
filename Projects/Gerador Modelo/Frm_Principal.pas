@@ -80,6 +80,7 @@ type
     FDPhysPgDriverLink1: TFDPhysPgDriverLink;
     Button1: TButton;
     checkLowerCase: TCheckBox;
+    checkLazy: TCheckBox;
     procedure lstTabelasClick(Sender: TObject);
     procedure btnReverseAllClick(Sender: TObject);
     procedure memoKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -113,6 +114,7 @@ type
     _DestructorDeclaration : TStringList;
     _DestructorImplementation : TStringList;
     _ForeignKeys: TDictionary<String,String>;
+    _LazyLoadImplementation: TStringList;
 
     procedure SaveConnection;
     procedure LoadConnection;
@@ -435,6 +437,7 @@ begin
             _Implementation            := TStringList.create;
             _ForeignKeys               := TDictionary<String,String>.Create;
             _UsesRelations             := TStringList.Create;
+            _LazyLoadImplementation    := TStringList.Create;
             //
             //Monta o Corpo da Unit
             GetTableParam(intFor);
@@ -460,6 +463,7 @@ begin
             _Declaration.Free;
             _Implementation.Free;
             _ForeignKeys.Free;
+            _LazyLoadImplementation.Free;
           end;
        end;
        Application.ProcessMessages;
@@ -508,7 +512,7 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
     if pTipo = 'Boolean'   then Result := 'ftBoolean';
     if pTipo = 'Currency'  then Result := 'ftCurrency';
 
-    if pTipo = 'ftBlob'    then Result := 'ftBlob';
+    if pTipo = 'TBlob'    then Result := 'ftBlob';
   end;
 
   //Cria o Corpo das Propriedades e Fields
@@ -610,12 +614,14 @@ begin
      if _UsesRelations.IndexOf(sUses) = -1 then
      _UsesRelations.Add(sUses);
 
-     //Criar Fields das Classes Relacionadas
-     _FieldsRelations.Add('    F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count) + ': ' + 'T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + ';');
+     _FieldsRelations.Add('    F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count) + ': ' + Format('%s T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + ' %s ;', [IfThen(checkLazy.Checked, 'Lazy<', EmptyStr), IfThen(checkLazy.Checked, '>', EmptyStr)]));
 
       // Monta o ReadWrite
-      ReadWrite := ' read F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' write F' +
-                               Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ';';
+     if checkLazy.Checked then
+       ReadWrite := ' read get' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ';'
+     else
+       ReadWrite := ' read F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' write F' +
+                                Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ';';
 
       Inc(FK);
      _ForeignKeys.Add(Fields.FieldByName('COLUMN_NAME').AsString + '$' + IntToStr(FK),
@@ -626,7 +632,7 @@ begin
                                            GetRule(Metadata.FieldByName('DELETE_RULE').AsInteger) + ', ' +
                                            GetRule(Metadata.FieldByName('UPDATE_RULE').AsInteger) +')]');
 
-     _PropertysRelations.Add('    [Association(OneToOne,' + QuotedStr(Fields.FieldByName('COLUMN_NAME').AsString) + ',' +QuotedStr(Metadata.FieldByName('PKEY_TABLE_NAME').AsString) + ',' + QuotedStr(Fields.FieldByName('PKEY_COLUMN_NAME').AsString) +')]');
+     _PropertysRelations.Add('    [Association(OneToOne,' + QuotedStr(Fields.FieldByName('COLUMN_NAME').AsString) + ',' +QuotedStr(Metadata.FieldByName('PKEY_TABLE_NAME').AsString) + ',' + QuotedStr(Fields.FieldByName('PKEY_COLUMN_NAME').AsString) + IfThen(checkLazy.Checked, ', True', EmptyStr) + ')]');
      _PropertysRelations.Add('    property ' +IfThen(checkLowerCase.Checked,
                                                      LowerCase(Metadata.FieldByName('PKEY_TABLE_NAME').AsString),
                                                      Metadata.FieldByName('PKEY_TABLE_NAME').AsString) + ': ' +
@@ -634,10 +640,24 @@ begin
                                   ReadWrite);
      _PropertysRelations.Add('');
 
-     _ConstructorImplementation.Add('  F' +Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' := T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString+ '.Create;');
-     _DestructorImplementation.Add('  F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + '.Free;');
+     if not checkLazy.Checked then
+       _ConstructorImplementation.Add('  F' +Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' := T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString+ '.Create;');
 
-     ///
+     _DestructorImplementation.Add('  if Assigned(F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + IfThen(checkLazy.Checked, '.Value', EmptyStr) + ') then');
+     _DestructorImplementation.Add('    F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + IfThen(checkLazy.Checked, '.Value', EmptyStr) + '.Free;');
+     _DestructorImplementation.Add(EmptyStr);
+
+     if checkLazy.Checked then
+     begin
+       _ConstructorDeclaration.Add('    function get' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' : T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + ';');
+
+       _LazyLoadImplementation.Add('');
+       _LazyLoadImplementation.Add('function T' +lstTabelas.Items.Strings[index] + '.get' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + ' : T' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + ';');
+       _LazyLoadImplementation.Add('begin');
+       _LazyLoadImplementation.Add('  Result := F' + Metadata.FieldByName('PKEY_TABLE_NAME').AsString + '_' + IntToStr(_FieldsRelations.Count-1) + '.Value;');
+       _LazyLoadImplementation.Add('end;');
+     end;
+
      Metadata.Next;
   end;
 
@@ -660,7 +680,7 @@ begin
     if Entidade.FieldByName(Campo).DataType = ftBoolean then
        CreateBodyProperty(index,Campo,'Boolean',ReadWrite,'taLeftJustify','''''',I)
     else
-    if Entidade.FieldByName(Campo).DataType in [ftSmallint, ftInteger, ftWord] then
+    if Entidade.FieldByName(Campo).DataType in [ftLargeint, ftSmallint, ftInteger, ftWord] then
        CreateBodyProperty(index,Campo,'Integer',ReadWrite,'taCenter','''''',I)
     else
     if Entidade.FieldByName(Campo).DataType in [ftFloat, ftCurrency] then
@@ -686,7 +706,7 @@ begin
     end
     else
     if Entidade.FieldByName(Campo).DataType in [ftBlob, ftMemo, ftWideMemo, ftOraBlob, ftOraClob] then
-       CreateBodyProperty(index, Campo, 'ftBlob', ReadWrite, 'taLeftJustify', '''''', I)
+       CreateBodyProperty(index, Campo, 'TBlob', ReadWrite, 'taLeftJustify', '''''', I)
     else
     if Entidade.FieldByName(Campo).DataType in [ftFMTBcd, ftBCD] then
     begin
@@ -822,6 +842,13 @@ begin
      for iKey  := 0 to _DestructorImplementation.Count -1 do
      memModel.Lines.Add(_DestructorImplementation.Strings[iKey]);
   end;
+
+  if _LazyLoadImplementation.Count > 0 then
+  begin
+     for iKey  := 0 to _LazyLoadImplementation.Count -1 do
+     memModel.Lines.Add(_LazyLoadImplementation.Strings[iKey]);
+  end;
+
   memModel.Lines.Add('');
   memModel.Lines.Add('initialization');
   memModel.Lines.Add('');

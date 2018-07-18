@@ -276,6 +276,15 @@ object FrmPrincipal: TFrmPrincipal
         Caption = 'Convert Properties To LowerCase'
         TabOrder = 5
       end
+      object checkLazy: TCheckBox
+        Left = 145
+        Top = 68
+        Width = 296
+        Height = 17
+        Hint = 'n'
+        Caption = 'Gerar Relacionamento com LazyLoad'
+        TabOrder = 6
+      end
     end
   end
   object StatusBar1: TStatusBar
