@@ -135,6 +135,7 @@ var
   var
     LColumn: TColumnMapping;
     LColumns: TColumnMappingList;
+    LField: TField;
   begin
     LColumns := TMappingExplorer
                   .GetInstance
@@ -149,9 +150,12 @@ var
         /// classe, é verificado se o nome dessa propriedade existe na coleção
         /// de dados selecionada.
         /// </summary>
-        if ADataSet.Fields.FindField(LColumn.ColumnName) <> nil then
-          SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName),
-                             LColumn, AObject);
+        LField := ADataSet.FieldList.Find(LColumn.ColumnName);
+        if LField = nil then
+          LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
+
+        if LField <> nil then
+          SetFieldToProperty(LField, LColumn, AObject);
       end;
     end;
   end;

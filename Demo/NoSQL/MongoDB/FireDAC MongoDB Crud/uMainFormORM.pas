@@ -112,6 +112,7 @@ begin
   oContainerClient := TContainerFDMemTable<Tclient>.Create(oConn, FDClient);
 //  oContainerClient := TContainerClientDataSet<Tclient>.Create(oConn, ClientDataSet1);
   oContainerClient.Open;
+//  oContainerClient.OpenWhere('{"client_id": 2}', '');
 
   // Campo do tipo TDataSetField que recebe os sub-objects da coleção selecionada
   // Será criado um campo desse tipo para cada sub-object, veja como definir o tipo
@@ -123,6 +124,7 @@ begin
 
   // Somente demonstração de funcionalidade
   LClientList := oContainerObject.Find;
+//  LClientList := oContainerObject.FindWhere('{"client_id": 2}', '');
   /// Converte lista para JSON
   try
     Memo1.Lines.Text := TORMBrJson.ObjectListToJsonString<Tclient>(LClientList);

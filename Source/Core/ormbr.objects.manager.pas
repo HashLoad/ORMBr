@@ -509,6 +509,7 @@ end;
 function TObjectManager<M>.FindSQLInternal(const ASQL: String): TObjectList<M>;
 var
  LResultSet: IDBResultSet;
+ LObject: M;
 begin
   Result := TObjectList<M>.Create;
   if ASQL = '' then
@@ -518,13 +519,14 @@ begin
   try
     while LResultSet.NotEof do
     begin
+      LObject := M.Create;
       TBindObject
         .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(Result.Items[Result.Add(M.Create)]));
-      /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
-      FillAssociation(Result.Items[Result.Count -1]);
+          .SetFieldToProperty(LResultSet, LObject);
+      /// <summary> Alimenta registros das associações existentes 1:1 ou 1:N </summary>
+      FillAssociation(LObject);
+      /// <summary> Adiciona o Object a lista de retorno </summary>
+      Result.Add(LObject);
     end;
   finally
     LResultSet.Close;

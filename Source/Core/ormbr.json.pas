@@ -387,6 +387,7 @@ function TJSONObjectORMBr.GetInstanceProp(AInstance: TObject;
 var
   LObject: TObject;
 begin
+  VarClear(Result);
   case AProperty.PropertyType.TypeKind of
     tkInt64:
       Result := AProperty.GetNullableValue(AInstance).AsInt64;
@@ -984,8 +985,8 @@ begin
   FVType := JSONVariantType.VarType;
   FVKind := jvUndefined;
   FVCount := 0;
-  FNames := nil;
-  FValues := nil;
+  Pointer(FNames) := nil;
+  Pointer(FValues) := nil;
 end;
 
 procedure TJSONVariantData.Init(const AJson: String);

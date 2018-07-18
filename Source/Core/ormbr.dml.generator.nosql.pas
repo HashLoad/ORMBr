@@ -181,6 +181,7 @@ var
   LCriteria: TStringBuilder;
 begin
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LCriteria := TStringBuilder.Create;
   try
     LCriteria
       .Append('command=find, ')

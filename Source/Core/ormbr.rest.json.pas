@@ -121,7 +121,7 @@ begin
   Result := '[';
   for LFor := 0 to AObjectList.Count -1 do
   begin
-    Result := Result + ObjectToJsonString(AObjectList.Items[LFor]);
+    Result := Result + ObjectToJsonString(T(AObjectList.Items[LFor]));
     if LFor < AObjectList.Count -1 then
       Result := Result + ', ';
   end;
