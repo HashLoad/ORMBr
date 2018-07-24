@@ -24,7 +24,7 @@ type
   [Entity]
   [Table('master','')]
   [PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]
-  [Sequence('seq_master')]
+//  [Sequence('seq_master')]
 //  [OrderBy('description DESC')]
   [OrderBy('master_id')]
   Tmaster = class

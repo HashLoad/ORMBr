@@ -63,6 +63,7 @@ type
     procedure Update(const AObjectList: TObjectList<M>); overload; override;
     procedure Delete(const AID: Integer); overload; override;
     procedure Delete(const AObject: M); overload; override;
+    function ExistSequence: Boolean; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Integer): M; overload; override;
     function Find(const AID: String): M; overload; override;
@@ -107,8 +108,8 @@ begin
   FRESTRequest.Response := FRESTResponse;
   FRESTResponse.RootElement := 'result';
   /// <summary>
-  ///  Pega o nome do recurso, caso não encontre o atributo Resource(),
-  ///  internamente busca pelo atributo Table()
+  /// Pega o nome do recurso, caso não encontre o atributo Resource(),
+  /// internamente busca pelo atributo Table()
   /// </summary>
   LObject := TObject(M.Create);
   try
@@ -141,6 +142,11 @@ begin
   FRESTResponse.Free;
   FRESTRequest.Free;
   inherited;
+end;
+
+function TSessionDataSnap<M>.ExistSequence: Boolean;
+begin
+  Result := False;
 end;
 
 procedure TSessionDataSnap<M>.Delete(const AID: Integer);

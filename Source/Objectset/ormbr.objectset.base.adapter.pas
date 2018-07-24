@@ -204,7 +204,7 @@ var
 begin
   LKey := AObject.ClassName;
   for LColumn in AObject.GetPrimaryKey do
-    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsVariant);
+    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant);
   Result := LKey;
 end;
 
