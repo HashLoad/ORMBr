@@ -10,20 +10,28 @@ object Form2: TForm2
   OnCreate = FormCreate
   DesignerMasterStyle = 0
   object Button1: TButton
-    Position.X = 258.000000000000000000
-    Position.Y = 342.000000000000000000
+    Position.X = 230.000000000000000000
+    Position.Y = 236.000000000000000000
+    Size.Width = 141.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
     TabOrder = 0
-    Text = 'Button1'
+    Text = 'Carregar Imagem'
     OnClick = Button1Click
   end
   object ImageControl1: TImageControl
     Position.X = 248.000000000000000000
-    Position.Y = 104.000000000000000000
-    TabOrder = 1
+    Position.Y = 262.000000000000000000
+    TabOrder = 2
   end
   object OpenDialog1: TOpenDialog
     Left = 430
     Top = 108
+  end
+  object ImageControl2: TImageControl
+    Position.X = 250.000000000000000000
+    Position.Y = 64.000000000000000000
+    TabOrder = 1
   end
   object FDConnection1: TFDConnection
     Params.Strings = (

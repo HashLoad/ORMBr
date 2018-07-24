@@ -29,6 +29,7 @@ type
     FDConnection1: TFDConnection;
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    ImageControl2: TImageControl;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -68,6 +69,9 @@ begin
   FContainer := TContainerObjectSet<TPERSON>.Create(FConnection);
 
   FPersonList := FContainer.Find;
+  // Mostra o que veio do banco de dados
+  FPersonList.Items[0].PERSON_FLD13.ToBitmap(ImageControl2.Bitmap);
+
 end;
 
 end.
