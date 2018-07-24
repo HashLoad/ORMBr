@@ -72,6 +72,7 @@ type
     {$IFNDEF HAS_FMX}
     procedure ToPicture(APicture: TPicture);
     {$ENDIF}
+    procedure ToBitmap(ABitmap: TBitmap);
     function ToBytes: TBytes;
     function ToBytesString: string; overload;
     function ToBytesString(const AString: string): Boolean; overload;
@@ -171,10 +172,9 @@ begin
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
 //    DecompressStream(LSourceStream, LTargetStream);
-    {$IFNDEF HAS_FMX}
     if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
       raise EInvalidGraphic.Create('Invalid image');
-    {$ENDIF}
+
     LGraphic := LGraphicClass.Create;
     LSourceStream.Position := 0;
     LGraphic.LoadFromStream(LSourceStream);
@@ -283,6 +283,25 @@ begin
     /// Codifica os Bytes em string
     /// </summary>
     FBase64String := String(EncodeBase64(FBase64Bytes, Length(FBase64Bytes)));
+  finally
+    LSourceStream.Free;
+  end;
+end;
+
+procedure TBlob.ToBitmap(ABitmap: TBitmap);
+var
+  LSourceStream: TMemoryStream;
+begin
+  LSourceStream := TMemoryStream.Create;
+  try
+    if Length(FBase64Bytes) = 0 then
+    begin
+      ABitmap.Assign(nil);
+      Exit;
+    end;
+    LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
+    LSourceStream.Position := 0;
+    ABitmap.LoadFromStream(LSourceStream);
   finally
     LSourceStream.Free;
   end;

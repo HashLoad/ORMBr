@@ -1,0 +1,48 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Button1: TButton
+    Position.X = 258.000000000000000000
+    Position.Y = 342.000000000000000000
+    TabOrder = 0
+    Text = 'Button1'
+    OnClick = Button1Click
+  end
+  object ImageControl1: TImageControl
+    Position.X = 248.000000000000000000
+    Position.Y = 104.000000000000000000
+    TabOrder = 1
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 430
+    Top = 108
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=D:\ORMBr\Demo\Data\Blob\blob.fdb'
+      'CharacterSet=WIN1252'
+      'Password=masterkey'
+      'User_Name=SYSDBA'
+      'DriverID=FB')
+    LoginPrompt = False
+    Left = 106
+    Top = 80
+  end
+  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
+    Left = 108
+    Top = 128
+  end
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'FMX'
+    Left = 106
+    Top = 182
+  end
+end
