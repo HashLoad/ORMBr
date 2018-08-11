@@ -545,12 +545,10 @@ object FrmPrincipal: TFrmPrincipal
   end
   object FDConn: TFDConnection
     Params.Strings = (
-      'DriverID=Ora'
-      
-        'Database=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=127.0.0.1)(PO' +
-        'RT=1521))(CONNECT_DATA=(SERVICE_NAME=XE)))'
-      'User_Name=USGRANCHEFF'
-      'Password=SYSG111212')
+      'DriverID=MySQL'
+      'Database=database'
+      'User_Name=root'
+      'Password=masterkey')
     Left = 730
     Top = 198
   end
@@ -563,7 +561,7 @@ object FrmPrincipal: TFrmPrincipal
     Top = 260
   end
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
-    Left = 408
+    Left = 396
     Top = 310
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink

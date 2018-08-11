@@ -187,7 +187,7 @@ procedure TFrmPrincipal.Conectar(Driver: string; Conn: TFDConnection;
 const
   DBOracle = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=%s)(PORT=%s))(CONNECT_DATA=(SERVICE_NAME=XE)))';
 begin
-  Conn.Connected                         := false;
+  Conn.Connected := false;
   if (Driver = 'MSSQL') then
   begin
     Conn.Params.Clear;
@@ -680,7 +680,7 @@ begin
     if Entidade.FieldByName(Campo).DataType = ftBoolean then
        CreateBodyProperty(index,Campo,'Boolean',ReadWrite,'taLeftJustify','''''',I)
     else
-    if Entidade.FieldByName(Campo).DataType in [ftLargeint, ftSmallint, ftInteger, ftWord] then
+    if Entidade.FieldByName(Campo).DataType in [ftLargeint, ftSmallint, ftInteger, ftWord, ftAutoInc] then
        CreateBodyProperty(index,Campo,'Integer',ReadWrite,'taCenter','''''',I)
     else
     if Entidade.FieldByName(Campo).DataType in [ftFloat, ftCurrency] then
