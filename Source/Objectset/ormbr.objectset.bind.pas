@@ -116,8 +116,14 @@ begin
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
     if LColumn.PropertyRtti.IsWritable then
+    try
+
       SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName),
                          LColumn, AObject);
+    except on E: Exception do
+      raise  exception.Create('Problem when binding column "'+
+                              LColumn.ColumnName + '" - ' + E.Message);
+    end;
 end;
 
 procedure TBindObject.SetFieldToProperty(AField: TField; AColumn: TColumnMapping;
