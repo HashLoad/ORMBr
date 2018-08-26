@@ -19,7 +19,10 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB,
   FireDAC.Phys.FBDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
   FireDAC.FMXUI.Wait, FireDAC.Comp.UI, FireDAC.Phys.SQLite, Data.DB,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client,
+  ormbr.rest.json,
+  ormbr.json.utils,
+  ormbr.json, FMX.ScrollBox, FMX.Memo, REST.JSON;
 
 type
   TForm2 = class(TForm)
@@ -30,8 +33,12 @@ type
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     ImageControl2: TImageControl;
+    Button2: TButton;
+    Memo1: TMemo;
+    ImageControl3: TImageControl;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
     FConnection: IDBConnection;
@@ -45,6 +52,10 @@ var
   Form2: TForm2;
 
 implementation
+
+uses
+  LOG_Class,
+  ormbr.encddecd;
 
 {$R *.fmx}
 
@@ -62,16 +73,34 @@ begin
   FPersonList.Items[0].PERSON_FLD13.ToBitmap(ImageControl1.Bitmap);
 end;
 
+procedure TForm2.Button2Click(Sender: TObject);
+var
+  cPessoa     : TPERSON;
+  cPessoaJson : TPERSON;
+  cJson: String;
+begin
+  cPessoa := FContainer.Find(0);
+  cJson := TORMBrJSONUtil.JSONObjectToJSONValue(cPessoa).ToJSON;
+  cPessoa.Free;
+
+  cPessoaJson := TORMBrJson.JsonToObject<TPERSON>(cJson);
+
+  cPessoaJson.PERSON_FLD13.ToBitmap(ImageControl3.Bitmap);
+  cPessoaJson.Free;
+end;
+
 procedure TForm2.FormCreate(Sender: TObject);
 begin
+  TLOG_Class.Open;
+  TLOG_Class.Active := True;
+
   // Instância da class de conexão via FireDAC
   FConnection := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
-  FContainer := TContainerObjectSet<TPERSON>.Create(FConnection);
+  FContainer  := TContainerObjectSet<TPERSON>.Create(FConnection);
 
   FPersonList := FContainer.Find;
   // Mostra o que veio do banco de dados
   FPersonList.Items[0].PERSON_FLD13.ToBitmap(ImageControl2.Bitmap);
-
 end;
 
 end.

@@ -107,7 +107,24 @@ begin
   /// <summary>
   /// Codifica os Bytes em string
   /// </summary>
-  FBase64String := String(EncodeBase64(FBase64Bytes, Length(FBase64Bytes)));
+  FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+end;
+
+function TBlob.ToBytesString: string;
+begin
+  Result := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+end;
+
+function TBlob.ToString: String;
+begin
+  Result := FBase64String;
+end;
+
+function TBlob.ToBytesString(const AString: string): Boolean;
+begin
+  FBase64Bytes := TNetEncoding.Base64.DecodeStringToBytes(AString);
+  FBase64String := AString;
+  Result := True;
 end;
 
 procedure TBlob.BuildBlobFieldToStream;
@@ -133,7 +150,7 @@ begin
       /// <summary>
       /// Codifica os Bytes em string
       /// </summary>
-      FBase64String := String(EncodeBase64(FBase64Bytes, Length(FBase64Bytes)));
+      FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
     finally
       LSourceStream.Free;
 //      LTargetStream.Free;
@@ -190,22 +207,6 @@ end;
 function TBlob.ToSize: Integer;
 begin
   Result := Length(FBase64Bytes);
-end;
-
-function TBlob.ToString: String;
-begin
-  Result := DecodeString(FBase64String);
-end;
-
-function TBlob.ToBytesString(const AString: string): Boolean;
-begin
-  FBase64String := AString;
-  Result := True;
-end;
-
-function TBlob.ToBytesString: string;
-begin
-  Result := FBase64String;
 end;
 
 {$IFNDEF HAS_FMX}
@@ -282,7 +283,7 @@ begin
     /// <summary>
     /// Codifica os Bytes em string
     /// </summary>
-    FBase64String := String(EncodeBase64(FBase64Bytes, Length(FBase64Bytes)));
+    FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
   finally
     LSourceStream.Free;
   end;

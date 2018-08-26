@@ -84,7 +84,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
@@ -323,6 +322,11 @@
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="ormbr.model.PERSON.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.encddecd.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.json.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.json.utils.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.rest.json.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -343,6 +347,9 @@
                 <Source>
                     <Source Name="MainSource">ORMBrBlob.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\RestServerWiRL.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\RestServerWiRL.bpl not found</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
                 <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
@@ -365,7 +372,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win32\Debug\ORMBrBlob.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="ORMBrBlob.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ORMBrBlob.exe</RemoteName>
                         <Overwrite>true</Overwrite>

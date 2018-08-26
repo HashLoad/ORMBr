@@ -43,23 +43,16 @@ type
   public
     class constructor Create;
     class destructor Destroy;
-
     class function ObjectToJsonString(AObject: TObject;
       AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string;
-
     class function ObjectListToJsonString(AObjectList: TObjectList<TObject>;
       AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string; overload;
-
     class function ObjectListToJsonString<T: class, constructor>(AObjectList: TObjectList<T>;
       AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string; overload;
-
     class function JsonToObject<T: class, constructor>(const AJson: string;
       AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): T; overload;
-
     class function JsonToObject<T: class>(AObject: T; const AJson: string): Boolean; overload;
-
     class function JsonToObjectList<T: class, constructor>(const AJson: string): TObjectList<T>;
-
     class procedure JsonToObject(const AJson: string; AObject: TObject); overload;
   end;
 

@@ -14,7 +14,7 @@ uses
   ormbr.types.nullable, 
   ormbr.mapping.classes, 
   ormbr.mapping.register, 
-  ormbr.mapping.attributes; 
+  ormbr.mapping.attributes;
 
 type
   [Entity]

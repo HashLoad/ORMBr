@@ -301,23 +301,26 @@ type
     FDisplayFormat: string;
     FEditMask: string;
     FAlignment: TAlignment;
+    FOrigin: String;
   public
     constructor Create(ADisplayLabel: string); overload;
     constructor Create(ADisplayLabel, AConstraintErrorMessage: string); overload;
     constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression,
-      ADisplayFormat: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression,
-      ADisplayFormat, AEditMask: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression,
-      ADisplayFormat, AEditMask: string; AAlignment: TAlignment); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment; AOrigin: string); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string; AAlignment: TAlignment); overload;
     constructor Create(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment); overload;
+    constructor Create(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment; AOrigin: string); overload;
+
     property DisplayLabel: string read FDisplayLabel;
     property ConstraintErrorMessage: string read FConstraintErrorMessage;
     property DefaultExpression: string read FDefaultExpression;
     property DisplayFormat: string read FDisplayFormat;
     property EditMask: string read FEditMask;
     property Alignment: TAlignment read FAlignment;
+    property Origin: String read FOrigin;
   end;
 
   OrderBy = class(TCustomAttribute)
@@ -794,6 +797,28 @@ end;
 constructor SubResource.Create(AName: String);
 begin
   FName := AName;
+end;
+
+constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment;
+  AOrigin: string);
+begin
+   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask, AAlignment);
+   FOrigin := AOrigin;
+end;
+
+constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage: string;
+  AAlignment: TAlignment; AOrigin: string);
+begin
+  Create(ADisplayLabel, AConstraintErrorMessage, AAlignment);
+  FOrigin := AOrigin;
+end;
+
+constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression: string; AAlignment: TAlignment);
+begin
+  Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression);
+  FAlignment := AAlignment;
 end;
 
 end.

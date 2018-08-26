@@ -11,15 +11,19 @@ uses
   FireDAC.DApt.Intf, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.StdCtrls,
 
+  Generics.Collections,
+
   /// orm interface de conexão
   ormbr.factory.interfaces,
   ormbr.factory.firedac,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,
+  ormbr.container.objectset.interfaces,
+  ormbr.container.objectset,
   ormbr.container.fdmemtable,
   /// Banco utilizado
   ormbr.dml.generator.firebird,
-  ormbr.model.person, Vcl.DBCtrls
+  ormbr.model.person, Vcl.DBCtrls, Vcl.ExtCtrls
   ;
 
 type
@@ -36,6 +40,8 @@ type
     DBMemo2: TDBMemo;
     Button1: TButton;
     OpenDialog1: TOpenDialog;
+    Button2: TButton;
+    Image1: TImage;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
   private
@@ -73,10 +79,8 @@ procedure TForm2.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   FConnection := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
-//  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
   // Master
   FContainerBlob := TContainerFDMemTable<TPERSON>.Create(FConnection, FDMemTable1, -1);
-
   FContainerBlob.Open;
 end;
 

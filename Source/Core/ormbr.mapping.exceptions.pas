@@ -54,6 +54,11 @@ type
     constructor Create(AName: string);
   end;
 
+  EDefaultExpression = class(Exception)
+  public
+    constructor Create(ADefault, AColumnName, AClassName: string);
+  end;
+
 implementation
 
 { EClassNotRegistered }
@@ -67,14 +72,14 @@ end;
 
 constructor EFieldNotNull.Create(AName: string);
 begin
-  inherited CreateFmt('O valor da campo [ %s ] não pode ser Nulo!', [AName]);
+  inherited CreateFmt('O valor do campo [ %s ] não pode ser Nulo!', [AName]);
 end;
 
 { EFieldZero }
 
 constructor EFieldZero.Create(AName: string);
 begin
-  inherited CreateFmt('O valor da campo [ %s ] não pode ser menor que zero!', [AName]);
+  inherited CreateFmt('O valor do campo [ %s ] não pode ser menor que zero!', [AName]);
 end;
 
 { EFieldValidate }
@@ -82,6 +87,13 @@ end;
 constructor EFieldValidate.Create(AField: string; AMensagem: string);
 begin
   inherited CreateFmt('[ %s ] %s', [AField, AMensagem]);
+end;
+
+{ EDefaultExpression }
+
+constructor EDefaultExpression.Create(ADefault, AColumnName, AClassName: string);
+begin
+  inherited CreateFmt('O valor Default [ %s ] do campo [ %s ] na classe [ %s ], é inválido!', [ADefault, AColumnName, AClassName]);
 end;
 
 end.

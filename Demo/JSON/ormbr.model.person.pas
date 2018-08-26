@@ -23,7 +23,6 @@ type
     FAge: Integer;
     FSalary: Double;
   public
-  published
     { Public declarations }
     property Id: Integer Index 0 read FId write FId;
     property FirstName: string Index 1 read FFirstName write FFirstName;
@@ -53,7 +52,7 @@ type
     { Public declarations }
     constructor Create;
     destructor Destroy; override;
-  published
+
     [Restrictions([NoUpdate, NotNull])]
     [Column('Id', ftInteger)]
     [Dictionary('Código ID','Mensagem de validação','0','','',taCenter)]

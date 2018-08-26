@@ -37,11 +37,11 @@ type
     FPERSON_FLD8: Nullable<TDateTime>;
     FPERSON_FLD9: Nullable<String>;
     FPERSON_FLD10: Nullable<String>;
-    FPERSON_FLD11: TBlob;
-    FPERSON_FLD12: TBlob;
+//    FPERSON_FLD11: TBlob;
+//    FPERSON_FLD12: TBlob;
     FPERSON_FLD13: TBlob;
   public
-    { Public declarations } 
+    { Public declarations }
     [Restrictions([NotNull])]
     [Column('ID', ftInteger)]
     [Dictionary('ID', 'Mensagem de validação', '', '', '', taCenter)]
@@ -104,13 +104,13 @@ type
     [Dictionary('PERSON_FLD10', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property PERSON_FLD10: Nullable<String> read FPERSON_FLD10 write FPERSON_FLD10;
 
-    [Column('PERSON_FLD11', ftBlob)]
-    [Dictionary('PERSON_FLD11', 'Mensagem de validação', '', '', '', taLeftJustify)]
-    property PERSON_FLD11: TBlob read FPERSON_FLD11 write FPERSON_FLD11;
+//    [Column('PERSON_FLD11', ftBlob)]
+//    [Dictionary('PERSON_FLD11', 'Mensagem de validação', '', '', '', taLeftJustify)]
+//    property PERSON_FLD11: TBlob read FPERSON_FLD11 write FPERSON_FLD11;
 
-    [Column('PERSON_FLD12', ftBlob)]
-    [Dictionary('PERSON_FLD12', 'Mensagem de validação', '', '', '', taLeftJustify)]
-    property PERSON_FLD12: TBlob read FPERSON_FLD12 write FPERSON_FLD12;
+//    [Column('PERSON_FLD12', ftBlob)]
+//    [Dictionary('PERSON_FLD12', 'Mensagem de validação', '', '', '', taLeftJustify)]
+//    property PERSON_FLD12: TBlob read FPERSON_FLD12 write FPERSON_FLD12;
 
     [Column('PERSON_FLD13', ftBlob)]
     [Dictionary('PERSON_FLD13', 'Mensagem de validação', '', '', '', taLeftJustify)]

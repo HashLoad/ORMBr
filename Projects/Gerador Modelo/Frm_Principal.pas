@@ -511,8 +511,7 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
     if pTipo = 'TDateTime' then Result := 'ftDateTime';
     if pTipo = 'Boolean'   then Result := 'ftBoolean';
     if pTipo = 'Currency'  then Result := 'ftCurrency';
-
-    if pTipo = 'TBlob'    then Result := 'ftBlob';
+    if pTipo = 'TBlob'     then Result := 'ftBlob';
   end;
 
   //Cria o Corpo das Propriedades e Fields
@@ -525,7 +524,8 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
      NullableTipo := _Tipo;
 
      if not Entidade.FieldByName(_Campo).Required then
-        NullableTipo := 'Nullable<' + NullableTipo + '>';
+       if _Tipo <> 'TBlob' then
+          NullableTipo := 'Nullable<' + NullableTipo + '>';
 
      // Fields
      _FieldsProperty.Add('    F' + _Campo + ': ' + NullableTipo + ';');

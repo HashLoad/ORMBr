@@ -178,8 +178,7 @@ begin
           if ADataSet.FieldByName(LColumn.ColumnName).IsBlob then
             TBlobField(ADataSet
                          .FieldByName(LColumn.ColumnName))
-                           .AsBytes := LProperty.GetNullableValue(AObject)
-                                         .AsType<TBlob>.ToBytes
+                           .AsBytes := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
           else
             raise Exception.Create(Format('Column [%s] must have blob value',
                                    [ADataSet.FieldByName(LColumn.ColumnName).FieldName]));
@@ -380,6 +379,12 @@ begin
             .FieldByName(LFieldName)
               .ConstraintErrorMessage := Dictionary(LAttributo).ConstraintErrorMessage;
 
+        /// Origin
+        if Length(Dictionary(LAttributo).Origin) > 0 then
+          ADataSet
+            .FieldByName(LFieldName)
+              .Origin := Dictionary(LAttributo).Origin;
+
         /// DefaultExpression
         if Length(Dictionary(LAttributo).DefaultExpression) > 0 then
         begin
@@ -397,6 +402,7 @@ begin
                .FieldByName(LFieldName)
                  .DefaultExpression := Dictionary(LAttributo).DefaultExpression;
         end;
+
         /// DisplayFormat
         if Length(Dictionary(LAttributo).DisplayFormat) > 0 then
           TDateField(ADataSet.FieldByName(LFieldName))

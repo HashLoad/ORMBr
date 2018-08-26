@@ -229,8 +229,8 @@ begin
             /// <summary>
             /// Gera o comando SQL do SELECT para abertura da tabela associada
             /// </summary>
-            GetRelationFields(LTable, LDataSetChild, LCriteria);
-            LDataSetChild.OpenSQLInternal(LCriteria.AsString);
+            if GetRelationFields(LTable, LDataSetChild, LCriteria) then
+              LDataSetChild.OpenSQLInternal(LCriteria.AsString);
           end;
         end;
       end;
@@ -243,8 +243,8 @@ function TDataSetAdapter<M>.GetRelationFields(ATable: TTableMapping;
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
-  LColumn: string;
   LFor: Integer;
+  LValue: String;
 begin
   Result := False;
   LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
@@ -257,20 +257,26 @@ begin
       /// </summary>
       if LAssociation.ClassNameRef = ADetail.FCurrentInternal.ClassName then
       begin
-        ACriteria.All.From(ATable.Name);
         /// <summary>
         /// O FROM pelo nome da classe de referencia
         /// O WHERE pela coluna de referencia.
         /// </summary>
         for LFor := 0 to LAssociation.ColumnsNameRef.Count -1 do
-          ACriteria.Where(ATable.Name + '.' +
-                          LAssociation.ColumnsNameRef[LFor] + '=' +
-                          TBindDataSet.GetInstance
-                            .GetFieldValue(FOrmDataSet,
-                                           LAssociation.ColumnsName[LFor],
-                                           FOrmDataSet
-                                             .FieldByName(LAssociation.ColumnsName[LFor]).DataType));
-        Result := True;
+        begin
+          LValue := TBindDataSet.GetInstance
+                      .GetFieldValue(FOrmDataSet,
+                                     LAssociation.ColumnsName[LFor],
+                                     FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).DataType);
+          if Length(LValue) > 0 then
+          begin
+            ACriteria
+              .All
+                .From(ATable.Name)
+                  .Where(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue);
+          end;
+        end;
+        if Length(ACriteria.AsString) > 0 then
+          Result := True;
       end;
     end;
   end;

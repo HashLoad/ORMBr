@@ -36,6 +36,7 @@ type
     Fupdatedate: TDate;
     Fclient_id: Integer;
     Fclient_name: string;
+    Fclient_namenew: string;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
 //    FEnumer: TMyEnum;
@@ -78,6 +79,12 @@ type
     [JoinColumn('client_id', 'client', 'id', 'client_name', InnerJoin)]
     [Dictionary('Nome do Cliente')]
     property client_name: string read fclient_name write fclient_name;
+
+    [Restrictions([NoInsert, NoUpdate])]
+    [Column('client_namenew', ftString, 60)]
+    [JoinColumn('client_id', 'client', 'id', 'client_name', InnerJoin, 'client_namenew')]
+    [Dictionary('Nome do Cliente New')]
+    property client_namenew: string read fclient_namenew write fclient_namenew;
 
     [Association(OneToOne, 'client_id', 'client', 'id')]
     property client: Tclient read Fclient write Fclient;

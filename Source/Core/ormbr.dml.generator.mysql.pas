@@ -127,7 +127,7 @@ begin
   Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
                                    'FROM INFORMATION_SCHEMA.TABLES ' +
                                    'WHERE TABLE_SCHEMA = DATABASE() ' +
-                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Table.Name)]));
+                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Sequence.Name)]));
 end;
 
 function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;

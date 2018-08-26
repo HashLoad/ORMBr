@@ -36,6 +36,12 @@ object Form2: TForm2
     Height = 13
     Caption = 'PERSON_FLD13'
   end
+  object Image1: TImage
+    Left = 458
+    Top = 175
+    Width = 105
+    Height = 105
+  end
   object DBGrid1: TDBGrid
     AlignWithMargins = True
     Left = 3
@@ -86,6 +92,14 @@ object Form2: TForm2
     Caption = 'Load XML'
     TabOrder = 4
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 104
+    Top = 589
+    Width = 75
+    Height = 25
+    Caption = 'Button2'
+    TabOrder = 5
   end
   object FDConnection1: TFDConnection
     Params.Strings = (

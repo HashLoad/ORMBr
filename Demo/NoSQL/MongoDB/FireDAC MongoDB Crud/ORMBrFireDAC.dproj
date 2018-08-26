@@ -159,7 +159,7 @@
         <DCCReference Include="..\..\..\..\Source\Core\ormbr.objects.manager.abstract.pas"/>
         <DCCReference Include="..\..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas"/>
         <DCCReference Include="..\..\..\..\Source\Core\ormbr.rest.json.pas"/>
-        <DCCReference Include="..\..\..\..\Source\Core\ormbr.jsonutils.datasnap.pas"/>
+        <DCCReference Include="..\..\..\..\Source\Core\ormbr.json.utils.pas"/>
         <DCCReference Include="..\..\..\..\Source\Drivers\ormbr.driver.firedac.mongodb.pas"/>
         <DCCReference Include="..\..\..\..\Source\Drivers\ormbr.factory.firedac.mongodb.pas"/>
         <DCCReference Include="..\..\..\..\Source\Drivers\ormbr.driver.firedac.mongodb.transaction.pas"/>

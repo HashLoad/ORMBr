@@ -15,14 +15,14 @@ object Form2: TForm2
     Size.Width = 141.000000000000000000
     Size.Height = 22.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
+    TabOrder = 1
     Text = 'Carregar Imagem'
     OnClick = Button1Click
   end
   object ImageControl1: TImageControl
     Position.X = 248.000000000000000000
     Position.Y = 262.000000000000000000
-    TabOrder = 2
+    TabOrder = 4
   end
   object OpenDialog1: TOpenDialog
     Left = 430
@@ -31,11 +31,42 @@ object Form2: TForm2
   object ImageControl2: TImageControl
     Position.X = 250.000000000000000000
     Position.Y = 64.000000000000000000
-    TabOrder = 1
+    TabOrder = 2
+  end
+  object Button2: TButton
+    Position.X = 430.000000000000000000
+    Position.Y = 236.000000000000000000
+    Size.Width = 141.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'Carregar Imagem Json'
+    OnClick = Button2Click
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      'Memo1')
+    Position.X = 392.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 201.000000000000000000
+    Size.Height = 169.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Left = 8
+    Top = 176
+    Viewport.Width = 197.000000000000000000
+    Viewport.Height = 165.000000000000000000
+  end
+  object ImageControl3: TImageControl
+    Position.X = 448.000000000000000000
+    Position.Y = 262.000000000000000000
+    TabOrder = 3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\ORMBr\Demo\Data\Blob\blob.fdb'
+      'Database=D:\ORMBr\Demo\Data\Blob Sem DataSet\blob.fdb'
       'CharacterSet=WIN1252'
       'Password=masterkey'
       'User_Name=SYSDBA'

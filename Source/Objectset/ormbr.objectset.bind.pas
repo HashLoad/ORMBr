@@ -115,15 +115,18 @@ begin
                 .GetInstance
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
+  begin
     if LColumn.PropertyRtti.IsWritable then
-    try
-
-      SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName),
-                         LColumn, AObject);
-    except on E: Exception do
-      raise  exception.Create('Problem when binding column "'+
-                              LColumn.ColumnName + '" - ' + E.Message);
-    end;
+	begin
+      try
+        SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
+      except 
+	  on E: Exception do
+        raise Exception.Create('Problem when binding column "' +
+                               LColumn.ColumnName + '" - ' + E.Message);
+      end;
+	end;
+  end;
 end;
 
 procedure TBindObject.SetFieldToProperty(AField: TField; AColumn: TColumnMapping;
@@ -227,9 +230,7 @@ begin
       begin
         if TVarData(AField.Value).VType <= varNull then
           Exit;
-        LProperty.SetNullableValue(AObject,
-                                   LRttiType.Handle,
-                                   AField.Value);
+        LProperty.SetNullableValue(AObject, LRttiType.Handle, AField.Value);
       end
       else
       if LProperty.IsBlob then
@@ -240,10 +241,8 @@ begin
              (not VarIsNull(AField.Value)) then
           begin
             LBlobField := LProperty.GetValue(AObject).AsType<TBlob>;
-            LBlobField.SetBytes(AField.Value);
+            LBlobField.SetBytes(AField.AsBytes);
             LProperty.SetValue(AObject, TValue.From<TBlob>(LBlobField));
-//            LBlobField.SetBlobField(TBlobField(ADataSet.FieldByName(LFieldName)));
-//            LProperty.SetValue(AObject, TValue.From<TBlob>(LBlobField));
           end;
         end
         else

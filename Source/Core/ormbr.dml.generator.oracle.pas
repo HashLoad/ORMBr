@@ -30,7 +30,9 @@ unit ormbr.dml.generator.oracle;
 interface
 
 uses
+  Classes,
   SysUtils,
+  StrUtils,
   Rtti,
   ormbr.dml.generator,
   ormbr.mapping.classes,
@@ -87,18 +89,41 @@ end;
 
 function TDMLGeneratorOracle.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
 var
-  oCriteria: ICriteria;
+  LTable: TTableMapping;
+  LCriteria: ICriteria;
+  LOrderBy: TOrderByMapping;
+  LOrderByList: TStringList;
+  LFor: Integer;
 begin
-  oCriteria := GetCriteriaSelect(AClass, AID);
+  LTable := TMappingExplorer
+              .GetInstance
+                .GetMappingTable(AClass);
+  LCriteria := GetCriteriaSelect(AClass, AID);
+  /// OrderBy
+  LOrderBy := TMappingExplorer
+                .GetInstance
+                  .GetMappingOrderBy(AClass);
+  if LOrderBy <> nil then
+  begin
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+    finally
+      LOrderByList.Free;
+    end;
+  end;
   if APageSize > -1 then
   begin
-     Result := Format(cSelectRow, [oCriteria.AsString]);
+     Result := Format(cSelectRow, [LCriteria.AsString]);
      Result := Result + sLineBreak +
                '   WHERE ROWNUM <= %s) ' + sLineBreak +
                'WHERE ROWINI > %s';
   end
   else
-     Result := oCriteria.AsString;
+     Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorOracle.GeneratorSelectWhere(AClass: TClass; AWhere: string;

@@ -20,12 +20,22 @@
     <Transaction>2018/07/07 12:57:31.000.673,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2018/07/08 16:24:45.000.258,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2018/07/09 10:28:07.000.786,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/07/24 11:02:32.793,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/07/24 11:06:59.464,=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
-    <Transaction>2018/07/24 11:35:35.711,D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.fmx=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.fmx</Transaction>
-    <Transaction>2018/07/24 11:35:35.711,D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.pas=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2018/07/24 11:35:43.532,D:\ORMBr\Demo\Blob Sem DataSet\ORMBrBlob.dproj=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
-    <Transaction>2018/07/24 11:37:15.708,D:\ORMBr\Demo\Blob Sem DataSet\ormbr.model.PERSON.pas=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
-  </Transactions>  <ActiveMobileDevice>   <NoProfile iOSSimulator="iPhone5"/>
-  </ActiveMobileDevice>
+    <Transaction>2018/07/24 11:02:32.000.793,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/24 11:06:59.000.464,=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
+    <Transaction>2018/07/24 11:35:35.000.711,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.fmx=D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.fmx</Transaction>
+    <Transaction>2018/07/24 11:35:35.000.711,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas=D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.pas</Transaction>
+    <Transaction>2018/07/24 11:35:43.000.532,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Project2.dproj=D:\ORMBr\Demo\Blob Sem DataSet\ORMBrBlob.dproj</Transaction>
+    <Transaction>2018/07/24 11:37:15.000.708,D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas=D:\ORMBr\Demo\Blob Sem DataSet\ormbr.model.PERSON.pas</Transaction>
+    <Transaction>2018/08/13 16:53:53.000.547,=D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas</Transaction>
+    <Transaction>2018/08/13 16:56:42.000.522,D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas=D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas</Transaction>
+    <Transaction>2018/08/13 17:47:50.000.534,D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas=</Transaction>
+    <Transaction>2018/08/26 15:25:06.937,=D:\ORMBr\Source\Core\ormbr.encddecd.pas</Transaction>
+    <Transaction>2018/08/26 15:25:06.978,=D:\ORMBr\Source\Core\ormbr.json.pas</Transaction>
+    <Transaction>2018/08/26 15:25:07.015,=D:\ORMBr\Source\Core\ormbr.json.utils.pas</Transaction>
+    <Transaction>2018/08/26 15:25:07.054,=D:\ORMBr\Source\Core\ormbr.rest.json.pas</Transaction>
+    <Transaction>2018/08/26 15:41:35.735,=D:\ORMBr\Source\Core\ormbr.types.blob.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
 </BorlandProject>

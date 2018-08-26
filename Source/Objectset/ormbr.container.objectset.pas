@@ -14,7 +14,6 @@ uses
   TContainerObjectSet<M: class, constructor> = class(TInterfacedObject, IContainerObjectSet<M>)
   protected
     FObjectSetAdapter: TObjectSetAdapter<M>;
-    FConnection: IDBConnection;
   public
     constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1);
     destructor Destroy; override;
@@ -42,7 +41,6 @@ implementation
 constructor TContainerObjectSet<M>.Create(const AConnection: IDBConnection;
   const APageSize: Integer);
 begin
-  FConnection := AConnection;
   FObjectSetAdapter := TObjectSetAdapter<M>.Create(AConnection, APageSize);
 end;
 
