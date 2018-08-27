@@ -25,6 +25,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.encddecd;
 
 interface
@@ -215,7 +217,7 @@ type
 function TNetEncoding.DoDecode(const Input: array of Byte): TBytes;
 begin
   if Length(Input) > 0 then
-    Result := TEncoding.UTF8.GetBytes(DoDecode(TEncoding.UTF8.GetString(Input)))
+    Result := TEncoding.UTF8.GetBytes(DoDecode(TEncoding.UTF8.GetString({$IFDEF DELPHI25_UP}Input{$ELSE}@Input[0]{$ENDIF})))
   else
     SetLength(Result, 0);
 end;
@@ -273,7 +275,7 @@ end;
 function TNetEncoding.DoEncode(const Input: array of Byte): TBytes;
 begin
   if Length(Input) > 0 then
-    Result := TEncoding.UTF8.GetBytes(DoEncode(TEncoding.UTF8.GetString(Input)))
+    Result := TEncoding.UTF8.GetBytes(DoDecode(TEncoding.UTF8.GetString({$IFDEF DELPHI25_UP}Input{$ELSE}@Input[0]{$ENDIF})))
   else
     SetLength(Result, 0);
 end;
