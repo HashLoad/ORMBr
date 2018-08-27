@@ -132,7 +132,7 @@ end;
 
 function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert) +1;
+  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert);
 end;
 
 initialization
