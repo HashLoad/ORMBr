@@ -44,6 +44,7 @@ type
   public
     function GetTable: Table;
     function GetResource: Resource;
+    function GetNotServerUse: NotServerUse;
     function GetSubResource: SubResource;
     function &GetType(out AType: TRttiType): Boolean;
     function GetSequence: Sequence;
@@ -82,6 +83,22 @@ begin
          end;
       end;
    end;
+end;
+
+function TObjectHelper.GetNotServerUse: NotServerUse;
+var
+  LType: TRttiType;
+  LAttribute: TCustomAttribute;
+begin
+  if &GetType(LType) then
+  begin
+    for LAttribute in LType.GetAttributes do // NotServerUse
+    begin
+      if LAttribute is NotServerUse then
+        Exit(NotServerUse(LAttribute));
+    end;
+    Exit(nil);
+  end;
 end;
 
 function TObjectHelper.GetPrimaryKey: TArray<TColumnMapping>;

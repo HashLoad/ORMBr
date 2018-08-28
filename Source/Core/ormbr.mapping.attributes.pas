@@ -61,6 +61,11 @@ type
     property Name: String Read FName;
   end;
 
+  NotServerUse = class(TCustomAttribute)
+  public
+    constructor Create;
+  end;
+
   SubResource = class(TCustomAttribute)
   private
     FName: String;
@@ -819,6 +824,13 @@ constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
 begin
   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression);
   FAlignment := AAlignment;
+end;
+
+{ NotServerUse }
+
+constructor NotServerUse.Create;
+begin
+
 end;
 
 end.
