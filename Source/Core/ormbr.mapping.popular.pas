@@ -267,7 +267,8 @@ begin
                                                JoinColumn(LAttrib).RefColumnName,
                                                JoinColumn(LAttrib).RefColumnNameSelect,
                                                JoinColumn(LAttrib).Join,
-                                               JoinColumn(LAttrib).Alias));
+                                               JoinColumn(LAttrib).AliasColumn,
+                                               JoinColumn(LAttrib).AliasRefTable));
         end;
       end;
     end;

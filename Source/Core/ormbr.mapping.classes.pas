@@ -261,16 +261,18 @@ type
     FRefColumnName: string;
     FRefColumnNameSelect: string;
     FJoin: TJoin;
-    FAlias: string;
+    FAliasColumn: string;
+    FAliasRefTable: string;
   public
     constructor Create(AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin; AAlias: string = '');
+      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string; AAliasRefTable: string);
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
     property RefTableName: string read FRefTableName;
     property RefColumnNameSelect: string read FRefColumnNameSelect;
     property Join: TJoin read FJoin;
-    property Alias: string read FAlias;
+    property AliasColumn: string read FAliasColumn;
+    property AliasRefTable: string read FAliasRefTable;
   end;
   /// JoinColumnMappingList
   TJoinColumnMappingList = class(TObjectList<TJoinColumnMapping>);
@@ -385,14 +387,16 @@ end;
 { TJoinColumnMapping }
 
 constructor TJoinColumnMapping.Create(AColumnName, ARefTableName,
-  ARefColumnName, ARefColumnNameSelect: string; AJoin: TJoin; AAlias: string);
+  ARefColumnName, ARefColumnNameSelect: string; AJoin: TJoin;
+  AAliasColumn: string; AAliasRefTable: string);
 begin
   FColumnName := AColumnName;
   FRefTableName := ARefTableName;
   FRefColumnName := ARefColumnName;
   FRefColumnNameSelect := ARefColumnNameSelect;
   FJoin := AJoin;
-  FAlias := AAlias;
+  FAliasColumn := AAliasColumn;
+  FAliasRefTable := AAliasRefTable;
 end;
 
 { TForeignKeyMapping }

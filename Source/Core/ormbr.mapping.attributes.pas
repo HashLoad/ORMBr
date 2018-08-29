@@ -278,16 +278,20 @@ type
     FRefColumnName: string;
     FRefColumnNameSelect: string;
     FJoin: TJoin;
-    FAlias: string;
+    FAliasColumn: string;
+    FAliasRefTable: string;
   public
     constructor Create(AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin; AAlias: string = '');
+      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn, AAliasRefTable: string); overload;
+    constructor Create(AColumnName, ARefTableName, ARefColumnName,
+      ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin); overload;
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
     property RefTableName: string read FRefTableName;
     property RefColumnNameSelect: string read FRefColumnNameSelect;
     property Join: TJoin read FJoin;
-    property Alias: string read FAlias;
+    property AliasColumn: string read FAliasColumn;
+    property AliasRefTable: string read FAliasRefTable;
   end;
 
   Restrictions = class(TCustomAttribute)
@@ -534,14 +538,25 @@ end;
 { JoinColumn }
 
 constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
-  ARefColumnNameSelect: string; AJoin: TJoin; AAlias: string);
+  ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn, AAliasRefTable: string);
 begin
-  FColumnName := AColumnName;
-  FRefTableName := ARefTableName;
-  FRefColumnName := ARefColumnName;
-  FRefColumnNameSelect := ARefColumnNameSelect;
+  FColumnName :=  LowerCase(AColumnName);
+  FRefTableName := LowerCase(ARefTableName);
+  FRefColumnName := LowerCase(ARefColumnName);
+  FRefColumnNameSelect := LowerCase(ARefColumnNameSelect);
   FJoin := AJoin;
-  FAlias := AAlias;
+  FAliasColumn := LowerCase(AAliasColumn);
+  FAliasRefTable := LowerCase(AAliasRefTable);
+  ///
+  if Length(FAliasRefTable) = 0 then
+    FAliasRefTable := FRefTableName;
+end;
+
+constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
+  ARefColumnNameSelect: string; AJoin: TJoin);
+begin
+  Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
+         AJoin, '', '');
 end;
 
 { ForeignKey }

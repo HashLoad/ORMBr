@@ -328,38 +328,42 @@ begin
     begin
       for LJoin in LJoinList do
       begin
-        if Length(LJoin.Alias) > 0 then
-          ACriteria.Column(LJoin.RefTableName + '.' + LJoin.RefColumnNameSelect).&As(LJoin.Alias)
+        if Length(LJoin.AliasColumn) > 0 then
+          ACriteria.Column(LJoin.AliasRefTable + '.' + LJoin.RefColumnNameSelect).&As(LJoin.AliasColumn)
         else
-          ACriteria.Column(LJoin.RefTableName + '.' + LJoin.RefColumnNameSelect);
+          ACriteria.Column(LJoin.AliasRefTable + '.' + LJoin.RefColumnNameSelect);
       end;
       for LJoin in LJoinList do
       begin
-        if LJoinExist.IndexOf(LJoin.RefTableName) = -1 then
+        if LJoinExist.IndexOf(LJoin.AliasRefTable) = -1 then
         begin
           LJoinExist.Add(LJoin.RefTableName);
           /// Join Inner, Left, Right, Full
           if LJoin.Join = InnerJoin then
             ACriteria.InnerJoin(LJoin.RefTableName)
-                       .&On([LJoin.RefTableName + '.' +
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
                              LJoin.RefColumnName,' = ',ATable.Name + '.' +
                              LJoin.ColumnName])
           else
           if LJoin.Join = LeftJoin then
             ACriteria.LeftJoin(LJoin.RefTableName)
-                       .&On([LJoin.RefTableName + '.' +
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
                              LJoin.RefColumnName,' = ',ATable.Name + '.' +
                              LJoin.ColumnName])
           else
           if LJoin.Join = RightJoin then
             ACriteria.RightJoin(LJoin.RefTableName)
-                       .&On([LJoin.RefTableName + '.' +
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
                              LJoin.RefColumnName,' = ',ATable.Name + '.' +
                              LJoin.ColumnName])
           else
           if LJoin.Join = FullJoin then
             ACriteria.FullJoin(LJoin.RefTableName)
-                       .&On([LJoin.RefTableName + '.' +
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
                              LJoin.RefColumnName,' = ',ATable.Name + '.' +
                              LJoin.ColumnName]);
         end;
