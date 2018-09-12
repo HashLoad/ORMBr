@@ -70,6 +70,7 @@ type
     function FindEvents(AEventName: string): Boolean;
     function GetAutoNextPacket: Boolean;
     procedure SetAutoNextPacket(const Value: Boolean);
+    procedure ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
   protected
     /// <summary>
     /// Classe para controle de evento interno com os eventos da interface do dataset
@@ -87,6 +88,7 @@ type
     FLookupsField: TList<TDataSetBaseAdapter<M>>;
     FInternalIndex: Integer;
     FAutoNextPacket: Boolean;
+    FCheckedFieldEvents: Boolean;
     FExplorer: IMappingExplorerStrategy;
     procedure DoBeforeScroll(DataSet: TDataSet); virtual;
     procedure DoAfterScroll(DataSet: TDataSet); virtual;
@@ -170,6 +172,7 @@ uses
   ormbr.mapping.rttiutils,
   ormbr.dataset.fields,
   ormbr.dataset.bind,
+  ormbr.dataset.consts,
   ormbr.objectset.bind,
   ormbr.mapping.explorer,
   ormbr.mapping.attributes,
@@ -199,6 +202,7 @@ begin
   /// Variável que identifica o campo que guarda o estado do registro.
   /// </summary>
   FInternalIndex := 0;
+  FCheckedFieldEvents := False;
   if AMasterObject <> nil then
     SetMasterObject(AMasterObject);
   inherited Create(ADataSet, APageSize, AMasterObject);
@@ -590,15 +594,43 @@ begin
 end;
 
 procedure TDataSetBaseAdapter<M>.DoBeforeEdit(DataSet: TDataSet);
+var
+  LFieldEvents: TFieldEventsMappingList;
 begin
   if Assigned(FDataSetEvents.BeforeEdit) then
     FDataSetEvents.BeforeEdit(DataSet);
+
+  /// <summary> Checa o Attributo "FieldEvents" nos TFields somente uma vez </summary>
+  if not FCheckedFieldEvents then
+  begin
+    /// ForeingnKey da Child
+    LFieldEvents := FExplorer
+                      .GetMappingFieldEvents(FCurrentInternal.ClassType);
+    if LFieldEvents <> nil then
+      ValideFieldEvents(LFieldEvents);
+
+    FCheckedFieldEvents := True;
+  end;
 end;
 
 procedure TDataSetBaseAdapter<M>.DoBeforeInsert(DataSet: TDataSet);
+var
+  LFieldEvents: TFieldEventsMappingList;
 begin
   if Assigned(FDataSetEvents.BeforeInsert) then
     FDataSetEvents.BeforeInsert(DataSet);
+
+  /// <summary> Checa o Attributo "FieldEvents" nos TFields somente uma vez </summary>
+  if not FCheckedFieldEvents then
+  begin
+    /// ForeingnKey da Child
+    LFieldEvents := FExplorer
+                      .GetMappingFieldEvents(FCurrentInternal.ClassType);
+    if LFieldEvents <> nil then
+      ValideFieldEvents(LFieldEvents);
+
+    FCheckedFieldEvents := True;
+  end;
 end;
 
 procedure TDataSetBaseAdapter<M>.DoBeforeOpen(DataSet: TDataSet);
@@ -695,7 +727,7 @@ begin
     FDataSetEvents.BeforeCancel := FOrmDataSet.BeforeCancel;
   if Assigned(FOrmDataSet.AfterCancel) then
     FDataSetEvents.AfterCancel := FOrmDataSet.AfterCancel;
-  /// Edit Events
+  /// Insert Events
   if Assigned(FOrmDataSet.BeforeInsert) then
     FDataSetEvents.BeforeInsert := FOrmDataSet.BeforeInsert;
   if Assigned(FOrmDataSet.AfterInsert) then
@@ -707,7 +739,7 @@ begin
     FDataSetEvents.AfterEdit := FOrmDataSet.AfterEdit;
   /// NewRecord Events
   if Assigned(FOrmDataSet.OnNewRecord) then
-    FDataSetEvents.OnNewRecord := FOrmDataSet.OnNewRecord;
+    FDataSetEvents.OnNewRecord := FOrmDataSet.OnNewRecord
 end;
 
 function TDataSetBaseAdapter<M>.IsAssociationUpdateCascade(
@@ -910,6 +942,35 @@ begin
       TDataSetBaseAdapter<M>(AValue).FMasterObject.Add(FCurrentInternal.ClassName, Self);
 
     FOwnerMasterObject := AValue;
+  end;
+end;
+
+procedure TDataSetBaseAdapter<M>.ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
+var
+  LFor: Integer;
+  LField: TField;
+begin
+  for LFor := 0 to AFieldEvents.Count -1 do
+  begin
+    LField := FOrmDataSet.FindField(AFieldEvents.Items[LFor].FieldName);
+    if LField <> nil then
+    begin
+      if onSetText in AFieldEvents.Items[LFor].Events then
+        if not Assigned(LField.OnSetText) then
+          raise Exception.CreateFmt(cFIELDEVENTS, ['OnSetText()', LField.FieldName]);
+
+      if onGetText in AFieldEvents.Items[LFor].Events then
+        if not Assigned(LField.OnGetText) then
+          raise Exception.CreateFmt(cFIELDEVENTS, ['OnGetText()', LField.FieldName]);
+
+      if onChange in AFieldEvents.Items[LFor].Events then
+        if not Assigned(LField.OnChange) then
+          raise Exception.CreateFmt(cFIELDEVENTS, ['OnChange()', LField.FieldName]);
+
+      if onValidate in AFieldEvents.Items[LFor].Events then
+        if not Assigned(LField.OnValidate) then
+          raise Exception.CreateFmt(cFIELDEVENTS, ['OnValidate()', LField.FieldName]);
+    end;
   end;
 end;
 

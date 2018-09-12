@@ -352,6 +352,14 @@ type
     property EnumValues: TList<Variant> read FEnumValues;
   end;
 
+  FieldEvents = class(TCustomAttribute)
+  private
+    FFieldEvents: TFieldEvents;
+  public
+    constructor Create(AFieldEvents: TFieldEvents);
+    property Events: TFieldEvents read FFieldEvents;
+  end;
+
   NotNullConstraint = class(TCustomAttribute)
   public
     constructor Create;
@@ -846,6 +854,13 @@ end;
 constructor NotServerUse.Create;
 begin
 
+end;
+
+{ FieldEvents }
+
+constructor FieldEvents.Create(AFieldEvents: TFieldEvents);
+begin
+  FFieldEvents := AFieldEvents;
 end;
 
 end.

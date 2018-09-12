@@ -89,6 +89,7 @@ implementation
 
 uses
   ormbr.dataset.fields,
+  ormbr.dataset.consts,
   ormbr.types.mapping,
   ormbr.mapping.explorer,
   ormbr.types.blob;
@@ -180,8 +181,8 @@ begin
                          .FieldByName(LColumn.ColumnName))
                            .AsBytes := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
           else
-            raise Exception.Create(Format('Column [%s] must have blob value',
-                                   [ADataSet.FieldByName(LColumn.ColumnName).FieldName]));
+            raise Exception.CreateFmt(cNOTFIELDTYPEBLOB,
+                                     [ADataSet.FieldByName(LColumn.ColumnName).FieldName]);
         end
         else
         begin
@@ -202,8 +203,7 @@ end;
 
 constructor TBindDataSet.Create;
 begin
-   raise Exception
-           .Create('Para usar o IBindDataSet use o método TBindDataSet.GetInstance()');
+   raise Exception.CreateFmt(cCREATEBINDDATASET, ['TBindDataSet', 'TBindDataSet.GetInstance()']);
 end;
 
 constructor TBindDataSet.CreatePrivate;

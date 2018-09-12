@@ -301,6 +301,18 @@ type
     property Script: string read FScript write FScript;
   end;
 
+  TFieldEventsMapping = class
+  private
+    FFieldName: String;
+    FFieldEvents: TFieldEvents;
+  public
+    constructor Create(AFieldName: String; AFieldEvents: TFieldEvents);
+    property FieldName: String read FFieldName;
+    property Events: TFieldEvents read FFieldEvents;
+  end;
+  /// FieldEventsMappingList
+  TFieldEventsMappingList = class(TObjectList<TFieldEventsMapping>);
+
 implementation
 
 { TOneToOneRelationMapping }
@@ -483,6 +495,14 @@ destructor TEnumerationMapping.Destroy;
 begin
   FEnumValues.Free;
   inherited;
+end;
+
+{ TFieldEvents }
+
+constructor TFieldEventsMapping.Create(AFieldName: String; AFieldEvents: TFieldEvents);
+begin
+  FFieldName := AFieldName;
+  FFieldEvents := AFieldEvents;
 end;
 
 end.

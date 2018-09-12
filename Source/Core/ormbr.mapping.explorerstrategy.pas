@@ -51,6 +51,7 @@ type
     function GetMappingSequence(const AClass: TClass): TSequenceMapping;
     function GetMappingTrigger(const AClass: TClass): TTriggerMappingList;
     function GetMappingView(const AClass: TClass): TViewMapping;
+    function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList;
     function GetMappingEnumeration(const ARttiType: TRttiType): TEnumerationMapping;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
@@ -72,6 +73,7 @@ type
     function GetMappingSequence(const AClass: TClass): TSequenceMapping; virtual; abstract;
     function GetMappingTrigger(const AClass: TClass): TTriggerMappingList; virtual; abstract;
     function GetMappingView(const AClass: TClass): TViewMapping; virtual; abstract;
+    function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList; virtual; abstract;
     function GetMappingEnumeration(const ARttiType: TRttiType): TEnumerationMapping; virtual; abstract;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;

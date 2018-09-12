@@ -64,6 +64,7 @@ type
     function PopularJoinColumn(ARttiType: TRttiType): TJoinColumnMappingList;
     function PopularTrigger(ARttiType: TRttiType): TTriggerMappingList;
     function PopularView(ARttiType: TRttiType): TViewMapping;
+    function PopularFieldEvents(ARttiType: TRttiType): TFieldEventsMappingList;
     function PopularEnumeration(ARttiType: TRttiType): TEnumerationMapping;
   end;
 
@@ -179,6 +180,27 @@ begin
       Result := TEnumerationMapping.Create(ARttiType.AsOrdinal,
                                            Enumeration(LAttrib).EnumType,
                                            Enumeration(LAttrib).EnumValues);
+    end;
+  end;
+end;
+
+function TMappingPopular.PopularFieldEvents(ARttiType: TRttiType): TFieldEventsMappingList;
+var
+  LProperty: TRttiProperty;
+  LAttrib: TCustomAttribute;
+begin
+  Result := nil;
+  for LProperty in ARttiType.GetProperties do
+  begin
+    for LAttrib in LProperty.GetAttributes do
+    begin
+      if LAttrib is FieldEvents then // FieldEvents
+      begin
+         if Result = nil then
+            Result := TFieldEventsMappingList.Create;
+         Result.Add(TFieldEventsMapping.Create(Column(LProperty.GetColumn).ColumnName,
+                                               FieldEvents(LAttrib).Events));
+      end;
     end;
   end;
 end;

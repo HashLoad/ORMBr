@@ -245,6 +245,7 @@ var
   LAssociation: TAssociationMapping;
   LFor: Integer;
   LValue: String;
+  LWhere: String;
 begin
   Result := False;
   LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
@@ -261,6 +262,7 @@ begin
         /// O FROM pelo nome da classe de referencia
         /// O WHERE pela coluna de referencia.
         /// </summary>
+        ACriteria.Select.All.From(ATable.Name);
         for LFor := 0 to LAssociation.ColumnsNameRef.Count -1 do
         begin
           LValue := TBindDataSet.GetInstance
@@ -269,10 +271,10 @@ begin
                                      FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).DataType);
           if Length(LValue) > 0 then
           begin
-            ACriteria
-              .All
-                .From(ATable.Name)
-                  .Where(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue);
+            if LFor = 0 then
+              ACriteria.Where(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue)
+            else
+              ACriteria.&And(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue);
           end;
         end;
         if Length(ACriteria.AsString) > 0 then

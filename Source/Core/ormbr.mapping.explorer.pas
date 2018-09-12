@@ -67,6 +67,7 @@ type
     FTriggerMapping: TDictionary<string, TTriggerMappingList>;
     FViewMapping: TDictionary<string, TViewMapping>;
     FEnumerationMapping: TDictionary<string, TEnumerationMapping>;
+    FFieldEventsMapping: TDictionary<string, TFieldEventsMappingList>;
     constructor CreatePrivate;
   protected
     function GetRepositoryMapping: TMappingRepository; override;
@@ -88,6 +89,7 @@ type
     function GetMappingCheck(const AClass: TClass): TCheckMappingList; override;
     function GetMappingTrigger(const AClass: TClass): TTriggerMappingList; override;
     function GetMappingView(const AClass: TClass): TViewMapping; override;
+    function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList; override;
     function GetMappingEnumeration(const ARttiType: TRttiType): TEnumerationMapping; override;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
@@ -124,6 +126,7 @@ begin
   FCheckMapping       := TObjectDictionary<string, TCheckMappingList>.Create([doOwnsValues]);
   FTriggerMapping     := TObjectDictionary<string, TTriggerMappingList>.Create([doOwnsValues]);
   FViewMapping        := TObjectDictionary<string, TViewMapping>.Create([doOwnsValues]);
+  FFieldEventsMapping := TObjectDictionary<string, TFieldEventsMappingList>.Create([doOwnsValues]);
   FEnumerationMapping := TObjectDictionary<string, TEnumerationMapping>.Create([doOwnsValues]);
 end;
 
@@ -143,6 +146,7 @@ begin
   FTriggerMapping.Free;
   FCheckMapping.Free;
   FViewMapping.Free;
+  FFieldEventsMapping.Free;
   FEnumerationMapping.Free;
   if Assigned(FRepositoryMapping) then
      FRepositoryMapping.Free;
@@ -235,6 +239,20 @@ begin
    /// Add List
   if Result <> nil then
     FEnumerationMapping.Add(ARttiType.Name, Result);
+end;
+
+function TMappingExplorer.GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList;
+var
+  LRttiType: TRttiType;
+begin
+  if FFieldEventsMapping.ContainsKey(AClass.ClassName) then
+     Exit(FFieldEventsMapping[AClass.ClassName]);
+
+  LRttiType := TRttiSingleton.GetInstance.GetRttiType(AClass);
+  Result    := FPopularMapping.PopularFieldEvents(LRttiType);
+   /// Add List
+  if Result <> nil then
+    FFieldEventsMapping.Add(AClass.ClassName, Result);
 end;
 
 function TMappingExplorer.GetMappingForeignKey(const AClass: TClass): TForeignKeyMappingList;

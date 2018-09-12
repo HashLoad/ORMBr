@@ -45,6 +45,8 @@ type
   TMasterEvent = (AutoPost, AutoEdit, AutoInsert);
   TMasterEvents = set of TMasterEvent;
   TEnumType = (etChar, etString, etInteger, etBoolean);
+  TFieldEvent = (onChange, onGetText, onSetText, onValidate);
+  TFieldEvents = set of TFieldEvent;
 
 implementation
 
