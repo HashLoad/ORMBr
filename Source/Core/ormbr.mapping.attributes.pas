@@ -284,6 +284,8 @@ type
     constructor Create(AColumnName, ARefTableName, ARefColumnName,
       ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn, AAliasRefTable: string); overload;
     constructor Create(AColumnName, ARefTableName, ARefColumnName,
+      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string); overload;
+    constructor Create(AColumnName, ARefTableName, ARefColumnName,
       ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin); overload;
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
@@ -565,6 +567,13 @@ constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
 begin
   Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
          AJoin, '', '');
+end;
+
+constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
+  ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string);
+begin
+  Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
+         AJoin, AAliasColumn, '');
 end;
 
 { ForeignKey }
