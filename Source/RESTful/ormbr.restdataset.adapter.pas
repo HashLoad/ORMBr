@@ -376,6 +376,7 @@ begin
   FOrmDataSet.Append;
   TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
+  FOrmDataSet.First;
   /// <summary> Popula Associations </summary>
   if FMasterObject.Count > 0 then
     PopularDataSetChilds(AObject);
@@ -408,12 +409,14 @@ begin
           if not LAssociation.PropertyRtti.IsList then
           begin
             LObjectChild := LAssociation.PropertyRtti.GetValue(AObject).AsObject;
-            PopularDataSetOneToOne(LObjectChild, LAssociation);
+            if LObjectChild <> nil then
+              PopularDataSetOneToOne(LObjectChild, LAssociation);
           end
           else
           begin
             LObjectList := TObjectList<TObject>(LAssociation.PropertyRtti.GetValue(AObject).AsObject);
-            PopularDataSetOneToMany(LObjectList);
+            if LObjectList <> nil then
+              PopularDataSetOneToMany(LObjectList);
           end;
         end;
       end;
@@ -427,25 +430,24 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LObjectChild: TObject;
 begin
-  for LObjectChild in AObjectList do
-  begin
-    if FMasterObject.ContainsKey(LObjectChild.ClassName) then
+  FOrmDataSet.DisableControls;
+  DisableDataSetEvents;
+  try
+    for LObjectChild in AObjectList do
     begin
-      LDataSetChild := FMasterObject.Items[LObjectChild.ClassName];
-      LDataSetChild.FOrmDataSet.DisableControls;
-      LDataSetChild.DisableDataSetEvents;
-      try
-        LDataSetChild.FOrmDataSet.Append;
-        TBindDataSet
-          .GetInstance
-            .SetPropertyToField(LObjectChild, LDataSetChild.FOrmDataSet);
-        LDataSetChild.FOrmDataSet.Post;
-      finally
-        LDataSetChild.FOrmDataSet.First;
-        LDataSetChild.FOrmDataSet.EnableControls;
-        LDataSetChild.EnableDataSetEvents;
+      if FMasterObject.ContainsKey(LObjectChild.ClassName) then
+      begin
+        LDataSetChild := FMasterObject.Items[LObjectChild.ClassName];
+        /// <summary>
+        /// Popular classe ralacionada através do atributo Association() e todos
+        /// as suas classes filhas, caso exista.
+        /// </summary>
+        TRESTDataSetAdapter<M>(LDataSetChild).PopularDataSet(LObjectChild);
       end;
     end;
+  finally
+    FOrmDataSet.EnableControls;
+    EnableDataSetEvents;
   end;
 end;
 

@@ -57,8 +57,6 @@ type
   /// </summary>
   TDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
-    function GetRelationFields(ATable: TTableMapping;
-      ADetail: TDataSetBaseAdapter<M>; var ACriteria: ICriteria): Boolean;
     procedure ExecuteCheckNotNull;
   protected
     FConnection: IDBConnection;
@@ -108,14 +106,7 @@ end;
 procedure TDataSetAdapter<M>.DoAfterScroll(DataSet: TDataSet);
 begin
   if DataSet.State in [dsBrowse] then
-  begin
-//    /// <summary>
-//    ///  Alternativa para abertura de sub-tabelas do atributo "Association",
-//    ///  o método atual habilitado tem melhor peformance
-//    /// </summary>
-//    TBindDataSet.GetInstance.SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
     OpenDataSetChilds;
-  end;
   inherited;
 end;
 
@@ -192,9 +183,7 @@ end;
 
 procedure TDataSetAdapter<M>.OpenDataSetChilds;
 var
-  LTable: TTableMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
-  LCriteria: ICriteria;
 begin
   inherited;
   if FOrmDataSet.Active then
@@ -207,87 +196,13 @@ begin
       if FMasterObject.Count > 0 then
       begin
         for LDataSetChild in FMasterObject.Values do
-        begin
-//          /// <summary>
-//          ///  Alternativa para abertura de sub-tabelas, o método atual
-//          ///  habilitado tem melhor peformance
-//          /// </summary>
-//          LDataSetChild.FOrmDataSet.DisableControls;
-//          LDataSetChild.DisableDataSetEvents;
-//          LDataSetChild.EmptyDataSet;
-//          try
-//            LDataSetChild.FSession.OpenAssociation(FCurrentInternal);
-//          finally
-//            LDataSetChild.FOrmDataSet.EnableControls;
-//            LDataSetChild.EnableDataSetEvents;
-//          end;
-          LTable := FExplorer
-                      .GetMappingTable(LDataSetChild.FCurrentInternal.ClassType);
-          if LTable <> nil then
-          begin
-            LCriteria := CreateCriteria.Select;
-            /// <summary>
-            /// Gera o comando SQL do SELECT para abertura da tabela associada
-            /// </summary>
-            if GetRelationFields(LTable, LDataSetChild, LCriteria) then
-              LDataSetChild.OpenSQLInternal(LCriteria.AsString);
-          end;
-        end;
-      end;
-    end;
-  end;
-end;
-
-function TDataSetAdapter<M>.GetRelationFields(ATable: TTableMapping;
-  ADetail: TDataSetBaseAdapter<M>; var ACriteria: ICriteria): Boolean;
-var
-  LAssociations: TAssociationMappingList;
-  LAssociation: TAssociationMapping;
-  LFor: Integer;
-  LValue: String;
-  LWhere: String;
-begin
-  Result := False;
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
-  if LAssociations <> nil then
-  begin
-    for LAssociation in LAssociations do
-    begin
-      /// <summary>
-      /// Verificação se tem algum mapeamento OneToOne para a classe.
-      /// </summary>
-      if LAssociation.ClassNameRef = ADetail.FCurrentInternal.ClassName then
-      begin
-        /// <summary>
-        /// O FROM pelo nome da classe de referencia
-        /// O WHERE pela coluna de referencia.
-        /// </summary>
-        ACriteria.Select.All.From(ATable.Name);
-        for LFor := 0 to LAssociation.ColumnsNameRef.Count -1 do
-        begin
-          LValue := TBindDataSet.GetInstance
-                      .GetFieldValue(FOrmDataSet,
-                                     LAssociation.ColumnsName[LFor],
-                                     FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).DataType);
-          if Length(LValue) > 0 then
-          begin
-            if LFor = 0 then
-              ACriteria.Where(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue)
-            else
-              ACriteria.&And(ATable.Name + '.' + LAssociation.ColumnsNameRef[LFor] + '=' + LValue);
-          end;
-        end;
-        if Length(ACriteria.AsString) > 0 then
-          Result := True;
+          LDataSetChild.OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
       end;
     end;
   end;
 end;
 
 procedure TDataSetAdapter<M>.LoadLazy(const AOwner: M);
-var
-  LTable: TTableMapping;
-  LCriteria: ICriteria;
 begin
   inherited;
   if AOwner <> nil then
@@ -297,29 +212,7 @@ begin
       if not FOrmDataSet.Active then
       begin
         SetMasterObject(AOwner);
-//        /// <summary>
-//        ///  Alternativa para abertura de sub-tabelas, o método atual
-//        ///  habilitado tem melhor peformance
-//        /// </summary>
-//        FOrmDataSet.DisableControls;
-//        DisableDataSetEvents;
-//        EmptyDataSet;
-//        try
-//          FSession.OpenAssociation(FCurrentInternal);
-//        finally
-//          FOrmDataSet.EnableControls;
-//          EnableDataSetEvents;
-//        end;
-        LTable := FExplorer.GetMappingTable(FCurrentInternal.ClassType);
-        if LTable <> nil then
-        begin
-          LCriteria := CreateCriteria.Select;
-          /// <summary>
-          /// Gera o comando SQL do SELECT para abertura da tabela associada
-          /// </summary>
-          GetRelationFields(LTable, Self, LCriteria);
-          OpenSQLInternal(LCriteria.AsString);
-        end;
+        OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
       end;
     end;
   end
@@ -355,11 +248,9 @@ end;
 
 procedure TDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
 var
-  LTable: TTableMapping;
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
-  LCriteria: ICriteria;
 begin
   inherited;
   if FOrmDataSet.Active then
@@ -382,32 +273,7 @@ begin
             begin
               LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
               if LDataSetChild <> nil then
-              begin
-//                /// <summary>
-//                ///  Alternativa para abertura de sub-tabelas do atributo "Association",
-//                /// o método atual habilitado tem melhor peformance
-//                /// </summary>
-//                LDataSetChild.FOrmDataSet.DisableControls;
-//                LDataSetChild.DisableDataSetEvents;
-//                LDataSetChild.EmptyDataSet;
-//                try
-//                  LDataSetChild.FSession.OpenAssociation(FCurrentInternal);
-//                finally
-//                  LDataSetChild.FOrmDataSet.EnableControls;
-//                  LDataSetChild.EnableDataSetEvents;
-//                end;
-                LTable := FExplorer
-                            .GetMappingTable(LDataSetChild.FCurrentInternal.ClassType);
-                if LTable <> nil then
-                begin
-                  LCriteria := CreateCriteria.Select;
-                  /// <summary>
-                  /// Gera o comando SQL do SELECT para abertura da tabela associada
-                  /// </summary>
-                  GetRelationFields(LTable, LDataSetChild, LCriteria);
-                  LDataSetChild.OpenSQLInternal(LCriteria.AsString);
-                end;
-              end;
+                LDataSetChild.OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
             end;
           end;
         end;

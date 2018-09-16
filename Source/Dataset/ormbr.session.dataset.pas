@@ -63,9 +63,9 @@ type
     destructor Destroy; override;
     procedure OpenID(const AID: Variant); override;
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
-//    procedure OpenAssociation(const AObject: TObject); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
+    function SelectAssociation(const AObject: TObject): String; override;
   end;
 
 implementation
@@ -90,17 +90,11 @@ begin
   inherited;
 end;
 
-//procedure TSessionDataSet<M>.OpenAssociation(const AObject: TObject);
-//var
-//  LDBResultSet: IDBResultSet;
-//begin
-//  inherited;
-//  LDBResultSet := FManager.SelectInternalAssociation(AObject);
-//  /// <summary>
-//  /// Popula o DataSet em memória com os registros retornardos no comando SQL
-//  /// </summary>
-//  PopularDataSet(LDBResultSet);
-//end;
+function TSessionDataSet<M>.SelectAssociation(const AObject: TObject): String;
+begin
+  inherited;
+  Result := FManager.SelectInternalAssociation(AObject);
+end;
 
 procedure TSessionDataSet<M>.OpenID(const AID: Variant);
 var

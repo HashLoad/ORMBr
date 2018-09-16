@@ -511,6 +511,7 @@ begin
     for LFor := 0 to LDoc.Count - 1 do
     begin
       LItem := T.Create;
+      LItem.MethodCall('Create', []);
       if not JSONVariantData(LDoc.FValues[LFor]).ToObject(LItem) then
       begin
         FreeAndNil(Result);
@@ -537,6 +538,7 @@ end;
 function TJSONObjectORMBr.JSONToObject<T>(const AJson: String): T;
 begin
   Result := T.Create;
+  TObject(Result).MethodCall('Create', []);
   if not JSONToObject(TObject(Result), AJson) then
     raise Exception.Create('Error Message');
 end;
@@ -1338,6 +1340,7 @@ begin
           for LFor := 0 to Count - 1 do
           begin
             LObjectType := LListType.AsInstance.MetaclassType.Create;
+            LObjectType.MethodCall('Create', []);
             if not TJSONObjectORMBr.JSONVariantData(FValues[LFor]).ToObject(LObjectType) then
               Exit;
             AObject.MethodCall('Add', [LObjectType]);

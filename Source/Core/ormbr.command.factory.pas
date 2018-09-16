@@ -64,6 +64,8 @@ type
     function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
+    function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
+      const AAssociation: TAssociationMapping): String; virtual; abstract;
     procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); virtual; abstract;
     procedure GeneratorInsert(const AObject: TObject); virtual; abstract;
     procedure GeneratorDelete(const AObject: TObject); virtual; abstract;
@@ -93,6 +95,8 @@ type
     function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
+    function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
+      const AAssociation: TAssociationMapping): String; override;
     procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); override;
     procedure GeneratorInsert(const AObject: TObject); override;
     procedure GeneratorDelete(const AObject: TObject); override;
@@ -231,12 +235,28 @@ begin
   Result := FConnection.ExecuteSQL(LSQLText);
 end;
 
-function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
+function TDMLCommandFactory.GeneratorSelectAssociation(const AOwner: TObject;
+  const AClass: TClass; const AAssociation: TAssociationMapping): String;
+var
+  LSQLText: String;
+begin
+  LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
+  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  /// <summary>
+  /// Envia comando para tela do monitor.
+  /// </summary>
+  if FConnection.CommandMonitor <> nil then
+    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+
+  Result := LSQLText;
+end;
+
+function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 var
   LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
+  LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
   /// Envia comando para tela do monitor.
@@ -247,12 +267,12 @@ begin
   Result := FConnection.ExecuteSQL(LSQLText);
 end;
 
-function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;
+function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 var
   LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
+  LSQLText := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
   /// Envia comando para tela do monitor.

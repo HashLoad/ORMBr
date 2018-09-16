@@ -99,10 +99,10 @@ type
     function SelectInternalAll: IDBResultSet; override;
     function SelectInternalID(const AID: Variant): IDBResultSet; override;
     function SelectInternal(const ASQL: String): IDBResultSet; override;
+    function SelectInternalAssociation(const AObject: TObject): String; override;
     function NextPacket: IDBResultSet; overload; override;
     function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
-//    function SelectInternalAssociation(const AObject: TObject): IDBResultSet; override;
     /// <summary>
     /// ObjectSet
     /// </summary>
@@ -158,34 +158,34 @@ begin
   Result := FDMLCommandFactory.GeneratorSelectAll(M, FPageSize);
 end;
 
-//function TObjectManager<M>.SelectInternalAssociation(const AObject: TObject): IDBResultSet;
-//var
-//  LAssociationList: TAssociationMappingList;
-//  LAssociation: TAssociationMapping;
-//begin
-//  LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
-//  if LAssociationList <> nil then
-//  begin
-//    for LAssociation in LAssociationList do
-//    begin
-//       if LAssociation.ClassNameRef = FObjectInternal.ClassName then
-//       begin
-//         if not LAssociation.Lazy then
-//         begin
-//           if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-//              Result := FDMLCommandFactory.GeneratorSelectOneToOne(AObject,
-//                                                                   FObjectInternal.ClassType,
-//                                                                   LAssociation)
-//           else
-//           if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-//              Result := FDMLCommandFactory.GeneratorSelectOneToMany(AObject,
-//                                                                    FObjectInternal.ClassType,
-//                                                                    LAssociation)
-//         end;
-//       end;
-//    end;
-//  end;
-//end;
+function TObjectManager<M>.SelectInternalAssociation(const AObject: TObject): String;
+var
+  LAssociationList: TAssociationMappingList;
+  LAssociation: TAssociationMapping;
+begin
+  LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
+  if LAssociationList <> nil then
+  begin
+    for LAssociation in LAssociationList do
+    begin
+       if LAssociation.ClassNameRef = FObjectInternal.ClassName then
+       begin
+         if not LAssociation.Lazy then
+         begin
+           if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+              Result := FDMLCommandFactory.GeneratorSelectAssociation(AObject,
+                                                                      FObjectInternal.ClassType,
+                                                                      LAssociation)
+           else
+           if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+              Result := FDMLCommandFactory.GeneratorSelectAssociation(AObject,
+                                                                      FObjectInternal.ClassType,
+                                                                      LAssociation)
+         end;
+       end;
+    end;
+  end;
+end;
 
 function TObjectManager<M>.SelectInternalID(const AID: Variant): IDBResultSet;
 begin

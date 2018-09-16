@@ -62,7 +62,7 @@ type
     function SelectInternalAll: IDBResultSet; virtual; abstract;
     function SelectInternalID(const AID: Variant): IDBResultSet; virtual; abstract;
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
-//    function SelectInternalAssociation(const AObject: TObject): IDBResultSet; virtual; abstract;
+    function SelectInternalAssociation(const AObject: TObject): String; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Variant): M; overload; virtual; abstract;

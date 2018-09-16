@@ -85,7 +85,7 @@ type
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure NextPacket; overload; virtual; abstract;
     procedure RefreshRecord(const AColumns: TParams); virtual; abstract;
-//    procedure OpenAssociation(const AObject: TObject); virtual; abstract;
+    function SelectAssociation(const AObject: TObject): String; virtual; abstract;
     function ResultParams: TParams;
     /// <summary>
     /// DataSet e ObjectSet

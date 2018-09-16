@@ -124,11 +124,9 @@ var
   LCriteria: ICriteria;
   LFor: Integer;
 begin
+  /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := CreateCriteria.Select.From(LTable.Name);
-  /// Columns
-  if AAssociation.Multiplicity in [OneToOne, OneToMany] then
-    LCriteria.All;
+  LCriteria := GetCriteriaSelect(AClass, '-1');
 
   /// Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
@@ -163,8 +161,10 @@ var
   LCriteria: ICriteria;
   LFor: Integer;
 begin
+  /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := CreateCriteria.Select.All.From(LTable.Name);
+  LCriteria := GetCriteriaSelect(AClass, '-1');
+
   /// Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
     LCriteria.Where(LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor] + ' = ' + GetValue(LFor));
