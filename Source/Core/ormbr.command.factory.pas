@@ -237,18 +237,8 @@ end;
 
 function TDMLCommandFactory.GeneratorSelectAssociation(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): String;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
-  /// <summary>
-  /// Envia comando para tela do monitor.
-  /// </summary>
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := LSQLText;
+  Result := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
 end;
 
 function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;

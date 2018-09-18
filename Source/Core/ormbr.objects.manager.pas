@@ -163,6 +163,10 @@ var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
+  /// <summary>
+  /// Result deve sempre iniciar vazio
+  /// </summary>
+  Result := '';
   LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
   if LAssociationList <> nil then
   begin
@@ -523,9 +527,13 @@ begin
       TBindObject
         .GetInstance
           .SetFieldToProperty(LResultSet, LObject);
-      /// <summary> Alimenta registros das associações existentes 1:1 ou 1:N </summary>
+      /// <summary>
+      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      /// </summary>
       FillAssociation(LObject);
-      /// <summary> Adiciona o Object a lista de retorno </summary>
+      /// <summary>
+      /// Adiciona o Object a lista de retorno
+      /// </summary>
       Result.Add(LObject);
     end;
   finally

@@ -278,27 +278,27 @@ function TDMLGeneratorAbstract.GetPropertyValue(AObject: TObject;
 begin
   case AFieldType of
      ftString, ftWideString, ftMemo, ftWideMemo, ftFmtMemo:
-        Result := QuotedStr(AProperty.GetNullableValue(AObject).AsString);
+        Result := QuotedStr(VarToStr(AProperty.GetNullableValue(AObject).AsVariant));
      ftLargeint:
-        Result := IntToStr(AProperty.GetNullableValue(AObject).AsInt64);
+        Result := VarToStr(AProperty.GetNullableValue(AObject).AsVariant);
      ftInteger, ftWord, ftSmallint:
-        Result := IntToStr(AProperty.GetNullableValue(AObject).AsInteger);
+        Result := VarToStr(AProperty.GetNullableValue(AObject).AsVariant);
      ftVariant:
         Result := VarToStr(AProperty.GetNullableValue(AObject).AsVariant);
      ftDateTime, ftDate:
         Result := QuotedStr(FormatDateTime(FDateFormat,
-                                           AProperty.GetNullableValue(AObject).AsExtended));
+                             VarToDateTime(AProperty.GetNullableValue(AObject).AsVariant)));
      ftTime, ftTimeStamp, ftOraTimeStamp:
         Result := QuotedStr(FormatDateTime(FTimeFormat,
-                                           AProperty.GetNullableValue(AObject).AsExtended));
+                             VarToDateTime(AProperty.GetNullableValue(AObject).AsVariant)));
      ftCurrency, ftBCD, ftFMTBcd:
        begin
-         Result := CurrToStr(AProperty.GetNullableValue(AObject).AsCurrency);
+         Result := VarToStr(AProperty.GetNullableValue(AObject).AsVariant);
          Result := ReplaceStr(Result, ',', '.');
        end;
      ftFloat:
        begin
-         Result := FloatToStr(AProperty.GetNullableValue(AObject).AsExtended);
+         Result := VarToStr(AProperty.GetNullableValue(AObject).AsVariant);
          Result := ReplaceStr(Result, ',', '.');
        end;
      ftBlob, ftGraphic, ftOraBlob, ftOraClob:

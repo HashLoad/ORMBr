@@ -184,25 +184,33 @@ end;
 procedure TDataSetAdapter<M>.OpenDataSetChilds;
 var
   LDataSetChild: TDataSetBaseAdapter<M>;
+  LSQL: String;
 begin
   inherited;
   if FOrmDataSet.Active then
   begin
     if FOrmDataSet.RecordCount > 0 then
     begin
-      /// <summary> Se Count > 0, identifica-se que é o objeto é o Master </summary>
+      /// <summary>
+      /// Se Count > 0, identifica-se que é o objeto é o Master
+      /// </summary>
       if FMasterObject.Count > 0 then
       begin
+        /// <summary>
+        /// Popula o objeto com o registro atual do dataset Master para filtar
+        /// os filhos com os valores das chaves.
+        /// </summary>
+        TBindObject
+          .GetInstance
+            .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
         for LDataSetChild in FMasterObject.Values do
         begin
-          /// <summary> Popula o Objeto com o registro atual do Master </summary>
-          TBindObject
-            .GetInstance
-              .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
-          /// <summary> Monta o comando SQL para abrir registros filhos </summary>
-          LDataSetChild.OpenSQLInternal(LDataSetChild
-                                          .FSession
-                                            .SelectAssociation(FCurrentInternal));
+          LSQL := LDataSetChild.FSession.SelectAssociation(FCurrentInternal);
+          /// <summary>
+          /// Monta o comando SQL para abrir registros filhos
+          /// </summary>
+          if Length(LSQL) > 0 then
+            LDataSetChild.OpenSQLInternal(LSQL);
         end;
       end;
     end;
@@ -212,6 +220,7 @@ end;
 procedure TDataSetAdapter<M>.LoadLazy(const AOwner: M);
 var
   LOwnerObject: TDataSetBaseAdapter<M>;
+  LSQL: String;
 begin
   inherited;
   if AOwner <> nil then
@@ -221,15 +230,20 @@ begin
       if not FOrmDataSet.Active then
       begin
         SetMasterObject(AOwner);
-        /// <summary> Popula o Objeto com o registro atual do Master </summary>
         LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
         if LOwnerObject <> nil then
         begin
+          /// <summary>
+          /// Popula o objeto com o registro atual do dataset Master para filtar
+          /// os filhos com os valores das chaves.
+          /// </summary>
           TBindObject
             .GetInstance
               .SetFieldToProperty(LOwnerObject.FOrmDataSet,
                           TObject(LOwnerObject.FCurrentInternal));
-          OpenSQLInternal(FSession.SelectAssociation(LOwnerObject.FCurrentInternal));
+          LSQL := FSession.SelectAssociation(LOwnerObject.FCurrentInternal);
+          if Length(LSQL) > 0 then
+            OpenSQLInternal(LSQL);
         end;
       end;
     end;
@@ -269,6 +283,7 @@ var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
+  LSQL: String;
 begin
   inherited;
   if FOrmDataSet.Active then
@@ -292,13 +307,16 @@ begin
               LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
               if LDataSetChild <> nil then
               begin
-                /// <summary> Popula o Objeto com o registro atual do Master </summary>
+                /// <summary>
+                /// Popula o objeto com o registro atual do dataset Master para filtar
+                /// os filhos com os valores das chaves.
+                /// </summary>
                 TBindObject
                   .GetInstance
                     .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
-                LDataSetChild.OpenSQLInternal(LDataSetChild
-                                                .FSession
-                                                  .SelectAssociation(FCurrentInternal));
+                LSQL := LDataSetChild.FSession.SelectAssociation(FCurrentInternal);
+                if Length(LSQL) > 0 then
+                  LDataSetChild.OpenSQLInternal(LSQL);
               end;
             end;
           end;

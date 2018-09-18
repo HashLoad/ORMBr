@@ -931,18 +931,24 @@ begin
 end;
 
 procedure TDataSetBaseAdapter<M>.SetMasterObject(const AValue: TObject);
+var
+  LOwnerObject: TDataSetBaseAdapter<M>;
 begin
   if FOwnerMasterObject <> AValue then
   begin
     if FOwnerMasterObject <> nil then
-      if TDataSetBaseAdapter<M>(FOwnerMasterObject).FMasterObject.ContainsKey(FCurrentInternal.ClassName) then
-        TDataSetBaseAdapter<M>(FOwnerMasterObject).FMasterObject.Remove(FCurrentInternal.ClassName);
-
+    begin
+      LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
+      if LOwnerObject.FMasterObject.ContainsKey(FCurrentInternal.ClassName) then
+      begin
+        LOwnerObject.FMasterObject.Remove(FCurrentInternal.ClassName);
+        LOwnerObject.FMasterObject.TrimExcess;
+      end;
+    end;
     if AValue <> nil then
       TDataSetBaseAdapter<M>(AValue).FMasterObject.Add(FCurrentInternal.ClassName, Self);
 
     FOwnerMasterObject := AValue;
-    TDataSetBaseAdapter<M>(FOwnerMasterObject).FMasterObject.TrimExcess;
   end;
 end;
 

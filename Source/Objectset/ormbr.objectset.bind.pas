@@ -117,15 +117,15 @@ begin
   for LColumn in LColumns do
   begin
     if LColumn.PropertyRtti.IsWritable then
-	begin
+    begin
       try
         SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
-      except 
-	  on E: Exception do
-        raise Exception.Create('Problem when binding column "' +
-                               LColumn.ColumnName + '" - ' + E.Message);
+      except
+        on E: Exception do
+          raise Exception.Create('Problem when binding column "' +
+                                 LColumn.ColumnName + '" - ' + E.Message);
       end;
-	end;
+    end;
   end;
 end;
 
