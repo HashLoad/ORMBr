@@ -1,0 +1,71 @@
+unit orion.model.emailcontato;
+
+interface
+
+uses
+  DB, 
+  Classes, 
+  SysUtils, 
+  Generics.Collections, 
+
+  /// orm 
+  ormbr.types.blob,
+  ormbr.types.lazy, 
+  ormbr.types.mapping, 
+  ormbr.types.nullable, 
+  ormbr.mapping.classes, 
+  ormbr.mapping.register, 
+  ormbr.mapping.attributes; 
+
+type
+  [Entity]
+  [Table('emailcontato', '')]
+  [PrimaryKey('id', NotInc, NoSort, False, 'Chave primária')]
+  Temailcontato = class
+  private
+    { Private declarations } 
+    Fid: Nullable<Integer>;
+    Ftipo: Nullable<String>;
+    Fendereco: Nullable<String>;
+    Fcontato_id: Nullable<Integer>;
+
+  public 
+    { Public declarations } 
+    constructor Create;
+    destructor Destroy; override;
+    [Column('id', ftInteger)]
+    [Dictionary('id', 'Mensagem de validação', '', '', '', taCenter)]
+    property id: Nullable<Integer> read Fid write Fid;
+
+    [Column('tipo', ftString, 1)]
+    [Dictionary('tipo', 'Mensagem de validação', '', '', '', taLeftJustify)]
+    property tipo: Nullable<String> read Ftipo write Ftipo;
+
+    [Column('endereco', ftString, 150)]
+    [Dictionary('endereco', 'Mensagem de validação', '', '', '', taLeftJustify)]
+    property endereco: Nullable<String> read Fendereco write Fendereco;
+
+    [Column('contato_id', ftInteger)]
+    [ForeignKey('fk_emailcontato_contato', 'contato_id', 'contato', 'id', Cascade, Cascade)]
+    [Dictionary('contato_id', 'Mensagem de validação', '', '', '', taCenter)]
+    property contato_id: Nullable<Integer> read Fcontato_id write Fcontato_id;
+  end;
+
+implementation
+
+constructor Temailcontato.Create;
+begin
+
+end;
+
+destructor Temailcontato.Destroy;
+begin
+
+  inherited;
+end;
+
+initialization
+
+  TRegisterClass.RegisterEntity(Temailcontato)
+
+end.
