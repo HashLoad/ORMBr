@@ -190,19 +190,28 @@ begin
   begin
     if FOrmDataSet.RecordCount > 0 then
     begin
-      /// <summary>
-      /// Se Count > 0, identifica-se que é o objeto é o Master
-      /// </summary>
+      /// <summary> Se Count > 0, identifica-se que é o objeto é o Master </summary>
       if FMasterObject.Count > 0 then
       begin
         for LDataSetChild in FMasterObject.Values do
-          LDataSetChild.OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
+        begin
+          /// <summary> Popula o Objeto com o registro atual do Master </summary>
+          TBindObject
+            .GetInstance
+              .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
+          /// <summary> Monta o comando SQL para abrir registros filhos </summary>
+          LDataSetChild.OpenSQLInternal(LDataSetChild
+                                          .FSession
+                                            .SelectAssociation(FCurrentInternal));
+        end;
       end;
     end;
   end;
 end;
 
 procedure TDataSetAdapter<M>.LoadLazy(const AOwner: M);
+var
+  LOwnerObject: TDataSetBaseAdapter<M>;
 begin
   inherited;
   if AOwner <> nil then
@@ -212,7 +221,16 @@ begin
       if not FOrmDataSet.Active then
       begin
         SetMasterObject(AOwner);
-        OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
+        /// <summary> Popula o Objeto com o registro atual do Master </summary>
+        LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
+        if LOwnerObject <> nil then
+        begin
+          TBindObject
+            .GetInstance
+              .SetFieldToProperty(LOwnerObject.FOrmDataSet,
+                          TObject(LOwnerObject.FCurrentInternal));
+          OpenSQLInternal(FSession.SelectAssociation(LOwnerObject.FCurrentInternal));
+        end;
       end;
     end;
   end
@@ -273,7 +291,15 @@ begin
             begin
               LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
               if LDataSetChild <> nil then
-                LDataSetChild.OpenSQLInternal( FSession.SelectAssociation(FCurrentInternal) );
+              begin
+                /// <summary> Popula o Objeto com o registro atual do Master </summary>
+                TBindObject
+                  .GetInstance
+                    .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
+                LDataSetChild.OpenSQLInternal(LDataSetChild
+                                                .FSession
+                                                  .SelectAssociation(FCurrentInternal));
+              end;
             end;
           end;
         end;

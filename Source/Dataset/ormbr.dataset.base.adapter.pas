@@ -942,6 +942,7 @@ begin
       TDataSetBaseAdapter<M>(AValue).FMasterObject.Add(FCurrentInternal.ClassName, Self);
 
     FOwnerMasterObject := AValue;
+    TDataSetBaseAdapter<M>(FOwnerMasterObject).FMasterObject.TrimExcess;
   end;
 end;
 
