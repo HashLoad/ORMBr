@@ -84,6 +84,7 @@ type
 
   TDriverResultSetBase = class(TInterfacedObject, IDBResultSet)
   private
+    FField: TAsField;
     function GetFetchingAll: Boolean;
     procedure SetFetchingAll(const Value: Boolean);
   protected
@@ -102,23 +103,21 @@ type
     function GetFieldType(AFieldName: string): TFieldType; overload; virtual; abstract;
     function GetField(AFieldName: string): TField; virtual; abstract;
     function RecordCount: Integer; virtual;
-    function FieldByName(AFieldName: string): IDBResultSet; virtual;
-    function AsString: string; virtual;
-    function AsInteger: Integer; virtual;
-    function AsFloat: Double; virtual;
-    function AsCurrency: Currency; virtual;
-    function AsExtended: Extended; virtual;
-    function AsDateTime: TDateTime; virtual;
-    function AsVariant: Variant; virtual;
-    function AsBoolean: Boolean; virtual;
-    function Value: Variant; virtual;
+    function FieldByName(AFieldName: string): TAsField;{ IDBResultSet; }virtual;
+//    function AsString: string; virtual;
+//    function AsInteger: Integer; virtual;
+//    function AsFloat: Double; virtual;
+//    function AsCurrency: Currency; virtual;
+//    function AsExtended: Extended; virtual;
+//    function AsDateTime: TDateTime; virtual;
+//    function AsVariant: Variant; virtual;
+//    function AsBoolean: Boolean; virtual;
+//    function Value: Variant; virtual;
     function DataSet: TDataSet; virtual; abstract;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
   TDriverResultSet<T: TDataSet> = class abstract(TDriverResultSetBase)
-  private
-//    function GetDataSet: T;
   protected
     FDataSet: T;
   public
@@ -126,7 +125,6 @@ type
     destructor Destroy; override;
     procedure Close; override;
     function FieldDefs: TFieldDefs; override;
-//    property DataSet: T read GetDataSet;
     function DataSet: TDataSet; override;
   end;
 
@@ -140,7 +138,7 @@ uses
 constructor TDriverResultSet<T>.Create(ADataSet: T);
 begin
   /// <summary>
-  /// Guarda o RecordCount do último SELECT executado no IDBResultSet
+  /// Guarda RecordCount do último SELECT executado no IDBResultSet
   /// </summary>
   try
   FRecordCount := FDataSet.RecordCount;
@@ -170,219 +168,217 @@ begin
   Result := FDataSet;
 end;
 
-//function TDriverResultSet<T>.GetDataSet: T;
-//begin
-//  Result := FDataSet;
-//end;
-
 { TDriverResultSetBase }
 
-function TDriverResultSetBase.AsBoolean: Boolean;
-var
-  LResult: Variant;
-begin
-  Result := False;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsBoolean');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := Boolean(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsExtended: Extended;
-var
-  LResult: Variant;
-begin
-  Result := 0;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsExtended');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := Extended(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsCurrency: Currency;
-var
-  LResult: Variant;
-begin
-  Result := 0;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsCurrency');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := Currency(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsDateTime: TDateTime;
-var
-  LResult: Variant;
-begin
-  Result := 0;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsDateTime');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := TDateTime(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsFloat: Double;
-var
-  LResult: Variant;
-begin
-  Result := 0;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsFloat');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := Double(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsInteger: Integer;
-var
-  LResult: Variant;
-begin
-  Result := 0;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsInteger');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := Integer(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsString: String;
-var
-  LResult: Variant;
-begin
-  Result := '';
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsString');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := String(LResult);
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
-
-function TDriverResultSetBase.AsVariant: Variant;
-var
-  LResult: Variant;
-begin
-  Result := Null;
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsVariant');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit;
-  try
-    try
-      Result := LResult;
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
+//function TDriverResultSetBase.AsBoolean: Boolean;
+//var
+//  LResult: Variant;
+//begin
+//  Result := False;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsBoolean');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := Boolean(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsExtended: Extended;
+//var
+//  LResult: Variant;
+//begin
+//  Result := 0;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsExtended');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := Extended(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsCurrency: Currency;
+//var
+//  LResult: Variant;
+//begin
+//  Result := 0;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsCurrency');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := Currency(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsDateTime: TDateTime;
+//var
+//  LResult: Variant;
+//begin
+//  Result := 0;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsDateTime');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := TDateTime(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsFloat: Double;
+//var
+//  LResult: Variant;
+//begin
+//  Result := 0;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsFloat');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := Double(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsInteger: Integer;
+//var
+//  LResult: Variant;
+//begin
+//  Result := 0;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsInteger');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := Integer(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsString: String;
+//var
+//  LResult: Variant;
+//begin
+//  Result := '';
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsString');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := String(LResult);
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
+//
+//function TDriverResultSetBase.AsVariant: Variant;
+//var
+//  LResult: Variant;
+//begin
+//  Result := Null;
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().AsVariant');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit;
+//  try
+//    try
+//      Result := LResult;
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
 
 constructor TDriverResultSetBase.Create;
 begin
-
+  FField := TAsField.Create(Self);
 end;
 
 destructor TDriverResultSetBase.Destroy;
 begin
+  FField.Free;
   inherited;
 end;
 
-function TDriverResultSetBase.FieldByName(AFieldName: string): IDBResultSet;
+function TDriverResultSetBase.FieldByName(AFieldName: string): TAsField; //IDBResultSet;
 begin
-  FFieldNameInternal := AFieldName;
-  Result := Self;
+//  FFieldNameInternal := AFieldName;
+//  Result := Self;
+  FField.FAsFieldName := AFieldName;
+  Result := FField;
 end;
 
 function TDriverResultSetBase.RecordCount: Integer;
@@ -390,28 +386,28 @@ begin
   Result := FRecordCount;
 end;
 
-function TDriverResultSetBase.Value: Variant;
-var
-  LResult: Variant;
-begin
-  if Length(FFieldNameInternal) = 0 then
-    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().Value');
-  LResult := GetFieldValue(FFieldNameInternal);
-  if LResult = Null then
-    Exit(Null);
-  try
-    try
-      Result := LResult;
-    except
-      on E: Exception do
-      begin
-        raise Exception.Create('Error de conversão de tipo!');
-      end;
-    end;
-  finally
-    FFieldNameInternal := '';
-  end;
-end;
+//function TDriverResultSetBase.Value: Variant;
+//var
+//  LResult: Variant;
+//begin
+//  if Length(FFieldNameInternal) = 0 then
+//    raise Exception.Create('Este método só pode ser usado em sequência ao método FieldByName().Value');
+//  LResult := GetFieldValue(FFieldNameInternal);
+//  if LResult = Null then
+//    Exit(Null);
+//  try
+//    try
+//      Result := LResult;
+//    except
+//      on E: Exception do
+//      begin
+//        raise Exception.Create('Error de conversão de tipo!');
+//      end;
+//    end;
+//  finally
+//    FFieldNameInternal := '';
+//  end;
+//end;
 
 function TDriverResultSetBase.GetFetchingAll: Boolean;
 begin
