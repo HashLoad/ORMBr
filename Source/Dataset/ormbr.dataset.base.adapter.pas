@@ -90,6 +90,10 @@ type
     FAutoNextPacket: Boolean;
     FCheckedFieldEvents: Boolean;
     FExplorer: IMappingExplorerStrategy;
+    procedure DoBeforeApplyUpdates(DataSet: TDataSet); overload; virtual; abstract;
+    procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); overload; virtual; abstract;
+    procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
+    procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
     procedure DoBeforeScroll(DataSet: TDataSet); virtual;
     procedure DoAfterScroll(DataSet: TDataSet); virtual;
     procedure DoBeforeOpen(DataSet: TDataSet); virtual;
@@ -620,12 +624,13 @@ begin
   if Assigned(FDataSetEvents.BeforeInsert) then
     FDataSetEvents.BeforeInsert(DataSet);
 
-  /// <summary> Checa o Attributo "FieldEvents" nos TFields somente uma vez </summary>
+  /// <summary>
+  /// Checa o Attributo "FieldEvents()" nos TFields somente uma vez
+  /// </summary>
   if not FCheckedFieldEvents then
   begin
     /// ForeingnKey da Child
-    LFieldEvents := FExplorer
-                      .GetMappingFieldEvents(FCurrentInternal.ClassType);
+    LFieldEvents := FExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
     if LFieldEvents <> nil then
       ValideFieldEvents(LFieldEvents);
 

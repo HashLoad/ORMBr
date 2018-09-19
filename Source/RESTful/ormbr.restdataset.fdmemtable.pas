@@ -434,11 +434,10 @@ begin
     ApplyInternal(MaxErros);
     DoAfterApplyUpdates(FOrmDataSet, MaxErros);
   finally
-    /// <summary>
-    /// Lista os fields alterados a lista para novas alterações
-    /// </summary>
-    FSession.ModifiedFields.Items[M.ClassName].Clear;
+    FSession.ModifiedFields.Clear;
+    FSession.ModifiedFields.TrimExcess;
     FSession.DeleteList.Clear;
+    FSession.DeleteList.TrimExcess;
   end;
 end;
 

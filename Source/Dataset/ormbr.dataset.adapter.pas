@@ -185,6 +185,7 @@ procedure TDataSetAdapter<M>.OpenDataSetChilds;
 var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LSQL: String;
+  LObject: TObject;
 begin
   inherited;
   if FOrmDataSet.Active then
@@ -200,17 +201,20 @@ begin
         /// Popula o objeto com o registro atual do dataset Master para filtar
         /// os filhos com os valores das chaves.
         /// </summary>
-        TBindObject
-          .GetInstance
-            .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
-        for LDataSetChild in FMasterObject.Values do
-        begin
-          LSQL := LDataSetChild.FSession.SelectAssociation(FCurrentInternal);
-          /// <summary>
-          /// Monta o comando SQL para abrir registros filhos
-          /// </summary>
-          if Length(LSQL) > 0 then
-            LDataSetChild.OpenSQLInternal(LSQL);
+        LObject := M.Create;
+        try
+          TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+          for LDataSetChild in FMasterObject.Values do
+          begin
+            LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
+            /// <summary>
+            /// Monta o comando SQL para abrir registros filhos
+            /// </summary>
+            if Length(LSQL) > 0 then
+              LDataSetChild.OpenSQLInternal(LSQL);
+          end;
+        finally
+          LObject.Free;
         end;
       end;
     end;
@@ -284,6 +288,7 @@ var
   LAssociation: TAssociationMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
   LSQL: String;
+  LObject: TObject;
 begin
   inherited;
   if FOrmDataSet.Active then
@@ -311,12 +316,15 @@ begin
                 /// Popula o objeto com o registro atual do dataset Master para filtar
                 /// os filhos com os valores das chaves.
                 /// </summary>
-                TBindObject
-                  .GetInstance
-                    .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
-                LSQL := LDataSetChild.FSession.SelectAssociation(FCurrentInternal);
-                if Length(LSQL) > 0 then
-                  LDataSetChild.OpenSQLInternal(LSQL);
+                LObject := M.Create;
+                try
+                  TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+                  LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
+                  if Length(LSQL) > 0 then
+                    LDataSetChild.OpenSQLInternal(LSQL);
+                finally
+                  LObject.Free;
+                end;
               end;
             end;
           end;

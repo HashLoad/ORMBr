@@ -79,10 +79,12 @@ type
   private
     FOrmDataSet: TFDMemTable;
     FMemTableEvents: TFDMemTableEvents;
-    procedure DoBeforeApplyUpdates(DataSet: TFDDataSet);
-    procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
     function GetIndexFieldNames(AOrderBy: String): String;
+    procedure DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
+    procedure DoAfterApplyUpdatesInternal(DataSet: TFDDataSet; AErrors: Integer);
   protected
+    procedure DoBeforeApplyUpdates(DataSet: TDataSet); override;
+    procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); override;
     procedure EmptyDataSetChilds; override;
     procedure OpenIDInternal(const AID: Variant); override;
     procedure OpenSQLInternal(const ASQL: string); override;
@@ -105,6 +107,7 @@ implementation
 
 uses
   ormbr.dataset.bind,
+  ormbr.objectset.bind,
   ormbr.rtti.helper,
   ormbr.objects.helper,
   ormbr.dataset.fields,
@@ -151,16 +154,27 @@ begin
   inherited;
 end;
 
-procedure TFDMemTableAdapter<M>.DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+procedure TFDMemTableAdapter<M>.DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
 begin
-  if Assigned(FMemTableEvents.AfterApplyUpdates) then
-     FMemTableEvents.AfterApplyUpdates(DataSet, AErrors);
+  DoBeforeApplyUpdates(DataSet);
 end;
 
-procedure TFDMemTableAdapter<M>.DoBeforeApplyUpdates(DataSet: TFDDataSet);
+procedure TFDMemTableAdapter<M>.DoAfterApplyUpdatesInternal(DataSet: TFDDataSet;
+  AErrors: Integer);
+begin
+  DoAfterApplyUpdates(DataSet, AErrors);
+end;
+
+procedure TFDMemTableAdapter<M>.DoBeforeApplyUpdates(DataSet: TDataSet);
 begin
   if Assigned(FMemTableEvents.BeforeApplyUpdates) then
-     FMemTableEvents.BeforeApplyUpdates(DataSet);
+    FMemTableEvents.BeforeApplyUpdates(TFDDataSet(DataSet));
+end;
+
+procedure TFDMemTableAdapter<M>.DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer);
+begin
+  if Assigned(FMemTableEvents.AfterApplyUpdates) then
+    FMemTableEvents.AfterApplyUpdates(TFDDataSet(DataSet), AErrors);
 end;
 
 procedure TFDMemTableAdapter<M>.EmptyDataSet;
@@ -226,6 +240,7 @@ end;
 
 procedure TFDMemTableAdapter<M>.ApplyInternal(const MaxErros: Integer);
 var
+  LDetail: TDataSetBaseAdapter<M>;
   LRecnoBook: TBookmark;
 begin
   LRecnoBook := FOrmDataSet.GetBookmark;
@@ -236,6 +251,20 @@ begin
     ApplyInserter(MaxErros);
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
+    /// <summary>
+    /// Executa o ApplyInternal de toda a hierarquia de dataset filho.
+    /// </summary>
+    if FMasterObject.Count > 0 then
+    begin
+      for LDetail in FMasterObject.Values do
+      begin
+        /// Before Apply
+        LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet);
+        LDetail.ApplyInternal(MaxErros);
+        /// After Apply
+        LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, MaxErros);
+      end;
+    end;
   finally
     FOrmDataSet.GotoBookmark(LRecnoBook);
     FOrmDataSet.FreeBookmark(LRecnoBook);
@@ -302,6 +331,7 @@ end;
 procedure TFDMemTableAdapter<M>.ApplyUpdater(const MaxErros: Integer);
 var
   LProperty: TRttiProperty;
+  LObject: TObject;
 begin
   inherited;
   /// Filtar somente os registros modificados
@@ -318,7 +348,13 @@ begin
          if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
             (FConnection.GetDriverName in [dnMongoDB]) then
          begin
-           FSession.Update(Current, M.ClassName);
+           LObject := M.Create;
+           try
+             TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+             FSession.Update(LObject, M.ClassName);
+           finally
+             LObject.Free;
+           end;
          end;
          FOrmDataSet.Edit;
          FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
@@ -333,7 +369,6 @@ end;
 
 procedure TFDMemTableAdapter<M>.ApplyUpdates(const MaxErros: Integer);
 var
-  LDetail: TDataSetBaseAdapter<M>;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
 begin
@@ -352,9 +387,6 @@ begin
     DoBeforeApplyUpdates(FOrmDataSet);
     try
       ApplyInternal(MaxErros);
-      /// Apply Details
-      for LDetail in FMasterObject.Values do
-        LDetail.ApplyInternal(MaxErros);
       /// After Apply
       DoAfterApplyUpdates(FOrmDataSet, MaxErros);
       if not LInTransaction then
@@ -365,8 +397,10 @@ begin
       raise;
     end;
   finally
-    FSession.ModifiedFields.Items[M.ClassName].Clear;
+    FSession.ModifiedFields.Clear;
+    FSession.ModifiedFields.TrimExcess;
     FSession.DeleteList.Clear;
+    FSession.DeleteList.TrimExcess;
     if not LIsConnected then
       FConnection.Disconnect;
   end;
@@ -485,8 +519,8 @@ end;
 procedure TFDMemTableAdapter<M>.SetDataSetEvents;
 begin
   inherited;
-  FOrmDataSet.BeforeApplyUpdates := DoBeforeApplyUpdates;
-  FOrmDataSet.AfterApplyUpdates  := DoAfterApplyUpdates;
+  FOrmDataSet.BeforeApplyUpdates := DoBeforeApplyUpdatesInternal;
+  FOrmDataSet.AfterApplyUpdates  := DoAfterApplyUpdatesInternal;
 end;
 
 end.

@@ -239,13 +239,9 @@ begin
     if not LInTransaction then
       FConnection.StartTransaction;
     try
-      /// <summary>
-      /// Executa comando update em cascade
-      /// </summary>
+      /// <summary> Executa comando update em cascade </summary>
       CascadeActionsExecute(AObject, CascadeUpdate);
-      /// <summary>
-      /// Gera a lista com as propriedades que foram alteradas
-      /// </summary>
+      /// <summary> Gera a lista com as propriedades que foram alteradas </summary>
       if TObject(AObject).GetType(LRttiType) then
       begin
         LKey := GenerateKey(AObject);
@@ -255,6 +251,7 @@ begin
           FSession.ModifyFieldsCompare(LKey, AObject, LObject);
           FSession.Update(AObject, LKey);
           FObjectState.Remove(LKey);
+          FObjectState.TrimExcess;
         end;
         /// <summary>
         /// Remove o item excluído em Update Mestre-Detalhe
@@ -276,6 +273,13 @@ begin
     if not LIsConnected then
       FConnection.Disconnect;
     FObjectState.Clear;
+    /// <summary>
+    /// Após executar o comando SQL Update, limpa a lista de campos alterados.
+    /// </summary>
+    FSession.ModifiedFields.Clear;
+    FSession.ModifiedFields.TrimExcess;
+    FSession.DeleteList.Clear;
+    FSession.DeleteList.TrimExcess;
   end;
 end;
 

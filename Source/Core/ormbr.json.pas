@@ -511,7 +511,6 @@ begin
     for LFor := 0 to LDoc.Count - 1 do
     begin
       LItem := T.Create;
-      LItem.MethodCall('Create', []);
       if not JSONVariantData(LDoc.FValues[LFor]).ToObject(LItem) then
       begin
         FreeAndNil(Result);

@@ -427,27 +427,27 @@ end;
 procedure TRESTDataSetAdapter<M>.PopularDataSetOneToMany(
   const AObjectList: TObjectList<TObject>);
 var
-  LDataSetChild: TDataSetBaseAdapter<M>;
+  LDataSetChild: TRESTDataSetAdapter<M>;
   LObjectChild: TObject;
 begin
-  FOrmDataSet.DisableControls;
-  DisableDataSetEvents;
-  try
-    for LObjectChild in AObjectList do
+  for LObjectChild in AObjectList do
+  begin
+    if FMasterObject.ContainsKey(LObjectChild.ClassName) then
     begin
-      if FMasterObject.ContainsKey(LObjectChild.ClassName) then
-      begin
-        LDataSetChild := FMasterObject.Items[LObjectChild.ClassName];
-        /// <summary>
-        /// Popular classe ralacionada através do atributo Association() e todos
-        /// as suas classes filhas, caso exista.
-        /// </summary>
-        TRESTDataSetAdapter<M>(LDataSetChild).PopularDataSet(LObjectChild);
+      LDataSetChild := TRESTDataSetAdapter<M>(FMasterObject.Items[LObjectChild.ClassName]);
+      /// <summary>
+      /// Popular classe ralacionada através do atributo Association() e todos
+      /// as suas classes filhas, caso exista.
+      /// </summary>
+      LDataSetChild.FOrmDataSet.DisableControls;
+      LDataSetChild.DisableDataSetEvents;
+      try
+        LDataSetChild.PopularDataSet(LObjectChild);
+      finally
+        LDataSetChild.FOrmDataSet.EnableControls;
+        LDataSetChild.EnableDataSetEvents;
       end;
     end;
-  finally
-    FOrmDataSet.EnableControls;
-    EnableDataSetEvents;
   end;
 end;
 

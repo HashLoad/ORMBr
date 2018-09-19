@@ -58,16 +58,7 @@ type
     function GetFieldValue(AFieldIndex: Integer): Variant; overload;
     function GetField(AFieldName: string): TField;
     function GetFieldType(AFieldName: string): TFieldType;
-    function FieldByName(AFieldName: string): TAsField; //IDBResultSet;
-//    function AsString: string;
-//    function AsInteger: Integer;
-//    function AsFloat: Double;
-//    function AsCurrency: Currency;
-//    function AsExtended: Extended;
-//    function AsDateTime: TDateTime;
-//    function AsVariant: Variant;
-//    function AsBoolean: Boolean;
-//    function Value: Variant;
+    function FieldByName(AFieldName: string): TAsField;
     function DataSet: TDataSet;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;

@@ -70,10 +70,10 @@ type
   private
     FOrmDataSet: TClientDataSet;
     FClientDataSetEvents: TClientDataSetEvents;
-    procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
-    procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant);
     function GetIndexFieldNames(AOrderBy: String): String;
   protected
+    procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
+    procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
     procedure EmptyDataSetChilds; override;
     procedure OpenIDInternal(const AID: Variant); override;
     procedure OpenSQLInternal(const ASQL: string); override;
@@ -95,9 +95,10 @@ type
 implementation
 
 uses
+  ormbr.dataset.bind,
+  ormbr.objectset.bind,
   ormbr.objects.helper,
   ormbr.rtti.helper,
-  ormbr.dataset.bind,
   ormbr.dataset.fields,
   ormbr.mapping.explorer;
 
@@ -312,8 +313,9 @@ end;
 
 procedure TClientDataSetAdapter<M>.ApplyInternal(const MaxErros: Integer);
 var
+  LDetail: TDataSetBaseAdapter<M>;
   LRecnoBook: TBookmark;
-  LProperty: TRttiProperty;
+  LOwnerData: OleVariant;
 begin
   LRecnoBook := FOrmDataSet.Bookmark;
   FOrmDataSet.DisableControls;
@@ -322,6 +324,20 @@ begin
     ApplyInserter(MaxErros);
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
+    /// <summary>
+    /// Executa o ApplyInternal de toda a hierarquia de dataset filho.
+    /// </summary>
+    if FMasterObject.Count > 0 then
+    begin
+      for LDetail in FMasterObject.Values do
+      begin
+        /// Before Apply
+        LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
+        LDetail.ApplyInternal(MaxErros);
+        /// After Apply
+        LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
+      end;
+    end;
   finally
     FOrmDataSet.GotoBookmark(LRecnoBook);
     FOrmDataSet.FreeBookmark(LRecnoBook);
@@ -387,6 +403,7 @@ end;
 procedure TClientDataSetAdapter<M>.ApplyUpdater(const MaxErros: Integer);
 var
   LProperty: TRttiProperty;
+  LObject: TObject;
 begin
   inherited;
   /// Filtar somente os registros modificados
@@ -403,7 +420,13 @@ begin
          if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
             (FConnection.GetDriverName in [dnMongoDB]) then
          begin
-           FSession.Update(Current, M.ClassName);
+           LObject := M.Create;
+           try
+             TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+             FSession.Update(LObject, M.ClassName);
+           finally
+             LObject.Free;
+           end;
          end;
          FOrmDataSet.Edit;
          FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
@@ -418,7 +441,6 @@ end;
 
 procedure TClientDataSetAdapter<M>.ApplyUpdates(const MaxErros: Integer);
 var
-  LDetail: TDataSetBaseAdapter<M>;
   LOwnerData: OleVariant;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
@@ -429,7 +451,6 @@ begin
   /// </summary>
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
-
   if not LIsConnected then
     FConnection.Connect;
   try
@@ -439,9 +460,6 @@ begin
     DoBeforeApplyUpdates(FOrmDataSet, LOwnerData);
     try
       ApplyInternal(MaxErros);
-      /// Apply Details
-      for LDetail in FMasterObject.Values do
-        LDetail.ApplyInternal(MaxErros);
       /// After Apply
       DoAfterApplyUpdates(FOrmDataSet, LOwnerData);
       if not LInTransaction then
@@ -452,8 +470,10 @@ begin
       raise;
     end;
   finally
-    FSession.ModifiedFields.Items[M.ClassName].Clear;
+    FSession.ModifiedFields.Clear;
+    FSession.ModifiedFields.TrimExcess;
     FSession.DeleteList.Clear;
+    FSession.DeleteList.TrimExcess;
     if not LIsConnected then
       FConnection.Disconnect;
   end;

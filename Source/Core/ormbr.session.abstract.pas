@@ -269,11 +269,6 @@ end;
 procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: string);
 begin
   FManager.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
-  /// <summary>
-  /// Após executar o comando SQL Update, limpa a lista de campos alterados.
-  /// </summary>
-  if FModifiedFields.ContainsKey(AKey) then
-    FModifiedFields.Items[AKey].Clear;
 end;
 
 end.
