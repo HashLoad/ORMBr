@@ -65,6 +65,10 @@ type
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
+    function NextPacketList: TObjectList<M>; overload; override;
+    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function SelectAssociation(const AObject: TObject): String; override;
   end;
 
@@ -167,6 +171,54 @@ begin
     /// </summary>
     PopularDataSet(LDBResultSet);
   end;
+end;
+
+procedure TSessionDataSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+  begin
+    FPageNext := FPageNext + FPageSize;
+    if FFindWhereUsed then
+      FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+    else
+      FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+  end;
+end;
+
+function TSessionDataSet<M>.NextPacketList: TObjectList<M>;
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+  begin
+    FPageNext := FPageNext + FPageSize;
+    if FFindWhereUsed then
+      Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+    else
+      Result := FManager.NextPacketList(FPageSize, FPageNext);
+  end
+  else
+    Result := nil;
+end;
+
+function TSessionDataSet<M>.NextPacketList(const APageSize,
+  APageNext: Integer): TObjectList<M>;
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+    Result := FManager.NextPacketList(APageSize, APageNext)
+  else
+    Result := nil;
+end;
+
+function TSessionDataSet<M>.NextPacketList(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): TObjectList<M>;
+begin
+  inherited;
+  if not FManager.FetchingRecords then
+    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext)
+  else
+    Result := nil;
 end;
 
 procedure TSessionDataSet<M>.PopularDataSet(const ADBResultSet: IDBResultSet);

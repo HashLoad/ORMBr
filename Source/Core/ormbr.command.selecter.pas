@@ -156,11 +156,12 @@ function TCommandSelecter.GenerateNextPacket(const AClass: TClass; const AWhere,
   AOrderBy: String; const APageSize, APageNext: Integer): string;
 var
   LWhere: String;
+  LCommandSelect: String;
 begin
   LWhere := StringReplace(AWhere,'%', '$', [rfReplaceAll]);
-  FCommandSelect := FGeneratorCommand.GeneratorSelectWhere(AClass, AWhere, AOrderBy, APageSize);
+  LCommandSelect := FGeneratorCommand.GeneratorSelectWhere(AClass, LWhere, AOrderBy, APageSize);
 
-  FCommand := FGeneratorCommand.GeneratorPageNext(FCommandSelect, APageSize, APageNext);
+  FCommand := FGeneratorCommand.GeneratorPageNext(LCommandSelect, APageSize, APageNext);
   FCommand := StringReplace(FCommand, '$', '%', [rfReplaceAll]);
   Result := FCommand;
 end;

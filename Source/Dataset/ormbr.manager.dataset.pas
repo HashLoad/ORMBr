@@ -42,7 +42,8 @@ uses
     {$ELSE}
     ormbr.dataset.fdmemtable,
     {$ENDIF}
-  {$ELSEIF USECLIENTDATASET}
+  {$ENDIF}
+  {$IFDEF USECLIENTDATASET}
   DBClient,
     {$IFDEF DRIVERRESTFUL}
     ormbr.restdataset.clientdataset,
@@ -209,7 +210,8 @@ begin
             {$ENDIF}
           else
             raise Exception.Create('Is not TFDMemTable type');
-        {$ELSEIF USECLIENTDATASET}
+        {$ENDIF}
+        {$IFDEF USECLIENTDATASET}
           if ADataSet is TClientDataSet then
             {$IFDEF DRIVERRESTFUL}
             LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
@@ -218,7 +220,8 @@ begin
             {$ENDIF}
           else
             raise Exception.Create('Is not TClientDataSet type');
-        {$ELSE}
+        {$ENDIF}
+        {$IFNDEF USEMEMDATASET}
           raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
         {$ENDIF}
         /// <summary> Adiciona o container ao repositório </summary>
@@ -247,16 +250,18 @@ begin
         {$ENDIF}
       else
         raise Exception.Create('Is not TFDMemTable type');
-    {$ELSEIF USECLIENTDATASET}
+    {$ENDIF}
+    {$IFDEF USECLIENTDATASET}
       if ADataSet is TClientDataSet then
         {$IFDEF DRIVERRESTFUL}
         LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
         {$ELSE}
-        LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, nil)
+        LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ENDIF}
       else
         raise Exception.Create('Is not TClientDataSet type');
-    {$ELSE}
+    {$ENDIF}
+    {$IFNDEF USEMEMDATASET}
       raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
     {$ENDIF}
     /// <summary> Adiciona o container ao repositório </summary>
