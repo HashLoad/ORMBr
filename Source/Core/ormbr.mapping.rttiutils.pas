@@ -50,8 +50,6 @@ type
     ['{AF40524E-2027-46C3-AAAE-5F4267689CD8}']
     function GetRttiType(AClass: TClass): TRttiType;
     function RunValidade(AClass: TClass): Boolean;
-//    function MethodCall(AObject: TObject; AMethodName: string;
-//      const AParameters: array of TValue): TValue;
     function Clone(AObject: TObject): TObject;
     function CreateObject(ARttiType: TRttiType): TObject;
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
@@ -71,8 +69,6 @@ type
     class function GetInstance: IRttiSingleton;
     function GetRttiType(AClass: TClass): TRttiType;
     function RunValidade(AClass: TClass): Boolean;
-//    function MethodCall(AObject: TObject; AMethodName: string;
-//      const AParameters: array of TValue): TValue;
     function Clone(AObject: TObject): TObject;
     function CreateObject(ARttiType: TRttiType): TObject;
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
@@ -308,9 +304,7 @@ var
   LAttribute: TCustomAttribute;
 begin
   Result := False;
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AClass);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
   for LColumn in LColumns do
   begin
      /// <summary>
@@ -325,25 +319,11 @@ begin
      /// </summary>
      LAttribute := LColumn.PropertyRtti.GetZeroConstraint;
      if LAttribute <> nil then
-        ZeroConstraint(LAttribute)
+        HighestConstraint(LAttribute)
           .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AClass));
   end;
   Result := True;
 end;
-
-//function TRttiSingleton.MethodCall(AObject: TObject; AMethodName: string;
-//  const AParameters: array of TValue): TValue;
-//var
-//  LRttiType: TRttiType;
-//  LMethod: TRttiMethod;
-//begin
-//  LRttiType := GetRttiType(AObject.ClassType);
-//  LMethod   := LRttiType.GetMethod(AMethodName);
-//  if Assigned(LMethod) then
-//     Result := LMethod.Invoke(AObject, AParameters)
-//  else
-//     raise Exception.CreateFmt('Cannot find method "%s" in the object', [AMethodName]);
-//end;
 
 end.
 

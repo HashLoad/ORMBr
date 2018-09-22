@@ -290,6 +290,8 @@ type
     property EnumType: TEnumType read FEnumType;
     property EnumValues: TList<string> read FEnumValues;
   end;
+  /// EnumerationMappingList
+  TEnumerationMappingList = class(TObjectList<TEnumerationMapping>);
 
   /// ViewMapping
   TViewMapping = class(TMappingDescription)

@@ -134,7 +134,6 @@ procedure TForm3.Button6Click(Sender: TObject);
 var
   LMaster: Tmaster;
 begin
-{
   LMaster := oMaster.Current;
   if LMaster.MyEnum = fmsEmitente then
     ShowMessage(oMaster.DataSet.FieldByName('MyEnum').AsString + ' - 0=fmsEmitente')
@@ -148,9 +147,8 @@ begin
   if LMaster.MyEnum = fmsSemFrete then
     ShowMessage(oMaster.DataSet.FieldByName('MyEnum').AsString + ' - 9=fmsSemFrete');
 
-  LMaster.MyEnum := fmsSemFrete;
-  oMaster.Save(LMaster);
-}
+//  LMaster.MyEnum := fmsSemFrete;
+//  oMaster.Save(LMaster);
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);

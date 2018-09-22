@@ -66,6 +66,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -140,10 +141,7 @@
                 <Source>
                     <Source Name="MainSource">ORMBrZeos.dpr</Source>
                 </Source>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="D:\Axial Componentes\REST Dataware\Win32\Debug\RestEasyObjects.bpl">File D:\Axial Componentes\REST Dataware\Win32\Debug\RestEasyObjects.bpl not found</Excluded_Packages>
-                    <Excluded_Packages Name="C:\Users\Public\Documents\Embarcadero\Studio\18.0\Bpl\RESTDriverFD.bpl">File C:\Users\Public\Documents\Embarcadero\Studio\18.0\Bpl\RESTDriverFD.bpl not found</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
                 <Parameters>
                     <Parameters Name="UseLauncher">False</Parameters>
                     <Parameters Name="LoadAllSymbols">True</Parameters>

@@ -57,9 +57,6 @@ type
 
   TRttiPropertyHelper = class helper for TRttiProperty
   private
-//    function GetFieldTypeInternal(ATypeInfo: PTypeInfo): TFieldType;
-//    function TryGetUnderlyingTypeInfo(ATypeInfo: PTypeInfo;
-//      out AUnderlyingTypeInfo: PTypeInfo): Boolean;
     function ResolveNullableValue(AObject: TObject): Boolean;
   public
     function  IsNoUpdate: Boolean;
@@ -79,7 +76,6 @@ type
     function  IsList: Boolean;
     function  GetAssociation: TCustomAttribute;
     function  GetRestriction: TCustomAttribute;
-    function  GetEnumeration: TCustomAttribute;
     function  GetDictionary: TCustomAttribute;
     function  GetCalcField: TCustomAttribute;
     function  GetColumn: TCustomAttribute;
@@ -88,18 +84,18 @@ type
     function  GetNullableValue(AInstance: Pointer): TValue;
     function  GetTypeValue(ARttiType: TRttiType): TRttiType;
     function  GetObjectTheList: TObject;
-//    function  GetFieldType: TFieldType;
     function  GetIndex: Integer;
     function  GetCascadeActions: TCascadeActions;
-    function  GetEnumIntegerValue(AValue: Variant): TValue;
-    function  GetEnumStringValue(AValue: Variant): TValue;
-    function  GetEnumToFieldValue(AInstance: Pointer; AFieldType: TFieldType): TValue;
+    function  GetEnumIntegerValue(const AInstance: TObject; AValue: Variant): TValue;
+    function  GetEnumStringValue(const AInstance: TObject; AValue: Variant): TValue;
+    function  GetEnumToFieldValue(const AInstance: TObject; AFieldType: TFieldType): TValue;
     procedure SetNullableValue(AInstance: Pointer; ATypeInfo: PTypeInfo; AValue: Variant);
   end;
 
 implementation
 
 uses
+  ormbr.core.consts,
   ormbr.mapping.explorer,
   ormbr.types.blob,
   ormbr.objects.helper;
@@ -166,63 +162,82 @@ begin
    Exit(nil);
 end;
 
-function TRttiPropertyHelper.GetEnumeration: TCustomAttribute;
-var
-  LAttribute: TCustomAttribute;
-begin
-   for LAttribute in Self.GetAttributes do
-   begin
-      if LAttribute is Enumeration then // Enumeration
-         Exit(LAttribute);
-   end;
-   Exit(nil);
-end;
-
-function TRttiPropertyHelper.GetEnumIntegerValue(AValue: Variant): TValue;
-begin
-  Result := nil;
-  if TVarData(AValue).VType > varNull then
-    Result := TValue.FromOrdinal(Self.PropertyType.Handle, Integer(AValue));
-end;
-
-function TRttiPropertyHelper.GetEnumStringValue(AValue: Variant): TValue;
+function TRttiPropertyHelper.GetEnumIntegerValue(const AInstance: TObject;
+  AValue: Variant): TValue;
 var
   LEnumeration: TEnumerationMapping;
+  LEnumerationList: TEnumerationMappingList;
   LIndex: Integer;
 begin
   Result := nil;
-  LEnumeration := TMappingExplorer
-                    .GetInstance.GetMappingEnumeration(Self.PropertyType);
-  if LEnumeration <> nil then
+  LEnumerationList := TMappingExplorer
+                        .GetInstance.GetMappingEnumeration(AInstance.ClassType);
+  if LEnumerationList <> nil then
   begin
-   LIndex := LEnumeration.EnumValues.IndexOf(AValue);
-   if LIndex > -1 then
-     Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
+    for LEnumeration in LEnumerationList do
+    begin
+      if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
+      begin
+        LIndex := LEnumeration.EnumValues.IndexOf(AValue);
+        if LIndex > -1 then
+          Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
+      end;
+    end;
   end;
 end;
 
-function TRttiPropertyHelper.GetEnumToFieldValue(AInstance: Pointer;
+function TRttiPropertyHelper.GetEnumStringValue(const AInstance: TObject;
+  AValue: Variant): TValue;
+var
+  LEnumeration: TEnumerationMapping;
+  LEnumerationList: TEnumerationMappingList;
+  LIndex: Integer;
+begin
+  Result := nil;
+  LEnumerationList := TMappingExplorer
+                        .GetInstance.GetMappingEnumeration(AInstance.ClassType);
+  if LEnumerationList <> nil then
+  begin
+    for LEnumeration in LEnumerationList do
+    begin
+      if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
+      begin
+        LIndex := LEnumeration.EnumValues.IndexOf(AValue);
+        if LIndex > -1 then
+          Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
+      end;
+    end;
+  end;
+end;
+
+function TRttiPropertyHelper.GetEnumToFieldValue(const AInstance: TObject;
   AFieldType: TFieldType): TValue;
 var
   LEnumeration: TEnumerationMapping;
+  LEnumerationList: TEnumerationMappingList;
   LValue: TValue;
 begin
-  LEnumeration := TMappingExplorer
-                    .GetInstance.GetMappingEnumeration(Self.PropertyType);
-  if LEnumeration <> nil then
+  LEnumerationList := TMappingExplorer
+                        .GetInstance.GetMappingEnumeration(AInstance.ClassType);
+  if LEnumerationList <> nil then
   begin
     LValue := Self.GetValue(AInstance);
     if LValue.AsOrdinal >= 0 then
     begin
-      case AFieldType of
-        ftFixedChar: Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
-        ftString:    Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
-        ftInteger:   Result := TValue.From<Integer>(Integer(LValue.AsOrdinal));
-        ftBoolean:   Result := TValue.From<Boolean>(Boolean(LValue.AsOrdinal));
-      else
-        raise Exception
-               .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
-      end
+      for LEnumeration in LEnumerationList do
+      begin
+        if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
+        begin
+          case AFieldType of
+            ftFixedChar: Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
+            ftString:    Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
+            ftInteger:   Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
+            ftBoolean:   Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(-1)));
+          else
+            raise Exception.Create(cENUMERATIONSTYPEERROR);
+          end
+        end;
+      end;
     end;
   end;
 end;
@@ -317,7 +332,7 @@ var
 begin
    for LAttribute in Self.GetAttributes do
    begin
-      if LAttribute is ZeroConstraint then // ZeroConstraint
+      if LAttribute is HighestConstraint then // HighestConstraint
          Exit(LAttribute);
    end;
    Exit(nil);
@@ -647,105 +662,6 @@ begin
     else
       Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(TDate(AValue))));
 end;
-
-//function TRttiPropertyHelper.GetFieldType: TFieldType;
-//begin
-//  Result := GetFieldTypeInternal(Self.PropertyType.Handle)
-//end;
-
-//function TRttiPropertyHelper.GetFieldTypeInternal(ATypeInfo: PTypeInfo): TFieldType;
-//var
-//  LTypeInfo: PTypeInfo;
-//begin
-//   Result := ftUnknown;
-//   case ATypeInfo.Kind of
-//     tkInteger, tkSet:
-//     begin
-//       if ATypeInfo = TypeInfo(Word) then
-//          Result := ftWord
-//       else
-//       if ATypeInfo = TypeInfo(SmallInt) then
-//          Result := ftSmallint
-//       else
-//          Result := ftInteger;
-//     end;
-//     tkFloat:
-//     begin
-//       if ATypeInfo = TypeInfo(TDate) then
-//          Result := ftDate
-//       else
-//       if ATypeInfo = TypeInfo(TDateTime) then
-//          Result := ftDateTime
-//       else
-//       if ATypeInfo = TypeInfo(Currency) then
-//          Result := ftCurrency
-//       else
-//       if ATypeInfo = TypeInfo(TTime) then
-//          Result := ftTime
-//       else
-//          Result := ftFloat;
-//     end;
-//     tkString, tkLString, tkChar:
-//        Result := ftString;
-//     tkUString:
-//       Result := ftWideString;
-//     {$IFDEF DELPHI15_UP}
-//     tkWideChar, tkWideString:
-//       Result := ftWideString;
-//     {$ENDIF DELPHI15_UP}
-//     tkVariant, tkArray, tkDynArray:
-//        Result := ftVariant;
-//     tkClass:
-//     begin
-//       if ATypeInfo = TypeInfo(TStringStream) then
-//          Result := ftMemo
-//       else
-//          Result := ftBlob;
-//     end;
-//     tkRecord:
-//     begin
-//       if Self.IsNullable then
-//       begin
-//          TryGetUnderlyingTypeInfo(ATypeInfo, LTypeInfo);
-//          Result := GetFieldTypeInternal(LTypeInfo);
-//       end
-//       else
-//       if Self.IsBlob then
-//         Result := ftBlob
-//     end;
-//     tkInt64:
-//       Result := ftLargeint;
-//     tkEnumeration:
-//     begin
-//       if ATypeInfo = TypeInfo(Boolean) then
-//          Result := ftBoolean
-//       else
-//          Result := ftInteger;
-//     end;
-//   end;
-//   /// tkShortString, tkAnsiString, tkUnicodeString, tkWString, tkAnsiChar, tkWChar:
-//end;
-
-
-//function TRttiPropertyHelper.TryGetUnderlyingTypeInfo(ATypeInfo: PTypeInfo;
-//  out AUnderlyingTypeInfo: PTypeInfo): Boolean;
-//var
-//  LContext: TRttiContext;
-//  LRttiType: TRttiType;
-//  LValueField: TRttiField;
-//begin
-//  Result := Self.IsNullable;
-//  if Result then
-//  begin
-//    LRttiType := LContext.GetType(ATypeInfo);
-//    LValueField := LRttiType.GetField('FValue');
-//    Result := Assigned(LValueField);
-//    if Result then
-//       AUnderlyingTypeInfo := LValueField.FieldType.Handle
-//    else
-//       AUnderlyingTypeInfo := nil;
-//  end;
-//end;
 
 { TRttiTypeHelper }
 

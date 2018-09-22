@@ -59,7 +59,8 @@ uses
   ormbr.dataset.bind in '..\..\..\Source\Dataset\ormbr.dataset.bind.pas',
   ormbr.dataset.clientdataset in '..\..\..\Source\Dataset\ormbr.dataset.clientdataset.pas',
   ormbr.dataset.events in '..\..\..\Source\Dataset\ormbr.dataset.events.pas',
-  ormbr.dataset.fields in '..\..\..\Source\Dataset\ormbr.dataset.fields.pas';
+  ormbr.dataset.fields in '..\..\..\Source\Dataset\ormbr.dataset.fields.pas',
+  ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas';
 
 {$R *.res}
 

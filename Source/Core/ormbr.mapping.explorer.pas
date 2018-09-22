@@ -66,7 +66,7 @@ type
     FJoinColumnMapping: TDictionary<string, TJoinColumnMappingList>;
     FTriggerMapping: TDictionary<string, TTriggerMappingList>;
     FViewMapping: TDictionary<string, TViewMapping>;
-    FEnumerationMapping: TDictionary<string, TEnumerationMapping>;
+    FEnumerationMapping: TDictionary<string, TEnumerationMappingList>;
     FFieldEventsMapping: TDictionary<string, TFieldEventsMappingList>;
     constructor CreatePrivate;
   protected
@@ -90,7 +90,7 @@ type
     function GetMappingTrigger(const AClass: TClass): TTriggerMappingList; override;
     function GetMappingView(const AClass: TClass): TViewMapping; override;
     function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList; override;
-    function GetMappingEnumeration(const ARttiType: TRttiType): TEnumerationMapping; override;
+    function GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList; override;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
 
@@ -127,7 +127,7 @@ begin
   FTriggerMapping     := TObjectDictionary<string, TTriggerMappingList>.Create([doOwnsValues]);
   FViewMapping        := TObjectDictionary<string, TViewMapping>.Create([doOwnsValues]);
   FFieldEventsMapping := TObjectDictionary<string, TFieldEventsMappingList>.Create([doOwnsValues]);
-  FEnumerationMapping := TObjectDictionary<string, TEnumerationMapping>.Create([doOwnsValues]);
+  FEnumerationMapping := TObjectDictionary<string, TEnumerationMappingList>.Create([doOwnsValues]);
 end;
 
 destructor TMappingExplorer.Destroy;
@@ -230,15 +230,18 @@ begin
     FColumnMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingEnumeration(const ARttiType: TRttiType): TEnumerationMapping;
+function TMappingExplorer.GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList;
+var
+  LRttiType: TRttiType;
 begin
-  if FEnumerationMapping.ContainsKey(ARttiType.Name) then
-     Exit(FEnumerationMapping[ARttiType.Name]);
+  if FEnumerationMapping.ContainsKey(AClass.ClassName) then
+     Exit(FEnumerationMapping[AClass.ClassName]);
 
-  Result := FPopularMapping.PopularEnumeration(ARttiType);
+  LRttiType := TRttiSingleton.GetInstance.GetRttiType(AClass);
+  Result := FPopularMapping.PopularEnumeration(LRttiType);
    /// Add List
   if Result <> nil then
-    FEnumerationMapping.Add(ARttiType.Name, Result);
+    FEnumerationMapping.Add(AClass.ClassName, Result);
 end;
 
 function TMappingExplorer.GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList;

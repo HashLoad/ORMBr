@@ -65,7 +65,7 @@ type
     function PopularTrigger(ARttiType: TRttiType): TTriggerMappingList;
     function PopularView(ARttiType: TRttiType): TViewMapping;
     function PopularFieldEvents(ARttiType: TRttiType): TFieldEventsMappingList;
-    function PopularEnumeration(ARttiType: TRttiType): TEnumerationMapping;
+    function PopularEnumeration(ARttiType: TRttiType): TEnumerationMappingList;
   end;
 
 implementation
@@ -168,18 +168,24 @@ begin
   end;
 end;
 
-function TMappingPopular.PopularEnumeration(ARttiType: TRttiType): TEnumerationMapping;
+function TMappingPopular.PopularEnumeration(ARttiType: TRttiType): TEnumerationMappingList;
 var
+  LProperty: TRttiProperty;
   LAttrib: TCustomAttribute;
 begin
   Result := nil;
-  for LAttrib in ARttiType.GetAttributes do
+  for LProperty in ARttiType.GetProperties do
   begin
-    if LAttrib is Enumeration then // Enumeration
+    for LAttrib in LProperty.GetAttributes do
     begin
-      Result := TEnumerationMapping.Create(ARttiType.AsOrdinal,
-                                           Enumeration(LAttrib).EnumType,
-                                           Enumeration(LAttrib).EnumValues);
+      if LAttrib is Enumeration then // Enumeration
+      begin
+         if Result = nil then
+            Result := TEnumerationMappingList.Create;
+        Result.Add(TEnumerationMapping.Create(LProperty.PropertyType.AsOrdinal,
+                                              Enumeration(LAttrib).EnumType,
+                                              Enumeration(LAttrib).EnumValues));
+      end;
     end;
   end;
 end;

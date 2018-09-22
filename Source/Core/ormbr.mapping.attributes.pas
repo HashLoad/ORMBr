@@ -368,9 +368,11 @@ type
     procedure Validate(AName: string; AValue: TValue);
   end;
 
-  ZeroConstraint = class(TCustomAttribute)
+  HighestConstraint = class(TCustomAttribute)
+  private
+    FValue: Double;
   public
-    constructor Create;
+    constructor Create(AValue: Double);
     procedure Validate(AName: string; AValue: TValue);
   end;
 
@@ -664,14 +666,14 @@ end;
 
 { ZeroConstraint }
 
-constructor ZeroConstraint.Create;
+constructor HighestConstraint.Create(AValue: Double);
 begin
-
+  FValue := AValue;
 end;
 
-procedure ZeroConstraint.Validate(AName: string; AValue: TValue);
+procedure HighestConstraint.Validate(AName: string; AValue: TValue);
 begin
-  if AValue.AsInteger < 0 then
+  if AValue.AsExtended <= FValue then
   begin
      raise EFieldZero.Create(AName);
   end;
