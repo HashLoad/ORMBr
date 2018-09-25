@@ -44,11 +44,11 @@ type
     class constructor Create;
     class destructor Destroy;
     class function ObjectToJsonString(AObject: TObject;
-      AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string;
+      AStoreClassName: Boolean = False): string;
     class function ObjectListToJsonString(AObjectList: TObjectList<TObject>;
-      AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string; overload;
+      AStoreClassName: Boolean = False): string; overload;
     class function ObjectListToJsonString<T: class, constructor>(AObjectList: TObjectList<T>;
-      AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): string; overload;
+      AStoreClassName: Boolean = False): string; overload;
     class function JsonToObject<T: class, constructor>(const AJson: string;
       AOptions: TORMBrJsonOptions = [joDateIsUTC, joDateFormatISO8601]): T; overload;
     class function JsonToObject<T: class>(AObject: T; const AJson: string): Boolean; overload;
@@ -92,14 +92,14 @@ begin
 end;
 
 class function TORMBrJson.ObjectListToJsonString(AObjectList: TObjectList<TObject>;
-  AOptions: TORMBrJsonOptions): string;
+  AStoreClassName: Boolean): string;
 var
   LFor: Integer;
 begin
   Result := '[';
   for LFor := 0 to AObjectList.Count -1 do
   begin
-    Result := Result + ObjectToJsonString(AObjectList.Items[LFor]);
+    Result := Result + ObjectToJsonString(AObjectList.Items[LFor], AStoreClassName);
     if LFor < AObjectList.Count -1 then
       Result := Result + ', ';
   end;
@@ -107,14 +107,14 @@ begin
 end;
 
 class function TORMBrJson.ObjectListToJsonString<T>(AObjectList: TObjectList<T>;
-  AOptions: TORMBrJsonOptions): string;
+  AStoreClassName: Boolean): string;
 var
   LFor: Integer;
 begin
   Result := '[';
   for LFor := 0 to AObjectList.Count -1 do
   begin
-    Result := Result + ObjectToJsonString(T(AObjectList.Items[LFor]));
+    Result := Result + ObjectToJsonString(T(AObjectList.Items[LFor]), AStoreClassName);
     if LFor < AObjectList.Count -1 then
       Result := Result + ', ';
   end;
@@ -122,9 +122,9 @@ begin
 end;
 
 class function TORMBrJson.ObjectToJsonString(AObject: TObject;
-  AOptions: TORMBrJsonOptions): string;
+  AStoreClassName: Boolean): string;
 begin
-  Result := FJSONObject.ObjectToJSON(AObject);
+  Result := FJSONObject.ObjectToJSON(AObject, AStoreClassName);
 end;
 
 class function TORMBrJson.JsonToObjectList<T>(const AJson: string): TObjectList<T>;

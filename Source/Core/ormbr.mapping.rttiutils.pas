@@ -317,7 +317,7 @@ begin
      /// <summary>
      /// Valida se o valor é menor que ZERO
      /// </summary>
-     LAttribute := LColumn.PropertyRtti.GetZeroConstraint;
+     LAttribute := LColumn.PropertyRtti.GetHighestConstraint;
      if LAttribute <> nil then
         HighestConstraint(LAttribute)
           .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AClass));

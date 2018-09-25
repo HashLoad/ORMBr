@@ -470,8 +470,11 @@ begin
       raise;
     end;
   finally
-    FSession.ModifiedFields.Clear;
-    FSession.ModifiedFields.TrimExcess;
+    if FSession.ModifiedFields.ContainsKey(M.ClassName) then
+    begin
+      FSession.ModifiedFields.Items[M.ClassName].Clear;
+      FSession.ModifiedFields.Items[M.ClassName].TrimExcess;
+    end;
     FSession.DeleteList.Clear;
     FSession.DeleteList.TrimExcess;
     if not LIsConnected then

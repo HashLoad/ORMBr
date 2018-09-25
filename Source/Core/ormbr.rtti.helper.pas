@@ -80,7 +80,7 @@ type
     function  GetCalcField: TCustomAttribute;
     function  GetColumn: TCustomAttribute;
     function  GetNotNullConstraint: TCustomAttribute;
-    function  GetZeroConstraint: TCustomAttribute;
+    function  GetHighestConstraint: TCustomAttribute;
     function  GetNullableValue(AInstance: Pointer): TValue;
     function  GetTypeValue(ARttiType: TRttiType): TRttiType;
     function  GetObjectTheList: TObject;
@@ -326,7 +326,7 @@ begin
    Exit(nil);
 end;
 
-function TRttiPropertyHelper.GetZeroConstraint: TCustomAttribute;
+function TRttiPropertyHelper.GetHighestConstraint: TCustomAttribute;
 var
   LAttribute: TCustomAttribute;
 begin

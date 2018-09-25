@@ -214,7 +214,7 @@ begin
         {$IFDEF USECLIENTDATASET}
           if ADataSet is TClientDataSet then
             {$IFDEF DRIVERRESTFUL}
-            LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
+            LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ELSE}
             LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
             {$ENDIF}
@@ -254,7 +254,7 @@ begin
     {$IFDEF USECLIENTDATASET}
       if ADataSet is TClientDataSet then
         {$IFDEF DRIVERRESTFUL}
-        LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(AConnection, ADataSet, LMaster)
+        LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ELSE}
         LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
         {$ENDIF}
