@@ -43,7 +43,6 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 130
     ExplicitWidth = 70
   end
   object Label3: TLabel
@@ -59,7 +58,6 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 260
     ExplicitWidth = 154
   end
   object Label4: TLabel
@@ -75,7 +73,6 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 390
     ExplicitWidth = 179
   end
   object Label5: TLabel
@@ -91,7 +88,6 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 520
     ExplicitWidth = 125
   end
   object DBGrid1: TDBGrid
@@ -117,7 +113,7 @@ object Form1: TForm1
     Height = 90
     Align = alTop
     DataSource = DataSource4
-    TabOrder = 1
+    TabOrder = 3
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -147,7 +143,7 @@ object Form1: TForm1
     Height = 80
     Align = alTop
     DataSource = DataSource2
-    TabOrder = 3
+    TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -160,7 +156,8 @@ object Form1: TForm1
     Width = 107
     Height = 25
     Caption = 'ApplyUpdates'
-    TabOrder = 4
+    TabOrder = 7
+    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 586
@@ -168,7 +165,7 @@ object Form1: TForm1
     Width = 95
     Height = 25
     Caption = 'Monitor SQL'
-    TabOrder = 5
+    TabOrder = 9
     OnClick = Button2Click
   end
   object DBGrid5: TDBGrid
@@ -179,7 +176,7 @@ object Form1: TForm1
     Height = 90
     Align = alTop
     DataSource = DataSource5
-    TabOrder = 6
+    TabOrder = 4
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -195,7 +192,7 @@ object Form1: TForm1
     Align = alTop
     Lines.Strings = (
       'Memo1')
-    TabOrder = 7
+    TabOrder = 6
   end
   object Button3: TButton
     Left = 272
@@ -214,7 +211,7 @@ object Form1: TForm1
     Height = 64
     Align = alTop
     DataSource = DataSource6
-    TabOrder = 9
+    TabOrder = 5
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11

@@ -47,7 +47,9 @@ uses
   orion.model.estado in 'orion.model.estado.pas',
   orion.model.redesocialcontato in 'orion.model.redesocialcontato.pas',
   orion.model.telefonecontato in 'orion.model.telefonecontato.pas',
-  orion.model.usuario in 'orion.model.usuario.pas';
+  orion.model.usuario in 'orion.model.usuario.pas',
+  ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
+  ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas';
 
 {$R *.res}
 

@@ -71,6 +71,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     FConn : IDBConnection;
@@ -91,6 +92,11 @@ uses
   ormbr.json;
 
 {$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  FManager.ApplyUpdates<Tempresa>(0);
+end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
@@ -126,7 +132,7 @@ begin
           .AddAdapter<Tredesocialcontato, Tcontato>(FDMemTable4)
           .AddAdapter<Temailcontato, Tcontato>(FDMemTable5)
           .AddAdapter<Tcidade, Tempresa>(FDMemTable6)
-  .Open<Tempresa>;
+  .OpenWhere<Tempresa>(Format('cnpj = %s',[QuotedStr('10.690.274/0001-03')]));
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
