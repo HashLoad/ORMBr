@@ -85,6 +85,7 @@ type
     function Open<T: class, constructor>(const AID: Integer): TManagerDataSet; overload;
     function Open<T: class, constructor>(const AID: String): TManagerDataSet; overload;
     function OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = ''): TManagerDataSet;
+    function Close<T: class, constructor>: TManagerDataSet;
     function Save<T: class, constructor>(AObject: T): TManagerDataSet;
     function LoadLazy<T: class, constructor>(const AOwner: T): TManagerDataSet;
     function RefreshRecord<T: class, constructor>: TManagerDataSet;
@@ -175,6 +176,12 @@ end;
 function TManagerDataSet.CancelUpdates<T>: TManagerDataSet;
 begin
   Resolver<T>.CancelUpdates;
+  Result := Self;
+end;
+
+function TManagerDataSet.Close<T>: TManagerDataSet;
+begin
+  Resolver<T>.EmptyDataSet;
   Result := Self;
 end;
 
