@@ -49,7 +49,7 @@ type
   IRttiSingleton = interface
     ['{AF40524E-2027-46C3-AAAE-5F4267689CD8}']
     function GetRttiType(AClass: TClass): TRttiType;
-    function RunValidade(AClass: TClass): Boolean;
+    function RunValidade(AObject: TObject): Boolean;
     function Clone(AObject: TObject): TObject;
     function CreateObject(ARttiType: TRttiType): TObject;
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
@@ -68,7 +68,7 @@ type
     destructor Destroy; override;
     class function GetInstance: IRttiSingleton;
     function GetRttiType(AClass: TClass): TRttiType;
-    function RunValidade(AClass: TClass): Boolean;
+    function RunValidade(AObject: TObject): Boolean;
     function Clone(AObject: TObject): TObject;
     function CreateObject(ARttiType: TRttiType): TObject;
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
@@ -297,30 +297,26 @@ begin
    Result := FInstance;
 end;
 
-function TRttiSingleton.RunValidade(AClass: TClass): Boolean;
+function TRttiSingleton.RunValidade(AObject: TObject): Boolean;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
   LAttribute: TCustomAttribute;
 begin
   Result := False;
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-     /// <summary>
-     /// Valida se o valor é NULO
-     /// </summary>
+     /// <summary> Valida se o valor é NULO </summary>
      LAttribute := LColumn.PropertyRtti.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
-         .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AClass));
-     /// <summary>
-     /// Valida se o valor é menor que ZERO
-     /// </summary>
+         .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+     /// <summary> Valida se o valor é menor que ZERO </summary>
      LAttribute := LColumn.PropertyRtti.GetHighestConstraint;
      if LAttribute <> nil then
         HighestConstraint(LAttribute)
-          .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AClass));
+          .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
   end;
   Result := True;
 end;
