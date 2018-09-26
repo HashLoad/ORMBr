@@ -71,7 +71,6 @@ type
     Button2: TButton;
     ZConnection1: TZConnection;
     imgClient_Foto: TImage;
-    Button3: TButton;
     procedure btnOpenClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -82,7 +81,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnUpdateClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
@@ -125,13 +123,6 @@ begin
   TCommandMonitor.GetInstance.Show;
 end;
 
-procedure TForm3.Button3Click(Sender: TObject);
-//var
-//  T: TMyEnum;
-begin
-//  T := oMasterList.Items[8].MyEnum;
-end;
-
 procedure TForm3.btnOpenClick(Sender: TObject);
 begin
   MasterStringGridFill(oMaster.Find);
@@ -147,9 +138,11 @@ begin
   oMaster.Modify(oMasterUpd);
   oMasterUpd.description := edtMaster_Descricao.Text;
   oMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
+  oMasterUpd.MyEnum := fmsSemFrete;
+  oMasterUpd.EnumString := fmsSemFrete;
   //
   oMasterUpd.detail.Add(Tdetail.Create);
-  oMasterUpd.detail.Last.detail_id := 3;
+  oMasterUpd.detail.Last.detail_id := oMasterUpd.detail.Count + 1;
   oMasterUpd.detail.Last.master_id := oMasterUpd.master_id;
   oMasterUpd.detail.Last.lookup_id := 3;
   oMasterUpd.detail.Last.price := 556.88;
@@ -319,13 +312,15 @@ begin
   StringGridMaster.Cells[3, StringGridMaster.RowCount] := DateTimeToStr(AObject.updatedate);
   StringGridMaster.Cells[4, StringGridMaster.RowCount] := IntToStr(AObject.client_id);
   StringGridMaster.Cells[5, StringGridMaster.RowCount] := AObject.client.client_name;
+  StringGridMaster.Cells[6, StringGridMaster.RowCount] := AObject.MyEnum.ToEnumInt;
+  StringGridMaster.Cells[7, StringGridMaster.RowCount] := AObject.EnumString.ToEnumStr;
 end;
 
 procedure TForm3.MasterStringGridDefinitions;
 var
   iFor: Integer;
 begin
-  StringGridMaster.ColCount := 6;
+  StringGridMaster.ColCount := 8;
 
   for iFor := 0 to StringGridMaster.ColCount -1 do
     StringGridMaster.ColWidths[iFor] := 150;
@@ -336,6 +331,8 @@ begin
   StringGridMaster.Cols[3].Text := 'Data Alteração';
   StringGridMaster.Cols[4].Text := 'Cliente ID';
   StringGridMaster.Cols[5].Text := 'Cliente Nome';
+  StringGridMaster.Cols[6].Text := 'Enum Int';
+  StringGridMaster.Cols[7].Text := 'Enum Str';
 end;
 
 procedure TForm3.MasterStringGridFill(AMasterList: TObjectList<Tmaster>; AIndex: Integer);

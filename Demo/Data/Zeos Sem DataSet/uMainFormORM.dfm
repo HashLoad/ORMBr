@@ -98,7 +98,7 @@ object Form3: TForm3
     Top = 6
     Width = 844
     Height = 120
-    ColCount = 6
+    ColCount = 8
     DefaultRowHeight = 20
     FixedCols = 0
     RowCount = 1
@@ -107,6 +107,8 @@ object Form3: TForm3
     TabOrder = 0
     OnSelectCell = StringGridMasterSelectCell
     ColWidths = (
+      64
+      64
       64
       64
       64
@@ -231,15 +233,6 @@ object Form3: TForm3
     Caption = 'Show SQLMonitor'
     TabOrder = 14
     OnClick = Button2Click
-  end
-  object Button3: TButton
-    Left = 542
-    Top = 419
-    Width = 75
-    Height = 25
-    Caption = 'Button3'
-    TabOrder = 15
-    OnClick = Button3Click
   end
   object ZConnection1: TZConnection
     ControlsCodePage = cCP_UTF16
