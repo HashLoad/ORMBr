@@ -197,9 +197,7 @@ begin
         for LColumn in AObject.GetPrimaryKey do
           SetAutoIncValueChilds(AObject, LColumn);
       end;
-      /// <summary>
-      /// Executa comando insert em cascade
-      /// </summary>
+      /// <summary> Executa comando insert em cascade </summary>
       CascadeActionsExecute(AObject, CascadeInsert);
       ///
       if not LInTransaction then

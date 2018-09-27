@@ -86,15 +86,17 @@ var
   LPrimaryKey: TPrimaryKeyMapping;
 begin
   if not Assigned(FDMLCommandInsert) then
-  begin
     FDMLCommandInsert := TDMLCommandInsert.Create;
-    FDMLCommandInsert.Table := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
-    FDMLCommandInsert.Sequence := TMappingExplorer.GetInstance.GetMappingSequence(AObject.ClassType);
-    if FDMLCommandInsert.Sequence <> nil then
-      FDMLCommandInsert.ExistSequence := True
-    else
-      FDMLCommandInsert.ExistSequence := False;
-  end;
+
+  FDMLCommandInsert.Table := TMappingExplorer.GetInstance
+                                             .GetMappingTable(AObject.ClassType);
+  FDMLCommandInsert.Sequence := TMappingExplorer.GetInstance
+                                                .GetMappingSequence(AObject.ClassType);
+  if FDMLCommandInsert.Sequence <> nil then
+    FDMLCommandInsert.ExistSequence := True
+  else
+    FDMLCommandInsert.ExistSequence := False;
+
   FCommand := FGeneratorCommand.GeneratorInsert(AObject, FDMLCommandInsert);
   Result := FCommand;
   FParams.Clear;
@@ -105,9 +107,8 @@ begin
   if LColumns = nil then
     raise Exception.Create('Falta definir o atributo [Column()] nas propriedades da classe [' + AObject.ClassName + ']');
 
-  LPrimaryKey := TMappingExplorer
-                   .GetInstance
-                     .GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetInstance
+                                 .GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.PropertyRtti.IsNullValue(AObject) then

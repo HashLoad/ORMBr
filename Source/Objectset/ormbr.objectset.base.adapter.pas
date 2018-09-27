@@ -243,6 +243,7 @@ end;
 procedure TObjectSetBaseAdapter<M>.OneToManyCascadeActionsExecute(const AObject: TObject;
   const AAssociation: TAssociationMapping; const ACascadeAction: TCascadeAction);
 var
+  LColumn: TColumnMapping;
   LValue: TValue;
   LObjectList: TObjectList<TObject>;
   LObject: TObject;
@@ -258,7 +259,17 @@ begin
     begin
       LObject := LObjectList.Items[LFor];
       if ACascadeAction = CascadeInsert then // Insert
-        FSession.Insert(LObject)
+      begin
+        FSession.Insert(LObject);
+        /// <summary>
+        /// Popula as propriedades de relacionamento com os valores do master
+        /// </summary>
+        if FSession.ExistSequence then
+        begin
+          for LColumn in LObject.GetPrimaryKey do
+            SetAutoIncValueChilds(LObject, LColumn);
+        end;
+      end
       else
       if ACascadeAction = CascadeDelete then // Delete
         FSession.Delete(LObject)
@@ -272,10 +283,13 @@ begin
           FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
           UpdateInternal(LObject);
           FObjectState.Remove(LKey);
+          FObjectState.TrimExcess;
         end
         else
           FSession.Insert(LObject);
       end;
+      /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+      CascadeActionsExecute(LObject, ACascadeAction);
     end;
   end;
 end;
@@ -284,6 +298,7 @@ procedure TObjectSetBaseAdapter<M>.OneToOneCascadeActionsExecute(
   const AObject: TObject; const AAssociation: TAssociationMapping;
   const ACascadeAction: TCascadeAction);
 var
+  LColumn: TColumnMapping;
   LValue: TValue;
   LObject: TObject;
   LObjectKey: TObject;
@@ -294,7 +309,17 @@ begin
   begin
     LObject := LValue.AsObject;
     if ACascadeAction = CascadeInsert then // Insert
-      FSession.Insert(LObject)
+    begin
+      FSession.Insert(LObject);
+      /// <summary>
+      /// Popula as propriedades de relacionamento com os valores do master
+      /// </summary>
+      if FSession.ExistSequence then
+      begin
+        for LColumn in LObject.GetPrimaryKey do
+          SetAutoIncValueChilds(LObject, LColumn);
+      end;
+    end
     else
     if ACascadeAction = CascadeDelete then // Delete
       FSession.Delete(LObject)
@@ -308,10 +333,13 @@ begin
         FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
         UpdateInternal(LObject);
         FObjectState.Remove(LKey);
+        FObjectState.TrimExcess;
       end
       else
         FSession.Insert(LObject);
     end;
+    /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+    CascadeActionsExecute(LObject, ACascadeAction);
   end;
 end;
 
