@@ -246,6 +246,12 @@ begin
           end;
           TFDMemTable(LChild.FOrmDataSet).IndexFieldNames := LIndexFields;
           TFDMemTable(LChild.FOrmDataSet).MasterFields := LFields;
+          /// <summary>
+          /// Filtra os registros filhos associados ao LChild caso ele seja
+          /// master de outros objetos.
+          /// </summary>
+          if LChild.FMasterObject.Count > 0 then
+            TRESTFDMemTableAdapter<M>(LChild).FilterDataSetChilds;
         end;
       end;
     end;

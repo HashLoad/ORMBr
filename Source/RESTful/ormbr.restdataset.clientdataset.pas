@@ -197,10 +197,11 @@ var
   LRttiType: TRttiType;
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
-  LDataSetChild: TDataSetBaseAdapter<M>;
+  LChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
   LFields: string;
   LIndexFields: string;
+  LClassName: String;
 begin
   if FOrmDataSet.Active then
   begin
@@ -214,27 +215,31 @@ begin
         else
           LRttiType := LAssociation.PropertyRtti.PropertyType;
 
-        if FMasterObject.ContainsKey(LRttiType.AsInstance.MetaclassType.ClassName) then
+        LClassName := LRttiType.AsInstance.MetaclassType.ClassName;
+        if FMasterObject.ContainsKey(LClassName) then
         begin
-          LDataSetChild := FMasterObject.Items[LRttiType.AsInstance.MetaclassType.ClassName];
+          LChild := FMasterObject.Items[LClassName];
           LFields := '';
           LIndexFields := '';
-          try
-            TClientDataSet(LDataSetChild.FOrmDataSet).MasterSource := FOrmDataSource;
-            for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+          TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+          for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+          begin
+            LFields := LFields + LAssociation.ColumnsNameRef[LFor];
+            LIndexFields := LIndexFields + LAssociation.ColumnsName[LFor];
+            if LAssociation.ColumnsName.Count -1 > LFor then
             begin
-              LFields := LFields + LAssociation.ColumnsNameRef[LFor];
-              LIndexFields := LIndexFields + LAssociation.ColumnsName[LFor];
-              if LAssociation.ColumnsName.Count -1 > LFor then
-              begin
-                LFields := LFields + '; ';
-                LIndexFields := LIndexFields + '; ';
-              end;
+              LFields := LFields + '; ';
+              LIndexFields := LIndexFields + '; ';
             end;
-            TClientDataSet(LDataSetChild.FOrmDataSet).IndexFieldNames := LIndexFields;
-            TClientDataSet(LDataSetChild.FOrmDataSet).MasterFields := LFields;
-          finally
           end;
+          TClientDataSet(LChild.FOrmDataSet).IndexFieldNames := LIndexFields;
+          TClientDataSet(LChild.FOrmDataSet).MasterFields := LFields;
+          /// <summary>
+          /// Filtra os registros filhos associados ao LChild caso ele seja
+          /// master de outros objetos.
+          /// </summary>
+          if LChild.FMasterObject.Count > 0 then
+            TRESTClientDataSetAdapter<M>(LChild).FilterDataSetChilds;
         end;
       end;
     end;
