@@ -123,17 +123,29 @@ end;
 
 function TDMLGeneratorSQLite.GeneratorSequenceCurrentValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
-begin
+var
+  LSQL: String;
+begin
   Result := ExecuteSequence(Format('SELECT SEQ AS SEQUENCE FROM SQLITE_SEQUENCE ' +
                                    'WHERE NAME = ''%s''', [ACommandInsert.Sequence.Name]));
+  if Result = 0 then
+  begin
+    LSQL := Format('INSERT INTO SQLITE_SEQUENCE (NAME, SEQ) VALUES (''%s'', 0)',
+                   [ACommandInsert.Sequence.Name]);
+    FConnection.ExecuteDirect(LSQL);
+  end;
 end;
 
 function TDMLGeneratorSQLite.GeneratorSequenceNextValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
-begin
-  FConnection.ExecuteDirect(Format('UPDATE SQLITE_SEQUENCE SET SEQ = SEQ + %s ' +
-                                   'WHERE NAME = ''%s''', [IntToStr(ACommandInsert.Sequence.Increment), ACommandInsert.Sequence.Name]));
+var
+  LSQL: String;
+begin
   Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert);
+  LSQL := Format('UPDATE SQLITE_SEQUENCE SET SEQ = SEQ + %s WHERE NAME = ''%s''',
+                 [IntToStr(ACommandInsert.Sequence.Increment), ACommandInsert.Sequence.Name]);
+  FConnection.ExecuteDirect(LSQL);
+  Result := Result + ACommandInsert.Sequence.Increment;
 end;
 
 initialization

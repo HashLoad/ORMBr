@@ -198,6 +198,7 @@ begin
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
        begin
          LObject := M.Create;
+         LObject.MethodCall('Create', []);
          try
            TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
            for LDataSetChild in FMasterObject.Values do
@@ -254,6 +255,7 @@ begin
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
        begin
          LObject := M.Create;
+         LObject.MethodCall('Create', []);
          TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
          for LDataSetChild in FMasterObject.Values do
            LDataSetChild.FillMastersClass(LDataSetChild, LObject);

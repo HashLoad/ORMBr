@@ -432,7 +432,7 @@ var
 begin
   LKey := AObject.ClassName;
   for LColumn in AObject.GetPrimaryKey do
-    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsVariant);
+    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant);
   ///
   if FSession.ModifiedFields.ContainsKey(LKey) then
     if FSession.ModifiedFields.Items[LKey].Count > 0 then

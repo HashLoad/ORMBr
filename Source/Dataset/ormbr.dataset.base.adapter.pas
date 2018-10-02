@@ -363,28 +363,42 @@ procedure TDataSetBaseAdapter<M>.ExecuteOneToOne(AObject: M;
   AProperty: TRttiProperty; ADatasetBase: TDataSetBaseAdapter<M>);
 var
   LBookMark: TBookmark;
+  LValue: TValue;
+  LObject: TObject;
+  LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   if ADatasetBase.FCurrentInternal.ClassType =
      AProperty.PropertyType.AsInstance.MetaclassType then
   begin
-    LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-    ADatasetBase.FOrmDataSet.DisableControls;
-    ADatasetBase.FOrmDataSet.First;
-    try
-      while not ADatasetBase.FOrmDataSet.Eof do
-      begin
-        /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-        TBindObject
-          .GetInstance
-            .SetFieldToProperty(ADatasetBase.FOrmDataSet,
-                                AProperty.GetNullableValue(TObject(AObject)).AsObject);
-        /// Próximo registro
-        ADatasetBase.FOrmDataSet.Next;
+    LValue := AProperty.GetNullableValue(TObject(AObject));
+    if LValue.IsObject then
+    begin
+      LObject := LValue.AsObject;
+      LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
+      ADatasetBase.FOrmDataSet.DisableControls;
+      ADatasetBase.FOrmDataSet.First;
+      try
+        while not ADatasetBase.FOrmDataSet.Eof do
+        begin
+          /// <summary>
+          /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
+          /// </summary>
+          TBindObject
+            .GetInstance
+              .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
+          /// Próximo registro
+          ADatasetBase.FOrmDataSet.Next;
+        end;
+      finally
+        ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
+        ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
+        ADatasetBase.FOrmDataSet.EnableControls;
       end;
-    finally
-      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
-      ADatasetBase.FOrmDataSet.EnableControls;
+      /// <summary>
+      /// Populando em hierarquia de vários níveis
+      /// </summary>
+      for LDataSetChild in ADatasetBase.FMasterObject.Values do
+        LDataSetChild.FillMastersClass(LDataSetChild, LObject);
     end;
   end;
 end;
@@ -397,6 +411,8 @@ var
   LBookMark: TBookmark;
   LObjectType: TObject;
   LObjectList: TObject;
+  LValue: TValue;
+  LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   LPropertyType := AProperty.PropertyType;
   LPropertyType := AProperty.GetTypeValue(LPropertyType);
@@ -414,7 +430,9 @@ begin
       while not ADatasetBase.FOrmDataSet.Eof do
       begin
         LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
+        /// <summary>
         /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
+        /// </summary>
         TBindObject
           .GetInstance
             .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
@@ -423,6 +441,11 @@ begin
         LObjectList.MethodCall('Add', [LObjectType]);
         /// Próximo registro
         ADatasetBase.FOrmDataSet.Next;
+        /// <summary>
+        /// Populando em hierarquia de vários níveis
+        /// </summary>
+        for LDataSetChild in ADatasetBase.FMasterObject.Values do
+          LDataSetChild.FillMastersClass(LDataSetChild, LObjectType);
       end;
     finally
       ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
