@@ -373,7 +373,7 @@ type
     FValue: Double;
   public
     constructor Create(AValue: Double);
-    procedure Validate(AName: string; AValue: TValue);
+    procedure Validate(AProperty: TRttiProperty; AValue: TValue);
   end;
 
 implementation
@@ -671,11 +671,11 @@ begin
   FValue := AValue;
 end;
 
-procedure HighestConstraint.Validate(AName: string; AValue: TValue);
+procedure HighestConstraint.Validate(AProperty: TRttiProperty; AValue: TValue);
 begin
   if AValue.AsExtended <= FValue then
   begin
-     raise EFieldZero.Create(AName);
+     raise EHighestConstraint.Create(AProperty);
   end;
 end;
 

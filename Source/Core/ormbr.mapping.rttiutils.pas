@@ -316,7 +316,7 @@ begin
      LAttribute := LColumn.PropertyRtti.GetHighestConstraint;
      if LAttribute <> nil then
         HighestConstraint(LAttribute)
-          .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+          .Validate(LColumn.PropertyRtti, LColumn.PropertyRtti.GetNullableValue(AObject));
   end;
   Result := True;
 end;

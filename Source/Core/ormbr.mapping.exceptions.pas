@@ -49,9 +49,9 @@ type
     constructor Create(AField: string; AMensagem: string);
   end;
 
-  EFieldZero = class(Exception)
+  EHighestConstraint = class(Exception)
   public
-    constructor Create(AName: string);
+    constructor Create(AProperty: TRttiProperty);
   end;
 
   EDefaultExpression = class(Exception)
@@ -60,6 +60,10 @@ type
   end;
 
 implementation
+
+uses
+  ormbr.rtti.helper,
+  ormbr.mapping.attributes;
 
 { EClassNotRegistered }
 
@@ -75,11 +79,12 @@ begin
   inherited CreateFmt('O valor do campo [ %s ] não pode ser Nulo!', [AName]);
 end;
 
-{ EFieldZero }
+{ EHighestConstraint }
 
-constructor EFieldZero.Create(AName: string);
+constructor EHighestConstraint.Create(AProperty: TRttiProperty);
 begin
-  inherited CreateFmt('O valor do campo [ %s ] não pode ser menor que zero!', [AName]);
+  inherited CreateFmt('Validação do Campo: %s ' + sLineBreak
+                    + AProperty.GetDictionary.ConstraintErrorMessage, [AProperty.GetColumn.ClassName]);
 end;
 
 { EFieldValidate }

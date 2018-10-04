@@ -76,9 +76,9 @@ type
     function  IsList: Boolean;
     function  GetAssociation: TCustomAttribute;
     function  GetRestriction: TCustomAttribute;
-    function  GetDictionary: TCustomAttribute;
+    function  GetDictionary: Dictionary;
     function  GetCalcField: TCustomAttribute;
-    function  GetColumn: TCustomAttribute;
+    function  GetColumn: Column;
     function  GetNotNullConstraint: TCustomAttribute;
     function  GetHighestConstraint: TCustomAttribute;
     function  GetNullableValue(AInstance: Pointer): TValue;
@@ -138,26 +138,26 @@ begin
    Exit([CascadeNone]);
 end;
 
-function TRttiPropertyHelper.GetColumn: TCustomAttribute;
+function TRttiPropertyHelper.GetColumn: Column;
 var
   LAttribute: TCustomAttribute;
 begin
    for LAttribute in Self.GetAttributes do
    begin
       if LAttribute is Column then // Column
-         Exit(LAttribute);
+         Exit(Column(LAttribute));
    end;
    Exit(nil);
 end;
 
-function TRttiPropertyHelper.GetDictionary: TCustomAttribute;
+function TRttiPropertyHelper.GetDictionary: Dictionary;
 var
   LAttribute: TCustomAttribute;
 begin
    for LAttribute in Self.GetAttributes do
    begin
       if LAttribute is Dictionary then // Dictionary
-         Exit(LAttribute);
+         Exit(Dictionary(LAttribute));
    end;
    Exit(nil);
 end;
