@@ -80,7 +80,8 @@ type
     function  GetCalcField: TCustomAttribute;
     function  GetColumn: Column;
     function  GetNotNullConstraint: TCustomAttribute;
-    function  GetHighestConstraint: TCustomAttribute;
+    function  GetMinimumValueConstraint: MinimumValueConstraint;
+    function  GetMaximumValueConstraint: MaximumValueConstraint;
     function  GetNullableValue(AInstance: Pointer): TValue;
     function  GetTypeValue(ARttiType: TRttiType): TRttiType;
     function  GetObjectTheList: TObject;
@@ -326,14 +327,26 @@ begin
    Exit(nil);
 end;
 
-function TRttiPropertyHelper.GetHighestConstraint: TCustomAttribute;
+function TRttiPropertyHelper.GetMaximumValueConstraint: MaximumValueConstraint;
 var
   LAttribute: TCustomAttribute;
 begin
    for LAttribute in Self.GetAttributes do
    begin
-      if LAttribute is HighestConstraint then // HighestConstraint
-         Exit(LAttribute);
+      if LAttribute is MaximumValueConstraint then // MaximumValueConstraint
+         Exit(MaximumValueConstraint(LAttribute));
+   end;
+   Exit(nil);
+end;
+
+function TRttiPropertyHelper.GetMinimumValueConstraint: MinimumValueConstraint;
+var
+  LAttribute: TCustomAttribute;
+begin
+   for LAttribute in Self.GetAttributes do
+   begin
+      if LAttribute is MinimumValueConstraint then // MinimumValueConstraint
+         Exit(MinimumValueConstraint(LAttribute));
    end;
    Exit(nil);
 end;

@@ -311,12 +311,19 @@ begin
      LAttribute := LColumn.PropertyRtti.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
-         .Validate(LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+         .Validate(LColumn.PropertyRtti, LColumn.PropertyRtti.GetNullableValue(AObject));
+
      /// <summary> Valida se o valor é menor que ZERO </summary>
-     LAttribute := LColumn.PropertyRtti.GetHighestConstraint;
+     LAttribute := LColumn.PropertyRtti.GetMinimumValueConstraint;
      if LAttribute <> nil then
-        HighestConstraint(LAttribute)
-          .Validate(LColumn.PropertyRtti, LColumn.PropertyRtti.GetNullableValue(AObject));
+        MinimumValueConstraint(LAttribute)
+          .Validate(AObject.ClassName, LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+
+     /// <summary> Valida se o valor é menor que ZERO </summary>
+     LAttribute := LColumn.PropertyRtti.GetMaximumValueConstraint;
+     if LAttribute <> nil then
+        MaximumValueConstraint(LAttribute)
+          .Validate(AObject.ClassName, LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
   end;
   Result := True;
 end;

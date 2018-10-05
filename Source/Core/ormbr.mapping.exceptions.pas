@@ -41,7 +41,7 @@ type
 
   EFieldNotNull = class(Exception)
   public
-    constructor Create(AName: string);
+    constructor Create(AProperty: TRttiProperty);
   end;
 
   EFieldValidate = class(Exception)
@@ -49,9 +49,14 @@ type
     constructor Create(AField: string; AMensagem: string);
   end;
 
-  EHighestConstraint = class(Exception)
+  EMinimumValueConstraint = class(Exception)
   public
-    constructor Create(AProperty: TRttiProperty);
+    constructor Create(AClassName, AColumnName: String; AValue: Double);
+  end;
+
+  EMaximumValueConstraint = class(Exception)
+  public
+    constructor Create(AClassName, AColumnName: String; AValue: Double);
   end;
 
   EDefaultExpression = class(Exception)
@@ -74,17 +79,17 @@ end;
 
 { EFieldNotNull }
 
-constructor EFieldNotNull.Create(AName: string);
+constructor EFieldNotNull.Create(AProperty: TRttiProperty);
 begin
-  inherited CreateFmt('O valor do campo [ %s ] não pode ser Nulo!', [AName]);
+  inherited CreateFmt('Validação do campo [ %s ] ' + sLineBreak
+                    + AProperty.GetDictionary.ConstraintErrorMessage, [AProperty.GetColumn.ColumnName]);
 end;
 
 { EHighestConstraint }
 
-constructor EHighestConstraint.Create(AProperty: TRttiProperty);
+constructor EMinimumValueConstraint.Create(AClassName, AColumnName: String; AValue: Double);
 begin
-  inherited CreateFmt('Validação do Campo: %s ' + sLineBreak
-                    + AProperty.GetDictionary.ConstraintErrorMessage, [AProperty.GetColumn.ClassName]);
+  inherited CreateFmt('No modelo [ %s ], valor mínimo do campo [ %s ] permitido é : [ %s ]!', [AClassName, AColumnName, FloatToStr(AValue)]);
 end;
 
 { EFieldValidate }
@@ -99,6 +104,13 @@ end;
 constructor EDefaultExpression.Create(ADefault, AColumnName, AClassName: string);
 begin
   inherited CreateFmt('O valor Default [ %s ] do campo [ %s ] na classe [ %s ], é inválido!', [ADefault, AColumnName, AClassName]);
+end;
+
+{ EMaximumValueConstraint }
+
+constructor EMaximumValueConstraint.Create(AClassName, AColumnName: String; AValue: Double);
+begin
+  inherited CreateFmt('No modelo [ %s ], valor máximo do campo [ %s ] permitido é : [ %s ]!', [AClassName, AColumnName, FloatToStr(AValue)]);
 end;
 
 end.

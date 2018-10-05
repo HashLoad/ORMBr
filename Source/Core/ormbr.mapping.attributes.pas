@@ -365,15 +365,23 @@ type
   NotNullConstraint = class(TCustomAttribute)
   public
     constructor Create;
-    procedure Validate(AName: string; AValue: TValue);
+    procedure Validate(AProperty: TRttiProperty; AValue: TValue);
   end;
 
-  HighestConstraint = class(TCustomAttribute)
+  MinimumValueConstraint = class(TCustomAttribute)
   private
     FValue: Double;
   public
     constructor Create(AValue: Double);
-    procedure Validate(AProperty: TRttiProperty; AValue: TValue);
+    procedure Validate(AClassName, AColumnName: String; AValue: TValue);
+  end;
+
+  MaximumValueConstraint = class(TCustomAttribute)
+  private
+    FValue: Double;
+  public
+    constructor Create(AValue: Double);
+    procedure Validate(AClassName, AColumnName: String; AValue: TValue);
   end;
 
 implementation
@@ -498,11 +506,11 @@ begin
 
 end;
 
-procedure NotNullConstraint.Validate(AName: string; AValue: TValue);
+procedure NotNullConstraint.Validate(AProperty: TRttiProperty; AValue: TValue);
 begin
   if AValue.AsString = '' then
   begin
-     raise EFieldNotNull.Create(AName);
+     raise EFieldNotNull.Create(AProperty);
   end;
 end;
 
@@ -666,16 +674,16 @@ end;
 
 { ZeroConstraint }
 
-constructor HighestConstraint.Create(AValue: Double);
+constructor MinimumValueConstraint.Create(AValue: Double);
 begin
   FValue := AValue;
 end;
 
-procedure HighestConstraint.Validate(AProperty: TRttiProperty; AValue: TValue);
+procedure MinimumValueConstraint.Validate(AClassName, AColumnName: String; AValue: TValue);
 begin
-  if AValue.AsExtended <= FValue then
+  if AValue.AsExtended < FValue then
   begin
-     raise EHighestConstraint.Create(AProperty);
+    raise EMinimumValueConstraint.Create(AClassName, AColumnName, AValue.AsExtended);
   end;
 end;
 
@@ -872,6 +880,21 @@ end;
 constructor FieldEvents.Create(AFieldEvents: TFieldEvents);
 begin
   FFieldEvents := AFieldEvents;
+end;
+
+{ MaximumValueConstraint }
+
+constructor MaximumValueConstraint.Create(AValue: Double);
+begin
+  FValue := AValue;
+end;
+
+procedure MaximumValueConstraint.Validate(AClassName, AColumnName: String; AValue: TValue);
+begin
+  if AValue.AsExtended > FValue then
+  begin
+    raise EMaximumValueConstraint.Create(AClassName, AColumnName, AValue.AsExtended);
+  end;
 end;
 
 end.
