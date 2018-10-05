@@ -317,13 +317,15 @@ begin
      LAttribute := LColumn.PropertyRtti.GetMinimumValueConstraint;
      if LAttribute <> nil then
         MinimumValueConstraint(LAttribute)
-          .Validate(AObject.ClassName, LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+          .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
+                    LColumn.PropertyRtti.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
      LAttribute := LColumn.PropertyRtti.GetMaximumValueConstraint;
      if LAttribute <> nil then
         MaximumValueConstraint(LAttribute)
-          .Validate(AObject.ClassName, LColumn.ColumnName, LColumn.PropertyRtti.GetNullableValue(AObject));
+          .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
+                    LColumn.PropertyRtti.GetNullableValue(AObject));
   end;
   Result := True;
 end;

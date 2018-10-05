@@ -117,9 +117,9 @@ begin
   LCriteria.Where(AWhere);
   LCriteria.OrderBy(AOrderBy);
   if APageSize > -1 then
-     Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
+    Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
   else
-     Result := LCriteria.AsString;
+    Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorMySQL.GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
@@ -127,7 +127,7 @@ begin
   Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
                                    'FROM INFORMATION_SCHEMA.TABLES ' +
                                    'WHERE TABLE_SCHEMA = DATABASE() ' +
-                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Sequence.Name)]));
+                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Table.Name)]));
 end;
 
 function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;

@@ -373,7 +373,7 @@ type
     FValue: Double;
   public
     constructor Create(AValue: Double);
-    procedure Validate(AClassName, AColumnName: String; AValue: TValue);
+    procedure Validate(ADisplayLabel: String; AValue: TValue);
   end;
 
   MaximumValueConstraint = class(TCustomAttribute)
@@ -381,7 +381,7 @@ type
     FValue: Double;
   public
     constructor Create(AValue: Double);
-    procedure Validate(AClassName, AColumnName: String; AValue: TValue);
+    procedure Validate(ADisplayLabel: String; AValue: TValue);
   end;
 
 implementation
@@ -679,11 +679,11 @@ begin
   FValue := AValue;
 end;
 
-procedure MinimumValueConstraint.Validate(AClassName, AColumnName: String; AValue: TValue);
+procedure MinimumValueConstraint.Validate(ADisplayLabel: String; AValue: TValue);
 begin
   if AValue.AsExtended < FValue then
   begin
-    raise EMinimumValueConstraint.Create(AClassName, AColumnName, AValue.AsExtended);
+    raise EMinimumValueConstraint.Create(ADisplayLabel, FValue);
   end;
 end;
 
@@ -889,11 +889,11 @@ begin
   FValue := AValue;
 end;
 
-procedure MaximumValueConstraint.Validate(AClassName, AColumnName: String; AValue: TValue);
+procedure MaximumValueConstraint.Validate(ADisplayLabel: String; AValue: TValue);
 begin
   if AValue.AsExtended > FValue then
   begin
-    raise EMaximumValueConstraint.Create(AClassName, AColumnName, AValue.AsExtended);
+    raise EMaximumValueConstraint.Create(ADisplayLabel, FValue);
   end;
 end;
 

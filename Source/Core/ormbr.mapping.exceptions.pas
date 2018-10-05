@@ -51,12 +51,12 @@ type
 
   EMinimumValueConstraint = class(Exception)
   public
-    constructor Create(AClassName, AColumnName: String; AValue: Double);
+    constructor Create(ADisplayLabel: String; AValue: Double);
   end;
 
   EMaximumValueConstraint = class(Exception)
   public
-    constructor Create(AClassName, AColumnName: String; AValue: Double);
+    constructor Create(ADisplayLabel: String; AValue: Double);
   end;
 
   EDefaultExpression = class(Exception)
@@ -87,9 +87,9 @@ end;
 
 { EHighestConstraint }
 
-constructor EMinimumValueConstraint.Create(AClassName, AColumnName: String; AValue: Double);
+constructor EMinimumValueConstraint.Create(ADisplayLabel: String; AValue: Double);
 begin
-  inherited CreateFmt('No modelo [ %s ], valor mínimo do campo [ %s ] permitido é : [ %s ]!', [AClassName, AColumnName, FloatToStr(AValue)]);
+  inherited CreateFmt('O valor mínimo do campo [ %s ] permitido é [ %s ]!', [ADisplayLabel, FloatToStr(AValue)]);
 end;
 
 { EFieldValidate }
@@ -108,9 +108,9 @@ end;
 
 { EMaximumValueConstraint }
 
-constructor EMaximumValueConstraint.Create(AClassName, AColumnName: String; AValue: Double);
+constructor EMaximumValueConstraint.Create(ADisplayLabel: String; AValue: Double);
 begin
-  inherited CreateFmt('No modelo [ %s ], valor máximo do campo [ %s ] permitido é : [ %s ]!', [AClassName, AColumnName, FloatToStr(AValue)]);
+  inherited CreateFmt('O valor máximo do campo [ %s ] permitido é [ %s ]!', [ADisplayLabel, FloatToStr(AValue)]);
 end;
 
 end.
