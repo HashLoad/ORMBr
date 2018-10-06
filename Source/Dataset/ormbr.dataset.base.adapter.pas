@@ -193,6 +193,7 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
+  TObject(FCurrentInternal).MethodCall('Create', []);
   TBindDataSet
     .GetInstance
       .SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
@@ -411,7 +412,6 @@ var
   LBookMark: TBookmark;
   LObjectType: TObject;
   LObjectList: TObject;
-  LValue: TValue;
   LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   LPropertyType := AProperty.PropertyType;
@@ -423,13 +423,14 @@ begin
   if ADatasetBase.FCurrentInternal.ClassType =
      LPropertyType.AsInstance.MetaclassType then
   begin
-    LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-    ADatasetBase.FOrmDataSet.DisableControls;
+//    LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
+//    ADatasetBase.FOrmDataSet.DisableControls;
     ADatasetBase.FOrmDataSet.First;
     try
       while not ADatasetBase.FOrmDataSet.Eof do
       begin
         LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
+        LObjectType.MethodCall('Create', []);
         /// <summary>
         /// Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
         /// </summary>
@@ -439,18 +440,19 @@ begin
         ///
         LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
         LObjectList.MethodCall('Add', [LObjectType]);
-        /// Próximo registro
-        ADatasetBase.FOrmDataSet.Next;
         /// <summary>
         /// Populando em hierarquia de vários níveis
         /// </summary>
         for LDataSetChild in ADatasetBase.FMasterObject.Values do
           LDataSetChild.FillMastersClass(LDataSetChild, LObjectType);
+
+        /// Próximo registro
+        ADatasetBase.FOrmDataSet.Next;
       end;
     finally
-      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
-      ADatasetBase.FOrmDataSet.EnableControls;
+//      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
+//      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
+//      ADatasetBase.FOrmDataSet.EnableControls;
     end;
   end;
 end;
