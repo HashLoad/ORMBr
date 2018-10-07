@@ -409,7 +409,6 @@ procedure TDataSetBaseAdapter<M>.ExecuteOneToMany(AObject: M;
   ARttiType: TRttiType);
 var
   LPropertyType: TRttiType;
-  LBookMark: TBookmark;
   LObjectType: TObject;
   LObjectList: TObject;
   LDataSetChild: TDataSetBaseAdapter<M>;
@@ -423,8 +422,6 @@ begin
   if ADatasetBase.FCurrentInternal.ClassType =
      LPropertyType.AsInstance.MetaclassType then
   begin
-//    LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-//    ADatasetBase.FOrmDataSet.DisableControls;
     ADatasetBase.FOrmDataSet.First;
     try
       while not ADatasetBase.FOrmDataSet.Eof do
@@ -450,9 +447,7 @@ begin
         ADatasetBase.FOrmDataSet.Next;
       end;
     finally
-//      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-//      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
-//      ADatasetBase.FOrmDataSet.EnableControls;
+      ADatasetBase.FOrmDataSet.First;
     end;
   end;
 end;

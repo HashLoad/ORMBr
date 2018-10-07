@@ -311,7 +311,8 @@ begin
      LAttribute := LColumn.PropertyRtti.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
-         .Validate(LColumn.PropertyRtti, LColumn.PropertyRtti.GetNullableValue(AObject));
+         .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
+                   LColumn.PropertyRtti.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
      LAttribute := LColumn.PropertyRtti.GetMinimumValueConstraint;

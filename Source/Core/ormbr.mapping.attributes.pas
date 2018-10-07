@@ -365,7 +365,7 @@ type
   NotNullConstraint = class(TCustomAttribute)
   public
     constructor Create;
-    procedure Validate(AProperty: TRttiProperty; AValue: TValue);
+    procedure Validate(ADisplayLabel: String; AValue: TValue);
   end;
 
   MinimumValueConstraint = class(TCustomAttribute)
@@ -506,11 +506,11 @@ begin
 
 end;
 
-procedure NotNullConstraint.Validate(AProperty: TRttiProperty; AValue: TValue);
+procedure NotNullConstraint.Validate(ADisplayLabel: String; AValue: TValue);
 begin
   if AValue.AsString = '' then
   begin
-     raise EFieldNotNull.Create(AProperty);
+     raise EFieldNotNull.Create(ADisplayLabel);
   end;
 end;
 

@@ -41,7 +41,7 @@ type
 
   EFieldNotNull = class(Exception)
   public
-    constructor Create(AProperty: TRttiProperty);
+    constructor Create(ADisplayLabel: String);
   end;
 
   EFieldValidate = class(Exception)
@@ -79,10 +79,9 @@ end;
 
 { EFieldNotNull }
 
-constructor EFieldNotNull.Create(AProperty: TRttiProperty);
+constructor EFieldNotNull.Create(ADisplayLabel: String);
 begin
-  inherited CreateFmt('Validação do campo [ %s ] ' + sLineBreak
-                    + AProperty.GetDictionary.ConstraintErrorMessage, [AProperty.GetColumn.ColumnName]);
+  inherited CreateFmt('Campo [ %s ] não pode ser vazio', [ADisplayLabel]);
 end;
 
 { EHighestConstraint }
