@@ -376,8 +376,8 @@ begin
     begin
       LObject := LValue.AsObject;
       LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-      ADatasetBase.FOrmDataSet.DisableControls;
       ADatasetBase.FOrmDataSet.First;
+      ADatasetBase.FOrmDataSet.BlockReadSize := MaxInt;
       try
         while not ADatasetBase.FOrmDataSet.Eof do
         begin
@@ -393,7 +393,7 @@ begin
       finally
         ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
         ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
-        ADatasetBase.FOrmDataSet.EnableControls;
+        ADatasetBase.FOrmDataSet.BlockReadSize := 0;
       end;
       /// <summary>
       /// Populando em hierarquia de vários níveis
@@ -408,6 +408,7 @@ procedure TDataSetBaseAdapter<M>.ExecuteOneToMany(AObject: M;
   AProperty: TRttiProperty; ADatasetBase: TDataSetBaseAdapter<M>;
   ARttiType: TRttiType);
 var
+  LBookMark: TBookmark;
   LPropertyType: TRttiType;
   LObjectType: TObject;
   LObjectList: TObject;
@@ -422,7 +423,9 @@ begin
   if ADatasetBase.FCurrentInternal.ClassType =
      LPropertyType.AsInstance.MetaclassType then
   begin
+    LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
     ADatasetBase.FOrmDataSet.First;
+    ADatasetBase.FOrmDataSet.BlockReadSize := MaxInt;
     try
       while not ADatasetBase.FOrmDataSet.Eof do
       begin
@@ -447,7 +450,9 @@ begin
         ADatasetBase.FOrmDataSet.Next;
       end;
     finally
-      ADatasetBase.FOrmDataSet.First;
+      ADatasetBase.FOrmDataSet.BlockReadSize := 0;
+      ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
+      ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
     end;
   end;
 end;
@@ -896,6 +901,11 @@ begin
             end;
           end;
         end;
+        /// <summary>
+        /// Populando em hierarquia de vários níveis
+        /// </summary>
+        if LDataSetChild.FMasterObject.Count > 0 then
+          LDataSetChild.SetAutoIncValueChilds;
       end;
     end;
   end;
