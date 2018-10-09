@@ -232,8 +232,9 @@ begin
       else if FDriverName = dnPostgreSQL then AColumn.TypeName := 'BIGINT'
       else                                    AColumn.TypeName := 'NUMERIC(%l)';
     ftString:
-      if FDriverName = dnOracle then AColumn.TypeName := 'VARCHAR2(%l)'
-      else                           AColumn.TypeName := 'VARCHAR(%l)';
+      if FDriverName = dnOracle                               then AColumn.TypeName := 'VARCHAR2(%l)'
+      else if (FDriverName = dnMSSQL) and (AColumn.Size = -1) then AColumn.TypeName := 'VARCHAR(MAX)'       
+      else                                                         AColumn.TypeName := 'VARCHAR(%l)';
     ftWideString:
       if      FDriverName = dnOracle    then AColumn.TypeName := 'NVARCHAR2(%l)'
       else if FDriverName = dnFirebird  then AColumn.TypeName := 'VARCHAR(%l)'
