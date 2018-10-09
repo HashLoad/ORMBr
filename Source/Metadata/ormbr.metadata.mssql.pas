@@ -87,6 +87,7 @@ begin
     FFieldType.Add('CHAR', ftFixedChar);
     FFieldType.Add('CARACTER', ftFixedChar);
     FFieldType.Add('DATE', ftDate);
+    FFieldType.Add('DATETIME', ftDateTime);
     FFieldType.Add('DATETIME2', ftDateTime);
     FFieldType.Add('DECIMAL', ftBCD);
     FFieldType.Add('DOUBLE PRECISION', ftExtended);
@@ -105,6 +106,7 @@ begin
     FFieldType.Add('TIME', ftTime);
     FFieldType.Add('GUID', ftGuid);
     FFieldType.Add('VARBINARY(MAX)', ftBlob);
+    FFieldType.Add('IMAGE', ftGraphic);
   end;
 end;
 
