@@ -289,10 +289,15 @@ begin
       else if FDriverName = dnSQLite  then AColumn.TypeName := 'FLOAT(%p,%s)'
       else                                 AColumn.TypeName := 'DECIMAL(%p,%s)';
     end;
-    ftBlob, ftGraphic, ftOraBlob:
+    ftBlob, ftOraBlob:
     begin
-      if      FDriverName = dnMSSQL  then AColumn.TypeName := 'VARBINARY(MAX)'
-      else                                AColumn.TypeName := 'BLOB'
+      if FDriverName = dnMSSQL  then AColumn.TypeName := 'VARBINARY(MAX)'
+      else                           AColumn.TypeName := 'BLOB'
+    end;
+    ftGraphic: 
+    begin 
+      if FDriverName = dnMSSQL  then AColumn.TypeName := 'IMAGE'
+      else                           AColumn.TypeName := 'BLOB'
     end;
     ftWideMemo:
     begin
