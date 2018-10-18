@@ -193,7 +193,6 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
-  TObject(FCurrentInternal).MethodCall('Create', []);
   TBindDataSet
     .GetInstance
       .SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
