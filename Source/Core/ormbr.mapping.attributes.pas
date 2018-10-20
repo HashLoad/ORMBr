@@ -164,16 +164,11 @@ type
     FFieldName: string;
     FFieldType: TFieldType;
     FSize: Integer;
-    FAlignment: TAlignment;
-    FDisplayFormat: string;
   public
-    constructor Create(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0;
-      AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');
+    constructor Create(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0);
     property FieldName: string read FFieldName;
     property FieldType: TFieldType read FFieldType;
     property Size: Integer read FSize;
-    property Alignment: TAlignment read FAlignment;
-    property DisplayFormat: string read FDisplayFormat;
   end;
 
   /// Association 1:1, 1:N, N:N, N:1
@@ -777,13 +772,11 @@ end;
 { CalcField }
 
 constructor CalcField.Create(AFieldName: string; AFieldType: TFieldType;
-  ASize: Integer; AAlignment: TAlignment; ADisplayFormat: string);
+  ASize: Integer);
 begin
   FFieldName := AFieldName;
   FFieldType := AFieldType;
   FSize := ASize;
-  FAlignment := AAlignment;
-  FDisplayFormat := ADisplayFormat;
 end;
 
 { CascadeActions }

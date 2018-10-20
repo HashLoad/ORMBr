@@ -44,11 +44,9 @@ type
     procedure AddField(ADataSet: TDataSet; AFieldName: String; AFieldType:
       TFieldType; ASize: Integer = 0);
     procedure AddCalcField(ADataSet: TDataSet;
-                           AFieldName: String;
+                           AFieldName: string;
                            AFieldType: TFieldType;
-                           ASize: Integer = 0;
-                           AAlignment: TAlignment = taLeftJustify;
-                           ADisplayFormat: string = '');
+                           ASize: Integer = 0);
     procedure AddAggregateField(ADataSet: TDataSet;
                                 AFieldName,
                                 AExpression: string;
@@ -79,11 +77,9 @@ type
     procedure AddField(ADataSet: TDataSet; AFieldName: String; AFieldType:
       TFieldType; ASize: Integer = 0);
     procedure AddCalcField(ADataSet: TDataSet;
-                           AFieldName: String;
+                           AFieldName: string;
                            AFieldType: TFieldType;
-                           ASize: Integer = 0;
-                           AAlignment: TAlignment = taLeftJustify;
-                           ADisplayFormat: string = '');
+                           ASize: Integer = 0);
     procedure AddAggregateField(ADataSet: TDataSet;
                                 AFieldName,
                                 AExpression: string;
@@ -236,8 +232,7 @@ begin
 end;
 
 procedure TFieldSingleton.AddCalcField(ADataSet: TDataSet;
-  AFieldName: String; AFieldType: TFieldType; ASize: Integer;
-  AAlignment: TAlignment; ADisplayFormat: string);
+  AFieldName: String; AFieldType: TFieldType; ASize: Integer);
 var
   LField: TField;
 begin
@@ -247,19 +242,13 @@ begin
   LField := GetFieldType(ADataSet, AFieldType);
   if LField <> nil then
   begin
-    LField.Name         := ADataSet.Name + AFieldName;
-    LField.FieldName    := AFieldName;
-    LField.DisplayLabel := AFieldName;
-    LField.Calculated   := True;
-    LField.DataSet      := ADataSet;
-    LField.FieldKind    := fkInternalCalc;
-    LField.Alignment    := AAlignment;
+    LField.Name       := ADataSet.Name + AFieldName;
+    LField.FieldName  := AFieldName;
+    LField.Calculated := True;
+    LField.DataSet    := ADataSet;
+    LField.FieldKind  := fkInternalCalc;
     //
     case AFieldType of
-      ftBCD, ftCurrency, ftFloat, ftExtended, ftFMTBcd:
-        begin
-          TBCDField(LField).DisplayFormat := ADisplayFormat;
-        end;
        ftLargeint, ftString, ftWideString, ftFixedChar, ftFixedWideChar:
         begin
           if ASize > 0 then

@@ -99,8 +99,7 @@ begin
         Result.Last.FieldName := CalcField(LAttrib).FieldName;
         Result.Last.FieldType := CalcField(LAttrib).FieldType;
         Result.Last.Size := CalcField(LAttrib).Size;
-        Result.Last.Alignment := CalcField(LAttrib).Alignment;
-        Result.Last.DisplayFormat := CalcField(LAttrib).DisplayFormat;
+        Result.Last.PropertyRtti := LProperty;
       end;
     end;
   end;

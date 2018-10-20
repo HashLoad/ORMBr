@@ -139,14 +139,12 @@ type
     FFieldName: string;
     FFieldType: TFieldType;
     FSize: Integer;
-    FAlignment: TAlignment;
-    FDisplayFormat: string;
+    FProperty: TRttiProperty;
   public
     property FieldName: string read FFieldName write FFieldName;
     property FieldType: TFieldType read FFieldType write FFieldType;
     property Size: Integer read FSize write FSize;
-    property Alignment: TAlignment read FAlignment write FAlignment;
-    property DisplayFormat: string read FDisplayFormat write FDisplayFormat;
+    property PropertyRtti: TRttiProperty read FProperty write FProperty;
   end;
   /// ColumnMappingList
   TCalcFieldMappingList = class(TObjectList<TCalcFieldMapping>);

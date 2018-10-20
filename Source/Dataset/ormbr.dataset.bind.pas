@@ -328,6 +328,8 @@ procedure TBindDataSet.SetCalcFieldDefsObjectClass(ADataSet: TDataSet; AObject: 
 var
   LCalcField: TCalcFieldMapping;
   LCalcFields: TCalcFieldMappingList;
+  LAttributo: TCustomAttribute;
+  LFieldName: string;
 begin
   LCalcFields := TMappingExplorer
                    .GetInstance
@@ -341,9 +343,35 @@ begin
           .AddCalcField(ADataSet,
                         LCalcField.FieldName,
                         LCalcField.FieldType,
-                        LCalcField.Size,
-                        LCalcField.Alignment,
-                        LCalcField.DisplayFormat);
+                        LCalcField.Size);
+      LFieldName := LCalcField.FieldName;
+      if Assigned(TField(LCalcField.PropertyRtti)) then
+      begin
+        LAttributo := LCalcField.PropertyRtti.GetDictionary;
+         if LAttributo = nil then
+          Continue;
+
+        /// DisplayLabel
+        if Length(Dictionary(LAttributo).DisplayLabel) > 0 then
+          ADataSet
+            .FieldByName(LFieldName)
+              .DisplayLabel := Dictionary(LAttributo).DisplayLabel;
+
+        /// DisplayFormat
+        if Length(Dictionary(LAttributo).DisplayFormat) > 0 then
+          TDateField(ADataSet.FieldByName(LFieldName))
+            .DisplayFormat := Dictionary(LAttributo).DisplayFormat;
+
+        /// EditMask
+        if Length(Dictionary(LAttributo).EditMask) > 0 then
+          ADataSet
+            .FieldByName(LFieldName).EditMask := Dictionary(LAttributo).EditMask;
+
+        /// Alignment
+        if Dictionary(LAttributo).Alignment in [taLeftJustify,taRightJustify,taCenter] then
+          ADataSet
+            .FieldByName(LFieldName).Alignment := Dictionary(LAttributo).Alignment;
+      end;
     end;
   end;
 end;
