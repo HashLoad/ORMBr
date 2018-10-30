@@ -232,8 +232,9 @@ begin
       else if FDriverName = dnPostgreSQL then AColumn.TypeName := 'BIGINT'
       else                                    AColumn.TypeName := 'NUMERIC(%l)';
     ftString:
-      if FDriverName = dnOracle then AColumn.TypeName := 'VARCHAR2(%l)'
-      else                           AColumn.TypeName := 'VARCHAR(%l)';
+      if FDriverName = dnOracle                               then AColumn.TypeName := 'VARCHAR2(%l)'
+      else if (FDriverName = dnMSSQL) and (AColumn.Size = -1) then AColumn.TypeName := 'VARCHAR(MAX)'       
+      else                                                         AColumn.TypeName := 'VARCHAR(%l)';
     ftWideString:
       if      FDriverName = dnOracle    then AColumn.TypeName := 'NVARCHAR2(%l)'
       else if FDriverName = dnFirebird  then AColumn.TypeName := 'VARCHAR(%l)'
@@ -288,10 +289,15 @@ begin
       else if FDriverName = dnSQLite  then AColumn.TypeName := 'FLOAT(%p,%s)'
       else                                 AColumn.TypeName := 'DECIMAL(%p,%s)';
     end;
-    ftBlob, ftGraphic, ftOraBlob:
+    ftBlob, ftOraBlob:
     begin
-      if      FDriverName = dnMSSQL  then AColumn.TypeName := 'VARBINARY(MAX)'
-      else                                AColumn.TypeName := 'BLOB'
+      if FDriverName = dnMSSQL  then AColumn.TypeName := 'VARBINARY(MAX)'
+      else                           AColumn.TypeName := 'BLOB'
+    end;
+    ftGraphic: 
+    begin 
+      if FDriverName = dnMSSQL  then AColumn.TypeName := 'IMAGE'
+      else                           AColumn.TypeName := 'BLOB'
     end;
     ftWideMemo:
     begin
