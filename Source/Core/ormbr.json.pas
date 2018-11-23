@@ -537,7 +537,7 @@ end;
 function TJSONObjectORMBr.JSONToObject<T>(const AJson: String): T;
 begin
   Result := T.Create;
-  TObject(Result).MethodCall('Create', []);
+//  TObject(Result).MethodCall('Create', []);
   if not JSONToObject(TObject(Result), AJson) then
     raise Exception.Create('Error Message');
 end;
