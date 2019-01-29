@@ -259,8 +259,10 @@ begin
       case AColumn.FieldType of
         ftString, ftFixedChar:
           LProperty.SetValue(AObject, LProperty.GetEnumStringValue(AObject, AField.Value));
-        ftInteger, ftBoolean:
+        ftInteger:
           LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
+        ftBoolean:
+          LProperty.SetValue(AObject, AField.AsBoolean);
       else
         raise Exception
                 .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
