@@ -160,7 +160,8 @@ begin
    Result := FInstance;
 end;
 
-function TMappingExplorer.GetMappingPrimaryKey(const AClass: TClass): TPrimaryKeyMapping;
+function TMappingExplorer.GetMappingPrimaryKey(
+  const AClass: TClass): TPrimaryKeyMapping;
 var
   LRttiType: TRttiType;
 begin
@@ -174,7 +175,8 @@ begin
     FPrimaryKeyMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingSequence(const AClass: TClass): TSequenceMapping;
+function TMappingExplorer.GetMappingSequence(
+  const AClass: TClass): TSequenceMapping;
 var
   LRttiType: TRttiType;
 begin
@@ -188,7 +190,8 @@ begin
     FSequenceMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingCalcField(const AClass: TClass): TCalcFieldMappingList;
+function TMappingExplorer.GetMappingCalcField(
+  const AClass: TClass): TCalcFieldMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -202,7 +205,8 @@ begin
     FCalcFieldMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingCheck(const AClass: TClass): TCheckMappingList;
+function TMappingExplorer.GetMappingCheck(
+  const AClass: TClass): TCheckMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -216,7 +220,8 @@ begin
     FCheckMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingColumn(const AClass: TClass): TColumnMappingList;
+function TMappingExplorer.GetMappingColumn(
+  const AClass: TClass): TColumnMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -230,7 +235,8 @@ begin
     FColumnMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList;
+function TMappingExplorer.GetMappingEnumeration(
+  const AClass: TClass): TEnumerationMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -244,7 +250,8 @@ begin
     FEnumerationMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList;
+function TMappingExplorer.GetMappingFieldEvents(
+  const AClass: TClass): TFieldEventsMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -258,7 +265,8 @@ begin
     FFieldEventsMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingForeignKey(const AClass: TClass): TForeignKeyMappingList;
+function TMappingExplorer.GetMappingForeignKey(
+  const AClass: TClass): TForeignKeyMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -272,7 +280,8 @@ begin
     FForeingnKeyMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingIndexe(const AClass: TClass): TIndexeMappingList;
+function TMappingExplorer.GetMappingIndexe(
+  const AClass: TClass): TIndexeMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -286,7 +295,8 @@ begin
     FIndexeMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingJoinColumn(const AClass: TClass): TJoinColumnMappingList;
+function TMappingExplorer.GetMappingJoinColumn(
+  const AClass: TClass): TJoinColumnMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -300,7 +310,8 @@ begin
     FJoinColumnMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingOrderBy(const AClass: TClass): TOrderByMapping;
+function TMappingExplorer.GetMappingOrderBy(
+  const AClass: TClass): TOrderByMapping;
 var
   LRttiType: TRttiType;
 begin
@@ -314,7 +325,8 @@ begin
     FOrderByMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingAssociation(const AClass: TClass): TAssociationMappingList;
+function TMappingExplorer.GetMappingAssociation(
+  const AClass: TClass): TAssociationMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -328,7 +340,8 @@ begin
     FAssociationMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingTable(const AClass: TClass): TTableMapping;
+function TMappingExplorer.GetMappingTable(
+  const AClass: TClass): TTableMapping;
 var
   LRttiType: TRttiType;
 begin
@@ -342,7 +355,8 @@ begin
     FTableMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingTrigger(const AClass: TClass): TTriggerMappingList;
+function TMappingExplorer.GetMappingTrigger(
+  const AClass: TClass): TTriggerMappingList;
 var
   LRttiType: TRttiType;
 begin
@@ -356,7 +370,8 @@ begin
     FTriggerMapping.Add(AClass.ClassName, Result);
 end;
 
-function TMappingExplorer.GetMappingView(const AClass: TClass): TViewMapping;
+function TMappingExplorer.GetMappingView(
+  const AClass: TClass): TViewMapping;
 var
   LRttiType: TRttiType;
 begin

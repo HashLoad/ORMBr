@@ -49,10 +49,14 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer; AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass;
+      AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
   end;
 
 implementation
@@ -72,7 +76,8 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorPostgreSQL.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
+function TDMLGeneratorPostgreSQL.GeneratorSelectAll(AClass: TClass;
+  APageSize: Integer; AID: Variant): string;
 var
   LTable: TTableMapping;
   LCriteria: ICriteria;
@@ -120,14 +125,18 @@ begin
     Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorPostgreSQL.GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorPostgreSQL.GeneratorSequenceCurrentValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT CURRVAL(''%s'')', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT CURRVAL(''%s'')',
+                                   [ACommandInsert.Sequence.Name]));
 end;
 
-function TDMLGeneratorPostgreSQL.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorPostgreSQL.GeneratorSequenceNextValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT NEXTVAL(''%s'')', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT NEXTVAL(''%s'')',
+                                   [ACommandInsert.Sequence.Name]));
 end;
 
 initialization

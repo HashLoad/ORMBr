@@ -56,9 +56,11 @@ type
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const APageSize: Integer); virtual; abstract;
     procedure InsertInternal(const AObject: M); virtual; abstract;
-    procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TList<string>); virtual; abstract;
+    procedure UpdateInternal(const AObject: TObject;
+      const AModifiedFields: TList<string>); virtual; abstract;
     procedure DeleteInternal(const AObject: M); virtual; abstract;
-    function SelectInternalWhere(const AWhere: string; const AOrderBy: string): string; virtual; abstract;
+    function SelectInternalWhere(const AWhere: string;
+      const AOrderBy: string): string; virtual; abstract;
     function SelectInternalAll: IDBResultSet; virtual; abstract;
     function SelectInternalID(const AID: Variant): IDBResultSet; virtual; abstract;
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
@@ -66,16 +68,24 @@ type
     function GetDMLCommand: string; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Variant): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual; abstract;
+    function FindWhere(const AWhere: string;
+      const AOrderBy: string = ''): TObjectList<M>; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function NextPacket: IDBResultSet; overload; virtual; abstract;
-    function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
-    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function NextPacket(const APageSize,
+      APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function NextPacket(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function NextPacketList: TObjectList<M>; overload; virtual; abstract;
-    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
-    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
-    procedure NextPacketList(const AObjectList: TObjectList<M>; const APageSize, APageNext: Integer); overload; virtual; abstract;
-    procedure NextPacketList(const AObjectList: TObjectList<M>; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; virtual; abstract;
+    function NextPacketList(const APageSize,
+      APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>;
+      const APageSize, APageNext: Integer); overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>;
+      const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
     property Explorer: IMappingExplorerStrategy read FExplorer;
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;

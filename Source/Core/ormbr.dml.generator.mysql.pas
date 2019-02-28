@@ -51,10 +51,14 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer; AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
   end;
 
 implementation
@@ -74,7 +78,8 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorMySQL.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
+function TDMLGeneratorMySQL.GeneratorSelectAll(AClass: TClass;
+  APageSize: Integer; AID: Variant): string;
 var
   LTable: TTableMapping;
   LCriteria: ICriteria;
@@ -122,7 +127,8 @@ begin
     Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorMySQL.GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMySQL.GeneratorSequenceCurrentValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
                                    'FROM INFORMATION_SCHEMA.TABLES ' +
@@ -130,7 +136,8 @@ begin
                                    'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Table.Name)]));
 end;
 
-function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
   Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert);
 end;

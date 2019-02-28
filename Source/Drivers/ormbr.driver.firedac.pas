@@ -37,6 +37,7 @@ uses
   FireDAC.Comp.Client,
   FireDAC.Comp.Script,
   FireDAC.DApt,
+  FireDAC.Stan.Param,
   /// orm
   ormbr.driver.connection,
   ormbr.factory.interfaces,

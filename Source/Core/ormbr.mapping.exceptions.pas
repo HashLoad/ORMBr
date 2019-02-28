@@ -74,42 +74,48 @@ uses
 
 constructor EClassNotRegistered.Create(AClass: TClass);
 begin
-   inherited CreateFmt('Classe %s não registrada. Registre no Initialization usando TRegisterClasses.GetInstance.RegisterClass(%s)', [AClass.ClassName]);
+   inherited CreateFmt('Classe %s não registrada. Registre no Initialization usando TRegisterClasses.GetInstance.RegisterClass(%s)',
+                       [AClass.ClassName]);
 end;
 
 { EFieldNotNull }
 
 constructor EFieldNotNull.Create(ADisplayLabel: String);
 begin
-  inherited CreateFmt('Campo [ %s ] não pode ser vazio', [ADisplayLabel]);
+  inherited CreateFmt('Campo [ %s ] não pode ser vazio',
+                      [ADisplayLabel]);
 end;
 
 { EHighestConstraint }
 
 constructor EMinimumValueConstraint.Create(ADisplayLabel: String; AValue: Double);
 begin
-  inherited CreateFmt('O valor mínimo do campo [ %s ] permitido é [ %s ]!', [ADisplayLabel, FloatToStr(AValue)]);
+  inherited CreateFmt('O valor mínimo do campo [ %s ] permitido é [ %s ]!',
+                      [ADisplayLabel, FloatToStr(AValue)]);
 end;
 
 { EFieldValidate }
 
 constructor EFieldValidate.Create(AField: string; AMensagem: string);
 begin
-  inherited CreateFmt('[ %s ] %s', [AField, AMensagem]);
+  inherited CreateFmt('[ %s ] %s',
+                      [AField, AMensagem]);
 end;
 
 { EDefaultExpression }
 
 constructor EDefaultExpression.Create(ADefault, AColumnName, AClassName: string);
 begin
-  inherited CreateFmt('O valor Default [ %s ] do campo [ %s ] na classe [ %s ], é inválido!', [ADefault, AColumnName, AClassName]);
+  inherited CreateFmt('O valor Default [ %s ] do campo [ %s ] na classe [ %s ], é inválido!',
+                      [ADefault, AColumnName, AClassName]);
 end;
 
 { EMaximumValueConstraint }
 
 constructor EMaximumValueConstraint.Create(ADisplayLabel: String; AValue: Double);
 begin
-  inherited CreateFmt('O valor máximo do campo [ %s ] permitido é [ %s ]!', [ADisplayLabel, FloatToStr(AValue)]);
+  inherited CreateFmt('O valor máximo do campo [ %s ] permitido é [ %s ]!',
+                      [ADisplayLabel, FloatToStr(AValue)]);
 end;
 
 end.

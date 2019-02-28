@@ -49,10 +49,14 @@ type
   protected
     FDMLCommand: string;
   public
-    constructor Create(const AObject: TObject; const AConnection: IDBConnection; const ADriverName: TDriverName); virtual; abstract;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer): IDBResultSet; virtual; abstract;
-    function GeneratorSelectID(AClass: TClass; AID: Variant): IDBResultSet; virtual; abstract;
-    function GeneratorSelect(ASQL: String; APageSize: Integer): IDBResultSet; virtual; abstract;
+    constructor Create(const AObject: TObject; const AConnection: IDBConnection;
+      const ADriverName: TDriverName); virtual; abstract;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer): IDBResultSet; virtual; abstract;
+    function GeneratorSelectID(AClass: TClass;
+      AID: Variant): IDBResultSet; virtual; abstract;
+    function GeneratorSelect(ASQL: String;
+      APageSize: Integer): IDBResultSet; virtual; abstract;
     function GeneratorSelectOneToOne(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): IDBResultSet; virtual; abstract;
     function GeneratorSelectOneToMany(const AOwner: TObject; const AClass: TClass;
@@ -60,13 +64,17 @@ type
     function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
       const AOrderBy: string; const APageSize: Integer): string; virtual; abstract;
     function GeneratorNextPacket: IDBResultSet; overload; virtual; abstract;
-    function GeneratorNextPacket(const AClass: TClass; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
-    function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function GeneratorNextPacket(const AClass: TClass;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
+    function GeneratorNextPacket(const AClass: TClass;
+      const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; virtual; abstract;
-    procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); virtual; abstract;
+    procedure GeneratorUpdate(const AObject: TObject;
+      const AModifiedFields: TList<string>); virtual; abstract;
     procedure GeneratorInsert(const AObject: TObject); virtual; abstract;
     procedure GeneratorDelete(const AObject: TObject); virtual; abstract;
   end;
@@ -79,11 +87,15 @@ type
     FCommandUpdater: TCommandUpdater;
     FCommandDeleter: TCommandDeleter;
   public
-    constructor Create(const AObject: TObject; const AConnection: IDBConnection; const ADriverName: TDriverName); override;
+    constructor Create(const AObject: TObject; const AConnection: IDBConnection;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer): IDBResultSet; override;
-    function GeneratorSelectID(AClass: TClass; AID: Variant): IDBResultSet; override;
-    function GeneratorSelect(ASQL: String; APageSize: Integer): IDBResultSet; override;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer): IDBResultSet; override;
+    function GeneratorSelectID(AClass: TClass;
+      AID: Variant): IDBResultSet; override;
+    function GeneratorSelect(ASQL: String;
+      APageSize: Integer): IDBResultSet; override;
     function GeneratorSelectOneToOne(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): IDBResultSet; override;
     function GeneratorSelectOneToMany(const AOwner: TObject; const AClass: TClass;
@@ -91,13 +103,17 @@ type
     function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
       const AOrderBy: string; const APageSize: Integer): string; override;
     function GeneratorNextPacket: IDBResultSet; overload; override;
-    function GeneratorNextPacket(const AClass: TClass; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
-    function GeneratorNextPacket(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function GeneratorNextPacket(const AClass: TClass;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function GeneratorNextPacket(const AClass: TClass;
+      const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; override;
-    procedure GeneratorUpdate(const AObject: TObject; const AModifiedFields: TList<string>); override;
+    procedure GeneratorUpdate(const AObject: TObject;
+      const AModifiedFields: TList<string>); override;
     procedure GeneratorInsert(const AObject: TObject); override;
     procedure GeneratorDelete(const AObject: TObject); override;
   end;
@@ -113,6 +129,7 @@ uses
 constructor TDMLCommandFactory.Create(const AObject: TObject;
   const AConnection: IDBConnection; const ADriverName: TDriverName);
 begin
+  inherited;
   FConnection := AConnection;
   FCommandSelecter := TCommandSelecter.Create(AConnection, ADriverName, AObject);
   FCommandInserter := TCommandInserter.Create(AConnection, ADriverName, AObject);
@@ -136,10 +153,9 @@ end;
 
 function TDMLCommandFactory.ExistSequence: Boolean;
 begin
+  Result := False;
   if FCommandInserter.Sequence <> nil then
-    Exit(FCommandInserter.Sequence.ExistSequence)
-  else
-    Exit(False)
+    Exit(FCommandInserter.Sequence.ExistSequence);
 end;
 
 procedure TDMLCommandFactory.GeneratorDelete(const AObject: TObject);
@@ -177,7 +193,8 @@ function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
 var
   LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
+  LSQLText := FCommandSelecter
+                .GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
   /// Envia comando para tela do monitor.
@@ -204,7 +221,8 @@ begin
   Result := FConnection.ExecuteSQL(LSQLText);
 end;
 
-function TDMLCommandFactory.GeneratorSelect(ASQL: String; APageSize: Integer): IDBResultSet;
+function TDMLCommandFactory.GeneratorSelect(ASQL: String;
+  APageSize: Integer): IDBResultSet;
 begin
   FCommandSelecter.SetPageSize(APageSize);
 
@@ -218,7 +236,8 @@ begin
   Result := FConnection.ExecuteSQL(ASQL);
 end;
 
-function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass; APageSize: Integer): IDBResultSet;
+function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass;
+  APageSize: Integer): IDBResultSet;
 var
   LSQLText: String;
 begin
@@ -280,7 +299,8 @@ begin
   Result := FCommandSelecter.GeneratorSelectWhere(AClass, AWhere, AOrderBy);
 end;
 
-function TDMLCommandFactory.GeneratorSelectID(AClass: TClass; AID: Variant): IDBResultSet;
+function TDMLCommandFactory.GeneratorSelectID(AClass: TClass;
+  AID: Variant): IDBResultSet;
 var
   LSQLText: String;
 begin

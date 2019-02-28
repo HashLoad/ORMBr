@@ -161,7 +161,8 @@ type
     FProperty: TRttiProperty;
     FCascadeActions: TCascadeActions;
   public
-    constructor Create(AMultiplicity: TMultiplicity; AColumnsName, AColumnsNameRef: TArray<string>;
+    constructor Create(AMultiplicity: TMultiplicity;
+      AColumnsName, AColumnsNameRef: TArray<string>;
       AClassNameRef: string; AProperty: TRttiProperty; ALazy: Boolean;
       ACascadeActions: TCascadeActions);
     destructor Destroy; override;
@@ -198,7 +199,8 @@ type
   /// PrimaryKeyMapping
   TIndexeMapping = class(TPrimaryKeyMapping)
   public
-    constructor Create(AName: string; AColumns: TArray<string>; ASortingOrder: TSortingOrder;
+    constructor Create(AName: string; AColumns: TArray<string>;
+      ASortingOrder: TSortingOrder;
       AUnique: Boolean; ADescription: string = '');
   end;
   /// IndexeMappingList
@@ -238,7 +240,8 @@ type
     FRuleUpdate: TRuleAction;
     FRuleDelete: TRuleAction;
   public
-    constructor Create(AName, ATableNameRef: string; AFromColumns, AToColumns: TArray<string>;
+    constructor Create(AName, ATableNameRef: string;
+      AFromColumns, AToColumns: TArray<string>;
       ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string = '');
     destructor Destroy; override;
     property Name: string read FName;
@@ -263,7 +266,8 @@ type
     FAliasRefTable: string;
   public
     constructor Create(AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string; AAliasRefTable: string);
+      ARefColumnNameSelect: string; AJoin: TJoin;
+      AAliasColumn: string; AAliasRefTable: string);
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
     property RefTableName: string read FRefTableName;
@@ -317,8 +321,9 @@ implementation
 
 { TOneToOneRelationMapping }
 
-constructor TAssociationMapping.Create(AMultiplicity: TMultiplicity; AColumnsName,
-  AColumnsNameRef: TArray<string>; AClassNameRef: string; AProperty: TRttiProperty;
+constructor TAssociationMapping.Create(AMultiplicity: TMultiplicity;
+  AColumnsName, AColumnsNameRef: TArray<string>;
+  AClassNameRef: string; AProperty: TRttiProperty;
   ALazy: Boolean; ACascadeActions: TCascadeActions);
 var
   LFor: Integer;
@@ -353,8 +358,9 @@ end;
 
 { TPrimaryKeyMapping }
 
-constructor TPrimaryKeyMapping.Create(AColumns: TArray<string>; AAutoInc: Boolean;
-  ASortingOrder: TSortingOrder; AUnique: Boolean; ADescription: string);
+constructor TPrimaryKeyMapping.Create(AColumns: TArray<string>;
+  AAutoInc: Boolean; ASortingOrder: TSortingOrder;
+  AUnique: Boolean; ADescription: string);
 var
   iFor: Integer;
 begin
@@ -413,8 +419,9 @@ end;
 
 { TForeignKeyMapping }
 
-constructor TForeignKeyMapping.Create(AName, ATableNameRef: string; AFromColumns,
-  AToColumns: TArray<string>; ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string);
+constructor TForeignKeyMapping.Create(AName, ATableNameRef: string;
+  AFromColumns, AToColumns: TArray<string>;
+  ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string);
 var
   iFor: Integer;
 begin
@@ -499,7 +506,8 @@ end;
 
 { TFieldEvents }
 
-constructor TFieldEventsMapping.Create(AFieldName: String; AFieldEvents: TFieldEvents);
+constructor TFieldEventsMapping.Create(AFieldName: String;
+  AFieldEvents: TFieldEvents);
 begin
   FFieldName := AFieldName;
   FFieldEvents := AFieldEvents;

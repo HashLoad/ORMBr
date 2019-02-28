@@ -72,10 +72,13 @@ type
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
-    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual; abstract;
+    procedure NextPacketList(
+      const AObjectList: TObjectList<M>); overload; virtual; abstract;
     function NextPacketList: TObjectList<M>; overload; virtual; abstract;
-    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
-    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const APageSize,
+      APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     /// <summary>
     /// DataSet
     /// </summary>
@@ -96,9 +99,11 @@ type
     function Find(const AID: Integer): M; overload; virtual;
     function Find(const AID: string): M; overload; virtual;
     {$IFDEF DRIVERRESTFUL}
-    function Find(const AMethodName: String; const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    function Find(const AMethodName: String;
+      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
-    function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<M>; virtual;
+    function FindWhere(const AWhere: string;
+      const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
   end;
 
@@ -159,7 +164,8 @@ begin
   Result := FManager.Find(AID);
 end;
 
-function TSessionAbstract<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TSessionAbstract<M>.FindWhere(const AWhere,
+  AOrderBy: string): TObjectList<M>;
 begin
   FFindWhereUsed := True;
   FWhere := AWhere;

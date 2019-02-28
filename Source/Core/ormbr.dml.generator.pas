@@ -58,28 +58,40 @@ type
   /// </summary>
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
-    function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
-    procedure SetJoinColumn(AClass: TClass; ATable: TTableMapping; var ACriteria: ICriteria);
+    function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
+      AFieldType: TFieldType): Variant;
+    procedure SetJoinColumn(AClass: TClass; ATable: TTableMapping;
+      var ACriteria: ICriteria);
   protected
     FConnection: IDBConnection;
     FDateFormat: string;
     FTimeFormat: string;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
     function GetGeneratorSelect(ACriteria: ICriteria): string; virtual;
-    function ExecuteSequence(ASQL: string): Int64; virtual;
+    function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
     constructor Create; virtual; abstract;
     procedure SetConnection(const AConnaction: IDBConnection); virtual;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; virtual; abstract;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; virtual; abstract;
-    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string; virtual;
-    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string; virtual;
-    function GeneratorUpdate(AObject: TObject; AParams: TParams; AModifiedFields: TList<string>): string; virtual;
-    function GeneratorInsert(AObject: TObject; ACommandInsert: TDMLCommandInsert): string; virtual;
-    function GeneratorDelete(AObject: TObject; AParams: TParams): string; virtual;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
-    function GeneratorPageNext(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; virtual;
+    function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
+      AID: Variant): string; virtual; abstract;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; virtual; abstract;
+    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string; virtual;
+    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string; virtual;
+    function GeneratorUpdate(AObject: TObject; AParams: TParams;
+      AModifiedFields: TList<string>): string; virtual;
+    function GeneratorInsert(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): string; virtual;
+    function GeneratorDelete(AObject: TObject;
+      AParams: TParams): string; virtual;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
+    function GeneratorPageNext(const ACommandSelect: string;
+      APageSize, APageNext: Integer): string; virtual;
   end;
 
 implementation
@@ -89,7 +101,7 @@ uses
 
 { TDMLGeneratorAbstract }
 
-function TDMLGeneratorAbstract.ExecuteSequence(ASQL: string): Int64;
+function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: string): Int64;
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -112,6 +124,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
     LColumn: TColumnMapping;
     LColumns: TColumnMappingList;
   begin
+    Result := Null;
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[AIndex] then
@@ -130,8 +143,8 @@ begin
 
   /// Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
-    LCriteria.Where(LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor] + ' = ' + GetValue(LFor));
-
+    LCriteria.Where(LTable.Name + '.'   + AAssociation.ColumnsNameRef[LFor]
+                                + ' = ' + GetValue(LFor));
   /// OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
@@ -149,6 +162,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
     LColumn: TColumnMapping;
     LColumns: TColumnMappingList;
   begin
+    Result := Null;
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[Aindex] then
@@ -167,7 +181,8 @@ begin
 
   /// Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
-    LCriteria.Where(LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor] + ' = ' + GetValue(LFor));
+    LCriteria.Where(LTable.Name + '.'   + AAssociation.ColumnsNameRef[LFor]
+                                + ' = ' + GetValue(LFor));
 
   /// OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
@@ -178,7 +193,8 @@ begin
   Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbstract.GeneratorDelete(AObject: TObject; AParams: TParams): string;
+function TDMLGeneratorAbstract.GeneratorDelete(AObject: TObject;
+  AParams: TParams): string;
 var
   LFor: Integer;
   LTable: TTableMapping;
@@ -223,8 +239,8 @@ begin
   Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbstract.GeneratorPageNext(ACommandSelect: string;
-  APageSize: Integer; APageNext: Integer): string;
+function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
+  APageSize, APageNext: Integer): string;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
@@ -237,7 +253,8 @@ begin
   Result := '';
 end;
 
-function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria;
+function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass;
+  AID: Variant): ICriteria;
 var
   LTable: TTableMapping;
   LColumns: TColumnMappingList;
@@ -329,9 +346,11 @@ begin
       for LJoin in LJoinList do
       begin
         if Length(LJoin.AliasColumn) > 0 then
-          ACriteria.Column(LJoin.AliasRefTable + '.' + LJoin.RefColumnNameSelect).&As(LJoin.AliasColumn)
+          ACriteria.Column(LJoin.AliasRefTable + '.'
+                         + LJoin.RefColumnNameSelect).&As(LJoin.AliasColumn)
         else
-          ACriteria.Column(LJoin.AliasRefTable + '.' + LJoin.RefColumnNameSelect);
+          ACriteria.Column(LJoin.AliasRefTable + '.'
+                         + LJoin.RefColumnNameSelect);
       end;
       for LJoin in LJoinList do
       begin
@@ -374,8 +393,8 @@ begin
   end;
 end;
 
-function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject; AParams: TParams;
-  AModifiedFields: TList<string>): string;
+function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject;
+  AParams: TParams; AModifiedFields: TList<string>): string;
 var
   LFor: Integer;
   LRttiType: TRttiType;

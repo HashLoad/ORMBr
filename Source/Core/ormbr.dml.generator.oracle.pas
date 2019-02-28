@@ -51,11 +51,16 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorPageNext(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; override;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer; AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorPageNext(const ACommandSelect: string;
+      APageSize: Integer; APageNext: Integer): string; override;
   end;
 
 implementation
@@ -78,7 +83,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorOracle.GeneratorPageNext(ACommandSelect: string;
+function TDMLGeneratorOracle.GeneratorPageNext(const ACommandSelect: string;
   APageSize: Integer; APageNext: Integer): string;
 begin
   if APageSize > -1 then
@@ -87,7 +92,8 @@ begin
     Result := ACommandSelect;
 end;
 
-function TDMLGeneratorOracle.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
+function TDMLGeneratorOracle.GeneratorSelectAll(AClass: TClass;
+  APageSize: Integer; AID: Variant): string;
 var
   LTable: TTableMapping;
   LCriteria: ICriteria;
@@ -145,14 +151,18 @@ begin
      Result := oCriteria.AsString;
 end;
 
-function TDMLGeneratorOracle.GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorOracle.GeneratorSequenceCurrentValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT %s.CURRVAL FROM DUAL', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT %s.CURRVAL FROM DUAL',
+                                   [ACommandInsert.Sequence.Name]));
 end;
 
-function TDMLGeneratorOracle.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorOracle.GeneratorSequenceNextValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT %s.NEXTVAL FROM DUAL', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT %s.NEXTVAL FROM DUAL',
+                                   [ACommandInsert.Sequence.Name]));
 end;
 
 initialization

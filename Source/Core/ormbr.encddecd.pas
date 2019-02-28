@@ -58,8 +58,10 @@ type
     function DoEncode(const Input: array of Byte): TBytes; overload; virtual;
     function DoEncode(const Input: string): string; overload; virtual; abstract;
     function DoDecodeStringToBytes(const Input: string): TBytes; virtual;
-    function DoEncodeBytesToString(const Input: array of Byte): string; overload; virtual;
-    function DoEncodeBytesToString(const Input: Pointer; Size: Integer): string; overload; virtual;
+    function DoEncodeBytesToString(const Input:
+      array of Byte): string; overload; virtual;
+    function DoEncodeBytesToString(const Input: Pointer;
+      Size: Integer): string; overload; virtual;
   public
     function Decode(const Input, Output: TStream): Integer; overload;
     function Decode(const Input: array of Byte): TBytes; overload;
@@ -69,7 +71,8 @@ type
     function Encode(const Input: string): string; overload;
     function DecodeStringToBytes(const Input: string): TBytes;
     function EncodeBytesToString(const Input: array of Byte): string; overload;
-    function EncodeBytesToString(const Input: Pointer; Size: Integer): string; overload;
+    function EncodeBytesToString(const Input: Pointer;
+      Size: Integer): string; overload;
     class property Base64: TNetEncoding read GetBase64Encoding;
     class property HTML: TNetEncoding read GetHTMLEncoding;
     class property URL: TURLEncoding read GetURLEncoding;
@@ -116,12 +119,13 @@ type
 
     procedure InitEncodeState(var State: TEncodeState; const CharSize: Integer);
     procedure InitDecodeState(var State: TDecodeState);
-    function EstimateEncodeLength(const InputLength: UInt64; const CharSize: Integer): UInt64;
+    function EstimateEncodeLength(const InputLength: UInt64;
+      const CharSize: Integer): UInt64;
     function EstimateDecodeLength(const InputLength: UInt64): UInt64;
     function DecodeValue(const Code: Byte): Integer; inline;
     function EncodeValue(const Code: Integer): Byte; inline;
-    function EncodeBytes(Input, Output: PByte; InputLen: Integer; LineSeparator: array of Byte;
-      var State: TEncodeState): Integer;
+    function EncodeBytes(Input, Output: PByte; InputLen: Integer;
+      LineSeparator: array of Byte; var State: TEncodeState): Integer;
     function EncodeBytesEnd(Output: PByte; var State: TEncodeState): Integer;
     function DecodeBytes(Input, Output: PByte; InputLen: Integer; CharSize: Integer;
       var State: TDecodeState): Integer;
@@ -133,7 +137,8 @@ type
     function DoEncode(const Input: string): string; overload; override;
     function DoDecodeStringToBytes(const Input: string): TBytes; override;
     function DoEncodeBytesToString(const Input: array of Byte): string; overload; override;
-    function DoEncodeBytesToString(const Input: Pointer; Size: Integer): string; overload; override;
+    function DoEncodeBytesToString(const Input: Pointer;
+      Size: Integer): string; overload; override;
   public
     constructor Create; overload; virtual;
     constructor Create(CharsPerLine: Integer); overload; virtual;

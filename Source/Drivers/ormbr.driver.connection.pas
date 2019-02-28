@@ -229,11 +229,13 @@ end;
 function TORMBrField.AsBlob: TMemoryStream;
 begin
 //  Result := TMemoryStream( FOwner.GetFieldValue(FAsFieldName) );
+  Result := nil;
 end;
 
 function TORMBrField.AsBlobPtr(out iNumBytes: Integer): Pointer;
 begin
 //  Result := Pointer( FOwner.GetFieldValue(FAsFieldName) );
+  Result := nil;
 end;
 
 function TORMBrField.AsBlobText: string;
@@ -241,9 +243,8 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := String(LResult);
+  if LResult <> Null then
+    Result := String(LResult);
 end;
 
 function TORMBrField.AsBlobTextDef(const Def: string): string;
@@ -260,9 +261,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Boolean(LResult);
+  if LResult <> Null then
+    Result := Boolean(LResult)
+  else
+    Result := False;
 end;
 
 function TORMBrField.AsBooleanDef(const Def: Boolean): Boolean;
@@ -279,9 +281,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Currency(LResult);
+  if LResult <> Null then
+    Result := Currency(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsCurrencyDef(const Def: Currency): Currency;
@@ -298,9 +301,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := TDateTime(LResult);
+  if LResult <> Null then
+    Result := TDateTime(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsDateTimeDef(const Def: TDateTime): TDateTime;
@@ -317,9 +321,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Double(LResult);
+  if LResult <> Null then
+    Result := Double(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsDoubleDef(const Def: Double): Double;
@@ -336,9 +341,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Extended(LResult);
+  if LResult <> Null then
+    Result := Extended(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsExtendedDef(const Def: Extended): Extended;
@@ -355,9 +361,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Double(LResult);
+  if LResult <> Null then
+    Result := Double(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsFloatDef(const Def: Double): Double;
@@ -374,9 +381,10 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := Int64(LResult);
+  if LResult <> Null then
+    Result := Int64(LResult)
+  else
+    Result := 0;
 end;
 
 function TORMBrField.AsIntegerDef(const Def: Int64): Int64;
@@ -393,9 +401,8 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := String(LResult);
+  if LResult <> Null then
+    Result := String(LResult);
 end;
 
 function TORMBrField.AsStringDef(const Def: string): string;
@@ -412,9 +419,8 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := LResult;
+  if LResult <> Null then
+    Result := LResult;
 end;
 
 function TORMBrField.AsVariantDef(const Def: Variant): Variant;
@@ -436,9 +442,8 @@ var
   LResult: Variant;
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult = Null then
-    Exit;
-  Result := LResult;
+  if LResult <> Null then
+    Result := LResult;
 end;
 
 function TORMBrField.ValueDef(const Def: Variant): Variant;

@@ -87,10 +87,14 @@ type
     function  GetObjectTheList: TObject;
     function  GetIndex: Integer;
     function  GetCascadeActions: TCascadeActions;
-    function  GetEnumIntegerValue(const AInstance: TObject; AValue: Variant): TValue;
-    function  GetEnumStringValue(const AInstance: TObject; AValue: Variant): TValue;
-    function  GetEnumToFieldValue(const AInstance: TObject; AFieldType: TFieldType): TValue;
-    procedure SetNullableValue(AInstance: Pointer; ATypeInfo: PTypeInfo; AValue: Variant);
+    function  GetEnumIntegerValue(const AInstance: TObject;
+      AValue: Variant): TValue;
+    function  GetEnumStringValue(const AInstance: TObject;
+      AValue: Variant): TValue;
+    function  GetEnumToFieldValue(const AInstance: TObject;
+      AFieldType: TFieldType): TValue;
+    procedure SetNullableValue(AInstance: Pointer; ATypeInfo:
+      PTypeInfo; AValue: Variant);
   end;
 
 implementation
@@ -230,10 +234,14 @@ begin
         if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
         begin
           case AFieldType of
-            ftFixedChar: Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
-            ftString:    Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
-            ftInteger:   Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
-            ftBoolean:   Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(-1)));
+            ftFixedChar:
+              Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
+            ftString:
+              Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
+            ftInteger:
+              Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
+            ftBoolean:
+              Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(-1)));
           else
             raise Exception.Create(cENUMERATIONSTYPEERROR);
           end
@@ -292,7 +300,7 @@ begin
     begin
       LValueField := Self.PropertyType.GetField('FValue');
       if Assigned(LValueField) then
-         Result := LValueField.GetValue(LValue.GetReferenceToRawData);
+        Result := LValueField.GetValue(LValue.GetReferenceToRawData);
     end
   end
   else
@@ -562,6 +570,13 @@ begin
   if LRttiType.TypeKind in [tkFloat] then
   begin
     if LRttiType.Handle = TypeInfo(TDateTime) then
+    begin
+      if Self.GetNullableValue(AObject).AsExtended = 0 then
+        if Self.IsNotNull = False then
+          Exit(True);
+    end
+    else
+    if LRttiType.Handle = TypeInfo(TDate) then
     begin
       if Self.GetNullableValue(AObject).AsExtended = 0 then
         if Self.IsNotNull = False then

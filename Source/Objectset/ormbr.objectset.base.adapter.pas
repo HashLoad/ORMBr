@@ -68,23 +68,25 @@ type
   public
     constructor Create; overload; virtual;
     destructor Destroy; override;
-    function ExistSequence: Boolean;
-    function ModifiedFields: TDictionary<string, TList<string>>; virtual;
-    function Find: TObjectList<M>; overload; virtual; abstract;
-    function Find(const AID: Integer): M; overload; virtual; abstract;
-    function Find(const AID: string): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
-    procedure Insert(const AObject: M); virtual; abstract;
-    procedure Update(const AObject: M); virtual; abstract;
-    procedure Delete(const AObject: M); virtual; abstract;
-    procedure Modify(const AObject: M); virtual;
-    procedure LoadLazy(const AOwner, AObject: TObject); virtual;
-    procedure NextPacket(const AObjectList: TObjectList<M>); overload; virtual;
-    function NextPacket: TObjectList<M>; overload; virtual;
-    function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
-    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
+    function ExistSequence: Boolean; override;
+    function ModifiedFields: TDictionary<string, TList<string>>; override;
+//    function Find: TObjectList<M>; overload; virtual; abstract;
+//    function Find(const AID: Integer): M; overload; virtual; abstract;
+//    function Find(const AID: string): M; overload; virtual; abstract;
+//    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
+//    procedure Insert(const AObject: M); virtual; abstract;
+//    procedure Update(const AObject: M); virtual; abstract;
+//    procedure Delete(const AObject: M); virtual; abstract;
+    procedure Modify(const AObject: M); override;
+    procedure LoadLazy(const AOwner, AObject: TObject); override;
+    procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
+    function NextPacket: TObjectList<M>; overload; override;
+    function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacket(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     {$IFDEF DRIVERRESTFUL}
-    function Find(const AMethodName: String; const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    function Find(const AMethodName: String;
+      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
   end;
 

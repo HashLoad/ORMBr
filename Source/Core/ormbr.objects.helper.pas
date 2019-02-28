@@ -32,14 +32,22 @@ unit ormbr.objects.helper;
 interface
 
 uses
+  DB,
   Rtti,
+  Variants,
   SysUtils,
   Generics.Collections,
+  ormbr.rtti.helper,
   ormbr.mapping.explorer,
   ormbr.mapping.classes,
   ormbr.mapping.attributes;
 
 type
+  TORMBrObject = class
+  public
+    constructor Create; virtual;
+  end;
+
   TObjectHelper = class helper for TObject
   public
     function GetTable: Table;
@@ -50,7 +58,9 @@ type
     function GetSequence: Sequence;
     function GetPrimaryKey: TArray<TColumnMapping>;
     function GetColumns: TArray<TRttiProperty>;
-    function MethodCall(AMethodName: string; const AParameters: array of TValue): TValue;
+    function MethodCall(AMethodName: string;
+      const AParameters: array of TValue): TValue;
+    procedure SetDefaultValue;
   end;
 
 implementation
@@ -90,6 +100,7 @@ var
   LType: TRttiType;
   LAttribute: TCustomAttribute;
 begin
+  Result := nil;
   if &GetType(LType) then
   begin
     for LAttribute in LType.GetAttributes do // NotServerUse
@@ -133,6 +144,7 @@ var
   LType: TRttiType;
   LAttribute: TCustomAttribute;
 begin
+  Result := nil;
   if &GetType(LType) then
   begin
     for LAttribute in LType.GetAttributes do // Resource
@@ -149,6 +161,7 @@ var
   LType: TRttiType;
   LAttribute: TCustomAttribute;
 begin
+  Result := nil;
   if &GetType(LType) then
   begin
     for LAttribute in LType.GetAttributes do
@@ -156,10 +169,7 @@ begin
       if LAttribute is Sequence then // Sequence
         Exit(Sequence(LAttribute));
     end;
-    Exit(nil);
-  end
-  else
-    Exit(nil);
+  end;
 end;
 
 function TObjectHelper.GetSubResource: SubResource;
@@ -220,6 +230,68 @@ begin
      Result := LMethod.Invoke(Self, AParameters)
   else
      raise Exception.CreateFmt('Cannot find method "%s" in the object', [AMethodName]);
+end;
+
+procedure TObjectHelper.SetDefaultValue;
+var
+  LColumns: TColumnMappingList;
+  LColumn: TColumnMapping;
+  LProperty: TRttiProperty;
+  LValue: Variant;
+begin
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(Self.ClassType);
+  for LColumn in LColumns do
+  begin
+    LProperty := LColumn.PropertyRtti;
+    LValue := StringReplace(LColumn.DefaultValue, '''', '', [rfReplaceAll]);
+    if Length(LColumn.DefaultValue) > 0 then
+    begin
+      case LProperty.PropertyType.TypeKind of
+        tkString, tkWString, tkUString, tkWChar, tkLString, tkChar:
+          LProperty.SetValue(Self, TValue.FromVariant(LValue).AsString);
+        tkInteger, tkSet, tkInt64:
+          LProperty.SetValue(Self, StrToIntDef(LValue, 0));
+        tkFloat:
+          begin
+            if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then // TDateTime
+              LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDateTime>)
+            else
+            if LProperty.PropertyType.Handle = TypeInfo(TDate) then // TDate
+              LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDate>)
+            else
+            if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
+              LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<TTime>)
+            else
+              LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<Double>);
+          end;
+        tkRecord:
+          LProperty.SetNullableValue(Self, LProperty.PropertyType.Handle, LValue);
+        tkEnumeration:
+          begin
+            case LColumn.FieldType of
+              ftString, ftFixedChar:
+                LProperty.SetValue(Self, LProperty.GetEnumStringValue(Self, LValue));
+              ftInteger:
+                LProperty.SetValue(Self, LProperty.GetEnumIntegerValue(Self, LValue));
+              ftBoolean:
+                LProperty.SetValue(Self, TValue.FromVariant(LValue).AsBoolean);
+            else
+              raise Exception
+                      .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
+            end;
+          end;
+      end;
+    end;
+  end;
+end;
+
+{ TORMBrObject }
+
+constructor TORMBrObject.Create;
+begin
+  Self.SetDefaultValue;
 end;
 
 end.

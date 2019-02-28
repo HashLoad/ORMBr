@@ -66,8 +66,8 @@ uses
 
 { TCommandInserter }
 
-constructor TCommandInserter.Create(AConnection: IDBConnection; ADriverName: TDriverName;
-  AObject: TObject);
+constructor TCommandInserter.Create(AConnection: IDBConnection;
+  ADriverName: TDriverName; AObject: TObject);
 begin
   inherited Create(AConnection, ADriverName, AObject);
 end;
@@ -105,7 +105,8 @@ begin
   /// </summary>
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
-    raise Exception.Create('Falta definir o atributo [Column()] nas propriedades da classe [' + AObject.ClassName + ']');
+    raise Exception
+            .Create('Falta definir o atributo [Column()] nas propriedades da classe [' + AObject.ClassName + ']');
 
   LPrimaryKey := TMappingExplorer.GetInstance
                                  .GetMappingPrimaryKey(AObject.ClassType);
@@ -118,13 +119,16 @@ begin
     if LColumn.IsJoinColumn then
       Continue;
     /// <summary>
-    /// Verifica e gera campo AutoIncremental
+    /// Verifica se existe PK, pois autoinc só é usado se existir.
     /// </summary>
-    if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
-      if LPrimaryKey.AutoIncrement then
-        LColumn.PropertyRtti.SetValue(AObject,
-                                      FGeneratorCommand
-                                        .GeneratorSequenceNextValue(AObject, FDMLCommandInsert));
+    if LPrimaryKey <> nil then
+    begin
+      if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
+        if LPrimaryKey.AutoIncrement then
+          LColumn.PropertyRtti.SetValue(AObject,
+                                        FGeneratorCommand
+                                          .GeneratorSequenceNextValue(AObject, FDMLCommandInsert));
+    end;
     /// <summary>
     /// Alimenta cada parâmetro com o valor de cada propriedade do objeto.
     /// </summary>

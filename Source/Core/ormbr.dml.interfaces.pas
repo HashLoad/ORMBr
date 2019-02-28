@@ -47,16 +47,25 @@ type
   IDMLGeneratorCommand = interface
     ['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']
     procedure SetConnection(const AConnaction: IDBConnection);
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string;
-    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string;
-    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string;
-    function GeneratorUpdate(AObject: TObject; AParams: TParams; AModifiedFields: TList<string>): string; overload;
-    function GeneratorInsert(AObject: TObject; ACommandInsert: TDMLCommandInsert): string;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer; AID: Variant): string;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string;
+    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string;
+    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string;
+    function GeneratorUpdate(AObject: TObject; AParams: TParams;
+      AModifiedFields: TList<string>): string; overload;
+    function GeneratorInsert(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): string;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
-    function GeneratorPageNext(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64;
+    function GeneratorPageNext(const ACommandSelect: string;
+      APageSize, APageNext: Integer): string;
   end;
 
 implementation

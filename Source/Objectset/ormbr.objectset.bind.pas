@@ -211,112 +211,115 @@ begin
         else
           LProperty.SetValue(AObject, AField.AsInteger);
       end;
-  tkFloat:
-    begin
-      if TVarData(AField.Value).VType <= varNull then
-        LProperty.SetValue(AObject, 0)
-      else
-      if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then // TDateTime
-        LProperty.SetValue(AObject, AField.AsDateTime)
-      else
-      if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
-        LProperty.SetValue(AObject, AField.AsDateTime)
-      else
-        LProperty.SetValue(AObject, AField.AsFloat)
-    end;
-  tkRecord:
-    begin
-      if LProperty.IsNullable then /// Nullable
+    tkFloat:
       begin
         if TVarData(AField.Value).VType <= varNull then
-          Exit;
-        LProperty.SetNullableValue(AObject, LRttiType.Handle, AField.Value);
-      end
-      else
-      if LProperty.IsBlob then
+          LProperty.SetValue(AObject, 0)
+        else
+        if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then // TDateTime
+          LProperty.SetValue(AObject, AField.AsDateTime)
+        else
+        if LProperty.PropertyType.Handle = TypeInfo(TDate) then // TDate
+          LProperty.SetValue(AObject, AField.AsDateTime)
+        else
+        if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
+          LProperty.SetValue(AObject, AField.AsDateTime)
+        else
+          LProperty.SetValue(AObject, AField.AsFloat)
+      end;
+    tkRecord:
       begin
-        if AField.IsBlob then
+        if LProperty.IsNullable then /// Nullable
         begin
-          if (not VarIsEmpty(AField.Value)) and
-             (not VarIsNull(AField.Value)) then
-          begin
-            LBlobField := LProperty.GetValue(AObject).AsType<TBlob>;
-            LBlobField.SetBytes(AField.AsBytes);
-            LProperty.SetValue(AObject, TValue.From<TBlob>(LBlobField));
-          end;
+          if TVarData(AField.Value).VType <= varNull then
+            Exit;
+          LProperty.SetNullableValue(AObject, LRttiType.Handle, AField.Value);
         end
         else
-          raise Exception.Create(Format('Column [%s] must have blob value',
-                                [AColumn.ColumnName]));
-      end
-      else
-        LProperty.SetNullableValue(AObject,
-                                   LProperty.PropertyType.Handle,
-                                   AField.Value);
-    end;
-  tkEnumeration:
-    begin
-      case AColumn.FieldType of
-        ftString, ftFixedChar:
-          LProperty.SetValue(AObject, LProperty.GetEnumStringValue(AObject, AField.Value));
-        ftInteger:
-          LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
-        ftBoolean:
-          LProperty.SetValue(AObject, AField.AsBoolean);
-      else
-        raise Exception
-                .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
-      end;
-    end;
-  tkClass:
-    begin
-      if AColumn.FieldType in [ftDataSet] then
-      begin
-        case AField.DataType of
-          ftDataSet:
+        if LProperty.IsBlob then
+        begin
+          if AField.IsBlob then
+          begin
+            if (not VarIsEmpty(AField.Value)) and
+               (not VarIsNull(AField.Value)) then
             begin
-              LSource := (AField as TDataSetField).NestedDataSet;
-              if LProperty.IsList then
+              LBlobField := LProperty.GetValue(AObject).AsType<TBlob>;
+              LBlobField.SetBytes(AField.AsBytes);
+              LProperty.SetValue(AObject, TValue.From<TBlob>(LBlobField));
+            end;
+          end
+          else
+            raise Exception.Create(Format('Column [%s] must have blob value',
+                                  [AColumn.ColumnName]));
+        end
+        else
+          LProperty.SetNullableValue(AObject,
+                                     LProperty.PropertyType.Handle,
+                                     AField.Value);
+      end;
+    tkEnumeration:
+      begin
+        case AColumn.FieldType of
+          ftString, ftFixedChar:
+            LProperty.SetValue(AObject, LProperty.GetEnumStringValue(AObject, AField.Value));
+          ftInteger:
+            LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
+          ftBoolean:
+            LProperty.SetValue(AObject, AField.AsBoolean);
+        else
+          raise Exception
+                  .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
+        end;
+      end;
+    tkClass:
+      begin
+        if AColumn.FieldType in [ftDataSet] then
+        begin
+          case AField.DataType of
+            ftDataSet:
               begin
-                LObjectList := LProperty.GetNullableValue(AObject).AsObject;
-                if LObjectList <> nil then
+                LSource := (AField as TDataSetField).NestedDataSet;
+                if LProperty.IsList then
                 begin
-                  LObjectList.MethodCall('Clear', []);
-                  LSource.DisableControls;
-                  LSource.First;
-                  try
-                    while not LSource.Eof do
-                    begin
-                      LObject := LProperty.GetObjectTheList;
-                      FillDataSetField(LSource, LObject);
-                      LObjectList.MethodCall('Add', [LObject]);
-                      LSource.Next;
-                    end;
-                  finally
+                  LObjectList := LProperty.GetNullableValue(AObject).AsObject;
+                  if LObjectList <> nil then
+                  begin
+                    LObjectList.MethodCall('Clear', []);
+                    LSource.DisableControls;
                     LSource.First;
-                    LSource.EnableControls;
+                    try
+                      while not LSource.Eof do
+                      begin
+                        LObject := LProperty.GetObjectTheList;
+                        FillDataSetField(LSource, LObject);
+                        LObjectList.MethodCall('Add', [LObject]);
+                        LSource.Next;
+                      end;
+                    finally
+                      LSource.First;
+                      LSource.EnableControls;
+                    end;
                   end;
+                end
+                else
+                begin
+                  LObject := LProperty.GetNullableValue(AObject).AsObject;
+                  if LObject <> nil then
+                    FillDataSetField(LSource, LObject);
                 end;
-              end
-              else
+              end;
+            ftADT:
               begin
                 LObject := LProperty.GetNullableValue(AObject).AsObject;
                 if LObject <> nil then
-                  FillDataSetField(LSource, LObject);
+                begin
+                  LADTField := (AField as TADTField);
+                  FillADTField(LADTField, LObject);
+                end;
               end;
-            end;
-          ftADT:
-            begin
-              LObject := LProperty.GetNullableValue(AObject).AsObject;
-              if LObject <> nil then
-              begin
-                LADTField := (AField as TADTField);
-                FillADTField(LADTField, LObject);
-              end;
-            end;
+          end;
         end;
       end;
-    end;
   end;
 end;
 

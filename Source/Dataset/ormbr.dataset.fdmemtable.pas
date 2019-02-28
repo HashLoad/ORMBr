@@ -86,21 +86,21 @@ type
     procedure DoBeforeApplyUpdates(DataSet: TDataSet); override;
     procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); override;
     procedure EmptyDataSetChilds; override;
-    procedure OpenIDInternal(const AID: Variant); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
     procedure ApplyInserter(const MaxErros: Integer); override;
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
-    procedure ApplyUpdates(const MaxErros: Integer); override;
-    procedure EmptyDataSet; override;
   public
     constructor Create(AConnection: IDBConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
+    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenSQLInternal(const ASQL: string); override;
+    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure ApplyUpdates(const MaxErros: Integer); override;
+    procedure EmptyDataSet; override;
   end;
 
 implementation

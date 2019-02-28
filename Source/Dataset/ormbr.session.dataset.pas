@@ -56,12 +56,12 @@ type
     procedure PopularDataSet(const ADBResultSet: IDBResultSet);
   protected
     FConnection: IDBConnection;
-    procedure OpenSQL(const ASQL: string); override;
   public
     constructor Create(const AOwner: TDataSetBaseAdapter<M>;
       const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     procedure OpenID(const AID: Variant); override;
+    procedure OpenSQL(const ASQL: string); override;
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;

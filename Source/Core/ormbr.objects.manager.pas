@@ -70,8 +70,6 @@ type
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
     function FindSQLInternal(const ASQL: String): TObjectList<M>; override;
-    function SelectInternalWhere(const AWhere: string;
-      const AOrderBy: string): string; override;
   public
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const APageSize: Integer); override;
@@ -80,14 +78,20 @@ type
     /// Procedures
     /// </summary>
     procedure InsertInternal(const AObject: M); override;
-    procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TList<string>); override;
+    procedure UpdateInternal(const AObject: TObject;
+      const AModifiedFields: TList<string>); override;
     procedure DeleteInternal(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
-    procedure NextPacketList(const AObjectList: TObjectList<M>; const APageSize, APageNext: Integer); overload; override;
-    procedure NextPacketList(const AObjectList: TObjectList<M>; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>;
+      const APageSize, APageNext: Integer); overload; override;
+    procedure NextPacketList(const AObjectList: TObjectList<M>;
+      const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer); overload; override;
     function NextPacketList: TObjectList<M>; overload; override;
-    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
-    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const APageSize,
+      APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     /// <summary>
     /// Functions
     /// </summary>
@@ -96,19 +100,24 @@ type
     /// <summary>
     /// DataSet
     /// </summary>
+    function SelectInternalWhere(const AWhere: string;
+      const AOrderBy: string): string; override;
     function SelectInternalAll: IDBResultSet; override;
     function SelectInternalID(const AID: Variant): IDBResultSet; override;
     function SelectInternal(const ASQL: String): IDBResultSet; override;
     function SelectInternalAssociation(const AObject: TObject): String; override;
     function NextPacket: IDBResultSet; overload; override;
-    function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload; override;
-    function NextPacket(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet; overload; override;
+    function NextPacket(const APageSize,
+      APageNext: Integer): IDBResultSet; overload; override;
+    function NextPacket(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     /// <summary>
     /// ObjectSet
     /// </summary>
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Variant): M; overload; override;
-    function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<M>; override;
+    function FindWhere(const AWhere: string;
+      const AOrderBy: string): TObjectList<M>; override;
   end;
 
 implementation
@@ -121,8 +130,8 @@ uses
 
 { TObjectManager<M> }
 
-constructor TObjectManager<M>.Create(const AOwner: TObject; const AConnection: IDBConnection;
-  const APageSize: Integer);
+constructor TObjectManager<M>.Create(const AOwner: TObject;
+  const AConnection: IDBConnection; const APageSize: Integer);
 begin
   FOwner := AOwner;
   FPageSize := APageSize;
@@ -158,7 +167,8 @@ begin
   Result := FDMLCommandFactory.GeneratorSelectAll(M, FPageSize);
 end;
 
-function TObjectManager<M>.SelectInternalAssociation(const AObject: TObject): String;
+function TObjectManager<M>.SelectInternalAssociation(
+  const AObject: TObject): String;
 var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
@@ -177,14 +187,16 @@ begin
          if not LAssociation.Lazy then
          begin
            if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-              Result := FDMLCommandFactory.GeneratorSelectAssociation(AObject,
-                                                                      FObjectInternal.ClassType,
-                                                                      LAssociation)
+              Result := FDMLCommandFactory
+                          .GeneratorSelectAssociation(AObject,
+                                                      FObjectInternal.ClassType,
+                                                      LAssociation)
            else
            if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-              Result := FDMLCommandFactory.GeneratorSelectAssociation(AObject,
-                                                                      FObjectInternal.ClassType,
-                                                                      LAssociation)
+              Result := FDMLCommandFactory
+                          .GeneratorSelectAssociation(AObject,
+                                                      FObjectInternal.ClassType,
+                                                      LAssociation)
          end;
        end;
     end;
@@ -247,24 +259,24 @@ begin
     begin
       for LAssociation in LAssociationList do
       begin
-         if LAssociation.Lazy then
-         begin
-           if Pos(LAssociation.ClassNameRef, AObject.ClassName) > 0 then
-           begin
-             if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-                ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
-             else
-             if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-                ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
-           end;
-         end;
+        if LAssociation.Lazy then
+        begin
+          if Pos(LAssociation.ClassNameRef, AObject.ClassName) > 0 then
+          begin
+            if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+              ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
+            else
+            if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+              ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
+          end;
+        end;
       end;
     end;
   end;
 end;
 
-procedure TObjectManager<M>.ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
-  AAssociation: TAssociationMapping);
+procedure TObjectManager<M>.ExecuteOneToOne(AObject: TObject;
+  AProperty: TRttiProperty; AAssociation: TAssociationMapping);
 var
   LResultSet: IDBResultSet;
   LObjectValue: TObject;
@@ -352,7 +364,8 @@ begin
     FFetchingRecords := True;
 end;
 
-function TObjectManager<M>.NextPacket(const APageSize, APageNext: Integer): IDBResultSet;
+function TObjectManager<M>.NextPacket(const APageSize,
+  APageNext: Integer): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), APageSize, APageNext);
   if Result.FetchingAll then
@@ -387,7 +400,12 @@ end;
 function TObjectManager<M>.NextPacket(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): IDBResultSet;
 begin
-  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), AWhere, AOrderBy, APageSize, APageNext);
+  Result := FDMLCommandFactory
+              .GeneratorNextPacket(TClass(M),
+                                   AWhere,
+                                   AOrderBy,
+                                   APageSize,
+                                   APageNext);
   if Result.FetchingAll then
     FFetchingRecords := True;
 end;
@@ -464,7 +482,8 @@ begin
   end;
 end;
 
-function TObjectManager<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
+function TObjectManager<M>.NextPacketList(const APageSize,
+  APageNext: Integer): TObjectList<M>;
 var
   LResultSet: IDBResultSet;
   LObjectList: TObjectList<M>;

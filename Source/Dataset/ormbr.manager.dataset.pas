@@ -72,12 +72,13 @@ type
     constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
                                           {$ELSE}IDBConnection);
                                           {$ENDIF}
+    destructor Destroy; override;
     {$IFNDEF DRIVERRESTFUL}
     function NextPacket<T: class, constructor>: TManagerDataSet;
     function GetAutoNextPacket<T: class, constructor>: Boolean;
     procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
     {$ENDIF}
-    destructor Destroy; override;
+    procedure RemoveAdapter<T: class>;
     function AddAdapter<T: class, constructor>(ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
     function AddAdapter<T, M: class, constructor>(ADataSet: TDataSet): TManagerDataSet; overload;
@@ -330,6 +331,18 @@ function TManagerDataSet.RefreshRecord<T>: TManagerDataSet;
 begin
   Resolver<T>.RefreshRecord;
   Result := Self;
+end;
+
+procedure TManagerDataSet.RemoveAdapter<T>;
+var
+  LClassName: String;
+begin
+  LClassName := TClass(T).ClassName;
+  if FRepository.ContainsKey(LClassName) then
+  begin
+    FRepository.Remove(LClassName);
+    FRepository.TrimExcess;
+  end;
 end;
 
 function TManagerDataSet.Resolver<T>: TDataSetBaseAdapter<T>;

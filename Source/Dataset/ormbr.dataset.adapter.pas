@@ -66,12 +66,12 @@ type
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoNewRecord(DataSet: TDataSet); override;
-    procedure LoadLazy(const AOwner: M); override;
-    procedure NextPacket; override;
   public
     constructor Create(AConnection: IDBConnection; ADataSet:
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
+    procedure NextPacket; override;
+    procedure LoadLazy(const AOwner: M); override;
   end;
 
 implementation

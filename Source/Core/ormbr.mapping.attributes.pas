@@ -48,7 +48,7 @@ type
     FSchemaName: String;
   public
     constructor Create; overload;
-    constructor Create(AName: string; ASchemaName: String); overload;
+    constructor Create(const AName: string; ASchemaName: String); overload;
     property Name: String Read FName;
     property SchemaName: String Read FSchemaName;
   end;
@@ -57,7 +57,7 @@ type
   private
     FName: String;
   public
-    constructor Create(AName: String);
+    constructor Create(const AName: String);
     property Name: String Read FName;
   end;
 
@@ -70,7 +70,7 @@ type
   private
     FName: String;
   public
-    constructor Create(AName: String);
+    constructor Create(const AName: String);
     property Name: String Read FName;
   end;
 
@@ -80,8 +80,8 @@ type
     FDescription: string;
   public
     constructor Create; overload;
-    constructor Create(AName: String); overload;
-    constructor Create(AName, ADescription: String); overload;
+    constructor Create(const AName: String); overload;
+    constructor Create(const AName, ADescription: String); overload;
     property Name: String Read FName;
     property Description: string read FDescription;
   end;
@@ -92,8 +92,8 @@ type
     FDescription: string;
   public
     constructor Create; overload;
-    constructor Create(AName: String); overload;
-    constructor Create(AName, ADescription: String); overload;
+    constructor Create(const AName: String); overload;
+    constructor Create(const AName, ADescription: String); overload;
     property Name: String Read FName;
     property Description: string read FDescription;
   end;
@@ -105,8 +105,8 @@ type
     FDescription: string;
   public
     constructor Create; overload;
-    constructor Create(AName, ATableName: String); overload;
-    constructor Create(AName, ATableName, ADescription: String); overload;
+    constructor Create(const AName, ATableName: String); overload;
+    constructor Create(const AName, ATableName, ADescription: String); overload;
     property TableName: String Read FTableName;
     property Name: String Read FName;
     property Description: string read FDescription;
@@ -118,7 +118,8 @@ type
     FInitial: Integer;
     FIncrement: Integer;
   public
-    constructor Create(AName: string; AInitial: Integer = 0; AIncrement: Integer = 1);
+    constructor Create(const AName: string; const AInitial: Integer = 0;
+      const AIncrement: Integer = 1);
     property Name: string read FName;
     property Initial: Integer read FInitial;
     property Increment: Integer read FIncrement;
@@ -133,9 +134,17 @@ type
     FPrecision: Integer;
     FDescription: string;
   public
-    constructor Create(AColumnName: String; AFieldType: TFieldType; ADescription: string = ''); overload;
-    constructor Create(AColumnName: string; AFieldType: TFieldType; ASize: Integer; ADescription: string = ''); overload;
-    constructor Create(AColumnName: string; AFieldType: TFieldType; APrecision, AScale: Integer; ADescription: string = ''); overload;
+    constructor Create(const AColumnName: String;
+      const AFieldType: TFieldType;
+      const ADescription: string = ''); overload;
+    constructor Create(const AColumnName: string;
+      const AFieldType: TFieldType;
+      const ASize: Integer;
+      const ADescription: string = ''); overload;
+    constructor Create(const AColumnName: string;
+      const AFieldType: TFieldType;
+      const APrecision, AScale: Integer;
+      const ADescription: string = ''); overload;
     property ColumnName: String read FColumnName;
     property FieldType: TFieldType read FFieldType;
     property Size: Integer read FSize;
@@ -151,8 +160,9 @@ type
     FAlignment: TAlignment;
     FDisplayFormat: string;
   public
-    constructor Create(AFieldName: string; AExpression: string;
-      AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');
+    constructor Create(const AFieldName, AExpression: string;
+      const AAlignment: TAlignment = taLeftJustify;
+      const ADisplayFormat: string = '');
     property FieldName: string read FFieldName;
     property Expression: string read FExpression;
     property Alignment: TAlignment read FAlignment;
@@ -165,7 +175,8 @@ type
     FFieldType: TFieldType;
     FSize: Integer;
   public
-    constructor Create(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0);
+    constructor Create(const AFieldName: string; const AFieldType: TFieldType;
+      const ASize: Integer = 0);
     property FieldName: string read FFieldName;
     property FieldType: TFieldType read FFieldType;
     property Size: Integer read FSize;
@@ -180,8 +191,8 @@ type
     FColumnsNameRef: TArray<string>;
     FLazy: Boolean;
   public
-    constructor Create(AMultiplicity: TMultiplicity; AColumnsName, ATableNameRef,
-      AColumnsNameRef: string; ALazy: Boolean = False);
+    constructor Create(const AMultiplicity: TMultiplicity;
+      AColumnsName, ATableNameRef, AColumnsNameRef: string; ALazy: Boolean = False);
     property Multiplicity: TMultiplicity read FMultiplicity;
     property ColumnsName: TArray<string> read FColumnsName;
     property TableNameRef: string read FTabelNameRef;
@@ -193,7 +204,7 @@ type
   private
     FCascadeActions: TCascadeActions;
   public
-    constructor Create(ACascadeActions: TCascadeActions);
+    constructor Create(const ACascadeActions: TCascadeActions);
     property CascadeActions: TCascadeActions read FCascadeActions;
   end;
 
@@ -207,8 +218,10 @@ type
     FRuleDelete: TRuleAction;
     FDescription: string;
   public
-    constructor Create(AName, AFromColumns, ATableNameRef, AToColumns: string;
-      ARuleDelete: TRuleAction = None; ARuleUpdate: TRuleAction = None; ADescription: string = ''); overload;
+    constructor Create(const AName, AFromColumns, ATableNameRef, AToColumns: string;
+      const ARuleDelete: TRuleAction = None;
+      const ARuleUpdate: TRuleAction = None;
+      const ADescription: string = ''); overload;
     property Name: string read FName;
     property TableNameRef: string read FTableNameRef;
     property FromColumns: TArray<string> read FFromColumns;
@@ -226,8 +239,12 @@ type
     FSequenceType: TSequenceType;
     FDescription: string;
   public
-    constructor Create(AColumns, ADescription: string); overload;
-    constructor Create(AColumns: string; ASequenceType: TSequenceType = NotInc; ASortingOrder: TSortingOrder = NoSort; AUnique: Boolean = False; ADescription: string = ''); overload;
+    constructor Create(const AColumns, ADescription: string); overload;
+    constructor Create(const AColumns: string;
+      const ASequenceType: TSequenceType = NotInc;
+      const ASortingOrder: TSortingOrder = NoSort;
+      const AUnique: Boolean = False;
+      const ADescription: string = ''); overload;
     property Columns: TArray<string> read FColumns;
     property SortingOrder: TSortingOrder read FSortingOrder;
     property Unique: Boolean read FUnique;
@@ -243,9 +260,11 @@ type
     FUnique: Boolean;
     FDescription: string;
   public
-    constructor Create(AName, AColumns, ADescription: string); overload;
-    constructor Create(AName, AColumns: string; ASortingOrder: TSortingOrder = NoSort;
-      AUnique: Boolean = False; ADescription: string = ''); overload;
+    constructor Create(const AName, AColumns, ADescription: string); overload;
+    constructor Create(const AName, AColumns: string;
+      const ASortingOrder: TSortingOrder = NoSort;
+      const AUnique: Boolean = False;
+      const ADescription: string = ''); overload;
     property Name: string read FName;
     property Columns: TArray<string> read FColumns;
     property SortingOrder: TSortingOrder read FSortingOrder;
@@ -259,7 +278,7 @@ type
     FCondition: string;
     FDescription: string;
   public
-    constructor Create(AName, ACondition: string; ADescription: string = '');
+    constructor Create(const AName, ACondition: string; const ADescription: string = '');
     property Name: string read FName;
     property Condition: string read FCondition;
     property Description: string read FDescription;
@@ -276,11 +295,12 @@ type
     FAliasColumn: string;
     FAliasRefTable: string;
   public
-    constructor Create(AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn, AAliasRefTable: string); overload;
-    constructor Create(AColumnName, ARefTableName, ARefColumnName,
+    constructor Create(const AColumnName, ARefTableName, ARefColumnName,
+      ARefColumnNameSelect: string; AJoin: TJoin;
+      AAliasColumn, AAliasRefTable: string); overload;
+    constructor Create(const AColumnName, ARefTableName, ARefColumnName,
       ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string); overload;
-    constructor Create(AColumnName, ARefTableName, ARefColumnName,
+    constructor Create(const AColumnName, ARefTableName, ARefColumnName,
       ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin); overload;
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
@@ -295,34 +315,56 @@ type
   private
     FRestrictions: TRestrictions;
   public
-    constructor Create(ARestrictions: TRestrictions);
+    constructor Create(const ARestrictions: TRestrictions);
     property Restrictions: TRestrictions read FRestrictions;
   end;
 
   Dictionary = class(TCustomAttribute)
   private
     FDisplayLabel: string;
-    FDefaultExpression: string;
+    FDefaultExpression: Variant;
     FConstraintErrorMessage: string;
     FDisplayFormat: string;
     FEditMask: string;
     FAlignment: TAlignment;
     FOrigin: String;
   public
-    constructor Create(ADisplayLabel: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment; AOrigin: string); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string; AAlignment: TAlignment); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment); overload;
-    constructor Create(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment; AOrigin: string); overload;
-
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage: string); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage,
+      ADefaultExpression: string); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage,
+      ADefaultExpression, ADisplayFormat: string); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage,
+      ADefaultExpression, ADisplayFormat, AEditMask: string); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage,
+      ADefaultExpression, ADisplayFormat, AEditMask: string;
+      const AAlignment: TAlignment); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage,
+      ADefaultExpression, ADisplayFormat, AEditMask: string;
+      const AAlignment: TAlignment;
+      const AOrigin: string); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string;
+      const AAlignment: TAlignment); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage: string;
+      const AAlignment: TAlignment); overload;
+    constructor Create(const ADisplayLabel, AConstraintErrorMessage: string;
+      const AAlignment: TAlignment;
+      const AOrigin: string); overload;
+    /// <summary> OBJECT </summary>
+    constructor Create(const ADefaultExpression: string); overload;
+    constructor Create(const ADefaultExpression: Integer); overload;
+    constructor Create(const ADefaultExpression: Boolean); overload;
+    constructor Create(const ADefaultExpression: Char); overload;
+    constructor Create(const ADefaultExpression: Cardinal); overload;
+    constructor Create(const ADefaultExpression: Int64); overload;
+    constructor Create(const ADefaultExpression: UInt64); overload;
+    constructor Create(const ADefaultExpression: Extended); overload;
+{$IFNDEF NEXTGEN}
+    constructor Create(const ADefaultExpression: AnsiChar); overload;
+{$ENDIF !NEXTGEN}
     property DisplayLabel: string read FDisplayLabel;
     property ConstraintErrorMessage: string read FConstraintErrorMessage;
-    property DefaultExpression: string read FDefaultExpression;
+    property DefaultExpression: Variant read FDefaultExpression;
     property DisplayFormat: string read FDisplayFormat;
     property EditMask: string read FEditMask;
     property Alignment: TAlignment read FAlignment;
@@ -333,7 +375,7 @@ type
   private
     FColumnsName: string;
   public
-    constructor Create(AColumnsName: string);
+    constructor Create(const AColumnsName: string);
     property ColumnsName: string read FColumnsName;
   end;
 
@@ -343,7 +385,7 @@ type
     FEnumValues: TList<Variant>;
     function ValidateEnumValue(AValue: string): string;
   public
-    constructor Create(AEnumType: TEnumType; AEnumValues: string);
+    constructor Create(const AEnumType: TEnumType; const AEnumValues: string);
     destructor Destroy; override;
     property EnumType: TEnumType read FEnumType;
     property EnumValues: TList<Variant> read FEnumValues;
@@ -353,30 +395,30 @@ type
   private
     FFieldEvents: TFieldEvents;
   public
-    constructor Create(AFieldEvents: TFieldEvents);
+    constructor Create(const AFieldEvents: TFieldEvents);
     property Events: TFieldEvents read FFieldEvents;
   end;
 
   NotNullConstraint = class(TCustomAttribute)
   public
     constructor Create;
-    procedure Validate(ADisplayLabel: String; AValue: TValue);
+    procedure Validate(const ADisplayLabel: String; const AValue: TValue);
   end;
 
   MinimumValueConstraint = class(TCustomAttribute)
   private
     FValue: Double;
   public
-    constructor Create(AValue: Double);
-    procedure Validate(ADisplayLabel: String; AValue: TValue);
+    constructor Create(const AValue: Double);
+    procedure Validate(const ADisplayLabel: String; const AValue: TValue);
   end;
 
   MaximumValueConstraint = class(TCustomAttribute)
   private
     FValue: Double;
   public
-    constructor Create(AValue: Double);
-    procedure Validate(ADisplayLabel: String; AValue: TValue);
+    constructor Create(const AValue: Double);
+    procedure Validate(const ADisplayLabel: String; const AValue: TValue);
   end;
 
 implementation
@@ -388,12 +430,12 @@ begin
   Create('');
 end;
 
-constructor Table.Create(AName: String);
+constructor Table.Create(const AName: String);
 begin
   Create(AName, '');
 end;
 
-constructor Table.Create(AName, ADescription: String);
+constructor Table.Create(const AName, ADescription: String);
 begin
   FName := AName;
   FDescription := ADescription;
@@ -406,12 +448,12 @@ begin
   Create('');
 end;
 
-constructor View.Create(AName: String);
+constructor View.Create(const AName: String);
 begin
   Create(AName, '');
 end;
 
-constructor View.Create(AName, ADescription: String);
+constructor View.Create(const AName, ADescription: String);
 begin
   FName := AName;
   FDescription := ADescription;
@@ -419,66 +461,121 @@ end;
 
 { ColumnDictionary }
 
-constructor Dictionary.Create(ADisplayLabel: string);
+constructor Dictionary.Create(const ADefaultExpression: string);
 begin
-   FAlignment := taLeftJustify;
-   FDisplayLabel := ADisplayLabel;
+  FDefaultExpression := ADefaultExpression;
+end;
+//
+constructor Dictionary.Create(const ADefaultExpression: Cardinal);
+begin
+  FDefaultExpression := ADefaultExpression;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage: string);
+constructor Dictionary.Create(const ADefaultExpression: Char);
 begin
-   Create(ADisplayLabel);
-   FConstraintErrorMessage := AConstraintErrorMessage;
+  FDefaultExpression := ADefaultExpression;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string);
+constructor Dictionary.Create(const ADefaultExpression: Boolean);
 begin
-   Create(ADisplayLabel, AConstraintErrorMessage);
-   FDefaultExpression := ADefaultExpression;
+  FDefaultExpression := Ord(ADefaultExpression);
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string);
+constructor Dictionary.Create(const ADefaultExpression: Integer);
 begin
-   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression);
-   FDisplayFormat := ADisplayFormat;
+  FDefaultExpression := ADefaultExpression;
 end;
 
-constructor Dictionary.Create(ADisplayLabel,
-  AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string;
-  AAlignment: TAlignment);
+{$IFNDEF NEXTGEN}
+constructor Dictionary.Create(const ADefaultExpression: AnsiChar);
 begin
-   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask);
-   FAlignment := AAlignment;
+  FDefaultExpression := ADefaultExpression;
+end;
+{$ENDIF !NEXTGEN}
+
+constructor Dictionary.Create(const ADefaultExpression: Extended);
+begin
+  FDefaultExpression := ADefaultExpression;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
+constructor Dictionary.Create(const ADefaultExpression: UInt64);
+begin
+  FDefaultExpression := ADefaultExpression;
+end;
+
+constructor Dictionary.Create(const ADefaultExpression: Int64);
+begin
+  FDefaultExpression := ADefaultExpression;
+end;
+
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage: string);
+begin
+  FDisplayLabel := ADisplayLabel;
+  FConstraintErrorMessage := AConstraintErrorMessage;
+end;
+
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression: string);
+begin
+  Create(ADisplayLabel, AConstraintErrorMessage);
+  FDefaultExpression := ADefaultExpression;
+end;
+
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression, ADisplayFormat: string);
+begin
+  Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression);
+  FDisplayFormat := ADisplayFormat;
+end;
+
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression, ADisplayFormat, AEditMask: string;
+  const AAlignment: TAlignment);
+begin
+  Create(ADisplayLabel,
+         AConstraintErrorMessage,
+         ADefaultExpression,
+         ADisplayFormat,
+         AEditMask);
+  FAlignment := AAlignment;
+end;
+
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
   ADefaultExpression, ADisplayFormat, AEditMask: string);
 begin
-  Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat);
+  Create(ADisplayLabel,
+         AConstraintErrorMessage,
+         ADefaultExpression,
+         ADisplayFormat);
   FEditMask := AEditMask;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage: string;
-  AAlignment: TAlignment);
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage: string;
+  const AAlignment: TAlignment);
 begin
-   Create(ADisplayLabel, AConstraintErrorMessage);
-   FAlignment := AAlignment;
+  Create(ADisplayLabel, AConstraintErrorMessage);
+  FAlignment := AAlignment;
 end;
 
 { Column }
 
-constructor Column.Create(AColumnName: String; AFieldType: TFieldType; ADescription: string);
+constructor Column.Create(const AColumnName: String; const AFieldType: TFieldType;
+  const ADescription: string);
 begin
   Create(AColumnName, AFieldType, 0, ADescription);
 end;
 
-constructor Column.Create(AColumnName: string; AFieldType: TFieldType; ASize: Integer; ADescription: string);
+constructor Column.Create(const AColumnName: string;
+  const AFieldType: TFieldType;
+  const ASize: Integer;
+  const ADescription: string);
 begin
   Create(AColumnName, AFieldType, 0, 0, ADescription);
   FSize := ASize;
 end;
 
-constructor Column.Create(AColumnName: string; AFieldType: TFieldType; APrecision, AScale: Integer; ADescription: string);
+constructor Column.Create(const AColumnName: string; const AFieldType: TFieldType;
+  const APrecision, AScale: Integer; const ADescription: string);
 begin
   FColumnName := AColumnName;
   FFieldType := AFieldType;
@@ -489,7 +586,7 @@ end;
 
 { ColumnRestriction }
 
-constructor Restrictions.Create(ARestrictions: TRestrictions);
+constructor Restrictions.Create(const ARestrictions: TRestrictions);
 begin
   FRestrictions := ARestrictions;
 end;
@@ -501,7 +598,8 @@ begin
 
 end;
 
-procedure NotNullConstraint.Validate(ADisplayLabel: String; AValue: TValue);
+procedure NotNullConstraint.Validate(const ADisplayLabel: String;
+  const AValue: TValue);
 begin
   if AValue.AsString = '' then
   begin
@@ -511,8 +609,8 @@ end;
 
 { Association }
 
-constructor Association.Create(AMultiplicity: TMultiplicity; AColumnsName, ATableNameRef,
-  AColumnsNameRef: string; ALazy: Boolean);
+constructor Association.Create(const AMultiplicity: TMultiplicity;
+  AColumnsName, ATableNameRef, AColumnsNameRef: string; ALazy: Boolean);
 var
   rColumns: TStringList;
   iFor: Integer;
@@ -552,8 +650,9 @@ end;
 
 { JoinColumn }
 
-constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
-  ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn, AAliasRefTable: string);
+constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
+  ARefColumnNameSelect: string; AJoin: TJoin;
+  AAliasColumn, AAliasRefTable: string);
 begin
   FColumnName :=  LowerCase(AColumnName);
   FRefTableName := LowerCase(ARefTableName);
@@ -567,14 +666,14 @@ begin
     FAliasRefTable := FRefTableName;
 end;
 
-constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
+constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
   ARefColumnNameSelect: string; AJoin: TJoin);
 begin
   Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
          AJoin, '', '');
 end;
 
-constructor JoinColumn.Create(AColumnName, ARefTableName, ARefColumnName,
+constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
   ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string);
 begin
   Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
@@ -583,8 +682,9 @@ end;
 
 { ForeignKey }
 
-constructor ForeignKey.Create(AName, AFromColumns, ATableNameRef, AToColumns: string;
-  ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string);
+constructor ForeignKey.Create(const AName, AFromColumns, ATableNameRef, AToColumns: string;
+  const ARuleDelete, ARuleUpdate: TRuleAction;
+  const ADescription: string);
 var
   rColumns: TStringList;
   iFor: Integer;
@@ -624,13 +724,16 @@ end;
 
 { PrimaryKey }
 
-constructor PrimaryKey.Create(AColumns, ADescription: string);
+constructor PrimaryKey.Create(const AColumns, ADescription: string);
 begin
   Create(AColumns, NotInc, NoSort, False, ADescription);
 end;
 
-constructor PrimaryKey.Create(AColumns: string; ASequenceType: TSequenceType;
-  ASortingOrder: TSortingOrder; AUnique: Boolean; ADescription: string);
+constructor PrimaryKey.Create(const AColumns: string;
+  const ASequenceType: TSequenceType;
+  const ASortingOrder: TSortingOrder;
+  const AUnique: Boolean;
+  const ADescription: string);
 var
   rColumns: TStringList;
   iFor: Integer;
@@ -656,7 +759,7 @@ end;
 
 { Catalog }
 
-constructor Entity.Create(AName: string; ASchemaName: String);
+constructor Entity.Create(const AName: string; ASchemaName: String);
 begin
   FName := AName;
   FSchemaName := ASchemaName;
@@ -669,12 +772,13 @@ end;
 
 { ZeroConstraint }
 
-constructor MinimumValueConstraint.Create(AValue: Double);
+constructor MinimumValueConstraint.Create(const AValue: Double);
 begin
   FValue := AValue;
 end;
 
-procedure MinimumValueConstraint.Validate(ADisplayLabel: String; AValue: TValue);
+procedure MinimumValueConstraint.Validate(const ADisplayLabel: String;
+  const AValue: TValue);
 begin
   if AValue.AsExtended < FValue then
   begin
@@ -684,7 +788,7 @@ end;
 
 { Sequence }
 
-constructor Sequence.Create(AName: string; AInitial, AIncrement: Integer);
+constructor Sequence.Create(const AName: string; const AInitial, AIncrement: Integer);
 begin
   FName := AName;
   FInitial := AInitial;
@@ -698,12 +802,12 @@ begin
   Create('','');
 end;
 
-constructor Trigger.Create(AName, ATableName: String);
+constructor Trigger.Create(const AName, ATableName: String);
 begin
   Create(AName, ATableName, '')
 end;
 
-constructor Trigger.Create(AName, ATableName, ADescription: String);
+constructor Trigger.Create(const AName, ATableName, ADescription: String);
 begin
   FName := AName;
   FTableName := ATableName;
@@ -712,13 +816,15 @@ end;
 
 { Indexe }
 
-constructor Indexe.Create(AName, AColumns, ADescription: string);
+constructor Indexe.Create(const AName, AColumns, ADescription: string);
 begin
   Create(AName, AColumns, NoSort, False, ADescription);
 end;
 
-constructor Indexe.Create(AName, AColumns: string; ASortingOrder: TSortingOrder;
-  AUnique: Boolean; ADescription: string);
+constructor Indexe.Create(const AName, AColumns: string;
+  const ASortingOrder: TSortingOrder;
+  const AUnique: Boolean;
+  const ADescription: string);
 var
   rColumns: TStringList;
   iFor: Integer;
@@ -744,7 +850,7 @@ end;
 
 { Check }
 
-constructor Check.Create(AName, ACondition, ADescription: string);
+constructor Check.Create(const AName, ACondition, ADescription: string);
 begin
   FName := AName;
   FCondition := ACondition;
@@ -753,15 +859,16 @@ end;
 
 { OrderBy }
 
-constructor OrderBy.Create(AColumnsName: string);
+constructor OrderBy.Create(const AColumnsName: string);
 begin
   FColumnsName := AColumnsName;
 end;
 
 { AggregateField }
 
-constructor AggregateField.Create(AFieldName, AExpression: string;
-  AAlignment: TAlignment; ADisplayFormat: string);
+constructor AggregateField.Create(const AFieldName, AExpression: string;
+  const AAlignment: TAlignment;
+  const ADisplayFormat: string);
 begin
   FFieldName := AFieldName;
   FExpression := AExpression;
@@ -771,8 +878,8 @@ end;
 
 { CalcField }
 
-constructor CalcField.Create(AFieldName: string; AFieldType: TFieldType;
-  ASize: Integer);
+constructor CalcField.Create(const AFieldName: string; const AFieldType: TFieldType;
+  const ASize: Integer);
 begin
   FFieldName := AFieldName;
   FFieldType := AFieldType;
@@ -781,14 +888,15 @@ end;
 
 { CascadeActions }
 
-constructor CascadeActions.Create(ACascadeActions: TCascadeActions);
+constructor CascadeActions.Create(const ACascadeActions: TCascadeActions);
 begin
   FCascadeActions := ACascadeActions;
 end;
 
 { Enumeration }
 
-constructor Enumeration.Create(AEnumType: TEnumType; AEnumValues: string);
+constructor Enumeration.Create(const AEnumType: TEnumType;
+  const AEnumValues: string);
 var
   LEnumList: TStringList;
   LFor: Integer;
@@ -827,35 +935,43 @@ end;
 
 { Resource }
 
-constructor Resource.Create(AName: String);
+constructor Resource.Create(const AName: String);
 begin
   FName := AName;
 end;
 
 { SubResource }
 
-constructor SubResource.Create(AName: String);
+constructor SubResource.Create(const AName: String);
 begin
   FName := AName;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
-  ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment;
-  AOrigin: string);
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression, ADisplayFormat, AEditMask: string;
+  const AAlignment: TAlignment;
+  const AOrigin: string);
 begin
-   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask, AAlignment);
+   Create(ADisplayLabel,
+          AConstraintErrorMessage,
+          ADefaultExpression,
+          ADisplayFormat,
+          AEditMask,
+          AAlignment);
    FOrigin := AOrigin;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage: string;
-  AAlignment: TAlignment; AOrigin: string);
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage: string;
+  const AAlignment: TAlignment;
+  const AOrigin: string);
 begin
   Create(ADisplayLabel, AConstraintErrorMessage, AAlignment);
   FOrigin := AOrigin;
 end;
 
-constructor Dictionary.Create(ADisplayLabel, AConstraintErrorMessage,
-  ADefaultExpression: string; AAlignment: TAlignment);
+constructor Dictionary.Create(const ADisplayLabel, AConstraintErrorMessage,
+  ADefaultExpression: string;
+  const AAlignment: TAlignment);
 begin
   Create(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression);
   FAlignment := AAlignment;
@@ -870,19 +986,20 @@ end;
 
 { FieldEvents }
 
-constructor FieldEvents.Create(AFieldEvents: TFieldEvents);
+constructor FieldEvents.Create(const AFieldEvents: TFieldEvents);
 begin
   FFieldEvents := AFieldEvents;
 end;
 
 { MaximumValueConstraint }
 
-constructor MaximumValueConstraint.Create(AValue: Double);
+constructor MaximumValueConstraint.Create(const AValue: Double);
 begin
   FValue := AValue;
 end;
 
-procedure MaximumValueConstraint.Validate(ADisplayLabel: String; AValue: TValue);
+procedure MaximumValueConstraint.Validate(const ADisplayLabel: String;
+  const AValue: TValue);
 begin
   if AValue.AsExtended > FValue then
   begin

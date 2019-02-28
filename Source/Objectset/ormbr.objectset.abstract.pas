@@ -42,7 +42,6 @@ type
   /// M - Object M
   /// </summary>
   TObjectSetAbstract<M: class, constructor> = class abstract
-  private
   protected
     FSession: TSessionAbstract<M>;
     FObjectState: TDictionary<string, TObject>;
@@ -52,7 +51,8 @@ type
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Integer): M; overload; virtual; abstract;
     function Find(const AID: string): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
+    function FindWhere(const AWhere: string;
+      const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
     procedure Insert(const AObject: M); virtual; abstract;
     procedure Update(const AObject: M); virtual; abstract;
     procedure Delete(const AObject: M); virtual; abstract;
@@ -61,7 +61,8 @@ type
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     function NextPacket: TObjectList<M>; overload; virtual; abstract;
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
-    function NextPacket(const AWhere, AOrderby: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    function NextPacket(const AWhere, AOrderby: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
   end;
 
 implementation

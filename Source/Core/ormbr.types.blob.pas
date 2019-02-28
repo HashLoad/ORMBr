@@ -107,12 +107,16 @@ begin
   /// <summary>
   /// Codifica os Bytes em string
   /// </summary>
-  FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  FBase64String := TNetEncoding
+                     .Base64
+                       .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
 end;
 
 function TBlob.ToBytesString: string;
 begin
-  Result := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  Result := TNetEncoding
+              .Base64
+                .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
 end;
 
 function TBlob.ToString: String;
@@ -150,7 +154,9 @@ begin
       /// <summary>
       /// Codifica os Bytes em string
       /// </summary>
-      FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+      FBase64String := TNetEncoding
+                         .Base64
+                           .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
     finally
       LSourceStream.Free;
 //      LTargetStream.Free;
@@ -231,7 +237,7 @@ begin
       AGraphicClass := TMetafile
     else if (LLongWords[0] = 1) and (LLongWords[10] = $464D4520) then
       AGraphicClass := TMetafile
-    else if SysUtils.AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
+    else if AnsiStrings.AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
       AGraphicClass := TGIFImage
     else if LWords[1] = 1 then
       AGraphicClass := TIcon;
@@ -239,7 +245,8 @@ begin
   Result := (AGraphicClass <> nil);
 end;
 
-function TBlob.FindGraphicClass(AStream: TStream; out AGraphicClass: TGraphicClass): Boolean;
+function TBlob.FindGraphicClass(AStream: TStream;
+  out AGraphicClass: TGraphicClass): Boolean;
 var
   LBuffer: PByte;
   LCurPos: Int64;
@@ -283,7 +290,9 @@ begin
     /// <summary>
     /// Codifica os Bytes em string
     /// </summary>
-    FBase64String := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+    FBase64String := TNetEncoding
+                       .Base64
+                         .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
   finally
     LSourceStream.Free;
   end;

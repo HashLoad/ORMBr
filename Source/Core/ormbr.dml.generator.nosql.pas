@@ -25,19 +25,27 @@ type
   protected
     function GetCriteriaSelect(AClass: TClass; AID: Variant): string; virtual;
     function GetGeneratorSelect(ACriteria: string): string; virtual;
-    function ExecuteSequence(ASQL: string): Int64; override;
+    function ExecuteSequence(const ASQL: string): Int64; override;
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string; override;
-    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass; AAssociation: TAssociationMapping): string; override;
-    function GeneratorUpdate(AObject: TObject; AParams: TParams; AModifiedFields: TList<string>): string; override;
-    function GeneratorInsert(AObject: TObject; ACommandInsert: TDMLCommandInsert): string; override;
+    function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
+      AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; override;
+    function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string; override;
+    function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
+      AAssociation: TAssociationMapping): string; override;
+    function GeneratorUpdate(AObject: TObject; AParams: TParams;
+      AModifiedFields: TList<string>): string; override;
+    function GeneratorInsert(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): string; override;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
   end;
 
 implementation
@@ -58,7 +66,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorNoSQL.ExecuteSequence(ASQL: string): Int64;
+function TDMLGeneratorNoSQL.ExecuteSequence(const ASQL: string): Int64;
 begin
 
 end;
@@ -206,7 +214,8 @@ begin
 
 end;
 
-function TDMLGeneratorNoSQL.GetCriteriaSelect(AClass: TClass; AID: Variant): string;
+function TDMLGeneratorNoSQL.GetCriteriaSelect(AClass: TClass;
+  AID: Variant): string;
 var
   LTable: TTableMapping;
   LPrimaryKey: TPrimaryKeyMapping;

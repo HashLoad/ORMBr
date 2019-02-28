@@ -52,11 +52,16 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorPageNext(ACommandSelect: string; APageSize, APageNext: Integer): string; override;
+    function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
+      AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorPageNext(const ACommandSelect: string;
+      APageSize, APageNext: Integer): string; override;
   end;
 
 implementation
@@ -77,22 +82,22 @@ begin
 end;
 
 function TDMLGeneratorMSSql.GetGeneratorSelect(ACriteria: ICriteria): string;
+const
+  cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
 var
-  LTable: string;
+  LTable: String;
+  LWhere: String;
 begin
-   inherited;
-   LTable := ACriteria.AST.Select.TableNames.Columns[0].Name;
-   ACriteria.SelectSection(secSelect);
-   ACriteria.Column('ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER');
-   ACriteria.AST.Select.TableNames.Clear;
-   ACriteria.From(LTable + ')').&As(LTable);
-   ACriteria.SelectSection(secWhere);
-   ACriteria.Where('(ROWNUMBER <= %s) AND (ROWNUMBER > %s)');
-   ACriteria.SelectSection(secOrderBy);
-   Result := 'SELECT * FROM (' + ACriteria.AsString;
+  inherited;
+  LTable := ACriteria.AST.Select.TableNames.Columns[0].Name;
+  LWhere := '(ROWNUMBER <= %s) AND (ROWNUMBER > %s)';
+
+  ACriteria.SelectSection(secSelect);
+  ACriteria.Column('ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER');
+  Result := Format(cSQL, [ACriteria.AsString, LTable, LWhere]);
 end;
 
-function TDMLGeneratorMSSql.GeneratorPageNext(ACommandSelect: string;
+function TDMLGeneratorMSSql.GeneratorPageNext(const ACommandSelect: string;
   APageSize, APageNext: Integer): string;
 begin
   if APageSize > -1 then
@@ -101,7 +106,8 @@ begin
     Result := ACommandSelect;
 end;
 
-function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string;
+function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass;
+  APageSize: Integer; AID: Variant): string;
 var
   LTable: TTableMapping;
   LCriteria: ICriteria;
@@ -113,26 +119,33 @@ begin
               .GetInstance
                 .GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
+
+  if APageSize > -1 then
+    Result := GetGeneratorSelect(LCriteria)
+  else
+    Result := LCriteria.AsString;
+
   /// OrderBy
   LOrderBy := TMappingExplorer
                 .GetInstance
                   .GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
+    Result := Result + ' ORDER BY ';
     LOrderByList := TStringList.Create;
     try
       LOrderByList.Duplicates := dupError;
       ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
       for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+      begin
+        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
+        if LFor < LOrderByList.Count -1 then
+          Result := Result + ', ';
+      end;
     finally
       LOrderByList.Free;
     end;
   end;
-  if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria)
-  else
-    Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: string;
@@ -142,21 +155,28 @@ var
 begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
-  LCriteria.OrderBy(AOrderBy);
   if APageSize > -1 then
      Result := GetGeneratorSelect(LCriteria)
   else
      Result := LCriteria.AsString;
+
+  if Length(AOrderBy) > 0 then
+    Result := Result + ' ORDER BY ' + AOrderBy;
 end;
 
-function TDMLGeneratorMSSql.GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMSSql.GeneratorSequenceCurrentValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT CURRENT_VALUE FROM SYS.SEQUENCES WHERE NAME = ''%s''', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(
+              Format('SELECT CURRENT_VALUE FROM SYS.SEQUENCES WHERE NAME = ''%s''',
+                     [ACommandInsert.Sequence.Name]) );
 end;
 
-function TDMLGeneratorMSSql.GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMSSql.GeneratorSequenceNextValue(AObject: TObject;
+  ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT NEXT VALUE FOR %s ', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT NEXT VALUE FOR %s ',
+                                   [ACommandInsert.Sequence.Name]));
 end;
 
 initialization

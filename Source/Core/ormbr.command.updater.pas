@@ -52,7 +52,8 @@ type
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
-    function GenerateUpdate(AObject: TObject; AModifiedFields: TList<string>): string;
+    function GenerateUpdate(AObject: TObject;
+      AModifiedFields: TList<string>): string;
   end;
 
 implementation
@@ -78,7 +79,8 @@ begin
   end;
 end;
 
-function TCommandUpdater.GenerateUpdate(AObject: TObject; AModifiedFields: TList<string>): string;
+function TCommandUpdater.GenerateUpdate(AObject: TObject;
+  AModifiedFields: TList<string>): string;
 var
   LFor: Integer;
   LRttiType: TRttiType;
@@ -104,7 +106,8 @@ begin
         Value := LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant;
       end;
     end;
-    FCommand := FGeneratorCommand.GeneratorUpdate(AObject, LParams, AModifiedFields);
+    FCommand := FGeneratorCommand
+                  .GeneratorUpdate(AObject, LParams, AModifiedFields);
     Result := FCommand;
     /// <summary>
     /// Gera todos os parâmetros, sendo os campos alterados primeiro e o do
@@ -147,8 +150,8 @@ begin
   end;
 end;
 
-function TCommandUpdater.GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
-  AFieldType: TFieldType): Variant;
+function TCommandUpdater.GetParamValue(AInstance: TObject;
+  AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
   if (AProperty.PropertyType.TypeKind = tkEnumeration) and
      (AProperty.PropertyType.Handle <> TypeInfo(Boolean)) then

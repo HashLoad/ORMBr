@@ -53,10 +53,14 @@ type
   public
     constructor Create; override;
     destructor Destroy; override;
-    function GeneratorSelectAll(AClass: TClass; APageSize: Integer; AID: Variant): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject; ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSelectAll(AClass: TClass;
+      APageSize: Integer; AID: Variant): string; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
+      AOrderBy: string; APageSize: Integer): string; override;
+    function GeneratorSequenceCurrentValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorSequenceNextValue(AObject: TObject;
+      ACommandInsert: TDMLCommandInsert): Int64; override;
   end;
 
 implementation
@@ -79,7 +83,8 @@ end;
 function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(ACriteria: ICriteria): string;
 begin
   inherited;
-  ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s ' + ACriteria.AST.Select.Columns.Columns[0].Name;
+  ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s '
+                                                + ACriteria.AST.Select.Columns.Columns[0].Name;
   Result := ACriteria.AsString;
 end;
 
@@ -135,15 +140,17 @@ end;
 function TDMLGeneratorAbsoluteDB.GeneratorSequenceCurrentValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s', [ACommandInsert.Table.Name,
-                                                                          ACommandInsert.Table.Name,
-                                                                          ACommandInsert.Table.Name]));
+  Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s',
+                                   [ACommandInsert.Table.Name,
+                                    ACommandInsert.Table.Name,
+                                    ACommandInsert.Table.Name]));
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorSequenceNextValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert) + ACommandInsert.Sequence.Increment;
+  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert)
+          + ACommandInsert.Sequence.Increment;
 end;
 
 initialization

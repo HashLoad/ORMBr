@@ -160,8 +160,7 @@ begin
         Result.Last.DefaultValue := '';
 
         if LDictionary <> nil then
-         if not MatchStr(Dictionary(LDictionary).DefaultExpression, ['Date', 'Now']) then
-           Result.Last.DefaultValue := Dictionary(LDictionary).DefaultExpression
+          Result.Last.DefaultValue := Dictionary(LDictionary).DefaultExpression
       end;
     end;
   end;

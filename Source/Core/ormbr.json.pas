@@ -125,7 +125,8 @@ type
     procedure Copy(var ADest: TVarData; const ASource: TVarData;
       const AIndirect: Boolean); override;
     procedure Clear(var AVarData: TVarData); override;
-    function GetProperty(var ADest: TVarData; const AVarData: TVarData; const AName: String): Boolean; override;
+    function GetProperty(var ADest: TVarData; const AVarData: TVarData;
+      const AName: String): Boolean; override;
     function SetProperty(const AVarData: TVarData; const AName: String;
       const AValue: TVarData): Boolean; override;
     procedure Cast(var ADest: TVarData; const ASource: TVarData); override;
@@ -195,7 +196,8 @@ begin
   end;
 end;
 
-class function TJSONObjectORMBr.IdemPropName(const APropName1, APropName2: String): Boolean;
+class function TJSONObjectORMBr.IdemPropName(const APropName1,
+  APropName2: String): Boolean;
 var
   LLen, LFor: Integer;
 begin
@@ -224,7 +226,8 @@ begin
   TJSONVariantData(Result).FValues := AValues;
 end;
 
-function TJSONObjectORMBr.JSONVariantFromConst(const constValues: array of Variant): Variant;
+function TJSONObjectORMBr.JSONVariantFromConst(
+  const constValues: array of Variant): Variant;
 var
   LFor: Integer;
 begin
@@ -240,7 +243,8 @@ begin
   end;
 end;
 
-class function TJSONObjectORMBr.JSONVariantData(const JSONVariant: Variant): TJSONVariantData;
+class function TJSONObjectORMBr.JSONVariantData(
+  const JSONVariant: Variant): TJSONVariantData;
 begin
   with TVarData(JSONVariant) do
   begin
@@ -319,7 +323,8 @@ begin
   Result := AnsiQuotedStr(AText, '"');
 end;
 
-class procedure TJSONObjectORMBr.DoubleToJSON(AValue: Double; out AResult: string);
+class procedure TJSONObjectORMBr.DoubleToJSON(AValue: Double;
+  out AResult: string);
 begin
   AResult := FloatToStr(AValue, FSettingsUS);
 end;
@@ -401,6 +406,16 @@ begin
                     .GetInstance
                       .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
       else
+      if AProperty.PropertyType.Handle = TypeInfo(TDate) then
+        Result := TUtilSingleton
+                    .GetInstance
+                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
+      else
+      if AProperty.PropertyType.Handle = TypeInfo(TTime) then
+        Result := TUtilSingleton
+                    .GetInstance
+                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
+      else
         Result := AProperty.GetNullableValue(AInstance).AsCurrency;
     tkVariant:
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
@@ -454,6 +469,9 @@ begin
         if AProperty.PropertyType.Handle = TypeInfo(TDateTime) then
           AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
         else
+        if AProperty.PropertyType.Handle = TypeInfo(TDate) then
+          AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
+        else
         if AProperty.PropertyType.Handle = TypeInfo(TTime) then
           AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
         else
@@ -496,7 +514,8 @@ begin
   end;
 end;
 
-function TJSONObjectORMBr.JSONToObjectList<T>(const AJson: String): TObjectList<T>;
+function TJSONObjectORMBr.JSONToObjectList<T>(
+  const AJson: String): TObjectList<T>;
 var
   LDoc: TJSONVariantData;
   LItem: TObject;
@@ -521,7 +540,8 @@ begin
   end;
 end;
 
-function TJSONObjectORMBr.JSONToObject(AObject: TObject; const AJson: String): Boolean;
+function TJSONObjectORMBr.JSONToObject(AObject: TObject;
+  const AJson: String): Boolean;
 var
   LDoc: TJSONVariantData;
 begin
@@ -550,7 +570,8 @@ begin
   Result := LDoc.ToNewObject;
 end;
 
-class function TJSONObjectORMBr.FindClassForJSON(const AClassName: String): Integer;
+class function TJSONObjectORMBr.FindClassForJSON(
+  const AClassName: String): Integer;
 begin
   for Result := 0 to High(RegisteredClass) do
     if IdemPropName(RegisteredClass[Result].ClassName, AClassName) then
@@ -558,7 +579,8 @@ begin
   Result := -1;
 end;
 
-class function TJSONObjectORMBr.CreateClassForJSON(const AClassName: String): TObject;
+class function TJSONObjectORMBr.CreateClassForJSON(
+  const AClassName: String): TObject;
 var
   LFor: Integer;
 begin
@@ -569,7 +591,8 @@ begin
     Result := RegisteredClass[LFor].ClassType.Create;
 end;
 
-function TJSONObjectORMBr.ObjectToJSON(AObject: TObject; AStoreClassName: Boolean): String;
+function TJSONObjectORMBr.ObjectToJSON(AObject: TObject;
+  AStoreClassName: Boolean): String;
 var
   LTypeInfo: TRttiType;
   LProperty: TRttiProperty;
@@ -1016,7 +1039,8 @@ begin
   Init;
 end;
 
-procedure TJSONVariantData.AddNameValue(const AName: String; const AValue: Variant);
+procedure TJSONVariantData.AddNameValue(const AName: String;
+  const AValue: Variant);
 begin
   if FVKind = jvUndefined then
     FVKind := jvObject
