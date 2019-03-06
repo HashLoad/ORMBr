@@ -341,51 +341,51 @@ begin
   try
     /// JoinColumn
     LJoinList := TMappingExplorer.GetInstance.GetMappingJoinColumn(AClass);
-    if LJoinList <> nil then
+    if LJoinList = nil then
+      Exit;
+
+    for LJoin in LJoinList do
     begin
-      for LJoin in LJoinList do
+      if Length(LJoin.AliasColumn) > 0 then
+        ACriteria.Column(LJoin.AliasRefTable + '.'
+                       + LJoin.RefColumnNameSelect).&As(LJoin.AliasColumn)
+      else
+        ACriteria.Column(LJoin.AliasRefTable + '.'
+                       + LJoin.RefColumnNameSelect);
+    end;
+    for LJoin in LJoinList do
+    begin
+      if LJoinExist.IndexOf(LJoin.AliasRefTable) = -1 then
       begin
-        if Length(LJoin.AliasColumn) > 0 then
-          ACriteria.Column(LJoin.AliasRefTable + '.'
-                         + LJoin.RefColumnNameSelect).&As(LJoin.AliasColumn)
+        LJoinExist.Add(LJoin.RefTableName);
+        /// Join Inner, Left, Right, Full
+        if LJoin.Join = InnerJoin then
+          ACriteria.InnerJoin(LJoin.RefTableName)
+                     .&As(LJoin.AliasRefTable)
+                     .&On([LJoin.AliasRefTable + '.' +
+                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                           LJoin.ColumnName])
         else
-          ACriteria.Column(LJoin.AliasRefTable + '.'
-                         + LJoin.RefColumnNameSelect);
-      end;
-      for LJoin in LJoinList do
-      begin
-        if LJoinExist.IndexOf(LJoin.AliasRefTable) = -1 then
-        begin
-          LJoinExist.Add(LJoin.RefTableName);
-          /// Join Inner, Left, Right, Full
-          if LJoin.Join = InnerJoin then
-            ACriteria.InnerJoin(LJoin.RefTableName)
-                       .&As(LJoin.AliasRefTable)
-                       .&On([LJoin.AliasRefTable + '.' +
-                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                             LJoin.ColumnName])
-          else
-          if LJoin.Join = LeftJoin then
-            ACriteria.LeftJoin(LJoin.RefTableName)
-                       .&As(LJoin.AliasRefTable)
-                       .&On([LJoin.AliasRefTable + '.' +
-                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                             LJoin.ColumnName])
-          else
-          if LJoin.Join = RightJoin then
-            ACriteria.RightJoin(LJoin.RefTableName)
-                       .&As(LJoin.AliasRefTable)
-                       .&On([LJoin.AliasRefTable + '.' +
-                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                             LJoin.ColumnName])
-          else
-          if LJoin.Join = FullJoin then
-            ACriteria.FullJoin(LJoin.RefTableName)
-                       .&As(LJoin.AliasRefTable)
-                       .&On([LJoin.AliasRefTable + '.' +
-                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                             LJoin.ColumnName]);
-        end;
+        if LJoin.Join = LeftJoin then
+          ACriteria.LeftJoin(LJoin.RefTableName)
+                     .&As(LJoin.AliasRefTable)
+                     .&On([LJoin.AliasRefTable + '.' +
+                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                           LJoin.ColumnName])
+        else
+        if LJoin.Join = RightJoin then
+          ACriteria.RightJoin(LJoin.RefTableName)
+                     .&As(LJoin.AliasRefTable)
+                     .&On([LJoin.AliasRefTable + '.' +
+                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                           LJoin.ColumnName])
+        else
+        if LJoin.Join = FullJoin then
+          ACriteria.FullJoin(LJoin.RefTableName)
+                     .&As(LJoin.AliasRefTable)
+                     .&On([LJoin.AliasRefTable + '.' +
+                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                           LJoin.ColumnName]);
       end;
     end;
   finally
@@ -404,13 +404,17 @@ var
   LCriteria: ICriteria;
   LColumnName: string;
 begin
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
-  LCriteria := CreateCriteria.Update(LTable.Name);
+  Result := '';
+  if AModifiedFields.Count = 0 then
+    Exit;
+
   /// <summary>
   /// Varre a lista de campos alterados para montar o UPDATE
   /// </summary>
   if AModifiedFields.Count > 0 then
   begin
+    LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+    LCriteria := CreateCriteria.Update(LTable.Name);
     for LColumnName in AModifiedFields do
     begin
       /// <summary>
@@ -419,32 +423,32 @@ begin
       /// <exception cref="oTable.Name + '.'"></exception>
       LCriteria.&Set(LColumnName, ':' + LColumnName);
     end;
-  end
-  else
-  begin
-    AObject.GetType(LRttiType);
-    for LProperty in LRttiType.GetProperties do
-    begin
-      if LProperty.IsNoUpdate then
-        Continue;
-      LColumnAtt := LProperty.GetColumn;
-      if LColumnAtt <> nil then
-      begin
-        LColumnName := Column(LColumnAtt).ColumnName;
-        /// <summary>
-        /// SET Field=Value alterado
-        /// </summary>
-        /// <exception cref="oTable.Name + '.'"></exception>
-        LCriteria.&Set(LColumnName, ':' + LColumnName);
-        /// Cria lista de campos modificados de todos os campos
-        AModifiedFields.Add(LColumnName);
-      end;
-    end;
-  end;
-  for LFor := 0 to AParams.Count -1 do
-    LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
+//  end
+//  else
+//  begin
+//    AObject.GetType(LRttiType);
+//    for LProperty in LRttiType.GetProperties do
+//    begin
+//      if LProperty.IsNoUpdate then
+//        Continue;
+//      LColumnAtt := LProperty.GetColumn;
+//      if LColumnAtt <> nil then
+//      begin
+//        LColumnName := Column(LColumnAtt).ColumnName;
+//        /// <summary>
+//        /// SET Field=Value alterado
+//        /// </summary>
+//        /// <exception cref="oTable.Name + '.'"></exception>
+//        LCriteria.&Set(LColumnName, ':' + LColumnName);
+//        /// Cria lista de campos modificados de todos os campos
+//        AModifiedFields.Add(LColumnName);
+//      end;
+//    end;
+    for LFor := 0 to AParams.Count -1 do
+      LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
 
-  Result := LCriteria.AsString;
+    Result := LCriteria.AsString;
+  end;
 end;
 
 end.

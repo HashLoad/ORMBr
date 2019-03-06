@@ -33,6 +33,7 @@ uses
   DB,
   Rtti,
   Classes,
+  SysUtils,
   Variants,
   TypInfo,
   Generics.Collections,
@@ -90,6 +91,10 @@ var
   LColumnAtt: TCustomAttribute;
   LColumnName: string;
 begin
+  Result := '';
+  if AModifiedFields.Count = 0 then
+    Exit;
+
   /// <summary>
   /// Variavel local é usado como parâmetro para montar o script só com os
   /// campos PrimaryKey.
@@ -98,6 +103,9 @@ begin
   try
     for LColumn in AObject.GetPrimaryKey do
     begin
+      if LColumn = nil then
+        raise Exception.Create('PrimaryKey not found on your model!');
+
       with LParams.Add as TParam do
       begin
         Name := LColumn.ColumnName;

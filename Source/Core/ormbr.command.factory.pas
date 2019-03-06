@@ -337,6 +337,8 @@ var
 begin
   LSQLText := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
   FDMLCommand := FCommandUpdater.GetDMLCommand;
+  if FDMLCommand = '' then
+    Exit;
   /// <summary>
   /// Envia comando para tela do monitor.
   /// </summary>
