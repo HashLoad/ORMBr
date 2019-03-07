@@ -401,20 +401,14 @@ begin
     tkUString, tkLString, tkWString, tkString, tkChar, tkWChar:
       Result := AProperty.GetNullableValue(AInstance).AsString;
     tkFloat:
-      if AProperty.PropertyType.Handle = TypeInfo(TDateTime) then
+      if (AProperty.PropertyType.Handle = TypeInfo(TDateTime)) or
+         (AProperty.PropertyType.Handle = TypeInfo(TDate))     or
+         (AProperty.PropertyType.Handle = TypeInfo(TTime))     then
+      begin
         Result := TUtilSingleton
                     .GetInstance
-                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
-      else
-      if AProperty.PropertyType.Handle = TypeInfo(TDate) then
-        Result := TUtilSingleton
-                    .GetInstance
-                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
-      else
-      if AProperty.PropertyType.Handle = TypeInfo(TTime) then
-        Result := TUtilSingleton
-                    .GetInstance
-                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended)
+                      .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended);
+      end
       else
         Result := AProperty.GetNullableValue(AInstance).AsCurrency;
     tkVariant:

@@ -42,10 +42,14 @@ uses
 type
   TContainerClientDataSet<M: class, constructor> = class(TContainerDataSet<M>)
   public
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; APageSize: Integer); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; AMasterObject: TObject); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; APageSize: Integer); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; AMasterObject: TObject); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet); overload;
     destructor Destroy; override;
   end;
 

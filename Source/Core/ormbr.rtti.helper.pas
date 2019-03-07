@@ -504,8 +504,8 @@ begin
   Result := False;
   LValue := GetNullableValue(AObject);
   if LValue.AsVariant = Null then
-    Exit(True)
-  else
+    Exit(True);
+
   if LVAlue.Kind in [tkString, tkUString, tkLString, tkWString
                     {$IFDEF DELPHI22_UP}
                     , tkAnsiChar, tkWideChar, tkAnsiString, tkWideString
@@ -513,7 +513,7 @@ begin
                     {$ENDIF}] then
 
   begin
-    if LValue.IsEmpty then
+    if LValue.AsType<String> = '' then
       Exit(True);
   end
   else
@@ -551,63 +551,10 @@ begin
 end;
 
 function TRttiPropertyHelper.IsNullValue(AObject: TObject): Boolean;
-var
-  LRttiType: TRttiType;
 begin
   Result := False;
-  LRttiType := Self.PropertyType;
-  if LRttiType.TypeKind in [tkString, tkUString, tkLString, tkWString
-                            {$IFDEF DELPHI22_UP}
-                            , tkAnsiChar, tkWideChar, tkAnsiString, tkWideString
-                            , tkShortString, tkUnicodeString
-                            {$ENDIF}] then
-  begin
-    if Self.GetNullableValue(AObject).AsType<Variant> = Null then
-      if Self.IsNotNull = False then
-        Exit(True);
-  end
-  else
-  if LRttiType.TypeKind in [tkFloat] then
-  begin
-    if LRttiType.Handle = TypeInfo(TDateTime) then
-    begin
-      if Self.GetNullableValue(AObject).AsExtended = 0 then
-        if Self.IsNotNull = False then
-          Exit(True);
-    end
-    else
-    if LRttiType.Handle = TypeInfo(TDate) then
-    begin
-      if Self.GetNullableValue(AObject).AsExtended = 0 then
-        if Self.IsNotNull = False then
-          Exit(True);
-    end
-    else
-    if LRttiType.Handle = TypeInfo(TTime) then
-    begin
-      if Self.GetNullableValue(AObject).AsExtended = 0 then
-        if Self.IsNotNull = False then
-          Exit(True);
-    end;
-  end
-  else
-  if LRttiType.TypeKind in [tkInteger, tkInt64] then
-  begin
-    if LRttiType.Handle = TypeInfo(TTime) then
-      if Self.GetNullableValue(AObject).AsInteger = 0 then
-        if Self.IsNotNull = False then
-          Exit(True);
-  end
-  else
-  if LRttiType.TypeKind in [tkRecord] then
-  begin
-    if Self.IsNullable then
-      Exit(ResolveNullableValue(AObject))
-    else
-    if Self.IsBlob then
-      if Self.GetNullableValue(AObject).AsType<TBlob>.ToSize = 0 then
-        Exit(True);
-  end;
+  if (not Self.IsNotNull) and (Self.IsNullable) then
+    Exit(ResolveNullableValue(AObject));
 end;
 
 function TRttiPropertyHelper.IsPrimaryKey(AClass: TClass): Boolean;

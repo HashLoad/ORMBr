@@ -37,6 +37,7 @@ uses
   Variants,
   TypInfo,
   Generics.Collections,
+  ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.mapping.classes,
   ormbr.mapping.attributes,
@@ -92,6 +93,7 @@ var
   LColumnName: string;
 begin
   Result := '';
+  FCommand := '';
   if AModifiedFields.Count = 0 then
     Exit;
 
@@ -104,7 +106,7 @@ begin
     for LColumn in AObject.GetPrimaryKey do
     begin
       if LColumn = nil then
-        raise Exception.Create('PrimaryKey not found on your model!');
+        raise Exception.Create(cMESSAGEPKNOTFOUND);
 
       with LParams.Add as TParam do
       begin
@@ -161,17 +163,25 @@ end;
 function TCommandUpdater.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
-  if (AProperty.PropertyType.TypeKind = tkEnumeration) and
-     (AProperty.PropertyType.Handle <> TypeInfo(Boolean)) then
+  if AProperty.IsNullValue(AInstance) then
   begin
-    Result := AProperty.GetEnumToFieldValue(AInstance, AFieldType).AsVariant;
-  end
+    Result := Null;
+    Exit;
+  end;
+
+  case AProperty.PropertyType.TypeKind of
+    tkEnumeration:
+      Result := AProperty.GetEnumToFieldValue(AInstance, AFieldType).AsType<Variant>;
+    tkRecord:
+      begin
+        if AProperty.IsBlob then
+          Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
+        else
+        if AProperty.IsNullable then
+          Result := AProperty.GetNullableValue(AInstance).AsType<Variant>;
+      end
   else
-  begin
-    if AFieldType in [ftBlob] then
-      Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
-    else
-      Result := AProperty.GetNullableValue(AInstance).AsVariant;
+    Result := AProperty.GetValue(AInstance).AsType<Variant>;
   end;
 end;
 

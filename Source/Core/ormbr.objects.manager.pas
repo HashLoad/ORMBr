@@ -252,23 +252,23 @@ begin
   /// Se o driver selecionado for do tipo de banco NoSQL,
   /// o atributo Association deve ser ignorado.
   /// </summary>
-  if FConnection.GetDriverName <> dnMongoDB then
+  if FConnection.GetDriverName = dnMongoDB then
+    Exit;
+
+  LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);
+  if LAssociationList <> nil then
   begin
-    LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);
-    if LAssociationList <> nil then
+    for LAssociation in LAssociationList do
     begin
-      for LAssociation in LAssociationList do
+      if LAssociation.Lazy then
       begin
-        if LAssociation.Lazy then
+        if Pos(LAssociation.ClassNameRef, AObject.ClassName) > 0 then
         begin
-          if Pos(LAssociation.ClassNameRef, AObject.ClassName) > 0 then
-          begin
-            if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-              ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
-            else
-            if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-              ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
-          end;
+          if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+            ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
+          else
+          if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+            ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
         end;
       end;
     end;

@@ -942,23 +942,23 @@ var
   LField: TField;
   LFor: Integer;
 begin
-  if Assigned(FOwnerMasterObject) then
+  if not Assigned(FOwnerMasterObject) then
+    Exit;
+
+  LDataSetMaster := TDataSetBaseAdapter<M>(FOwnerMasterObject);
+  LAssociations := FExplorer.GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
+  if LAssociations = nil then
+    Exit;
+
+  for LAssociation in LAssociations do
   begin
-    LDataSetMaster := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-    LAssociations := FExplorer.GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
-    if LAssociations <> nil then
+    if CascadeAutoInc in LAssociation.CascadeActions then
     begin
-      for LAssociation in LAssociations do
+      for LFor := 0 to LAssociation.ColumnsName.Count -1 do
       begin
-        if CascadeAutoInc in LAssociation.CascadeActions then
-        begin
-          for LFor := 0 to LAssociation.ColumnsName.Count -1 do
-          begin
-            LField := LDataSetMaster.FOrmDataSet.FindField(LAssociation.ColumnsName.Items[0]);
-            if LField <> nil then
-              FOrmDataSet.FieldByName(LAssociation.ColumnsNameRef.Items[0]).Value := LField.Value;
-          end;
-        end;
+        LField := LDataSetMaster.FOrmDataSet.FindField(LAssociation.ColumnsName.Items[LFor]);
+        if LField <> nil then
+          FOrmDataSet.FieldByName(LAssociation.ColumnsNameRef.Items[LFor]).Value := LField.Value;
       end;
     end;
   end;

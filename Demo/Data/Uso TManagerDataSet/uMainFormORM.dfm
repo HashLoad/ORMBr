@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 649
+  ClientHeight = 476
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -224,16 +224,14 @@ object Form3: TForm3
     TabOrder = 13
     OnClick = Button4Click
   end
-  object Memo1: TMemo
-    AlignWithMargins = True
-    Left = 3
-    Top = 468
-    Width = 858
-    Height = 178
-    Align = alBottom
-    Lines.Strings = (
-      'Memo1')
+  object Button5: TButton
+    Left = 414
+    Top = 437
+    Width = 75
+    Height = 25
+    Caption = 'Refresh'
     TabOrder = 15
+    OnClick = Button5Click
   end
   object DataSource1: TDataSource
     DataSet = FDMaster
@@ -268,49 +266,28 @@ object Form3: TForm3
     Left = 86
     Top = 42
   end
-  object FDMaster: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 356
-    Top = 62
+  object FDMaster: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 500
+    Top = 60
   end
-  object FDDetail: TFDMemTable
-    AggregatesActive = True
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 356
+  object FDDetail: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 500
     Top = 114
   end
-  object FDClient: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 354
-    Top = 168
+  object FDClient: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 496
+    Top = 164
   end
-  object FDLookup: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 354
-    Top = 222
+  object FDLookup: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 496
+    Top = 220
   end
 end

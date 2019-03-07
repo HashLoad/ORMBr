@@ -224,16 +224,8 @@ end;
 procedure TCatalogMetadataSQLite.GetPrimaryKey(ATable: TTableMIK);
 
   function GetPrimaryKeyName(ATableName: string): string;
-  var
-    oDBResultSet: IDBResultSet;
   begin
-    FSQLText := Format('PRAGMA index_list("%s")', [ATable.Name]);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
-    begin
-      if VarToStr(oDBResultSet.GetFieldValue('origin')) = 'pk' then
-        Exit('PK_' + ATableName);
-    end;
+    Exit('PK_' + ATableName);
   end;
 
   function GetColumnAutoIncrement(ATableName: string): Integer;

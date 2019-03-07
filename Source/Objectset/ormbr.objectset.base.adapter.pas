@@ -37,10 +37,12 @@ uses
   Rtti,
   Variants,
   Generics.Collections,
+  ormbr.core.consts,
   ormbr.session.abstract,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.rtti.helper,
+  ormbr.types.blob,
   ormbr.objects.helper,
   ormbr.mapping.explorer,
   ormbr.objectset.abstract;
@@ -107,12 +109,6 @@ begin
 end;
 
 procedure TObjectSetBaseAdapter<M>.AddObjectState(const ASourceObject: TObject);
-const
-  cPropertyTypes = [tkUnknown,
-                    tkInterface,
-                    tkClassRef,
-                    tkPointer,
-                    tkProcedure];
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
@@ -145,24 +141,40 @@ begin
         /// <summary>
         /// Validação para entrar no IF somente propriedades que o tipo não esteja na lista
         /// </summary>
-        if not (LProperty.PropertyType.TypeKind in cPropertyTypes) then
+        if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_2) then
         begin
-          if LProperty.PropertyType.TypeKind = tkClass then
-          begin
-            if LProperty.IsList then
-            begin
-              LObjectList := TObjectList<TObject>(LProperty.GetValue(ASourceObject).AsObject);
-              for LObjectItem in LObjectList do
+          case LProperty.PropertyType.TypeKind of
+            tkRecord:
               begin
-                if LObjectItem <> nil then
-                  AddObjectState(LObjectItem);
+                if LProperty.IsNullable then
+                  LProperty.SetNullableValue(LStateObject,
+                                             LProperty.PropertyType.Handle,
+                                             LProperty.GetNullableValue(ASourceObject).AsType<Variant>)
+                else
+                if LProperty.IsBlob then
+                  LProperty.SetNullableValue(LStateObject,
+                                             LProperty.PropertyType.Handle,
+                                             LProperty.GetNullableValue(ASourceObject).AsType<TBlob>.ToBytes)
               end;
-            end
-            else
-              AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
-          end
+            tkClass:
+              begin
+                if LProperty.IsList then
+                begin
+                  LObjectList := TObjectList<TObject>(LProperty.GetValue(ASourceObject).AsObject);
+                  for LObjectItem in LObjectList do
+                  begin
+                    if LObjectItem <> nil then
+                      AddObjectState(LObjectItem);
+                  end;
+                end
+                else
+                  AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
+              end;
           else
-            LProperty.SetValue(LStateObject, LProperty.GetValue(ASourceObject));
+            begin
+              LProperty.SetValue(LStateObject, LProperty.GetValue(ASourceObject));
+            end;
+          end;
         end;
       end;
     except

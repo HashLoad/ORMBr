@@ -37,6 +37,7 @@ uses
   TypInfo,
   Generics.Collections,
   /// ORMBr
+  ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.types.blob,
   ormbr.mapping.attributes,
@@ -197,13 +198,6 @@ end;
 
 procedure TSessionAbstract<M>.ModifyFieldsCompare(const AKey: string;
   const AObjectSource, AObjectUpdate: TObject);
-const
-  cPropertyTypes = [tkUnknown,
-                    tkInterface,
-                    tkClass,
-                    tkClassRef,
-                    tkPointer,
-                    tkProcedure];
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
@@ -219,7 +213,7 @@ begin
       /// Validação para entrar no IF somente propriedades que o tipo não
       ///  esteja na lista de tipos.
       /// </summary>
-      if not (LProperty.PropertyType.TypeKind in cPropertyTypes) then
+      if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1) then
       begin
         if not FModifiedFields.ContainsKey(AKey) then
           FModifiedFields.Add(AKey, TList<string>.Create);

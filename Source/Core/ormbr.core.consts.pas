@@ -31,8 +31,25 @@ unit ormbr.core.consts;
 
 interface
 
+uses
+  TypInfo;
+
 const
   cENUMERATIONSTYPEERROR = 'Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]';
+  cMESSAGEPKNOTFOUND = 'PrimaryKey not found on your model!';
+  cPROPERTYTYPES_1 = [tkUnknown,
+                      tkInterface,
+                      tkClass,
+                      tkClassRef,
+                      tkPointer,
+                      tkProcedure];
+
+  cPROPERTYTYPES_2 = [tkUnknown,
+                      tkInterface,
+                      tkClassRef,
+                      tkPointer,
+                      tkProcedure];
+
 
 implementation
 

@@ -163,10 +163,11 @@ begin
    inherited;
 end;
 
-function TFieldSingleton.GetFieldType(ADataSet: TDataSet; AFieldType: TFieldType): TField;
+function TFieldSingleton.GetFieldType(ADataSet: TDataSet;
+  AFieldType: TFieldType): TField;
 begin
   case AFieldType of
-     ftUnknown:         Result := nil;
+//     ftUnknown:         Result := nil;
      ftString:          Result := TStringField.Create(ADataSet);
      ftSmallint:        Result := TSmallintField.Create(ADataSet);
      ftInteger:         Result := TIntegerField.Create(ADataSet);
@@ -184,11 +185,11 @@ begin
      ftBlob:            Result := TBlobField.Create(ADataSet);
      ftMemo:            Result := TMemoField.Create(ADataSet);
      ftGraphic:         Result := TGraphicField.Create(ADataSet);
-     ftFmtMemo:         Result := nil;
-     ftParadoxOle:      Result := nil;
-     ftDBaseOle:        Result := nil;
+//     ftFmtMemo:         Result := nil;
+//     ftParadoxOle:      Result := nil;
+//     ftDBaseOle:        Result := nil;
      ftTypedBinary:     Result := TBinaryField.Create(ADataSet);
-     ftCursor:          Result := nil;
+//     ftCursor:          Result := nil;
      ftFixedChar:       Result := TStringField.Create(ADataSet);
      ftWideString:      Result := TWideStringField.Create(ADataSet);
      ftLargeint:        Result := TLargeintField.Create(ADataSet);
@@ -196,8 +197,8 @@ begin
      ftArray:           Result := TArrayField.Create(ADataSet);
      ftReference:       Result := TReferenceField.Create(ADataSet);
      ftDataSet:         Result := TDataSetField.Create(ADataSet);
-     ftOraBlob:         Result := nil;
-     ftOraClob:         Result := nil;
+//     ftOraBlob:         Result := nil;
+//     ftOraClob:         Result := nil;
      ftVariant:         Result := TVariantField.Create(ADataSet);
      ftInterface:       Result := TInterfaceField.Create(ADataSet);
      ftIDispatch:       Result := TIDispatchField.Create(ADataSet);
@@ -205,16 +206,16 @@ begin
      ftTimeStamp:       Result := TDateTimeField.Create(ADataSet);
      ftFMTBcd:          Result := TFMTBCDField.Create(ADataSet);
      ftFixedWideChar:   Result := TStringField.Create(ADataSet);
-     ftWideMemo:        Result := TStringField.Create(ADataSet);
+     ftWideMemo:        Result := TMemoField.Create(ADataSet);
      ftOraTimeStamp:    Result := TDateTimeField.Create(ADataSet);
      ftOraInterval:     Result := nil;
      ftLongWord:        Result := TLongWordField.Create(ADataSet);
      ftShortint:        Result := TShortintField.Create(ADataSet);
      ftByte:            Result := TByteField.Create(ADataSet);
      ftExtended:        Result := TExtendedField.Create(ADataSet);
-     ftConnection:      Result := nil;
-     ftParams:          Result := nil;
-     ftStream:          Result := nil;
+//     ftConnection:      Result := nil;
+//     ftParams:          Result := nil;
+//     ftStream:          Result := nil;
      ftTimeStampOffset: Result := TStringField.Create(ADataSet);
      ftObject:          Result := TObjectField.Create(ADataSet);
      ftSingle:          Result := TSingleField.Create(ADataSet);

@@ -67,23 +67,24 @@ type
     FDConnection1: TFDConnection;
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
-    FDMaster: TFDMemTable;
-    FDDetail: TFDMemTable;
-    FDClient: TFDMemTable;
-    FDLookup: TFDMemTable;
     Label8: TLabel;
     DBEdit7: TDBEdit;
     Button1: TButton;
     Button3: TButton;
     DBImage1: TDBImage;
     Button4: TButton;
-    Memo1: TMemo;
+    FDMaster: TClientDataSet;
+    FDDetail: TClientDataSet;
+    FDClient: TClientDataSet;
+    FDLookup: TClientDataSet;
+    Button5: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
@@ -98,7 +99,8 @@ var
 implementation
 
 uses
-  ormbr.form.monitor;
+  ormbr.form.monitor,
+  ormbr.json;
 
 {$R *.dfm}
 
@@ -126,17 +128,21 @@ begin
   oManager.OpenWhere<Tmaster>('description = ''Master Demo Test 26''', '');
 end;
 
+procedure TForm3.Button5Click(Sender: TObject);
+begin
+  oManager.RefreshRecord<Tmaster>;
+end;
+
 procedure TForm3.FormCreate(Sender: TObject);
 var
   LMaster: TMaster;
 begin
-  Memo1.Lines.Clear;
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
   oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oManager := TManagerDataSet.Create(oConn);
-  oManager.AddAdapter<Tmaster>(FDMaster)
+  oManager.AddAdapter<Tmaster>(FDMaster, 3)
           .AddAdapter<Tdetail, Tmaster>(FDDetail)
           .AddAdapter<Tclient, Tmaster>(FDClient)
           .AddAdapter<Tlookup>(FDLookup)
@@ -144,19 +150,9 @@ begin
                                             'lookup_id',
                                             'lookup_id',
                                             'lookup_description',
-                                            'Descrição Lookup')
-  .Open<Tmaster>;
-
-  oManager.FindWhere<Tmaster>('master_id = 83');
-  if oManager.NestedList<Tmaster>.Count > 0 then
-  begin
-    oManager.NestedList<Tmaster>.First;
-    for LMaster in oManager.NestedList<Tmaster> do
-    begin
-      if LMaster <> nil then
-        Memo1.Lines.Add(TORMBrJson.ObjectToJsonString(LMaster));
-    end;
-  end;
+                                            'Descrição Lookup');
+  oManager.Open<Tmaster>;
+//  .OpenWhere<Tmaster>('master_id > 0');
 end;
 
 procedure TForm3.FormDestroy(Sender: TObject);
