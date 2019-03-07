@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 467
+  ClientHeight = 472
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -223,6 +223,15 @@ object Form3: TForm3
     TabOrder = 13
     OnClick = Button4Click
   end
+  object Button5: TButton
+    Left = 399
+    Top = 437
+    Width = 109
+    Height = 25
+    Caption = 'RefreshRecord'
+    TabOrder = 15
+    OnClick = Button5Click
+  end
   object DataSource1: TDataSource
     DataSet = FDMaster
     Left = 424
@@ -241,7 +250,7 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=..\Database\database.db3'
+      'Database=D:\ORMBr\Demo\Data\Database\database.db3'
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 154
@@ -300,5 +309,10 @@ object Form3: TForm3
     UpdateOptions.AutoCommitUpdates = True
     Left = 354
     Top = 222
+  end
+  object DataSource4: TDataSource
+    AutoEdit = False
+    Left = 493
+    Top = 221
   end
 end

@@ -77,11 +77,14 @@ type
     Button3: TButton;
     DBImage1: TDBImage;
     Button4: TButton;
+    DataSource4: TDataSource;
+    Button5: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
@@ -111,6 +114,8 @@ var
 begin
   LMasterCurrent := Tmaster(oContainerMaster.Current);
   LMasterCurrent.description := 'Object Update Master';
+  LMasterCurrent.MyEnumInteger := eiEmitente;
+  LMasterCurrent.MyEnumString := esA;
   oContainerMaster.Save(LMasterCurrent);
 end;
 
@@ -127,6 +132,11 @@ end;
 procedure TForm3.Button4Click(Sender: TObject);
 begin
   oContainerMaster.OpenWhere('description = ''Master Demo Test 26''', '');
+end;
+
+procedure TForm3.Button5Click(Sender: TObject);
+begin
+  oContainerMaster.RefreshRecord;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
