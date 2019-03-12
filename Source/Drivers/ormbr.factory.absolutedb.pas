@@ -42,7 +42,8 @@ type
   /// </summary>
   TFactoryAbsoluteDB = class(TFactoryConnection)
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -50,7 +51,8 @@ type
     procedure Commit; override;
     procedure Rollback; override;
     procedure ExecuteDirect(const ASQL: string); override;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); override;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); override;
     procedure ExecuteScript(const ASQL: string); override;
     procedure AddScript(const ASQL: string); override;
     procedure ExecuteScripts; override;
@@ -58,7 +60,7 @@ type
     function IsConnected: Boolean; override;
     function GetDriverName: TDriverName; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -76,7 +78,8 @@ begin
     FDriverConnection.Connect;
 end;
 
-constructor TFactoryAbsoluteDB.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TFactoryAbsoluteDB.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FDriverConnection  := TDriverAbsoluteDB.Create(AConnection, ADriverName);
@@ -88,9 +91,9 @@ begin
   Result := FDriverConnection.CreateQuery;
 end;
 
-function TFactoryAbsoluteDB.CreateResultSet: IDBResultSet;
+function TFactoryAbsoluteDB.CreateResultSet(const ASQL: String): IDBResultSet;
 begin
-  Result := FDriverConnection.CreateResultSet;
+  Result := FDriverConnection.CreateResultSet(ASQL);
 end;
 
 destructor TFactoryAbsoluteDB.Destroy;

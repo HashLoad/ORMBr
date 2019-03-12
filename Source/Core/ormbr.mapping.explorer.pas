@@ -68,6 +68,7 @@ type
     FViewMapping: TDictionary<string, TViewMapping>;
     FEnumerationMapping: TDictionary<string, TEnumerationMappingList>;
     FFieldEventsMapping: TDictionary<string, TFieldEventsMappingList>;
+    FPrimaryKeyColumnsMapping: TDictionary<string, TPrimaryKeyColumnsMapping>;
     constructor CreatePrivate;
   protected
     function GetRepositoryMapping: TMappingRepository; override;
@@ -91,6 +92,7 @@ type
     function GetMappingView(const AClass: TClass): TViewMapping; override;
     function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList; override;
     function GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList; override;
+    function GetMappingPrimaryKeyColumns(const AClass: TClass): TPrimaryKeyColumnsMapping; override;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
 
@@ -128,6 +130,7 @@ begin
   FViewMapping        := TObjectDictionary<string, TViewMapping>.Create([doOwnsValues]);
   FFieldEventsMapping := TObjectDictionary<string, TFieldEventsMappingList>.Create([doOwnsValues]);
   FEnumerationMapping := TObjectDictionary<string, TEnumerationMappingList>.Create([doOwnsValues]);
+  FPrimaryKeyColumnsMapping  := TObjectDictionary<string, TPrimaryKeyColumnsMapping>.Create([doOwnsValues]);
 end;
 
 destructor TMappingExplorer.Destroy;
@@ -148,6 +151,7 @@ begin
   FViewMapping.Free;
   FFieldEventsMapping.Free;
   FEnumerationMapping.Free;
+  FPrimaryKeyColumnsMapping.Free;
   if Assigned(FRepositoryMapping) then
      FRepositoryMapping.Free;
   inherited;
@@ -175,6 +179,21 @@ begin
     FPrimaryKeyMapping.Add(AClass.ClassName, Result);
 end;
 
+function TMappingExplorer.GetMappingPrimaryKeyColumns(
+  const AClass: TClass): TPrimaryKeyColumnsMapping;
+var
+  LRttiType: TRttiType;
+begin
+  if FPrimaryKeyColumnsMapping.ContainsKey(AClass.ClassName) then
+     Exit(FPrimaryKeyColumnsMapping[AClass.ClassName]);
+
+  LRttiType := TRttiSingleton.GetInstance.GetRttiType(AClass);
+  Result    := FPopularMapping.PopularPrimaryKeyColumns(LRttiType, AClass);
+   /// Add List
+  if Result <> nil then
+    FPrimaryKeyColumnsMapping.Add(AClass.ClassName, Result);
+end;
+
 function TMappingExplorer.GetMappingSequence(
   const AClass: TClass): TSequenceMapping;
 var
@@ -199,7 +218,7 @@ begin
      Exit(FCalcFieldMapping[AClass.ClassName]);
 
   LRttiType := TRttiSingleton.GetInstance.GetRttiType(AClass);
-  Result    := FPopularMapping.PopularCalcField(LRttiType, AClass);
+  Result    := FPopularMapping.PopularCalcField(LRttiType);
    /// Add List
   if Result <> nil then
     FCalcFieldMapping.Add(AClass.ClassName, Result);

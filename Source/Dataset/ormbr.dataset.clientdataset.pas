@@ -75,27 +75,28 @@ type
     procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
     procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
     procedure EmptyDataSetChilds; override;
-    procedure OpenIDInternal(const AID: Variant); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
     procedure ApplyInserter(const MaxErros: Integer); override;
     procedure ApplyUpdater(const MaxErros: Integer); override;
     procedure ApplyDeleter(const MaxErros: Integer); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
-    procedure ApplyUpdates(const MaxErros: Integer); override;
-    procedure EmptyDataSet; override;
   public
     constructor Create(AConnection: IDBConnection; ADataSet:
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
+    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenSQLInternal(const ASQL: string); override;
+    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure ApplyUpdates(const MaxErros: Integer); override;
+    procedure EmptyDataSet; override;
   end;
 
 implementation
 
 uses
   ormbr.dataset.bind,
+  ormbr.core.consts,
   ormbr.objectset.bind,
   ormbr.objects.helper,
   ormbr.rtti.helper,
@@ -361,6 +362,7 @@ end;
 
 procedure TClientDataSetAdapter<M>.ApplyInserter(const MaxErros: Integer);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
 begin
   inherited;
@@ -372,27 +374,37 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-       /// Append/Insert
-       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
-       begin
-         /// <summary>
-         /// Ao passar como parametro a propriedade Current, e disparado o metodo
-         /// que atualiza a var FCurrentInternal, para ser usada abaixo.
-         /// </summary>
-         FSession.Insert(Current);
-         FOrmDataSet.Edit;
-         if FSession.ExistSequence then
-         begin
-           for LColumn in FCurrentInternal.GetPrimaryKey do
-             FOrmDataSet.FieldByName(LColumn.ColumnName).Value := LColumn.PropertyRtti.GetNullableValue(TObject(FCurrentInternal)).AsVariant;
-           /// <summary>
-           /// Atualiza o valor do AutoInc nas sub tabelas
-           /// </summary>
-           SetAutoIncValueChilds;
-         end;
-         FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
-         FOrmDataSet.Post;
-       end;
+      /// Append/Insert
+      if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
+      begin
+        /// <summary>
+        /// Ao passar como parametro a propriedade Current, e disparado o metodo
+        /// que atualiza a var FCurrentInternal, para ser usada abaixo.
+        /// </summary>
+        FSession.Insert(Current);
+        FOrmDataSet.Edit;
+        if FSession.ExistSequence then
+        begin
+           LPrimaryKey := TMappingExplorer
+                            .GetInstance
+                              .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+           if LPrimaryKey = nil then
+             raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+           for LColumn in LPrimaryKey.Columns do
+           begin
+            FOrmDataSet.FieldByName(LColumn.ColumnName).Value :=
+              LColumn.ColumnProperty
+                     .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
+           end;
+          /// <summary>
+          /// Atualiza o valor do AutoInc nas sub tabelas
+          /// </summary>
+          SetAutoIncValueChilds;
+        end;
+        FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
+        FOrmDataSet.Post;
+      end;
     end;
   finally
     FOrmDataSet.Filtered := False;

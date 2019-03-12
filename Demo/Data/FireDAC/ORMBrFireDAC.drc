@@ -8,87 +8,90 @@
   resources were bound to the produced executable.
 */
 
-#define ormbr_encddecd_cMEMORYSTREAMERROR 64688
-#define Vcl_Imaging_pnglang_EPNGUnknownCriticalChunkText 64704
-#define Vcl_Imaging_pnglang_EPNGUnknownCompressionText 64705
-#define Vcl_Imaging_pnglang_EPNGUnknownInterlaceText 64706
-#define Vcl_Imaging_pnglang_EPNGUnknownColorTypeText 64707
-#define Vcl_Imaging_pnglang_EPNGCannotAssignChunkText 64708
-#define Vcl_Imaging_pnglang_EPNGUnexpectedEndText 64709
-#define Vcl_Imaging_pnglang_EPNGNoImageDataText 64710
-#define Vcl_Imaging_pnglang_EPNGCannotAddChunkText 64711
-#define Vcl_Imaging_pnglang_EPNGCannotAddInvalidImageText 64712
-#define Vcl_Imaging_pnglang_EPNGCouldNotLoadResourceText 64713
-#define Vcl_Imaging_pnglang_EPNGOutMemoryText 64714
-#define Vcl_Imaging_pnglang_EPNGCannotChangeTransparentText 64715
-#define Vcl_Imaging_pnglang_EPNGHeaderNotPresentText 64716
-#define Vcl_Imaging_pnglang_EInvalidNewSize 64717
-#define Vcl_Imaging_pnglang_EInvalidSpec 64718
-#define Vcl_Imaging_pnglang_EPNGInvalidBitDepthText 64719
-#define Vcl_Imaging_GIFConsts_sProgressConverting 64720
-#define Vcl_Imaging_GIFConsts_sProgressRendering 64721
-#define Vcl_Imaging_GIFConsts_sProgressCopying 64722
-#define Vcl_Imaging_GIFConsts_sProgressOptimizing 64723
-#define Vcl_Imaging_JConsts_sChangeJPGSize 64724
-#define Vcl_Imaging_JConsts_sJPEGError 64725
-#define Vcl_Imaging_JConsts_sJPEGImageFile 64726
-#define Vcl_Imaging_pnglang_EPngInvalidCRCText 64727
-#define Vcl_Imaging_pnglang_EPNGInvalidIHDRText 64728
-#define Vcl_Imaging_pnglang_EPNGMissingMultipleIDATText 64729
-#define Vcl_Imaging_pnglang_EPNGZLIBErrorText 64730
-#define Vcl_Imaging_pnglang_EPNGInvalidPaletteText 64731
-#define Vcl_Imaging_pnglang_EPNGInvalidFileHeaderText 64732
-#define Vcl_Imaging_pnglang_EPNGIHDRNotFirstText 64733
-#define Vcl_Imaging_pnglang_EPNGSizeExceedsText 64734
-#define Vcl_Imaging_pnglang_EPNGUnknownPalEntryText 64735
-#define Vcl_Imaging_GIFConsts_sScreenSizeExceeded 64736
-#define Vcl_Imaging_GIFConsts_sNoColorTable 64737
-#define Vcl_Imaging_GIFConsts_sBadPixelCoordinates 64738
-#define Vcl_Imaging_GIFConsts_sInvalidPixelFormat 64739
-#define Vcl_Imaging_GIFConsts_sBadDimension 64740
-#define Vcl_Imaging_GIFConsts_sNoDIB 64741
-#define Vcl_Imaging_GIFConsts_sInvalidStream 64742
-#define Vcl_Imaging_GIFConsts_sInvalidColor 64743
-#define Vcl_Imaging_GIFConsts_sInvalidBitSize 64744
-#define Vcl_Imaging_GIFConsts_sEmptyColorMap 64745
-#define Vcl_Imaging_GIFConsts_sEmptyImage 64746
-#define Vcl_Imaging_GIFConsts_sMultipleGCE 64747
-#define Vcl_Imaging_GIFConsts_sNoPalette 64748
-#define Vcl_Imaging_GIFConsts_sGIFImageFile 64749
-#define Vcl_Imaging_GIFConsts_sProgressLoading 64750
-#define Vcl_Imaging_GIFConsts_sProgressSaving 64751
-#define Vcl_Imaging_GIFConsts_sGIFErrorSaveEmpty 64752
-#define Vcl_Imaging_GIFConsts_sBadSignature 64753
-#define Vcl_Imaging_GIFConsts_sScreenBadColorSize 64754
-#define Vcl_Imaging_GIFConsts_sImageBadColorSize 64755
-#define Vcl_Imaging_GIFConsts_sUnknownExtension 64756
-#define Vcl_Imaging_GIFConsts_sBadExtensionLabel 64757
-#define Vcl_Imaging_GIFConsts_sOutOfMemDIB 64758
-#define Vcl_Imaging_GIFConsts_sDecodeTooFewBits 64759
-#define Vcl_Imaging_GIFConsts_sDecodeCircular 64760
-#define Vcl_Imaging_GIFConsts_sBadTrailer 64761
-#define Vcl_Imaging_GIFConsts_sBadExtensionInstance 64762
-#define Vcl_Imaging_GIFConsts_sBadBlockSize 64763
-#define Vcl_Imaging_GIFConsts_sBadBlock 64764
-#define Vcl_Imaging_GIFConsts_sUnsupportedClass 64765
-#define Vcl_Imaging_GIFConsts_sInvalidData 64766
-#define Vcl_Imaging_GIFConsts_sBadSize 64767
+#define Vcl_Imaging_pnglang_EInvalidNewSize 64688
+#define Vcl_Imaging_pnglang_EInvalidSpec 64689
+#define Vcl_Imaging_pnglang_EPNGInvalidBitDepthText 64690
+#define ormbr_encddecd_cMEMORYSTREAMERROR 64691
+#define Vcl_Imaging_pnglang_EPNGIHDRNotFirstText 64704
+#define Vcl_Imaging_pnglang_EPNGSizeExceedsText 64705
+#define Vcl_Imaging_pnglang_EPNGUnknownPalEntryText 64706
+#define Vcl_Imaging_pnglang_EPNGUnknownCriticalChunkText 64707
+#define Vcl_Imaging_pnglang_EPNGUnknownCompressionText 64708
+#define Vcl_Imaging_pnglang_EPNGUnknownInterlaceText 64709
+#define Vcl_Imaging_pnglang_EPNGUnknownColorTypeText 64710
+#define Vcl_Imaging_pnglang_EPNGCannotAssignChunkText 64711
+#define Vcl_Imaging_pnglang_EPNGUnexpectedEndText 64712
+#define Vcl_Imaging_pnglang_EPNGNoImageDataText 64713
+#define Vcl_Imaging_pnglang_EPNGCannotAddChunkText 64714
+#define Vcl_Imaging_pnglang_EPNGCannotAddInvalidImageText 64715
+#define Vcl_Imaging_pnglang_EPNGCouldNotLoadResourceText 64716
+#define Vcl_Imaging_pnglang_EPNGOutMemoryText 64717
+#define Vcl_Imaging_pnglang_EPNGCannotChangeTransparentText 64718
+#define Vcl_Imaging_pnglang_EPNGHeaderNotPresentText 64719
+#define Vcl_Imaging_GIFConsts_sGIFImageFile 64720
+#define Vcl_Imaging_GIFConsts_sProgressLoading 64721
+#define Vcl_Imaging_GIFConsts_sProgressSaving 64722
+#define Vcl_Imaging_GIFConsts_sProgressConverting 64723
+#define Vcl_Imaging_GIFConsts_sProgressRendering 64724
+#define Vcl_Imaging_GIFConsts_sProgressCopying 64725
+#define Vcl_Imaging_GIFConsts_sProgressOptimizing 64726
+#define Vcl_Imaging_JConsts_sChangeJPGSize 64727
+#define Vcl_Imaging_JConsts_sJPEGError 64728
+#define Vcl_Imaging_JConsts_sJPEGImageFile 64729
+#define Vcl_Imaging_pnglang_EPngInvalidCRCText 64730
+#define Vcl_Imaging_pnglang_EPNGInvalidIHDRText 64731
+#define Vcl_Imaging_pnglang_EPNGMissingMultipleIDATText 64732
+#define Vcl_Imaging_pnglang_EPNGZLIBErrorText 64733
+#define Vcl_Imaging_pnglang_EPNGInvalidPaletteText 64734
+#define Vcl_Imaging_pnglang_EPNGInvalidFileHeaderText 64735
+#define Vcl_Imaging_GIFConsts_sUnsupportedClass 64736
+#define Vcl_Imaging_GIFConsts_sInvalidData 64737
+#define Vcl_Imaging_GIFConsts_sBadSize 64738
+#define Vcl_Imaging_GIFConsts_sScreenSizeExceeded 64739
+#define Vcl_Imaging_GIFConsts_sNoColorTable 64740
+#define Vcl_Imaging_GIFConsts_sBadPixelCoordinates 64741
+#define Vcl_Imaging_GIFConsts_sInvalidPixelFormat 64742
+#define Vcl_Imaging_GIFConsts_sBadDimension 64743
+#define Vcl_Imaging_GIFConsts_sNoDIB 64744
+#define Vcl_Imaging_GIFConsts_sInvalidStream 64745
+#define Vcl_Imaging_GIFConsts_sInvalidColor 64746
+#define Vcl_Imaging_GIFConsts_sInvalidBitSize 64747
+#define Vcl_Imaging_GIFConsts_sEmptyColorMap 64748
+#define Vcl_Imaging_GIFConsts_sEmptyImage 64749
+#define Vcl_Imaging_GIFConsts_sMultipleGCE 64750
+#define Vcl_Imaging_GIFConsts_sNoPalette 64751
+#define Vcl_Imaging_GIFConsts_sTooManyColors 64752
+#define Vcl_Imaging_GIFConsts_sBadColorIndex 64753
+#define Vcl_Imaging_GIFConsts_sBadColorIndexFixed 64754
+#define Vcl_Imaging_GIFConsts_sGIFErrorSaveEmpty 64755
+#define Vcl_Imaging_GIFConsts_sBadSignature 64756
+#define Vcl_Imaging_GIFConsts_sScreenBadColorSize 64757
+#define Vcl_Imaging_GIFConsts_sImageBadColorSize 64758
+#define Vcl_Imaging_GIFConsts_sUnknownExtension 64759
+#define Vcl_Imaging_GIFConsts_sBadExtensionLabel 64760
+#define Vcl_Imaging_GIFConsts_sOutOfMemDIB 64761
+#define Vcl_Imaging_GIFConsts_sDecodeTooFewBits 64762
+#define Vcl_Imaging_GIFConsts_sDecodeCircular 64763
+#define Vcl_Imaging_GIFConsts_sBadTrailer 64764
+#define Vcl_Imaging_GIFConsts_sBadExtensionInstance 64765
+#define Vcl_Imaging_GIFConsts_sBadBlockSize 64766
+#define Vcl_Imaging_GIFConsts_sBadBlock 64767
 #define FireDAC_Stan_ResStrs_S_FD_ClntSessionInfo 64768
 #define FireDAC_Stan_ResStrs_S_FD_ClntFailedToLoad 64769
 #define FireDAC_Stan_ResStrs_S_FD_ClntFailedToConnect 64770
 #define FireDAC_Stan_ResStrs_S_FD_ClntNotConnected 64771
 #define FireDAC_Stan_ResStrs_S_FD_ClntCheckingSession 64772
-#define FireDAC_Stan_ResStrs_S_FD_NotFound 64773
-#define FireDAC_Stan_ResStrs_S_FD_Unnamed 64774
-#define FireDAC_Stan_ResStrs_S_FD_Warning 64775
-#define FireDAC_Stan_ResStrs_S_FD_Error 64776
-#define FireDAC_Stan_ResStrs_S_FD_MySQLWarnNoFK 64777
-#define FireDAC_Stan_ResStrs_S_FD_MySQLWarnNoMR 64778
-#define FireDAC_Stan_ResStrs_S_FD_PhysWarnMajVerDiff 64779
-#define Vcl_Imaging_GIFConsts_sOutOfData 64780
-#define Vcl_Imaging_GIFConsts_sTooManyColors 64781
-#define Vcl_Imaging_GIFConsts_sBadColorIndex 64782
-#define Vcl_Imaging_GIFConsts_sBadColorIndexFixed 64783
+#define FireDAC_Stan_ResStrs_S_FD_StartLog 64773
+#define FireDAC_Stan_ResStrs_S_FD_NoErrorsLogged 64774
+#define FireDAC_Stan_ResStrs_S_FD_EndLog 64775
+#define FireDAC_Stan_ResStrs_S_FD_NotFound 64776
+#define FireDAC_Stan_ResStrs_S_FD_Unnamed 64777
+#define FireDAC_Stan_ResStrs_S_FD_Warning 64778
+#define FireDAC_Stan_ResStrs_S_FD_Error 64779
+#define FireDAC_Stan_ResStrs_S_FD_MySQLWarnNoFK 64780
+#define FireDAC_Stan_ResStrs_S_FD_MySQLWarnNoMR 64781
+#define FireDAC_Stan_ResStrs_S_FD_PhysWarnMajVerDiff 64782
+#define Vcl_Imaging_GIFConsts_sOutOfData 64783
 #define FireDAC_Stan_ResStrs_S_FD_MongoError 64784
 #define FireDAC_Stan_ResStrs_S_FD_MongoBadURI 64785
 #define FireDAC_Stan_ResStrs_S_FD_MongoDocReadOnly 64786
@@ -843,7 +846,13 @@
 #define System_SysConst_SAccessDenied 65535
 STRINGTABLE
 BEGIN
+	Vcl_Imaging_pnglang_EInvalidNewSize,	L"The new size provided for image resizing is invalid."
+	Vcl_Imaging_pnglang_EInvalidSpec,	L"The \"Portable Network Graphics\" could not be created because invalid image type parameters have being provided."
+	Vcl_Imaging_pnglang_EPNGInvalidBitDepthText,	L"The \"Portable Network Graphics\" image could not be loaded because it uses an invalid image bit depth."
 	ormbr_encddecd_cMEMORYSTREAMERROR,	L"Out of memory while expanding memory stream"
+	Vcl_Imaging_pnglang_EPNGIHDRNotFirstText,	L"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
+	Vcl_Imaging_pnglang_EPNGSizeExceedsText,	L"This \"Portable Network Graphics\" image is not supported because either its width or height exceeds the maximum size of 65535 pixels."
+	Vcl_Imaging_pnglang_EPNGUnknownPalEntryText,	L"There is no such palette entry."
 	Vcl_Imaging_pnglang_EPNGUnknownCriticalChunkText,	L"This \"Portable Network Graphics\" image contains an unknown critical part which could not be decoded."
 	Vcl_Imaging_pnglang_EPNGUnknownCompressionText,	L"This \"Portable Network Graphics\" image is encoded with an unknown compression scheme which could not be decoded."
 	Vcl_Imaging_pnglang_EPNGUnknownInterlaceText,	L"This \"Portable Network Graphics\" image uses an unknown interlace scheme which could not be decoded."
@@ -857,9 +866,9 @@ BEGIN
 	Vcl_Imaging_pnglang_EPNGOutMemoryText,	L"Some operation could not be performed because the system is out of resources. Close some windows and try again."
 	Vcl_Imaging_pnglang_EPNGCannotChangeTransparentText,	L"Setting bit transparency color is not allowed for png images containing alpha value for each pixel (COLOR_RGBALPHA and COLOR_GRAYSCALEALPHA)"
 	Vcl_Imaging_pnglang_EPNGHeaderNotPresentText,	L"This operation is not valid because the current image contains no valid header."
-	Vcl_Imaging_pnglang_EInvalidNewSize,	L"The new size provided for image resizing is invalid."
-	Vcl_Imaging_pnglang_EInvalidSpec,	L"The \"Portable Network Graphics\" could not be created because invalid image type parameters have being provided."
-	Vcl_Imaging_pnglang_EPNGInvalidBitDepthText,	L"The \"Portable Network Graphics\" image could not be loaded because it uses an invalid image bit depth."
+	Vcl_Imaging_GIFConsts_sGIFImageFile,	L"GIF Image"
+	Vcl_Imaging_GIFConsts_sProgressLoading,	L"Loading"
+	Vcl_Imaging_GIFConsts_sProgressSaving,	L"Saving"
 	Vcl_Imaging_GIFConsts_sProgressConverting,	L"Converting"
 	Vcl_Imaging_GIFConsts_sProgressRendering,	L"Rendering"
 	Vcl_Imaging_GIFConsts_sProgressCopying,	L"Copying"
@@ -873,9 +882,9 @@ BEGIN
 	Vcl_Imaging_pnglang_EPNGZLIBErrorText,	L"Could not decompress the image because it contains invalid compressed data.\r\n Description: "
 	Vcl_Imaging_pnglang_EPNGInvalidPaletteText,	L"The \"Portable Network Graphics\" image contains an invalid palette."
 	Vcl_Imaging_pnglang_EPNGInvalidFileHeaderText,	L"The file being read is not a valid \"Portable Network Graphics\" image because it contains an invalid header. This file may be corrupted, try obtaining it again"
-	Vcl_Imaging_pnglang_EPNGIHDRNotFirstText,	L"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
-	Vcl_Imaging_pnglang_EPNGSizeExceedsText,	L"This \"Portable Network Graphics\" image is not supported because either its width or height exceeds the maximum size of 65535 pixels."
-	Vcl_Imaging_pnglang_EPNGUnknownPalEntryText,	L"There is no such palette entry."
+	Vcl_Imaging_GIFConsts_sUnsupportedClass,	L"Object type not supported for operation"
+	Vcl_Imaging_GIFConsts_sInvalidData,	L"Invalid GIF data"
+	Vcl_Imaging_GIFConsts_sBadSize,	L"Invalid image size"
 	Vcl_Imaging_GIFConsts_sScreenSizeExceeded,	L"Image exceeds Logical Screen size"
 	Vcl_Imaging_GIFConsts_sNoColorTable,	L"No global or local color table defined"
 	Vcl_Imaging_GIFConsts_sBadPixelCoordinates,	L"Invalid pixel coordinates"
@@ -889,9 +898,9 @@ BEGIN
 	Vcl_Imaging_GIFConsts_sEmptyImage,	L"Image is empty"
 	Vcl_Imaging_GIFConsts_sMultipleGCE,	L"Frame contains multiple Graphic Control Extension blocks"
 	Vcl_Imaging_GIFConsts_sNoPalette,	L"Missing, invalid or empty palette"
-	Vcl_Imaging_GIFConsts_sGIFImageFile,	L"GIF Image"
-	Vcl_Imaging_GIFConsts_sProgressLoading,	L"Loading"
-	Vcl_Imaging_GIFConsts_sProgressSaving,	L"Saving"
+	Vcl_Imaging_GIFConsts_sTooManyColors,	L"Color table overflow"
+	Vcl_Imaging_GIFConsts_sBadColorIndex,	L"Invalid color index"
+	Vcl_Imaging_GIFConsts_sBadColorIndexFixed,	L"Invalid color index - color map expanded"
 	Vcl_Imaging_GIFConsts_sGIFErrorSaveEmpty,	L"Cannot save empty GIF"
 	Vcl_Imaging_GIFConsts_sBadSignature,	L"Invalid GIF signature"
 	Vcl_Imaging_GIFConsts_sScreenBadColorSize,	L"Invalid number of colors specified in Screen Descriptor"
@@ -905,14 +914,14 @@ BEGIN
 	Vcl_Imaging_GIFConsts_sBadExtensionInstance,	L"Internal error: Extension Instance does not match Extension Label"
 	Vcl_Imaging_GIFConsts_sBadBlockSize,	L"Unsupported Application Extension block size"
 	Vcl_Imaging_GIFConsts_sBadBlock,	L"Unknown GIF block type"
-	Vcl_Imaging_GIFConsts_sUnsupportedClass,	L"Object type not supported for operation"
-	Vcl_Imaging_GIFConsts_sInvalidData,	L"Invalid GIF data"
-	Vcl_Imaging_GIFConsts_sBadSize,	L"Invalid image size"
 	FireDAC_Stan_ResStrs_S_FD_ClntSessionInfo,	L"Session info"
 	FireDAC_Stan_ResStrs_S_FD_ClntFailedToLoad,	L"Failed to load DBMS client !"
 	FireDAC_Stan_ResStrs_S_FD_ClntFailedToConnect,	L"Failed to connect to DBMS !"
 	FireDAC_Stan_ResStrs_S_FD_ClntNotConnected,	L"Not connected to DBMS."
 	FireDAC_Stan_ResStrs_S_FD_ClntCheckingSession,	L"Checking session ..."
+	FireDAC_Stan_ResStrs_S_FD_StartLog,	L"Start Log"
+	FireDAC_Stan_ResStrs_S_FD_NoErrorsLogged,	L"No Errors Logged"
+	FireDAC_Stan_ResStrs_S_FD_EndLog,	L"End Log"
 	FireDAC_Stan_ResStrs_S_FD_NotFound,	L"<not found>"
 	FireDAC_Stan_ResStrs_S_FD_Unnamed,	L"Unnamed"
 	FireDAC_Stan_ResStrs_S_FD_Warning,	L"Warning:"
@@ -921,9 +930,6 @@ BEGIN
 	FireDAC_Stan_ResStrs_S_FD_MySQLWarnNoMR,	L"Warning: The client [%s] version or less does not support multiple result sets or output parameters of prepared statement."
 	FireDAC_Stan_ResStrs_S_FD_PhysWarnMajVerDiff,	L"Warning: The client [%s] and server [%s] major versions difference > 1."
 	Vcl_Imaging_GIFConsts_sOutOfData,	L"Premature end of data"
-	Vcl_Imaging_GIFConsts_sTooManyColors,	L"Color table overflow"
-	Vcl_Imaging_GIFConsts_sBadColorIndex,	L"Invalid color index"
-	Vcl_Imaging_GIFConsts_sBadColorIndexFixed,	L"Invalid color index - color map expanded"
 	FireDAC_Stan_ResStrs_S_FD_MongoError,	L"[%s] method failed"
 	FireDAC_Stan_ResStrs_S_FD_MongoBadURI,	L"Failed to parse URI"
 	FireDAC_Stan_ResStrs_S_FD_MongoDocReadOnly,	L"Cannot modify read-only document"
@@ -1686,6 +1692,5 @@ END
 /* c:\program files (x86)\embarcadero\studio\20.0\lib\Win32\release\DBGrids.res */
 /* D:\ORMBr\Source\Monitor\ormbr.form.monitor.dfm */
 /* D:\ORMBr\Demo\Data\FireDAC\uMainFormORM.dfm */
-/* c:\program files (x86)\embarcadero\studio\20.0\lib\Win32\release\midas.res */
 /* D:\ORMBr\Demo\Data\FireDAC\ORMBrFireDAC.res */
 /* D:\ORMBr\Demo\Data\FireDAC\ORMBrFireDAC.drf */

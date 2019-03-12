@@ -1,0 +1,120 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E7ECDD2C-7957-4F06-B9B3-818870849121}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TestsUniDAC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsDBExpress.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsFireDAC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsADO.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsZeos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsSQLiteNative.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsIBExpress.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TestsAbsoluteDB.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TestsUniDAC">
+        <MSBuild Projects="TestsUniDAC.dproj"/>
+    </Target>
+    <Target Name="TestsUniDAC:Clean">
+        <MSBuild Projects="TestsUniDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsUniDAC:Make">
+        <MSBuild Projects="TestsUniDAC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsDBExpress">
+        <MSBuild Projects="TestsDBExpress.dproj"/>
+    </Target>
+    <Target Name="TestsDBExpress:Clean">
+        <MSBuild Projects="TestsDBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsDBExpress:Make">
+        <MSBuild Projects="TestsDBExpress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsFireDAC">
+        <MSBuild Projects="TestsFireDAC.dproj"/>
+    </Target>
+    <Target Name="TestsFireDAC:Clean">
+        <MSBuild Projects="TestsFireDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsFireDAC:Make">
+        <MSBuild Projects="TestsFireDAC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsADO">
+        <MSBuild Projects="TestsADO.dproj"/>
+    </Target>
+    <Target Name="TestsADO:Clean">
+        <MSBuild Projects="TestsADO.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsADO:Make">
+        <MSBuild Projects="TestsADO.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsZeos">
+        <MSBuild Projects="TestsZeos.dproj"/>
+    </Target>
+    <Target Name="TestsZeos:Clean">
+        <MSBuild Projects="TestsZeos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsZeos:Make">
+        <MSBuild Projects="TestsZeos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsSQLiteNative">
+        <MSBuild Projects="TestsSQLiteNative.dproj"/>
+    </Target>
+    <Target Name="TestsSQLiteNative:Clean">
+        <MSBuild Projects="TestsSQLiteNative.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsSQLiteNative:Make">
+        <MSBuild Projects="TestsSQLiteNative.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsIBExpress">
+        <MSBuild Projects="TestsIBExpress.dproj"/>
+    </Target>
+    <Target Name="TestsIBExpress:Clean">
+        <MSBuild Projects="TestsIBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsIBExpress:Make">
+        <MSBuild Projects="TestsIBExpress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestsAbsoluteDB">
+        <MSBuild Projects="TestsAbsoluteDB.dproj"/>
+    </Target>
+    <Target Name="TestsAbsoluteDB:Clean">
+        <MSBuild Projects="TestsAbsoluteDB.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestsAbsoluteDB:Make">
+        <MSBuild Projects="TestsAbsoluteDB.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TestsUniDAC;TestsDBExpress;TestsFireDAC;TestsADO;TestsZeos;TestsSQLiteNative;TestsIBExpress;TestsAbsoluteDB"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TestsUniDAC:Clean;TestsDBExpress:Clean;TestsFireDAC:Clean;TestsADO:Clean;TestsZeos:Clean;TestsSQLiteNative:Clean;TestsIBExpress:Clean;TestsAbsoluteDB:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TestsUniDAC:Make;TestsDBExpress:Make;TestsFireDAC:Make;TestsADO:Make;TestsZeos:Make;TestsSQLiteNative:Make;TestsIBExpress:Make;TestsAbsoluteDB:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

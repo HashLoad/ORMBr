@@ -42,10 +42,10 @@ type
 
   IUtilSingleton = interface
     ['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']
-    function DateTimeToIso8601(AValue: TDateTime): string;
+    function DateTimeToIso8601(const AValue: TDateTime): string;
     function Iso8601ToDateTime(const AValue: string): TDateTime;
     function ParseCommandNoSQL(const ASubStr, ACommandText: string;
-      ADefault: String = ''): string;
+      const ADefault: String = ''): string;
   end;
 
   TUtilSingleton = class sealed(TInterfacedObject, IUtilSingleton)
@@ -59,10 +59,10 @@ type
     constructor Create;
     class function GetInstance: IUtilSingleton;
 
-    function DateTimeToIso8601(AValue: TDateTime): string;
+    function DateTimeToIso8601(const AValue: TDateTime): string;
     function Iso8601ToDateTime(const AValue: string): TDateTime;
     function ParseCommandNoSQL(const ASubStr, ASQL: string;
-      ADefault: String): string;
+      const ADefault: String): string;
   end;
 
 implementation
@@ -82,7 +82,7 @@ end;
 /// <summary>
 /// YYYY-MM-DD Thh:mm:ss or YYYY-MM-DDThh:mm:ss
 /// </summary>
-function TUtilSingleton.DateTimeToIso8601(AValue: TDateTime): string;
+function TUtilSingleton.DateTimeToIso8601(const AValue: TDateTime): string;
 begin
   if AValue = 0 then
     Result := ''
@@ -149,7 +149,7 @@ begin
 end;
 
 function TUtilSingleton.ParseCommandNoSQL(const ASubStr, ASQL: string;
-  ADefault: String): string;
+  const ADefault: String): string;
 var
   LFor: Integer;
   LPosI: Integer;

@@ -85,12 +85,12 @@ type
     function NotEof: Boolean;
     function RecordCount: Integer;
     function FieldDefs: TFieldDefs;
-    function GetFieldValue(AFieldName: string): Variant; overload;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload;
-    function GetField(AFieldName: string): TField;
-    function GetFieldType(AFieldName: string): TFieldType;
-    function FieldByName(AFieldName: string): TAsField;
-    function DataSet: TDataSet;
+    function GetFieldValue(const AFieldName: string): Variant; overload;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload;
+    function GetField(const AFieldName: string): TField;
+    function GetFieldType(const AFieldName: string): TFieldType;
+    function FieldByName(const AFieldName: string): TAsField;
+//    function DataSet: TDataSet;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
@@ -120,7 +120,7 @@ type
     function IsConnected: Boolean;
     function GetDriverName: TDriverName;
     function CreateQuery: IDBQuery;
-    function CreateResultSet: IDBResultSet;
+    function CreateResultSet(const ASQL: String): IDBResultSet;
     function ExecuteSQL(const ASQL: string): IDBResultSet;
     function CommandMonitor: ICommandMonitor;
   end;

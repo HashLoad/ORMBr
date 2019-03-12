@@ -59,7 +59,6 @@ type
 
     [Association(OneToOne,'MNEMONICO','PROCEDIMENTOS','MNEMONICO')]
     property Procedimento: TProcedimento read FProcedimento write FProcedimento;
-
   end;
 
 implementation

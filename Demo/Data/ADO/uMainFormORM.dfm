@@ -276,7 +276,7 @@ object Form3: TForm3
   object ADOConnection1: TADOConnection
     ConnectionString = 
       'Provider=MSDASQL.1;Persist Security Info=False;Data Source=SQLit' +
-      'e3 Datasource;'
+      'e3 Datasource'
     LoginPrompt = False
     Provider = 'MSDASQL.1'
     Left = 140

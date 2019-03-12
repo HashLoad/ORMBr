@@ -104,6 +104,7 @@ procedure TSessionDataSet<M>.OpenID(const AID: Variant);
 var
   LDBResultSet: IDBResultSet;
 begin
+  inherited;
   FManager.FetchingRecords := False;
   LDBResultSet := FManager.SelectInternalID(AID);
   /// <summary>
@@ -116,6 +117,7 @@ procedure TSessionDataSet<M>.OpenSQL(const ASQL: string);
 var
   LDBResultSet: IDBResultSet;
 begin
+  inherited;
   FManager.FetchingRecords := False;
   if ASQL = '' then
     LDBResultSet := FManager.SelectInternalAll
@@ -130,6 +132,7 @@ end;
 procedure TSessionDataSet<M>.OpenWhere(const AWhere: string;
   const AOrderBy: string);
 begin
+  inherited;
   OpenSQL(FManager.SelectInternalWhere(AWhere, AOrderBy));
 end;
 
@@ -163,6 +166,7 @@ procedure TSessionDataSet<M>.NextPacket;
 var
   LDBResultSet: IDBResultSet;
 begin
+  inherited;
   if not FManager.FetchingRecords then
   begin
     LDBResultSet := FManager.NextPacket;

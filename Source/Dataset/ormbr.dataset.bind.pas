@@ -52,12 +52,16 @@ uses
 type
   IBindDataSet = interface
     ['{8EAF6052-177E-4D4B-9E0A-386799C129FC}']
-    procedure SetDataDictionary(ADataSet: TDataSet; AObject: TObject);
-    procedure SetInternalInitFieldDefsObjectClass(ADataSet: TDataSet; AObject: TObject);
-    procedure SetPropertyToField(AObject: TObject; ADataSet: TDataSet);
-    procedure SetFieldToField(AResultSet: IDBResultSet; ADataSet: TDataSet);
-    function GetFieldValue(ADataSet: TDataSet; AFieldName: string;
-      AFieldType: TFieldType): string;
+    procedure SetDataDictionary(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure SetInternalInitFieldDefsObjectClass(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure SetPropertyToField(const AObject: TObject;
+      const ADataSet: TDataSet);
+    procedure SetFieldToField(const AResultSet: IDBResultSet;
+      const ADataSet: TDataSet);
+    function GetFieldValue(const ADataSet: TDataSet;
+      const AFieldName: string; const AFieldType: TFieldType): string;
   end;
 
   TBindDataSet = class(TInterfacedObject, IBindDataSet)
@@ -66,23 +70,29 @@ type
     FInstance: IBindDataSet;
     FContext: TRttiContext;
     constructor CreatePrivate;
-    procedure SetAggregateFieldDefsObjectClass(ADataSet: TDataSet; AObject: TObject);
-    procedure SetCalcFieldDefsObjectClass(ADataSet: TDataSet; AObject: TObject);
-    procedure FillDataSetField(ASource, ATarget: TDataSet);
-    procedure FillADTField(AADTField: TADTField; ATarget: TDataSet);
-    procedure CreateFieldsNestedDataSet(ADataSet: TDataSet; AObject: TObject;
-      LColumn: TColumnMapping);
+    procedure SetAggregateFieldDefsObjectClass(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure FillDataSetField(const ASource, ATarget: TDataSet);
+    procedure FillADTField(const AADTField: TADTField;
+      const ATarget: TDataSet);
+    procedure CreateFieldsNestedDataSet(const ADataSet: TDataSet;
+      const AObject: TObject; const LColumn: TColumnMapping);
   public
     { Public declarations }
     constructor Create;
     class function GetInstance: IBindDataSet;
-    procedure SetDataDictionary(ADataSet: TDataSet; AObject: TObject);
-    procedure SetInternalInitFieldDefsObjectClass(ADataSet: TDataSet;
-      AObject: TObject);
-    procedure SetPropertyToField(AObject: TObject; ADataSet: TDataSet);
-    procedure SetFieldToField(AResultSet: IDBResultSet; ADataSet: TDataSet);
-    function GetFieldValue(ADataSet: TDataSet; AFieldName: string;
-      AFieldType: TFieldType): string;
+    procedure SetDataDictionary(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure SetInternalInitFieldDefsObjectClass(const ADataSet: TDataSet;
+      const AObject: TObject);
+    procedure SetPropertyToField(const AObject: TObject;
+      const ADataSet: TDataSet);
+    procedure SetFieldToField(const AResultSet: IDBResultSet;
+      const ADataSet: TDataSet);
+    function GetFieldValue(const ADataSet: TDataSet; const AFieldName: string;
+      const AFieldType: TFieldType): string;
   end;
 
 implementation
@@ -96,7 +106,8 @@ uses
 
 { TBindDataSet }
 
-procedure TBindDataSet.SetPropertyToField(AObject: TObject; ADataSet: TDataSet);
+procedure TBindDataSet.SetPropertyToField(const AObject: TObject;
+  const ADataSet: TDataSet);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -120,7 +131,7 @@ begin
       if LColumn.IsJoinColumn then
         Continue;
 
-      LProperty := LColumn.PropertyRtti;
+      LProperty := LColumn.ColumnProperty;
       LField := ADataSet.FieldByName(LColumn.ColumnName);
       case LProperty.PropertyType.TypeKind of
         tkEnumeration:
@@ -212,8 +223,9 @@ begin
    FContext := TRttiContext.Create;
 end;
 
-function TBindDataSet.GetFieldValue(ADataSet: TDataSet; AFieldName: string;
-  AFieldType: TFieldType): string;
+function TBindDataSet.GetFieldValue(const ADataSet: TDataSet;
+  const AFieldName: string;
+  const AFieldType: TFieldType): string;
 begin
   case AFieldType of
     ftString, ftDate, ftTime, ftDateTime, ftTimeStamp:
@@ -271,16 +283,16 @@ begin
   end;
 end;
 
-procedure TBindDataSet.CreateFieldsNestedDataSet(ADataSet: TDataSet;
-  AObject: TObject; LColumn: TColumnMapping);
+procedure TBindDataSet.CreateFieldsNestedDataSet(const ADataSet: TDataSet;
+  const AObject: TObject; const LColumn: TColumnMapping);
 var
   LDataSet: TDataSet;
   LObject: TObject;
 begin
   LDataSet := (ADataSet.FieldByName(LColumn.ColumnName) as TDataSetField).NestedDataSet;
-  if LColumn.PropertyRtti.IsList then
+  if LColumn.ColumnProperty.IsList then
   begin
-    LObject := LColumn.PropertyRtti.GetObjectTheList;
+    LObject := LColumn.ColumnProperty.GetObjectTheList;
     try
       SetInternalInitFieldDefsObjectClass(LDataSet, LObject);
     finally
@@ -289,7 +301,7 @@ begin
   end
   else
   begin
-    LObject := LColumn.PropertyRtti.GetNullableValue(AObject).AsObject;
+    LObject := LColumn.ColumnProperty.GetNullableValue(AObject).AsObject;
     SetInternalInitFieldDefsObjectClass(LDataSet, LObject);
   end;
 end;
@@ -302,8 +314,8 @@ begin
    Result := FInstance;
 end;
 
-procedure TBindDataSet.SetAggregateFieldDefsObjectClass(ADataSet: TDataSet;
-  AObject: TObject);
+procedure TBindDataSet.SetAggregateFieldDefsObjectClass(
+  const ADataSet: TDataSet; const AObject: TObject);
 var
   LRttiType: TRttiType;
   LAggregates: TArray<TCustomAttribute>;
@@ -324,127 +336,127 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetCalcFieldDefsObjectClass(ADataSet: TDataSet; AObject: TObject);
+procedure TBindDataSet.SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
+  const AObject: TObject);
 var
   LCalcField: TCalcFieldMapping;
   LCalcFields: TCalcFieldMappingList;
-  LAttributo: TCustomAttribute;
+  LDictionary: Dictionary;
   LFieldName: string;
 begin
   LCalcFields := TMappingExplorer
                    .GetInstance
                      .GetMappingCalcField(AObject.ClassType);
-  if LCalcFields <> nil then
+  if LCalcFields = nil then
+    Exit;
+
+  for LCalcField in LCalcFields do
   begin
-    for LCalcField in LCalcFields do
+    TFieldSingleton
+      .GetInstance
+        .AddCalcField(ADataSet,
+                      LCalcField.FieldName,
+                      LCalcField.FieldType,
+                      LCalcField.Size);
+    LFieldName := LCalcField.FieldName;
+    if Assigned(TField(LCalcField.CalcProperty)) then
     begin
-      TFieldSingleton
-        .GetInstance
-          .AddCalcField(ADataSet,
-                        LCalcField.FieldName,
-                        LCalcField.FieldType,
-                        LCalcField.Size);
-      LFieldName := LCalcField.FieldName;
-      if Assigned(TField(LCalcField.PropertyRtti)) then
-      begin
-        LAttributo := LCalcField.PropertyRtti.GetDictionary;
-         if LAttributo = nil then
-          Continue;
+      LDictionary := LCalcField.CalcDictionary;
+       if LDictionary = nil then
+        Continue;
 
-        /// DisplayLabel
-        if Length(Dictionary(LAttributo).DisplayLabel) > 0 then
-          ADataSet
-            .FieldByName(LFieldName)
-              .DisplayLabel := Dictionary(LAttributo).DisplayLabel;
+      /// DisplayLabel
+      if Length(LDictionary.DisplayLabel) > 0 then
+        ADataSet.FieldByName(LFieldName).DisplayLabel := LDictionary.DisplayLabel;
 
-        /// DisplayFormat
-        if Length(Dictionary(LAttributo).DisplayFormat) > 0 then
-          TDateField(ADataSet.FieldByName(LFieldName))
-            .DisplayFormat := Dictionary(LAttributo).DisplayFormat;
+      /// DisplayFormat
+      if Length(LDictionary.DisplayFormat) > 0 then
+        TDateField(ADataSet.FieldByName(LFieldName)).DisplayFormat := LDictionary.DisplayFormat;
 
-        /// EditMask
-        if Length(Dictionary(LAttributo).EditMask) > 0 then
-          ADataSet
-            .FieldByName(LFieldName).EditMask := Dictionary(LAttributo).EditMask;
+      /// EditMask
+      if Length(LDictionary.EditMask) > 0 then
+        ADataSet.FieldByName(LFieldName).EditMask := LDictionary.EditMask;
 
-        /// Alignment
-        if Dictionary(LAttributo).Alignment in [taLeftJustify,taRightJustify,taCenter] then
-          ADataSet
-            .FieldByName(LFieldName).Alignment := Dictionary(LAttributo).Alignment;
-      end;
+      /// Alignment
+      if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
+        ADataSet.FieldByName(LFieldName).Alignment := LDictionary.Alignment;
     end;
   end;
 end;
 
-procedure TBindDataSet.SetDataDictionary(ADataSet: TDataSet; AObject: TObject);
+procedure TBindDataSet.SetDataDictionary(const ADataSet: TDataSet;
+  const AObject: TObject);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
-  LAttributo: TCustomAttribute;
+  LDictionary: Dictionary;
   LFieldName: string;
 begin
    LColumns := TMappingExplorer
                  .GetInstance
                    .GetMappingColumn(AObject.ClassType);
+   if LColumns = nil then
+     Exit;
+
    for LColumn in LColumns do
    begin
      LFieldName := LColumn.ColumnName;
-     if Assigned(TField(LColumn.PropertyRtti)) then
+     if Assigned(TField(LColumn.ColumnProperty)) then
      begin
-        LAttributo := LColumn.PropertyRtti.GetDictionary;
-        if LAttributo = nil then
+        LDictionary := LColumn.ColumnDictionary;
+        if LDictionary = nil then
           Continue;
 
         /// DisplayLabel
-        if Length(Dictionary(LAttributo).DisplayLabel) > 0 then
+        if Length(LDictionary.DisplayLabel) > 0 then
           ADataSet
             .FieldByName(LFieldName)
-              .DisplayLabel := Dictionary(LAttributo).DisplayLabel;
+              .DisplayLabel := LDictionary.DisplayLabel;
 
         /// ConstraintErrorMessage
-        if Length(Dictionary(LAttributo).ConstraintErrorMessage) > 0 then
+        if Length(LDictionary.ConstraintErrorMessage) > 0 then
           ADataSet
             .FieldByName(LFieldName)
-              .ConstraintErrorMessage := Dictionary(LAttributo).ConstraintErrorMessage;
+              .ConstraintErrorMessage := LDictionary.ConstraintErrorMessage;
 
         /// Origin
-        if Length(Dictionary(LAttributo).Origin) > 0 then
+        if Length(LDictionary.Origin) > 0 then
           ADataSet
             .FieldByName(LFieldName)
-              .Origin := Dictionary(LAttributo).Origin;
+              .Origin := LDictionary.Origin;
 
         /// DefaultExpression
-        if Length(Dictionary(LAttributo).DefaultExpression) > 0 then
+        if Length(LDictionary.DefaultExpression) > 0 then
         begin
-           if Dictionary(LAttributo).DefaultExpression = 'Date' then
+           if LDictionary.DefaultExpression = 'Date' then
              ADataSet
                .FieldByName(LFieldName)
                  .DefaultExpression := QuotedStr(DateToStr(Date))
            else
-           if Dictionary(LAttributo).DefaultExpression = 'Now' then
+           if LDictionary.DefaultExpression = 'Now' then
              ADataSet
                .FieldByName(LFieldName)
                  .DefaultExpression := QuotedStr(DateTimeToStr(Now))
            else
              ADataSet
                .FieldByName(LFieldName)
-                 .DefaultExpression := Dictionary(LAttributo).DefaultExpression;
+                 .DefaultExpression := LDictionary.DefaultExpression;
         end;
 
         /// DisplayFormat
-        if Length(Dictionary(LAttributo).DisplayFormat) > 0 then
+        if Length(LDictionary.DisplayFormat) > 0 then
           TDateField(ADataSet.FieldByName(LFieldName))
-            .DisplayFormat := Dictionary(LAttributo).DisplayFormat;
+            .DisplayFormat := LDictionary.DisplayFormat;
 
         /// EditMask
-        if Length(Dictionary(LAttributo).EditMask) > 0 then
+        if Length(LDictionary.EditMask) > 0 then
           ADataSet
-            .FieldByName(LFieldName).EditMask := Dictionary(LAttributo).EditMask;
+            .FieldByName(LFieldName).EditMask := LDictionary.EditMask;
 
         /// Alignment
-        if Dictionary(LAttributo).Alignment in [taLeftJustify,taRightJustify,taCenter] then
+        if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
           ADataSet
-            .FieldByName(LFieldName).Alignment := Dictionary(LAttributo).Alignment;
+            .FieldByName(LFieldName).Alignment := LDictionary.Alignment;
 
         /// Origin
         ADataSet
@@ -453,7 +465,8 @@ begin
    end;
 end;
 
-procedure TBindDataSet.SetFieldToField(AResultSet: IDBResultSet; ADataSet: TDataSet);
+procedure TBindDataSet.SetFieldToField(const AResultSet: IDBResultSet;
+  const ADataSet: TDataSet);
 var
   LFor: Integer;
   LFieldValue: Variant;
@@ -521,8 +534,8 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetInternalInitFieldDefsObjectClass(ADataSet: TDataSet;
-  AObject: TObject);
+procedure TBindDataSet.SetInternalInitFieldDefsObjectClass(
+  const ADataSet: TDataSet; const AObject: TObject);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -544,7 +557,7 @@ begin
                                             LColumn.Size);
     end;
     /// IsWritable
-    if not LColumn.PropertyRtti.IsWritable then
+    if not LColumn.ColumnProperty.IsWritable then
       ADataSet.FieldByName(LColumn.ColumnName).ReadOnly := True;
     /// IsJoinColumn
     if LColumn.IsJoinColumn then
@@ -591,7 +604,8 @@ begin
   SetAggregateFieldDefsObjectClass(ADataSet, AObject);
 end;
 
-procedure TBindDataSet.FillADTField(AADTField: TADTField; ATarget: TDataSet);
+procedure TBindDataSet.FillADTField(const AADTField: TADTField;
+  const ATarget: TDataSet);
 var
   LFor: Integer;
 begin
@@ -601,7 +615,7 @@ begin
   ATarget.Post;
 end;
 
-procedure TBindDataSet.FillDataSetField(ASource, ATarget: TDataSet);
+procedure TBindDataSet.FillDataSetField(const ASource, ATarget: TDataSet);
 var
   LFor: Integer;
 begin

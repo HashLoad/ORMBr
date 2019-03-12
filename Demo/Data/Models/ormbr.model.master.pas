@@ -18,14 +18,12 @@ uses
   ormbr.mapping.register;
 
 type
-//  [Enumeration(TEnumType.etInteger, '0, 1, 2, 9')]
-//  TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);
+  TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);
 
   [Entity]
   [Table('master','')]
   [PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]
   [Sequence('seq_master')]
-//  [OrderBy('description DESC')]
   [OrderBy('master_id')]
   Tmaster = class
   private
@@ -36,10 +34,9 @@ type
     Fupdatedate: TDate;
     Fclient_id: Integer;
     Fclient_name: string;
-    Fclient_namenew: string;
+    FEnumer: TMyEnum;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
-//    FEnumer: TMyEnum;
     function GetTotal: Double;
   public
     { Public declarations }
@@ -56,7 +53,7 @@ type
     property description: Nullable<String> read Fdescription write Fdescription;
 
     [Restrictions([NotNull])]
-    [Column('registerdate', ftDate)]
+    [Column('registerdate', ftDateTime)]
     [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
     property registerdate: TDateTime read Fregisterdate write Fregisterdate;
 
@@ -67,26 +64,21 @@ type
 
     [Restrictions([NotNull])]
     [Column('client_id', ftInteger)]
-    [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'id')]
+    [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
     property client_id: Integer read Fclient_id write Fclient_id;
 
-//    [Column('MyEnum', ftInteger)]
-//    property MyEnum: TMyEnum read FEnumer write FEnumer;
+    [Enumeration(TEnumType.etInteger, '0, 1, 2, 9')]
+    [Column('MyEnum', ftInteger)]
+    property MyEnum: TMyEnum read FEnumer write FEnumer;
 
     [Restrictions([NoInsert, NoUpdate])]
     [Column('client_name', ftString, 60)]
-    [JoinColumn('client_id', 'client', 'id', 'client_name', InnerJoin)]
-    [Dictionary('Nome do Cliente')]
+    [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin)]
+    [Dictionary('Nome do Cliente', '')]
     property client_name: string read fclient_name write fclient_name;
 
-    [Restrictions([NoInsert, NoUpdate])]
-    [Column('client_namenew', ftString, 60)]
-    [JoinColumn('client_id', 'client', 'id', 'client_name', InnerJoin, 'client_namenew')]
-    [Dictionary('Nome do Cliente New')]
-    property client_namenew: string read fclient_namenew write fclient_namenew;
-
-    [Association(OneToOne, 'client_id', 'client', 'id')]
+    [Association(OneToOne, 'client_id', 'client', 'client_id')]
     property client: Tclient read Fclient write Fclient;
 
     [Association(OneToMany, 'master_id', 'detail', 'master_id')]

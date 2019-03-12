@@ -48,7 +48,7 @@ type
   /// </summary>
   TDMLGeneratorFirebird = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -79,7 +79,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorFirebird.GetGeneratorSelect(ACriteria: ICriteria): string;
+function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   inherited;
   ACriteria.AST.Select.Columns.Columns[0].Name := 'FIRST %s SKIP %s ' +

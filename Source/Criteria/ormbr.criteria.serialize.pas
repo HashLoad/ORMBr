@@ -139,7 +139,8 @@ begin
   Result := Result + newElement;
 end; { AddToList }
 
-function Concatenate(const elements: array of string; delimiter: string = ' '): string;
+function Concatenate(const elements: array of string;
+  const delimiter: string = ' '): string;
 var
   s: string;
 begin

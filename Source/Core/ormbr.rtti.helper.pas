@@ -175,6 +175,9 @@ var
   LIndex: Integer;
 begin
   Result := nil;
+  if AValue = Null then
+    Exit;
+
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
   if LEnumerationList <> nil then
@@ -222,6 +225,7 @@ var
   LEnumerationList: TEnumerationMappingList;
   LValue: TValue;
 begin
+  Result := nil;
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
   if LEnumerationList <> nil then
@@ -292,6 +296,10 @@ var
   LValueField: TRttiField;
   LHasValueField: TRttiField;
 begin
+  Result := nil;
+  if not Assigned(AInstance) then
+    Exit;
+    
   if Self.IsNullable then
   begin
     LValue := Self.GetValue(AInstance);
@@ -645,6 +653,7 @@ var
   LAttrib: TCustomAttribute;
   LLength: Integer;
 begin
+  Result := nil;
   LLength := -1;
   for LAttrib in Self.GetAttributes do
   begin
@@ -662,6 +671,7 @@ var
   LAttrib: TCustomAttribute;
   LLength: Integer;
 begin
+  Result := nil;
   LLength := -1;
   for LAttrib in Self.GetAttributes do
   begin

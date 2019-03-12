@@ -11,9 +11,9 @@ uses
 type
   ICriteriaSet = interface
     ['{0285A016-824C-41C7-9680-44127BB62AD0}']
-    function SetConnection(AConnection: IDBConnection): ICriteriaSet;
-    function SQL(ACriteria: ICriteria): ICriteriaSet; overload;
-    function SQL(ASQL: string): ICriteriaSet; overload;
+    function SetConnection(const AConnection: IDBConnection): ICriteriaSet;
+    function SQL(const ACriteria: ICriteria): ICriteriaSet; overload;
+    function SQL(const ASQL: string): ICriteriaSet; overload;
     function AsResultSet: IDBResultSet;
   end;
 
@@ -22,12 +22,10 @@ type
     FSQL: string;
     FConnection: IDBConnection;
   public
-    constructor Create;
-    destructor Destroy; override;
     class function New: ICriteriaSet;
-    function SetConnection(AConnection: IDBConnection): ICriteriaSet;
-    function SQL(ACriteria: ICriteria): ICriteriaSet; overload;
-    function SQL(ASQL: string): ICriteriaSet; overload;
+    function SetConnection(const AConnection: IDBConnection): ICriteriaSet;
+    function SQL(const ACriteria: ICriteria): ICriteriaSet; overload;
+    function SQL(const ASQL: string): ICriteriaSet; overload;
     function AsResultSet: IDBResultSet;
   end;
 
@@ -45,8 +43,6 @@ type
     FSQL: string;
     FConnection: IDBConnection;
   public
-    constructor Create;
-    destructor Destroy; override;
     class function New: ICriteriaObject<M>;
     function SetConnection(AConnection: IDBConnection): ICriteriaObject<M>;
     function SQL(ACriteria: ICriteria): ICriteriaObject<M>; overload;
@@ -64,34 +60,24 @@ begin
   Result := FConnection.ExecuteSQL(FSQL);
 end;
 
-constructor TCriteria.Create;
-begin
-
-end;
-
-destructor TCriteria.Destroy;
-begin
-  inherited;
-end;
-
 class function TCriteria.New: ICriteriaSet;
 begin
   Result := Self.Create;
 end;
 
-function TCriteria.SetConnection(AConnection: IDBConnection): ICriteriaSet;
+function TCriteria.SetConnection(const AConnection: IDBConnection): ICriteriaSet;
 begin
   FConnection := AConnection;
   Result := Self;
 end;
 
-function TCriteria.SQL(ASQL: string): ICriteriaSet;
+function TCriteria.SQL(const ASQL: string): ICriteriaSet;
 begin
   FSQL := ASQL;
   Result := Self;
 end;
 
-function TCriteria.SQL(ACriteria: ICriteria): ICriteriaSet;
+function TCriteria.SQL(const ACriteria: ICriteria): ICriteriaSet;
 begin
   FSQL := ACriteria.AsString;
   Result := Self;
@@ -133,17 +119,6 @@ begin
     LResultSet.Close;
     FConnection.Disconnect;
   end;
-end;
-
-constructor TCriteria<M>.Create;
-begin
-
-end;
-
-destructor TCriteria<M>.Destroy;
-begin
-
-  inherited;
 end;
 
 class function TCriteria<M>.New: ICriteriaObject<M>;

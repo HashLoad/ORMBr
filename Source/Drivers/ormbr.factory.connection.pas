@@ -49,14 +49,16 @@ type
     FDriverConnection: TDriverConnection;
     FDriverTransaction: TDriverTransaction;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); virtual;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); virtual;
     procedure Connect; virtual; abstract;
     procedure Disconnect; virtual; abstract;
     procedure StartTransaction; virtual;
     procedure Commit; virtual;
     procedure Rollback; virtual;
     procedure ExecuteDirect(const ASQL: string); overload; virtual;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); overload; virtual;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); overload; virtual;
     procedure ExecuteScript(const ASQL: string); virtual;
     procedure AddScript(const ASQL: string); virtual; abstract;
     procedure ExecuteScripts; virtual;
@@ -65,7 +67,7 @@ type
     function IsConnected: Boolean; virtual; abstract;
     function GetDriverName: TDriverName; virtual; abstract;
     function CreateQuery: IDBQuery; virtual; abstract;
-    function CreateResultSet: IDBResultSet; virtual; abstract;
+    function CreateResultSet(const ASQL: String): IDBResultSet; virtual; abstract;
     function ExecuteSQL(const ASQL: string): IDBResultSet; virtual; abstract;
     function CommandMonitor: ICommandMonitor;
   end;
@@ -88,7 +90,8 @@ begin
     Disconnect;
 end;
 
-constructor TFactoryConnection.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TFactoryConnection.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   FAutoTransaction := False;
 end;

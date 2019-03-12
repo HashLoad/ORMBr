@@ -56,7 +56,22 @@ uses
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
-  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor};
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor},
+  ormbr.container.clientdataset in '..\..\..\Source\Dataset\ormbr.container.clientdataset.pas',
+  ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',
+  ormbr.container.dataset in '..\..\..\Source\Dataset\ormbr.container.dataset.pas',
+  ormbr.container.fdmemtable in '..\..\..\Source\Dataset\ormbr.container.fdmemtable.pas',
+  ormbr.dataset.abstract in '..\..\..\Source\Dataset\ormbr.dataset.abstract.pas',
+  ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
+  ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas',
+  ormbr.dataset.bind in '..\..\..\Source\Dataset\ormbr.dataset.bind.pas',
+  ormbr.dataset.clientdataset in '..\..\..\Source\Dataset\ormbr.dataset.clientdataset.pas',
+  ormbr.dataset.consts in '..\..\..\Source\Dataset\ormbr.dataset.consts.pas',
+  ormbr.dataset.events in '..\..\..\Source\Dataset\ormbr.dataset.events.pas',
+  ormbr.dataset.fdmemtable in '..\..\..\Source\Dataset\ormbr.dataset.fdmemtable.pas',
+  ormbr.dataset.fields in '..\..\..\Source\Dataset\ormbr.dataset.fields.pas',
+  ormbr.manager.dataset in '..\..\..\Source\Dataset\ormbr.manager.dataset.pas',
+  ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas';
 
 {$R *.res}
 

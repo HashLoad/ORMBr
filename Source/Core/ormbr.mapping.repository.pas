@@ -64,7 +64,7 @@ type
     constructor Create(AEntity, AView: TArray<TClass>);
     destructor Destroy; override;
     function GetEntity(AClass: TClass): TEnumerable<TClass>;
-    function FindEntityByName(ClassName: string): TClass;
+    function FindEntityByName(const ClassName: string): TClass;
     property List: TRepository read FRepository;
   end;
 
@@ -108,7 +108,7 @@ begin
   inherited;
 end;
 
-function TMappingRepository.FindEntityByName(ClassName: string): TClass;
+function TMappingRepository.FindEntityByName(const ClassName: string): TClass;
 var
   LClass: TClass;
 begin

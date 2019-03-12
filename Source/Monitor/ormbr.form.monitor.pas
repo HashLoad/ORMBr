@@ -22,7 +22,7 @@ type
     { Private declarations }
     class var
       FInstance: TCommandMonitor;
-    procedure Command(ASQL: string; AParams: TParams);
+    procedure Command(const ASQL: string; AParams: TParams);
   public
     { Public declarations }
     class destructor Destroy;
@@ -40,7 +40,7 @@ begin
   MemoSQL.Lines.Clear;
 end;
 
-procedure TCommandMonitor.Command(ASQL: string; AParams: TParams);
+procedure TCommandMonitor.Command(const ASQL: string; AParams: TParams);
 var
   iFor: Integer;
   AsValue: string;

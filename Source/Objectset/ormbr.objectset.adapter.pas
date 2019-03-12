@@ -65,7 +65,9 @@ type
 implementation
 
 uses
-  ormbr.session.objectset;
+  ormbr.session.objectset,
+  ormbr.mapping.explorer,
+  ormbr.core.consts;
 
 { TObjectSetAdapter<M> }
 
@@ -175,6 +177,7 @@ end;
 
 procedure TObjectSetAdapter<M>.Insert(const AObject: M);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
@@ -194,7 +197,13 @@ begin
       FSession.Insert(AObject);
       if FSession.ExistSequence then
       begin
-        for LColumn in AObject.GetPrimaryKey do
+        LPrimaryKey := TMappingExplorer
+                         .GetInstance
+                           .GetMappingPrimaryKeyColumns(AObject.ClassType);
+        if LPrimaryKey = nil then
+          raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+        for LColumn in LPrimaryKey.Columns do
           SetAutoIncValueChilds(AObject, LColumn);
       end;
       /// <summary> Executa comando insert em cascade </summary>

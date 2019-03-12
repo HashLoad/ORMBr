@@ -39,7 +39,7 @@ const
 
 type
   ILazy<T> = interface(TFunc<T>)
-    ['{E1B7F953-FBC7-4E5F-BE1E-94E2E7239FCA}']
+    ['{C303E426-F0C3-447B-9FCB-7B911B9E5CF5}']
     function IsValueCreated: Boolean;
     property Value: T read Invoke;
   end;

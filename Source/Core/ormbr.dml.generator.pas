@@ -67,7 +67,7 @@ type
     FDateFormat: string;
     FTimeFormat: string;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
-    function GetGeneratorSelect(ACriteria: ICriteria): string; virtual;
+    function GetGeneratorSelect(const ACriteria: ICriteria): string; virtual;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
     constructor Create; virtual; abstract;
@@ -128,7 +128,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[AIndex] then
-        Exit(GetPropertyValue(AOwner, LColumn.PropertyRtti, LColumn.FieldType));
+        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -166,7 +166,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[Aindex] then
-        Exit(GetPropertyValue(AOwner, LColumn.PropertyRtti, LColumn.FieldType));
+        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -224,7 +224,7 @@ begin
   LCriteria := CreateCriteria.Insert.Into(LTable.Name);
   for LColumn in LColumns do
   begin
-    if LColumn.PropertyRtti.IsNullValue(AObject) then
+    if LColumn.ColumnProperty.IsNullValue(AObject) then
       Continue;
     /// Restrictions
     if LColumn.IsNoInsert then
@@ -248,7 +248,8 @@ begin
     Result := ACommandSelect;
 end;
 
-function TDMLGeneratorAbstract.GetGeneratorSelect(ACriteria: ICriteria): string;
+function TDMLGeneratorAbstract.GetGeneratorSelect(
+  const ACriteria: ICriteria): string;
 begin
   Result := '';
 end;
@@ -261,6 +262,7 @@ var
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
   LCriteria: ICriteria;
+  LFor: Integer;
 begin
   /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
@@ -281,10 +283,23 @@ begin
     LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
     if LPrimaryKey <> nil then
     begin
-      if TVarData(AID).VType = varInteger then
-        LCriteria.Where(LPrimaryKey.Columns[0] + ' = ' + IntToStr(AID))
-      else
-        LCriteria.Where(LPrimaryKey.Columns[0] + ' = ' + QuotedStr(AID));
+      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+      begin
+        if LFor = 0 then
+        begin
+          if TVarData(AID).VType = varInteger then
+            LCriteria.Where(LPrimaryKey.Columns[LFor] + ' = ' + IntToStr(AID))
+          else
+            LCriteria.Where(LPrimaryKey.Columns[LFor] + ' = ' + QuotedStr(AID));
+        end
+        else
+        begin
+          if TVarData(AID).VType = varInteger then
+            LCriteria.&And(LPrimaryKey.Columns[LFor] + ' = ' + IntToStr(AID))
+          else
+            LCriteria.&And(LPrimaryKey.Columns[LFor] + ' = ' + QuotedStr(AID));
+        end;
+      end;
     end;
   end;
   Result := LCriteria;
@@ -397,10 +412,7 @@ function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject;
   AParams: TParams; AModifiedFields: TList<string>): string;
 var
   LFor: Integer;
-  LRttiType: TRttiType;
-  LProperty: TRttiProperty;
   LTable: TTableMapping;
-  LColumnAtt: TCustomAttribute;
   LCriteria: ICriteria;
   LColumnName: string;
 begin
@@ -423,27 +435,6 @@ begin
       /// <exception cref="oTable.Name + '.'"></exception>
       LCriteria.&Set(LColumnName, ':' + LColumnName);
     end;
-//  end
-//  else
-//  begin
-//    AObject.GetType(LRttiType);
-//    for LProperty in LRttiType.GetProperties do
-//    begin
-//      if LProperty.IsNoUpdate then
-//        Continue;
-//      LColumnAtt := LProperty.GetColumn;
-//      if LColumnAtt <> nil then
-//      begin
-//        LColumnName := Column(LColumnAtt).ColumnName;
-//        /// <summary>
-//        /// SET Field=Value alterado
-//        /// </summary>
-//        /// <exception cref="oTable.Name + '.'"></exception>
-//        LCriteria.&Set(LColumnName, ':' + LColumnName);
-//        /// Cria lista de campos modificados de todos os campos
-//        AModifiedFields.Add(LColumnName);
-//      end;
-//    end;
     for LFor := 0 to AParams.Count -1 do
       LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
 

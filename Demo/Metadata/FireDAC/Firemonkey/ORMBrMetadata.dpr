@@ -14,12 +14,7 @@ uses
   ormbr.database.factory in '..\..\..\..\Source\Metadata\ormbr.database.factory.pas',
   ormbr.ddl.commands in '..\..\..\..\Source\Metadata\ormbr.ddl.commands.pas',
   ormbr.ddl.generator.firebird in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.firebird.pas',
-  ormbr.ddl.generator.interbase in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.interbase.pas',
-  ormbr.ddl.generator.mssql in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.mssql.pas',
-  ormbr.ddl.generator.mysql in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.mysql.pas',
   ormbr.ddl.generator in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.pas',
-  ormbr.ddl.generator.postgresql in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.postgresql.pas',
-  ormbr.ddl.generator.sqlite in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.sqlite.pas',
   ormbr.ddl.interfaces in '..\..\..\..\Source\Metadata\ormbr.ddl.interfaces.pas',
   ormbr.ddl.register in '..\..\..\..\Source\Metadata\ormbr.ddl.register.pas',
   ormbr.metadata.db.factory in '..\..\..\..\Source\Metadata\ormbr.metadata.db.factory.pas',
@@ -35,8 +30,6 @@ uses
   ormbr.driver.dbexpress in '..\..\..\..\Source\Drivers\ormbr.driver.dbexpress.pas',
   ormbr.driver.dbexpress.transaction in '..\..\..\..\Source\Drivers\ormbr.driver.dbexpress.transaction.pas',
   ormbr.factory.dbexpress in '..\..\..\..\Source\Drivers\ormbr.factory.dbexpress.pas',
-  ormbr.ddl.generator.absolutedb in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.absolutedb.pas',
-  ormbr.ddl.generator.oracle in '..\..\..\..\Source\Metadata\ormbr.ddl.generator.oracle.pas',
   ormbr.metadata.oracle in '..\..\..\..\Source\Metadata\ormbr.metadata.oracle.pas',
   ormbr.modeldb.compare in '..\..\..\..\Source\Metadata\ormbr.modeldb.compare.pas',
   ormbr.database.compare in '..\..\..\..\Source\Metadata\ormbr.database.compare.pas',
@@ -59,10 +52,10 @@ uses
   ormbr.metadata.classe.factory in '..\..\..\..\Source\Metadata\ormbr.metadata.classe.factory.pas',
   ormbr.metadata.model in '..\..\..\..\Source\Metadata\ormbr.metadata.model.pas',
   ormbr.monitor in '..\..\..\..\Source\Drivers\ormbr.monitor.pas',
-  ormbr.model.client in '..\..\..\Data\Models\ormbr.model.client.pas',
-  ormbr.model.detail in '..\..\..\Data\Models\ormbr.model.detail.pas',
-  ormbr.model.lookup in '..\..\..\Data\Models\ormbr.model.lookup.pas',
-  ormbr.model.master in '..\..\..\Data\Models\ormbr.model.master.pas';
+  ormbr.model.client in '..\..\Modelos\ormbr.model.client.pas',
+  ormbr.model.detail in '..\..\Modelos\ormbr.model.detail.pas',
+  ormbr.model.lookup in '..\..\Modelos\ormbr.model.lookup.pas',
+  ormbr.model.master in '..\..\Modelos\ormbr.model.master.pas';
 
 {$R *.res}
 

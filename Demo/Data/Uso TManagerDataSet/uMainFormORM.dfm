@@ -274,6 +274,7 @@ object Form3: TForm3
   end
   object FDDetail: TClientDataSet
     Aggregates = <>
+    AggregatesActive = True
     Params = <>
     Left = 500
     Top = 114

@@ -42,8 +42,6 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
     DBGrid2: TDBGrid;
     DataSource2: TDataSource;
     DataSource3: TDataSource;
@@ -69,13 +67,15 @@ type
     CDSMaster: TClientDataSet;
     Button5: TButton;
     DBImage1: TDBImage;
-    procedure Button3Click(Sender: TObject);
+    Button4: TButton;
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     FDatabase: TSQLiteDatabase;
@@ -99,10 +99,12 @@ uses
 {$R *.dfm}
 
 procedure TForm3.Button1Click(Sender: TObject);
+var
+  LCurrent: Tmaster;
 begin
-//  oMaster.Current;
-//  oMaster.Current.description := 'Object Update Master';
-//  oMaster.Save;
+  LCurrent := oMaster.Current;
+  LCurrent.description := 'Object Update Master';
+  oMaster.Save(LCurrent);
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
@@ -112,12 +114,12 @@ end;
 
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-  oMaster.Open;
+  oMaster.RefreshRecord;
 end;
 
 procedure TForm3.Button4Click(Sender: TObject);
 begin
-  oMaster.Close;
+  oMaster.OpenWhere('description = ''Object Update Master''', '');
 end;
 
 procedure TForm3.Button5Click(Sender: TObject);
@@ -133,7 +135,7 @@ begin
   oConn := TFactorySQLite.Create(FDatabase, dnSQLite);
   oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
-  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 10);
+  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 3);
   oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.MasterObject);
   oClient := TContainerClientDataSet<Tclient>.Create(oConn, CDSClient, oMaster.MasterObject);
   oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
@@ -141,7 +143,8 @@ begin
                          'lookup_id',
                          oLookup.This,
                          'lookup_id',
-                         'lookup_description');
+                         'lookup_description',
+                         'Lookup Descrição');
   oMaster.Open;
 end;
 

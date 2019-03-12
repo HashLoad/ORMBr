@@ -36,6 +36,7 @@ uses
   StrUtils,
   FireDAC.Comp.Client,
   FireDAC.Comp.Script,
+  FireDAC.Comp.ScriptCommands,
   FireDAC.DApt,
   FireDAC.Stan.Param,
   /// orm
@@ -52,7 +53,8 @@ type
     FConnection: TFDConnection;
     FSQLScript: TFDScript;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -64,7 +66,7 @@ type
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: string): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -86,16 +88,18 @@ type
     constructor Create(ADataSet: TFDQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
 
 { TDriverFireDAC }
 
-constructor TDriverFireDAC.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverFireDAC.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TFDConnection;
@@ -228,7 +232,7 @@ end;
 function TDriverFireDAC.IsConnected: Boolean;
 begin
   inherited;
-  Result := FConnection.Connected = True;
+  Result := FConnection.Connected;
 end;
 
 function TDriverFireDAC.CreateQuery: IDBQuery;
@@ -236,11 +240,12 @@ begin
   Result := TDriverQueryFireDAC.Create(FConnection);
 end;
 
-function TDriverFireDAC.CreateResultSet: IDBResultSet;
+function TDriverFireDAC.CreateResultSet(const ASQL: string): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryFireDAC.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result   := LDBQuery.ExecuteQuery;
 end;
 
@@ -320,7 +325,7 @@ begin
   inherited;
 end;
 
-function TDriverResultSetFireDAC.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetFireDAC.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -328,12 +333,17 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetFireDAC.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetFireDAC.GetField(const AFieldName: string): TField;
+begin
+  Result := FDataSet.FieldByName(AFieldName);
+end;
+
+function TDriverResultSetFireDAC.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetFireDAC.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetFireDAC.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount -1  then
     Exit(Variants.Null);

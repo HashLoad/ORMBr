@@ -851,7 +851,6 @@ begin
 
   memModel.Lines.Add('');
   memModel.Lines.Add('initialization');
-  memModel.Lines.Add('');
   memModel.Lines.Add('  TRegisterClass.RegisterEntity(T'+lstTabelas.Items.Strings[index]+')');
   memModel.Lines.Add('');
 

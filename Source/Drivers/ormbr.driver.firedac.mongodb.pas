@@ -104,11 +104,10 @@ type
     constructor Create(ADataSet: TFDMongoQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
-    function GetField(AFieldName: string): TField; override;
-    function DataSet: TDataSet; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
@@ -290,7 +289,7 @@ end;
 function TDriverMongoFireDAC.IsConnected: Boolean;
 begin
   inherited;
-  Result := FConnection.Connected = True;
+  Result := FConnection.Connected;
 end;
 
 function TDriverMongoFireDAC.CreateQuery: IDBQuery;
@@ -393,18 +392,14 @@ begin
   inherited;
 end;
 
-function TDriverResultSetMongoFireDAC.DataSet: TDataSet;
-begin
-  Result := FDataSet;
-end;
-
 destructor TDriverResultSetMongoFireDAC.Destroy;
 begin
   FDataSet.Free;
   inherited;
 end;
 
-function TDriverResultSetMongoFireDAC.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetMongoFireDAC.GetFieldValue(
+  const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -412,12 +407,14 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetMongoFireDAC.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetMongoFireDAC.GetFieldType(
+  const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetMongoFireDAC.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetMongoFireDAC.GetFieldValue(
+  const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount - 1 then
     Exit(Variants.Null);
@@ -428,7 +425,8 @@ begin
     Result := FDataSet.Fields[AFieldIndex].Value;
 end;
 
-function TDriverResultSetMongoFireDAC.GetField(AFieldName: string): TField;
+function TDriverResultSetMongoFireDAC.GetField(
+  const AFieldName: string): TField;
 begin
   Result := FDataSet.FieldByName(AFieldName);
 end;

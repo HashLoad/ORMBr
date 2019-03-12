@@ -132,8 +132,8 @@ procedure TSessionDataSnap<M>.Delete(const AObject: M);
 var
   LColumn: TColumnMapping;
 begin
-  for LColumn in AObject.GetPrimaryKey do
-    Delete(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsInteger);
+//  for LColumn in AObject.GetPrimaryKey do
+//    Delete(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsInteger);
 end;
 
 destructor TSessionDataSnap<M>.Destroy;

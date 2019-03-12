@@ -41,26 +41,26 @@ const
 type
   IFieldSingleton = interface
     ['{47DDCFB7-6EB9-41A9-A41F-D9474D7A1E85}']
-    procedure AddField(ADataSet: TDataSet; AFieldName: String; AFieldType:
-      TFieldType; ASize: Integer = 0);
-    procedure AddCalcField(ADataSet: TDataSet;
-                           AFieldName: string;
-                           AFieldType: TFieldType;
-                           ASize: Integer = 0);
-    procedure AddAggregateField(ADataSet: TDataSet;
-                                AFieldName,
-                                AExpression: string;
-                                AAlignment: TAlignment = taLeftJustify;
-                                ADisplayFormat: string = '');
-    procedure AddLookupField(AFieldName: string;
-                             ADataSet: TDataSet;
-                             AKeyFields: string;
-                             ALookupDataSet: TDataSet;
-                             ALookupKeyFields: string;
-                             ALookupResultField: string;
-                             AFieldType: TFieldType;
-                             ASize: Integer = 0;
-                             ADisplayLabel: string = '');
+    procedure AddField(const ADataSet: TDataSet;
+      const AFieldName: String; const AFieldType: TFieldType;
+      const ASize: Integer = 0);
+    procedure AddCalcField(const ADataSet: TDataSet;
+                           const AFieldName: string;
+                           const AFieldType: TFieldType;
+                           const ASize: Integer = 0);
+    procedure AddAggregateField(const ADataSet: TDataSet;
+                                const AFieldName, AExpression: string;
+                                const AAlignment: TAlignment = taLeftJustify;
+                                const ADisplayFormat: string = '');
+    procedure AddLookupField(const AFieldName: string;
+                             const ADataSet: TDataSet;
+                             const AKeyFields: string;
+                             const ALookupDataSet: TDataSet;
+                             const ALookupKeyFields: string;
+                             const ALookupResultField: string;
+                             const AFieldType: TFieldType;
+                             const ASize: Integer = 0;
+                             const ADisplayLabel: string = '');
   end;
 
   TFieldSingleton = class(TInterfacedObject, IFieldSingleton)
@@ -74,32 +74,31 @@ type
     { Public declarations }
     constructor Create;
     class function GetInstance: IFieldSingleton;
-    procedure AddField(ADataSet: TDataSet; AFieldName: String; AFieldType:
-      TFieldType; ASize: Integer = 0);
-    procedure AddCalcField(ADataSet: TDataSet;
-                           AFieldName: string;
-                           AFieldType: TFieldType;
-                           ASize: Integer = 0);
-    procedure AddAggregateField(ADataSet: TDataSet;
-                                AFieldName,
-                                AExpression: string;
-                                AAlignment: TAlignment = taLeftJustify;
-                                ADisplayFormat: string = '');
-    procedure AddLookupField(AFieldName: string;
-                             ADataSet: TDataSet;
-                             AKeyFields: string;
-                             ALookupDataSet: TDataSet;
-                             ALookupKeyFields: string;
-                             ALookupResultField: string;
-                             AFieldType: TFieldType;
-                             ASize: Integer = 0;
-                             ADisplayLabel: string = '');
+    procedure AddField(const ADataSet: TDataSet; const AFieldName: String;
+      const AFieldType: TFieldType; const ASize: Integer = 0);
+    procedure AddCalcField(const ADataSet: TDataSet;
+                           const AFieldName: string;
+                           const AFieldType: TFieldType;
+                           const ASize: Integer = 0);
+    procedure AddAggregateField(const ADataSet: TDataSet;
+                                const AFieldName, AExpression: string;
+                                const AAlignment: TAlignment = taLeftJustify;
+                                const ADisplayFormat: string = '');
+    procedure AddLookupField(const AFieldName: string;
+                             const ADataSet: TDataSet;
+                             const AKeyFields: string;
+                             const ALookupDataSet: TDataSet;
+                             const ALookupKeyFields: string;
+                             const ALookupResultField: string;
+                             const AFieldType: TFieldType;
+                             const ASize: Integer = 0;
+                             const ADisplayLabel: string = '');
   end;
 
 implementation
 
-procedure TFieldSingleton.AddField(ADataSet: TDataSet;
-  AFieldName: String; AFieldType: TFieldType; ASize: Integer);
+procedure TFieldSingleton.AddField(const ADataSet: TDataSet;
+  const AFieldName: String; const AFieldType: TFieldType; const ASize: Integer);
 var
   LField: TField;
 begin
@@ -123,10 +122,15 @@ begin
   end;
 end;
 
-procedure TFieldSingleton.AddLookupField(AFieldName: string; ADataSet: TDataSet;
-  AKeyFields: string; ALookupDataSet: TDataSet; ALookupKeyFields: string;
-  ALookupResultField: string; AFieldType: TFieldType; ASize: Integer;
-  ADisplayLabel: string);
+procedure TFieldSingleton.AddLookupField(const AFieldName: string;
+  const ADataSet: TDataSet;
+  const AKeyFields: string;
+  const ALookupDataSet: TDataSet;
+  const ALookupKeyFields: string;
+  const ALookupResultField: string;
+  const AFieldType: TFieldType;
+  const ASize: Integer;
+  const ADisplayLabel: string);
 var
   LField: TField;
 begin
@@ -232,8 +236,10 @@ begin
    Result := FInstance;
 end;
 
-procedure TFieldSingleton.AddCalcField(ADataSet: TDataSet;
-  AFieldName: String; AFieldType: TFieldType; ASize: Integer);
+procedure TFieldSingleton.AddCalcField(const ADataSet: TDataSet;
+  const AFieldName: String;
+  const AFieldType: TFieldType;
+  const ASize: Integer);
 var
   LField: TField;
 begin
@@ -259,8 +265,10 @@ begin
   end;
 end;
 
-procedure TFieldSingleton.AddAggregateField(ADataSet: TDataSet;
-  AFieldName, AExpression: string; AAlignment: TAlignment; ADisplayFormat: string);
+procedure TFieldSingleton.AddAggregateField(const ADataSet: TDataSet;
+  const AFieldName, AExpression: string;
+  const AAlignment: TAlignment;
+  const ADisplayFormat: string);
 var
   LField: TAggregateField;
 begin

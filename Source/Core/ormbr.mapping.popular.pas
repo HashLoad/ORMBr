@@ -59,19 +59,22 @@ type
     function PopularIndexe(ARttiType: TRttiType): TIndexeMappingList;
     function PopularCheck(ARttiType: TRttiType): TCheckMappingList;
     function PopularColumn(ARttiType: TRttiType; AClass: TClass): TColumnMappingList;
-    function PopularCalcField(ARttiType: TRttiType; AClass: TClass): TCalcFieldMappingList;
+    function PopularCalcField(ARttiType: TRttiType): TCalcFieldMappingList;
     function PopularAssociation(ARttiType: TRttiType): TAssociationMappingList;
     function PopularJoinColumn(ARttiType: TRttiType): TJoinColumnMappingList;
     function PopularTrigger(ARttiType: TRttiType): TTriggerMappingList;
     function PopularView(ARttiType: TRttiType): TViewMapping;
     function PopularFieldEvents(ARttiType: TRttiType): TFieldEventsMappingList;
     function PopularEnumeration(ARttiType: TRttiType): TEnumerationMappingList;
+    function PopularPrimaryKeyColumns(ARttiType: TRttiType;
+      AClass: TClass): TPrimaryKeyColumnsMapping;
   end;
 
 implementation
 
 uses
-  ormbr.objects.helper;
+  ormbr.objects.helper,
+  ormbr.mapping.explorer;
 
 { TMappingPopular }
 
@@ -80,8 +83,7 @@ begin
   FMappingExplorerStrategy := AMappingExplorerStrategy;
 end;
 
-function TMappingPopular.PopularCalcField(ARttiType: TRttiType;
-  AClass: TClass): TCalcFieldMappingList;
+function TMappingPopular.PopularCalcField(ARttiType: TRttiType): TCalcFieldMappingList;
 var
   LProperty: TRttiProperty;
   LAttrib: TCustomAttribute;
@@ -99,7 +101,8 @@ begin
         Result.Last.FieldName := CalcField(LAttrib).FieldName;
         Result.Last.FieldType := CalcField(LAttrib).FieldType;
         Result.Last.Size := CalcField(LAttrib).Size;
-        Result.Last.PropertyRtti := LProperty;
+        Result.Last.CalcProperty := LProperty;
+        Result.Last.CalcDictionary := LProperty.GetDictionary;
       end;
     end;
   end;
@@ -128,25 +131,25 @@ function TMappingPopular.PopularColumn(ARttiType: TRttiType;
 var
   LProperty: TRttiProperty;
   LAttrib: TCustomAttribute;
-  LDictionary: TCustomAttribute;
+  LColumn: Column;
 begin
   Result := nil;
   for LProperty in ARttiType.GetProperties do
   begin
-    LDictionary := LProperty.GetDictionary;
     for LAttrib in LProperty.GetAttributes do
     begin
       if LAttrib is Column then // Column
       begin
+        LColumn := Column(LAttrib);
         if Result = nil then
           Result := TColumnMappingList.Create;
         Result.Add(TColumnMapping.Create);
-        Result.Last.ColumnName := Column(LAttrib).ColumnName;
-        Result.Last.FieldType :=  Column(LAttrib).FieldType;
-        Result.Last.Scale := Column(LAttrib).Scale;
-        Result.Last.Size := Column(LAttrib).Size;
-        Result.Last.Precision := Column(LAttrib).Precision;
-        Result.Last.PropertyRtti := LProperty;
+        Result.Last.ColumnName := LColumn.ColumnName;
+        Result.Last.FieldType := LColumn.FieldType;
+        Result.Last.Scale := LColumn.Scale;
+        Result.Last.Size := LColumn.Size;
+        Result.Last.Precision := LColumn.Precision;
+        Result.Last.ColumnProperty := LProperty;
         Result.Last.FieldIndex := Result.Count -1;
         Result.Last.IsJoinColumn := LProperty.IsJoinColumn;
         Result.Last.IsNotNull := LProperty.IsNotNull;
@@ -157,10 +160,12 @@ begin
         Result.Last.IsNoValidate := LProperty.IsNoValidate;
         Result.Last.IsHidden := LProperty.IsHidden;
         Result.Last.IsPrimaryKey := LProperty.IsPrimaryKey(AClass);
+        Result.Last.IsNullable := LProperty.IsNullable;
         Result.Last.DefaultValue := '';
+        Result.Last.ColumnDictionary := LProperty.GetDictionary;
 
-        if LDictionary <> nil then
-          Result.Last.DefaultValue := Dictionary(LDictionary).DefaultExpression
+        if Result.Last.ColumnDictionary <> nil then
+          Result.Last.DefaultValue := Result.Last.ColumnDictionary.DefaultExpression
       end;
     end;
   end;
@@ -332,6 +337,24 @@ begin
                                            PrimaryKey(LAttrib).Description);
     end;
   end;
+end;
+
+function TMappingPopular.PopularPrimaryKeyColumns(
+  ARttiType: TRttiType; AClass: TClass): TPrimaryKeyColumnsMapping;
+var
+  LColumns: TColumnMappingList;
+  LColumn: TColumnMapping;
+begin
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(AClass);
+  if LColumns = nil then
+    Exit(nil);
+
+  Result := TPrimaryKeyColumnsMapping.Create;
+  for LColumn in LColumns do
+    if LColumn.IsPrimaryKey then
+      Result.Columns.Add(LColumn);
 end;
 
 function TMappingPopular.PopularSequence(ARttiType: TRttiType): TSequenceMapping;

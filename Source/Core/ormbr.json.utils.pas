@@ -44,24 +44,24 @@ uses
 type
   TORMBrJSONUtil = class
   public
-    class function JSONStringToJSONValue(AJson: string): TJSONValue;
-    class function JSONObjectToJSONValue(AObject: TObject): TJSONValue;
-    class function JSONStringToJSONArray(AJson: string): TJSONArray;
-    class function JSONObjectListToJSONArray<T: class>(AObjectList: TObjectList<T>): TJSONArray;
-    class function JSONStringToJSONObject(AJson: string): TJSONObject;
+    class function JSONStringToJSONValue(const AJson: string): TJSONValue;
+    class function JSONObjectToJSONValue(const AObject: TObject): TJSONValue;
+    class function JSONStringToJSONArray(const AJson: string): TJSONArray;
+    class function JSONObjectListToJSONArray<T: class>(const AObjectList: TObjectList<T>): TJSONArray;
+    class function JSONStringToJSONObject(const AJson: string): TJSONObject;
   end;
 
 implementation
 
 { TORMBrJSONUtil }
 
-class function TORMBrJSONUtil.JSONStringToJSONArray(AJson: string): TJSONArray;
+class function TORMBrJSONUtil.JSONStringToJSONArray(const AJson: string): TJSONArray;
 begin
   Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0) as TJSONArray;
 end;
 
 class function TORMBrJSONUtil.JSONObjectListToJSONArray<T>(
-  AObjectList: TObjectList<T>): TJSONArray;
+  const AObjectList: TObjectList<T>): TJSONArray;
 var
   LItem: T;
 begin
@@ -70,17 +70,17 @@ begin
     Result.Add(JSONStringToJSONObject(TORMBrJson.ObjectToJsonString(LItem)));
 end;
 
-class function TORMBrJSONUtil.JSONStringToJSONObject(AJson: string): TJSONObject;
+class function TORMBrJSONUtil.JSONStringToJSONObject(const AJson: string): TJSONObject;
 begin
   Result := JSONStringToJSONValue(AJson) as TJSONObject;
 end;
 
-class function TORMBrJSONUtil.JSONObjectToJSONValue(AObject: TObject): TJSONValue;
+class function TORMBrJSONUtil.JSONObjectToJSONValue(const AObject: TObject): TJSONValue;
 begin
   Result := JSONStringToJSONValue(TORMBrJson.ObjectToJsonString(AObject));
 end;
 
-class function TORMBrJSONUtil.JSONStringToJSONValue(AJson: string): TJSONValue;
+class function TORMBrJSONUtil.JSONStringToJSONValue(const AJson: string): TJSONValue;
 begin
   Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0);
 end;

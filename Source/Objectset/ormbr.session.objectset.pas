@@ -52,13 +52,15 @@ type
   protected
     FConnection: IDBConnection;
   public
-    constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
+    constructor Create(const AConnection: IDBConnection;
+      const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
     function NextPacketList: TObjectList<M>; overload; override;
     function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
-    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+    function NextPacketList(const AWhere, AOrderBy: String;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
   end;
 
 implementation

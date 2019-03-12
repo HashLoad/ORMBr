@@ -1046,7 +1046,6 @@ begin
         FASTColumns   := nil;
         FActiveExpr   := nil;
         FTableNames   := nil;
-        FActiveValues := nil;
         FActiveValues := FAST.Update.Values;
       end;
     secWhere:

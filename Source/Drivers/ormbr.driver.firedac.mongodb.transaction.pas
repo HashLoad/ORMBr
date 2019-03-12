@@ -59,6 +59,7 @@ implementation
 
 constructor TDriverMongoFireDACTransaction.Create(AConnection: TComponent);
 begin
+  inherited;
   FConnection := AConnection as TFDConnection;
 end;
 

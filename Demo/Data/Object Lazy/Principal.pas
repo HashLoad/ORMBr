@@ -12,14 +12,10 @@ uses
   ormbr.dml.generator.firebird,
   ormbr.ddl.generator.firebird,
   ormbr.metadata.firebird,
-  
-  ormbr.dml.generator.oracle,
-  ormbr.ddl.generator.oracle,
-  ormbr.metadata.oracle,
-  
-  ormbr.container.objectset.interfaces,
-  ormbr.container.objectset,
+
   ormbr.modeldb.compare,
+  ormbr.manager.objectset,
+
   Model.Atendimento, Model.Procedimento, UDM_Conexao, Vcl.StdCtrls;
 
 type
@@ -35,11 +31,7 @@ type
     Conexao : TDataModule1;
     FConn : IDBConnection;
     FManager : TModelDbCompare;
-    FContainerAtendimentos: TContainerObjectSet<TAtendimento>;
-    FListaAtendimentos : TObjectList<TAtendimento>;
-//    FListaProcedimento : TObjectList<TProcedimento>;
-//    fContainerProcedimentos : TContainerObjectSet<TProcedimento>;
-
+    FManagedObject: TManagerObjectSet;
     { Private declarations }
   public
     { Public declarations }
@@ -61,76 +53,77 @@ begin
     Conexao := TDataModule1.Create(nil);
 
     FConn := TFactoryFireDAC.Create(Conexao.fdconnFB, dnFirebird);
-    //FConn := TFactoryFireDAC.Create(Conexao.fdConnORA, dnOracle);
-    FContainerAtendimentos := TContainerObjectSet<TAtendimento>.Create(FConn, 10);
+    FManagedObject := TManagerObjectSet.Create(FConn);
+    FManagedObject.AddAdapter<TAtendimento>(10);
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
     Conexao.Free;
-    FContainerAtendimentos.Free;
+    FManagedObject.Free;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  LSetor: TSetor;
+  LAtendimento: TAtendimento;
+  LProcedimento: TProcedimento;
 begin
-    try
-        FListaAtendimentos := FContainerAtendimentos.FindWhere('POSTO = 1 AND ATENDIMENTO = 1');
+  FManagedObject.FindWhere<TAtendimento>('POSTO = 1 AND ATENDIMENTO = 1');
+  LAtendimento := FManagedObject.NestedList<TAtendimento>.Items[0];
+  LProcedimento:= FManagedObject.NestedList<TAtendimento>.Items[0].Exames[0].Procedimento;
+  try
+    Memo1.Lines.Add('ID do Atendimento: ' + LAtendimento.Atendimento.ToString);
+    Memo1.Lines.Add('Posto do Atendimento: ' + LAtendimento.Posto.ToString);
 
-        Memo1.Lines.Add('ID do Atendimento: ' + FListaAtendimentos[0].Atendimento.ToString);
-        Memo1.Lines.Add('Posto do Atendimento: ' + FListaAtendimentos[0].Posto.ToString);
+    Memo1.Lines.Add('================================================================');
+
+    Memo1.Lines.Add('Atendimento do Exame: ' + LAtendimento.Exames[0].Atendimento.ToString);
+    Memo1.Lines.Add('Posto do Exame: ' + LAtendimento.Exames[0].Posto.ToString);
+    Memo1.Lines.Add('Correlativo do Exame: ' + LAtendimento.Exames[0].Correl.ToString);
+
+    Memo1.Lines.Add('================================================================');
+
+    Memo1.Lines.Add('Procedimento do Exame: ' + LProcedimento.PROCEDIMENTO.ToString);
+    Memo1.Lines.Add('Nome do Procedimento: ' + LProcedimento.NOME);
+    Memo1.Lines.Add('Mnemonico do Procedimento: ' + LProcedimento.MNEMONICO);
+
+    /// <summary>
+    ///   Carregamento Lazy do ORMBr, favor olhar a classe modelo TProcedimento
+    ///   para entender como declarar o tipo como Lazy<T>
+    /// <param name="AOwner">
+    ///   Objeto pai para que o ORMBr consiga recuperar o mapeamento dele
+    /// </param>
+    /// <param name="AObject">
+    ///   Objeto que será instânciado e populado com os dados, pelo mapeamento
+    /// </param>
+    /// </summary>
+    if LProcedimento.Setores <> nil then
+    begin
+      /// Objeto único
+      FManagedObject
+        .LoadLazy<TAtendimento>(LProcedimento, // Objeto Owner
+                                LProcedimento.Setores); // Objeto Child
 
         Memo1.Lines.Add('================================================================');
+        Memo1.Lines.Add('Objeto único');
+        Memo1.Lines.Add('Setor do Procedimento: ' + LProcedimento.Setores.SETOR.ToString);
+        Memo1.Lines.Add('Nome do Setor: ' + LProcedimento.Setores.NOME);
 
-        Memo1.Lines.Add('Atendimento do Exame: ' + FListaAtendimentos[0].Exames[0].Atendimento.ToString);
-        Memo1.Lines.Add('Posto do Exame: ' + FListaAtendimentos[0].Exames[0].Posto.ToString);
-        Memo1.Lines.Add('Correlativo do Exame: ' + FListaAtendimentos[0].Exames[0].Correl.ToString);
+      /// Lista de objeto
+      FManagedObject
+        .LoadLazy<TAtendimento>(LProcedimento, // Objeto Owner
+                                LProcedimento.SetoresList); // Objeto Child
 
+      if LProcedimento.SetoresList.Count > 0 then
+      begin
         Memo1.Lines.Add('================================================================');
-
-        Memo1.Lines.Add('Procedimento do Exame: ' + FListaAtendimentos[0].Exames[0].Procedimento.PROCEDIMENTO.ToString);
-        Memo1.Lines.Add('Nome do Procedimento: ' + FListaAtendimentos[0].Exames[0].Procedimento.NOME);
-        Memo1.Lines.Add('Mnemonico do Procedimento: ' + FListaAtendimentos[0].Exames[0].Procedimento.MNEMONICO);
-
-        /// <summary>
-        ///   Carregamento Lazy do ORMBr, favor olhar a classe modelo TProcedimento
-        ///   para entender como declarar o tipo como Lazy<T>
-        /// <param name="AOwner">
-        ///   Objeto pai para que o ORMBr consiga recuperar o mapeamento dele
-        /// </param>
-        /// <param name="AObject">
-        ///   Objeto que será instânciado e populado com os dados, pelo mapeamento
-        /// </param>
-        /// </summary>
-        if FListaAtendimentos[0].Exames[0].Procedimento.Setores <> nil then
-        begin
-          /// Objeto único
-          FContainerAtendimentos
-            .LoadLazy(FListaAtendimentos[0].Exames[0].Procedimento, // Objeto Owner
-                      FListaAtendimentos[0].Exames[0].Procedimento.Setores); // Objeto Child
-
-            Memo1.Lines.Add('================================================================');
-            Memo1.Lines.Add('Objeto único');
-            Memo1.Lines.Add('Setor do Procedimento: ' + FListaAtendimentos[0].Exames[0].Procedimento.Setores.SETOR.ToString);
-            Memo1.Lines.Add('Nome do Setor: ' + FListaAtendimentos[0].Exames[0].Procedimento.Setores.NOME);
-
-          /// Lista de objeto
-          FContainerAtendimentos
-            .LoadLazy(FListaAtendimentos[0].Exames[0].Procedimento, // Objeto Owner
-                      FListaAtendimentos[0].Exames[0].Procedimento.SetoresList); // Objeto Child
-
-          if FListaAtendimentos[0].Exames[0].Procedimento.SetoresList.Count > 0 then
-          begin
-            Memo1.Lines.Add('================================================================');
-            Memo1.Lines.Add('Lista de Objeto');
-            Memo1.Lines.Add('Setor do Procedimento: ' + FListaAtendimentos[0].Exames[0].Procedimento.SetoresList[0].SETOR.ToString);
-            Memo1.Lines.Add('Nome do Setor: ' + FListaAtendimentos[0].Exames[0].Procedimento.SetoresList[0].NOME);
-          end;
-        end;
-    finally
-        FListaAtendimentos.Free;
+        Memo1.Lines.Add('Lista de Objeto');
+        Memo1.Lines.Add('Setor do Procedimento: ' + LProcedimento.SetoresList[0].SETOR.ToString);
+        Memo1.Lines.Add('Nome do Setor: ' + LProcedimento.SetoresList[0].NOME);
+      end;
     end;
+  finally
+  end;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -145,6 +138,5 @@ end;
 
 initialization
     ReportMemoryLeaksOnShutdown := True;
-
 
 end.

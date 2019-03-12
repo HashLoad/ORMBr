@@ -42,7 +42,10 @@ uses
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.container.objectset.interfaces in '..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas',
   ormbr.container.objectset in '..\..\..\Source\Objectset\ormbr.container.objectset.pas',
-  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas';
+  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas',
+  ormbr.driver.dbexpress in '..\..\..\Source\Drivers\ormbr.driver.dbexpress.pas',
+  ormbr.driver.dbexpress.transaction in '..\..\..\Source\Drivers\ormbr.driver.dbexpress.transaction.pas',
+  ormbr.factory.dbexpress in '..\..\..\Source\Drivers\ormbr.factory.dbexpress.pas';
 
 {$R *.res}
 

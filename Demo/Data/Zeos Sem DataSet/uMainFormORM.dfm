@@ -204,7 +204,7 @@ object Form3: TForm3
     Width = 75
     Height = 25
     Caption = 'Insert'
-    TabOrder = 11
+    TabOrder = 12
     OnClick = btnInsertClick
   end
   object btnDelete: TButton
@@ -213,7 +213,7 @@ object Form3: TForm3
     Width = 75
     Height = 25
     Caption = 'Delete'
-    TabOrder = 12
+    TabOrder = 14
     OnClick = btnDeleteClick
   end
   object btnUpdate: TButton
@@ -231,11 +231,12 @@ object Form3: TForm3
     Width = 115
     Height = 25
     Caption = 'Show SQLMonitor'
-    TabOrder = 14
+    TabOrder = 11
     OnClick = Button2Click
   end
   object ZConnection1: TZConnection
     ControlsCodePage = cCP_UTF16
+    AutoEncodeStrings = True
     Catalog = ''
     HostName = ''
     Port = 0

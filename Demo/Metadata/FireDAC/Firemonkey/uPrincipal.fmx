@@ -67,10 +67,13 @@ object Form4: TForm4
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Server=LG-ALLINONE\SQLExpress,1433'
-      'Database=database'
-      'OSAuthent=Yes'
-      'DriverID=MSSQL')
+      
+        'Database=D:\ORMBr Diversos\CodeRage 2019 Brasil\database\databas' +
+        'e.fdb'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
     LoginPrompt = False
     Left = 80
     Top = 56

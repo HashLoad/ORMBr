@@ -24,9 +24,7 @@ uses
   /// orm factory
   ormbr.factory.interfaces,
   /// orm injection dependency
-  ormbr.criteria,
   ormbr.factory.firedac,
-  ormbr.types.database,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
   /// orm model
@@ -77,7 +75,6 @@ type
     btnUpdate: TButton;
     Button2: TButton;
     imgClient_Foto: TImage;
-    Button3: TButton;
     procedure btnOpenClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -88,7 +85,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnUpdateClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
@@ -111,9 +107,11 @@ var
 implementation
 
 uses
-  StrUtils, ormbr.form.monitor,
+  StrUtils,
+  ormbr.form.monitor,
   ormbr.mapping.explorer,
-  ormbr.objects.helper;
+  ormbr.objects.helper,
+  ormbr.json, ormbr.rest.json, ormbr.rtti.helper;
 
 {$R *.dfm}
 
@@ -123,23 +121,19 @@ var
 begin
   MasterStringGridDefinitions;
   DetailStringGridDefinitions;
-  /// <summary>
-  /// Variaveis declaradas em { Private declarations } acima.
-  /// </summary>
-  // Instância da class de conexão via FireDAC
+
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
   oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
-  /// Class Adapter
-  /// Parâmetros: (IDBConnection, TClientDataSet)
-  /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
-  /// defina o quanto achar melhor para sua necessiade
-  oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 2);
+
+  oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 3);
   oMasterList := oMaster.Find;
 //  oMasterList := oMaster.FindWhere('master_id > 0 and master_id <> 6');
+
   /// <summary>
   /// Preenche o grid
   /// </summary>
   MasterStringGridFill(oMasterList);
+
   /// <summary>
   /// Dispara o evento onde abre as sub-tabelas
   /// </summary>
@@ -161,19 +155,6 @@ begin
   TCommandMonitor.GetInstance.Show;
 end;
 
-procedure TForm3.Button3Click(Sender: TObject);
-var
-  LObject: TObject;
-begin
-  LObject :=  TMappingExplorer
-                .GetInstance
-                  .Repository
-                    .FindEntityByName('T' + 'master').Create;
-  LObject.MethodCall('Create', []);
-
-
-end;
-
 procedure TForm3.btnOpenClick(Sender: TObject);
 begin
   MasterStringGridFill(oMaster.Find);
@@ -190,7 +171,7 @@ begin
   oMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
   //
   oMasterUpd.detail.Add(Tdetail.Create);
-  oMasterUpd.detail.Last.detail_id := 3;
+  oMasterUpd.detail.Last.detail_id := oMasterUpd.detail.Count + 1;
   oMasterUpd.detail.Last.master_id := oMasterUpd.master_id;
   oMasterUpd.detail.Last.lookup_id := 1;
   oMasterUpd.detail.Last.price := 556.88;
@@ -205,6 +186,8 @@ var
 oMasterNew: Tmaster;
 begin
   oMasterNew := Tmaster.Create;
+
+  oMasterNew.SetDefaultValue;
   try
     oMasterNew.master_id := -1;
     oMasterNew.description := edtMaster_Descricao.Text;
@@ -214,14 +197,14 @@ begin
     oMasterNew.client_name := edtClient_Nome.Text;
     // Child
     oMasterNew.detail.Add(Tdetail.Create);
-    oMasterNew.detail.Last.master_id := -1;
+//    oMasterNew.detail.Last.master_id := -1;
     oMasterNew.detail.Last.detail_id := 1;
     oMasterNew.detail.Last.lookup_id := 2;
     oMasterNew.detail.Last.lookup_description := 'Insert Cascade 1';
     oMasterNew.detail.Last.price := 165.78;
     // Child
     oMasterNew.detail.Add(Tdetail.Create);
-    oMasterNew.detail.Last.master_id := -1;
+//    oMasterNew.detail.Last.master_id := -1;
     oMasterNew.detail.Last.detail_id := 2;
     oMasterNew.detail.Last.lookup_id := 3;
     oMasterNew.detail.Last.lookup_description := 'Insert Cascade 2';

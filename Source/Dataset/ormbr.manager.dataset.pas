@@ -138,6 +138,7 @@ function TManagerDataSet.NestedList<T>: TObjectList<T>;
 var
   LClassName: String;
 begin
+  Result := nil;
   LClassName := TClass(T).ClassName;
   if FNestedList.ContainsKey(LClassName) then
     Result := TObjectList<T>(FNestedList.Items[LClassName]);
@@ -349,6 +350,7 @@ function TManagerDataSet.Resolver<T>: TDataSetBaseAdapter<T>;
 var
   LClassName: String;
 begin
+  Result := nil;
   LClassName := TClass(T).ClassName;
   if FRepository.ContainsKey(LClassName) then
     Result := TDataSetBaseAdapter<T>(FRepository.Items[LClassName]);

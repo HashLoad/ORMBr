@@ -245,9 +245,7 @@ object Form3: TForm3
         'MetaDataPackageLoader=TDBXSqliteMetaDataCommandFactory,DbxSqlite' +
         'Driver240.bpl'
       'FailIfMissing=True'
-      'Database=..\Database\database.db3'
-      'DateTimeFormat=dd/mm/yyyy'
-      'TEXT=dd/MM/yyyy HH:mm:ss')
+      'Database=..\Database\database.db3')
     Left = 58
     Top = 54
   end

@@ -23,8 +23,9 @@ type
   /// </summary>
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
-    function GetCriteriaSelect(AClass: TClass; AID: Variant): string; virtual;
-    function GetGeneratorSelect(ACriteria: string): string; virtual;
+    function GetCriteriaSelectNoSQL(const AClass: TClass;
+      const AID: Variant): string;
+    function GetGeneratorSelectNoSQL(const ACriteria: string): string;
     function ExecuteSequence(const ASQL: string): Int64; override;
   public
     constructor Create; override;
@@ -68,7 +69,7 @@ end;
 
 function TDMLGeneratorNoSQL.ExecuteSequence(const ASQL: string): Int64;
 begin
-
+  Result := 0;
 end;
 
 function TDMLGeneratorNoSQL.GenerateSelectOneToOne(AOwner: TObject;
@@ -177,9 +178,9 @@ end;
 function TDMLGeneratorNoSQL.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 begin
-  Result := GetCriteriaSelect(AClass, AID);
+  Result := GetCriteriaSelectNoSQL(AClass, AID);
   if APageSize > -1 then
-     Result := GetGeneratorSelect(Result);
+     Result := GetGeneratorSelectNoSQL(Result);
 end;
 
 function TDMLGeneratorNoSQL.GeneratorSelectWhere(AClass: TClass; AWhere,
@@ -205,17 +206,17 @@ end;
 function TDMLGeneratorNoSQL.GeneratorSequenceCurrentValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
-
+  Result := 0;
 end;
 
 function TDMLGeneratorNoSQL.GeneratorSequenceNextValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
-
+  Result := 0;
 end;
 
-function TDMLGeneratorNoSQL.GetCriteriaSelect(AClass: TClass;
-  AID: Variant): string;
+function TDMLGeneratorNoSQL.GetCriteriaSelectNoSQL(const AClass: TClass;
+  const AID: Variant): string;
 var
   LTable: TTableMapping;
   LPrimaryKey: TPrimaryKeyMapping;
@@ -265,10 +266,8 @@ begin
           if Pos('DESC', LOrderByList[LFor]) > 0 then
             LOrder := -1
           else
-          if Pos('ASC', LOrderByList[LFor]) > 0 then
-            LOrder := 1
-          else
             LOrder := 1;
+
           LOrderByList[LFor] := ReplaceStr(LOrderByList[LFor], 'ASC', '');
           LOrderByList[LFor] := ReplaceStr(LOrderByList[LFor], 'DESC', '');
           LOrderByList[LFor] := Trim(LOrderByList[LFor]);
@@ -287,7 +286,8 @@ begin
   end;
 end;
 
-function TDMLGeneratorNoSQL.GetGeneratorSelect(ACriteria: string): string;
+function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(
+  const ACriteria: string): string;
 begin
   Result := ACriteria + ', limit=%s, skip=%s';
 end;

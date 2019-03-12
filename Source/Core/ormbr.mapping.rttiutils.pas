@@ -308,25 +308,25 @@ begin
   for LColumn in LColumns do
   begin
      /// <summary> Valida se o valor é NULO </summary>
-     LAttribute := LColumn.PropertyRtti.GetNotNullConstraint;
+     LAttribute := LColumn.ColumnProperty.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
-         .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
-                   LColumn.PropertyRtti.GetNullableValue(AObject));
+         .Validate(LColumn.ColumnDictionary.DisplayLabel,
+                   LColumn.ColumnProperty.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
-     LAttribute := LColumn.PropertyRtti.GetMinimumValueConstraint;
+     LAttribute := LColumn.ColumnProperty.GetMinimumValueConstraint;
      if LAttribute <> nil then
         MinimumValueConstraint(LAttribute)
-          .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
-                    LColumn.PropertyRtti.GetNullableValue(AObject));
+          .Validate(LColumn.ColumnDictionary.DisplayLabel,
+                    LColumn.ColumnProperty.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
-     LAttribute := LColumn.PropertyRtti.GetMaximumValueConstraint;
+     LAttribute := LColumn.ColumnProperty.GetMaximumValueConstraint;
      if LAttribute <> nil then
         MaximumValueConstraint(LAttribute)
-          .Validate(LColumn.PropertyRtti.GetDictionary.DisplayLabel,
-                    LColumn.PropertyRtti.GetNullableValue(AObject));
+          .Validate(LColumn.ColumnDictionary.DisplayLabel,
+                    LColumn.ColumnProperty.GetNullableValue(AObject));
   end;
   Result := True;
 end;

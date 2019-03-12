@@ -34,7 +34,8 @@ uses
 
 type
   ICommandMonitor = interface
-    procedure Command(ASQL: string; AParams: TParams);
+    ['{9AEB5A47-0205-4648-8C8A-F9DA8D88EB64}']
+    procedure Command(const ASQL: string; AParams: TParams);
   end;
 
 implementation

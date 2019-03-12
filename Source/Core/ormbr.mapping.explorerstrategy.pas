@@ -53,6 +53,7 @@ type
     function GetMappingView(const AClass: TClass): TViewMapping;
     function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList;
     function GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList;
+    function GetMappingPrimaryKeyColumns(const AClass: TClass): TPrimaryKeyColumnsMapping;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
 
@@ -75,6 +76,7 @@ type
     function GetMappingView(const AClass: TClass): TViewMapping; virtual; abstract;
     function GetMappingFieldEvents(const AClass: TClass): TFieldEventsMappingList; virtual; abstract;
     function GetMappingEnumeration(const AClass: TClass): TEnumerationMappingList; virtual; abstract;
+    function GetMappingPrimaryKeyColumns(const AClass: TClass): TPrimaryKeyColumnsMapping; virtual; abstract;
     property Repository: TMappingRepository read GetRepositoryMapping;
   end;
 

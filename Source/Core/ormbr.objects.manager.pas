@@ -58,11 +58,11 @@ type
   protected
     FConnection: IDBConnection;
     /// <summary>
-    /// Fábrica de comandos a serem executados
+    ///   Fábrica de comandos a serem executados
     /// </summary>
     FDMLCommandFactory: TDMLCommandFactoryAbstract;
     /// <summary>
-    /// Controle de paginação vindo do banco de dados
+    ///   Controle de paginação vindo do banco de dados
     /// </summary>
     FPageSize: Integer;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
@@ -75,7 +75,7 @@ type
       const APageSize: Integer); override;
     destructor Destroy; override;
     /// <summary>
-    /// Procedures
+    ///   Procedures
     /// </summary>
     procedure InsertInternal(const AObject: M); override;
     procedure UpdateInternal(const AObject: TObject;
@@ -93,12 +93,12 @@ type
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     /// <summary>
-    /// Functions
+    ///   Functions
     /// </summary>
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
     /// <summary>
-    /// DataSet
+    ///   DataSet
     /// </summary>
     function SelectInternalWhere(const AWhere: string;
       const AOrderBy: string): string; override;
@@ -112,7 +112,7 @@ type
     function NextPacket(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     /// <summary>
-    /// ObjectSet
+    ///   ObjectSet
     /// </summary>
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Variant): M; overload; override;
@@ -142,7 +142,7 @@ begin
   FExplorer := TMappingExplorer.GetInstance;
   FObjectInternal := M.Create;
   /// <summary>
-  /// Fabrica de comandos SQL
+  ///   Fabrica de comandos SQL
   /// </summary>
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
@@ -174,7 +174,7 @@ var
   LAssociation: TAssociationMapping;
 begin
   /// <summary>
-  /// Result deve sempre iniciar vazio
+  ///   Result deve sempre iniciar vazio
   /// </summary>
   Result := '';
   LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
@@ -220,8 +220,8 @@ var
   LAssociation: TAssociationMapping;
 begin
   /// <summary>
-  /// Se o driver selecionado for do tipo de banco NoSQL,
-  /// o atributo Association deve ser ignorado.
+  ///   Se o driver selecionado for do tipo de banco NoSQL,
+  ///   o atributo Association deve ser ignorado.
   /// </summary>
   if FConnection.GetDriverName <> dnMongoDB then
   begin
@@ -249,8 +249,8 @@ var
   LAssociation: TAssociationMapping;
 begin
   /// <summary>
-  /// Se o driver selecionado for do tipo de banco NoSQL,
-  /// o atributo Association deve ser ignorado.
+  ///   Se o driver selecionado for do tipo de banco NoSQL,
+  ///   o atributo Association deve ser ignorado.
   /// </summary>
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
@@ -290,11 +290,11 @@ begin
     begin
       LObjectValue := AProperty.GetNullableValue(AObject).AsObject;
       /// <summary>
-      /// Preenche o objeto com os dados do ResultSet
+      ///   Preenche o objeto com os dados do ResultSet
       /// </summary>
       TBindObject.GetInstance.SetFieldToProperty(LResultSet, LObjectValue);
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObjectValue);
     end;
@@ -321,22 +321,22 @@ begin
     while LResultSet.NotEof do
     begin
       /// <summary>
-      /// Instancia o objeto do tipo definido na lista
+      ///   Instancia o objeto do tipo definido na lista
       /// </summary>
       LObjectCreate := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectCreate.MethodCall('Create', []);
       /// <summary>
-      /// Popula o objeto com os dados do ResultSet
+      ///   Popula o objeto com os dados do ResultSet
       /// </summary>
       TBindObject
         .GetInstance
           .SetFieldToProperty(LResultSet, LObjectCreate);
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObjectCreate);
       /// <summary>
-      /// Adiciona o objeto a lista
+      ///   Adiciona o objeto a lista
       /// </summary>
       LObjectList := AProperty.GetNullableValue(AObject).AsObject;
       if LObjectList <> nil then
@@ -387,7 +387,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObjectList.Last);
     end;
@@ -426,7 +426,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObjectList.Last);
     end;
@@ -450,7 +450,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(AObjectList.Last);
     end;
@@ -473,7 +473,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(AObjectList.Last);
     end;
@@ -498,7 +498,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObjectList.Last);
     end;
@@ -547,11 +547,11 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, LObject);
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(LObject);
       /// <summary>
-      /// Adiciona o Object a lista de retorno
+      ///   Adiciona o Object a lista de retorno
       /// </summary>
       Result.Add(LObject);
     end;
@@ -578,7 +578,7 @@ begin
         .GetInstance
           .SetFieldToProperty(LResultSet, TObject(Result));
       /// <summary>
-      /// Alimenta registros das associações existentes 1:1 ou 1:N
+      ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
       FillAssociation(Result);
     end

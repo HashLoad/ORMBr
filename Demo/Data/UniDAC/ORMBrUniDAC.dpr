@@ -43,12 +43,10 @@ uses
   ormbr.driver.connection in '..\..\..\Source\Drivers\ormbr.driver.connection.pas',
   ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
   ormbr.factory.interfaces in '..\..\..\Source\Drivers\ormbr.factory.interfaces.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.dml.generator.oracle in '..\..\..\Source\Core\ormbr.dml.generator.oracle.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
   ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
-  ormbr.monitor in '..\..\..\Source\Drivers\ormbr.monitor.pas',
   ormbr.container.clientdataset in '..\..\..\Source\Dataset\ormbr.container.clientdataset.pas',
   ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',
   ormbr.container.dataset in '..\..\..\Source\Dataset\ormbr.container.dataset.pas',
@@ -60,7 +58,9 @@ uses
   ormbr.dataset.fields in '..\..\..\Source\Dataset\ormbr.dataset.fields.pas',
   ormbr.driver.unidac in '..\..\..\Source\Drivers\ormbr.driver.unidac.pas',
   ormbr.driver.unidac.transaction in '..\..\..\Source\Drivers\ormbr.driver.unidac.transaction.pas',
-  ormbr.factory.unidac in '..\..\..\Source\Drivers\ormbr.factory.unidac.pas';
+  ormbr.factory.unidac in '..\..\..\Source\Drivers\ormbr.factory.unidac.pas',
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor},
+  ormbr.monitor in '..\..\..\Source\Monitor\ormbr.monitor.pas';
 
 {$R *.res}
 

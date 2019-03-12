@@ -42,8 +42,6 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
     DBGrid2: TDBGrid;
     DataSource2: TDataSource;
     DataSource3: TDataSource;
@@ -72,10 +70,8 @@ type
     Button6: TButton;
     UniConnection: TUniConnection;
     SQLiteUniProvider1: TSQLiteUniProvider;
-    procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
@@ -96,7 +92,9 @@ var
 implementation
 
 uses
-  SQLMonitor, ormbr.criteria, System.TypInfo;
+  ormbr.form.monitor,
+  ormbr.criteria,
+  TypInfo;
 
 {$R *.dfm}
 
@@ -114,19 +112,9 @@ begin
   oMaster.ApplyUpdates(0);
 end;
 
-procedure TForm3.Button3Click(Sender: TObject);
-begin
-  oMaster.Open;
-end;
-
-procedure TForm3.Button4Click(Sender: TObject);
-begin
-  oMaster.Close;
-end;
-
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-  TFSQLMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button6Click(Sender: TObject);
@@ -154,13 +142,13 @@ procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryUniDAC.Create(UniConnection, dnSQLite);
-  oConn.SetCommandMonitor(TFSQLMonitor.GetInstance);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   /// Class Adapter
   /// Parâmetros: (IDBConnection, TClientDataSet)
   /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
   /// defina o quanto achar melhor para sua necessiade
-  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 10);
+  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 3);
 
   /// Relacionamento Master-Detail 1:N
   oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.This);

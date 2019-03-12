@@ -40,14 +40,15 @@ uses
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
-  SQLMonitor in '..\..\SQLMonitor.pas' {FSQLMonitor},
   ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
   ormbr.container.objectset.interfaces in '..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas',
   ormbr.container.objectset in '..\..\..\Source\Objectset\ormbr.container.objectset.pas',
   ormbr.objectset.abstract in '..\..\..\Source\Objectset\ormbr.objectset.abstract.pas',
   ormbr.objectset.adapter in '..\..\..\Source\Objectset\ormbr.objectset.adapter.pas',
-  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas';
+  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas',
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor},
+  ormbr.monitor in '..\..\..\Source\Monitor\ormbr.monitor.pas';
 
 {$R *.res}
 
@@ -56,6 +57,5 @@ begin
   ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm3, Form3);
-  Application.CreateForm(TFSQLMonitor, FSQLMonitor);
   Application.Run;
 end.

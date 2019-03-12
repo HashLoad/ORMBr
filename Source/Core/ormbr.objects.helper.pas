@@ -37,6 +37,7 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
+  ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.mapping.explorer,
   ormbr.mapping.classes,
@@ -56,9 +57,7 @@ type
     function GetSubResource: SubResource;
     function &GetType(out AType: TRttiType): Boolean;
     function GetSequence: Sequence;
-    function GetPrimaryKey: TArray<TColumnMapping>;
-    function GetColumns: TArray<TRttiProperty>;
-    function MethodCall(AMethodName: string;
+    function MethodCall(const AMethodName: string;
       const AParameters: array of TValue): TValue;
     procedure SetDefaultValue;
   end;
@@ -69,31 +68,6 @@ var
   Context: TRttiContext;
 
 { TObjectHelper }
-
-function TObjectHelper.GetColumns: TArray<TRttiProperty>;
-var
-  LType: TRttiType;
-  LProperty: TRttiProperty;
-  LAttribute: TCustomAttribute;
-  LLength: Integer;
-begin
-   LLength := -1;
-   if &GetType(LType) then
-   begin
-      for LProperty in LType.GetProperties do
-      begin
-         for LAttribute in LProperty.GetAttributes do
-         begin
-            if (LAttribute is Column) then // Column
-            begin
-              Inc(LLength);
-              SetLength(Result, LLength +1);
-              Result[LLength] := LProperty;
-            end;
-         end;
-      end;
-   end;
-end;
 
 function TObjectHelper.GetNotServerUse: NotServerUse;
 var
@@ -109,33 +83,6 @@ begin
         Exit(NotServerUse(LAttribute));
     end;
     Exit(nil);
-  end;
-end;
-
-function TObjectHelper.GetPrimaryKey: TArray<TColumnMapping>;
-var
-  LCols: Integer;
-  LPkList: TList<TColumnMapping>;
-  LColumns: TColumnMappingList;
-  LColumn: TColumnMapping;
-begin
-  LPkList := TList<TColumnMapping>.Create;
-  try
-    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(Self.ClassType);
-    for LColumn in LColumns do
-      if LColumn.IsPrimaryKey then
-        LPkList.Add(LColumn);
-    ///
-    if LPkList.Count > 0 then
-    begin
-      SetLength(Result, LPkList.Count);
-      for LCols := 0 to LPkList.Count -1 do
-        Result[LCols] := LPkList.Items[LCols];
-    end
-    else
-      Exit(nil);
-  finally
-    LPkList.Free;
   end;
 end;
 
@@ -218,7 +165,7 @@ begin
   end;
 end;
 
-function TObjectHelper.MethodCall(AMethodName: string;
+function TObjectHelper.MethodCall(const AMethodName: string;
   const AParameters: array of TValue): TValue;
 var
   LRttiType: TRttiType;
@@ -242,9 +189,12 @@ begin
   LColumns := TMappingExplorer
                 .GetInstance
                   .GetMappingColumn(Self.ClassType);
+  if LColumns = nil then
+    Exit;
+
   for LColumn in LColumns do
   begin
-    LProperty := LColumn.PropertyRtti;
+    LProperty := LColumn.ColumnProperty;
     LValue := StringReplace(LColumn.DefaultValue, '''', '', [rfReplaceAll]);
     if Length(LColumn.DefaultValue) > 0 then
     begin
@@ -278,8 +228,7 @@ begin
               ftBoolean:
                 LProperty.SetValue(Self, TValue.FromVariant(LValue).AsBoolean);
             else
-              raise Exception
-                      .Create('Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]');
+              raise Exception.Create(cENUMERATIONSTYPEERROR);
             end;
           end;
       end;

@@ -22,6 +22,9 @@ uses
   Data.DB,
   // UniDAC
   Uni,
+  DBAccess,
+  UniProvider,
+  SQLiteUniProvider,
   UniScript,
   /// orm
   ormbr.driver.connection,
@@ -37,7 +40,8 @@ type
     FConnection: TUniConnection;
     FSQLScript : TUniScript;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -49,7 +53,7 @@ type
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -71,16 +75,18 @@ type
     constructor Create(ADataSet: TUniQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
 
 { TDriverUniDAC }
 
-constructor TDriverUniDAC.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverUniDAC.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TUniConnection;
@@ -207,11 +213,12 @@ begin
   Result := TDriverQueryUniDAC.Create(FConnection);
 end;
 
-function TDriverUniDAC.CreateResultSet: IDBResultSet;
+function TDriverUniDAC.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryUniDAC.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result := LDBQuery.ExecuteQuery;
 end;
 
@@ -292,7 +299,7 @@ begin
   inherited;
 end;
 
-function TDriverResultSetUniDAC.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetUniDAC.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -300,12 +307,17 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetUniDAC.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetUniDAC.GetField(const AFieldName: string): TField;
+begin
+  Result := FDataSet.FieldByName(AFieldName);
+end;
+
+function TDriverResultSetUniDAC.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetUniDAC.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetUniDAC.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount - 1 then
     Exit(Variants.Null);

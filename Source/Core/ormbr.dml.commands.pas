@@ -48,10 +48,12 @@ type
     FTable: TTableMapping;
     FSequence: TSequenceMapping;
     FExistSequence: Boolean;
+    FPrimaryKey: TPrimaryKeyMapping;
   public
     property Table: TTableMapping read FTable write FTable;
     property Sequence: TSequenceMapping read FSequence write FSequence;
     property ExistSequence: Boolean read FExistSequence write FExistSequence;
+    property PrimaryKey: TPrimaryKeyMapping read FPrimaryKey write FPrimaryKey;
   end;
 
 implementation

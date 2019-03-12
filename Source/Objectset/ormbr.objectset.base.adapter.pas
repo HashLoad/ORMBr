@@ -36,6 +36,7 @@ interface
 uses
   Rtti,
   Variants,
+  SysUtils,
   Generics.Collections,
   ormbr.core.consts,
   ormbr.session.abstract,
@@ -213,12 +214,19 @@ end;
 
 function TObjectSetBaseAdapter<M>.GenerateKey(const AObject: TObject): string;
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
   LKey: string;
 begin
   LKey := AObject.ClassName;
-  for LColumn in AObject.GetPrimaryKey do
-    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant);
+  LPrimaryKey := TMappingExplorer
+                   .GetInstance
+                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  if LPrimaryKey = nil then
+    raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+  for LColumn in LPrimaryKey.Columns do
+    LKey := LKey + '-' + VarToStr(LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant);
   Result := LKey;
 end;
 
@@ -257,6 +265,7 @@ end;
 procedure TObjectSetBaseAdapter<M>.OneToManyCascadeActionsExecute(const AObject: TObject;
   const AAssociation: TAssociationMapping; const ACascadeAction: TCascadeAction);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
   LValue: TValue;
   LObjectList: TObjectList<TObject>;
@@ -280,7 +289,13 @@ begin
         /// </summary>
         if FSession.ExistSequence then
         begin
-          for LColumn in LObject.GetPrimaryKey do
+          LPrimaryKey := TMappingExplorer
+                           .GetInstance
+                             .GetMappingPrimaryKeyColumns(AObject.ClassType);
+          if LPrimaryKey = nil then
+            raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+          for LColumn in LPrimaryKey.Columns do
             SetAutoIncValueChilds(LObject, LColumn);
         end;
       end
@@ -312,6 +327,7 @@ procedure TObjectSetBaseAdapter<M>.OneToOneCascadeActionsExecute(
   const AObject: TObject; const AAssociation: TAssociationMapping;
   const ACascadeAction: TCascadeAction);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
   LValue: TValue;
   LObject: TObject;
@@ -330,7 +346,13 @@ begin
       /// </summary>
       if FSession.ExistSequence then
       begin
-        for LColumn in LObject.GetPrimaryKey do
+        LPrimaryKey := TMappingExplorer
+                         .GetInstance
+                           .GetMappingPrimaryKeyColumns(AObject.ClassType);
+        if LPrimaryKey = nil then
+          raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+        for LColumn in LPrimaryKey.Columns do
           SetAutoIncValueChilds(LObject, LColumn);
       end;
     end
@@ -372,10 +394,10 @@ begin
       if CascadeAutoInc in LAssociation.CascadeActions then
       begin
         if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-          SetAutoIncValueOneToOne(AObject, LAssociation, AColumn.PropertyRtti)
+          SetAutoIncValueOneToOne(AObject, LAssociation, AColumn.ColumnProperty)
         else
         if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-          SetAutoIncValueOneToMany(AObject, LAssociation, AColumn.PropertyRtti);
+          SetAutoIncValueOneToMany(AObject, LAssociation, AColumn.ColumnProperty);
       end;
     end;
   end;
@@ -441,12 +463,19 @@ end;
 
 procedure TObjectSetBaseAdapter<M>.UpdateInternal(const AObject: TObject);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
   LKey: string;
 begin
   LKey := AObject.ClassName;
-  for LColumn in AObject.GetPrimaryKey do
-    LKey := LKey + '-' + VarToStr(LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant);
+  LPrimaryKey := TMappingExplorer
+                   .GetInstance
+                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  if LPrimaryKey = nil then
+    raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+  for LColumn in LPrimaryKey.Columns do
+    LKey := LKey + '-' + VarToStr(LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant);
   ///
   if FSession.ModifiedFields.ContainsKey(LKey) then
     if FSession.ModifiedFields.Items[LKey].Count > 0 then

@@ -23,11 +23,10 @@ uses
   /// orm interface de conexão
   ormbr.factory.interfaces,
   ormbr.factory.firedac,
+  ormbr.dml.generator.sqlite,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,
   ormbr.container.fdmemtable,
-  /// Banco utilizado
-  ormbr.dml.generator.sqlite,
   /// modelos usados
   ormbr.model.master,
   ormbr.model.detail,

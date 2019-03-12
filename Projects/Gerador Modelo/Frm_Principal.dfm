@@ -340,6 +340,8 @@ object FrmPrincipal: TFrmPrincipal
           ParentFont = False
           ScrollBars = ssBoth
           TabOrder = 0
+          ExplicitLeft = -8
+          ExplicitTop = -183
         end
       end
     end

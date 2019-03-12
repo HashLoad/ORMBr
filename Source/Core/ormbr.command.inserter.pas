@@ -34,6 +34,7 @@ uses
   Rtti,
   StrUtils,
   TypInfo,
+  ormbr.core.consts,
   ormbr.command.abstract,
   ormbr.mapping.classes,
   ormbr.factory.interfaces,
@@ -105,14 +106,13 @@ begin
   /// </summary>
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
-    raise Exception
-            .Create('Falta definir o atributo [Column()] nas propriedades da classe [' + AObject.ClassName + ']');
+    raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
 
   LPrimaryKey := TMappingExplorer.GetInstance
                                  .GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
-    if LColumn.PropertyRtti.IsNullValue(AObject) then
+    if LColumn.ColumnProperty.IsNullValue(AObject) then
       Continue;
     if LColumn.IsNoInsert then
       Continue;
@@ -123,11 +123,12 @@ begin
     /// </summary>
     if LPrimaryKey <> nil then
     begin
+      FDMLCommandInsert.PrimaryKey := LPrimaryKey;
       if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
         if LPrimaryKey.AutoIncrement then
-          LColumn.PropertyRtti.SetValue(AObject,
-                                        FGeneratorCommand
-                                          .GeneratorSequenceNextValue(AObject, FDMLCommandInsert));
+          LColumn.ColumnProperty.SetValue(AObject,
+                                          FGeneratorCommand
+                                            .GeneratorSequenceNextValue(AObject, FDMLCommandInsert));
     end;
     /// <summary>
     /// Alimenta cada parâmetro com o valor de cada propriedade do objeto.
@@ -137,21 +138,18 @@ begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptInput;
-      Value := GetParamValue(AObject, LColumn.PropertyRtti, LColumn.FieldType);
+      Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
     end;
   end;
 end;
 
-function TCommandInserter.GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
-  AFieldType: TFieldType): Variant;
+function TCommandInserter.GetParamValue(AInstance: TObject;
+  AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
-  if (AProperty.PropertyType.TypeKind = tkEnumeration) and
-     (AProperty.PropertyType.Handle <> TypeInfo(Boolean)) then
-  begin
-    Result := AProperty.GetEnumToFieldValue(AInstance, AFieldType).AsVariant;
-  end
+  case AProperty.PropertyType.TypeKind of
+    tkEnumeration:
+      Result := AProperty.GetEnumToFieldValue(AInstance, AFieldType).AsVariant;
   else
-  begin
     if AFieldType = ftBlob then
       Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
     else

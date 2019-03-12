@@ -49,19 +49,21 @@ type
     FConnection: TABSDatabase;
     FSQLScript: TABSQuery;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
     procedure ExecuteDirect(const ASQL: string); overload; override;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); overload; override;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); overload; override;
     procedure ExecuteScript(const ASQL: string); override;
     procedure AddScript(const ASQL: string); override;
     procedure ExecuteScripts; override;
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -83,16 +85,18 @@ type
     constructor Create(ADataSet: TABSQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
 
 { TDriverAbsoluteDB }
 
-constructor TDriverAbsoluteDB.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverAbsoluteDB.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TABSDatabase;
@@ -208,11 +212,12 @@ begin
   Result := TDriverQueryAbsoluteDB.Create(FConnection);
 end;
 
-function TDriverAbsoluteDB.CreateResultSet: IDBResultSet;
+function TDriverAbsoluteDB.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryAbsoluteDB.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result   := LDBQuery.ExecuteQuery;
 end;
 
@@ -259,12 +264,7 @@ begin
     raise;
   end;
   Result := TDriverResultSetAbsoluteDB.Create(LResultSet);
-  /// <summary>
-  /// if LResultSet.RecordCount = 0 then
-  /// Ao checar Recordcount no DBXExpress da um erro de Object Inválid para o SQL
-  /// select name as name, ' ' as description from sys.sequences
-  /// </summary>
-  if LResultSet.Eof then
+  if LResultSet.RecordCount = 0 then
      Result.FetchingAll := True;
 end;
 
@@ -298,7 +298,7 @@ begin
   inherited;
 end;
 
-function TDriverResultSetAbsoluteDB.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetAbsoluteDB.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -306,12 +306,17 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetAbsoluteDB.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetAbsoluteDB.GetField(const AFieldName: string): TField;
+begin
+  Result := FDataSet.FieldByName(AFieldName);
+end;
+
+function TDriverResultSetAbsoluteDB.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetAbsoluteDB.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetAbsoluteDB.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount -1  then
     Exit(Variants.Null);

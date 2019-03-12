@@ -48,7 +48,7 @@ type
     FSchemaName: String;
   public
     constructor Create; overload;
-    constructor Create(const AName: string; ASchemaName: String); overload;
+    constructor Create(const AName: string; const ASchemaName: String); overload;
     property Name: String Read FName;
     property SchemaName: String Read FSchemaName;
   end;
@@ -192,7 +192,8 @@ type
     FLazy: Boolean;
   public
     constructor Create(const AMultiplicity: TMultiplicity;
-      AColumnsName, ATableNameRef, AColumnsNameRef: string; ALazy: Boolean = False);
+      const AColumnsName, ATableNameRef, AColumnsNameRef: string;
+      const ALazy: Boolean = False);
     property Multiplicity: TMultiplicity read FMultiplicity;
     property ColumnsName: TArray<string> read FColumnsName;
     property TableNameRef: string read FTabelNameRef;
@@ -296,12 +297,13 @@ type
     FAliasRefTable: string;
   public
     constructor Create(const AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin;
-      AAliasColumn, AAliasRefTable: string); overload;
+      ARefColumnNameSelect: string; const AJoin: TJoin;
+      const AAliasColumn, AAliasRefTable: string); overload;
     constructor Create(const AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string); overload;
+      ARefColumnNameSelect: string; const AJoin: TJoin;
+      const AAliasColumn: string); overload;
     constructor Create(const AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin = InnerJoin); overload;
+      ARefColumnNameSelect: string; const AJoin: TJoin = InnerJoin); overload;
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
     property RefTableName: string read FRefTableName;
@@ -383,7 +385,7 @@ type
   private
     FEnumType: TEnumType;
     FEnumValues: TList<Variant>;
-    function ValidateEnumValue(AValue: string): string;
+    function ValidateEnumValue(const AValue: string): string;
   public
     constructor Create(const AEnumType: TEnumType; const AEnumValues: string);
     destructor Destroy; override;
@@ -610,7 +612,8 @@ end;
 { Association }
 
 constructor Association.Create(const AMultiplicity: TMultiplicity;
-  AColumnsName, ATableNameRef, AColumnsNameRef: string; ALazy: Boolean);
+  const AColumnsName, ATableNameRef, AColumnsNameRef: string;
+  const ALazy: Boolean);
 var
   rColumns: TStringList;
   iFor: Integer;
@@ -651,8 +654,8 @@ end;
 { JoinColumn }
 
 constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
-  ARefColumnNameSelect: string; AJoin: TJoin;
-  AAliasColumn, AAliasRefTable: string);
+  ARefColumnNameSelect: string; const AJoin: TJoin;
+  const AAliasColumn, AAliasRefTable: string);
 begin
   FColumnName :=  LowerCase(AColumnName);
   FRefTableName := LowerCase(ARefTableName);
@@ -667,14 +670,14 @@ begin
 end;
 
 constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
-  ARefColumnNameSelect: string; AJoin: TJoin);
+  ARefColumnNameSelect: string; const AJoin: TJoin);
 begin
   Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
          AJoin, '', '');
 end;
 
 constructor JoinColumn.Create(const AColumnName, ARefTableName, ARefColumnName,
-  ARefColumnNameSelect: string; AJoin: TJoin; AAliasColumn: string);
+  ARefColumnNameSelect: string; const AJoin: TJoin; const AAliasColumn: string);
 begin
   Create(AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect,
          AJoin, AAliasColumn, '');
@@ -759,7 +762,7 @@ end;
 
 { Catalog }
 
-constructor Entity.Create(const AName: string; ASchemaName: String);
+constructor Entity.Create(const AName: string; const ASchemaName: String);
 begin
   FName := AName;
   FSchemaName := ASchemaName;
@@ -920,7 +923,7 @@ begin
   inherited;
 end;
 
-function Enumeration.ValidateEnumValue(AValue: string): string;
+function Enumeration.ValidateEnumValue(const AValue: string): string;
 begin
   Result := AValue;
   {$IFDEF NEXTGEN}

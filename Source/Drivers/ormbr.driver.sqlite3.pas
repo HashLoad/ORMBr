@@ -34,6 +34,7 @@ uses
   DB,
   Variants,
   SQLiteTable3,
+  Datasnap.DBClient,
   /// orm
   ormbr.driver.connection,
   ormbr.factory.interfaces,
@@ -48,7 +49,8 @@ type
     FConnection: TSQLiteDatabase;
     FScripts: TStrings;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -60,7 +62,7 @@ type
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -79,7 +81,6 @@ type
 
   TDriverResultSetSQLite3 = class(TDriverResultSetBase)
   private
-    function GetDataSet: ISQLiteTable;
     procedure CreateFieldDefs;
   protected
     FConnection: TSQLiteDatabase;
@@ -88,17 +89,19 @@ type
     FFetchingAll: Boolean;
     FFirstNext: Boolean;
     FFieldDefs: TFieldDefs;
-    property DataSet: ISQLiteTable read GetDataSet;
+    FDataSetInternal: TClientDataSet;
   public
-    constructor Create(AConnection: TSQLiteDatabase; ADataSet: ISQLiteTable);
+    constructor Create(const AConnection: TSQLiteDatabase;
+      const ADataSet: ISQLiteTable);
     destructor Destroy; override;
     procedure Close; override;
     function NotEof: Boolean; override;
     function RecordCount: Integer; override;
     function FieldDefs: TFieldDefs; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
@@ -108,13 +111,14 @@ uses
 
 { TDriverSQLite3 }
 
-constructor TDriverSQLite3.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverSQLite3.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TSQLiteDatabase;
   FConnection.Connected := True;
   FDriverName := ADriverName;
-  FScripts := TStrings.Create;
+  FScripts := TStringList.Create;
 end;
 
 destructor TDriverSQLite3.Destroy;
@@ -130,7 +134,7 @@ begin
   inherited;
   /// <summary>
   /// Esse driver nativo, por motivo de erro, tem que manter a conexão aberta
-  /// até o final do uso da palicação.
+  /// até o final do uso da aplicação.
   /// O FConnection.Connected := False; é chamado no Destroy;
   /// </summary>
 end;
@@ -211,7 +215,7 @@ end;
 function TDriverSQLite3.IsConnected: Boolean;
 begin
   inherited;
-  Result := FConnection.Connected = True;
+  Result := FConnection.Connected;
 end;
 
 function TDriverSQLite3.CreateQuery: IDBQuery;
@@ -219,11 +223,12 @@ begin
   Result := TDriverQuerySQLite3.Create(FConnection);
 end;
 
-function TDriverSQLite3.CreateResultSet: IDBResultSet;
+function TDriverSQLite3.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQuerySQLite3.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result   := LDBQuery.ExecuteQuery;
 end;
 
@@ -244,18 +249,17 @@ function TDriverQuerySQLite3.ExecuteQuery: IDBResultSet;
 var
   LStatement: TSQLitePreparedStatement;
   LResultSet: ISQLiteTable;
-  LAffectedRows: Integer;
 begin
   LStatement := TSQLitePreparedStatement.Create(FSQLQuery.DB, FSQLQuery.SQL);
   try
-  try
-    LResultSet := LStatement.ExecQueryIntf;
-  except
-    raise;
-  end;
-  Result := TDriverResultSetSQLite3.Create(FSQLQuery.DB, LResultSet);
-  if LResultSet.Eof then
-    Result.FetchingAll := True;
+    try
+      LResultSet := LStatement.ExecQueryIntf;
+    except
+      raise;
+    end;
+    Result := TDriverResultSetSQLite3.Create(FSQLQuery.DB, LResultSet);
+    if LResultSet.Eof then
+      Result.FetchingAll := True;
   finally
     LStatement.Free;
   end;
@@ -280,16 +284,38 @@ end;
 
 procedure TDriverResultSetSQLite3.Close;
 begin
-  inherited;
   if Assigned(FDataSet) then
     FDataSet := nil;
 end;
 
-constructor TDriverResultSetSQLite3.Create(AConnection: TSQLiteDatabase; ADataSet: ISQLiteTable);
+constructor TDriverResultSetSQLite3.Create(const AConnection: TSQLiteDatabase;
+  const ADataSet: ISQLiteTable);
+var
+  LField: TField;
+  LFor: Integer;
 begin
   FConnection := AConnection;
   FDataSet := ADataSet;
   FFieldDefs := TFieldDefs.Create(nil);
+  FDataSetInternal := TClientDataSet.Create(nil);
+
+  for LFor := 0 to FDataSet.FieldCount -1 do
+  begin
+    case FDataSet.Fields[LFor].FieldType of
+      0: LField := TStringField.Create(FDataSetInternal);
+      1: LField := TIntegerField.Create(FDataSetInternal);
+      2: LField := TFloatField.Create(FDataSetInternal);
+      3: LField := TWideStringField.Create(FDataSetInternal);
+      4: LField := TBlobField.Create(FDataSetInternal);
+//      5:
+      15: LField := TDateField.Create(FDataSetInternal);
+      16: LField := TDateTimeField.Create(FDataSetInternal);
+    end;
+    LField.FieldName := FDataSet.Fields[LFor].Name;
+    LField.DataSet := FDataSetInternal;
+    LField.FieldKind := fkData;
+  end;
+  FDataSetInternal.CreateDataSet;
   /// <summary>
   /// Criar os FieldDefs, pois nesse driver não cria automaticamente.
   /// </summary>
@@ -300,6 +326,7 @@ destructor TDriverResultSetSQLite3.Destroy;
 begin
   FDataSet := nil;
   FFieldDefs.Free;
+  FDataSetInternal.Free;
   inherited;
 end;
 
@@ -309,27 +336,31 @@ begin
   Result := FFieldDefs;
 end;
 
-function TDriverResultSetSQLite3.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetSQLite3.GetFieldValue(const AFieldName: string): Variant;
 begin
   inherited;
-  Result := fDataSet.FieldByName[AFieldName].Value;
+  Result := FDataSet.FieldByName[AFieldName].Value;
 end;
 
-function TDriverResultSetSQLite3.GetDataSet: ISQLiteTable;
+function TDriverResultSetSQLite3.GetField(const AFieldName: string): TField;
 begin
-  Result := FDataSet;
+  inherited;
+  FDataSetInternal.Edit;
+  FDataSetInternal.FieldByName(AFieldName).Value := FDataSet.FieldByName[AFieldName].Value;
+  FDataSetInternal.Post;
+  Result := FDataSetInternal.FieldByName(AFieldName);
 end;
 
-function TDriverResultSetSQLite3.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetSQLite3.GetFieldType(const AFieldName: string): TFieldType;
 begin
   inherited;
   Result := TFieldType(FDataSet.FindField(AFieldName).FieldType);
 end;
 
-function TDriverResultSetSQLite3.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetSQLite3.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   inherited;
-  if AFieldIndex > FDataSet.FieldCount -1  then
+  if AFieldIndex > FDataSet.FieldCount -1 then
     Exit(Variants.Null);
 
   if FDataSet.Fields[AFieldIndex].IsNull then

@@ -15,26 +15,12 @@ object Form3: TForm3
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label3: TLabel
-    Left = 12
-    Top = 346
-    Width = 41
-    Height = 13
-    Caption = 'Client ID'
-  end
-  object Label4: TLabel
-    Left = 144
-    Top = 346
-    Width = 83
-    Height = 13
-    Caption = 'Client Description'
-  end
   object DBGrid1: TDBGrid
     Left = 8
     Top = 4
     Width = 848
-    Height = 333
-    DataSource = DataSource3
+    Height = 143
+    DataSource = DataSource1
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -48,7 +34,7 @@ object Form3: TForm3
     Width = 840
     Height = 25
     DataSource = DataSource3
-    TabOrder = 3
+    TabOrder = 1
   end
   object Button2: TButton
     Left = 8
@@ -56,52 +42,38 @@ object Form3: TForm3
     Width = 113
     Height = 25
     Caption = 'ApplyUpdates'
-    TabOrder = 4
+    TabOrder = 2
     OnClick = Button2Click
   end
-  object DBEdit3: TDBEdit
-    Left = 12
-    Top = 362
-    Width = 121
-    Height = 21
-    DataField = 'client_id'
+  object DBGrid2: TDBGrid
+    Left = 8
+    Top = 153
+    Width = 848
+    Height = 143
     DataSource = DataSource3
-    TabOrder = 1
-  end
-  object DBEdit4: TDBEdit
-    Left = 144
-    Top = 362
-    Width = 601
-    Height = 21
-    DataField = 'client_name'
-    DataSource = DataSource3
-    Enabled = False
-    TabOrder = 2
-  end
-  object Button1: TButton
-    Left = 132
-    Top = 437
-    Width = 75
-    Height = 25
-    Caption = 'Object Post'
-    TabOrder = 5
-    OnClick = Button1Click
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
   end
   object DataSource3: TDataSource
-    DataSet = FDClient
-    Left = 426
-    Top = 168
+    DataSet = FDMemTable1
+    Left = 430
+    Top = 222
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=..\Database\database.db3'
+      'Database=database.db3'
+      'LockingMode=Normal'
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 154
     Top = 42
   end
   object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
-    Left = 218
+    Left = 252
     Top = 42
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
@@ -119,5 +91,21 @@ object Form3: TForm3
     UpdateOptions.AutoCommitUpdates = True
     Left = 354
     Top = 168
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 358
+    Top = 224
+  end
+  object DataSource1: TDataSource
+    DataSet = FDClient
+    Left = 428
+    Top = 170
   end
 end

@@ -111,7 +111,8 @@ uses
   ormbr.rtti.helper,
   ormbr.objects.helper,
   ormbr.dataset.fields,
-  ormbr.mapping.explorer;
+  ormbr.mapping.explorer,
+  ormbr.core.consts;
 
 { TFDMemTableAdapter<M> }
 
@@ -289,6 +290,7 @@ end;
 
 procedure TFDMemTableAdapter<M>.ApplyInserter(const MaxErros: Integer);
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
 begin
   inherited;
@@ -311,8 +313,18 @@ begin
          FOrmDataSet.Edit;
          if FSession.ExistSequence then
          begin
-           for LColumn in FCurrentInternal.GetPrimaryKey do
-             FOrmDataSet.FieldByName(LColumn.ColumnName).Value := LColumn.PropertyRtti.GetNullableValue(TObject(FCurrentInternal)).AsVariant;
+           LPrimaryKey := TMappingExplorer
+                            .GetInstance
+                              .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+           if LPrimaryKey = nil then
+             raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+           for LColumn in LPrimaryKey.Columns do
+           begin
+             FOrmDataSet.FieldByName(LColumn.ColumnName).Value :=
+               LColumn.ColumnProperty
+                      .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
+           end;
            /// <summary>
            /// Atualiza o valor do AutoInc nas sub tabelas
            /// </summary>

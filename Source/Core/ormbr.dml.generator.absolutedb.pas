@@ -49,7 +49,7 @@ type
   /// </summary>
   TDMLGeneratorAbsoluteDB = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -80,7 +80,8 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(ACriteria: ICriteria): string;
+function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(
+  const ACriteria: ICriteria): string;
 begin
   inherited;
   ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s '
@@ -142,7 +143,7 @@ function TDMLGeneratorAbsoluteDB.GeneratorSequenceCurrentValue(AObject: TObject;
 begin
   Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s',
                                    [ACommandInsert.Table.Name,
-                                    ACommandInsert.Table.Name,
+                                    ACommandInsert.PrimaryKey.Columns.Items[0],
                                     ACommandInsert.Table.Name]));
 end;
 

@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 452
+  ClientHeight = 451
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -232,15 +232,6 @@ object Form3: TForm3
     TabOrder = 14
     OnClick = Button2Click
   end
-  object Button3: TButton
-    Left = 552
-    Top = 419
-    Width = 110
-    Height = 25
-    Caption = 'Button3'
-    TabOrder = 15
-    OnClick = Button3Click
-  end
   object FDConnection1: TFDConnection
     Params.Strings = (
       'Database=..\Database\database.db3'
@@ -248,8 +239,8 @@ object Form3: TForm3
     UpdateOptions.AssignedValues = [uvLockWait]
     TxOptions.Isolation = xiSnapshot
     LoginPrompt = False
-    Left = 154
-    Top = 42
+    Left = 151
+    Top = 15
   end
   object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
     Left = 218

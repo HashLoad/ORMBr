@@ -15,7 +15,6 @@ uses
   Forms,
   Dialogs,
   StdCtrls,
-  ormbr.rest.json,
   DBXJSON,
   {$IFDEF DELPHI15_UP}
   JSON,
@@ -46,6 +45,7 @@ implementation
 
 uses
   ormbr.model.person,
+  ormbr.rest.json,
   ormbr.json.utils;
 
 {$R *.dfm}
@@ -103,6 +103,10 @@ procedure TForm4.Button2Click(Sender: TObject);
 var
   Person: TPerson;
 begin
+  Memo1.Clear;
+  Button1Click(Button1);
+
+
   Person := TORMbrJson.JSONToObject<TPerson>(Memo1.Lines.Text);
   Memo1.Lines.Add(' ');
   Memo1.Lines.Add('RECRIADO O OBJECT ATRAVÉS DO JSON ACIMA, MUDADOS ALGUMAS INFORMAÇÕES A GERADO NOVO JSON PARA TESTAR.');
@@ -123,6 +127,10 @@ procedure TForm4.Button3Click(Sender: TObject);
 var
  jObject: TJSONObject;
 begin
+  Memo1.Clear;
+  Button1Click(Button1);
+
+
   jObject := TORMBrJSONUtil.JSONStringToJSONObject(Memo1.Text);
   try
     Memo1.Lines.Add(' ');
@@ -137,6 +145,10 @@ procedure TForm4.Button4Click(Sender: TObject);
 var
  jArray: TJSONArray;
 begin
+  Memo1.Clear;
+  Button1Click(Button1);
+
+
   jArray := TORMBrJSONUtil.JSONStringToJSONArray(Memo1.Text);
   try
     Memo1.Lines.Add(' ');

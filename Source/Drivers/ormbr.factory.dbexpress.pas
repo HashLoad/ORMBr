@@ -42,7 +42,8 @@ type
   /// </summary>
   TFactoryDBExpress = class(TFactoryConnection)
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -58,7 +59,7 @@ type
     function IsConnected: Boolean; override;
     function GetDriverName: TDriverName; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -76,7 +77,8 @@ begin
     FDriverConnection.Connect;
 end;
 
-constructor TFactoryDBExpress.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TFactoryDBExpress.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FDriverConnection  := TDriverDBExpress.Create(AConnection, ADriverName);
@@ -88,9 +90,9 @@ begin
   Result := FDriverConnection.CreateQuery;
 end;
 
-function TFactoryDBExpress.CreateResultSet: IDBResultSet;
+function TFactoryDBExpress.CreateResultSet(const ASQL: String): IDBResultSet;
 begin
-  Result := FDriverConnection.CreateResultSet;
+  Result := FDriverConnection.CreateResultSet(ASQL);
 end;
 
 destructor TFactoryDBExpress.Destroy;

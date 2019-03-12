@@ -99,31 +99,13 @@ object Form3: TForm3
     TabOrder = 1
   end
   object Button2: TButton
-    Left = 178
-    Top = 433
+    Left = 8
+    Top = 438
     Width = 113
     Height = 25
     Caption = 'ApplyUpdates'
     TabOrder = 2
     OnClick = Button2Click
-  end
-  object Button3: TButton
-    Left = 8
-    Top = 433
-    Width = 75
-    Height = 25
-    Caption = 'Open'
-    TabOrder = 3
-    OnClick = Button3Click
-  end
-  object Button4: TButton
-    Left = 93
-    Top = 433
-    Width = 75
-    Height = 25
-    Caption = 'Close'
-    TabOrder = 4
-    OnClick = Button4Click
   end
   object DBGrid2: TDBGrid
     Left = 8
@@ -131,7 +113,7 @@ object Form3: TForm3
     Width = 848
     Height = 96
     DataSource = DataSource2
-    TabOrder = 5
+    TabOrder = 3
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -145,7 +127,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'master_id'
     DataSource = DataSource1
-    TabOrder = 6
+    TabOrder = 4
   end
   object DBEdit2: TDBEdit
     Left = 144
@@ -154,7 +136,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'description'
     DataSource = DataSource1
-    TabOrder = 7
+    TabOrder = 5
   end
   object DBEdit3: TDBEdit
     Left = 12
@@ -163,7 +145,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'client_id'
     DataSource = DataSource1
-    TabOrder = 8
+    TabOrder = 6
   end
   object DBEdit4: TDBEdit
     Left = 144
@@ -172,7 +154,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'client_name'
     DataSource = DataSource3
-    TabOrder = 9
+    TabOrder = 7
   end
   object DBEdit5: TDBEdit
     Left = 12
@@ -181,7 +163,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'registerdate'
     DataSource = DataSource1
-    TabOrder = 10
+    TabOrder = 8
   end
   object DBEdit6: TDBEdit
     Left = 144
@@ -190,7 +172,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'updatedate'
     DataSource = DataSource1
-    TabOrder = 11
+    TabOrder = 9
   end
   object DBEdit7: TDBEdit
     Left = 735
@@ -199,16 +181,25 @@ object Form3: TForm3
     Height = 21
     DataField = 'AGGPRICE'
     DataSource = DataSource2
-    TabOrder = 12
+    TabOrder = 10
   end
   object Button1: TButton
-    Left = 301
-    Top = 433
-    Width = 75
+    Left = 133
+    Top = 438
+    Width = 132
     Height = 25
-    Caption = 'Post'
-    TabOrder = 13
+    Caption = 'Update for Object'
+    TabOrder = 11
     OnClick = Button1Click
+  end
+  object Button3: TButton
+    Left = 716
+    Top = 438
+    Width = 132
+    Height = 25
+    Caption = 'Monitor'
+    TabOrder = 12
+    OnClick = Button3Click
   end
   object DataSource1: TDataSource
     DataSet = CDSMaster
@@ -252,10 +243,11 @@ object Form3: TForm3
     Top = 58
   end
   object ABSDatabase1: TABSDatabase
-    CurrentVersion = '7.80 '
-    DatabaseFileName = 'D:\ORMBr\Demo\Data\Database\database.abs'
+    CurrentVersion = '7.90 '
+    DatabaseFileName = '..\Database\database.abs'
+    DatabaseName = 'database'
     Exclusive = False
-    MaxConnections = 500
+    MaxConnections = 20
     MultiUser = False
     SessionName = 'Default'
     Left = 114

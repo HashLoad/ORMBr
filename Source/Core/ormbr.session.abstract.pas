@@ -72,7 +72,7 @@ type
     procedure Update(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
-    procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
+    procedure LoadLazy(const AOwner, AObject: TObject); virtual;
     procedure NextPacketList(
       const AObjectList: TObjectList<M>); overload; virtual; abstract;
     function NextPacketList: TObjectList<M>; overload; virtual; abstract;
@@ -83,13 +83,13 @@ type
     /// <summary>
     /// DataSet
     /// </summary>
-    procedure Open; virtual; abstract;
-    procedure OpenID(const AID: Variant); virtual; abstract;
-    procedure OpenSQL(const ASQL: string); virtual; abstract;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
-    procedure NextPacket; overload; virtual; abstract;
-    procedure RefreshRecord(const AColumns: TParams); virtual; abstract;
-    function SelectAssociation(const AObject: TObject): String; virtual; abstract;
+    procedure Open; virtual;
+    procedure OpenID(const AID: Variant); virtual;
+    procedure OpenSQL(const ASQL: string); virtual;
+    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual;
+    procedure NextPacket; overload; virtual;
+    procedure RefreshRecord(const AColumns: TParams); virtual;
+    function SelectAssociation(const AObject: TObject): String; virtual;
     function ResultParams: TParams;
     /// <summary>
     /// DataSet e ObjectSet
@@ -261,14 +261,54 @@ begin
   end;
 end;
 
+procedure TSessionAbstract<M>.NextPacket;
+begin
+
+end;
+
+procedure TSessionAbstract<M>.Open;
+begin
+
+end;
+
+procedure TSessionAbstract<M>.OpenID(const AID: Variant);
+begin
+
+end;
+
+procedure TSessionAbstract<M>.OpenSQL(const ASQL: string);
+begin
+
+end;
+
+procedure TSessionAbstract<M>.OpenWhere(const AWhere, AOrderBy: string);
+begin
+
+end;
+
+procedure TSessionAbstract<M>.RefreshRecord(const AColumns: TParams);
+begin
+
+end;
+
 function TSessionAbstract<M>.ResultParams: TParams;
 begin
   Result := FResultParams;
 end;
 
+function TSessionAbstract<M>.SelectAssociation(const AObject: TObject): String;
+begin
+  Result := ''
+end;
+
 procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: string);
 begin
   FManager.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
+end;
+
+procedure TSessionAbstract<M>.LoadLazy(const AOwner, AObject: TObject);
+begin
+
 end;
 
 end.

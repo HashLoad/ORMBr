@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="D:\ORMBr\Test\TestsIBExpress.exe" total="15" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2019-03-12" time="0.591">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="TestsIBExpress.exe" executed="true" result="Success" success="True" time="0.591" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="Tests" executed="true" result="Success" success="True" time="0.590" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TTestDriverConnection" executed="True" result="Success" success="True" time="0.590" >
+                <results>
+                  <test-case name="TestConnect" executed="True" result="Success" success="True" time="0.188" asserts="0" />
+                  <test-case name="TestDisconnect" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestExecuteDirect" executed="True" result="Success" success="True" time="0.058" asserts="0" />
+                  <test-case name="TestExecuteDirectParams" executed="True" result="Success" success="True" time="0.041" asserts="0" />
+                  <test-case name="TestExecuteScript" executed="True" result="Success" success="True" time="0.033" asserts="0" />
+                  <test-case name="TestAddScript" executed="True" result="Success" success="True" time="0.021" asserts="0" />
+                  <test-case name="TestExecuteScripts" executed="True" result="Success" success="True" time="0.015" asserts="0" />
+                  <test-case name="TestIsConnected" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestInTransaction" executed="True" result="Success" success="True" time="0.022" asserts="0" />
+                  <test-case name="TestCreateQuery" executed="True" result="Success" success="True" time="0.026" asserts="0" />
+                  <test-case name="TestCreateResultSet" executed="True" result="Success" success="True" time="0.017" asserts="0" />
+                  <test-case name="TestExecuteSQL" executed="True" result="Success" success="True" time="0.018" asserts="0" />
+                  <test-case name="TestStartTransaction" executed="True" result="Success" success="True" time="0.014" asserts="0" />
+                  <test-case name="TestCommit" executed="True" result="Success" success="True" time="0.026" asserts="0" />
+                  <test-case name="TestRollback" executed="True" result="Success" success="True" time="0.023" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>

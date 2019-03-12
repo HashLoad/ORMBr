@@ -45,18 +45,20 @@ type
   protected
     FDriverName: TDriverName;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); virtual; abstract;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); virtual; abstract;
     procedure Connect; virtual; abstract;
     procedure Disconnect; virtual; abstract;
     procedure ExecuteDirect(const ASQL: string); overload; virtual; abstract;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); overload; virtual; abstract;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); overload; virtual; abstract;
     procedure ExecuteScript(const ASQL: string); virtual; abstract;
     procedure AddScript(const ASQL: string); virtual; abstract;
     procedure ExecuteScripts; virtual; abstract;
     function IsConnected: Boolean; virtual; abstract;
     function InTransaction: Boolean; virtual; abstract;
     function CreateQuery: IDBQuery; virtual; abstract;
-    function CreateResultSet: IDBResultSet; virtual; abstract;
+    function CreateResultSet(const ASQL: string): IDBResultSet; virtual; abstract;
     function ExecuteSQL(const ASQL: string): IDBResultSet; virtual; abstract;
     property DriverName: TDriverName read FDriverName;
   end;
@@ -97,13 +99,13 @@ type
     procedure Close; virtual; abstract;
     function FieldDefs: TFieldDefs; virtual; abstract;
     function NotEof: Boolean; virtual; abstract;
-    function GetFieldValue(AFieldName: string): Variant; overload; virtual; abstract;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; virtual; abstract;
-    function GetFieldType(AFieldName: string): TFieldType; overload; virtual; abstract;
-    function GetField(AFieldName: string): TField; virtual; abstract;
-    function FieldByName(AFieldName: string): TAsField; virtual;
+    function GetFieldValue(const AFieldName: string): Variant; overload; virtual; abstract;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; virtual; abstract;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; virtual; abstract;
+    function GetField(const AFieldName: string): TField; virtual; abstract;
+    function FieldByName(const AFieldName: string): TAsField; virtual;
     function RecordCount: Integer; virtual;
-    function DataSet: TDataSet; virtual; abstract;
+//    function DataSet: TDataSet; virtual;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
@@ -115,7 +117,7 @@ type
     destructor Destroy; override;
     procedure Close; override;
     function FieldDefs: TFieldDefs; override;
-    function DataSet: TDataSet; override;
+//    function DataSet: TDataSet; override;
   end;
 
   TORMBrField = class(TAsField)
@@ -185,10 +187,10 @@ begin
   Result := FDataSet.FieldDefs;
 end;
 
-function TDriverResultSet<T>.DataSet: TDataSet;
-begin
-  Result := FDataSet;
-end;
+//function TDriverResultSet<T>.DataSet: TDataSet;
+//begin
+//  Result := FDataSet;
+//end;
 
 { TDriverResultSetBase }
 
@@ -197,7 +199,12 @@ begin
   Result := FRecordCount;
 end;
 
-function TDriverResultSetBase.FieldByName(AFieldName: string): TAsField;
+//function TDriverResultSetBase.DataSet: TDataSet;
+//begin
+//  Result := nil;
+//end;
+
+function TDriverResultSetBase.FieldByName(const AFieldName: string): TAsField;
 begin
   FField.AsFieldName := AFieldName;
   Result := FField;
@@ -244,7 +251,9 @@ var
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := String(LResult);
+    Result := String(LResult)
+  else
+    Result := '';
 end;
 
 function TORMBrField.AsBlobTextDef(const Def: string): string;
@@ -402,7 +411,9 @@ var
 begin
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := String(LResult);
+    Result := String(LResult)
+  else
+    Result := '';
 end;
 
 function TORMBrField.AsStringDef(const Def: string): string;
@@ -415,12 +426,8 @@ begin
 end;
 
 function TORMBrField.AsVariant: Variant;
-var
-  LResult: Variant;
 begin
-  LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult <> Null then
-    Result := LResult;
+  Result := FOwner.GetFieldValue(FAsFieldName);
 end;
 
 function TORMBrField.AsVariantDef(const Def: Variant): Variant;
@@ -438,12 +445,8 @@ begin
 end;
 
 function TORMBrField.Value: Variant;
-var
-  LResult: Variant;
 begin
-  LResult := FOwner.GetFieldValue(FAsFieldName);
-  if LResult <> Null then
-    Result := LResult;
+  Result := FOwner.GetFieldValue(FAsFieldName);
 end;
 
 function TORMBrField.ValueDef(const Def: Variant): Variant;

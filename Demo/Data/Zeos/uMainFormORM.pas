@@ -43,8 +43,6 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
     DBGrid2: TDBGrid;
     DataSource2: TDataSource;
     DataSource3: TDataSource;
@@ -72,10 +70,8 @@ type
     Button5: TButton;
     DBImage1: TDBImage;
     Button6: TButton;
-    procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
@@ -115,16 +111,6 @@ begin
   oMaster.ApplyUpdates(0);
 end;
 
-procedure TForm3.Button3Click(Sender: TObject);
-begin
-  oMaster.Open;
-end;
-
-procedure TForm3.Button4Click(Sender: TObject);
-begin
-  oMaster.Close;
-end;
-
 procedure TForm3.Button5Click(Sender: TObject);
 begin
   TCommandMonitor.GetInstance.Show;
@@ -161,7 +147,7 @@ begin
   /// Parâmetros: (IDBConnection, TClientDataSet)
   /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
   /// defina o quanto achar melhor para sua necessiade
-  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 10);
+  oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 3);
 
   /// Relacionamento Master-Detail 1:N
   oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.This);
@@ -177,7 +163,8 @@ begin
                          'lookup_id',
                          oLookup.This,
                          'lookup_id',
-                         'lookup_description');
+                         'lookup_description',
+                         'Lookup Descrição');
   oMaster.Open;
 end;
 

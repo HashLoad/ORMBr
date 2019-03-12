@@ -29,7 +29,8 @@ uses
   ormbr.types.database,
   ormbr.dml.generator.sqlite,
   /// orm model
-  ormbr.model.client,
+  ormbr.model.cliente,
+  ormbr.model.anotacoes,
 
   FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
@@ -45,22 +46,20 @@ type
     DBNavigator1: TDBNavigator;
     Button2: TButton;
     DataSource3: TDataSource;
-    Label3: TLabel;
-    DBEdit3: TDBEdit;
-    Label4: TLabel;
-    DBEdit4: TDBEdit;
     FDConnection1: TFDConnection;
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     FDClient: TFDMemTable;
-    Button1: TButton;
+    DBGrid2: TDBGrid;
+    FDMemTable1: TFDMemTable;
+    DataSource1: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
-    oContainerClient: IContainerDataSet<Tclient>;
+    oContainerClient: IContainerDataSet<Tcliente>;
+    oContainerAnote: IContainerDataSet<Tanotacoes>;
 public
     { Public declarations }
   end;
@@ -75,20 +74,9 @@ uses
 
 {$R *.dfm}
 
-procedure TForm3.Button1Click(Sender: TObject);
-var
-  LClient: Tclient;
-begin
-  LClient := oContainerClient.Current;
-  LClient.client_name := 'Mudar campo "Nome" pelo objeto';
-  oContainerClient.Save(LClient);
-end;
-
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  oConn.StartTransaction;
   oContainerClient.ApplyUpdates(0);
-  oConn.Commit;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
@@ -96,7 +84,9 @@ begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
   // Client
-  oContainerClient := TContainerFDMemTable<Tclient>.Create(oConn, FDClient);
+  oContainerClient := TContainerFDMemTable<Tcliente>.Create(oConn, FDClient);
+  oContainerAnote := TContainerFDMemTable<Tanotacoes>.Create(oConn, FDMemTable1, oContainerClient.this);
+
   oContainerClient.Open;
 end;
 

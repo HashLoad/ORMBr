@@ -2,6 +2,6 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2018/09/22 13:31:28.000.884,=D:\ORMBr\Demo\Data\Zeos\Unit1.pas</Transaction>
-    <Transaction>2018/09/22 13:31:46.000.680,D:\ORMBr\Demo\Data\Zeos\Unit1.pas=D:\ORMBr\Source\Core\ormbr.core.consts.pas</Transaction>
+    <Transaction>2018/09/22 13:31:46.000.680,D:\ORMBr\Source\Core\ormbr.core.consts.pas=D:\ORMBr\Demo\Data\Zeos\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -48,7 +48,7 @@ type
   /// </summary>
   TDMLGeneratorMSSql = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -81,7 +81,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorMSSql.GetGeneratorSelect(ACriteria: ICriteria): string;
+function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): string;
 const
   cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
 var

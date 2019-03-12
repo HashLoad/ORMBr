@@ -61,17 +61,22 @@ type
 implementation
 
 uses
-  ormbr.objects.helper;
+  ormbr.objects.helper,
+  ormbr.mapping.explorer;
 
 { TCommandUpdater }
 
 constructor TCommandUpdater.Create(AConnection: IDBConnection;
   ADriverName: TDriverName; AObject: TObject);
 var
+  LColumns: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
 begin
   inherited Create(AConnection, ADriverName, AObject);
-  for LColumn in AObject.GetPrimaryKey do
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  for LColumn in LColumns.Columns do
   begin
     with FParams.Add as TParam do
     begin
@@ -84,13 +89,14 @@ end;
 function TCommandUpdater.GenerateUpdate(AObject: TObject;
   AModifiedFields: TList<string>): string;
 var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
   LFor: Integer;
-  LRttiType: TRttiType;
-  LProperty: TRttiProperty;
   LParams: TParams;
   LColumn: TColumnMapping;
-  LColumnAtt: TCustomAttribute;
-  LColumnName: string;
+  LObjectType: TRttiType;
+  LProperty: TRttiProperty;
+  LKey: String;
+  LFieldType: Column;
 begin
   Result := '';
   FCommand := '';
@@ -103,17 +109,20 @@ begin
   /// </summary>
   LParams := TParams.Create(nil);
   try
-    for LColumn in AObject.GetPrimaryKey do
-    begin
-      if LColumn = nil then
-        raise Exception.Create(cMESSAGEPKNOTFOUND);
+    LPrimaryKey := TMappingExplorer
+                     .GetInstance
+                       .GetMappingPrimaryKeyColumns(AObject.ClassType);
+    if LPrimaryKey = nil then
+      raise Exception.Create(cMESSAGEPKNOTFOUND);
 
+    for LColumn in LPrimaryKey.Columns do
+    begin
       with LParams.Add as TParam do
       begin
         Name := LColumn.ColumnName;
         DataType := LColumn.FieldType;
         ParamType := ptUnknown;
-        Value := LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant;
+        Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
       end;
     end;
     FCommand := FGeneratorCommand
@@ -123,25 +132,24 @@ begin
     /// Gera todos os parâmetros, sendo os campos alterados primeiro e o do
     /// PrimaryKey por último, usando LParams criado local.
     /// </summary>
-    AObject.GetType(LRttiType);
-    for LProperty in LRttiType.GetProperties do
+    AObject.GetType(LObjectType);
+    for LKey in AModifiedFields do
     begin
+      LProperty := LObjectType.GetProperty(LKey);
+      if LProperty = nil then
+        Continue;
+
       if LProperty.IsNoUpdate then
         Continue;
-      LColumnAtt := LProperty.GetColumn;
-      if LColumnAtt <> nil then
+
+      LFieldType := LProperty.GetColumn;
+      with LParams.Add as TParam do
       begin
-        LColumnName := Column(LColumnAtt).ColumnName;
-        if AModifiedFields.IndexOf(LColumnName) > -1 then
-        begin
-          with LParams.Add as TParam do
-          begin
-            Name := LColumnName;
-            DataType := Column(LColumnAtt).FieldType;
-            ParamType := ptInput;
-            Value := GetParamValue(AObject, LProperty, DataType);
-          end;
-        end;
+        Name := LKey;
+        if LFieldType <> nil then
+          DataType := LFieldType.FieldType;
+        ParamType := ptInput;
+        Value := GetParamValue(AObject, LProperty, DataType);
       end;
     end;
     FParams.Clear;
@@ -163,11 +171,9 @@ end;
 function TCommandUpdater.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
+  Result := Null;
   if AProperty.IsNullValue(AInstance) then
-  begin
-    Result := Null;
     Exit;
-  end;
 
   case AProperty.PropertyType.TypeKind of
     tkEnumeration:

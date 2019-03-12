@@ -4,7 +4,6 @@ uses
   Forms,
   SysUtils,
   uMainFormORM in 'uMainFormORM.pas' {Form3},
-  ormbr.model.client in '..\Models\ormbr.model.client.pas',
   ormbr.command.abstract in '..\..\..\Source\Core\ormbr.command.abstract.pas',
   ormbr.command.deleter in '..\..\..\Source\Core\ormbr.command.deleter.pas',
   ormbr.command.factory in '..\..\..\Source\Core\ormbr.command.factory.pas',
@@ -59,7 +58,10 @@ uses
   ormbr.objects.manager.abstract in '..\..\..\Source\Core\ormbr.objects.manager.abstract.pas',
   ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas',
   ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
-  ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas';
+  ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas',
+  ormbr.model.anotacoes in 'ormbr.model.anotacoes.pas',
+  ormbr.model.cliente in 'ormbr.model.cliente.pas',
+  ormbr.model.empresa in 'ormbr.model.empresa.pas';
 
 {$R *.res}
 

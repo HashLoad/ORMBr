@@ -115,17 +115,6 @@
         <DCCReference Include="..\Models\ormbr.model.detail.pas"/>
         <DCCReference Include="..\Models\ormbr.model.lookup.pas"/>
         <DCCReference Include="..\Models\ormbr.model.master.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.connection.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.interfaces.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.manager.objectset.pas"/>
-        <DCCReference Include="..\..\..\Source\Monitor\ormbr.form.monitor.pas">
-            <Form>CommandMonitor</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.deleter.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.factory.pas"/>
@@ -171,6 +160,10 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.mapping.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.nullable.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.utils.pas"/>
+        <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.ast.pas"/>
+        <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.pas"/>
+        <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.resultset.pas"/>
+        <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.serialize.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.clientdataset.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.dataset.pas"/>
@@ -186,6 +179,33 @@
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.fields.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.manager.dataset.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.session.dataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.connection.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.dbexpress.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.dbexpress.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.mongodb.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.mongodb.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.sqlite3.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.sqlite3.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.dbexpress.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.mongodb.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
+        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.interfaces.pas"/>
+        <DCCReference Include="..\..\..\Source\Monitor\ormbr.form.monitor.pas">
+            <Form>CommandMonitor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\..\Source\Monitor\ormbr.monitor.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.container.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.manager.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.bind.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -235,6 +255,7 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                 </DeployClass>
@@ -370,11 +391,6 @@
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.framework</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                     </Platform>
@@ -393,11 +409,6 @@
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
@@ -425,11 +436,6 @@
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                         <Extensions>.bpl</Extensions>
@@ -449,10 +455,6 @@
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
-                        <Operation>0</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
@@ -603,27 +605,15 @@
                         <RemoteDir>..\</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>..\</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXInfoPList">
                     <Platform Name="OSX32">
                         <RemoteDir>Contents</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\Resources</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -646,10 +636,6 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>

@@ -32,6 +32,7 @@ interface
 uses
   DB,
   Rtti,
+  SysUtils,
   ormbr.command.abstract,
   ormbr.factory.interfaces,
   ormbr.rtti.helper,
@@ -49,7 +50,9 @@ implementation
 
 uses
   ormbr.objects.helper,
-  ormbr.mapping.classes;
+  ormbr.core.consts,
+  ormbr.mapping.classes,
+  ormbr.mapping.explorer;
 
 { TCommandDeleter }
 
@@ -62,16 +65,23 @@ end;
 function TCommandDeleter.GenerateDelete(AObject: TObject): string;
 var
   LColumn: TColumnMapping;
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
 begin
   FParams.Clear;
-  for LColumn in AObject.GetPrimaryKey do
+  LPrimaryKey := TMappingExplorer
+                   .GetInstance
+                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  if LPrimaryKey = nil then
+    raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+  for LColumn in LPrimaryKey.Columns do
   begin
     with FParams.Add as TParam do
     begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptUnknown;
-      Value := LColumn.PropertyRtti.GetNullableValue(AObject).AsVariant;
+      Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
   end;
   FCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);

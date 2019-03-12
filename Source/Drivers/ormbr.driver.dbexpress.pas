@@ -50,19 +50,21 @@ type
     FConnection: TSQLConnection;
     FSQLScript: TSQLQuery;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
     procedure ExecuteDirect(const ASQL: string); overload; override;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); overload; override;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); overload; override;
     procedure ExecuteScript(const ASQL: string); override;
     procedure AddScript(const ASQL: string); override;
     procedure ExecuteScripts; override;
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -84,16 +86,18 @@ type
     constructor Create(ADataSet: TSQLQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
 
 { TDriverDBExpress }
 
-constructor TDriverDBExpress.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverDBExpress.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TSQLConnection;
@@ -197,7 +201,7 @@ end;
 function TDriverDBExpress.IsConnected: Boolean;
 begin
   inherited;
-  Result := FConnection.Connected = True;
+  Result := FConnection.Connected;
 end;
 
 function TDriverDBExpress.CreateQuery: IDBQuery;
@@ -205,11 +209,12 @@ begin
   Result := TDriverQueryDBExpress.Create(FConnection);
 end;
 
-function TDriverDBExpress.CreateResultSet: IDBResultSet;
+function TDriverDBExpress.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryDBExpress.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result   := LDBQuery.ExecuteQuery;
 end;
 
@@ -295,7 +300,7 @@ begin
   inherited;
 end;
 
-function TDriverResultSetDBExpress.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetDBExpress.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -303,12 +308,18 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetDBExpress.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetDBExpress.GetField(const AFieldName: string): TField;
+begin
+  inherited;
+  Result := FDataSet.FieldByName(AFieldName);
+end;
+
+function TDriverResultSetDBExpress.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetDBExpress.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetDBExpress.GetFieldValue(const AFieldIndex: Integer): Variant;
 var
   LValue: Variant;
 begin
@@ -321,16 +332,18 @@ begin
   begin
     LValue := FDataSet.Fields[AFieldIndex].Value;
     /// <summary>
-    /// Usando DBExpress para acessar SQLite os campos data retornam no
-    /// formato ISO8601 "yyyy-MM-dd e o DBExpress não converte para dd-MM-yyy,
-    /// então tive que criar uma alternativa.
+    ///   Usando DBExpress para acessar SQLite os campos data retornam no
+    ///   formato ISO8601 "yyyy-MM-dd e o DBExpress não converte para dd-MM-yyy,
+    ///   então tive que criar uma alternativa.
     /// </summary>
     if FDataSet.SQLConnection.DriverName = 'Sqlite' then
+    begin
       if (Copy(LValue,5,1) = '-') and (Copy(LValue,8,1) = '-') then
       begin
          Result := TUtilSingleton.GetInstance.Iso8601ToDateTime(LValue);
          Exit;
       end;
+    end;
     Result := LValue;
   end;
 end;

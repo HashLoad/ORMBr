@@ -11,6 +11,7 @@ uses
   FireDAC.FMXUI.Wait, FireDAC.Phys.MSSQLDef, FMX.ScrollBox, FMX.Memo,
   FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, FireDAC.Comp.UI, Data.DB,
   FireDAC.Comp.Client, FireDAC.DApt,
+
   /// orm factory
   ormbr.factory.interfaces,
   ormbr.factory.firedac,
@@ -21,6 +22,7 @@ uses
   ormbr.database.compare,
   ormbr.database.interfaces,
   ormbr.types.database,
+
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
   FireDAC.Phys.MongoDBDataSet, FireDAC.Comp.DataSet, FireDAC.Phys.PG,
@@ -66,7 +68,7 @@ var
 begin
   oManager := TModelDbCompare.Create(oConnection);
 //  oManager := TDatabaseCompare.Create(oConnection, oConnection);
-  oManager.CommandsAutoExecute := False;
+//  oManager.CommandsAutoExecute := False;
   oManager.BuildDatabase;
   for cDDL in oManager.GetCommandList do
       Memo1.Lines.Add(cDDL.Command);
@@ -75,7 +77,7 @@ end;
 procedure TForm4.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
-  oConnection := TFactoryFireDAC.Create(FDConnection1, dnMSSQL);
+  oConnection := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
 end;
 
 end.

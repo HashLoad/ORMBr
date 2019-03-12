@@ -33,13 +33,16 @@ interface
 
 uses
   Rtti,
+  DB,
   SysUtils,
   Classes,
   Variants,
   TypInfo,
   Generics.Collections,
   /// ormbr
+  ormbr.mapping.attributes,
   ormbr.mapping.rttiutils,
+  ormbr.core.consts,
   ormbr.types.blob,
   ormbr.utils,
   ormbr.rtti.helper,
@@ -391,6 +394,7 @@ function TJSONObjectORMBr.GetInstanceProp(AInstance: TObject;
   AProperty: TRttiProperty): Variant;
 var
   LObject: TObject;
+  LColumn: Column;
 begin
   VarClear(Result);
   case AProperty.PropertyType.TypeKind of
@@ -430,9 +434,20 @@ begin
       end;
     tkEnumeration:
       begin
-        // Mudar o param para receber o tipo Column que tem as info necessárias
-        // Column.FieldType = ftBoolean
-        Result := AProperty.GetNullableValue(AInstance).AsBoolean;
+        LColumn := AProperty.GetColumn;
+        if LColumn <> nil then
+        begin
+          if LColumn.FieldType in [ftBoolean] then
+            Result := AProperty.GetEnumToFieldValue(AInstance, LColumn.FieldType).AsBoolean
+          else
+          if LColumn.FieldType in [ftFixedChar, ftString] then
+            Result := AProperty.GetEnumToFieldValue(AInstance, LColumn.FieldType).AsString
+          else
+          if LColumn.FieldType in [ftInteger] then
+            Result := AProperty.GetEnumToFieldValue(AInstance, LColumn.FieldType).AsInteger
+          else
+            raise Exception.Create(cENUMERATIONSTYPEERROR);
+        end;
     end;
     tkDynArray:;
 //    if IsBlob(PropInfo) then
@@ -445,6 +460,7 @@ class procedure TJSONObjectORMBr.SetInstanceProp(AInstance: TObject;
 var
   LObject: TObject;
   LBlob: TBlob;
+  LColumn: Column;
 begin
   if (AProperty <> nil) and (AInstance <> nil) then
   begin
@@ -492,16 +508,20 @@ begin
         end;
       tkEnumeration:
         begin
-//          if AFieldType in [ftBoolean] then
-//            AProperty.SetValue(AInstance, Boolean(AValue))
-//          else
-//          if AFieldType in [ftFixedChar, ftString] then
-//            AProperty.SetValue(AInstance, AProperty.GetEnumStringValue(AValue))
-//          else
-//          if AFieldType in [ftInteger] then
-//            AProperty.SetValue(AInstance, AProperty.GetEnumIntegerValue(AValue))
-//          else
-//            raise Exception.Create('Invalid type. Type enumerator supported [ftBoolena,ftInteger,ftFixedChar,ftString]');
+          LColumn := AProperty.GetColumn;
+          if LColumn <> nil then
+          begin
+            if LColumn.FieldType in [ftBoolean] then
+              AProperty.SetValue(AInstance, Boolean(AValue))
+            else
+            if LColumn.FieldType in [ftFixedChar, ftString] then
+              AProperty.SetValue(AInstance, AProperty.GetEnumStringValue(AInstance, AValue))
+            else
+            if LColumn.FieldType in [ftInteger] then
+              AProperty.SetValue(AInstance, AProperty.GetEnumIntegerValue(AInstance, AValue))
+            else
+              raise Exception.Create(cENUMERATIONSTYPEERROR);
+          end;
         end;
       tkDynArray:;
     end;
@@ -551,7 +571,6 @@ end;
 function TJSONObjectORMBr.JSONToObject<T>(const AJson: String): T;
 begin
   Result := T.Create;
-//  TObject(Result).MethodCall('Create', []);
   if not JSONToObject(TObject(Result), AJson) then
     raise Exception.Create('Error Message');
 end;
@@ -891,7 +910,7 @@ begin
            Result := kTrue;
            AValue := True;
          end;
-    '"': if GetNextString(LStr) = True then
+    '"': if GetNextString(LStr) then
          begin
            Result := kString;
            AValue := LStr;

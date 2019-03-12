@@ -38,6 +38,7 @@ uses
   Rtti,
   SysUtils,
   Generics.Collections,
+  ormbr.mapping.attributes,
   ormbr.types.mapping;
 
 type
@@ -85,7 +86,7 @@ type
     FName: string;
     FScript: string;
   public
-    constructor Create(AName, AScript: string);
+    constructor Create(const AName, AScript: string);
     property Name: string read FName;
     property Script: string read FScript;
   end;
@@ -111,7 +112,9 @@ type
     FIsNoUpdate: Boolean;
     FIsPrimaryKey: Boolean;
     FIsNoValidate: Boolean;
+    FIsNullable: Boolean;
     FProperty: TRttiProperty;
+    FDictionary: Dictionary;
   public
     property FieldIndex: Integer read FFieldIndex write FFieldIndex;
     property ColumnName: string read FColumnName write FColumnName;
@@ -129,7 +132,9 @@ type
     property IsPrimaryKey: Boolean read FIsPrimaryKey write FIsPrimaryKey;
     property IsNoValidate: Boolean read FIsNoValidate write FIsNoValidate;
     property IsHidden: Boolean read FIsHidden write FIsHidden;
-    property PropertyRtti: TRttiProperty read FProperty write FProperty;
+    property IsNullable: Boolean read FIsNullable write FIsNullable;
+    property ColumnProperty: TRttiProperty read FProperty write FProperty;
+    property ColumnDictionary: Dictionary read FDictionary write FDictionary;
   end;
   /// ColumnMappingList
   TColumnMappingList = class(TObjectList<TColumnMapping>);
@@ -140,11 +145,13 @@ type
     FFieldType: TFieldType;
     FSize: Integer;
     FProperty: TRttiProperty;
+    FDictionary: Dictionary;
   public
     property FieldName: string read FFieldName write FFieldName;
     property FieldType: TFieldType read FFieldType write FFieldType;
     property Size: Integer read FSize write FSize;
-    property PropertyRtti: TRttiProperty read FProperty write FProperty;
+    property CalcProperty: TRttiProperty read FProperty write FProperty;
+    property CalcDictionary: Dictionary read FDictionary write FDictionary;
   end;
   /// ColumnMappingList
   TCalcFieldMappingList = class(TObjectList<TCalcFieldMapping>);
@@ -161,10 +168,12 @@ type
     FProperty: TRttiProperty;
     FCascadeActions: TCascadeActions;
   public
-    constructor Create(AMultiplicity: TMultiplicity;
-      AColumnsName, AColumnsNameRef: TArray<string>;
-      AClassNameRef: string; AProperty: TRttiProperty; ALazy: Boolean;
-      ACascadeActions: TCascadeActions);
+    constructor Create(const AMultiplicity: TMultiplicity;
+      const AColumnsName, AColumnsNameRef: TArray<string>;
+      const AClassNameRef: string;
+      const AProperty: TRttiProperty;
+      const ALazy: Boolean;
+      const ACascadeActions: TCascadeActions);
     destructor Destroy; override;
     property Multiplicity: TMultiplicity read FMultiplicity;
     property ColumnsName: TList<string> read FColumnsName;
@@ -177,7 +186,7 @@ type
   /// AssociationMappingList
   TAssociationMappingList = class(TObjectList<TAssociationMapping>);
 
-  /// IndexeMapping
+  /// PrimaryKeyMapping
   TPrimaryKeyMapping = class(TMappingDescription)
   private
     FName: string;
@@ -186,8 +195,11 @@ type
     FUnique: Boolean;
     FAutoIncrement: Boolean;
   public
-    constructor Create(AColumns: TArray<string>; AAutoInc: Boolean;
-      ASortingOrder: TSortingOrder; AUnique: Boolean; ADescription: string = '');
+    constructor Create(const AColumns: TArray<string>;
+      const AAutoInc: Boolean;
+      const ASortingOrder: TSortingOrder;
+      const AUnique: Boolean;
+      const ADescription: string = '');
     destructor Destroy; override;
     property Name: string read FName;
     property Columns: TList<string> read FColumns;
@@ -196,12 +208,23 @@ type
     property AutoIncrement: boolean read FAutoIncrement;
   end;
 
+  /// IndexeMapping
+  TPrimaryKeyColumnsMapping = class(TMappingDescription)
+  private
+    FColumns: TList<TColumnMapping>;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property Columns: TList<TColumnMapping> read FColumns;
+  end;
+
   /// PrimaryKeyMapping
   TIndexeMapping = class(TPrimaryKeyMapping)
   public
-    constructor Create(AName: string; AColumns: TArray<string>;
-      ASortingOrder: TSortingOrder;
-      AUnique: Boolean; ADescription: string = '');
+    constructor Create(const AName: string; const AColumns: TArray<string>;
+      const ASortingOrder: TSortingOrder;
+      const AUnique: Boolean;
+      const ADescription: string = '');
   end;
   /// IndexeMappingList
   TIndexeMappingList = class(TObjectList<TIndexeMapping>);
@@ -212,7 +235,7 @@ type
     FName: string;
     FCondition: string;
   public
-    constructor Create(AName, ACondition, ADescription: string);
+    constructor Create(const AName, ACondition, ADescription: string);
     property Name: string read FName;
     property Condition: string read FCondition;
   end;
@@ -240,9 +263,10 @@ type
     FRuleUpdate: TRuleAction;
     FRuleDelete: TRuleAction;
   public
-    constructor Create(AName, ATableNameRef: string;
-      AFromColumns, AToColumns: TArray<string>;
-      ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string = '');
+    constructor Create(const AName, ATableNameRef: string;
+      const AFromColumns, AToColumns: TArray<string>;
+      const ARuleDelete, ARuleUpdate: TRuleAction;
+      const ADescription: string = '');
     destructor Destroy; override;
     property Name: string read FName;
     property TableNameRef: string read FTableNameRef;
@@ -265,9 +289,9 @@ type
     FAliasColumn: string;
     FAliasRefTable: string;
   public
-    constructor Create(AColumnName, ARefTableName, ARefColumnName,
-      ARefColumnNameSelect: string; AJoin: TJoin;
-      AAliasColumn: string; AAliasRefTable: string);
+    constructor Create(const AColumnName, ARefTableName, ARefColumnName,
+      ARefColumnNameSelect: string; const AJoin: TJoin;
+      const AAliasColumn: string; const AAliasRefTable: string);
     property ColumnName: string read FColumnName;
     property RefColumnName: string read FRefColumnName;
     property RefTableName: string read FRefTableName;
@@ -310,7 +334,8 @@ type
     FFieldName: String;
     FFieldEvents: TFieldEvents;
   public
-    constructor Create(AFieldName: String; AFieldEvents: TFieldEvents);
+    constructor Create(const AFieldName: String;
+      const AFieldEvents: TFieldEvents);
     property FieldName: String read FFieldName;
     property Events: TFieldEvents read FFieldEvents;
   end;
@@ -319,12 +344,17 @@ type
 
 implementation
 
+uses
+  ormbr.rtti.helper;
+
 { TOneToOneRelationMapping }
 
-constructor TAssociationMapping.Create(AMultiplicity: TMultiplicity;
-  AColumnsName, AColumnsNameRef: TArray<string>;
-  AClassNameRef: string; AProperty: TRttiProperty;
-  ALazy: Boolean; ACascadeActions: TCascadeActions);
+constructor TAssociationMapping.Create(const AMultiplicity: TMultiplicity;
+  const AColumnsName, AColumnsNameRef: TArray<string>;
+  const AClassNameRef: string;
+  const AProperty: TRttiProperty;
+  const ALazy: Boolean;
+  const ACascadeActions: TCascadeActions);
 var
   LFor: Integer;
 begin
@@ -358,9 +388,11 @@ end;
 
 { TPrimaryKeyMapping }
 
-constructor TPrimaryKeyMapping.Create(AColumns: TArray<string>;
-  AAutoInc: Boolean; ASortingOrder: TSortingOrder;
-  AUnique: Boolean; ADescription: string);
+constructor TPrimaryKeyMapping.Create(const AColumns: TArray<string>;
+  const AAutoInc: Boolean;
+  const ASortingOrder: TSortingOrder;
+  const AUnique: Boolean;
+  const ADescription: string);
 var
   iFor: Integer;
 begin
@@ -385,8 +417,11 @@ end;
 
 { TIndexMapping }
 
-constructor TIndexeMapping.Create(AName: string; AColumns: TArray<string>;
-  ASortingOrder: TSortingOrder; AUnique: Boolean; ADescription: string);
+constructor TIndexeMapping.Create(const AName: string;
+  const AColumns: TArray<string>;
+  const ASortingOrder: TSortingOrder;
+  const AUnique: Boolean;
+  const ADescription: string);
 var
   iFor: Integer;
 begin
@@ -404,9 +439,9 @@ end;
 
 { TJoinColumnMapping }
 
-constructor TJoinColumnMapping.Create(AColumnName, ARefTableName,
-  ARefColumnName, ARefColumnNameSelect: string; AJoin: TJoin;
-  AAliasColumn: string; AAliasRefTable: string);
+constructor TJoinColumnMapping.Create(const AColumnName, ARefTableName,
+  ARefColumnName, ARefColumnNameSelect: string; const AJoin: TJoin;
+  const AAliasColumn: string; const AAliasRefTable: string);
 begin
   FColumnName := AColumnName;
   FRefTableName := ARefTableName;
@@ -419,9 +454,9 @@ end;
 
 { TForeignKeyMapping }
 
-constructor TForeignKeyMapping.Create(AName, ATableNameRef: string;
-  AFromColumns, AToColumns: TArray<string>;
-  ARuleDelete, ARuleUpdate: TRuleAction; ADescription: string);
+constructor TForeignKeyMapping.Create(const AName, ATableNameRef: string;
+  const AFromColumns, AToColumns: TArray<string>;
+  const ARuleDelete, ARuleUpdate: TRuleAction; const ADescription: string);
 var
   iFor: Integer;
 begin
@@ -458,7 +493,7 @@ end;
 
 { TTriggerMapping }
 
-constructor TTriggerMapping.Create(AName, AScript: string);
+constructor TTriggerMapping.Create(const AName, AScript: string);
 begin
   FName := AName;
   FScript := AScript;
@@ -466,7 +501,7 @@ end;
 
 { TCheckMapping }
 
-constructor TCheckMapping.Create(AName, ACondition, ADescription: string);
+constructor TCheckMapping.Create(const AName, ACondition, ADescription: string);
 begin
   FName := AName;
   FCondition := ACondition;
@@ -506,11 +541,24 @@ end;
 
 { TFieldEvents }
 
-constructor TFieldEventsMapping.Create(AFieldName: String;
-  AFieldEvents: TFieldEvents);
+constructor TFieldEventsMapping.Create(const AFieldName: String;
+  const AFieldEvents: TFieldEvents);
 begin
   FFieldName := AFieldName;
   FFieldEvents := AFieldEvents;
+end;
+
+{ TPrimaryKeyColumnsMapping }
+
+constructor TPrimaryKeyColumnsMapping.Create;
+begin
+  FColumns := TList<TColumnMapping>.Create;
+end;
+
+destructor TPrimaryKeyColumnsMapping.Destroy;
+begin
+  FColumns.Free;
+  inherited;
 end;
 
 end.

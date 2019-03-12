@@ -107,11 +107,10 @@ type
     constructor Create(ADataSet: TMongoDBQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
-    function GetField(AFieldName: string): TField; override;
-    function DataSet: TDataSet; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
@@ -390,18 +389,13 @@ begin
   inherited;
 end;
 
-function TDriverResultSetMongoWire.DataSet: TDataSet;
-begin
-  Result := FDataSet;
-end;
-
 destructor TDriverResultSetMongoWire.Destroy;
 begin
   FDataSet.Free;
   inherited;
 end;
 
-function TDriverResultSetMongoWire.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetMongoWire.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -409,17 +403,17 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetMongoWire.GetField(AFieldName: string): TField;
+function TDriverResultSetMongoWire.GetField(const AFieldName: string): TField;
 begin
   Result := FDataSet.FieldByName(AFieldName);
 end;
 
-function TDriverResultSetMongoWire.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetMongoWire.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetMongoWire.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetMongoWire.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount - 1 then
     Exit(Variants.Null);

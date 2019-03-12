@@ -134,8 +134,6 @@ begin
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
-var
-  LMaster: TMaster;
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);

@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 464
+  ClientHeight = 465
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -99,31 +99,13 @@ object Form3: TForm3
     TabOrder = 10
   end
   object Button2: TButton
-    Left = 255
-    Top = 433
+    Left = 8
+    Top = 438
     Width = 113
     Height = 25
     Caption = 'ApplyUpdates'
-    TabOrder = 14
-    OnClick = Button2Click
-  end
-  object Button3: TButton
-    Left = 8
-    Top = 433
-    Width = 75
-    Height = 25
-    Caption = 'Open'
-    TabOrder = 11
-    OnClick = Button3Click
-  end
-  object Button4: TButton
-    Left = 93
-    Top = 433
-    Width = 75
-    Height = 25
-    Caption = 'Close'
     TabOrder = 12
-    OnClick = Button4Click
+    OnClick = Button2Click
   end
   object DBGrid2: TDBGrid
     Left = 8
@@ -203,12 +185,12 @@ object Form3: TForm3
     TabOrder = 9
   end
   object Button1: TButton
-    Left = 174
-    Top = 433
-    Width = 75
+    Left = 127
+    Top = 438
+    Width = 154
     Height = 25
-    Caption = 'Post'
-    TabOrder = 13
+    Caption = 'Update for Object'
+    TabOrder = 11
     OnClick = Button1Click
   end
   object Button5: TButton
@@ -217,7 +199,7 @@ object Form3: TForm3
     Width = 113
     Height = 25
     Caption = 'Show SQLMonitor'
-    TabOrder = 16
+    TabOrder = 14
     OnClick = Button5Click
   end
   object DBImage1: TDBImage
@@ -233,12 +215,12 @@ object Form3: TForm3
     TabOrder = 3
   end
   object Button6: TButton
-    Left = 378
-    Top = 433
+    Left = 292
+    Top = 438
     Width = 75
     Height = 25
     Caption = 'Enumeration'
-    TabOrder = 15
+    TabOrder = 13
     OnClick = Button6Click
   end
   object DataSource1: TDataSource

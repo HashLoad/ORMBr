@@ -21,18 +21,18 @@ uses
   DBCtrls,
   ExtCtrls,
   MidasLib,
-  /// orm factory
+  /// orm interface de conexão
   ormbr.factory.interfaces,
-  /// orm injection dependency
   ormbr.factory.absolutedb,
+  ormbr.dml.generator.absolutedb,
+  /// orm injection dependency
   ormbr.container.dataset.interfaces,
   ormbr.container.clientdataset,
-  /// orm model
+  /// modelos usados
   ormbr.model.master,
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
-  ormbr.types.database,
   /// Zeos
   ABSMain;
 
@@ -42,8 +42,6 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
     DBGrid2: TDBGrid;
     DataSource2: TDataSource;
     DataSource3: TDataSource;
@@ -68,11 +66,11 @@ type
     Button1: TButton;
     CDSMaster: TClientDataSet;
     ABSDatabase1: TABSDatabase;
-    procedure Button3Click(Sender: TObject);
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     oConn: IDBConnection;
@@ -91,11 +89,15 @@ implementation
 
 {$R *.dfm}
 
+uses ormbr.form.monitor;
+
 procedure TForm3.Button1Click(Sender: TObject);
+var
+  LMasterCurrent: Tmaster;
 begin
-//  oMaster.Current;
-//  oMaster.Current.description := 'Object Update Master';
-//  oMaster.Save;
+  LMasterCurrent := oMaster.Current;
+  LMasterCurrent.description := 'Object Update Master';
+  oMaster.Save(LMasterCurrent);
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
@@ -105,47 +107,25 @@ end;
 
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-  oMaster.Open;
-end;
-
-procedure TForm3.Button4Click(Sender: TObject);
-begin
-  oMaster.Close;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 begin
-  /// <summary>
-  /// Variaveis declaradas em { Private declarations } acima.
-  /// </summary>
-
   // Instância da class de conexão via FireDAC
-  oConn := TFactoryAbsoluteDB.Create(ABSDatabase1, dnSQLite);
+  oConn := TFactoryAbsoluteDB.Create(ABSDatabase1, dnAbsoluteDB);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
-  /// Class Adapter
-  /// Parâmetros: (IDBConnection, TClientDataSet)
-  /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
-  /// defina o quanto achar melhor para sua necessiade
   oMaster := TContainerClientDataSet<Tmaster>.Create(oConn, CDSMaster, 10);
-
-  /// Relacionamento Master-Detail 1:N
-  oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.DataSet);
-
-  /// Adiciona um campo Aggregate
-  oDetail.AddAggregateField('AGGPRICE','SUM(PRICE)', taRightJustify, '#,###,##0.00');
-
-  /// Relacionamento 1:1
-  oClient := TContainerClientDataSet<Tclient>.Create(oConn, CDSClient, oMaster.DataSet);
-
-  /// Lookup lista de registro (DBLookupComboBox)
+  oDetail := TContainerClientDataSet<Tdetail>.Create(oConn, CDSDetail, oMaster.This);
+  oClient := TContainerClientDataSet<Tclient>.Create(oConn, CDSClient, oMaster.This);
   oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
-
-  /// Campo LookupField pode ser usado em um DBLookupComboBox, ou DBGrid
   oDetail.AddLookupField('fieldname',
                          'lookup_id',
-                         oLookup.DataSet,
+                         oLookup.This,
                          'lookup_id',
-                         'lookup_description');
+                         'lookup_description',
+                         'Descrição Lookup');
   oMaster.Open;
   /// Outras formas para fazer um open, se precisar
 ///  oMaster.DataSet.Open(10);

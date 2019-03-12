@@ -49,19 +49,21 @@ type
     FConnection: TADOConnection;
     FSQLScript: TADOQuery;
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
     procedure ExecuteDirect(const ASQL: string); overload; override;
-    procedure ExecuteDirect(const ASQL: string; const AParams: TParams); overload; override;
+    procedure ExecuteDirect(const ASQL: string;
+      const AParams: TParams); overload; override;
     procedure ExecuteScript(const ASQL: string); override;
     procedure AddScript(const ASQL: string); override;
     procedure ExecuteScripts; override;
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -83,16 +85,18 @@ type
     constructor Create(ADataSet: TADOQuery); override;
     destructor Destroy; override;
     function NotEof: Boolean; override;
-    function GetFieldValue(AFieldName: string): Variant; overload; override;
-    function GetFieldValue(AFieldIndex: Integer): Variant; overload; override;
-    function GetFieldType(AFieldName: string): TFieldType; overload; override;
+    function GetFieldValue(const AFieldName: string): Variant; overload; override;
+    function GetFieldValue(const AFieldIndex: Integer): Variant; overload; override;
+    function GetFieldType(const AFieldName: string): TFieldType; overload; override;
+    function GetField(const AFieldName: string): TField; override;
   end;
 
 implementation
 
 { TDriverADO }
 
-constructor TDriverADO.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverADO.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TADOConnection;
@@ -204,11 +208,12 @@ begin
   Result := TDriverQueryADO.Create(FConnection);
 end;
 
-function TDriverADO.CreateResultSet: IDBResultSet;
+function TDriverADO.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryADO.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
   Result   := LDBQuery.ExecuteQuery;
 end;
 
@@ -289,7 +294,7 @@ begin
   inherited;
 end;
 
-function TDriverResultSetADO.GetFieldValue(AFieldName: string): Variant;
+function TDriverResultSetADO.GetFieldValue(const AFieldName: string): Variant;
 var
   LField: TField;
 begin
@@ -297,12 +302,17 @@ begin
   Result := GetFieldValue(LField.Index);
 end;
 
-function TDriverResultSetADO.GetFieldType(AFieldName: string): TFieldType;
+function TDriverResultSetADO.GetField(const AFieldName: string): TField;
+begin
+  Result := FDataSet.FieldByName(AFieldName);
+end;
+
+function TDriverResultSetADO.GetFieldType(const AFieldName: string): TFieldType;
 begin
   Result := FDataSet.FieldByName(AFieldName).DataType;
 end;
 
-function TDriverResultSetADO.GetFieldValue(AFieldIndex: Integer): Variant;
+function TDriverResultSetADO.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   if AFieldIndex > FDataSet.FieldCount -1  then
     Exit(Variants.Null);

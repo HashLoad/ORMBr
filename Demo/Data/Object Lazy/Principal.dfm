@@ -13,6 +13,9 @@ object Form1: TForm1
   OldCreateOrder = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  DesignSize = (
+    527
+    242)
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
@@ -29,7 +32,7 @@ object Form1: TForm1
     Top = 47
     Width = 527
     Height = 195
-    Align = alBottom
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
     TabOrder = 1

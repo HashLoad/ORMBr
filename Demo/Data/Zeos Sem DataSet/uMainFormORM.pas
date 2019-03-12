@@ -104,7 +104,10 @@ var
 implementation
 
 uses
-  StrUtils, ormbr.monitor, ormbr.form.monitor;
+  StrUtils,
+  ormbr.monitor,
+  ormbr.form.monitor,
+  ormbr.mapping.rttiutils;
 
 {$R *.dfm}
 
@@ -135,11 +138,13 @@ begin
   // Faz uma cópia do objeto antes dele sofre as mudanças necessárias
   oMasterUpd := oMasterList.Items[StringGridMaster.Row-1];
   oMasterUpd.master_id := StrToInt(edtMaster_ID.Text);
+  // Passa o estado atual do objeto para o ORMBr
   oMaster.Modify(oMasterUpd);
+
   oMasterUpd.description := edtMaster_Descricao.Text;
   oMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
   oMasterUpd.MyEnum := fmsSemFrete;
-  oMasterUpd.EnumString := fmsSemFrete;
+  oMasterUpd.client_id := -1;
   //
   oMasterUpd.detail.Add(Tdetail.Create);
   oMasterUpd.detail.Last.detail_id := oMasterUpd.detail.Count + 1;
@@ -149,7 +154,8 @@ begin
   oMasterUpd.detail.Last.lookup_description := 'UDATE VIA CASDACE';
 
   // Altera o registro no Banco
-  oMaster.Update(oMasterUpd);
+  if TRttiSingleton.GetInstance.RunValidade(oMasterUpd) then
+    oMaster.Update(oMasterUpd);
 end;
 
 procedure TForm3.btnInsertClick(Sender: TObject);
@@ -312,15 +318,14 @@ begin
   StringGridMaster.Cells[3, StringGridMaster.RowCount] := DateTimeToStr(AObject.updatedate);
   StringGridMaster.Cells[4, StringGridMaster.RowCount] := IntToStr(AObject.client_id);
   StringGridMaster.Cells[5, StringGridMaster.RowCount] := AObject.client.client_name;
-  StringGridMaster.Cells[6, StringGridMaster.RowCount] := AObject.MyEnum.ToEnumInt;
-  StringGridMaster.Cells[7, StringGridMaster.RowCount] := AObject.EnumString.ToEnumStr;
+  StringGridMaster.Cells[6, StringGridMaster.RowCount] := Integer(AObject.MyEnum).ToString;
 end;
 
 procedure TForm3.MasterStringGridDefinitions;
 var
   iFor: Integer;
 begin
-  StringGridMaster.ColCount := 8;
+  StringGridMaster.ColCount := 7;
 
   for iFor := 0 to StringGridMaster.ColCount -1 do
     StringGridMaster.ColWidths[iFor] := 150;
@@ -332,7 +337,6 @@ begin
   StringGridMaster.Cols[4].Text := 'Cliente ID';
   StringGridMaster.Cols[5].Text := 'Cliente Nome';
   StringGridMaster.Cols[6].Text := 'Enum Int';
-  StringGridMaster.Cols[7].Text := 'Enum Str';
 end;
 
 procedure TForm3.MasterStringGridFill(AMasterList: TObjectList<Tmaster>; AIndex: Integer);

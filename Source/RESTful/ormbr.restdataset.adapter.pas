@@ -340,7 +340,7 @@ begin
       Continue;
     if LColumn.IsNoValidate then
       Continue;
-    if LColumn.PropertyRtti.IsNullable then
+    if LColumn.IsNullable then
       Continue;
     if LColumn.FieldType in [ftDataSet, ftADT] then
       Continue;

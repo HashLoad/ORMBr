@@ -42,10 +42,12 @@ uses
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
   SQLite3 in '..\..\..\Source\External\SQLite3\SQLite3.pas',
   SQLiteTable3 in '..\..\..\Source\External\SQLite3\SQLiteTable3.pas',
-  ormbr.driver.sqlite3 in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.pas',
   ormbr.container.objectset.interfaces in '..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas',
   ormbr.container.objectset in '..\..\..\Source\Objectset\ormbr.container.objectset.pas',
-  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas';
+  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas',
+  ormbr.driver.sqlite3 in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.pas',
+  ormbr.driver.sqlite3.transaction in '..\..\..\Source\Drivers\ormbr.driver.sqlite3.transaction.pas',
+  ormbr.factory.sqlite3 in '..\..\..\Source\Drivers\ormbr.factory.sqlite3.pas';
 
 {$R *.res}
 

@@ -141,8 +141,9 @@ type
       Size: Integer): string; overload; override;
   public
     constructor Create; overload; virtual;
-    constructor Create(CharsPerLine: Integer); overload; virtual;
-    constructor Create(CharsPerLine: Integer; LineSeparator: string); overload; virtual;
+    constructor Create(const CharsPerLine: Integer); overload; virtual;
+    constructor Create(const CharsPerLine: Integer;
+      const LineSeparator: string); overload; virtual;
   end;
 
   TURLEncoding = class(TNetEncoding)
@@ -453,12 +454,13 @@ begin
   Create(kCharsPerLine, sLineBreak);
 end;
 
-constructor TBase64Encoding.Create(CharsPerLine: Integer);
+constructor TBase64Encoding.Create(const CharsPerLine: Integer);
 begin
   Create(CharsPerLine, sLineBreak);
 end;
 
-constructor TBase64Encoding.Create(CharsPerLine: Integer; LineSeparator: string);
+constructor TBase64Encoding.Create(const CharsPerLine: Integer;
+  const LineSeparator: string);
 begin
   FCharsPerline := CharsPerLine;
   FLineSeparator := LineSeparator;

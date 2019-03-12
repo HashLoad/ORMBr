@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2017/07/29 12:05:34.782,D:\ORMBr\Demo\Data\UniDAC Sem DataSet\ORMBrUniDAC.dproj=D:\ORMBr\Demo\Data\UniDAC Sem DataSet\ORMBrZeos.dproj</Transaction>
+	<Transactions>
+    <Transaction>2017/07/29 12:05:34.000.782,D:\ORMBr\Demo\Data\UniDAC Sem DataSet\ORMBrZeos.dproj=D:\ORMBr\Demo\Data\UniDAC Sem DataSet\ORMBrUniDAC.dproj</Transaction>
+    <Transaction>2019/03/10 19:49:51.173,=D:\ORMBr\Source\Monitor\ormbr.form.monitor.pas</Transaction>
+    <Transaction>2019/03/10 19:49:51.241,=D:\ORMBr\Source\Monitor\ormbr.monitor.pas</Transaction>
   </Transactions>
 </BorlandProject>
