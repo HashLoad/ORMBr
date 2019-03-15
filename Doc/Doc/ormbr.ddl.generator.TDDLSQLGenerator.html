@@ -84,11 +84,19 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GetFieldDefaultDefinition">GetFieldDefaultDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GetCreateFieldDefaultDefinition">GetCreateFieldDefaultDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#BuilderFieldDefinition">BuilderFieldDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GetAlterFieldDefaultDefinition">GetAlterFieldDefaultDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#BuilderCreateFieldDefinition">BuilderCreateFieldDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#BuilderAlterFieldDefinition">BuilderAlterFieldDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -148,27 +156,35 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateAddPrimaryKey">GenerateAddPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateAlterCheck">GenerateAlterCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateAddPrimaryKey">GenerateAddPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropTable">GenerateDropTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropColumn">GenerateDropColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropPrimaryKey">GenerateDropPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropForeignKey">GenerateDropForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropIndexe">GenerateDropIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGenerator.html#GenerateDropCheck">GenerateDropCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -271,7 +287,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetFieldDefaultDefinition"></a><code>function <b>GetFieldDefaultDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+<td class="itemcode"><a name="GetCreateFieldDefaultDefinition"></a><code>function <b>GetCreateFieldDefaultDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -279,7 +295,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="BuilderFieldDefinition"></a><code>function <b>BuilderFieldDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
+<td class="itemcode"><a name="GetAlterFieldDefaultDefinition"></a><code>function <b>GetAlterFieldDefaultDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="BuilderCreateFieldDefinition"></a><code>function <b>BuilderCreateFieldDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="BuilderAlterFieldDefinition"></a><code>function <b>BuilderAlterFieldDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -399,6 +431,14 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterCheck"></a><code>function <b>GenerateAlterCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateAddPrimaryKey"></a><code>function <b>GenerateAddPrimaryKey</b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -440,6 +480,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateDropIndexe"></a><code>function <b>GenerateDropIndexe</b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropCheck"></a><code>function <b>GenerateDropCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

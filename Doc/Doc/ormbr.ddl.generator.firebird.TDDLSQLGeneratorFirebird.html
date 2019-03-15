@@ -57,19 +57,43 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateDropSequence">GenerateDropSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateCreateForeignKey">GenerateCreateForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateDropSequence">GenerateDropSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateDropIndexe">GenerateDropIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateDropColumn">GenerateDropColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateAlterColumn">GenerateAlterColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateAlterDefaultValue">GenerateAlterDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateDropDefaultValue">GenerateDropDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.firebird.TDDLSQLGeneratorFirebird.html#GenerateCreateView">GenerateCreateView</a></b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>): string; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -93,7 +117,31 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateCreateForeignKey"></a><code>function <b>GenerateCreateForeignKey</b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateDropSequence"></a><code>function <b>GenerateDropSequence</b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropIndexe"></a><code>function <b>GenerateDropIndexe</b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropColumn"></a><code>function <b>GenerateDropColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -118,6 +166,30 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateAlterColumn"></a><code>function <b>GenerateAlterColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterDefaultValue"></a><code>function <b>GenerateAlterDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropDefaultValue"></a><code>function <b>GenerateDropDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateCreateView"></a><code>function <b>GenerateCreateView</b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

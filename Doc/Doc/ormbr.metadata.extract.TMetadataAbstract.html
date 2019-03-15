@@ -53,20 +53,32 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#FCatalogMetadata">FCatalogMetadata</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#FModelForDatabase">FModelForDatabase</a></b>: Boolean;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetFieldTypeDefinition">GetFieldTypeDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>); virtual;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetModelForDatabase">GetModelForDatabase</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetModelForDatabase">SetModelForDatabase</a></b>(const Value: Boolean);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetCatalogMetadata">GetCatalogMetadata</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetCatalogMetadata">SetCatalogMetadata</a></b>(const Value: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetCatalogMetadata">SetCatalogMetadata</a></b>(const Value: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetFieldTypeDefinition">GetFieldTypeDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>); virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -91,6 +103,10 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#CatalogMetadata">CatalogMetadata</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a> read <a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetCatalogMetadata">GetCatalogMetadata</a> write <a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetCatalogMetadata">SetCatalogMetadata</a>;</code></td>
 </tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.metadata.extract.TMetadataAbstract.html#ModelForDatabase">ModelForDatabase</a></b>: Boolean read <a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetModelForDatabase">GetModelForDatabase</a> write <a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetModelForDatabase">SetModelForDatabase</a>;</code></td>
+</tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
@@ -110,18 +126,34 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetFieldTypeDefinition"></a><code>procedure <b>GetFieldTypeDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>); virtual;</code></td>
+<td class="itemcode"><a name="FModelForDatabase"></a><code><b>FModelForDatabase</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetModelForDatabase"></a><code>function <b>GetModelForDatabase</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetModelForDatabase"></a><code>procedure <b>SetModelForDatabase</b>(const Value: Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="GetCatalogMetadata"></a><code>function <b>GetCatalogMetadata</b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -129,8 +161,16 @@ $(document).ready(function() {
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="SetCatalogMetadata"></a><code>procedure <b>SetCatalogMetadata</b>(const Value: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetFieldTypeDefinition"></a><code>procedure <b>GetFieldTypeDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -172,6 +212,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="CatalogMetadata"></a><code>property <b>CatalogMetadata</b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a> read <a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetCatalogMetadata">GetCatalogMetadata</a> write <a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetCatalogMetadata">SetCatalogMetadata</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModelForDatabase"></a><code>property <b>ModelForDatabase</b>: Boolean read <a  href="ormbr.metadata.extract.TMetadataAbstract.html#GetModelForDatabase">GetModelForDatabase</a> write <a  href="ormbr.metadata.extract.TMetadataAbstract.html#SetModelForDatabase">SetModelForDatabase</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

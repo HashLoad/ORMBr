@@ -110,11 +110,19 @@ ColumnMapping</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TColumnMapping.html#FIsRequired">FIsRequired</a></b>: Boolean;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNoValidate">FIsNoValidate</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNullable">FIsNullable</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a></b>: TRttiProperty;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TColumnMapping.html#FDictionary">FDictionary</a></b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a>;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -177,7 +185,7 @@ ColumnMapping</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#IsRequired">IsRequired</a></b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsRequired">FIsRequired</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsRequired">FIsRequired</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#IsNoValidate">IsNoValidate</a></b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNoValidate">FIsNoValidate</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNoValidate">FIsNoValidate</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -185,7 +193,15 @@ ColumnMapping</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#PropertyRtti">PropertyRtti</a></b>: TRttiProperty read <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#IsNullable">IsNullable</a></b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNullable">FIsNullable</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNullable">FIsNullable</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#ColumnProperty">ColumnProperty</a></b>: TRttiProperty read <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TColumnMapping.html#ColumnDictionary">ColumnDictionary</a></b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a> read <a  href="ormbr.mapping.classes.TColumnMapping.html#FDictionary">FDictionary</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FDictionary">FDictionary</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -313,7 +329,15 @@ ColumnMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FIsRequired"></a><code><b>FIsRequired</b>: Boolean;</code></td>
+<td class="itemcode"><a name="FIsNoValidate"></a><code><b>FIsNoValidate</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FIsNullable"></a><code><b>FIsNullable</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -322,6 +346,14 @@ ColumnMapping</p>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="FProperty"></a><code><b>FProperty</b>: TRttiProperty;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FDictionary"></a><code><b>FDictionary</b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -442,7 +474,7 @@ ColumnMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="IsRequired"></a><code>property <b>IsRequired</b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsRequired">FIsRequired</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsRequired">FIsRequired</a>;</code></td>
+<td class="itemcode"><a name="IsNoValidate"></a><code>property <b>IsNoValidate</b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNoValidate">FIsNoValidate</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNoValidate">FIsNoValidate</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -458,7 +490,23 @@ ColumnMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="PropertyRtti"></a><code>property <b>PropertyRtti</b>: TRttiProperty read <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a>;</code></td>
+<td class="itemcode"><a name="IsNullable"></a><code>property <b>IsNullable</b>: Boolean read <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNullable">FIsNullable</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FIsNullable">FIsNullable</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ColumnProperty"></a><code>property <b>ColumnProperty</b>: TRttiProperty read <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FProperty">FProperty</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ColumnDictionary"></a><code>property <b>ColumnDictionary</b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a> read <a  href="ormbr.mapping.classes.TColumnMapping.html#FDictionary">FDictionary</a> write <a  href="ormbr.mapping.classes.TColumnMapping.html#FDictionary">FDictionary</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

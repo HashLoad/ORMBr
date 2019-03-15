@@ -52,24 +52,32 @@ $(document).ready(function() {
 <td class="itemcode"><code>procedure <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#ResolveFieldType">ResolveFieldType</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>; AColumnType: Integer; AColumnSubType: Variant);</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectViewsColumns">GetSelectViewsColumns</a></b>(AViewName: string): string;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectTables">GetSelectTables</a></b>: string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectTableColumns">GetSelectTableColumns</a></b>(ATableName: string): string; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectPrimaryKey">GetSelectPrimaryKey</a></b>(ATableName: string): string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectPrimaryKeyColumns">GetSelectPrimaryKeyColumns</a></b>(APrimaryKeyName: string): string; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectForeignKey">GetSelectForeignKey</a></b>(ATableName: string): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.firebird.TCatalogMetadataFirebird.html#GetSelectForeignKeyColumns">GetSelectForeignKeyColumns</a></b>(AForeignKeyName: string): string; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -164,6 +172,14 @@ $(document).ready(function() {
 </table>
 <table class="detail wide_list">
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetSelectViewsColumns"></a><code>function <b>GetSelectViewsColumns</b>(AViewName: string): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><a name="GetSelectTables"></a><code>function <b>GetSelectTables</b>: string; override;</code></td>
 </tr>
@@ -198,6 +214,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><a name="GetSelectForeignKey"></a><code>function <b>GetSelectForeignKey</b>(ATableName: string): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetSelectForeignKeyColumns"></a><code>function <b>GetSelectForeignKeyColumns</b>(AForeignKeyName: string): string; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

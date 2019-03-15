@@ -51,7 +51,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a></b>: Variant;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -69,63 +69,115 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a></b>: TAlignment;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Dictionary.html#FOrigin">FOrigin</a></b>: String;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage: string); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; const AAlignment: TAlignment); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; const AAlignment: TAlignment; const AOrigin: string); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string; const AAlignment: TAlignment); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage: string; const AAlignment: TAlignment); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADisplayLabel, AConstraintErrorMessage: string; const AAlignment: TAlignment; const AOrigin: string); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: string); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Integer); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Boolean); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Char); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Cardinal); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Int64); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: UInt64); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: Extended); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Dictionary.html#Create">Create</a></b>(const ADefaultExpression: AnsiChar); overload;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DisplayLabel">DisplayLabel</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DisplayLabel">DisplayLabel</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#ConstraintErrorMessage">ConstraintErrorMessage</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#ConstraintErrorMessage">ConstraintErrorMessage</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DefaultExpression">DefaultExpression</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DefaultExpression">DefaultExpression</a></b>: Variant read <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DisplayFormat">DisplayFormat</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#DisplayFormat">DisplayFormat</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#EditMask">EditMask</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#EditMask">EditMask</a></b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#Alignment">Alignment</a></b>: TAlignment read <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#Alignment">Alignment</a></b>: TAlignment read <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Dictionary.html#Origin">Origin</a></b>: String read <a  href="ormbr.mapping.attributes.Dictionary.html#FOrigin">FOrigin</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -141,7 +193,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FDefaultExpression"></a><code><b>FDefaultExpression</b>: string;</code></td>
+<td class="itemcode"><a name="FDefaultExpression"></a><code><b>FDefaultExpression</b>: Variant;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -178,11 +230,19 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FOrigin"></a><code><b>FOrigin</b>: String;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage: string); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -190,7 +250,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -198,7 +258,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -206,7 +266,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -214,7 +274,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; const AAlignment: TAlignment); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -222,7 +282,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; AAlignment: TAlignment); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression, ADisplayFormat, AEditMask: string; const AAlignment: TAlignment; const AOrigin: string); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -230,7 +290,97 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADisplayLabel, AConstraintErrorMessage: string; AAlignment: TAlignment); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage, ADefaultExpression: string; const AAlignment: TAlignment); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage: string; const AAlignment: TAlignment); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADisplayLabel, AConstraintErrorMessage: string; const AAlignment: TAlignment; const AOrigin: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ OBJECT </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Integer); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Boolean); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Char); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Cardinal); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Int64); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: UInt64); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: Extended); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const ADefaultExpression: AnsiChar); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -239,7 +389,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DisplayLabel"></a><code>property <b>DisplayLabel</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a>;</code></td>
+<td class="itemcode"><a name="DisplayLabel"></a><code>property <b>DisplayLabel</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayLabel">FDisplayLabel</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -247,7 +397,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ConstraintErrorMessage"></a><code>property <b>ConstraintErrorMessage</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a>;</code></td>
+<td class="itemcode"><a name="ConstraintErrorMessage"></a><code>property <b>ConstraintErrorMessage</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FConstraintErrorMessage">FConstraintErrorMessage</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -255,7 +405,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DefaultExpression"></a><code>property <b>DefaultExpression</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a>;</code></td>
+<td class="itemcode"><a name="DefaultExpression"></a><code>property <b>DefaultExpression</b>: Variant read <a  href="ormbr.mapping.attributes.Dictionary.html#FDefaultExpression">FDefaultExpression</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -263,7 +413,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DisplayFormat"></a><code>property <b>DisplayFormat</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a>;</code></td>
+<td class="itemcode"><a name="DisplayFormat"></a><code>property <b>DisplayFormat</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FDisplayFormat">FDisplayFormat</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -271,7 +421,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="EditMask"></a><code>property <b>EditMask</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a>;</code></td>
+<td class="itemcode"><a name="EditMask"></a><code>property <b>EditMask</b>: string read <a  href="ormbr.mapping.attributes.Dictionary.html#FEditMask">FEditMask</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -279,7 +429,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Alignment"></a><code>property <b>Alignment</b>: TAlignment read <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a> write <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a>;</code></td>
+<td class="itemcode"><a name="Alignment"></a><code>property <b>Alignment</b>: TAlignment read <a  href="ormbr.mapping.attributes.Dictionary.html#FAlignment">FAlignment</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Origin"></a><code>property <b>Origin</b>: String read <a  href="ormbr.mapping.attributes.Dictionary.html#FOrigin">FOrigin</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

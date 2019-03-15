@@ -40,7 +40,9 @@ $(document).ready(function() {
 <p class="declaration">
 <code>type TDatabaseFactory = class(<a class="normal" href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>)</code></p>
 <h2 class="description">Descrição</h2>
-<div class="nodescription">no description available, TDatabaseAbstract description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<div class="nodescription">no description available, TDatabaseAbstract description follows</div><p>
+ormbr</p>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a></li>
 <li class="thisitem">TDatabaseFactory</li></ul><h2 class="overview">Visão Geral</h2>
@@ -60,6 +62,14 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareTablesForeignKeys">CompareTablesForeignKeys</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareForeignKeys">CompareForeignKeys</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareColumns">CompareColumns</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
 <tr class="list">
@@ -68,47 +78,47 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareForeignKeys">CompareForeignKeys</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareIndexes">CompareIndexes</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareTriggers">CompareTriggers</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#CompareChecks">CompareChecks</a></b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateTable">ActionCreateTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateIndexe">ActionCreateIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateCheck">ActionCreateCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreatePrimaryKey">ActionCreatePrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateColumn">ActionCreateColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateSequence">ActionCreateSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>);</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateForeignKey">ActionCreateForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionCreateView">ActionCreateView</a></b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -140,7 +150,23 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropView">ActionDropView</a></b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionAlterColumn">ActionAlterColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionDropDefaultValue">ActionDropDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionAlterDefaultValue">ActionAlterDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#ActionAlterCheck">ActionAlterCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -156,33 +182,37 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKey">DeepEqualsForeignKey</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsDefaultValue">DeepEqualsDefaultValue</a></b>(AMasterColumn, ATargetColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): Boolean;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKey">DeepEqualsForeignKey</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKeyFromColumns">DeepEqualsForeignKeyFromColumns</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsForeignKeyToColumns">DeepEqualsForeignKeyToColumns</a></b>(AMasterForeignKey, ATargetForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): Boolean;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsIndexe">DeepEqualsIndexe</a></b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#DeepEqualsIndexeColumns">DeepEqualsIndexeColumns</a></b>(AMasterIndexe, ATargetIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): Boolean;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.database.factory.TDatabaseFactory.html#GetFieldTypeValid">GetFieldTypeValid</a></b>(AFieldType: TFieldType): TFieldType; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#GenerateDDLCommands">GenerateDDLCommands</a></b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>); override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.factory.TDatabaseFactory.html#BuildDatabase">BuildDatabase</a></b>; override;</code></td>
 </tr>
@@ -216,6 +246,22 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareTablesForeignKeys"></a><code>procedure <b>CompareTablesForeignKeys</b>(AMasterDB, ATargetDB: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="CompareForeignKeys"></a><code>procedure <b>CompareForeignKeys</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="CompareColumns"></a><code>procedure <b>CompareColumns</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
 <tr><td colspan="2">
@@ -225,14 +271,6 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="ComparePrimaryKey"></a><code>procedure <b>ComparePrimaryKey</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="CompareForeignKeys"></a><code>procedure <b>CompareForeignKeys</b>(AMasterTable, ATargetTable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -320,6 +358,14 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionCreateView"></a><code>procedure <b>ActionCreateView</b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="ActionDropTable"></a><code>procedure <b>ActionDropTable</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
 </tr>
 <tr><td colspan="2">
@@ -376,7 +422,39 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropView"></a><code>procedure <b>ActionDropView</b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="ActionAlterColumn"></a><code>procedure <b>ActionAlterColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionDropDefaultValue"></a><code>procedure <b>ActionDropDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionAlterDefaultValue"></a><code>procedure <b>ActionAlterDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ActionAlterCheck"></a><code>procedure <b>ActionAlterCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -401,6 +479,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="DeepEqualsColumn"></a><code>function <b>DeepEqualsColumn</b>(AMasterColumn, ATargetColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="DeepEqualsDefaultValue"></a><code>function <b>DeepEqualsDefaultValue</b>(AMasterColumn, ATargetColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

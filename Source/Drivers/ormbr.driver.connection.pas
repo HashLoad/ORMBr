@@ -96,8 +96,9 @@ type
     FFetchingAll: Boolean;
     FFirstNext: Boolean;
   public
+    constructor Create; overload; virtual;
+    destructor Destroy; override;
     procedure Close; virtual; abstract;
-    function FieldDefs: TFieldDefs; virtual; abstract;
     function NotEof: Boolean; virtual; abstract;
     function GetFieldValue(const AFieldName: string): Variant; overload; virtual; abstract;
     function GetFieldValue(const AFieldIndex: Integer): Variant; overload; virtual; abstract;
@@ -105,7 +106,7 @@ type
     function GetField(const AFieldName: string): TField; virtual; abstract;
     function FieldByName(const AFieldName: string): TAsField; virtual;
     function RecordCount: Integer; virtual;
-//    function DataSet: TDataSet; virtual;
+    function FieldDefs: TFieldDefs; virtual; abstract;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
@@ -113,11 +114,9 @@ type
   protected
     FDataSet: T;
   public
-    constructor Create(ADataSet: T); virtual;
-    destructor Destroy; override;
+    constructor Create(ADataSet: T); overload; virtual;
     procedure Close; override;
     function FieldDefs: TFieldDefs; override;
-//    function DataSet: TDataSet; override;
   end;
 
   TORMBrField = class(TAsField)
@@ -159,7 +158,7 @@ implementation
 
 constructor TDriverResultSet<T>.Create(ADataSet: T);
 begin
-  FField := TORMBrField.Create(Self);
+  Create;
   /// <summary>
   /// Guarda RecordCount do último SELECT executado no IDBResultSet
   /// </summary>
@@ -167,12 +166,6 @@ begin
   FRecordCount := FDataSet.RecordCount;
   except
   end;
-end;
-
-destructor TDriverResultSet<T>.Destroy;
-begin
-  FField.Free;
-  inherited;
 end;
 
 procedure TDriverResultSet<T>.Close;
@@ -203,6 +196,17 @@ end;
 //begin
 //  Result := nil;
 //end;
+
+constructor TDriverResultSetBase.Create;
+begin
+  FField := TORMBrField.Create(Self);
+end;
+
+destructor TDriverResultSetBase.Destroy;
+begin
+  FField.Free;
+  inherited;
+end;
 
 function TDriverResultSetBase.FieldByName(const AFieldName: string): TAsField;
 begin

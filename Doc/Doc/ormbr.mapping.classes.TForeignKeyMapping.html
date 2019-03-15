@@ -54,15 +54,15 @@ ForeignKeyKeyMapping</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FReferenceTableName">FReferenceTableName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FTableNameRef">FTableNameRef</a></b>: string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a></b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a></b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -77,26 +77,30 @@ ForeignKeyKeyMapping</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#Create">Create</a></b>(AReferenceTableName, AFromColumns, AToColumns: string; ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; ADescription: string = '');</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#Create">Create</a></b>(const AName, ATableNameRef: string; const AFromColumns, AToColumns: TArray&lt;string&gt;; const ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; const ADescription: string = '');</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#Name">Name</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#Name">Name</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#ReferenceTableName">ReferenceTableName</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FReferenceTableName">FReferenceTableName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#TableNameRef">TableNameRef</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FTableNameRef">FTableNameRef</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FromColumns">FromColumns</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FromColumns">FromColumns</a></b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#ToColumns">ToColumns</a></b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TForeignKeyMapping.html#ToColumns">ToColumns</a></b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -120,7 +124,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferenceTableName"></a><code><b>FReferenceTableName</b>: string;</code></td>
+<td class="itemcode"><a name="FTableNameRef"></a><code><b>FTableNameRef</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -128,7 +132,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FFromColumns"></a><code><b>FFromColumns</b>: string;</code></td>
+<td class="itemcode"><a name="FFromColumns"></a><code><b>FFromColumns</b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -136,7 +140,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FToColumns"></a><code><b>FToColumns</b>: string;</code></td>
+<td class="itemcode"><a name="FToColumns"></a><code><b>FToColumns</b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -161,7 +165,15 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AReferenceTableName, AFromColumns, AToColumns: string; ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; ADescription: string = '');</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AName, ATableNameRef: string; const AFromColumns, AToColumns: TArray&lt;string&gt;; const ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; const ADescription: string = '');</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -170,7 +182,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a>;</code></td>
+<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FName">FName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -178,7 +190,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferenceTableName"></a><code>property <b>ReferenceTableName</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FReferenceTableName">FReferenceTableName</a>;</code></td>
+<td class="itemcode"><a name="TableNameRef"></a><code>property <b>TableNameRef</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FTableNameRef">FTableNameRef</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -186,7 +198,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FromColumns"></a><code>property <b>FromColumns</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a>;</code></td>
+<td class="itemcode"><a name="FromColumns"></a><code>property <b>FromColumns</b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FFromColumns">FFromColumns</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -194,7 +206,7 @@ ForeignKeyKeyMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ToColumns"></a><code>property <b>ToColumns</b>: string read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a> write <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a>;</code></td>
+<td class="itemcode"><a name="ToColumns"></a><code>property <b>ToColumns</b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TForeignKeyMapping.html#FToColumns">FToColumns</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

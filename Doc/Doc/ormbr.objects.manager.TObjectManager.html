@@ -32,18 +32,19 @@ $(document).ready(function() {
 <a name="TObjectManager"></a><h1 class="cio">Classe TObjectManager</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.objects.manager.html">ormbr.objects.manager</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TObjectManager&lt;M:class,constructor&gt; = class abstract(TObject)</code></p>
+<code>type TObjectManager&lt;M:class,constructor&gt; = class sealed(<a class="normal" href="ormbr.objects.manager.abstract.TObjectManagerAbstract.html">TObjectManagerAbstract&lt;M&gt;</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
 ormbr</p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
+<li class="ancestor"><a class="normal" href="ormbr.objects.manager.abstract.TObjectManagerAbstract.html">TObjectManagerAbstract</a></li>
 <li class="thisitem">TObjectManager</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
@@ -53,31 +54,15 @@ ormbr</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FUpdateInternal">FUpdateInternal</a></b>: M;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FObjectInternal">FObjectInternal</a></b>: M;</code></td>
 </tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FFetchingRecords">FFetchingRecords</a></b>: Boolean;</code></td>
-</tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FModifiedFields">FModifiedFields</a></b>: TList&lt;string&gt;;</code></td>
-</tr>
-<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FConnection">FConnection</a></b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
 </tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FDMLCommandFactory">FDMLCommandFactory</a></b>: <a  href="ormbr.command.factory.TDMLCommandFactoryAbstract.html">TDMLCommandFactoryAbstract</a>;</code></td>
-</tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FExplorer">FExplorer</a></b>: <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html">IMappingExplorerStrategy</a>;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.objects.manager.TObjectManager.html#FDMLCommandFactory">FDMLCommandFactory</a></b>: <a  href="ormbr.command.factory.TDMLCommandFactoryAbstract.html">TDMLCommandFactoryAbstract</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -88,106 +73,119 @@ ormbr</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#FillAssociation">FillAssociation</a></b>(AObject: M);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#FillAssociation">FillAssociation</a></b>(const AObject: M);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ExecuteOneToOne">ExecuteOneToOne</a></b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#FillAssociationLazy">FillAssociationLazy</a></b>(const AOwner, AObject: TObject);</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ExecuteOneToMany">ExecuteOneToMany</a></b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>);</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ExecuteOneToOne">ExecuteOneToOne</a></b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); override;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ModifyFieldsCompare">ModifyFieldsCompare</a></b>(AObjectSource, AObjectUpdate: M);</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ExecuteOneToMany">ExecuteOneToMany</a></b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); override;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#FindSQLInternal">FindSQLInternal</a></b>(const ASQL: String): TObjectList&lt;M&gt;; override;</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.objects.manager.TObjectManager.html#Create">Create</a></b>(const AOwner: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const APageSize: Integer); virtual;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.objects.manager.TObjectManager.html#Create">Create</a></b>(const AOwner: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const APageSize: Integer); override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a  href="ormbr.objects.manager.TObjectManager.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#InsertInternal">InsertInternal</a></b>(const AObject: M); override;</code></td>
+</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#InsertInternal">InsertInternal</a></b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#UpdateInternal">UpdateInternal</a></b>(const AObject: TObject; const AModifiedFields: TList&lt;string&gt;); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#UpdateInternal">UpdateInternal</a></b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#DeleteInternal">DeleteInternal</a></b>(const AObject: M); override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#DeleteInternal">DeleteInternal</a></b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#LoadLazy">LoadLazy</a></b>(const AOwner, AObject: TObject); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#ModifyInternal">ModifyInternal</a></b>(AObjectSource: M); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>(const AObjectList: TObjectList&lt;M&gt;; const APageSize, APageNext: Integer); overload; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalAll">SelectInternalAll</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>(const AObjectList: TObjectList&lt;M&gt;; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalID">SelectInternalID</a></b>(AID: TValue): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>: TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternal">SelectInternal</a></b>(ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>(const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalWhere">SelectInternalWhere</a></b>(AWhere: string; AOrderBy: string): string; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#GetDMLCommand">GetDMLCommand</a></b>: string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#GetDMLCommand">GetDMLCommand</a></b>: string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#Find">Find</a></b>: TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#ExistSequence">ExistSequence</a></b>: Boolean; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#Find">Find</a></b>(ASQL: String): TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalWhere">SelectInternalWhere</a></b>(const AWhere: string; const AOrderBy: string): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#Find">Find</a></b>(AID: TValue): M; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalAll">SelectInternalAll</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#FindWhere">FindWhere</a></b>(AWhere: string; AOrderBy: string): TObjectList&lt;M&gt;;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalID">SelectInternalID</a></b>(const AID: Variant): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#ExistSequence">ExistSequence</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternal">SelectInternal</a></b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacket">NextPacket</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#SelectInternalAssociation">SelectInternalAssociation</a></b>(const AObject: TObject): String; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacketList">NextPacketList</a></b>(AObjectList: TObjectList&lt;M&gt;); virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacket">NextPacket</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
-</table>
-<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
-<table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.objects.manager.TObjectManager.html#Explorer">Explorer</a></b>: <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html">IMappingExplorerStrategy</a> read <a  href="ormbr.objects.manager.TObjectManager.html#FExplorer">FExplorer</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacket">NextPacket</a></b>(const APageSize, APageNext: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.objects.manager.TObjectManager.html#FetchingRecords">FetchingRecords</a></b>: Boolean read <a  href="ormbr.objects.manager.TObjectManager.html#FFetchingRecords">FFetchingRecords</a> write <a  href="ormbr.objects.manager.TObjectManager.html#FFetchingRecords">FFetchingRecords</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#NextPacket">NextPacket</a></b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.objects.manager.TObjectManager.html#ModifiedFields">ModifiedFields</a></b>: TList&lt;string&gt; read <a  href="ormbr.objects.manager.TObjectManager.html#FModifiedFields">FModifiedFields</a> write <a  href="ormbr.objects.manager.TObjectManager.html#FModifiedFields">FModifiedFields</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#Find">Find</a></b>: TObjectList&lt;M&gt;; overload; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#Find">Find</a></b>(const AID: Variant): M; overload; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.objects.manager.TObjectManager.html#FindWhere">FindWhere</a></b>(const AWhere: string; const AOrderBy: string): TObjectList&lt;M&gt;; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -203,31 +201,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FUpdateInternal"></a><code><b>FUpdateInternal</b>: M;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="FObjectInternal"></a><code><b>FObjectInternal</b>: M;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FFetchingRecords"></a><code><b>FFetchingRecords</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FModifiedFields"></a><code><b>FModifiedFields</b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -253,16 +227,6 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FExplorer"></a><code><b>FExplorer</b>: <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html">IMappingExplorerStrategy</a>;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Instancia a class que mapea todas as class do tipo <a class="normal" href="ormbr.mapping.attributes.Entity.html">Entity</a> </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><a name="FPageSize"></a><code><b>FPageSize</b>: Integer;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -274,7 +238,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FillAssociation"></a><code>procedure <b>FillAssociation</b>(AObject: M);</code></td>
+<td class="itemcode"><a name="FillAssociation"></a><code>procedure <b>FillAssociation</b>(const AObject: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -282,23 +246,31 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ExecuteOneToOne"></a><code>procedure <b>ExecuteOneToOne</b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>);</code></td>
+<td class="itemcode"><a name="FillAssociationLazy"></a><code>procedure <b>FillAssociationLazy</b>(const AOwner, AObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ExecuteOneToMany"></a><code>procedure <b>ExecuteOneToMany</b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>);</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ExecuteOneToOne"></a><code>procedure <b>ExecuteOneToOne</b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ModifyFieldsCompare"></a><code>procedure <b>ModifyFieldsCompare</b>(AObjectSource, AObjectUpdate: M);</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="ExecuteOneToMany"></a><code>procedure <b>ExecuteOneToMany</b>(AObject: TObject; AProperty: TRttiProperty; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FindSQLInternal"></a><code>function <b>FindSQLInternal</b>(const ASQL: String): TObjectList&lt;M&gt;; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -306,7 +278,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AOwner: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const APageSize: Integer); virtual;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AOwner: TObject; const AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; const APageSize: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -322,7 +294,17 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="InsertInternal"></a><code>procedure <b>InsertInternal</b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><a name="InsertInternal"></a><code>procedure <b>InsertInternal</b>(const AObject: M); override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Procedures </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="UpdateInternal"></a><code>procedure <b>UpdateInternal</b>(const AObject: TObject; const AModifiedFields: TList&lt;string&gt;); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -330,7 +312,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="UpdateInternal"></a><code>procedure <b>UpdateInternal</b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><a name="DeleteInternal"></a><code>procedure <b>DeleteInternal</b>(const AObject: M); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -338,7 +320,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DeleteInternal"></a><code>procedure <b>DeleteInternal</b>(AObject: M); virtual;</code></td>
+<td class="itemcode"><a name="LoadLazy"></a><code>procedure <b>LoadLazy</b>(const AOwner, AObject: TObject); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -346,7 +328,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ModifyInternal"></a><code>procedure <b>ModifyInternal</b>(AObjectSource: M); virtual;</code></td>
+<td class="itemcode"><a name="NextPacketList"></a><code>procedure <b>NextPacketList</b>(const AObjectList: TObjectList&lt;M&gt;; const APageSize, APageNext: Integer); overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -354,7 +336,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SelectInternalAll"></a><code>function <b>SelectInternalAll</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><a name="NextPacketList"></a><code>procedure <b>NextPacketList</b>(const AObjectList: TObjectList&lt;M&gt;; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer); overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -362,7 +344,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SelectInternalID"></a><code>function <b>SelectInternalID</b>(AID: TValue): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><a name="NextPacketList"></a><code>function <b>NextPacketList</b>: TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -370,7 +352,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SelectInternal"></a><code>function <b>SelectInternal</b>(ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><a name="NextPacketList"></a><code>function <b>NextPacketList</b>(const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -378,7 +360,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SelectInternalWhere"></a><code>function <b>SelectInternalWhere</b>(AWhere: string; AOrderBy: string): string; virtual;</code></td>
+<td class="itemcode"><a name="NextPacketList"></a><code>function <b>NextPacketList</b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -386,7 +368,17 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDMLCommand"></a><code>function <b>GetDMLCommand</b>: string;</code></td>
+<td class="itemcode"><a name="GetDMLCommand"></a><code>function <b>GetDMLCommand</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Functions </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ExistSequence"></a><code>function <b>ExistSequence</b>: Boolean; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -394,7 +386,17 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>: TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><a name="SelectInternalWhere"></a><code>function <b>SelectInternalWhere</b>(const AWhere: string; const AOrderBy: string): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ DataSet </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SelectInternalAll"></a><code>function <b>SelectInternalAll</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -402,7 +404,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(ASQL: String): TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><a name="SelectInternalID"></a><code>function <b>SelectInternalID</b>(const AID: Variant): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -410,7 +412,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(AID: TValue): M; overload;</code></td>
+<td class="itemcode"><a name="SelectInternal"></a><code>function <b>SelectInternal</b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -418,7 +420,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FindWhere"></a><code>function <b>FindWhere</b>(AWhere: string; AOrderBy: string): TObjectList&lt;M&gt;;</code></td>
+<td class="itemcode"><a name="SelectInternalAssociation"></a><code>function <b>SelectInternalAssociation</b>(const AObject: TObject): String; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -426,7 +428,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExistSequence"></a><code>function <b>ExistSequence</b>: Boolean;</code></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -434,7 +436,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual;</code></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>(const APageSize, APageNext: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -442,16 +444,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="NextPacketList"></a><code>procedure <b>NextPacketList</b>(AObjectList: TObjectList&lt;M&gt;); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<h3 class="detail">Properties</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Explorer"></a><code>property <b>Explorer</b>: <a  href="ormbr.mapping.explorerstrategy.IMappingExplorerStrategy.html">IMappingExplorerStrategy</a> read <a  href="ormbr.objects.manager.TObjectManager.html#FExplorer">FExplorer</a>;</code></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -459,7 +452,17 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FetchingRecords"></a><code>property <b>FetchingRecords</b>: Boolean read <a  href="ormbr.objects.manager.TObjectManager.html#FFetchingRecords">FFetchingRecords</a> write <a  href="ormbr.objects.manager.TObjectManager.html#FFetchingRecords">FFetchingRecords</a>;</code></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>: TObjectList&lt;M&gt;; overload; override;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ ObjectSet </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(const AID: Variant): M; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -467,7 +470,7 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ModifiedFields"></a><code>property <b>ModifiedFields</b>: TList&lt;string&gt; read <a  href="ormbr.objects.manager.TObjectManager.html#FModifiedFields">FModifiedFields</a> write <a  href="ormbr.objects.manager.TObjectManager.html#FModifiedFields">FModifiedFields</a>;</code></td>
+<td class="itemcode"><a name="FindWhere"></a><code>function <b>FindWhere</b>(const AWhere: string; const AOrderBy: string): TObjectList&lt;M&gt;; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

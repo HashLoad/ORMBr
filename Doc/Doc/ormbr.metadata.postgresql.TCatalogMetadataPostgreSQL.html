@@ -69,19 +69,27 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectIndexe">GetSelectIndexe</a></b>(ATableName: string): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectForeignKeyColumns">GetSelectForeignKeyColumns</a></b>(AForeignKeyName: string): string; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectIndexeColumns">GetSelectIndexeColumns</a></b>(AIndexeName: string): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectIndexe">GetSelectIndexe</a></b>(ATableName: string): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectTriggers">GetSelectTriggers</a></b>(ATableName: string): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectIndexeColumns">GetSelectIndexeColumns</a></b>(AIndexeName: string): string; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectTriggers">GetSelectTriggers</a></b>(ATableName: string): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectViews">GetSelectViews</a></b>: string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.metadata.postgresql.TCatalogMetadataPostgreSQL.html#GetSelectChecks">GetSelectChecks</a></b>(ATableName: string): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -197,6 +205,14 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetSelectForeignKeyColumns"></a><code>function <b>GetSelectForeignKeyColumns</b>(AForeignKeyName: string): string; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><a name="GetSelectIndexe"></a><code>function <b>GetSelectIndexe</b>(ATableName: string): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -222,6 +238,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><a name="GetSelectViews"></a><code>function <b>GetSelectViews</b>: string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetSelectChecks"></a><code>function <b>GetSelectChecks</b>(ATableName: string): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

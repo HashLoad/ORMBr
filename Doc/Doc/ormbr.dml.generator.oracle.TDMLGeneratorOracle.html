@@ -58,7 +58,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.oracle.TDMLGeneratorOracle.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: TValue): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.oracle.TDMLGeneratorOracle.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: Variant): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.oracle.TDMLGeneratorOracle.html#GeneratorPageNext">GeneratorPageNext</a></b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.oracle.TDMLGeneratorOracle.html#GeneratorPageNext">GeneratorPageNext</a></b>(const ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -98,7 +98,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: TValue): string; override;</code></td>
+<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: Variant): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -130,7 +130,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; override;</code></td>
+<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(const ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

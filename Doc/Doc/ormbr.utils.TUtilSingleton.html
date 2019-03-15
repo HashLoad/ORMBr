@@ -38,7 +38,7 @@ $(document).ready(function() {
 <a  href="ormbr.utils.html">ormbr.utils</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TUtilSingleton = class(TInterfacedObject, <a class="normal" href="ormbr.utils.IUtilSingleton.html">IUtilSingleton</a>)</code></p>
+<code>type TUtilSingleton = class sealed(TInterfacedObject, <a class="normal" href="ormbr.utils.IUtilSingleton.html">IUtilSingleton</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
@@ -66,15 +66,15 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#Delimiter">Delimiter</a></b>(var AFields: TStringList; ADelimiter: Char; ATexto: string): Integer;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#DateTimeToIso8601">DateTimeToIso8601</a></b>(const AValue: TDateTime): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#DateTimeToIso8601">DateTimeToIso8601</a></b>(AValue: TDateTime): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#Iso8601ToDateTime">Iso8601ToDateTime</a></b>(const AValue: string): TDateTime;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#Iso8601ToDateTime">Iso8601ToDateTime</a></b>(const AValue: string): TDateTime;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.TUtilSingleton.html#ParseCommandNoSQL">ParseCommandNoSQL</a></b>(const ASubStr, ASQL: string; const ADefault: String): string;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -117,15 +117,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Delimiter"></a><code>function <b>Delimiter</b>(var AFields: TStringList; ADelimiter: Char; ATexto: string): Integer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DateTimeToIso8601"></a><code>function <b>DateTimeToIso8601</b>(AValue: TDateTime): string;</code></td>
+<td class="itemcode"><a name="DateTimeToIso8601"></a><code>function <b>DateTimeToIso8601</b>(const AValue: TDateTime): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -134,6 +126,14 @@ Public declarations</p>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="Iso8601ToDateTime"></a><code>function <b>Iso8601ToDateTime</b>(const AValue: string): TDateTime;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ParseCommandNoSQL"></a><code>function <b>ParseCommandNoSQL</b>(const ASubStr, ASQL: string; const ADefault: String): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

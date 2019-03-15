@@ -41,7 +41,7 @@ $(document).ready(function() {
 <code>type TDMLGeneratorAbsoluteDB = class(<a class="normal" href="ormbr.dml.generator.TDMLGeneratorAbstract.html">TDMLGeneratorAbstract</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
- Classe de banco de dados Firebird </p>
+ Classe de banco de dados AbsoluteDB </p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.dml.generator.TDMLGeneratorAbstract.html">TDMLGeneratorAbstract</a></li>
@@ -50,7 +50,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GetGeneratorSelect">GetGeneratorSelect</a></b>(ACriteria: ICriteria): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GetGeneratorSelect">GetGeneratorSelect</a></b>(const ACriteria: ICriteria): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -62,13 +62,17 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: TValue): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: Variant): string; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSequenceCurrentValue">GeneratorSequenceCurrentValue</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): Int64; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSelectWhere">GeneratorSelectWhere</a></b>(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSequenceCurrentValue">GeneratorSequenceCurrentValue</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): Int64; override;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.absolutedb.TDMLGeneratorAbsoluteDB.html#GeneratorSequenceNextValue">GeneratorSequenceNextValue</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): Int64; override;</code></td>
 </tr>
@@ -78,7 +82,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetGeneratorSelect"></a><code>function <b>GetGeneratorSelect</b>(ACriteria: ICriteria): string; override;</code></td>
+<td class="itemcode"><a name="GetGeneratorSelect"></a><code>function <b>GetGeneratorSelect</b>(const ACriteria: ICriteria): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -102,7 +106,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: TValue): string; override;</code></td>
+<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: Variant): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GeneratorSelectWhere"></a><code>function <b>GeneratorSelectWhere</b>(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -47,9 +47,13 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#FConnection">FConnection</a></b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#FOwner">FOwner</a></b>: <a  href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#FConnection">FConnection</a></b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#FDatabaseMetadata">FDatabaseMetadata</a></b>: <a  href="ormbr.metadata.extract.TCatalogMetadataAbstract.html">TCatalogMetadataAbstract</a>;</code></td>
 </tr>
@@ -70,7 +74,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>); virtual;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.metadata.db.factory.TMetadataDBAbstract.html#Create">Create</a></b>(AOwner: <a  href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>; AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>); virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -90,6 +94,14 @@ $(document).ready(function() {
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOwner"></a><code><b>FOwner</b>: <a  href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -134,7 +146,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>); virtual;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AOwner: <a  href="ormbr.database.abstract.TDatabaseAbstract.html">TDatabaseAbstract</a>; AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

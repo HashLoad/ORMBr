@@ -45,6 +45,7 @@ $(document).ready(function() {
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.dataset.abstract.TDataSetAbstract.html">TDataSetAbstract</a></li>
+<li class="ancestor"><a class="normal" href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a></li>
 <li class="ancestor"><a class="normal" href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a></li>
 <li class="thisitem">TFDMemTableAdapter</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
@@ -62,23 +63,23 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoBeforeApplyUpdates">DoBeforeApplyUpdates</a></b>(DataSet: TFDDataSet);</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#GetIndexFieldNames">GetIndexFieldNames</a></b>(AOrderBy: String): String;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoAfterApplyUpdates">DoAfterApplyUpdates</a></b>(DataSet: TFDDataSet; AErrors: Integer);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoBeforeApplyUpdatesInternal">DoBeforeApplyUpdatesInternal</a></b>(DataSet: TFDDataSet);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ExecuteCheckNotNull">ExecuteCheckNotNull</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoAfterApplyUpdatesInternal">DoAfterApplyUpdatesInternal</a></b>(DataSet: TFDDataSet; AErrors: Integer);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#OpenInternal">OpenInternal</a></b>(ASQL: String; AID: TValue); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoBeforeApplyUpdates">DoBeforeApplyUpdates</a></b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoBeforePost">DoBeforePost</a></b>(DataSet: TDataSet); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#DoAfterApplyUpdates">DoAfterApplyUpdates</a></b>(DataSet: TDataSet; AErrors: Integer); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -94,31 +95,47 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyInserter">ApplyInserter</a></b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyInserter">ApplyInserter</a></b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyUpdater">ApplyUpdater</a></b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyUpdater">ApplyUpdater</a></b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyDeleter">ApplyDeleter</a></b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyDeleter">ApplyDeleter</a></b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyInternal">ApplyInternal</a></b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyInternal">ApplyInternal</a></b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyUpdates">ApplyUpdates</a></b>(MaxErros: Integer); override;</code></td>
-</tr>
-<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); override;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#OpenIDInternal">OpenIDInternal</a></b>(const AID: Variant); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#OpenSQLInternal">OpenSQLInternal</a></b>(const ASQL: string); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#OpenWhereInternal">OpenWhereInternal</a></b>(const AWhere: string; const AOrderBy: string = ''); override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#ApplyUpdates">ApplyUpdates</a></b>(const MaxErros: Integer); override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fdmemtable.TFDMemTableAdapter.html#EmptyDataSet">EmptyDataSet</a></b>; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -143,7 +160,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoBeforeApplyUpdates"></a><code>procedure <b>DoBeforeApplyUpdates</b>(DataSet: TFDDataSet);</code></td>
+<td class="itemcode"><a name="GetIndexFieldNames"></a><code>function <b>GetIndexFieldNames</b>(AOrderBy: String): String;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -151,7 +168,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoAfterApplyUpdates"></a><code>procedure <b>DoAfterApplyUpdates</b>(DataSet: TFDDataSet; AErrors: Integer);</code></td>
+<td class="itemcode"><a name="DoBeforeApplyUpdatesInternal"></a><code>procedure <b>DoBeforeApplyUpdatesInternal</b>(DataSet: TFDDataSet);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -159,7 +176,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ExecuteCheckNotNull"></a><code>procedure <b>ExecuteCheckNotNull</b>;</code></td>
+<td class="itemcode"><a name="DoAfterApplyUpdatesInternal"></a><code>procedure <b>DoAfterApplyUpdatesInternal</b>(DataSet: TFDDataSet; AErrors: Integer);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -167,7 +184,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="OpenInternal"></a><code>procedure <b>OpenInternal</b>(ASQL: String; AID: TValue); override;</code></td>
+<td class="itemcode"><a name="DoBeforeApplyUpdates"></a><code>procedure <b>DoBeforeApplyUpdates</b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -175,7 +192,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforePost"></a><code>procedure <b>DoBeforePost</b>(DataSet: TDataSet); override;</code></td>
+<td class="itemcode"><a name="DoAfterApplyUpdates"></a><code>procedure <b>DoAfterApplyUpdates</b>(DataSet: TDataSet; AErrors: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -207,7 +224,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyInserter"></a><code>procedure <b>ApplyInserter</b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><a name="ApplyInserter"></a><code>procedure <b>ApplyInserter</b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -215,7 +232,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyUpdater"></a><code>procedure <b>ApplyUpdater</b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><a name="ApplyUpdater"></a><code>procedure <b>ApplyUpdater</b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -223,7 +240,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyDeleter"></a><code>procedure <b>ApplyDeleter</b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><a name="ApplyDeleter"></a><code>procedure <b>ApplyDeleter</b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -231,25 +248,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyInternal"></a><code>procedure <b>ApplyInternal</b>(MaxErros: Integer); override;</code></td>
+<td class="itemcode"><a name="ApplyInternal"></a><code>procedure <b>ApplyInternal</b>(const MaxErros: Integer); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyUpdates"></a><code>procedure <b>ApplyUpdates</b>(MaxErros: Integer); override;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Comandos DataSet</p>
-</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); override;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -258,6 +265,46 @@ Comandos DataSet</p>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OpenIDInternal"></a><code>procedure <b>OpenIDInternal</b>(const AID: Variant); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OpenSQLInternal"></a><code>procedure <b>OpenSQLInternal</b>(const ASQL: string); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OpenWhereInternal"></a><code>procedure <b>OpenWhereInternal</b>(const AWhere: string; const AOrderBy: string = ''); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ApplyUpdates"></a><code>procedure <b>ApplyUpdates</b>(const MaxErros: Integer); override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="EmptyDataSet"></a><code>procedure <b>EmptyDataSet</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
 <html>
 <head>
-<title>ORM Brasil Framework: ormbr.Json: Objeto TJSONParser</title>
+<title>ORM Brasil Framework: ormbr.json: record TJSONParser</title>
 <meta name="generator" content="PasDoc 0.14.0">
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
 <script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
@@ -29,207 +29,175 @@ $(document).ready(function() {
 });
 </script>
 </p></td><td class="content">
-<a name="TJSONParser"></a><h1 class="cio">Objeto TJSONParser</h1>
+<a name="TJSONParser"></a><h1 class="cio">record TJSONParser</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td>Hierarquia</td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a  href="ormbr.Json.html">ormbr.Json</a></p>
+<a  href="ormbr.json.html">ormbr.json</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TJSONParser = object(TObject)</code></p>
+<code>type TJSONParser = record</code></p>
 <h2 class="description">Descrição</h2>
-<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
-<ul class="hierarchy"><li class="ancestor">TObject</li>
-<li class="thisitem">TJSONParser</li></ul><h2 class="overview">Visão Geral</h2>
+&nbsp;<h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.Json.TJSONParser.html#FJson">FJson</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.json.TJSONParser.html#FJson">FJson</a></b>: String;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.Json.TJSONParser.html#FIndex">FIndex</a></b>: Integer;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.json.TJSONParser.html#FIndex">FIndex</a></b>: Integer;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.Json.TJSONParser.html#FJsonLength">FJsonLength</a></b>: Integer;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.json.TJSONParser.html#FJsonLength">FJsonLength</a></b>: Integer;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.Json.TJSONParser.html#Init">Init</a></b>(const AJson: string; AIndex: Integer);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.json.TJSONParser.html#Init">Init</a></b>(const AJson: String; AIndex: Integer);</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextChar">GetNextChar</a></b>: Char; inline;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextChar">GetNextChar</a></b>: Char; inline;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextNonWhiteChar">GetNextNonWhiteChar</a></b>: Char; inline;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextNonWhiteChar">GetNextNonWhiteChar</a></b>: Char; inline;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#CheckNextNonWhiteChar">CheckNextNonWhiteChar</a></b>(AChar: Char): Boolean; inline;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#CheckNextNonWhiteChar">CheckNextNonWhiteChar</a></b>(AChar: Char): Boolean; inline;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextString">GetNextString</a></b>(out AStr: string): Boolean; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextString">GetNextString</a></b>(out AStr: String): Boolean; overload;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextString">GetNextString</a></b>: string; overload; inline;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextString">GetNextString</a></b>: String; overload; inline;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextJSON">GetNextJSON</a></b>(out AValue: Variant): <a  href="ormbr.Json.html#TJSONParserKind">TJSONParserKind</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextJSON">GetNextJSON</a></b>(out AValue: Variant): <a  href="ormbr.json.html#TJSONParserKind">TJSONParserKind</a>;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#CheckNextIdent">CheckNextIdent</a></b>(const AExpectedIdent: string): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#CheckNextIdent">CheckNextIdent</a></b>(const AExpectedIdent: string): Boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#GetNextAlphaPropName">GetNextAlphaPropName</a></b>(out AFieldName: string): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#GetNextAlphaPropName">GetNextAlphaPropName</a></b>(out AFieldName: string): Boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#ParseJSONObject">ParseJSONObject</a></b>(var AData: <a  href="ormbr.Json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#ParseJSONObject">ParseJSONObject</a></b>(out AData: <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONParser.html#ParseJSONArray">ParseJSONArray</a></b>(var AData: <a  href="ormbr.Json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONParser.html#ParseJSONArray">ParseJSONArray</a></b>(out AData: <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.Json.TJSONParser.html#GetNextStringUnEscape">GetNextStringUnEscape</a></b>(var AStr: string);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.json.TJSONParser.html#GetNextStringUnEscape">GetNextStringUnEscape</a></b>(var AStr: string);</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FJson"></a><code><b>FJson</b>: string;</code></td>
+<td class="itemcode"><a name="FJson"></a><code><b>FJson</b>: String;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="FIndex"></a><code><b>FIndex</b>: Integer;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="FJsonLength"></a><code><b>FJsonLength</b>: Integer;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Init"></a><code>procedure <b>Init</b>(const AJson: string; AIndex: Integer);</code></td>
+<td class="itemcode"><a name="Init"></a><code>procedure <b>Init</b>(const AJson: String; AIndex: Integer);</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GetNextChar"></a><code>function <b>GetNextChar</b>: Char; inline;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GetNextNonWhiteChar"></a><code>function <b>GetNextNonWhiteChar</b>: Char; inline;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="CheckNextNonWhiteChar"></a><code>function <b>CheckNextNonWhiteChar</b>(AChar: Char): Boolean; inline;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetNextString"></a><code>function <b>GetNextString</b>(out AStr: string): Boolean; overload;</code></td>
+<td class="itemcode"><a name="GetNextString"></a><code>function <b>GetNextString</b>(out AStr: String): Boolean; overload;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetNextString"></a><code>function <b>GetNextString</b>: string; overload; inline;</code></td>
+<td class="itemcode"><a name="GetNextString"></a><code>function <b>GetNextString</b>: String; overload; inline;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetNextJSON"></a><code>function <b>GetNextJSON</b>(out AValue: Variant): <a  href="ormbr.Json.html#TJSONParserKind">TJSONParserKind</a>;</code></td>
+<td class="itemcode"><a name="GetNextJSON"></a><code>function <b>GetNextJSON</b>(out AValue: Variant): <a  href="ormbr.json.html#TJSONParserKind">TJSONParserKind</a>;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="CheckNextIdent"></a><code>function <b>CheckNextIdent</b>(const AExpectedIdent: string): Boolean;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GetNextAlphaPropName"></a><code>function <b>GetNextAlphaPropName</b>(out AFieldName: string): Boolean;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ParseJSONObject"></a><code>function <b>ParseJSONObject</b>(var AData: <a  href="ormbr.Json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
+<td class="itemcode"><a name="ParseJSONObject"></a><code>function <b>ParseJSONObject</b>(out AData: <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ParseJSONArray"></a><code>function <b>ParseJSONArray</b>(var AData: <a  href="ormbr.Json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
+<td class="itemcode"><a name="ParseJSONArray"></a><code>function <b>ParseJSONArray</b>(out AData: <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>): Boolean;</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GetNextStringUnEscape"></a><code>procedure <b>GetNextStringUnEscape</b>(var AStr: string);</code></td>
 </tr>
-<tr><td colspan="2">
+<tr><td colspan="1">
 &nbsp;</td></tr>
 </table>
 <hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>

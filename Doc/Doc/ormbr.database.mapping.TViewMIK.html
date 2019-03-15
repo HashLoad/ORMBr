@@ -32,7 +32,7 @@ $(document).ready(function() {
 <a name="TViewMIK"></a><h1 class="cio">Classe TViewMIK</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td>Métodos</td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.database.mapping.html">ormbr.database.mapping</a></p>
@@ -48,18 +48,45 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TViewMIK.html#FCatalog">FCatalog</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.mapping.TViewMIK.html#FScript">FScript</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TViewMIK.html#FFields">FFields</a></b>: TObjectDictionary&lt;string, <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>&gt;;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.database.mapping.TViewMIK.html#Create">Create</a></b>(ADatabase: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ormbr.database.mapping.TViewMIK.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TViewMIK.html#Database">Database</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a> read <a  href="ormbr.database.mapping.TViewMIK.html#FCatalog">FCatalog</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TViewMIK.html#Name">Name</a></b>: string read <a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a> write <a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TViewMIK.html#Fields">Fields</a></b>: TObjectDictionary&lt;string, <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>&gt; read <a  href="ormbr.database.mapping.TViewMIK.html#FFields">FFields</a> write <a  href="ormbr.database.mapping.TViewMIK.html#FFields">FFields</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -68,6 +95,14 @@ $(document).ready(function() {
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><a name="FCatalog"></a><code><b>FCatalog</b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
@@ -84,11 +119,52 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><a name="FFields"></a><code><b>FFields</b>: TObjectDictionary&lt;string, <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADatabase: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Properties</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Database"></a><code>property <b>Database</b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a> read <a  href="ormbr.database.mapping.TViewMIK.html#FCatalog">FCatalog</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a> write <a  href="ormbr.database.mapping.TViewMIK.html#FName">FName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Fields"></a><code>property <b>Fields</b>: TObjectDictionary&lt;string, <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>&gt; read <a  href="ormbr.database.mapping.TViewMIK.html#FFields">FFields</a> write <a  href="ormbr.database.mapping.TViewMIK.html#FFields">FFields</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

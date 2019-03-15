@@ -46,7 +46,7 @@ $(document).ready(function() {
 ormbr </p>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{8B569AB2-FD86-4D72-B5AC-6CCA3C6FC52A}']</dt>
+  <dt>GUID['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -60,7 +60,7 @@ ormbr </p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: TValue): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: Variant): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -96,7 +96,7 @@ ormbr </p>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html#GeneratorPageNext">GeneratorPageNext</a></b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html#GeneratorPageNext">GeneratorPageNext</a></b>(const ACommandSelect: string; APageSize, APageNext: Integer): string;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -112,7 +112,7 @@ ormbr </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: TValue): string;</code></td>
+<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: Variant): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -184,7 +184,7 @@ ormbr </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string;</code></td>
+<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(const ACommandSelect: string; APageSize, APageNext: Integer): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

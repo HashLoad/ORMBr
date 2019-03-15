@@ -41,7 +41,7 @@ Telagram : <a  href="https://t.me/ormbr">https://t.me/ormbr</a></p>
 
 <p>ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.</p>
 <a name="PasDoc-Uses"></a><h2 class="uses">Uses</h2>
-<ul class="useslist"><li>Classes</li><li>SysUtils</li><li>DB</li><li>Rtti</li><li><a  href="ormbr.mapping.exceptions.html">ormbr.mapping.exceptions</a></li><li><a  href="ormbr.utils.html">ormbr.utils</a></li><li><a  href="ormbr.types.mapping.html">ormbr.types.mapping</a></li></ul><h2 class="overview">Visão Geral</h2>
+<ul class="useslist"><li>DB</li><li>Rtti</li><li>Classes</li><li>SysUtils</li><li>TypInfo</li><li>Generics.Collections</li><li><a  href="ormbr.mapping.exceptions.html">ormbr.mapping.exceptions</a></li><li><a  href="ormbr.types.mapping.html">ormbr.types.mapping</a></li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Classes"></a><h3 class="cio">Classes, Interfaces, Objetos e Registros</h3>
 <table class="classestable wide_list">
 <tr class="listheader">
@@ -49,12 +49,20 @@ Telagram : <a  href="https://t.me/ormbr">https://t.me/ormbr</a></p>
 <th class="itemdesc">Descrição</th>
 </tr>
 <tr class="list">
-<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Description.html"><code>Description</code></a></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Entity.html"><code>Entity</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list2">
-<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Entity.html"><code>Entity</code></a></td>
-<td class="itemdesc">ColumnBase = class(<a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a>) private FColumnName: String; protected constructor <a class="normal" href="ormbr.mapping.attributes.Entity.html#Create">Create</a>(const AColumnName: string; ADescription: string); overload; virtual; public property ColumnName: String read FColumnName write FColumnName; end;</td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Resource.html"><code>Resource</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.NotServerUse.html"><code>NotServerUse</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.SubResource.html"><code>SubResource</code></a></td>
+<td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Table.html"><code>Table</code></a></td>
@@ -77,35 +85,59 @@ Telagram : <a  href="https://t.me/ormbr">https://t.me/ormbr</a></p>
 <td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list2">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.AggregateField.html"><code>AggregateField</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.CalcField.html"><code>CalcField</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Association.html"><code>Association</code></a></td>
 <td class="itemdesc"><code>Association</code> 1:1, 1:N, N:N, N:1</td>
 </tr>
 <tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.CascadeActions.html"><code>CascadeActions</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.ForeignKey.html"><code>ForeignKey</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.PrimaryKey.html"><code>PrimaryKey</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Indexe.html"><code>Indexe</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Check.html"><code>Check</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.JoinColumn.html"><code>JoinColumn</code></a></td>
 <td class="itemdesc">INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOIN</a>, LEFT <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOIN</a>, RIGHT <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOIN</a>, FULL <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOIN</a></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Restrictions.html"><code>Restrictions</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Dictionary.html"><code>Dictionary</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.OrderBy.html"><code>OrderBy</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.Enumeration.html"><code>Enumeration</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.FieldEvents.html"><code>FieldEvents</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list2">
@@ -113,7 +145,11 @@ Telagram : <a  href="https://t.me/ormbr">https://t.me/ormbr</a></p>
 <td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list">
-<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.ZeroConstraint.html"><code>ZeroConstraint</code></a></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.MinimumValueConstraint.html"><code>MinimumValueConstraint</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.mapping.attributes.MaximumValueConstraint.html"><code>MaximumValueConstraint</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
 </table>

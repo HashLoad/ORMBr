@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
 <html>
 <head>
-<title>ORM Brasil Framework: ormbr.Json: Classe TJSONObjectORMBr</title>
+<title>ORM Brasil Framework: ormbr.json: Classe TJSONObjectORMBr</title>
 <meta name="generator" content="PasDoc 0.14.0">
 <meta http-equiv="content-type" content="text/html; charset=windows-1252">
 <script type="text/javascript" src="tipuesearch/jquery.min.js"></script>
@@ -35,7 +35,7 @@ $(document).ready(function() {
 <td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td>Campos</td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
-<a  href="ormbr.Json.html">ormbr.Json</a></p>
+<a  href="ormbr.json.html">ormbr.json</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
 <code>type TJSONObjectORMBr = class(TObject)</code></p>
@@ -47,95 +47,91 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONVariant">JSONVariant</a></b>(const AJson: string): Variant; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONVariant">JSONVariant</a></b>(const AJson: String): Variant; overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONVariant">JSONVariant</a></b>(const AValues: <a  href="ormbr.Json.html#TVariantDynamicArray">TVariantDynamicArray</a>): Variant; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONVariant">JSONVariant</a></b>(const AValues: <a  href="ormbr.json.html#TVariantDynamicArray">TVariantDynamicArray</a>): Variant; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONVariantFromConst">JSONVariantFromConst</a></b>(const constValues: array of Variant): Variant;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONVariantFromConst">JSONVariantFromConst</a></b>(const constValues: array of Variant): Variant;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONVariantDataSafe">JSONVariantDataSafe</a></b>(const JSONVariant: Variant; ExpectedKind: <a  href="ormbr.Json.html#TJSONVariantKind">TJSONVariantKind</a> = jvUndefined): <a  href="ormbr.Json.html#PJSONVariantData">PJSONVariantData</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONVariantDataSafe">JSONVariantDataSafe</a></b>(const JSONVariant: Variant; ExpectedKind: <a  href="ormbr.json.html#TJSONVariantKind">TJSONVariantKind</a> = jvUndefined): <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#GetInstanceProp">GetInstanceProp</a></b>(AInstance: TObject; AProperty: TRttiProperty): Variant;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#GetInstanceProp">GetInstanceProp</a></b>(AInstance: TObject; AProperty: TRttiProperty): Variant;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONToValue">JSONToValue</a></b>(const AJson: string): Variant;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONToValue">JSONToValue</a></b>(const AJson: String): Variant;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#NowToIso8601">NowToIso8601</a></b>: string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONToNewObject">JSONToNewObject</a></b>(const AJson: String): Pointer;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONToNewObject">JSONToNewObject</a></b>(const AJson: string): Pointer;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.json.TJSONObjectORMBr.html#RegisterClassForJSON">RegisterClassForJSON</a></b>(const AClasses: array of TClass);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.Json.TJSONObjectORMBr.html#RegisterClassForJSON">RegisterClassForJSON</a></b>(const AClasses: array of TClass);</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONVariantData">JSONVariantData</a></b>(const JSONVariant: Variant): <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONVariantData">JSONVariantData</a></b>(const JSONVariant: Variant): <a  href="ormbr.Json.html#PJSONVariantData">PJSONVariantData</a>;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#IdemPropName">IdemPropName</a></b>(const APropName1, APropName2: string): Boolean; inline;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#IdemPropName">IdemPropName</a></b>(const APropName1, APropName2: string): Boolean; inline;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#FindClassForJSON">FindClassForJSON</a></b>(const AClassName: string): Integer;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#FindClassForJSON">FindClassForJSON</a></b>(const AClassName: string): Integer;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#CreateClassForJSON">CreateClassForJSON</a></b>(const AClassName: string): TObject;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#CreateClassForJSON">CreateClassForJSON</a></b>(const AClassName: string): TObject;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#StringToJSON">StringToJSON</a></b>(const AText: string): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#StringToJSON">StringToJSON</a></b>(const AText: string): string;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#ValueToJSON">ValueToJSON</a></b>(const AValue: Variant): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#ValueToJSON">ValueToJSON</a></b>(const AValue: Variant): string;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.json.TJSONObjectORMBr.html#DateTimeToJSON">DateTimeToJSON</a></b>(AValue: TDateTime): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#DateTimeToJSON">DateTimeToJSON</a></b>(AValue: TDateTime): string;</code></td>
+<td class="itemcode"><code>class procedure <b><a  href="ormbr.json.TJSONObjectORMBr.html#AppendChar">AppendChar</a></b>(var AStr: string; AChr: char);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class procedure <b><a  href="ormbr.Json.TJSONObjectORMBr.html#AppendChar">AppendChar</a></b>(var AStr: string; AChr: char);</code></td>
+<td class="itemcode"><code>class procedure <b><a  href="ormbr.json.TJSONObjectORMBr.html#DoubleToJSON">DoubleToJSON</a></b>(AValue: Double; out AResult: string);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class procedure <b><a  href="ormbr.Json.TJSONObjectORMBr.html#DoubleToJSON">DoubleToJSON</a></b>(AValue: Double; var AResult: string);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>class procedure <b><a  href="ormbr.Json.TJSONObjectORMBr.html#SetInstanceProp">SetInstanceProp</a></b>(AInstance: TObject; AProperty: TRttiProperty; const AValue: Variant);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#ObjectToJSON">ObjectToJSON</a></b>(AObject: TObject; AStoreClassName: Boolean = False): string;</code></td>
+<td class="itemcode"><code>class procedure <b><a  href="ormbr.json.TJSONObjectORMBr.html#SetInstanceProp">SetInstanceProp</a></b>(AInstance: TObject; AProperty: TRttiProperty; const AValue: Variant);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONToObject">JSONToObject</a></b>(AObject: TObject; const AJson: string): Boolean; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#ObjectToJSON">ObjectToJSON</a></b>(AObject: TObject; AStoreClassName: Boolean = False): String;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONToObject">JSONToObject</a></b>&lt;T: class, constructor&gt;(const AJson: string): T; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONToObject">JSONToObject</a></b>(AObject: TObject; const AJson: String): Boolean; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.Json.TJSONObjectORMBr.html#JSONToObjectList">JSONToObjectList</a></b>&lt;T: class, constructor&gt;(const AJson: string): TList&lt;T&gt;;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONToObject">JSONToObject</a></b>&lt;T: class, constructor&gt;(const AJson: String): T; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.json.TJSONObjectORMBr.html#JSONToObjectList">JSONToObjectList</a></b>&lt;T: class, constructor&gt;(const AJson: String): TObjectList&lt;T&gt;;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -143,7 +139,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONVariant"></a><code>function <b>JSONVariant</b>(const AJson: string): Variant; overload;</code></td>
+<td class="itemcode"><a name="JSONVariant"></a><code>function <b>JSONVariant</b>(const AJson: String): Variant; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -151,7 +147,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONVariant"></a><code>function <b>JSONVariant</b>(const AValues: <a  href="ormbr.Json.html#TVariantDynamicArray">TVariantDynamicArray</a>): Variant; overload;</code></td>
+<td class="itemcode"><a name="JSONVariant"></a><code>function <b>JSONVariant</b>(const AValues: <a  href="ormbr.json.html#TVariantDynamicArray">TVariantDynamicArray</a>): Variant; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -167,7 +163,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONVariantDataSafe"></a><code>function <b>JSONVariantDataSafe</b>(const JSONVariant: Variant; ExpectedKind: <a  href="ormbr.Json.html#TJSONVariantKind">TJSONVariantKind</a> = jvUndefined): <a  href="ormbr.Json.html#PJSONVariantData">PJSONVariantData</a>;</code></td>
+<td class="itemcode"><a name="JSONVariantDataSafe"></a><code>function <b>JSONVariantDataSafe</b>(const JSONVariant: Variant; ExpectedKind: <a  href="ormbr.json.html#TJSONVariantKind">TJSONVariantKind</a> = jvUndefined): <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -183,7 +179,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONToValue"></a><code>function <b>JSONToValue</b>(const AJson: string): Variant;</code></td>
+<td class="itemcode"><a name="JSONToValue"></a><code>function <b>JSONToValue</b>(const AJson: String): Variant;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -191,15 +187,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="NowToIso8601"></a><code>function <b>NowToIso8601</b>: string;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONToNewObject"></a><code>function <b>JSONToNewObject</b>(const AJson: string): Pointer;</code></td>
+<td class="itemcode"><a name="JSONToNewObject"></a><code>function <b>JSONToNewObject</b>(const AJson: String): Pointer;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -215,7 +203,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="JSONVariantData"></a><code>class function <b>JSONVariantData</b>(const JSONVariant: Variant): <a  href="ormbr.Json.html#PJSONVariantData">PJSONVariantData</a>;</code></td>
+<td class="itemcode"><a name="JSONVariantData"></a><code>class function <b>JSONVariantData</b>(const JSONVariant: Variant): <a  href="ormbr.json.TJSONVariantData.html">TJSONVariantData</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -279,7 +267,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoubleToJSON"></a><code>class procedure <b>DoubleToJSON</b>(AValue: Double; var AResult: string);</code></td>
+<td class="itemcode"><a name="DoubleToJSON"></a><code>class procedure <b>DoubleToJSON</b>(AValue: Double; out AResult: string);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -295,7 +283,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ObjectToJSON"></a><code>function <b>ObjectToJSON</b>(AObject: TObject; AStoreClassName: Boolean = False): string;</code></td>
+<td class="itemcode"><a name="ObjectToJSON"></a><code>function <b>ObjectToJSON</b>(AObject: TObject; AStoreClassName: Boolean = False): String;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -303,7 +291,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="JSONToObject"></a><code>function <b>JSONToObject</b>(AObject: TObject; const AJson: string): Boolean; overload;</code></td>
+<td class="itemcode"><a name="JSONToObject"></a><code>function <b>JSONToObject</b>(AObject: TObject; const AJson: String): Boolean; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -311,7 +299,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="JSONToObject"></a><code>function <b>JSONToObject</b>&lt;T: class, constructor&gt;(const AJson: string): T; overload;</code></td>
+<td class="itemcode"><a name="JSONToObject"></a><code>function <b>JSONToObject</b>&lt;T: class, constructor&gt;(const AJson: String): T; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -319,7 +307,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="JSONToObjectList"></a><code>function <b>JSONToObjectList</b>&lt;T: class, constructor&gt;(const AJson: string): TList&lt;T&gt;;</code></td>
+<td class="itemcode"><a name="JSONToObjectList"></a><code>function <b>JSONToObjectList</b>&lt;T: class, constructor&gt;(const AJson: String): TObjectList&lt;T&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

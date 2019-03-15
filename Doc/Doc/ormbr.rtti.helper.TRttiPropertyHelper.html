@@ -46,16 +46,24 @@ $(document).ready(function() {
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNoUpdate">IsNoUpdate</a></b>: Boolean;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#ResolveNullableValue">ResolveNullableValue</a></b>(AObject: TObject): Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNoInsert">IsNoInsert</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNoUpdate">IsNoUpdate</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNoInsert">IsNoInsert</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNotNull">IsNotNull</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNotCascade">IsNotCascade</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -75,7 +83,23 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsRequired">IsRequired</a></b>: Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNoValidate">IsNoValidate</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsBlob">IsBlob</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsLazy">IsLazy</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNullable">IsNullable</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsNullValue">IsNullValue</a></b>(AObject: TObject): Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -83,19 +107,27 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetAssociation">GetAssociation</a></b>: TCustomAttribute;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#IsList">IsList</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetRestriction">GetRestriction</a></b>: TCustomAttribute;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetAssociation">GetAssociation</a></b>: TCustomAttribute;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetDictionary">GetDictionary</a></b>: TCustomAttribute;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetRestriction">GetRestriction</a></b>: TCustomAttribute;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetColumn">GetColumn</a></b>: TCustomAttribute;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetDictionary">GetDictionary</a></b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetCalcField">GetCalcField</a></b>: TCustomAttribute;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetColumn">GetColumn</a></b>: <a  href="ormbr.mapping.attributes.Column.html">Column</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -103,23 +135,59 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetZeroConstraint">GetZeroConstraint</a></b>: TCustomAttribute;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetMinimumValueConstraint">GetMinimumValueConstraint</a></b>: <a  href="ormbr.mapping.attributes.MinimumValueConstraint.html">MinimumValueConstraint</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetNullableValue">GetNullableValue</a></b>(AInstance: Pointer): TValue;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetMaximumValueConstraint">GetMaximumValueConstraint</a></b>: <a  href="ormbr.mapping.attributes.MaximumValueConstraint.html">MaximumValueConstraint</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetIndex">GetIndex</a></b>: Integer;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetNullableValue">GetNullableValue</a></b>(AInstance: Pointer): TValue;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetTypeValue">GetTypeValue</a></b>(ARttiType: TRttiType): TRttiType;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetObjectTheList">GetObjectTheList</a></b>: TObject;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetIndex">GetIndex</a></b>: Integer;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetCascadeActions">GetCascadeActions</a></b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetEnumIntegerValue">GetEnumIntegerValue</a></b>(const AInstance: TObject; AValue: Variant): TValue;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetEnumStringValue">GetEnumStringValue</a></b>(const AInstance: TObject; AValue: Variant): TValue;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#GetEnumToFieldValue">GetEnumToFieldValue</a></b>(const AInstance: TObject; AFieldType: TFieldType): TValue;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.rtti.helper.TRttiPropertyHelper.html#SetNullableValue">SetNullableValue</a></b>(AInstance: Pointer; ATypeInfo: PTypeInfo; AValue: Variant);</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="ResolveNullableValue"></a><code>function <b>ResolveNullableValue</b>(AObject: TObject): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -140,6 +208,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="IsNotNull"></a><code>function <b>IsNotNull</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsNotCascade"></a><code>function <b>IsNotCascade</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -179,7 +255,39 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="IsRequired"></a><code>function <b>IsRequired</b>: Boolean;</code></td>
+<td class="itemcode"><a name="IsNoValidate"></a><code>function <b>IsNoValidate</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsBlob"></a><code>function <b>IsBlob</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsLazy"></a><code>function <b>IsLazy</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsNullable"></a><code>function <b>IsNullable</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsNullValue"></a><code>function <b>IsNullValue</b>(AObject: TObject): Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -188,6 +296,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="IsPrimaryKey"></a><code>function <b>IsPrimaryKey</b>(AClass: TClass): Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsList"></a><code>function <b>IsList</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -211,7 +327,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDictionary"></a><code>function <b>GetDictionary</b>: TCustomAttribute;</code></td>
+<td class="itemcode"><a name="GetDictionary"></a><code>function <b>GetDictionary</b>: <a  href="ormbr.mapping.attributes.Dictionary.html">Dictionary</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -219,7 +335,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetColumn"></a><code>function <b>GetColumn</b>: TCustomAttribute;</code></td>
+<td class="itemcode"><a name="GetCalcField"></a><code>function <b>GetCalcField</b>: TCustomAttribute;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetColumn"></a><code>function <b>GetColumn</b>: <a  href="ormbr.mapping.attributes.Column.html">Column</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -235,7 +359,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetZeroConstraint"></a><code>function <b>GetZeroConstraint</b>: TCustomAttribute;</code></td>
+<td class="itemcode"><a name="GetMinimumValueConstraint"></a><code>function <b>GetMinimumValueConstraint</b>: <a  href="ormbr.mapping.attributes.MinimumValueConstraint.html">MinimumValueConstraint</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMaximumValueConstraint"></a><code>function <b>GetMaximumValueConstraint</b>: <a  href="ormbr.mapping.attributes.MaximumValueConstraint.html">MaximumValueConstraint</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -251,7 +383,55 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetTypeValue"></a><code>function <b>GetTypeValue</b>(ARttiType: TRttiType): TRttiType;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetObjectTheList"></a><code>function <b>GetObjectTheList</b>: TObject;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GetIndex"></a><code>function <b>GetIndex</b>: Integer;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetCascadeActions"></a><code>function <b>GetCascadeActions</b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetEnumIntegerValue"></a><code>function <b>GetEnumIntegerValue</b>(const AInstance: TObject; AValue: Variant): TValue;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetEnumStringValue"></a><code>function <b>GetEnumStringValue</b>(const AInstance: TObject; AValue: Variant): TValue;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetEnumToFieldValue"></a><code>function <b>GetEnumToFieldValue</b>(const AInstance: TObject; AFieldType: TFieldType): TValue;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

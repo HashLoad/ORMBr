@@ -38,11 +38,10 @@ $(document).ready(function() {
 <a  href="ormbr.mapping.attributes.html">ormbr.mapping.attributes</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type Trigger = class(<a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a>)</code></p>
+<code>type Trigger = class(TCustomAttribute)</code></p>
 <h2 class="description">Descrição</h2>
-<div class="nodescription">no description available, Description description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TCustomAttribute</li>
-<li class="ancestor"><a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a></li>
 <li class="thisitem">Trigger</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
@@ -54,6 +53,10 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a></b>: String;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Trigger.html#FDescription">FDescription</a></b>: string;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
@@ -63,22 +66,26 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Trigger.html#Create">Create</a></b>(AName, ATableName: String); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Trigger.html#Create">Create</a></b>(const AName, ATableName: String); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Trigger.html#Create">Create</a></b>(AName, ATableName, ADescription: String); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Trigger.html#Create">Create</a></b>(const AName, ATableName, ADescription: String); overload;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Trigger.html#TableName">TableName</a></b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a> Write <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Trigger.html#TableName">TableName</a></b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Trigger.html#Name">Name</a></b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a> Write <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Trigger.html#Name">Name</a></b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Trigger.html#Description">Description</a></b>: string read <a  href="ormbr.mapping.attributes.Trigger.html#FDescription">FDescription</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -99,6 +106,14 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FDescription"></a><code><b>FDescription</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
@@ -111,7 +126,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AName, ATableName: String); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AName, ATableName: String); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -119,7 +134,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AName, ATableName, ADescription: String); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AName, ATableName, ADescription: String); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -128,7 +143,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="TableName"></a><code>property <b>TableName</b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a> Write <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a>;</code></td>
+<td class="itemcode"><a name="TableName"></a><code>property <b>TableName</b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FTableName">FTableName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -136,7 +151,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a> Write <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a>;</code></td>
+<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: String Read <a  href="ormbr.mapping.attributes.Trigger.html#FName">FName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Description"></a><code>property <b>Description</b>: string read <a  href="ormbr.mapping.attributes.Trigger.html#FDescription">FDescription</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

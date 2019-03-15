@@ -70,19 +70,19 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddField">AddField</a></b>(ADataSet: TDataSet; AFieldName: String; AFieldType: TFieldType; ASize: Integer = 0);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddField">AddField</a></b>(const ADataSet: TDataSet; const AFieldName: String; const AFieldType: TFieldType; const ASize: Integer = 0);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddCalcField">AddCalcField</a></b>(ADataSet: TDataSet; AFieldName: String; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddCalcField">AddCalcField</a></b>(const ADataSet: TDataSet; const AFieldName: string; const AFieldType: TFieldType; const ASize: Integer = 0);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddAggregateField">AddAggregateField</a></b>(ADataSet: TDataSet; AFieldName, AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddAggregateField">AddAggregateField</a></b>(const ADataSet: TDataSet; const AFieldName, AExpression: string; const AAlignment: TAlignment = taLeftJustify; const ADisplayFormat: string = '');</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddLookupField">AddLookupField</a></b>(AFieldName: string; ADataSet: TDataSet; AKeyFields: string; ALookupDataSet: TDataSet; ALookupKeyFields: string; ALookupResultField: string; AFieldType: TFieldType; ASize: Integer = 0);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.fields.TFieldSingleton.html#AddLookupField">AddLookupField</a></b>(const AFieldName: string; const ADataSet: TDataSet; const AKeyFields: string; const ALookupDataSet: TDataSet; const ALookupKeyFields: string; const ALookupResultField: string; const AFieldType: TFieldType; const ASize: Integer = 0; const ADisplayLabel: string = '');</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -133,7 +133,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddField"></a><code>procedure <b>AddField</b>(ADataSet: TDataSet; AFieldName: String; AFieldType: TFieldType; ASize: Integer = 0);</code></td>
+<td class="itemcode"><a name="AddField"></a><code>procedure <b>AddField</b>(const ADataSet: TDataSet; const AFieldName: String; const AFieldType: TFieldType; const ASize: Integer = 0);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -141,7 +141,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddCalcField"></a><code>procedure <b>AddCalcField</b>(ADataSet: TDataSet; AFieldName: String; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><a name="AddCalcField"></a><code>procedure <b>AddCalcField</b>(const ADataSet: TDataSet; const AFieldName: string; const AFieldType: TFieldType; const ASize: Integer = 0);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -149,7 +149,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddAggregateField"></a><code>procedure <b>AddAggregateField</b>(ADataSet: TDataSet; AFieldName, AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><a name="AddAggregateField"></a><code>procedure <b>AddAggregateField</b>(const ADataSet: TDataSet; const AFieldName, AExpression: string; const AAlignment: TAlignment = taLeftJustify; const ADisplayFormat: string = '');</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -157,7 +157,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddLookupField"></a><code>procedure <b>AddLookupField</b>(AFieldName: string; ADataSet: TDataSet; AKeyFields: string; ALookupDataSet: TDataSet; ALookupKeyFields: string; ALookupResultField: string; AFieldType: TFieldType; ASize: Integer = 0);</code></td>
+<td class="itemcode"><a name="AddLookupField"></a><code>procedure <b>AddLookupField</b>(const AFieldName: string; const ADataSet: TDataSet; const AKeyFields: string; const ALookupDataSet: TDataSet; const ALookupKeyFields: string; const ALookupResultField: string; const AFieldType: TFieldType; const ASize: Integer = 0; const ADisplayLabel: string = '');</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

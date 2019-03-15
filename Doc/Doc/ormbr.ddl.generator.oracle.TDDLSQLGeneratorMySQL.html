@@ -57,21 +57,25 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateCreateForeignKey">GenerateCreateForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string; override;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateAlterColumn">GenerateAlterColumn</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateDropPrimaryKey">GenerateDropPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; override;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.oracle.TDDLSQLGeneratorMySQL.html#GenerateDropIndexe">GenerateDropIndexe</a></b>(AIndexe: <a  href="ormbr.database.mapping.TIndexeKeyMIK.html">TIndexeKeyMIK</a>): string; override;</code></td>
 </tr>
@@ -90,6 +94,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateCreateSequence"></a><code>function <b>GenerateCreateSequence</b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateCreateForeignKey"></a><code>function <b>GenerateCreateForeignKey</b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

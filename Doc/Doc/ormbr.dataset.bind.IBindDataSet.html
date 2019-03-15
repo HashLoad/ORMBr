@@ -44,7 +44,7 @@ $(document).ready(function() {
 orm</p>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{C80D9F51-F684-40E2-8275-0082E4052575}']</dt>
+  <dt>GUID['{8EAF6052-177E-4D4B-9E0A-386799C129FC}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -54,27 +54,23 @@ orm</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetDataDictionary">SetDataDictionary</a></b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetDataDictionary">SetDataDictionary</a></b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetInternalInitFieldDefsObjectClass">SetInternalInitFieldDefsObjectClass</a></b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetInternalInitFieldDefsObjectClass">SetInternalInitFieldDefsObjectClass</a></b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetPropertyToField">SetPropertyToField</a></b>(AObject: TObject; ADataSet: TDataSet);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetPropertyToField">SetPropertyToField</a></b>(const AObject: TObject; const ADataSet: TDataSet);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetFieldToProperty">SetFieldToProperty</a></b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetFieldToField">SetFieldToField</a></b>(const AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; const ADataSet: TDataSet);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.bind.IBindDataSet.html#SetFieldToField">SetFieldToField</a></b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; ADataSet: TDataSet);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dataset.bind.IBindDataSet.html#GetFieldValue">GetFieldValue</a></b>(ADataSet: TDataSet; AFieldName: string; AFieldType: TFieldType): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dataset.bind.IBindDataSet.html#GetFieldValue">GetFieldValue</a></b>(const ADataSet: TDataSet; const AFieldName: string; const AFieldType: TFieldType): string;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -82,7 +78,7 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetDataDictionary"></a><code>procedure <b>SetDataDictionary</b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><a name="SetDataDictionary"></a><code>procedure <b>SetDataDictionary</b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -90,7 +86,7 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetInternalInitFieldDefsObjectClass"></a><code>procedure <b>SetInternalInitFieldDefsObjectClass</b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><a name="SetInternalInitFieldDefsObjectClass"></a><code>procedure <b>SetInternalInitFieldDefsObjectClass</b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -98,7 +94,7 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetPropertyToField"></a><code>procedure <b>SetPropertyToField</b>(AObject: TObject; ADataSet: TDataSet);</code></td>
+<td class="itemcode"><a name="SetPropertyToField"></a><code>procedure <b>SetPropertyToField</b>(const AObject: TObject; const ADataSet: TDataSet);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -106,7 +102,7 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(ADataSet: TDataSet; AObject: TObject);</code></td>
+<td class="itemcode"><a name="SetFieldToField"></a><code>procedure <b>SetFieldToField</b>(const AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; const ADataSet: TDataSet);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -114,15 +110,7 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetFieldToField"></a><code>procedure <b>SetFieldToField</b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; ADataSet: TDataSet);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(ADataSet: TDataSet; AFieldName: string; AFieldType: TFieldType): string;</code></td>
+<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(const ADataSet: TDataSet; const AFieldName: string; const AFieldType: TFieldType): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

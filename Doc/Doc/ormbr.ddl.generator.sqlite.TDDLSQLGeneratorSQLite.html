@@ -49,15 +49,23 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#BuilderPrimayKeyDefinition">BuilderPrimayKeyDefinition</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#BuilderCreateFieldDefinition">BuilderCreateFieldDefinition</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#GenerateCreateTable">GenerateCreateTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string; override;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#GetFieldPrimaryKeyAutoincrement">GetFieldPrimaryKeyAutoincrement</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#GenerateCreateTable">GenerateCreateTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#GenerateCreateSequence">GenerateCreateSequence</a></b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.sqlite.TDDLSQLGeneratorSQLite.html#GenerateCreateForeignKey">GenerateCreateForeignKey</a></b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -81,7 +89,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="BuilderPrimayKeyDefinition"></a><code>function <b>BuilderPrimayKeyDefinition</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string; override;</code></td>
+<td class="itemcode"><a name="BuilderCreateFieldDefinition"></a><code>function <b>BuilderCreateFieldDefinition</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetFieldPrimaryKeyAutoincrement"></a><code>function <b>GetFieldPrimaryKeyAutoincrement</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -98,6 +114,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateCreateSequence"></a><code>function <b>GenerateCreateSequence</b>(ASequence: <a  href="ormbr.database.mapping.TSequenceMIK.html">TSequenceMIK</a>): string; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateCreateForeignKey"></a><code>function <b>GenerateCreateForeignKey</b>(AForeignKey: <a  href="ormbr.database.mapping.TForeignKeyMIK.html">TForeignKeyMIK</a>): string; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

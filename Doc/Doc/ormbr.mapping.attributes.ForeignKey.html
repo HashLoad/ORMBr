@@ -38,21 +38,28 @@ $(document).ready(function() {
 <a  href="ormbr.mapping.attributes.html">ormbr.mapping.attributes</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type ForeignKey = class(<a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a>)</code></p>
+<code>type ForeignKey = class(TCustomAttribute)</code></p>
 <h2 class="description">Descrição</h2>
-<div class="nodescription">no description available, Description description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TCustomAttribute</li>
-<li class="ancestor"><a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a></li>
 <li class="thisitem">ForeignKey</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceTableName">FReferenceTableName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FName">FName</a></b>: string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceFieldName">FReferenceFieldName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FTableNameRef">FTableNameRef</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FFromColumns">FFromColumns</a></b>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FToColumns">FToColumns</a></b>: TArray&lt;string&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -62,23 +69,35 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FRuleDelete">FRuleDelete</a></b>: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.ForeignKey.html#FDescription">FDescription</a></b>: string;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.ForeignKey.html#Create">Create</a></b>(AReferenceTableName: string; AReferenceFieldName: string; ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; ADescription: string = '');</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.ForeignKey.html#Create">Create</a></b>(const AName, AFromColumns, ATableNameRef, AToColumns: string; const ARuleDelete: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> = None; const ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> = None; const ADescription: string = ''); overload;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#ReferenceTableName">ReferenceTableName</a></b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceTableName">FReferenceTableName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#Name">Name</a></b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FName">FName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#ReferenceFieldName">ReferenceFieldName</a></b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceFieldName">FReferenceFieldName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#TableNameRef">TableNameRef</a></b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FTableNameRef">FTableNameRef</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#FromColumns">FromColumns</a></b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.ForeignKey.html#FFromColumns">FFromColumns</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#ToColumns">ToColumns</a></b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.ForeignKey.html#FToColumns">FToColumns</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -88,13 +107,17 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#RuleUpdate">RuleUpdate</a></b>: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> read <a  href="ormbr.mapping.attributes.ForeignKey.html#FRuleUpdate">FRuleUpdate</a>;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.ForeignKey.html#Description">Description</a></b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FDescription">FDescription</a>;</code></td>
+</tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferenceTableName"></a><code><b>FReferenceTableName</b>: string;</code></td>
+<td class="itemcode"><a name="FName"></a><code><b>FName</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -102,7 +125,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferenceFieldName"></a><code><b>FReferenceFieldName</b>: string;</code></td>
+<td class="itemcode"><a name="FTableNameRef"></a><code><b>FTableNameRef</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FFromColumns"></a><code><b>FFromColumns</b>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FToColumns"></a><code><b>FToColumns</b>: TArray&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -123,11 +162,19 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FDescription"></a><code><b>FDescription</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AReferenceTableName: string; AReferenceFieldName: string; ARuleDelete, ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; ADescription: string = '');</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AName, AFromColumns, ATableNameRef, AToColumns: string; const ARuleDelete: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> = None; const ARuleUpdate: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> = None; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -136,7 +183,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferenceTableName"></a><code>property <b>ReferenceTableName</b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceTableName">FReferenceTableName</a>;</code></td>
+<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FName">FName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -144,7 +191,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferenceFieldName"></a><code>property <b>ReferenceFieldName</b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FReferenceFieldName">FReferenceFieldName</a>;</code></td>
+<td class="itemcode"><a name="TableNameRef"></a><code>property <b>TableNameRef</b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FTableNameRef">FTableNameRef</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FromColumns"></a><code>property <b>FromColumns</b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.ForeignKey.html#FFromColumns">FFromColumns</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ToColumns"></a><code>property <b>ToColumns</b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.ForeignKey.html#FToColumns">FToColumns</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -161,6 +224,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="RuleUpdate"></a><code>property <b>RuleUpdate</b>: <a  href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a> read <a  href="ormbr.mapping.attributes.ForeignKey.html#FRuleUpdate">FRuleUpdate</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Description"></a><code>property <b>Description</b>: string read <a  href="ormbr.mapping.attributes.ForeignKey.html#FDescription">FDescription</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

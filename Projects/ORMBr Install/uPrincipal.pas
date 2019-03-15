@@ -316,7 +316,7 @@ begin
 
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       if framePacotes1.Pacotes[I].Enabled then
-        framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Caption, False);
+        framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Hint, False);
   finally
     ArqIni.Free;
   end;
@@ -350,7 +350,7 @@ begin
 
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       if framePacotes1.Pacotes[I].Enabled then
-        ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Caption, framePacotes1.Pacotes[I].Checked);
+        ArqIni.WriteBool('PACOTES', framePacotes1.Pacotes[I].Hint, framePacotes1.Pacotes[I].Checked);
   finally
     ArqIni.Free;
   end;
@@ -982,11 +982,11 @@ begin
                     WriteToTXT(PathArquivoLog, '');
 
                     if oORMBr.Installations[iVersion].InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-                      Logar(Format('Pacote "%s" instalado.', [framePacotes1.Pacotes[iDpk].Caption]))
+                      Logar(Format('Pacote "%s" instalado.', [framePacotes1.Pacotes[iDpk].Hint]))
                     else
                     begin
                       Inc(FCountErros);
-                      Logar(Format('Ocorreu um erro ao instalar o pacote "%s".', [framePacotes1.Pacotes[iDpk].Caption]));
+                      Logar(Format('Ocorreu um erro ao instalar o pacote "%s".', [framePacotes1.Pacotes[iDpk].Hint]));
 
                       Break;
                     end;
@@ -1296,7 +1296,7 @@ begin
     if framePacotes1.Pacotes[I].Checked then
     begin
       sDirRoot   := IncludeTrailingPathDelimiter(edtDirDestino.Text);
-      NomePacote := framePacotes1.Pacotes[I].Caption;
+      NomePacote := framePacotes1.Pacotes[I].Hint;
 
       // Busca diretório do pacote
       ExtrairDiretorioPacote(NomePacote);

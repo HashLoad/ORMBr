@@ -78,35 +78,19 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#GetListType">GetListType</a></b>(ARttiType: TRttiType): TRttiType;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#RunValidade">RunValidade</a></b>(AObject: TObject): Boolean;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#GetFieldType">GetFieldType</a></b>(ATypeInfo: PTypeInfo): TFieldType;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#Clone">Clone</a></b>(AObject: TObject): TObject;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#TryGetUnderlyingTypeInfo">TryGetUnderlyingTypeInfo</a></b>(ATypeInfo: PTypeInfo; out AUnderlyingTypeInfo: PTypeInfo): Boolean;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#CreateObject">CreateObject</a></b>(ARttiType: TRttiType): TObject;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#IsNullable">IsNullable</a></b>(ATypeInfo: PTypeInfo): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#IsLazy">IsLazy</a></b>(ARttiType: TRttiType): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#IsBlob">IsBlob</a></b>(ATypeInfo: PTypeInfo): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#RunValidade">RunValidade</a></b>(AClass: TClass): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#MethodCall">MethodCall</a></b>(AObject: TObject; AMethodName: string; const AParameters: array of TValue): TValue;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.mapping.rttiutils.TRttiSingleton.html#CopyObject">CopyObject</a></b>(ASourceObject, ATargetObject: TObject);</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -168,14 +152,12 @@ Public declarations</p>
 <td class="itemcode"><a name="GetRttiType"></a><code>function <b>GetRttiType</b>(AClass: TClass): TRttiType;</code></td>
 </tr>
 <tr><td colspan="2">
-<p>
-function GetRuleAction(ARuleAction: string): <a class="normal" href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; overload; function GetRuleAction(ARuleAction: Variant): <a class="normal" href="ormbr.types.mapping.html#TRuleAction">TRuleAction</a>; overload;</p>
-</td></tr>
+&nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetListType"></a><code>function <b>GetListType</b>(ARttiType: TRttiType): TRttiType;</code></td>
+<td class="itemcode"><a name="RunValidade"></a><code>function <b>RunValidade</b>(AObject: TObject): Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -183,7 +165,7 @@ function GetRuleAction(ARuleAction: string): <a class="normal" href="ormbr.types
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(ATypeInfo: PTypeInfo): TFieldType;</code></td>
+<td class="itemcode"><a name="Clone"></a><code>function <b>Clone</b>(AObject: TObject): TObject;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -191,7 +173,7 @@ function GetRuleAction(ARuleAction: string): <a class="normal" href="ormbr.types
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="TryGetUnderlyingTypeInfo"></a><code>function <b>TryGetUnderlyingTypeInfo</b>(ATypeInfo: PTypeInfo; out AUnderlyingTypeInfo: PTypeInfo): Boolean;</code></td>
+<td class="itemcode"><a name="CreateObject"></a><code>function <b>CreateObject</b>(ARttiType: TRttiType): TObject;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -199,39 +181,7 @@ function GetRuleAction(ARuleAction: string): <a class="normal" href="ormbr.types
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="IsNullable"></a><code>function <b>IsNullable</b>(ATypeInfo: PTypeInfo): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="IsLazy"></a><code>function <b>IsLazy</b>(ARttiType: TRttiType): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="IsBlob"></a><code>function <b>IsBlob</b>(ATypeInfo: PTypeInfo): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RunValidade"></a><code>function <b>RunValidade</b>(AClass: TClass): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="MethodCall"></a><code>function <b>MethodCall</b>(AObject: TObject; AMethodName: string; const AParameters: array of TValue): TValue;</code></td>
+<td class="itemcode"><a name="CopyObject"></a><code>procedure <b>CopyObject</b>(ASourceObject, ATargetObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

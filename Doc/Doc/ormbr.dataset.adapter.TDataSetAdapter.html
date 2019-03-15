@@ -32,72 +32,23 @@ $(document).ready(function() {
 <a name="TDataSetAdapter"></a><h1 class="cio">Classe TDataSetAdapter</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.dataset.adapter.html">ormbr.dataset.adapter</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TDataSetAdapter&lt;M:class,constructor&gt; = class(<a class="normal" href="ormbr.dataset.abstract.TDataSetAbstract.html">TDataSetAbstract&lt;M&gt;</a>)</code></p>
+<code>type TDataSetAdapter&lt;M:class,constructor&gt; = class(<a class="normal" href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter&lt;M&gt;</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
  M - Object M </p>
-<p>
-orm </p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.dataset.abstract.TDataSetAbstract.html">TDataSetAbstract</a></li>
+<li class="ancestor"><a class="normal" href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a></li>
 <li class="thisitem">TDataSetAdapter</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FOrmDataSet">FOrmDataSet</a></b>: TDataSet;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FOrmDataSetEvents">FOrmDataSetEvents</a></b>: TDataSet;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FOrmDataSource">FOrmDataSource</a></b>: TDataSource;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FOwnerMasterObject">FOwnerMasterObject</a></b>: TObject;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FPageSize">FPageSize</a></b>: Integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FDataSetEvents">FDataSetEvents</a></b>: <a  href="ormbr.dataset.events.TDataSetEvents.html">TDataSetEvents</a>;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FCurrentRecordInternal">FCurrentRecordInternal</a></b>: M;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FMasterObject">FMasterObject</a></b>: TDictionary&lt;string, <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;&gt;;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FLookupsField">FLookupsField</a></b>: TList&lt;<a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;&gt;;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FSession">FSession</a></b>: <a  href="ormbr.session.manager.TSessionDataSet.html">TSessionDataSet</a>&lt;M&gt;;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FInternalIndex">FInternalIndex</a></b>: Integer;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FAutoNextPacket">FAutoNextPacket</a></b>: Boolean;</code></td>
-</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FConnection">FConnection</a></b>: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>;</code></td>
@@ -107,372 +58,51 @@ orm </p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#OpenDataSetChilds">OpenDataSetChilds</a></b>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#RefreshDataSetOneToOneChilds">RefreshDataSetOneToOneChilds</a></b>(AFieldName: string);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#SetMasterObject">SetMasterObject</a></b>(const AValue: TObject);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoStateChange">DoStateChange</a></b>(Sender: TObject);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoDataChange">DoDataChange</a></b>(Sender: TObject; Field: TField);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoUpdateData">DoUpdateData</a></b>(Sender: TObject);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FillMastersClass">FillMastersClass</a></b>(ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; AObject: M);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ExecuteOneToOne">ExecuteOneToOne</a></b>(AObject: M; oProperty: TRttiProperty; ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ExecuteOneToMany">ExecuteOneToMany</a></b>(AObject: M; oProperty: TRttiProperty; ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; oRttiType: TRttiType);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetMasterValues">GetMasterValues</a></b>;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetRelationFields">GetRelationFields</a></b>(ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; ADetail: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; var ASQLBuild: ICriteria): Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#FindEvents">FindEvents</a></b>(AEventName: string): Boolean;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetAutoNextPacket">GetAutoNextPacket</a></b>: Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#SetAutoNextPacket">SetAutoNextPacket</a></b>(const Value: Boolean);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a></b>: M;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ExecuteCheckNotNull">ExecuteCheckNotNull</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#OpenInternal">OpenInternal</a></b>(ASQL: string; AID: TValue); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#OpenDataSetChilds">OpenDataSetChilds</a></b>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeScroll">DoBeforeScroll</a></b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#RefreshDataSetOneToOneChilds">RefreshDataSetOneToOneChilds</a></b>(AFieldName: string); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterScroll">DoAfterScroll</a></b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterScroll">DoAfterScroll</a></b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeOpen">DoBeforeOpen</a></b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforePost">DoBeforePost</a></b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterOpen">DoAfterOpen</a></b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeDelete">DoBeforeDelete</a></b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeClose">DoBeforeClose</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterClose">DoAfterClose</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeDelete">DoBeforeDelete</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterDelete">DoAfterDelete</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforePost">DoBeforePost</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterPost">DoAfterPost</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoBeforeCancel">DoBeforeCancel</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoAfterCancel">DoAfterCancel</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoNewRecord">DoNewRecord</a></b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#EmptyDataSetChilds">EmptyDataSetChilds</a></b>; virtual; abstract;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetDataSetEvents">GetDataSetEvents</a></b>; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#SetDataSetEvents">SetDataSetEvents</a></b>; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DisableDataSetEvents">DisableDataSetEvents</a></b>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#EnableDataSetEvents">EnableDataSetEvents</a></b>;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ApplyInserter">ApplyInserter</a></b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ApplyUpdater">ApplyUpdater</a></b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ApplyDeleter">ApplyDeleter</a></b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ApplyInternal">ApplyInternal</a></b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#RefreshRecord">RefreshRecord</a></b>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#PopularDataSet">PopularDataSet</a></b>(ADBResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Lazy">Lazy</a></b>(AOwner: M);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Open">Open</a></b>(AID: TValue); overload; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Open">Open</a></b>; overload; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Open">Open</a></b>(AWhere: string; AOrderBy: string = ''); overload; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#OpenWhere">OpenWhere</a></b>(AWhere: string); deprecated 'Use Open()';</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Insert">Insert</a></b>; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Append">Append</a></b>; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Post">Post</a></b>; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Edit">Edit</a></b>; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Delete">Delete</a></b>; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Close">Close</a></b>; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Cancel">Cancel</a></b>; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#CancelUpdates">CancelUpdates</a></b>; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Save">Save</a></b>(AObject: M); virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#ApplyUpdates">ApplyUpdates</a></b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#AddCalcField">AddCalcField</a></b>(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#AddLookupField">AddLookupField</a></b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#AddAggregateField">AddAggregateField</a></b>(AFieldName: string; AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#NextPacket">NextPacket</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#DoNewRecord">DoNewRecord</a></b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); virtual;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
-</table>
-<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
-<table class="summary wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#Current">Current</a></b>: M read <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a>;</code></td>
-</tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#AutoNextPacket">AutoNextPacket</a></b>: Boolean read <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetAutoNextPacket">GetAutoNextPacket</a> write <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#SetAutoNextPacket">SetAutoNextPacket</a>;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#NextPacket">NextPacket</a></b>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.adapter.TDataSetAdapter.html#LoadLazy">LoadLazy</a></b>(const AOwner: M); override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FOrmDataSet"></a><code><b>FOrmDataSet</b>: TDataSet;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Objeto interface com o DataSet passado pela interface. </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FOrmDataSetEvents"></a><code><b>FOrmDataSetEvents</b>: TDataSet;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Objeto para captura dos eventos do dataset passado pela interface </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FOrmDataSource"></a><code><b>FOrmDataSource</b>: TDataSource;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Objeto para controle de estado do registro </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FOwnerMasterObject"></a><code><b>FOwnerMasterObject</b>: TObject;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Usado em relacionamento mestre-detalhe, guarda qual objeto pai </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FPageSize"></a><code><b>FPageSize</b>: Integer;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Controle de paginação vindo do banco de dados </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FDataSetEvents"></a><code><b>FDataSetEvents</b>: <a  href="ormbr.dataset.events.TDataSetEvents.html">TDataSetEvents</a>;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Classe para controle de evento interno com os eventos da interface do dataset </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FCurrentRecordInternal"></a><code><b>FCurrentRecordInternal</b>: M;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
- Uso interno para fazer mapeamento do registro dataset </p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FMasterObject"></a><code><b>FMasterObject</b>: TDictionary&lt;string, <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;&gt;;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FLookupsField"></a><code><b>FLookupsField</b>: TList&lt;<a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;&gt;;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FSession"></a><code><b>FSession</b>: <a  href="ormbr.session.manager.TSessionDataSet.html">TSessionDataSet</a>&lt;M&gt;;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FInternalIndex"></a><code><b>FInternalIndex</b>: Integer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FAutoNextPacket"></a><code><b>FAutoNextPacket</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -485,119 +115,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="OpenDataSetChilds"></a><code>procedure <b>OpenDataSetChilds</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="RefreshDataSetOneToOneChilds"></a><code>procedure <b>RefreshDataSetOneToOneChilds</b>(AFieldName: string);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="SetMasterObject"></a><code>procedure <b>SetMasterObject</b>(const AValue: TObject);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoStateChange"></a><code>procedure <b>DoStateChange</b>(Sender: TObject);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoDataChange"></a><code>procedure <b>DoDataChange</b>(Sender: TObject; Field: TField);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="DoUpdateData"></a><code>procedure <b>DoUpdateData</b>(Sender: TObject);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FillMastersClass"></a><code>procedure <b>FillMastersClass</b>(ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; AObject: M);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ExecuteOneToOne"></a><code>procedure <b>ExecuteOneToOne</b>(AObject: M; oProperty: TRttiProperty; ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="ExecuteOneToMany"></a><code>procedure <b>ExecuteOneToMany</b>(AObject: M; oProperty: TRttiProperty; ADatasetBase: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; oRttiType: TRttiType);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetMasterValues"></a><code>procedure <b>GetMasterValues</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetRelationFields"></a><code>function <b>GetRelationFields</b>(ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; ADetail: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;; var ASQLBuild: ICriteria): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FindEvents"></a><code>function <b>FindEvents</b>(AEventName: string): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetAutoNextPacket"></a><code>function <b>GetAutoNextPacket</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="SetAutoNextPacket"></a><code>procedure <b>SetAutoNextPacket</b>(const Value: Boolean);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetCurrentRecordInternal"></a><code>function <b>GetCurrentRecordInternal</b>: M;</code></td>
+<td class="itemcode"><a name="ExecuteCheckNotNull"></a><code>procedure <b>ExecuteCheckNotNull</b>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -605,7 +123,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="OpenInternal"></a><code>procedure <b>OpenInternal</b>(ASQL: string; AID: TValue); virtual;</code></td>
+<td class="itemcode"><a name="OpenDataSetChilds"></a><code>procedure <b>OpenDataSetChilds</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -613,7 +131,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforeScroll"></a><code>procedure <b>DoBeforeScroll</b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><a name="RefreshDataSetOneToOneChilds"></a><code>procedure <b>RefreshDataSetOneToOneChilds</b>(AFieldName: string); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -621,7 +139,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterScroll"></a><code>procedure <b>DoAfterScroll</b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><a name="DoAfterScroll"></a><code>procedure <b>DoAfterScroll</b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -629,7 +147,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforeOpen"></a><code>procedure <b>DoBeforeOpen</b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><a name="DoBeforePost"></a><code>procedure <b>DoBeforePost</b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -637,7 +155,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterOpen"></a><code>procedure <b>DoAfterOpen</b>(DataSet: TDataSet); virtual;</code></td>
+<td class="itemcode"><a name="DoBeforeDelete"></a><code>procedure <b>DoBeforeDelete</b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -645,313 +163,7 @@ orm </p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforeClose"></a><code>procedure <b>DoBeforeClose</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterClose"></a><code>procedure <b>DoAfterClose</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforeDelete"></a><code>procedure <b>DoBeforeDelete</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterDelete"></a><code>procedure <b>DoAfterDelete</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforePost"></a><code>procedure <b>DoBeforePost</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterPost"></a><code>procedure <b>DoAfterPost</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoBeforeCancel"></a><code>procedure <b>DoBeforeCancel</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoAfterCancel"></a><code>procedure <b>DoAfterCancel</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DoNewRecord"></a><code>procedure <b>DoNewRecord</b>(DataSet: TDataSet); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="EmptyDataSetChilds"></a><code>procedure <b>EmptyDataSetChilds</b>; virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetDataSetEvents"></a><code>procedure <b>GetDataSetEvents</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="SetDataSetEvents"></a><code>procedure <b>SetDataSetEvents</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DisableDataSetEvents"></a><code>procedure <b>DisableDataSetEvents</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="EnableDataSetEvents"></a><code>procedure <b>EnableDataSetEvents</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyInserter"></a><code>procedure <b>ApplyInserter</b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyUpdater"></a><code>procedure <b>ApplyUpdater</b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyDeleter"></a><code>procedure <b>ApplyDeleter</b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyInternal"></a><code>procedure <b>ApplyInternal</b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="RefreshRecord"></a><code>procedure <b>RefreshRecord</b>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="PopularDataSet"></a><code>procedure <b>PopularDataSet</b>(ADBResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Lazy"></a><code>procedure <b>Lazy</b>(AOwner: M);</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-Comandos DataSet</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(AID: TValue); overload; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>; overload; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(AWhere: string; AOrderBy: string = ''); overload; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="OpenWhere"></a><code>procedure <b>OpenWhere</b>(AWhere: string); deprecated 'Use Open()';</code></td>
-</tr>
-<tr><td colspan="2">
-<p class="hint_directive">Warning: este símbolo está depreciado: Use Open()</p>&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Insert"></a><code>procedure <b>Insert</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Append"></a><code>procedure <b>Append</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Post"></a><code>procedure <b>Post</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Edit"></a><code>procedure <b>Edit</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Delete"></a><code>procedure <b>Delete</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Close"></a><code>procedure <b>Close</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Cancel"></a><code>procedure <b>Cancel</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="CancelUpdates"></a><code>procedure <b>CancelUpdates</b>; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Save"></a><code>procedure <b>Save</b>(AObject: M); virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ApplyUpdates"></a><code>procedure <b>ApplyUpdates</b>(MaxErros: Integer); virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="AddCalcField"></a><code>procedure <b>AddCalcField</b>(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="AddLookupField"></a><code>procedure <b>AddLookupField</b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="AddAggregateField"></a><code>procedure <b>AddAggregateField</b>(AFieldName: string; AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="NextPacket"></a><code>procedure <b>NextPacket</b>;</code></td>
+<td class="itemcode"><a name="DoNewRecord"></a><code>procedure <b>DoNewRecord</b>(DataSet: TDataSet); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -959,7 +171,7 @@ Comandos DataSet</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); virtual;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -972,21 +184,18 @@ Comandos DataSet</p>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<h3 class="detail">Properties</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Current"></a><code>property <b>Current</b>: M read <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a>;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="NextPacket"></a><code>procedure <b>NextPacket</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
-<p>
- Uso na interface para ler, gravar e alterar dados do registro atual no dataset, pelo objeto. </p>
-</td></tr>
+&nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="AutoNextPacket"></a><code>property <b>AutoNextPacket</b>: Boolean read <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#GetAutoNextPacket">GetAutoNextPacket</a> write <a  href="ormbr.dataset.adapter.TDataSetAdapter.html#SetAutoNextPacket">SetAutoNextPacket</a>;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="LoadLazy"></a><code>procedure <b>LoadLazy</b>(const AOwner: M); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

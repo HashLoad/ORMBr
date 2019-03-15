@@ -44,7 +44,7 @@ $(document).ready(function() {
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBase64String">FBase64String</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBase64String">FBase64String</a></b>: String;</code></td>
 </tr>
 <tr class="list2">
 <td class="itemcode"><code><b><a  href="ormbr.types.blob.TBlob.html#FBase64Bytes">FBase64Bytes</a></b>: TBytes;</code></td>
@@ -89,18 +89,21 @@ $(document).ready(function() {
 <td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#ToPicture">ToPicture</a></b>(APicture: TPicture);</code></td>
 </tr>
 <tr class="list2">
+<td class="itemcode"><code>procedure <b><a  href="ormbr.types.blob.TBlob.html#ToBitmap">ToBitmap</a></b>(ABitmap: TBitmap);</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytes">ToBytes</a></b>: TBytes;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytesString">ToBytesString</a></b>: string; overload;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToBytesString">ToBytesString</a></b>(const AString: string): Boolean; overload;</code></td>
 </tr>
-<tr class="list">
-<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToString">ToString</a></b>: string;</code></td>
-</tr>
 <tr class="list2">
+<td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToString">ToString</a></b>: String;</code></td>
+</tr>
+<tr class="list">
 <td class="itemcode"><code>function <b><a  href="ormbr.types.blob.TBlob.html#ToSize">ToSize</a></b>: Integer;</code></td>
 </tr>
 </table>
@@ -108,7 +111,7 @@ $(document).ready(function() {
 <h3 class="detail">Campos</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="FBase64String"></a><code><b>FBase64String</b>: string;</code></td>
+<td class="itemcode"><a name="FBase64String"></a><code><b>FBase64String</b>: String;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>
@@ -207,6 +210,13 @@ $(document).ready(function() {
 </table>
 <table class="detail wide_list">
 <tr class="list">
+<td class="itemcode"><a name="ToBitmap"></a><code>procedure <b>ToBitmap</b>(ABitmap: TBitmap);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="itemcode"><a name="ToBytes"></a><code>function <b>ToBytes</b>: TBytes;</code></td>
 </tr>
 <tr><td colspan="1">
@@ -228,7 +238,7 @@ $(document).ready(function() {
 </table>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="ToString"></a><code>function <b>ToString</b>: string;</code></td>
+<td class="itemcode"><a name="ToString"></a><code>function <b>ToString</b>: String;</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>

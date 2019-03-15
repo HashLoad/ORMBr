@@ -47,10 +47,14 @@ $(document).ready(function() {
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.command.updater.TCommandUpdater.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.updater.TCommandUpdater.html#GetParamValue">GetParamValue</a></b>(AInstance: TObject; AProperty: TRttiProperty; AFieldType: TFieldType): Variant;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.command.updater.TCommandUpdater.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.command.updater.TCommandUpdater.html#GenerateUpdate">GenerateUpdate</a></b>(AObject: TObject; AModifiedFields: TList&lt;string&gt;): string;</code></td>
 </tr>
@@ -59,8 +63,16 @@ $(document).ready(function() {
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetParamValue"></a><code>function <b>GetParamValue</b>(AInstance: TObject; AProperty: TRttiProperty; AFieldType: TFieldType): Variant;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

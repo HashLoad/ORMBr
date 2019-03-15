@@ -53,26 +53,26 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FColumnName">FColumnName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FColumnsName">FColumnsName</a></b>: TArray&lt;string&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FReferencedColumnName">FReferencedColumnName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FTabelNameRef">FTabelNameRef</a></b>: string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FColumns">FColumns</a></b>: TArray&lt;string&gt;;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FColumnsNameRef">FColumnsNameRef</a></b>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Association.html#FLazy">FLazy</a></b>: Boolean;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Association.html#Create">Create</a></b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName: string); overload;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Association.html#Create">Create</a></b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AColumns: string); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Association.html#Create">Create</a></b>(const AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; const AColumnsName, ATableNameRef, AColumnsNameRef: string; const ALazy: Boolean = False);</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -83,15 +83,19 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#ColumnName">ColumnName</a></b>: string read <a  href="ormbr.mapping.attributes.Association.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#ColumnsName">ColumnsName</a></b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumnsName">FColumnsName</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#ReferencedColumnName">ReferencedColumnName</a></b>: string read <a  href="ormbr.mapping.attributes.Association.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#TableNameRef">TableNameRef</a></b>: string read <a  href="ormbr.mapping.attributes.Association.html#FTabelNameRef">FTabelNameRef</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#Columns">Columns</a></b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumns">FColumns</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#ColumnsNameRef">ColumnsNameRef</a></b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumnsNameRef">FColumnsNameRef</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Association.html#Lazy">Lazy</a></b>: Boolean read <a  href="ormbr.mapping.attributes.Association.html#FLazy">FLazy</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -107,7 +111,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FColumnName"></a><code><b>FColumnName</b>: string;</code></td>
+<td class="itemcode"><a name="FColumnsName"></a><code><b>FColumnsName</b>: TArray&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -115,7 +119,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferencedColumnName"></a><code><b>FReferencedColumnName</b>: string;</code></td>
+<td class="itemcode"><a name="FTabelNameRef"></a><code><b>FTabelNameRef</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -123,7 +127,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FColumns"></a><code><b>FColumns</b>: TArray&lt;string&gt;;</code></td>
+<td class="itemcode"><a name="FColumnsNameRef"></a><code><b>FColumnsNameRef</b>: TArray&lt;string&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FLazy"></a><code><b>FLazy</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -132,15 +144,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName: string); overload;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AColumns: string); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; const AColumnsName, ATableNameRef, AColumnsNameRef: string; const ALazy: Boolean = False);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -157,7 +161,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ColumnName"></a><code>property <b>ColumnName</b>: string read <a  href="ormbr.mapping.attributes.Association.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><a name="ColumnsName"></a><code>property <b>ColumnsName</b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumnsName">FColumnsName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -165,7 +169,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferencedColumnName"></a><code>property <b>ReferencedColumnName</b>: string read <a  href="ormbr.mapping.attributes.Association.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><a name="TableNameRef"></a><code>property <b>TableNameRef</b>: string read <a  href="ormbr.mapping.attributes.Association.html#FTabelNameRef">FTabelNameRef</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -173,7 +177,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Columns"></a><code>property <b>Columns</b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumns">FColumns</a>;</code></td>
+<td class="itemcode"><a name="ColumnsNameRef"></a><code>property <b>ColumnsNameRef</b>: TArray&lt;string&gt; read <a  href="ormbr.mapping.attributes.Association.html#FColumnsNameRef">FColumnsNameRef</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Lazy"></a><code>property <b>Lazy</b>: Boolean read <a  href="ormbr.mapping.attributes.Association.html#FLazy">FLazy</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -44,7 +44,7 @@ $(document).ready(function() {
  Unit : ormbr.driver.connection.pas Classe : <a class="normal" href="ormbr.driver.connection.TDriverResultSet.html">TDriverResultSet</a>&lt;T: TDataSet&gt; </p>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{DF558CDD-6CB4-4B42-8D6B-E4FC5F2642EA}']</dt>
+  <dt>GUID['{A8ECADF6-A9AF-4610-8429-3B0A5CD0295C}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -78,15 +78,23 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldValue">GetFieldValue</a></b>(AFieldName: string): Variant; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldValue">GetFieldValue</a></b>(const AFieldName: string): Variant; overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldValue">GetFieldValue</a></b>(AFieldIndex: Integer): Variant; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldValue">GetFieldValue</a></b>(const AFieldIndex: Integer): Variant; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldType">GetFieldType</a></b>(AFieldName: string): TFieldType;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetField">GetField</a></b>(const AFieldName: string): TField;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFieldType">GetFieldType</a></b>(const AFieldName: string): TFieldType;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBResultSet.html#FieldByName">FieldByName</a></b>(const AFieldName: string): <a  href="ormbr.factory.interfaces.TAsField.html">TAsField</a>;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -149,7 +157,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldName: string): Variant; overload;</code></td>
+<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(const AFieldName: string): Variant; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -157,7 +165,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldIndex: Integer): Variant; overload;</code></td>
+<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(const AFieldIndex: Integer): Variant; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -165,7 +173,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(AFieldName: string): TFieldType;</code></td>
+<td class="itemcode"><a name="GetField"></a><code>function <b>GetField</b>(const AFieldName: string): TField;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(const AFieldName: string): TFieldType;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FieldByName"></a><code>function <b>FieldByName</b>(const AFieldName: string): <a  href="ormbr.factory.interfaces.TAsField.html">TAsField</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -177,7 +201,9 @@ $(document).ready(function() {
 <td class="itemcode"><a name="FetchingAll"></a><code>property <b>FetchingAll</b>: Boolean read <a  href="ormbr.factory.interfaces.IDBResultSet.html#GetFetchingAll">GetFetchingAll</a> write <a  href="ormbr.factory.interfaces.IDBResultSet.html#SetFetchingAll">SetFetchingAll</a>;</code></td>
 </tr>
 <tr><td colspan="2">
-&nbsp;</td></tr>
+<p>
+function DataSet: TDataSet;</p>
+</td></tr>
 </table>
 <hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
 </span>

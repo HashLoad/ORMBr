@@ -94,12 +94,20 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.mapping.TColumnMIK.html#FDefaultValue">FDefaultValue</a></b>: string;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TColumnMIK.html#FIsPrimaryKey">FIsPrimaryKey</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.mapping.TColumnMIK.html#FCharSet">FCharSet</a></b>: string;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.database.mapping.TColumnMIK.html#Create">Create</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.database.mapping.TColumnMIK.html#Create">Create</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a> = nil);</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -151,6 +159,14 @@ $(document).ready(function() {
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TColumnMIK.html#DefaultValue">DefaultValue</a></b>: string read <a  href="ormbr.database.mapping.TColumnMIK.html#FDefaultValue">FDefaultValue</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FDefaultValue">FDefaultValue</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TColumnMIK.html#IsPrimaryKey">IsPrimaryKey</a></b>: boolean read <a  href="ormbr.database.mapping.TColumnMIK.html#FIsPrimaryKey">FIsPrimaryKey</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FIsPrimaryKey">FIsPrimaryKey</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.mapping.TColumnMIK.html#CharSet">CharSet</a></b>: string read <a  href="ormbr.database.mapping.TColumnMIK.html#FCharSet">FcharSet</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FCharSet">FCharSet</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -251,11 +267,27 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><a name="FIsPrimaryKey"></a><code><b>FIsPrimaryKey</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
+<td class="itemcode"><a name="FCharSet"></a><code><b>FCharSet</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>);</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a> = nil);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -353,6 +385,22 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="DefaultValue"></a><code>property <b>DefaultValue</b>: string read <a  href="ormbr.database.mapping.TColumnMIK.html#FDefaultValue">FDefaultValue</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FDefaultValue">FDefaultValue</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="IsPrimaryKey"></a><code>property <b>IsPrimaryKey</b>: boolean read <a  href="ormbr.database.mapping.TColumnMIK.html#FIsPrimaryKey">FIsPrimaryKey</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FIsPrimaryKey">FIsPrimaryKey</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CharSet"></a><code>property <b>CharSet</b>: string read <a  href="ormbr.database.mapping.TColumnMIK.html#FCharSet">FcharSet</a> write <a  href="ormbr.database.mapping.TColumnMIK.html#FCharSet">FCharSet</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

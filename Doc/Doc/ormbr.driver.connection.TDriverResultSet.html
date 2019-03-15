@@ -32,13 +32,13 @@ $(document).ready(function() {
 <a name="TDriverResultSet"></a><h1 class="cio">Classe TDriverResultSet</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.driver.connection.html">ormbr.driver.connection</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TDriverResultSet&lt;T:TDataSet&gt; = class(<a class="normal" href="ormbr.driver.connection.TDriverResultSetBase.html">TDriverResultSetBase</a>, <a class="normal" href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>)</code></p>
+<code>type TDriverResultSet&lt;T:TDataSet&gt; = class abstract(<a class="normal" href="ormbr.driver.connection.TDriverResultSetBase.html">TDriverResultSetBase</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <div class="nodescription">no description available, TDriverResultSetBase description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
@@ -50,79 +50,24 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverResultSet.html#FDataSet">FDataSet</a></b>: T;</code></td>
 </tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverResultSet.html#FRecordCount">FRecordCount</a></b>: Integer;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverResultSet.html#FFetchingAll">FFetchingAll</a></b>: Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverResultSet.html#FFirstNext">FFirstNext</a></b>: Boolean;</code></td>
-</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#GetFetchingAll">GetFetchingAll</a></b>: Boolean;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.driver.connection.TDriverResultSet.html#SetFetchingAll">SetFetchingAll</a></b>(const Value: Boolean);</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#GetDataSet">GetDataSet</a></b>: T;</code></td>
-</tr>
-<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>constructor <b><a  href="ormbr.driver.connection.TDriverResultSet.html#Create">Create</a></b>(ADataSet: T); virtual;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a  href="ormbr.driver.connection.TDriverResultSet.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.driver.connection.TDriverResultSet.html#Close">Close</a></b>; virtual;</code></td>
-</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#NotEof">NotEof</a></b>: Boolean; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.driver.connection.TDriverResultSet.html#Close">Close</a></b>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#RecordCount">RecordCount</a></b>: Integer; virtual;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#FieldDefs">FieldDefs</a></b>: TFieldDefs; virtual;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#GetFieldValue">GetFieldValue</a></b>(AFieldName: string): Variant; overload; virtual; abstract;</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#GetFieldValue">GetFieldValue</a></b>(AFieldIndex: Integer): Variant; overload; virtual; abstract;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#GetFieldType">GetFieldType</a></b>(AFieldName: string): TFieldType; overload; virtual; abstract;</code></td>
-</tr>
-</table>
-<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
-<table class="summary wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.driver.connection.TDriverResultSet.html#DataSet">DataSet</a></b>: T read <a  href="ormbr.driver.connection.TDriverResultSet.html#GetDataSet">GetDataSet</a>;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.driver.connection.TDriverResultSet.html#FetchingAll">FetchingAll</a></b>: Boolean read <a  href="ormbr.driver.connection.TDriverResultSet.html#GetFetchingAll">GetFetchingAll</a> write <a  href="ormbr.driver.connection.TDriverResultSet.html#SetFetchingAll">SetFetchingAll</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverResultSet.html#FieldDefs">FieldDefs</a></b>: TFieldDefs; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -135,55 +80,7 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FRecordCount"></a><code><b>FRecordCount</b>: Integer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FFetchingAll"></a><code><b>FFetchingAll</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FFirstNext"></a><code><b>FFirstNext</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <h3 class="detail">Métodos</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetFetchingAll"></a><code>function <b>GetFetchingAll</b>: Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="SetFetchingAll"></a><code>procedure <b>SetFetchingAll</b>(const Value: Boolean);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetDataSet"></a><code>function <b>GetDataSet</b>: T;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -203,7 +100,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Close"></a><code>procedure <b>Close</b>; virtual;</code></td>
+<td class="itemcode"><a name="Close"></a><code>procedure <b>Close</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -211,64 +108,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="NotEof"></a><code>function <b>NotEof</b>: Boolean; virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RecordCount"></a><code>function <b>RecordCount</b>: Integer; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FieldDefs"></a><code>function <b>FieldDefs</b>: TFieldDefs; virtual;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldName: string): Variant; overload; virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldIndex: Integer): Variant; overload; virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(AFieldName: string): TFieldType; overload; virtual; abstract;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<h3 class="detail">Properties</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="DataSet"></a><code>property <b>DataSet</b>: T read <a  href="ormbr.driver.connection.TDriverResultSet.html#GetDataSet">GetDataSet</a>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FetchingAll"></a><code>property <b>FetchingAll</b>: Boolean read <a  href="ormbr.driver.connection.TDriverResultSet.html#GetFetchingAll">GetFetchingAll</a> write <a  href="ormbr.driver.connection.TDriverResultSet.html#SetFetchingAll">SetFetchingAll</a>;</code></td>
+<td class="itemcode"><a name="FieldDefs"></a><code>function <b>FieldDefs</b>: TFieldDefs; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

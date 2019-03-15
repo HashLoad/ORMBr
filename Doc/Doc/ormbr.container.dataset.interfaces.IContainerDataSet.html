@@ -42,7 +42,7 @@ $(document).ready(function() {
 <h2 class="description">Descrição</h2>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{55C7F31F-6D2C-4F1F-BF09-8DA8A6FF72D8}']</dt>
+  <dt>GUID['{67DC311E-06BF-4B41-93E1-FA66AB0D8537}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -52,39 +52,31 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetDataSetBase">GetDataSetBase</a></b>: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;;</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetAutoNextPacket">GetAutoNextPacket</a></b>: Boolean;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#SetAutoNextPacket">SetAutoNextPacket</a></b>(const Value: Boolean);</code></td>
 </tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a></b>: M;</code></td>
-</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Lazy">Lazy</a></b>(AOwner: M);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#LoadLazy">LoadLazy</a></b>(AOwner: M);</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Open">Open</a></b>(AID: TValue); overload;</code></td>
-</tr>
-<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Open">Open</a></b>; overload;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Open">Open</a></b>(const AID: Integer); overload;</code></td>
+</tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Open">Open</a></b>(AWhere: string; AOrderBy: string = ''); overload;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Open">Open</a></b>(const AID: String); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#OpenWhere">OpenWhere</a></b>(AWhere: string); deprecated 'Use Open()';</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#OpenWhere">OpenWhere</a></b>(const AWhere: string; const AOrderBy: string = '');</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -116,6 +108,14 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#RefreshRecord">RefreshRecord</a></b>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#EmptyDataSet">EmptyDataSet</a></b>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#CancelUpdates">CancelUpdates</a></b>;</code></td>
 </tr>
 <tr class="list2">
@@ -128,31 +128,47 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#AddCalcField">AddCalcField</a></b>(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#AddLookupField">AddLookupField</a></b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string);</code></td>
-</tr>
-<tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#AddAggregateField">AddAggregateField</a></b>(AFieldName: string; AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#AddLookupField">AddLookupField</a></b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string; ADisplayLabel: string = '');</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#NextPacket">NextPacket</a></b>;</code></td>
 </tr>
-</table>
-<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
-<table class="summary wide_list">
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#DataSet">DataSet</a></b>: TDataSet;</code></td>
+</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#DataSet">DataSet</a></b>: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt; read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetDataSetBase">GetDataSetBase</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#MasterObject">MasterObject</a></b>: <a  href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a>&lt;M&gt;; deprecated 'Use This';</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Current">Current</a></b>: M read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#This">This</a></b>: <a  href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a>&lt;M&gt;;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Current">Current</a></b>: M;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Find">Find</a></b>: TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Find">Find</a></b>(const AID: Integer): M; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#Find">Find</a></b>(const AID: String): M; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#FindWhere">FindWhere</a></b>(const AWhere: string; const AOrderBy: string = ''): TObjectList&lt;M&gt;;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
+<table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#AutoNextPacket">AutoNextPacket</a></b>: Boolean read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetAutoNextPacket">GetAutoNextPacket</a> write <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#SetAutoNextPacket">SetAutoNextPacket</a>;</code></td>
@@ -160,14 +176,6 @@ $(document).ready(function() {
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Métodos</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDataSetBase"></a><code>function <b>GetDataSetBase</b>: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt;;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -187,23 +195,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetCurrentRecordInternal"></a><code>function <b>GetCurrentRecordInternal</b>: M;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Lazy"></a><code>procedure <b>Lazy</b>(AOwner: M);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(AID: TValue); overload;</code></td>
+<td class="itemcode"><a name="LoadLazy"></a><code>procedure <b>LoadLazy</b>(AOwner: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -219,7 +211,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(AWhere: string; AOrderBy: string = ''); overload;</code></td>
+<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(const AID: Integer); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -227,10 +219,18 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="OpenWhere"></a><code>procedure <b>OpenWhere</b>(AWhere: string); deprecated 'Use Open()';</code></td>
+<td class="itemcode"><a name="Open"></a><code>procedure <b>Open</b>(const AID: String); overload;</code></td>
 </tr>
 <tr><td colspan="2">
-<p class="hint_directive">Warning: este símbolo está depreciado: Use Open()</p>&nbsp;</td></tr>
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="OpenWhere"></a><code>procedure <b>OpenWhere</b>(const AWhere: string; const AOrderBy: string = '');</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
 </table>
 <table class="detail wide_list">
 <tr class="list">
@@ -291,6 +291,22 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="RefreshRecord"></a><code>procedure <b>RefreshRecord</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="EmptyDataSet"></a><code>procedure <b>EmptyDataSet</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="CancelUpdates"></a><code>procedure <b>CancelUpdates</b>;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -315,23 +331,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddCalcField"></a><code>procedure <b>AddCalcField</b>(AFieldName: string; AFieldType: TFieldType; ASize: Integer = 0; ADisplayFormat: string = '');</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddLookupField"></a><code>procedure <b>AddLookupField</b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string);</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AddAggregateField"></a><code>procedure <b>AddAggregateField</b>(AFieldName: string; AExpression: string; AAlignment: TAlignment = taLeftJustify; ADisplayFormat: string = '');</code></td>
+<td class="itemcode"><a name="AddLookupField"></a><code>procedure <b>AddLookupField</b>(AFieldName: string; AKeyFields: string; ALookupDataSet: TObject; ALookupKeyFields: string; ALookupResultField: string; ADisplayLabel: string = '');</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -344,30 +344,82 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="DataSet"></a><code>function <b>DataSet</b>: TDataSet;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="MasterObject"></a><code>function <b>MasterObject</b>: <a  href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a>&lt;M&gt;; deprecated 'Use This';</code></td>
+</tr>
+<tr><td colspan="2">
+<p class="hint_directive">Warning: este símbolo está depreciado: Use This</p>&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="This"></a><code>function <b>This</b>: <a  href="ormbr.dataset.base.adapter.TDataSetBaseAdapter.html">TDataSetBaseAdapter</a>&lt;M&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Current"></a><code>function <b>Current</b>: M;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>: TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ObjectSet</p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(const AID: Integer): M; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(const AID: String): M; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FindWhere"></a><code>function <b>FindWhere</b>(const AWhere: string; const AOrderBy: string = ''): TObjectList&lt;M&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Properties</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DataSet"></a><code>property <b>DataSet</b>: <a  href="ormbr.dataset.adapter.TDataSetAdapter.html">TDataSetAdapter</a>&lt;M&gt; read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetDataSetBase">GetDataSetBase</a>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Current"></a><code>property <b>Current</b>: M read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetCurrentRecordInternal">GetCurrentRecordInternal</a>;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="AutoNextPacket"></a><code>property <b>AutoNextPacket</b>: Boolean read <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#GetAutoNextPacket">GetAutoNextPacket</a> write <a  href="ormbr.container.dataset.interfaces.IContainerDataSet.html#SetAutoNextPacket">SetAutoNextPacket</a>;</code></td>
 </tr>
 <tr><td colspan="2">
-&nbsp;</td></tr>
+<p>
+<a class="normal" href="ormbr.container.dataset.interfaces.IContainerDataSet.html#DataSet">DataSet</a></p>
+</td></tr>
 </table>
 <hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
 </span>

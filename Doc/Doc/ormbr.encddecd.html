@@ -32,90 +32,39 @@ $(document).ready(function() {
 <h1 class="unit">Unit ormbr.encddecd</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Uses">Uses</a></td><td>Classes, Interfaces, Objetos e Registros</td><td><a class="section" href="#PasDoc-FuncsProcs">Funções e Procedimentos</a></td><td>Tipos</td><td>Constantes</td><td>Variáveis</td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Uses">Uses</a></td><td><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objetos e Registros</a></td><td>Funções e Procedimentos</td><td>Tipos</td><td>Constantes</td><td>Variáveis</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="description">Descrição</h2>
 <p>
-ORMBr Framework.</p>
-<p>
-   
-
-<p>ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.</p>
+Delphi ??? Delphi TOKYO Delphi BERLIN Delphi SEATLLE Delphi XE8 Delphi XE7 Delphi XE6 Delphi XE5 Delphi XE4 Delphi XE3 Delphi XE2 Delphi XE Delphi 2010</p>
 <a name="PasDoc-Uses"></a><h2 class="uses">Uses</h2>
 <ul class="useslist"><li>Classes</li><li>SysUtils</li></ul><h2 class="overview">Visão Geral</h2>
-<a name="PasDoc-FuncsProcs"></a><h3 class="summary">Funções e Procedimentos</h3>
-<table class="summary wide_list">
+<a name="PasDoc-Classes"></a><h3 class="cio">Classes, Interfaces, Objetos e Registros</h3>
+<table class="classestable wide_list">
+<tr class="listheader">
+<th class="itemname">Nome</th>
+<th class="itemdesc">Descrição</th>
+</tr>
 <tr class="list">
-<td class="itemcode"><code>procedure <b><a  href="ormbr.encddecd.html#EncodeStream">EncodeStream</a></b>(Input, Output: TStream);</code></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.encddecd.TNetEncoding.html"><code>TNetEncoding</code></a></td>
+<td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>procedure <b><a  href="ormbr.encddecd.html#DecodeStream">DecodeStream</a></b>(Input, Output: TStream);</code></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.encddecd.TBase64Encoding.html"><code>TBase64Encoding</code></a></td>
+<td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a  href="ormbr.encddecd.html#EncodeString">EncodeString</a></b>(const Input: string): string;</code></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.encddecd.TURLEncoding.html"><code>TURLEncoding</code></a></td>
+<td class="itemdesc">&nbsp;</td>
 </tr>
 <tr class="list2">
-<td class="itemcode"><code>function <b><a  href="ormbr.encddecd.html#DecodeString">DecodeString</a></b>(const Input: string): string;</code></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.encddecd.THTMLEncoding.html"><code>THTMLEncoding</code></a></td>
+<td class="itemdesc">function <a class="normal" href="ormbr.encddecd.TNetEncoding.html#Encode">Encode</a>(const Input: string; const ASet, ExtraUnsafeChars: TUnsafeChars; SpacesAsPlus, EncodePercent: Boolean): string; overload; function <a class="normal" href="ormbr.encddecd.TNetEncoding.html#Decode">Decode</a>(const Input: string): string; overload;</td>
 </tr>
 <tr class="list">
-<td class="itemcode"><code>function <b><a  href="ormbr.encddecd.html#DecodeBase64">DecodeBase64</a></b>(const Input: AnsiString): TBytes;</code></td>
-</tr>
-<tr class="list2">
-<td class="itemcode"><code>function <b><a  href="ormbr.encddecd.html#EncodeBase64">EncodeBase64</a></b>(const Input: Pointer; Size: Integer): AnsiString;</code></td>
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.encddecd.EHTTPException.html"><code>EHTTPException</code></a></td>
+<td class="itemdesc">&nbsp;</td>
 </tr>
 </table>
-<h2 class="description">Descrição</h2>
-<h3 class="detail">Funções e Procedimentos</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="EncodeStream"></a><code>procedure <b>EncodeStream</b>(Input, Output: TStream);</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="DecodeStream"></a><code>procedure <b>DecodeStream</b>(Input, Output: TStream);</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="EncodeString"></a><code>function <b>EncodeString</b>(const Input: string): string;</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="DecodeString"></a><code>function <b>DecodeString</b>(const Input: string): string;</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="DecodeBase64"></a><code>function <b>DecodeBase64</b>(const Input: AnsiString): TBytes;</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="EncodeBase64"></a><code>function <b>EncodeBase64</b>(const Input: Pointer; Size: Integer): AnsiString;</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;</td></tr>
-</table>
-<h2 class="authors">Autores</h2>
-<ul class="authors">
-<li>Isaque Pinheiro &lt;<a  href="mailto:isaquepsp@gmail.com">isaquepsp@gmail.com</a>&gt;</li>
-<li>Skype : ispinheiro</li>
-</ul>
-<h2 class="created">Criada</h2>
-<p>
-20 Jul 2016
-</p>
 <hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
 </span>
 </td></tr></table></body></html>

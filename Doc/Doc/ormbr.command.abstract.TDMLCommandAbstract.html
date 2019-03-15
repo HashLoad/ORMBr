@@ -32,7 +32,7 @@ $(document).ready(function() {
 <a name="TDMLCommandAbstract"></a><h1 class="cio">Classe TDMLCommandAbstract</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td><a class="section" href="#PasDoc-Properties">Properties</a></td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.command.abstract.html">ormbr.command.abstract</a></p>
@@ -66,7 +66,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.command.abstract.TDMLCommandAbstract.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); virtual;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.command.abstract.TDMLCommandAbstract.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -76,12 +76,9 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.command.abstract.TDMLCommandAbstract.html#GetDMLCommand">GetDMLCommand</a></b>: string;</code></td>
 </tr>
-</table>
-<a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
-<table class="summary wide_list">
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.command.abstract.TDMLCommandAbstract.html#Params">Params</a></b>: TParams read <a  href="ormbr.command.abstract.TDMLCommandAbstract.html#FParams">FParams</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.abstract.TDMLCommandAbstract.html#Params">Params</a></b>: TParams;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -122,7 +119,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); virtual;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -143,11 +140,10 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<h3 class="detail">Properties</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Params"></a><code>property <b>Params</b>: TParams read <a  href="ormbr.command.abstract.TDMLCommandAbstract.html#FParams">FParams</a>;</code></td>
+<td class="itemcode"><a name="Params"></a><code>function <b>Params</b>: TParams;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -38,11 +38,10 @@ $(document).ready(function() {
 <a  href="ormbr.mapping.attributes.html">ormbr.mapping.attributes</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type Column = class(<a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a>)</code></p>
+<code>type Column = class(TCustomAttribute)</code></p>
 <h2 class="description">Descrição</h2>
-<div class="nodescription">no description available, Description description follows</div><a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
+<a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TCustomAttribute</li>
-<li class="ancestor"><a class="normal" href="ormbr.mapping.attributes.Description.html">Description</a></li>
 <li class="thisitem">Column</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
@@ -66,43 +65,51 @@ $(document).ready(function() {
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a></b>: Integer;</code></td>
 </tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.Column.html#FDescription">FDescription</a></b>: string;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(AColumnName: String; AFieldType: TFieldType; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(const AColumnName: String; const AFieldType: TFieldType; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(AColumnName: string; AFieldType: TFieldType; ASize: Integer; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(const AColumnName: string; const AFieldType: TFieldType; const ASize: Integer; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(AColumnName: string; AFieldType: TFieldType; APrecision, AScale: Integer; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.Column.html#Create">Create</a></b>(const AColumnName: string; const AFieldType: TFieldType; const APrecision, AScale: Integer; const ADescription: string = ''); overload;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#ColumnName">ColumnName</a></b>: String read <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a> write <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#ColumnName">ColumnName</a></b>: String read <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#FieldType">FieldType</a></b>: TFieldType read <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a> write <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#FieldType">FieldType</a></b>: TFieldType read <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Size">Size</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a> write <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Size">Size</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Scale">Scale</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a> write <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Scale">Scale</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Precision">Precision</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a> write <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Precision">Precision</a></b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.Column.html#Description">Description</a></b>: string read <a  href="ormbr.mapping.attributes.Column.html#FDescription">FDescription</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -147,11 +154,19 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FDescription"></a><code><b>FDescription</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AColumnName: String; AFieldType: TFieldType; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName: String; const AFieldType: TFieldType; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -159,7 +174,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AColumnName: string; AFieldType: TFieldType; ASize: Integer; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName: string; const AFieldType: TFieldType; const ASize: Integer; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -167,7 +182,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AColumnName: string; AFieldType: TFieldType; APrecision, AScale: Integer; ADescription: string = ''); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName: string; const AFieldType: TFieldType; const APrecision, AScale: Integer; const ADescription: string = ''); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -176,7 +191,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ColumnName"></a><code>property <b>ColumnName</b>: String read <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a> write <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><a name="ColumnName"></a><code>property <b>ColumnName</b>: String read <a  href="ormbr.mapping.attributes.Column.html#FColumnName">FColumnName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -184,7 +199,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FieldType"></a><code>property <b>FieldType</b>: TFieldType read <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a> write <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a>;</code></td>
+<td class="itemcode"><a name="FieldType"></a><code>property <b>FieldType</b>: TFieldType read <a  href="ormbr.mapping.attributes.Column.html#FFieldType">FFieldType</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -192,7 +207,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Size"></a><code>property <b>Size</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a> write <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a>;</code></td>
+<td class="itemcode"><a name="Size"></a><code>property <b>Size</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FSize">FSize</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -200,7 +215,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Scale"></a><code>property <b>Scale</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a> write <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a>;</code></td>
+<td class="itemcode"><a name="Scale"></a><code>property <b>Scale</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FScale">FScale</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -208,7 +223,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Precision"></a><code>property <b>Precision</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a> write <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a>;</code></td>
+<td class="itemcode"><a name="Precision"></a><code>property <b>Precision</b>: Integer read <a  href="ormbr.mapping.attributes.Column.html#FPrecision">FPrecision</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Description"></a><code>property <b>Description</b>: string read <a  href="ormbr.mapping.attributes.Column.html#FDescription">FDescription</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

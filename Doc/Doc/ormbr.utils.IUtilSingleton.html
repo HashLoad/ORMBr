@@ -42,7 +42,7 @@ $(document).ready(function() {
 <h2 class="description">Descrição</h2>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{1CCB8F6C-E549-4FDF-A299-BAE3D31748FC}']</dt>
+  <dt>GUID['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -52,15 +52,15 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#Delimiter">Delimiter</a></b>(var AFields: TStringList; ADelimiter: Char; ATexto: string): Integer;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#DateTimeToIso8601">DateTimeToIso8601</a></b>(const AValue: TDateTime): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#DateTimeToIso8601">DateTimeToIso8601</a></b>(AValue: TDateTime): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#Iso8601ToDateTime">Iso8601ToDateTime</a></b>(const AValue: string): TDateTime;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#Iso8601ToDateTime">Iso8601ToDateTime</a></b>(const AValue: string): TDateTime;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.utils.IUtilSingleton.html#ParseCommandNoSQL">ParseCommandNoSQL</a></b>(const ASubStr, ACommandText: string; const ADefault: String = ''): string;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -68,15 +68,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Delimiter"></a><code>function <b>Delimiter</b>(var AFields: TStringList; ADelimiter: Char; ATexto: string): Integer;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DateTimeToIso8601"></a><code>function <b>DateTimeToIso8601</b>(AValue: TDateTime): string;</code></td>
+<td class="itemcode"><a name="DateTimeToIso8601"></a><code>function <b>DateTimeToIso8601</b>(const AValue: TDateTime): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -85,6 +77,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="Iso8601ToDateTime"></a><code>function <b>Iso8601ToDateTime</b>(const AValue: string): TDateTime;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ParseCommandNoSQL"></a><code>function <b>ParseCommandNoSQL</b>(const ASubStr, ACommandText: string; const ADefault: String = ''): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

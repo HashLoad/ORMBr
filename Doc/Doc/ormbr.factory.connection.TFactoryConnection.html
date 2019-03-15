@@ -38,7 +38,7 @@ $(document).ready(function() {
 <a  href="ormbr.factory.connection.html">ormbr.factory.connection</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TFactoryConnection = class(TInterfacedObject, <a class="normal" href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>)</code></p>
+<code>type TFactoryConnection = class abstract(TInterfacedObject, <a class="normal" href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
  Fábrica de conexões abstratas </p>
@@ -48,14 +48,18 @@ $(document).ready(function() {
 <a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FCommandMonitor">FCommandMonitor</a></b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FAutoTransaction">FAutoTransaction</a></b>: Boolean;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FDriverConnection">FDriverConnection</a></b>: <a  href="ormbr.driver.connection.TDriverConnection.html">TDriverConnection</a>;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FCommandMonitor">FCommandMonitor</a></b>: ICommandMonitor;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FDriverConnection">FDriverConnection</a></b>: <a  href="ormbr.driver.connection.TDriverConnection.html">TDriverConnection</a>;</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.factory.connection.TFactoryConnection.html#FDriverTransaction">FDriverTransaction</a></b>: <a  href="ormbr.driver.connection.TDriverTransaction.html">TDriverTransaction</a>;</code></td>
 </tr>
@@ -64,7 +68,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Create">Create</a></b>(AConnection: TComponent; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Create">Create</a></b>(const AConnection: TComponent; const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -76,27 +80,27 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#StartTransaction">StartTransaction</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#StartTransaction">StartTransaction</a></b>; virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Commit">Commit</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Commit">Commit</a></b>; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Rollback">Rollback</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#Rollback">Rollback</a></b>; virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteDirect">ExecuteDirect</a></b>(const ASQL: string); overload; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteDirect">ExecuteDirect</a></b>(const ASQL: string); overload; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteDirect">ExecuteDirect</a></b>(const ASQL: string; const AParams: TParams); overload; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteDirect">ExecuteDirect</a></b>(const ASQL: string; const AParams: TParams); overload; virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteScript">ExecuteScript</a></b>(const ASQL: string); virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteScript">ExecuteScript</a></b>(const ASQL: string); virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -104,11 +108,11 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteScripts">ExecuteScripts</a></b>; virtual; abstract;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#ExecuteScripts">ExecuteScripts</a></b>; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#SetCommandMonitor">SetCommandMonitor</a></b>(AMonitor: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>); virtual;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.connection.TFactoryConnection.html#SetCommandMonitor">SetCommandMonitor</a></b>(AMonitor: ICommandMonitor); virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -120,7 +124,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#GetDriverName">GetDriverName</a></b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; virtual; abstract;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#GetDriverName">GetDriverName</a></b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; virtual; abstract;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -128,7 +132,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#CreateResultSet">CreateResultSet</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#CreateResultSet">CreateResultSet</a></b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -136,15 +140,23 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#CommandMonitor">CommandMonitor</a></b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.connection.TFactoryConnection.html#CommandMonitor">CommandMonitor</a></b>: ICommandMonitor;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
 <table class="detail wide_list">
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FAutoTransaction"></a><code><b>FAutoTransaction</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FCommandMonitor"></a><code><b>FCommandMonitor</b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="itemcode"><a name="FCommandMonitor"></a><code><b>FCommandMonitor</b>: ICommandMonitor;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -169,7 +181,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: TComponent; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AConnection: TComponent; const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -193,7 +205,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="StartTransaction"></a><code>procedure <b>StartTransaction</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="StartTransaction"></a><code>procedure <b>StartTransaction</b>; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -201,7 +213,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Commit"></a><code>procedure <b>Commit</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="Commit"></a><code>procedure <b>Commit</b>; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -209,7 +221,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Rollback"></a><code>procedure <b>Rollback</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="Rollback"></a><code>procedure <b>Rollback</b>; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -217,7 +229,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExecuteDirect"></a><code>procedure <b>ExecuteDirect</b>(const ASQL: string); overload; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ExecuteDirect"></a><code>procedure <b>ExecuteDirect</b>(const ASQL: string); overload; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -225,7 +237,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExecuteDirect"></a><code>procedure <b>ExecuteDirect</b>(const ASQL: string; const AParams: TParams); overload; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ExecuteDirect"></a><code>procedure <b>ExecuteDirect</b>(const ASQL: string; const AParams: TParams); overload; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -233,7 +245,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExecuteScript"></a><code>procedure <b>ExecuteScript</b>(const ASQL: string); virtual; abstract;</code></td>
+<td class="itemcode"><a name="ExecuteScript"></a><code>procedure <b>ExecuteScript</b>(const ASQL: string); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -249,7 +261,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ExecuteScripts"></a><code>procedure <b>ExecuteScripts</b>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="ExecuteScripts"></a><code>procedure <b>ExecuteScripts</b>; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -257,7 +269,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetCommandMonitor"></a><code>procedure <b>SetCommandMonitor</b>(AMonitor: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>); virtual;</code></td>
+<td class="itemcode"><a name="SetCommandMonitor"></a><code>procedure <b>SetCommandMonitor</b>(AMonitor: ICommandMonitor); virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -281,7 +293,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDriverName"></a><code>function <b>GetDriverName</b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="GetDriverName"></a><code>function <b>GetDriverName</b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -297,7 +309,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -313,7 +325,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CommandMonitor"></a><code>function <b>CommandMonitor</b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="itemcode"><a name="CommandMonitor"></a><code>function <b>CommandMonitor</b>: ICommandMonitor;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

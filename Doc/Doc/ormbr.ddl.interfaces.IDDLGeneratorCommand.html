@@ -44,7 +44,7 @@ $(document).ready(function() {
  Class unit : ormbr.ddl.generator.pas Class Name : <a class="normal" href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html">TDDLSQLGeneratorAbstract</a> </p>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{3FFFA9FB-9318-4D40-9C3A-ACC38F0F4C19}']</dt>
+  <dt>GUID['{9E14DD57-94B9-4117-982A-BB9E8CBA54C6}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -94,6 +94,14 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateAlterDefaultValue">GenerateAlterDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateAlterCheck">GenerateAlterCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateDropTable">GenerateDropTable</a></b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string;</code></td>
 </tr>
 <tr class="list2">
@@ -130,13 +138,17 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateDropDefaultValue">GenerateDropDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html#GetSupportedFeatures">GetSupportedFeatures</a></b>: <a  href="ormbr.ddl.interfaces.html#TSupportedFeatures">TSupportedFeatures</a>;</code></td>
 </tr>
@@ -233,6 +245,22 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterDefaultValue"></a><code>function <b>GenerateAlterDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterCheck"></a><code>function <b>GenerateAlterCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateDropTable"></a><code>function <b>GenerateDropTable</b>(ATable: <a  href="ormbr.database.mapping.TTableMIK.html">TTableMIK</a>): string;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -298,6 +326,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateDropColumn"></a><code>function <b>GenerateDropColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropDefaultValue"></a><code>function <b>GenerateDropDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

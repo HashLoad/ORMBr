@@ -53,22 +53,42 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedTableName">FReferencedTableName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FRefTableName">FRefTableName</a></b>: string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedColumnName">FReferencedColumnName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnName">FRefColumnName</a></b>: string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnNameSelect">FRefColumnNameSelect</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a></b>: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasColumn">FAliasColumn</a></b>: string;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasRefTable">FAliasRefTable</a></b>: string;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Create">Create</a></b>(AColumnName, AReferencedTableName, AReferencedColumnName: string; AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> = InnerJoin);</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Create">Create</a></b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a>; const AAliasColumn, AAliasRefTable: string); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Create">Create</a></b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a>; const AAliasColumn: string); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Create">Create</a></b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> = InnerJoin); overload;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -79,15 +99,27 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#ReferencedColumnName">ReferencedColumnName</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#RefColumnName">RefColumnName</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnName">FRefColumnName</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#ReferencedTableName">ReferencedTableName</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedTableName">FReferencedTableName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#RefTableName">RefTableName</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefTableName">FRefTableName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Join">Join</a></b>: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> read <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a> write <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#RefColumnNameSelect">RefColumnNameSelect</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnNameSelect">FRefColumnNameSelect</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#Join">Join</a></b>: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> read <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#AliasColumn">AliasColumn</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasColumn">FAliasColumn</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.attributes.JoinColumn.html#AliasRefTable">AliasRefTable</a></b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasRefTable">FAliasRefTable</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -103,7 +135,7 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferencedTableName"></a><code><b>FReferencedTableName</b>: string;</code></td>
+<td class="itemcode"><a name="FRefTableName"></a><code><b>FRefTableName</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -111,7 +143,15 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferencedColumnName"></a><code><b>FReferencedColumnName</b>: string;</code></td>
+<td class="itemcode"><a name="FRefColumnName"></a><code><b>FRefColumnName</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FRefColumnNameSelect"></a><code><b>FRefColumnNameSelect</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -124,11 +164,43 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FAliasColumn"></a><code><b>FAliasColumn</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FAliasRefTable"></a><code><b>FAliasRefTable</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AColumnName, AReferencedTableName, AReferencedColumnName: string; AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> = InnerJoin);</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a>; const AAliasColumn, AAliasRefTable: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a>; const AAliasColumn: string); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumnName, ARefTableName, ARefColumnName, ARefColumnNameSelect: string; const AJoin: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> = InnerJoin); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -145,7 +217,7 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferencedColumnName"></a><code>property <b>ReferencedColumnName</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><a name="RefColumnName"></a><code>property <b>RefColumnName</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnName">FRefColumnName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -153,7 +225,7 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferencedTableName"></a><code>property <b>ReferencedTableName</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FReferencedTableName">FReferencedTableName</a>;</code></td>
+<td class="itemcode"><a name="RefTableName"></a><code>property <b>RefTableName</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefTableName">FRefTableName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -161,7 +233,31 @@ INNER <a class="normal" href="ormbr.mapping.attributes.JoinColumn.html#Join">JOI
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Join"></a><code>property <b>Join</b>: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> read <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a> write <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a>;</code></td>
+<td class="itemcode"><a name="RefColumnNameSelect"></a><code>property <b>RefColumnNameSelect</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FRefColumnNameSelect">FRefColumnNameSelect</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Join"></a><code>property <b>Join</b>: <a  href="ormbr.types.mapping.html#TJoin">TJoin</a> read <a  href="ormbr.mapping.attributes.JoinColumn.html#FJoin">FJoin</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AliasColumn"></a><code>property <b>AliasColumn</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasColumn">FAliasColumn</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="AliasRefTable"></a><code>property <b>AliasRefTable</b>: string read <a  href="ormbr.mapping.attributes.JoinColumn.html#FAliasRefTable">FAliasRefTable</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

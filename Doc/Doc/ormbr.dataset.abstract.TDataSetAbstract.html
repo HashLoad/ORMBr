@@ -32,7 +32,7 @@ $(document).ready(function() {
 <a name="TDataSetAbstract"></a><h1 class="cio">Classe TDataSetAbstract</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td>Campos</td><td>Métodos</td><td>Properties</td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Hierarchy">Hierarquia</a></td><td><a class="section" href="#PasDoc-Fields">Campos</a></td><td><a class="section" href="#PasDoc-Methods">Métodos</a></td><td>Properties</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="unit">Unit</h2>
 <p class="unitlink">
 <a  href="ormbr.dataset.abstract.html">ormbr.dataset.abstract</a></p>
@@ -44,6 +44,104 @@ $(document).ready(function() {
  M - Object M </p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
-<li class="thisitem">TDataSetAbstract</li></ul><hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
+<li class="thisitem">TDataSetAbstract</li></ul><h2 class="overview">Visão Geral</h2>
+<a name="PasDoc-Fields"></a><h3 class="summary">Campos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#FSession">FSession</a></b>: <a  href="ormbr.session.abstract.TSessionAbstract.html">TSessionAbstract</a>&lt;M&gt;;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#FOrmDataSource">FOrmDataSource</a></b>: TDataSource;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#FOrmDataSet">FOrmDataSet</a></b>: TDataSet;</code></td>
+</tr>
+</table>
+<a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#RefreshDataSetOneToOneChilds">RefreshDataSetOneToOneChilds</a></b>(AFieldName: string); virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#DoDataChange">DoDataChange</a></b>(Sender: TObject; Field: TField); virtual;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#Create">Create</a></b>(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload; virtual;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ormbr.dataset.abstract.TDataSetAbstract.html#Destroy">Destroy</a></b>; override;</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FSession"></a><code><b>FSession</b>: <a  href="ormbr.session.abstract.TSessionAbstract.html">TSessionAbstract</a>&lt;M&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FOrmDataSource"></a><code><b>FOrmDataSource</b>: TDataSource;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Objeto para controle de estado do registro </p>
+</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="FOrmDataSet"></a><code><b>FOrmDataSet</b>: TDataSet;</code></td>
+</tr>
+<tr><td colspan="2">
+<p>
+ Objeto interface com o DataSet passado pela interface. </p>
+</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="RefreshDataSetOneToOneChilds"></a><code>procedure <b>RefreshDataSetOneToOneChilds</b>(AFieldName: string); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="DoDataChange"></a><code>procedure <b>DoDataChange</b>(Sender: TObject; Field: TField); virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload; virtual;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<hr noshade size="1"><span class="appinfo"><em>Gerado por <a  href="http://pasdoc.sourceforge.net/">PasDoc 0.14.0</a>. </em>
 </span>
 </td></tr></table></body></html>

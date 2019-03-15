@@ -53,36 +53,36 @@ AssociationMapping</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnName">FColumnName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsName">FColumnsName</a></b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedColumnName">FReferencedColumnName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsNameRef">FColumnsNameRef</a></b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedClassName">FReferencedClassName</a></b>: string;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FClassNameRef">FClassNameRef</a></b>: string;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FLazy">FLazy</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FProperty">FProperty</a></b>: TRttiProperty;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumns">FColumns</a></b>: TList&lt;string&gt;;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.classes.TAssociationMapping.html#FCascadeActions">FCascadeActions</a></b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Create">Create</a></b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AReferencedClassName: string; AProperty: TRttiProperty); overload;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Create">Create</a></b>(const AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; const AColumnsName, AColumnsNameRef: TArray&lt;string&gt;; const AClassNameRef: string; const AProperty: TRttiProperty; const ALazy: Boolean; const ACascadeActions: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>);</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Create">Create</a></b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AReferencedClassName: string; AProperty: TRttiProperty; AColumns: TArray&lt;string&gt;); overload;</code></td>
-</tr>
-<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>destructor <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
@@ -95,23 +95,27 @@ AssociationMapping</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ColumnName">ColumnName</a></b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ColumnsName">ColumnsName</a></b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsName">FColumnsName</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ReferencedColumnName">ReferencedColumnName</a></b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ColumnsNameRef">ColumnsNameRef</a></b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsNameRef">FColumnsNameRef</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ReferencedClassName">ReferencedClassName</a></b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedClassName">FReferencedClassName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#ClassNameRef">ClassNameRef</a></b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FClassNameRef">FClassNameRef</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Columns">Columns</a></b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumns">FColumns</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#Lazy">Lazy</a></b>: Boolean read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FLazy">FLazy</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#PropertyRtti">PropertyRtti</a></b>: TRttiProperty read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FProperty">FProperty</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TAssociationMapping.html#CascadeActions">CascadeActions</a></b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a> read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FCascadeActions">FCascadeActions</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -127,7 +131,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FColumnName"></a><code><b>FColumnName</b>: string;</code></td>
+<td class="itemcode"><a name="FColumnsName"></a><code><b>FColumnsName</b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -135,7 +139,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferencedColumnName"></a><code><b>FReferencedColumnName</b>: string;</code></td>
+<td class="itemcode"><a name="FColumnsNameRef"></a><code><b>FColumnsNameRef</b>: TList&lt;string&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -143,7 +147,15 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FReferencedClassName"></a><code><b>FReferencedClassName</b>: string;</code></td>
+<td class="itemcode"><a name="FClassNameRef"></a><code><b>FClassNameRef</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FLazy"></a><code><b>FLazy</b>: Boolean;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -159,7 +171,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FColumns"></a><code><b>FColumns</b>: TList&lt;string&gt;;</code></td>
+<td class="itemcode"><a name="FCascadeActions"></a><code><b>FCascadeActions</b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -168,15 +180,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AReferencedClassName: string; AProperty: TRttiProperty); overload;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; AColumnName, AReferencedColumnName, AReferencedClassName: string; AProperty: TRttiProperty; AColumns: TArray&lt;string&gt;); overload;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AMultiplicity: <a  href="ormbr.types.mapping.html#TMultiplicity">TMultiplicity</a>; const AColumnsName, AColumnsNameRef: TArray&lt;string&gt;; const AClassNameRef: string; const AProperty: TRttiProperty; const ALazy: Boolean; const ACascadeActions: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a>);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -201,7 +205,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ColumnName"></a><code>property <b>ColumnName</b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnName">FColumnName</a>;</code></td>
+<td class="itemcode"><a name="ColumnsName"></a><code>property <b>ColumnsName</b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsName">FColumnsName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -209,7 +213,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferencedColumnName"></a><code>property <b>ReferencedColumnName</b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedColumnName">FReferencedColumnName</a>;</code></td>
+<td class="itemcode"><a name="ColumnsNameRef"></a><code>property <b>ColumnsNameRef</b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumnsNameRef">FColumnsNameRef</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -217,7 +221,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ReferencedClassName"></a><code>property <b>ReferencedClassName</b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FReferencedClassName">FReferencedClassName</a>;</code></td>
+<td class="itemcode"><a name="ClassNameRef"></a><code>property <b>ClassNameRef</b>: string read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FClassNameRef">FClassNameRef</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -225,7 +229,7 @@ AssociationMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Columns"></a><code>property <b>Columns</b>: TList&lt;string&gt; read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FColumns">FColumns</a>;</code></td>
+<td class="itemcode"><a name="Lazy"></a><code>property <b>Lazy</b>: Boolean read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FLazy">FLazy</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -234,6 +238,14 @@ AssociationMapping</p>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="PropertyRtti"></a><code>property <b>PropertyRtti</b>: TRttiProperty read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FProperty">FProperty</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="CascadeActions"></a><code>property <b>CascadeActions</b>: <a  href="ormbr.types.mapping.html#TCascadeActions">TCascadeActions</a> read <a  href="ormbr.mapping.classes.TAssociationMapping.html#FCascadeActions">FCascadeActions</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

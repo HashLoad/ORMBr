@@ -47,7 +47,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>classvar <b><a  href="ormbr.rest.json.TORMBrJson.html#FJSONObject">FJSONObject</a></b>: <a  href="ormbr.Json.TJSONObjectORMBr.html">TJSONObjectORMBr</a>;</code></td>
+<td class="itemcode"><code>classvar <b><a  href="ormbr.rest.json.TORMBrJson.html#FJSONObject">FJSONObject</a></b>: <a  href="ormbr.json.TJSONObjectORMBr.html">TJSONObjectORMBr</a>;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
@@ -58,15 +58,23 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>destructor <b><a  href="ormbr.rest.json.TORMBrJson.html#Destroy">Destroy</a></b>; override;</code></td>
+<td class="itemcode"><code>class destructor <b><a  href="ormbr.rest.json.TORMBrJson.html#Destroy">Destroy</a></b>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#ObjectToJsonString">ObjectToJsonString</a></b>(AObject: TObject; AOptions: <a  href="ormbr.Json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): string;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#ObjectToJsonString">ObjectToJsonString</a></b>(AObject: TObject; AStoreClassName: Boolean = False): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#JsonToObject">JsonToObject</a></b>&lt;T: class, constructor&gt;(const AJson: string; AOptions: <a  href="ormbr.Json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): T; overload;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#ObjectListToJsonString">ObjectListToJsonString</a></b>(AObjectList: TObjectList&lt;TObject&gt;; AStoreClassName: Boolean = False): string; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#ObjectListToJsonString">ObjectListToJsonString</a></b>&lt;T: class, constructor&gt;(AObjectList: TObjectList&lt;T&gt;; AStoreClassName: Boolean = False): string; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#JsonToObject">JsonToObject</a></b>&lt;T: class, constructor&gt;(const AJson: string; AOptions: <a  href="ormbr.json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): T; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -74,7 +82,11 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#JsonToObjectList">JsonToObjectList</a></b>&lt;T: class, constructor&gt;(const AJson: string): TList&lt;T&gt;;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.rest.json.TORMBrJson.html#JsonToObjectList">JsonToObjectList</a></b>&lt;T: class, constructor&gt;(const AJson: string): TObjectList&lt;T&gt;;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>class procedure <b><a  href="ormbr.rest.json.TORMBrJson.html#JsonToObject">JsonToObject</a></b>(const AJson: string; AObject: TObject); overload;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -82,7 +94,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="FJSONObject"></a><code>classvar <b>FJSONObject</b>: <a  href="ormbr.Json.TJSONObjectORMBr.html">TJSONObjectORMBr</a>;</code></td>
+<td class="itemcode"><a name="FJSONObject"></a><code>classvar <b>FJSONObject</b>: <a  href="ormbr.json.TJSONObjectORMBr.html">TJSONObjectORMBr</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -99,7 +111,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
+<td class="itemcode"><a name="Destroy"></a><code>class destructor <b>Destroy</b>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -107,7 +119,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ObjectToJsonString"></a><code>class function <b>ObjectToJsonString</b>(AObject: TObject; AOptions: <a  href="ormbr.Json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): string;</code></td>
+<td class="itemcode"><a name="ObjectToJsonString"></a><code>class function <b>ObjectToJsonString</b>(AObject: TObject; AStoreClassName: Boolean = False): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -115,7 +127,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="JsonToObject"></a><code>class function <b>JsonToObject</b>&lt;T: class, constructor&gt;(const AJson: string; AOptions: <a  href="ormbr.Json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): T; overload;</code></td>
+<td class="itemcode"><a name="ObjectListToJsonString"></a><code>class function <b>ObjectListToJsonString</b>(AObjectList: TObjectList&lt;TObject&gt;; AStoreClassName: Boolean = False): string; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ObjectListToJsonString"></a><code>class function <b>ObjectListToJsonString</b>&lt;T: class, constructor&gt;(AObjectList: TObjectList&lt;T&gt;; AStoreClassName: Boolean = False): string; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="JsonToObject"></a><code>class function <b>JsonToObject</b>&lt;T: class, constructor&gt;(const AJson: string; AOptions: <a  href="ormbr.json.html#TORMBrJsonOptions">TORMBrJsonOptions</a> = [joDateIsUTC, joDateFormatISO8601]): T; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -131,7 +159,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="JsonToObjectList"></a><code>class function <b>JsonToObjectList</b>&lt;T: class, constructor&gt;(const AJson: string): TList&lt;T&gt;;</code></td>
+<td class="itemcode"><a name="JsonToObjectList"></a><code>class function <b>JsonToObjectList</b>&lt;T: class, constructor&gt;(const AJson: string): TObjectList&lt;T&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="JsonToObject"></a><code>class procedure <b>JsonToObject</b>(const AJson: string; AObject: TObject); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

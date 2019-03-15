@@ -41,7 +41,7 @@ $(document).ready(function() {
 <code>type TMappingExplorer = class(<a class="normal" href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
-orm</p>
+ormbr</p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.mapping.explorerstrategy.TMappingExplorerStrategy.html">TMappingExplorerStrategy</a></li>
@@ -66,27 +66,35 @@ orm</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FSequenceMapping">FSequenceMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>&gt;;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FOrderByMapping">FOrderByMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TOrderByMapping.html">TOrderByMapping</a>&gt;;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FSequenceMapping">FSequenceMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>&gt;;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FPrimaryKeyMapping">FPrimaryKeyMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>&gt;;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FForeingnKeyMapping">FForeingnKeyMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>&gt;;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FIndexeMapping">FIndexeMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>&gt;;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FCheckMapping">FCheckMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>&gt;;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FColumnMapping">FColumnMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>&gt;;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FCalcFieldMapping">FCalcFieldMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TCalcFieldMappingList.html">TCalcFieldMappingList</a>&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
@@ -104,16 +112,28 @@ orm</p>
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FViewMapping">FViewMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>&gt;;</code></td>
 </tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FEnumerationMapping">FEnumerationMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TEnumerationMappingList.html">TEnumerationMappingList</a>&gt;;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FFieldEventsMapping">FFieldEventsMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TFieldEventsMappingList.html">TFieldEventsMappingList</a>&gt;;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#FPrimaryKeyColumnsMapping">FPrimaryKeyColumnsMapping</a></b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TPrimaryKeyColumnsMapping.html">TPrimaryKeyColumnsMapping</a>&gt;;</code></td>
+</tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetRepositoryMapping">GetRepositoryMapping</a></b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>; override;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#CreatePrivate">CreatePrivate</a></b>;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#CreatePrivate">CreatePrivate</a></b>;</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetRepositoryMapping">GetRepositoryMapping</a></b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -129,51 +149,67 @@ orm</p>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingTable">GetMappingTable</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingTable">GetMappingTable</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingSequence">GetMappingSequence</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingOrderBy">GetMappingOrderBy</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TOrderByMapping.html">TOrderByMapping</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingPrimaryKey">GetMappingPrimaryKey</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingSequence">GetMappingSequence</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingForeignKey">GetMappingForeignKey</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingPrimaryKey">GetMappingPrimaryKey</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingColumn">GetMappingColumn</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingForeignKey">GetMappingForeignKey</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingAssociation">GetMappingAssociation</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingColumn">GetMappingColumn</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingJoinColumn">GetMappingJoinColumn</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingCalcField">GetMappingCalcField</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TCalcFieldMappingList.html">TCalcFieldMappingList</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingIndexe">GetMappingIndexe</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingAssociation">GetMappingAssociation</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingCheck">GetMappingCheck</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingJoinColumn">GetMappingJoinColumn</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingTrigger">GetMappingTrigger</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingIndexe">GetMappingIndexe</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingView">GetMappingView</a></b>(AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingCheck">GetMappingCheck</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetColumnByName">GetColumnByName</a></b>(AClass: TClass; AColumnName: string): <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingTrigger">GetMappingTrigger</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingView">GetMappingView</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingFieldEvents">GetMappingFieldEvents</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TFieldEventsMappingList.html">TFieldEventsMappingList</a>; override;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingEnumeration">GetMappingEnumeration</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TEnumerationMappingList.html">TEnumerationMappingList</a>; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.mapping.explorer.TMappingExplorer.html#GetMappingPrimaryKeyColumns">GetMappingPrimaryKeyColumns</a></b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyColumnsMapping.html">TPrimaryKeyColumnsMapping</a>; override;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Properties"></a><h3 class="summary">Properties</h3>
@@ -213,6 +249,14 @@ orm</p>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="FTableMapping"></a><code><b>FTableMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FOrderByMapping"></a><code><b>FOrderByMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TOrderByMapping.html">TOrderByMapping</a>&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -268,6 +312,14 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FCalcFieldMapping"></a><code><b>FCalcFieldMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TCalcFieldMappingList.html">TCalcFieldMappingList</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="FAssociationMapping"></a><code><b>FAssociationMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -297,11 +349,10 @@ orm</p>
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
-<h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetRepositoryMapping"></a><code>function <b>GetRepositoryMapping</b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>; override;</code></td>
+<td class="itemcode"><a name="FEnumerationMapping"></a><code><b>FEnumerationMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TEnumerationMappingList.html">TEnumerationMappingList</a>&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -309,7 +360,32 @@ orm</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FFieldEventsMapping"></a><code><b>FFieldEventsMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TFieldEventsMappingList.html">TFieldEventsMappingList</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FPrimaryKeyColumnsMapping"></a><code><b>FPrimaryKeyColumnsMapping</b>: TDictionary&lt;string, <a  href="ormbr.mapping.classes.TPrimaryKeyColumnsMapping.html">TPrimaryKeyColumnsMapping</a>&gt;;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<h3 class="detail">Métodos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="CreatePrivate"></a><code>constructor <b>CreatePrivate</b>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="GetRepositoryMapping"></a><code>function <b>GetRepositoryMapping</b>: <a  href="ormbr.mapping.repository.TMappingRepository.html">TMappingRepository</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -343,7 +419,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingTable"></a><code>function <b>GetMappingTable</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingTable"></a><code>function <b>GetMappingTable</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -351,7 +427,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingSequence"></a><code>function <b>GetMappingSequence</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingOrderBy"></a><code>function <b>GetMappingOrderBy</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TOrderByMapping.html">TOrderByMapping</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -359,7 +435,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingPrimaryKey"></a><code>function <b>GetMappingPrimaryKey</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingSequence"></a><code>function <b>GetMappingSequence</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TSequenceMapping.html">TSequenceMapping</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -367,7 +443,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingForeignKey"></a><code>function <b>GetMappingForeignKey</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingPrimaryKey"></a><code>function <b>GetMappingPrimaryKey</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html">TPrimaryKeyMapping</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -375,7 +451,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingColumn"></a><code>function <b>GetMappingColumn</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingForeignKey"></a><code>function <b>GetMappingForeignKey</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TForeignKeyMappingList.html">TForeignKeyMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -383,7 +459,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingAssociation"></a><code>function <b>GetMappingAssociation</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingColumn"></a><code>function <b>GetMappingColumn</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TColumnMappingList.html">TColumnMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -391,7 +467,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingJoinColumn"></a><code>function <b>GetMappingJoinColumn</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingCalcField"></a><code>function <b>GetMappingCalcField</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TCalcFieldMappingList.html">TCalcFieldMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -399,7 +475,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingIndexe"></a><code>function <b>GetMappingIndexe</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingAssociation"></a><code>function <b>GetMappingAssociation</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TAssociationMappingList.html">TAssociationMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -407,7 +483,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingCheck"></a><code>function <b>GetMappingCheck</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingJoinColumn"></a><code>function <b>GetMappingJoinColumn</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TJoinColumnMappingList.html">TJoinColumnMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -415,7 +491,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingTrigger"></a><code>function <b>GetMappingTrigger</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingIndexe"></a><code>function <b>GetMappingIndexe</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TIndexeMappingList.html">TIndexeMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -423,7 +499,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetMappingView"></a><code>function <b>GetMappingView</b>(AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingCheck"></a><code>function <b>GetMappingCheck</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TCheckMappingList.html">TCheckMappingList</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -431,7 +507,39 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetColumnByName"></a><code>function <b>GetColumnByName</b>(AClass: TClass; AColumnName: string): <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; override;</code></td>
+<td class="itemcode"><a name="GetMappingTrigger"></a><code>function <b>GetMappingTrigger</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TTriggerMappingList.html">TTriggerMappingList</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingView"></a><code>function <b>GetMappingView</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TViewMapping.html">TViewMapping</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingFieldEvents"></a><code>function <b>GetMappingFieldEvents</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TFieldEventsMappingList.html">TFieldEventsMappingList</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingEnumeration"></a><code>function <b>GetMappingEnumeration</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TEnumerationMappingList.html">TEnumerationMappingList</a>; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetMappingPrimaryKeyColumns"></a><code>function <b>GetMappingPrimaryKeyColumns</b>(const AClass: TClass): <a  href="ormbr.mapping.classes.TPrimaryKeyColumnsMapping.html">TPrimaryKeyColumnsMapping</a>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

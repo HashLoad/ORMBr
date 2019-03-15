@@ -47,7 +47,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
-<td class="itemcode"><code>classvar <b><a  href="ormbr.driver.register.TDriverRegister.html#FDriver">FDriver</a></b>: TDictionary&lt;<a  href="ormbr.types.database.html#TDriverName">TDriverName</a>, <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>&gt;;</code></td>
+<td class="itemcode"><code>classvar <b><a  href="ormbr.driver.register.TDriverRegister.html#FDriver">FDriver</a></b>: TDictionary&lt;<a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>, <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>&gt;;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
@@ -62,11 +62,11 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>class procedure <b><a  href="ormbr.driver.register.TDriverRegister.html#RegisterDriver">RegisterDriver</a></b>(const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; const ADriverSQL: <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>); overload;</code></td>
+<td class="itemcode"><code>class procedure <b><a  href="ormbr.driver.register.TDriverRegister.html#RegisterDriver">RegisterDriver</a></b>(const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; const ADriverSQL: <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>class function <b><a  href="ormbr.driver.register.TDriverRegister.html#GetDriver">GetDriver</a></b>(const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>): <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>; overload;</code></td>
+<td class="itemcode"><code>class function <b><a  href="ormbr.driver.register.TDriverRegister.html#GetDriver">GetDriver</a></b>( const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>): <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Strict Private" title="Strict Private"></a></td>
-<td class="itemcode"><a name="FDriver"></a><code>classvar <b>FDriver</b>: TDictionary&lt;<a  href="ormbr.types.database.html#TDriverName">TDriverName</a>, <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>&gt;;</code></td>
+<td class="itemcode"><a name="FDriver"></a><code>classvar <b>FDriver</b>: TDictionary&lt;<a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>, <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -99,7 +99,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="RegisterDriver"></a><code>class procedure <b>RegisterDriver</b>(const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; const ADriverSQL: <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>); overload;</code></td>
+<td class="itemcode"><a name="RegisterDriver"></a><code>class procedure <b>RegisterDriver</b>(const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; const ADriverSQL: <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -107,7 +107,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDriver"></a><code>class function <b>GetDriver</b>(const ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>): <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>; overload;</code></td>
+<td class="itemcode"><a name="GetDriver"></a><code>class function <b>GetDriver</b>( const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>): <a  href="ormbr.dml.interfaces.IDMLGeneratorCommand.html">IDMLGeneratorCommand</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -61,15 +61,19 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldValue">GetFieldValue</a></b>(AFieldName: string): Variant; overload; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldValue">GetFieldValue</a></b>(const AFieldName: string): Variant; overload; override;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldValue">GetFieldValue</a></b>(AFieldIndex: Integer): Variant; overload; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldValue">GetFieldValue</a></b>(const AFieldIndex: Integer): Variant; overload; override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldType">GetFieldType</a></b>(AFieldName: string): TFieldType; overload; override;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetFieldType">GetFieldType</a></b>(const AFieldName: string): TFieldType; overload; override;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.zeos.TDriverResultSetZeos.html#GetField">GetField</a></b>(const AFieldName: string): TField; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -101,7 +105,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldName: string): Variant; overload; override;</code></td>
+<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(const AFieldName: string): Variant; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -109,7 +113,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(AFieldIndex: Integer): Variant; overload; override;</code></td>
+<td class="itemcode"><a name="GetFieldValue"></a><code>function <b>GetFieldValue</b>(const AFieldIndex: Integer): Variant; overload; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -117,7 +121,15 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(AFieldName: string): TFieldType; overload; override;</code></td>
+<td class="itemcode"><a name="GetFieldType"></a><code>function <b>GetFieldType</b>(const AFieldName: string): TFieldType; overload; override;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GetField"></a><code>function <b>GetField</b>(const AFieldName: string): TField; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

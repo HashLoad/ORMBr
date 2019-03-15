@@ -58,27 +58,59 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetPropertyValue">SetPropertyValue</a></b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject; AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>);</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.objectset.bind.TBindObject.html#CreatePrivate">CreatePrivate</a></b>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.objectset.bind.TBindObject.html#CreatePrivate">CreatePrivate</a></b>;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToProperty">SetFieldToProperty</a></b>(const AField: TField; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AObject: TObject); overload;</code></td>
 </tr>
 <tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyString">SetFieldToPropertyString</a></b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyInteger">SetFieldToPropertyInteger</a></b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyDouble">SetFieldToPropertyDouble</a></b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyRecord">SetFieldToPropertyRecord</a></b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const LRttiType: TRttiType; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyEnumeration">SetFieldToPropertyEnumeration</a></b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#FillADTField">FillADTField</a></b>(const AADTField: TADTField; const AObject: TObject);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#FillDataSetField">FillDataSetField</a></b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
+</tr>
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>constructor <b><a  href="ormbr.objectset.bind.TBindObject.html#Create">Create</a></b>;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>class function <b><a  href="ormbr.objectset.bind.TBindObject.html#GetInstance">GetInstance</a></b>: <a  href="ormbr.objectset.bind.IBindObject.html">IBindObject</a>;</code></td>
 </tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToProperty">SetFieldToProperty</a></b>(const ADataSet: TDataSet; const AObject: TObject); overload;</code></td>
+</tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToProperty">SetFieldToProperty</a></b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject); overload;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToProperty">SetFieldToProperty</a></b>(const ADataSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; const AObject: TObject); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToProperty">SetFieldToProperty</a></b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); overload;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.objectset.bind.TBindObject.html#SetFieldToPropertyClass">SetFieldToPropertyClass</a></b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AField: TField; const AObject: TObject);</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -103,7 +135,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="SetPropertyValue"></a><code>procedure <b>SetPropertyValue</b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject; AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>);</code></td>
+<td class="itemcode"><a name="CreatePrivate"></a><code>constructor <b>CreatePrivate</b>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -111,7 +143,63 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="CreatePrivate"></a><code>constructor <b>CreatePrivate</b>;</code></td>
+<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(const AField: TField; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AObject: TObject); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyString"></a><code>procedure <b>SetFieldToPropertyString</b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyInteger"></a><code>procedure <b>SetFieldToPropertyInteger</b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyDouble"></a><code>procedure <b>SetFieldToPropertyDouble</b>(const LProperty: TRttiProperty; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyRecord"></a><code>procedure <b>SetFieldToPropertyRecord</b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const LRttiType: TRttiType; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyEnumeration"></a><code>procedure <b>SetFieldToPropertyEnumeration</b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AField: TField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FillADTField"></a><code>procedure <b>FillADTField</b>(const AADTField: TADTField; const AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FillDataSetField"></a><code>procedure <b>FillDataSetField</b>(const ADataSet: TDataSet; const AObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -137,7 +225,7 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject); overload;</code></td>
+<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(const ADataSet: TDataSet; const AObject: TObject); overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -145,7 +233,15 @@ Public declarations</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(AResultSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; AObject: TObject; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>); overload;</code></td>
+<td class="itemcode"><a name="SetFieldToProperty"></a><code>procedure <b>SetFieldToProperty</b>(const ADataSet: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; const AObject: TObject); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="SetFieldToPropertyClass"></a><code>procedure <b>SetFieldToPropertyClass</b>(const LProperty: TRttiProperty; const AColumn: <a  href="ormbr.mapping.classes.TColumnMapping.html">TColumnMapping</a>; const AField: TField; const AObject: TObject);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

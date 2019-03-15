@@ -64,75 +64,71 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetPropertyValue">GetPropertyValue</a></b>(AObject: TObject; AProperty: TRttiProperty): Variant;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetPropertyValue">GetPropertyValue</a></b>(AObject: TObject; AProperty: TRttiProperty; AFieldType: TFieldType): Variant;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#IsNull">IsNull</a></b>(AProperty: TRttiProperty; AObject: TObject): Boolean;</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#SetJoinColumn">SetJoinColumn</a></b>(AClass: TClass; ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; var ACriteria: ICriteria);</code></td>
 </tr>
 <tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#SetJoinColumn">SetJoinColumn</a></b>(AClass: TClass; ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; ACriteria: ICriteria);</code></td>
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetCriteriaSelect">GetCriteriaSelect</a></b>(AClass: TClass; AID: Variant): ICriteria; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetCriteriaSelect">GetCriteriaSelect</a></b>(AClass: TClass; AID: TValue): ICriteria; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetGeneratorSelect">GetGeneratorSelect</a></b>(const ACriteria: ICriteria): string; virtual;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GetGeneratorSelect">GetGeneratorSelect</a></b>(ACriteria: ICriteria): string; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#ExecuteSequence">ExecuteSequence</a></b>(const ASQL: string): Int64; virtual;</code></td>
 </tr>
 <tr class="list2">
-<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#ExecuteSequence">ExecuteSequence</a></b>(ASQL: string): Int64;</code></td>
-</tr>
-<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>constructor <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#Create">Create</a></b>; virtual; abstract;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#SetConnection">SetConnection</a></b>(const AConnaction: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>); virtual;</code></td>
 </tr>
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: TValue): string; virtual; abstract;</code></td>
-</tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorSelectAll">GeneratorSelectAll</a></b>(AClass: TClass; APageSize: Integer; AID: Variant): string; virtual; abstract;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorSelectWhere">GeneratorSelectWhere</a></b>(AClass: TClass; AWhere: string; AOrderBy: string; APageSize: Integer): string; virtual; abstract;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GenerateSelectOneToOne">GenerateSelectOneToOne</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string; virtual;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GenerateSelectOneToOneMany">GenerateSelectOneToOneMany</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string; virtual;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorUpdate">GeneratorUpdate</a></b>(AObject: TObject; AParams: TParams; AModifiedFields: TList&lt;string&gt;): string; virtual;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorInsert">GeneratorInsert</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): string; virtual;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorDelete">GeneratorDelete</a></b>(AObject: TObject; AParams: TParams): string; virtual;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorSequenceCurrentValue">GeneratorSequenceCurrentValue</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): Int64; virtual; abstract;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorSequenceNextValue">GeneratorSequenceNextValue</a></b>(AObject: TObject; ACommandInsert: <a  href="ormbr.dml.commands.TDMLCommandInsert.html">TDMLCommandInsert</a>): Int64; virtual; abstract;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorPageNext">GeneratorPageNext</a></b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; virtual;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.dml.generator.TDMLGeneratorAbstract.html#GeneratorPageNext">GeneratorPageNext</a></b>(const ACommandSelect: string; APageSize, APageNext: Integer): string; virtual;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -165,7 +161,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="GetPropertyValue"></a><code>function <b>GetPropertyValue</b>(AObject: TObject; AProperty: TRttiProperty): Variant;</code></td>
+<td class="itemcode"><a name="GetPropertyValue"></a><code>function <b>GetPropertyValue</b>(AObject: TObject; AProperty: TRttiProperty; AFieldType: TFieldType): Variant;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -173,15 +169,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="IsNull"></a><code>function <b>IsNull</b>(AProperty: TRttiProperty; AObject: TObject): Boolean;</code></td>
-</tr>
-<tr><td colspan="2">
-&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
-<td class="itemcode"><a name="SetJoinColumn"></a><code>procedure <b>SetJoinColumn</b>(AClass: TClass; ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; ACriteria: ICriteria);</code></td>
+<td class="itemcode"><a name="SetJoinColumn"></a><code>procedure <b>SetJoinColumn</b>(AClass: TClass; ATable: <a  href="ormbr.mapping.classes.TTableMapping.html">TTableMapping</a>; var ACriteria: ICriteria);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -189,7 +177,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetCriteriaSelect"></a><code>function <b>GetCriteriaSelect</b>(AClass: TClass; AID: TValue): ICriteria; virtual;</code></td>
+<td class="itemcode"><a name="GetCriteriaSelect"></a><code>function <b>GetCriteriaSelect</b>(AClass: TClass; AID: Variant): ICriteria; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -197,7 +185,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="GetGeneratorSelect"></a><code>function <b>GetGeneratorSelect</b>(ACriteria: ICriteria): string; virtual;</code></td>
+<td class="itemcode"><a name="GetGeneratorSelect"></a><code>function <b>GetGeneratorSelect</b>(const ACriteria: ICriteria): string; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -205,7 +193,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="ExecuteSequence"></a><code>function <b>ExecuteSequence</b>(ASQL: string): Int64;</code></td>
+<td class="itemcode"><a name="ExecuteSequence"></a><code>function <b>ExecuteSequence</b>(const ASQL: string): Int64; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -229,7 +217,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: TValue): string; virtual; abstract;</code></td>
+<td class="itemcode"><a name="GeneratorSelectAll"></a><code>function <b>GeneratorSelectAll</b>(AClass: TClass; APageSize: Integer; AID: Variant): string; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -301,7 +289,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(ACommandSelect: string; APageSize: Integer; APageNext: Integer): string; virtual;</code></td>
+<td class="itemcode"><a name="GeneratorPageNext"></a><code>function <b>GeneratorPageNext</b>(const ACommandSelect: string; APageSize, APageNext: Integer): string; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

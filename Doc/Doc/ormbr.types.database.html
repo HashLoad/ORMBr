@@ -32,7 +32,7 @@ $(document).ready(function() {
 <h1 class="unit">Unit ormbr.types.database</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td>Uses</td><td>Classes, Interfaces, Objetos e Registros</td><td>Funções e Procedimentos</td><td><a class="section" href="#PasDoc-Types">Tipos</a></td><td><a class="section" href="#PasDoc-Constants">Constantes</a></td><td>Variáveis</td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Uses">Uses</a></td><td>Classes, Interfaces, Objetos e Registros</td><td>Funções e Procedimentos</td><td>Tipos</td><td><a class="section" href="#PasDoc-Constants">Constantes</a></td><td>Variáveis</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="description">Descrição</h2>
 <p>
 ORMBr Framework.</p>
@@ -40,65 +40,25 @@ ORMBr Framework.</p>
    
 
 <p>ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.</p>
-<a name="PasDoc-Uses"></a><h2 class="overview">Visão Geral</h2>
-<a name="PasDoc-Types"></a><h3 class="summary">Tipos</h3>
-<table class="summary wide_list">
-<tr class="list">
-<td class="itemcode"><code><b><a  href="ormbr.types.database.html#TDriverName">TDriverName</a></b> = (...);</code></td>
-</tr>
-</table>
+<a name="PasDoc-Uses"></a><h2 class="uses">Uses</h2>
+<ul class="useslist"><li><a  href="ormbr.factory.interfaces.html">ormbr.factory.interfaces</a></li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Constants"></a><h3 class="summary">Constantes</h3>
 <table class="summary wide_list">
 <tr class="list">
-<td class="itemcode"><code><b><a  href="ormbr.types.database.html#TStrDriverName">TStrDriverName</a></b>: array[dnMSSQL..dnAbsoluteDB] of
+<td class="itemcode"><code><b><a  href="ormbr.types.database.html#TStrDriverName">TStrDriverName</a></b>: array[dnMSSQL..dnMongoDB] of
                   string = ('MSSQL','MySQL','Firebird','SQLite','Interbase','DB2',
                             'Oracle','Informix','PostgreSQL','ADS','ASA',
-                            'AbsoluteDB');</code></td>
+                            'AbsoluteDB','MongoDB');</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
-<h3 class="detail">Tipos</h3>
-<table class="detail wide_list">
-<tr class="list">
-<td class="itemcode"><a name="TDriverName"></a><code><b>TDriverName</b> = (...);</code></td>
-</tr>
-<tr><td colspan="1">
-&nbsp;<h6 class="description_section">Values</h6>
-<ul>
-<li>
-dnMSSQL: &nbsp;</li>
-<li>
-dnMySQL: &nbsp;</li>
-<li>
-dnFirebird: &nbsp;</li>
-<li>
-dnSQLite: &nbsp;</li>
-<li>
-dnInterbase: &nbsp;</li>
-<li>
-dnDB2: &nbsp;</li>
-<li>
-dnOracle: &nbsp;</li>
-<li>
-dnInformix: &nbsp;</li>
-<li>
-dnPostgreSQL: &nbsp;</li>
-<li>
-dnADS: &nbsp;</li>
-<li>
-dnASA: &nbsp;</li>
-<li>
-dnAbsoluteDB: &nbsp;</li>
-</ul>
-</td></tr>
-</table>
 <h3 class="detail">Constantes</h3>
 <table class="detail wide_list">
 <tr class="list">
-<td class="itemcode"><a name="TStrDriverName"></a><code><b>TStrDriverName</b>: array[dnMSSQL..dnAbsoluteDB] of
+<td class="itemcode"><a name="TStrDriverName"></a><code><b>TStrDriverName</b>: array[dnMSSQL..dnMongoDB] of
                   string = ('MSSQL','MySQL','Firebird','SQLite','Interbase','DB2',
                             'Oracle','Informix','PostgreSQL','ADS','ASA',
-                            'AbsoluteDB');</code></td>
+                            'AbsoluteDB','MongoDB');</code></td>
 </tr>
 <tr><td colspan="1">
 &nbsp;</td></tr>

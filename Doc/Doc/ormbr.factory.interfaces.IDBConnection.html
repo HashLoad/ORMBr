@@ -42,7 +42,7 @@ $(document).ready(function() {
 <h2 class="description">Descrição</h2>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{3423CA41-501A-4267-91BC-FE95F6AE3B81}']</dt>
+  <dt>GUID['{4520C97F-8777-4D14-9C14-C79EF86957DB}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -92,7 +92,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.interfaces.IDBConnection.html#SetCommandMonitor">SetCommandMonitor</a></b>(AMonitor: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.factory.interfaces.IDBConnection.html#SetCommandMonitor">SetCommandMonitor</a></b>(AMonitor: ICommandMonitor);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -104,7 +104,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#GetDriverName">GetDriverName</a></b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#GetDriverName">GetDriverName</a></b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -112,7 +112,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#CreateResultSet">CreateResultSet</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#CreateResultSet">CreateResultSet</a></b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -120,7 +120,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#CommandMonitor">CommandMonitor</a></b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.factory.interfaces.IDBConnection.html#CommandMonitor">CommandMonitor</a></b>: ICommandMonitor;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -208,7 +208,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetCommandMonitor"></a><code>procedure <b>SetCommandMonitor</b>(AMonitor: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>);</code></td>
+<td class="itemcode"><a name="SetCommandMonitor"></a><code>procedure <b>SetCommandMonitor</b>(AMonitor: ICommandMonitor);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -232,7 +232,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GetDriverName"></a><code>function <b>GetDriverName</b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>;</code></td>
+<td class="itemcode"><a name="GetDriverName"></a><code>function <b>GetDriverName</b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -248,7 +248,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>;</code></td>
+<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>(const ASQL: String): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -264,7 +264,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CommandMonitor"></a><code>function <b>CommandMonitor</b>: <a  href="ormbr.monitor.ICommandMonitor.html">ICommandMonitor</a>;</code></td>
+<td class="itemcode"><a name="CommandMonitor"></a><code>function <b>CommandMonitor</b>: ICommandMonitor;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

@@ -38,20 +38,35 @@ $(document).ready(function() {
 <a  href="ormbr.container.fdmemtable.html">ormbr.container.fdmemtable</a></p>
 <h2 class="declaration">Declaração</h2>
 <p class="declaration">
-<code>type TContainerFDMemTable&lt;M:class,constructor&gt; = class(<a class="normal" href="ormbr.container.dataset.strategy.TContainerDataSetStrategy.html">TContainerDataSetStrategy&lt;M&gt;</a>)</code></p>
+<code>type TContainerFDMemTable&lt;M:class,constructor&gt; = class(<a class="normal" href="ormbr.container.dataset.TContainerDataSet.html">TContainerDataSet&lt;M&gt;</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
 ormbr</p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
-<li class="ancestor"><a class="normal" href="ormbr.container.dataset.abstract.TContainerDataSetAbstract.html">TContainerDataSetAbstract</a></li>
-<li class="ancestor"><a class="normal" href="ormbr.container.dataset.strategy.TContainerDataSetStrategy.html">TContainerDataSetStrategy</a></li>
+<li class="ancestor"><a class="normal" href="ormbr.container.dataset.TContainerDataSet.html">TContainerDataSet</a></li>
 <li class="thisitem">TContainerFDMemTable</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); override;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; AMasterObject: TObject); overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet); overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>destructor <b><a  href="ormbr.container.fdmemtable.TContainerFDMemTable.html#Destroy">Destroy</a></b>; override;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -59,7 +74,39 @@ ormbr</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); override;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; APageSize: Integer); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet; AMasterObject: TObject); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADataSet: TDataSet); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="Destroy"></a><code>destructor <b>Destroy</b>; override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

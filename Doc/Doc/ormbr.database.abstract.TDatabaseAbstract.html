@@ -40,6 +40,8 @@ $(document).ready(function() {
 <p class="declaration">
 <code>type TDatabaseAbstract = class abstract(TInterfacedObject, <a class="normal" href="ormbr.database.interfaces.IDatabaseCompare.html">IDatabaseCompare</a>)</code></p>
 <h2 class="description">Descrição</h2>
+<p>
+ormbr</p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TInterfacedObject</li>
 <li class="thisitem">TDatabaseAbstract</li></ul><h2 class="overview">Visão Geral</h2>
@@ -47,23 +49,35 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FGeneratorCommand">FGeneratorCommand</a></b>: <a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html">IDDLGeneratorCommand</a>;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FDriverName">FDriverName</a></b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FGeneratorCommand">FGeneratorCommand</a></b>: <a  href="ormbr.ddl.interfaces.IDDLGeneratorCommand.html">IDDLGeneratorCommand</a>;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FDDLCommands">FDDLCommands</a></b>: TList&lt;<a  href="ormbr.ddl.commands.TDDLCommand.html">TDDLCommand</a>&gt;;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FCatalogMaster">FCatalogMaster</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FCatalogTarget">FCatalogTarget</a></b>: <a  href="ormbr.database.mapping.TCatalogMetadataMIK.html">TCatalogMetadataMIK</a>;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FCommandsAutoExecute">FCommandsAutoExecute</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FComparerFieldPosition">FComparerFieldPosition</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#FModelForDatabase">FModelForDatabase</a></b>: Boolean;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
@@ -75,6 +89,14 @@ $(document).ready(function() {
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code>procedure <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetCommandsAutoExecute">SetCommandsAutoExecute</a></b>(const Value: Boolean);</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#GetComparerFieldPosition">GetComparerFieldPosition</a></b>: Boolean;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetComparerFieldPosition">SetComparerFieldPosition</a></b>(const Value: Boolean);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -94,7 +116,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#Create">Create</a></b>(ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); overload; virtual;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#Create">Create</a></b>(ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); overload; virtual;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -117,11 +139,27 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#ModelForDatabase">ModelForDatabase</a></b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#FModelForDatabase">FModelForDatabase</a>;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>property <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#CommandsAutoExecute">CommandsAutoExecute</a></b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#GetCommandsAutoExecute">GetCommandsAutoExecute</a> write <a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetCommandsAutoExecute">SetCommandsAutoExecute</a>;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.database.abstract.TDatabaseAbstract.html#ComparerFieldPosition">ComparerFieldPosition</a></b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#GetComparerFieldPosition">GetComparerFieldPosition</a> write <a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetComparerFieldPosition">SetComparerFieldPosition</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
 <h3 class="detail">Campos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FDriverName"></a><code><b>FDriverName</b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
@@ -162,6 +200,22 @@ $(document).ready(function() {
 <tr><td colspan="2">
 &nbsp;</td></tr>
 </table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FComparerFieldPosition"></a><code><b>FComparerFieldPosition</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
+<td class="itemcode"><a name="FModelForDatabase"></a><code><b>FModelForDatabase</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
 <h3 class="detail">Métodos</h3>
 <table class="detail wide_list">
 <tr class="list">
@@ -175,6 +229,22 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="SetCommandsAutoExecute"></a><code>procedure <b>SetCommandsAutoExecute</b>(const Value: Boolean);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="GetComparerFieldPosition"></a><code>function <b>GetComparerFieldPosition</b>: Boolean;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="SetComparerFieldPosition"></a><code>procedure <b>SetComparerFieldPosition</b>(const Value: Boolean);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -214,7 +284,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); overload; virtual;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); overload; virtual;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -255,7 +325,23 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ModelForDatabase"></a><code>property <b>ModelForDatabase</b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#FModelForDatabase">FModelForDatabase</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="CommandsAutoExecute"></a><code>property <b>CommandsAutoExecute</b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#GetCommandsAutoExecute">GetCommandsAutoExecute</a> write <a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetCommandsAutoExecute">SetCommandsAutoExecute</a>;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="ComparerFieldPosition"></a><code>property <b>ComparerFieldPosition</b>: Boolean read <a  href="ormbr.database.abstract.TDatabaseAbstract.html#GetComparerFieldPosition">GetComparerFieldPosition</a> write <a  href="ormbr.database.abstract.TDatabaseAbstract.html#SetComparerFieldPosition">SetComparerFieldPosition</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

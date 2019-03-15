@@ -94,6 +94,14 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateAlterDefaultValue">GenerateAlterDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateAlterCheck">GenerateAlterCheck</a></b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateAddPrimaryKey">GenerateAddPrimaryKey</a></b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; virtual; abstract;</code></td>
 </tr>
 <tr class="list2">
@@ -126,21 +134,25 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateDropView">GenerateDropView</a></b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>): string; virtual; abstract;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateDropDefaultValue">GenerateDropDefaultValue</a></b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual; abstract;</code></td>
 </tr>
 <tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateDropView">GenerateDropView</a></b>(AView: <a  href="ormbr.database.mapping.TViewMIK.html">TViewMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateDropTrigger">GenerateDropTrigger</a></b>(ATrigger: <a  href="ormbr.database.mapping.TTriggerMIK.html">TTriggerMIK</a>): string; virtual; abstract;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateEnableForeignKeys">GenerateEnableForeignKeys</a></b>(AEnable: Boolean): string; virtual; abstract;</code></td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GenerateEnableTriggers">GenerateEnableTriggers</a></b>(AEnable: Boolean): string; virtual; abstract;</code></td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><code>function <b><a  href="ormbr.ddl.generator.TDDLSQLGeneratorAbstract.html#GetSupportedFeatures">GetSupportedFeatures</a></b>: <a  href="ormbr.ddl.interfaces.html#TSupportedFeatures">TSupportedFeatures</a>; virtual; abstract;</code></td>
 </tr>
@@ -246,6 +258,22 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterDefaultValue"></a><code>function <b>GenerateAlterDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateAlterCheck"></a><code>function <b>GenerateAlterCheck</b>(ACheck: <a  href="ormbr.database.mapping.TCheckMIK.html">TCheckMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateAddPrimaryKey"></a><code>function <b>GenerateAddPrimaryKey</b>(APrimaryKey: <a  href="ormbr.database.mapping.TPrimaryKeyMIK.html">TPrimaryKeyMIK</a>): string; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -303,6 +331,14 @@ $(document).ready(function() {
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
 <td class="itemcode"><a name="GenerateDropColumn"></a><code>function <b>GenerateDropColumn</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual; abstract;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateDropDefaultValue"></a><code>function <b>GenerateDropDefaultValue</b>(AColumn: <a  href="ormbr.database.mapping.TColumnMIK.html">TColumnMIK</a>): string; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

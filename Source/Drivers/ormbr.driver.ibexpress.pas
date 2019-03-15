@@ -144,6 +144,7 @@ var
   LExeSQL: TIBQuery;
   LFor: Integer;
 begin
+  inherited;
   LExeSQL := TIBQuery.Create(nil);
   try
     LExeSQL.Database := FConnection;
@@ -184,6 +185,7 @@ function TDriverIBExpress.ExecuteSQL(const ASQL: string): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
+  inherited;
   LDBQuery := TDriverQueryIBExpress.Create(FConnection);
   LDBQuery.CommandText := ASQL;
   Result := LDBQuery.ExecuteQuery;
@@ -260,11 +262,10 @@ var
   LFor: Integer;
 begin
   LResultSet := TIBQuery.Create(nil);
-  LResultSet.Database := FSQLQuery.Database;
-  LResultSet.Transaction := FSQLQuery.Transaction;
-  LResultSet.UniDirectional := True;
   try
     LResultSet.Database := FSQLQuery.Database;
+    LResultSet.Transaction := FSQLQuery.Transaction;
+    LResultSet.UniDirectional := True;
     LResultSet.SQL.Text := FSQLQuery.SQL.Text;
 
     for LFor := 0 to FSQLQuery.Params.Count - 1 do

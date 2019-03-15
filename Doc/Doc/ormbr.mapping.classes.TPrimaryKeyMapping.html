@@ -41,7 +41,7 @@ $(document).ready(function() {
 <code>type TPrimaryKeyMapping = class(<a class="normal" href="ormbr.mapping.classes.TMappingDescription.html">TMappingDescription</a>)</code></p>
 <h2 class="description">Descrição</h2>
 <p>
-IndexeMapping</p>
+PrimaryKeyMapping</p>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
 <ul class="hierarchy"><li class="ancestor">TObject</li>
 <li class="ancestor"><a class="normal" href="ormbr.mapping.classes.TMappingDescription.html">TMappingDescription</a></li>
@@ -73,7 +73,7 @@ IndexeMapping</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Create">Create</a></b>(AColumns: TArray&lt;string&gt;; AAutoInc: Boolean; ASortingOrder: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a>; AUnique: Boolean; ADescription: string = '');</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Create">Create</a></b>(const AColumns: TArray&lt;string&gt;; const AAutoInc: Boolean; const ASortingOrder: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a>; const AUnique: Boolean; const ADescription: string = '');</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -84,7 +84,7 @@ IndexeMapping</p>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Name">Name</a></b>: string read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Name">Name</a></b>: string read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -92,15 +92,15 @@ IndexeMapping</p>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#SortingOrder">SortingOrder</a></b>: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a> read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#SortingOrder">SortingOrder</a></b>: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a> read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a>;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Unique">Unique</a></b>: Boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#Unique">Unique</a></b>: Boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a>;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#AutoIncrement">AutoIncrement</a></b>: boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#AutoIncrement">AutoIncrement</a></b>: boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -149,7 +149,7 @@ IndexeMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AColumns: TArray&lt;string&gt;; AAutoInc: Boolean; ASortingOrder: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a>; AUnique: Boolean; ADescription: string = '');</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AColumns: TArray&lt;string&gt;; const AAutoInc: Boolean; const ASortingOrder: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a>; const AUnique: Boolean; const ADescription: string = '');</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -166,7 +166,7 @@ IndexeMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a>;</code></td>
+<td class="itemcode"><a name="Name"></a><code>property <b>Name</b>: string read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FName">FName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -182,7 +182,7 @@ IndexeMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SortingOrder"></a><code>property <b>SortingOrder</b>: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a> read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a>;</code></td>
+<td class="itemcode"><a name="SortingOrder"></a><code>property <b>SortingOrder</b>: <a  href="ormbr.types.mapping.html#TSortingOrder">TSortingOrder</a> read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FSortingOrder">FSortingOrder</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -190,7 +190,7 @@ IndexeMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Unique"></a><code>property <b>Unique</b>: Boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a>;</code></td>
+<td class="itemcode"><a name="Unique"></a><code>property <b>Unique</b>: Boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FUnique">FUnique</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -198,7 +198,7 @@ IndexeMapping</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="AutoIncrement"></a><code>property <b>AutoIncrement</b>: boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a> write <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a>;</code></td>
+<td class="itemcode"><a name="AutoIncrement"></a><code>property <b>AutoIncrement</b>: boolean read <a  href="ormbr.mapping.classes.TPrimaryKeyMapping.html#FAutoIncrement">FAutoIncrement</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

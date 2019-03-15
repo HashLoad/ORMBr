@@ -32,7 +32,7 @@ $(document).ready(function() {
 <h1 class="unit">Unit ormbr.factory.interfaces</h1>
 <table class="sections wide_list">
 <tr>
-<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Uses">Uses</a></td><td><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objetos e Registros</a></td><td>Funções e Procedimentos</td><td>Tipos</td><td>Constantes</td><td>Variáveis</td></tr></table>
+<td><a class="section" href="#PasDoc-Description">Descrição</a></td><td><a class="section" href="#PasDoc-Uses">Uses</a></td><td><a class="section" href="#PasDoc-Classes">Classes, Interfaces, Objetos e Registros</a></td><td>Funções e Procedimentos</td><td><a class="section" href="#PasDoc-Types">Tipos</a></td><td>Constantes</td><td>Variáveis</td></tr></table>
 <a name="PasDoc-Description"></a><h2 class="description">Descrição</h2>
 <p>
 ORMBr Framework.</p>
@@ -41,7 +41,7 @@ ORMBr Framework.</p>
 
 <p>ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.</p>
 <a name="PasDoc-Uses"></a><h2 class="uses">Uses</h2>
-<ul class="useslist"><li>DB</li><li>Classes</li><li><a  href="ormbr.monitor.html">ormbr.monitor</a></li><li><a  href="ormbr.types.database.html">ormbr.types.database</a></li></ul><h2 class="overview">Visão Geral</h2>
+<ul class="useslist"><li>DB</li><li>Classes</li><li>SysUtils</li><li>Variants</li><li>ormbr.monitor</li></ul><h2 class="overview">Visão Geral</h2>
 <a name="PasDoc-Classes"></a><h3 class="cio">Classes, Interfaces, Objetos e Registros</h3>
 <table class="classestable wide_list">
 <tr class="listheader">
@@ -49,21 +49,69 @@ ORMBr Framework.</p>
 <th class="itemdesc">Descrição</th>
 </tr>
 <tr class="list">
+<td class="itemname">Classe&nbsp;<a class="bold" href="ormbr.factory.interfaces.TAsField.html"><code>TAsField</code></a></td>
+<td class="itemdesc">&nbsp;</td>
+</tr>
+<tr class="list2">
 <td class="itemname">Interface&nbsp;<a class="bold" href="ormbr.factory.interfaces.IDBResultSet.html"><code>IDBResultSet</code></a></td>
 <td class="itemdesc"> Unit : ormbr.driver.connection.pas Classe : <a class="normal" href="ormbr.driver.connection.TDriverResultSet.html">TDriverResultSet</a>&lt;T: TDataSet&gt; </td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname">Interface&nbsp;<a class="bold" href="ormbr.factory.interfaces.IDBQuery.html"><code>IDBQuery</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list">
+<tr class="list2">
 <td class="itemname">Interface&nbsp;<a class="bold" href="ormbr.factory.interfaces.IDBConnection.html"><code>IDBConnection</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
-<tr class="list2">
+<tr class="list">
 <td class="itemname">Interface&nbsp;<a class="bold" href="ormbr.factory.interfaces.IDBTransaction.html"><code>IDBTransaction</code></a></td>
 <td class="itemdesc">&nbsp;</td>
 </tr>
+</table>
+<a name="PasDoc-Types"></a><h3 class="summary">Tipos</h3>
+<table class="summary wide_list">
+<tr class="list">
+<td class="itemcode"><code><b><a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a></b> = (...);</code></td>
+</tr>
+</table>
+<h2 class="description">Descrição</h2>
+<h3 class="detail">Tipos</h3>
+<table class="detail wide_list">
+<tr class="list">
+<td class="itemcode"><a name="TDriverName"></a><code><b>TDriverName</b> = (...);</code></td>
+</tr>
+<tr><td colspan="1">
+&nbsp;<h6 class="description_section">Values</h6>
+<ul>
+<li>
+dnMSSQL: &nbsp;</li>
+<li>
+dnMySQL: &nbsp;</li>
+<li>
+dnFirebird: &nbsp;</li>
+<li>
+dnSQLite: &nbsp;</li>
+<li>
+dnInterbase: &nbsp;</li>
+<li>
+dnDB2: &nbsp;</li>
+<li>
+dnOracle: &nbsp;</li>
+<li>
+dnInformix: &nbsp;</li>
+<li>
+dnPostgreSQL: &nbsp;</li>
+<li>
+dnADS: &nbsp;</li>
+<li>
+dnASA: &nbsp;</li>
+<li>
+dnAbsoluteDB: &nbsp;</li>
+<li>
+dnMongoDB: &nbsp;</li>
+</ul>
+</td></tr>
 </table>
 <h2 class="authors">Autores</h2>
 <ul class="authors">

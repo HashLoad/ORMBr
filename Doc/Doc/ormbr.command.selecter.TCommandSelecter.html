@@ -56,6 +56,10 @@ $(document).ready(function() {
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><code><b><a  href="ormbr.command.selecter.TCommandSelecter.html#FCommandSelectAll">FCommandSelectAll</a></b>: string;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><code><b><a  href="ormbr.command.selecter.TCommandSelecter.html#FCommandSelect">FCommandSelect</a></b>: string;</code></td>
 </tr>
 </table>
@@ -63,35 +67,43 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.command.selecter.TCommandSelecter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.command.selecter.TCommandSelecter.html#Create">Create</a></b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.command.selecter.TCommandSelecter.html#SetPageSize">SetPageSize</a></b>(APageSize: Integer);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.command.selecter.TCommandSelecter.html#SetPageSize">SetPageSize</a></b>(const APageSize: Integer);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectAll">GenerateSelectAll</a></b>(AClass: TClass): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectAll">GenerateSelectAll</a></b>(const AClass: TClass): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GeneratorSelectWhere">GeneratorSelectWhere</a></b>(AClass: TClass; AWhere: string; AOrderBy: string): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GeneratorSelectWhere">GeneratorSelectWhere</a></b>(const AClass: TClass; const AWhere, AOrderBy: string): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectID">GenerateSelectID</a></b>(AClass: TClass; AID: TValue): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectID">GenerateSelectID</a></b>(const AClass: TClass; const AID: Variant): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectOneToOne">GenerateSelectOneToOne</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectOneToOne">GenerateSelectOneToOne</a></b>(const AOwner: TObject; const AClass: TClass; const AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectOneToMany">GenerateSelectOneToMany</a></b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateSelectOneToMany">GenerateSelectOneToMany</a></b>(const AOwner: TObject; const AClass: TClass; const AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateNextPacket">GenerateNextPacket</a></b>: string;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateNextPacket">GenerateNextPacket</a></b>: string; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateNextPacket">GenerateNextPacket</a></b>(const AClass: TClass; const APageSize, APageNext: Integer): string; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.command.selecter.TCommandSelecter.html#GenerateNextPacket">GenerateNextPacket</a></b>(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): string; overload;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -115,6 +127,14 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
+<td class="itemcode"><a name="FCommandSelectAll"></a><code><b>FCommandSelectAll</b>: string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="private.gif" alt="Private" title="Private"></a></td>
 <td class="itemcode"><a name="FCommandSelect"></a><code><b>FCommandSelect</b>: string;</code></td>
 </tr>
 <tr><td colspan="2">
@@ -124,7 +144,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: <a  href="ormbr.factory.interfaces.IDBConnection.html">IDBConnection</a>; ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>; AObject: TObject); override;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -132,7 +152,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="SetPageSize"></a><code>procedure <b>SetPageSize</b>(APageSize: Integer);</code></td>
+<td class="itemcode"><a name="SetPageSize"></a><code>procedure <b>SetPageSize</b>(const APageSize: Integer);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -140,17 +160,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GenerateSelectAll"></a><code>function <b>GenerateSelectAll</b>(AClass: TClass): string;</code></td>
-</tr>
-<tr><td colspan="2">
-<p>
-function GeneratorSelect(ASQL: string): string;</p>
-</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GeneratorSelectWhere"></a><code>function <b>GeneratorSelectWhere</b>(AClass: TClass; AWhere: string; AOrderBy: string): string;</code></td>
+<td class="itemcode"><a name="GenerateSelectAll"></a><code>function <b>GenerateSelectAll</b>(const AClass: TClass): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -158,7 +168,7 @@ function GeneratorSelect(ASQL: string): string;</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GenerateSelectID"></a><code>function <b>GenerateSelectID</b>(AClass: TClass; AID: TValue): string;</code></td>
+<td class="itemcode"><a name="GeneratorSelectWhere"></a><code>function <b>GeneratorSelectWhere</b>(const AClass: TClass; const AWhere, AOrderBy: string): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -166,7 +176,7 @@ function GeneratorSelect(ASQL: string): string;</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GenerateSelectOneToOne"></a><code>function <b>GenerateSelectOneToOne</b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
+<td class="itemcode"><a name="GenerateSelectID"></a><code>function <b>GenerateSelectID</b>(const AClass: TClass; const AID: Variant): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -174,7 +184,7 @@ function GeneratorSelect(ASQL: string): string;</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GenerateSelectOneToMany"></a><code>function <b>GenerateSelectOneToMany</b>(AOwner: TObject; AClass: TClass; AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
+<td class="itemcode"><a name="GenerateSelectOneToOne"></a><code>function <b>GenerateSelectOneToOne</b>(const AOwner: TObject; const AClass: TClass; const AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -182,7 +192,31 @@ function GeneratorSelect(ASQL: string): string;</p>
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="GenerateNextPacket"></a><code>function <b>GenerateNextPacket</b>: string;</code></td>
+<td class="itemcode"><a name="GenerateSelectOneToMany"></a><code>function <b>GenerateSelectOneToMany</b>(const AOwner: TObject; const AClass: TClass; const AAssociation: <a  href="ormbr.mapping.classes.TAssociationMapping.html">TAssociationMapping</a>): string;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateNextPacket"></a><code>function <b>GenerateNextPacket</b>: string; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateNextPacket"></a><code>function <b>GenerateNextPacket</b>(const AClass: TClass; const APageSize, APageNext: Integer): string; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="GenerateNextPacket"></a><code>function <b>GenerateNextPacket</b>(const AClass: TClass; const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): string; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

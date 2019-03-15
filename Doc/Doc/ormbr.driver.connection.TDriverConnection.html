@@ -49,14 +49,14 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a></b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>;</code></td>
+<td class="itemcode"><code><b><a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a></b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
 </tr>
 </table>
 <a name="PasDoc-Methods"></a><h3 class="summary">Métodos</h3>
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>constructor <b><a  href="ormbr.driver.connection.TDriverConnection.html#Create">Create</a></b>(AConnection: TComponent; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
+<td class="itemcode"><code>constructor <b><a  href="ormbr.driver.connection.TDriverConnection.html#Create">Create</a></b>(const AConnection: TComponent; const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -100,7 +100,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverConnection.html#CreateResultSet">CreateResultSet</a></b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.driver.connection.TDriverConnection.html#CreateResultSet">CreateResultSet</a></b>(const ASQL: string): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -111,7 +111,7 @@ $(document).ready(function() {
 <table class="summary wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>property <b><a  href="ormbr.driver.connection.TDriverConnection.html#DriverName">DriverName</a></b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a> read <a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a>;</code></td>
+<td class="itemcode"><code>property <b><a  href="ormbr.driver.connection.TDriverConnection.html#DriverName">DriverName</a></b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a> read <a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a>;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -119,7 +119,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="protected.gif" alt="Protected" title="Protected"></a></td>
-<td class="itemcode"><a name="FDriverName"></a><code><b>FDriverName</b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>;</code></td>
+<td class="itemcode"><a name="FDriverName"></a><code><b>FDriverName</b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -128,7 +128,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(AConnection: TComponent; ADriverName: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
+<td class="itemcode"><a name="Create"></a><code>constructor <b>Create</b>(const AConnection: TComponent; const ADriverName: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a>); virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -216,7 +216,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>: <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
+<td class="itemcode"><a name="CreateResultSet"></a><code>function <b>CreateResultSet</b>(const ASQL: string): <a  href="ormbr.factory.interfaces.IDBResultSet.html">IDBResultSet</a>; virtual; abstract;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -233,7 +233,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="DriverName"></a><code>property <b>DriverName</b>: <a  href="ormbr.types.database.html#TDriverName">TDriverName</a> read <a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a>;</code></td>
+<td class="itemcode"><a name="DriverName"></a><code>property <b>DriverName</b>: <a  href="ormbr.factory.interfaces.html#TDriverName">TDriverName</a> read <a  href="ormbr.driver.connection.TDriverConnection.html#FDriverName">FDriverName</a>;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>

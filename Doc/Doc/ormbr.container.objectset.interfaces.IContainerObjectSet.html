@@ -42,7 +42,7 @@ $(document).ready(function() {
 <h2 class="description">Descrição</h2>
 <h6 class="description_section">Attributes</h6>
 <dl class="attributes">
-  <dt>GUID['{9C287701-40D0-4CFC-9B24-850D43784030}']</dt>
+  <dt>GUID['{427CBF16-5FD5-4144-9699-09B08335D545}']</dt>
   <dd></dd>
 </dl>
 <a name="PasDoc-Hierarchy"></a><h2 class="hierarchy">Hierarquia</h2>
@@ -56,7 +56,7 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#ModifiedFields">ModifiedFields</a></b>: TList&lt;string&gt;;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#ModifiedFields">ModifiedFields</a></b>: TDictionary&lt;string, TList&lt;string&gt;&gt;;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
@@ -64,39 +64,47 @@ $(document).ready(function() {
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Find">Find</a></b>(AID: TValue): M; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Find">Find</a></b>(const AID: Integer): M; overload;</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Find">Find</a></b>(AWhere: string; AOrderBy: string = ''): TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#FindWhere">FindWhere</a></b>(const AWhere: string; const AOrderBy: string = ''): TObjectList&lt;M&gt;;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#FindWhere">FindWhere</a></b>(AWhere: string): TObjectList&lt;M&gt;; deprecated 'Use Find(where)';</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Insert">Insert</a></b>(const AObject: M);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#FindOrderBy">FindOrderBy</a></b>(AOrderBy: string): TObjectList&lt;M&gt;; deprecated 'Use Find('', orderby)';</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Update">Update</a></b>(const AObject: M);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Insert">Insert</a></b>(AObject: M);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Delete">Delete</a></b>(const AObject: M);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Update">Update</a></b>(AObject: M);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Modify">Modify</a></b>(const AObject: M);</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Delete">Delete</a></b>(AObject: M);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#LoadLazy">LoadLazy</a></b>(const AOwner, AObject: TObject);</code></td>
 </tr>
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#NextPacket">NextPacket</a></b>(AObjectList: TObjectList&lt;M&gt;);</code></td>
+<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#NextPacket">NextPacket</a></b>(const AObjectList: TObjectList&lt;M&gt;); overload;</code></td>
 </tr>
 <tr class="list2">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><code>procedure <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#Modify">Modify</a></b>(AObject: M);</code></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#NextPacket">NextPacket</a></b>: TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#NextPacket">NextPacket</a></b>(const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr class="list2">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><code>function <b><a  href="ormbr.container.objectset.interfaces.IContainerObjectSet.html#NextPacket">NextPacket</a></b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload;</code></td>
 </tr>
 </table>
 <h2 class="description">Descrição</h2>
@@ -112,7 +120,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="ModifiedFields"></a><code>function <b>ModifiedFields</b>: TList&lt;string&gt;;</code></td>
+<td class="itemcode"><a name="ModifiedFields"></a><code>function <b>ModifiedFields</b>: TDictionary&lt;string, TList&lt;string&gt;&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -128,7 +136,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(AID: TValue): M; overload;</code></td>
+<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(const AID: Integer): M; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -136,7 +144,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Find"></a><code>function <b>Find</b>(AWhere: string; AOrderBy: string = ''): TObjectList&lt;M&gt;; overload;</code></td>
+<td class="itemcode"><a name="FindWhere"></a><code>function <b>FindWhere</b>(const AWhere: string; const AOrderBy: string = ''): TObjectList&lt;M&gt;;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -144,23 +152,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FindWhere"></a><code>function <b>FindWhere</b>(AWhere: string): TObjectList&lt;M&gt;; deprecated 'Use Find(where)';</code></td>
-</tr>
-<tr><td colspan="2">
-<p class="hint_directive">Warning: este símbolo está depreciado: Use Find(where)</p>&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="FindOrderBy"></a><code>function <b>FindOrderBy</b>(AOrderBy: string): TObjectList&lt;M&gt;; deprecated 'Use Find('', orderby)';</code></td>
-</tr>
-<tr><td colspan="2">
-<p class="hint_directive">Warning: este símbolo está depreciado: Use Find(', orderby)</p>&nbsp;</td></tr>
-</table>
-<table class="detail wide_list">
-<tr class="list">
-<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Insert"></a><code>procedure <b>Insert</b>(AObject: M);</code></td>
+<td class="itemcode"><a name="Insert"></a><code>procedure <b>Insert</b>(const AObject: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -168,7 +160,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Update"></a><code>procedure <b>Update</b>(AObject: M);</code></td>
+<td class="itemcode"><a name="Update"></a><code>procedure <b>Update</b>(const AObject: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -176,7 +168,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Delete"></a><code>procedure <b>Delete</b>(AObject: M);</code></td>
+<td class="itemcode"><a name="Delete"></a><code>procedure <b>Delete</b>(const AObject: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -184,7 +176,7 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="NextPacket"></a><code>procedure <b>NextPacket</b>(AObjectList: TObjectList&lt;M&gt;);</code></td>
+<td class="itemcode"><a name="Modify"></a><code>procedure <b>Modify</b>(const AObject: M);</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
@@ -192,7 +184,39 @@ $(document).ready(function() {
 <table class="detail wide_list">
 <tr class="list">
 <td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
-<td class="itemcode"><a name="Modify"></a><code>procedure <b>Modify</b>(AObject: M);</code></td>
+<td class="itemcode"><a name="LoadLazy"></a><code>procedure <b>LoadLazy</b>(const AOwner, AObject: TObject);</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="NextPacket"></a><code>procedure <b>NextPacket</b>(const AObjectList: TObjectList&lt;M&gt;); overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>: TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>(const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload;</code></td>
+</tr>
+<tr><td colspan="2">
+&nbsp;</td></tr>
+</table>
+<table class="detail wide_list">
+<tr class="list">
+<td class="visibility"><a  href="legend.html"><img  src="public.gif" alt="Public" title="Public"></a></td>
+<td class="itemcode"><a name="NextPacket"></a><code>function <b>NextPacket</b>(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList&lt;M&gt;; overload;</code></td>
 </tr>
 <tr><td colspan="2">
 &nbsp;</td></tr>
