@@ -60,6 +60,8 @@ type
     function MethodCall(const AMethodName: string;
       const AParameters: array of TValue): TValue;
     procedure SetDefaultValue;
+
+    function GetPrimaryKey: TArray<TColumnMapping>;
   end;
 
 implementation
@@ -83,6 +85,33 @@ begin
         Exit(NotServerUse(LAttribute));
     end;
     Exit(nil);
+  end;
+end;
+
+function TObjectHelper.GetPrimaryKey: TArray<TColumnMapping>;
+var
+  LCols: Integer;
+  LPkList: TList<TColumnMapping>;
+  LColumns: TColumnMappingList;
+  LColumn: TColumnMapping;
+begin
+  LPkList := TList<TColumnMapping>.Create;
+  try
+    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(Self.ClassType);
+    for LColumn in LColumns do
+      if LColumn.IsPrimaryKey then
+        LPkList.Add(LColumn);
+    ///
+    if LPkList.Count > 0 then
+    begin
+      SetLength(Result, LPkList.Count);
+      for LCols := 0 to LPkList.Count -1 do
+        Result[LCols] := LPkList.Items[LCols];
+    end
+    else
+      Exit(nil);
+  finally
+    LPkList.Free;
   end;
 end;
 

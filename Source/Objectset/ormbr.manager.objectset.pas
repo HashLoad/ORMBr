@@ -145,7 +145,9 @@ begin
     {$ELSE}
     LContainer := TObjectSetAdapter<T>.Create(FConnection, APageSize);
     {$ENDIF}
-    /// <summary> Adiciona o container ao repositório </summary>
+    /// <summary>
+    ///   Adiciona o container ao repositório de containers
+    /// </summary>
     FRepository.Add(LClassName, LContainer);
   end;
   Result := Self;

@@ -153,6 +153,9 @@ type
     property Description: string read FDescription;
   end;
 
+  /// <summary>
+  ///   DataSets Attribute
+  /// </summary>
   AggregateField = class(TCustomAttribute)
   private
     FFieldName: string;
@@ -169,6 +172,9 @@ type
     property DisplayFormat: string read FDisplayFormat;
   end;
 
+  /// <summary>
+  ///   DataSets Attribute
+  /// </summary>
   CalcField = class(TCustomAttribute)
   private
     FFieldName: string;

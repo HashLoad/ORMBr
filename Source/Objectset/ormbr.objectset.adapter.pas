@@ -51,12 +51,14 @@ type
   private
     FConnection: IDBConnection;
   public
-    constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
+    constructor Create(const AConnection: IDBConnection;
+      const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Integer): M; overload; override;
     function Find(const AID: string): M; overload; override;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; overload; override;
+    function FindWhere(const AWhere: string;
+      const AOrderBy: string = ''): TObjectList<M>; overload; override;
     procedure Insert(const AObject: M); override;
     procedure Update(const AObject: M); override;
     procedure Delete(const AObject: M); override;

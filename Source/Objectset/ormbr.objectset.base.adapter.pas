@@ -73,13 +73,6 @@ type
     destructor Destroy; override;
     function ExistSequence: Boolean; override;
     function ModifiedFields: TDictionary<string, TList<string>>; override;
-//    function Find: TObjectList<M>; overload; virtual; abstract;
-//    function Find(const AID: Integer): M; overload; virtual; abstract;
-//    function Find(const AID: string): M; overload; virtual; abstract;
-//    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
-//    procedure Insert(const AObject: M); virtual; abstract;
-//    procedure Update(const AObject: M); virtual; abstract;
-//    procedure Delete(const AObject: M); virtual; abstract;
     procedure Modify(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
@@ -179,7 +172,8 @@ begin
         end;
       end;
     except
-      raise;
+      on E: Exception do
+        raise Exception.Create('procedure AddObjectState()' + sLineBreak + E.Message);
     end;
   end;
 end;
