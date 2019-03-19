@@ -357,19 +357,25 @@ var
   LObjectList: TObjectList<M>;
 begin
   inherited;
-  FOrmDataSet.DisableControls;
-  DisableDataSetEvents;
-  LBookMark := FOrmDataSet.Bookmark;
-  LObjectList := FSession.NextPacketList;
-  try
-    if LObjectList <> nil then
-      PopularDataSetList(LObjectList);
-  finally
-    LObjectList.Clear;
-    LObjectList.Free;
-    FOrmDataSet.GotoBookmark(LBookMark);
-    FOrmDataSet.EnableControls;
-    EnableDataSetEvents;
+  if not FSession.FetchingRecords then
+  begin
+    FOrmDataSet.DisableControls;
+    DisableDataSetEvents;
+    LBookMark := FOrmDataSet.Bookmark;
+    LObjectList := FSession.NextPacketList;
+    try
+      if LObjectList <> nil then
+      begin
+        if LObjectList.Count > 0 then
+          PopularDataSetList(LObjectList);
+      end;
+    finally
+      LObjectList.Clear;
+      LObjectList.Free;
+      FOrmDataSet.GotoBookmark(LBookMark);
+      FOrmDataSet.EnableControls;
+      EnableDataSetEvents;
+    end;
   end;
 end;
 

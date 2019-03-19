@@ -48,16 +48,16 @@ uses
 
 type
   /// <summary>
-  /// M - Object M
+  ///   M - Object M
   /// </summary>
   TDataSetBaseAdapter<M: class, constructor> = class(TDataSetAbstract<M>)
   private
     /// <summary>
-    /// Objeto para captura dos eventos do dataset passado pela interface
+    ///   Objeto para captura dos eventos do dataset passado pela interface
     /// </summary>
     FOrmDataSetEvents: TDataSet;
     /// <summary>
-    /// Controle de paginação vindo do banco de dados
+    ///   Controle de paginação vindo do banco de dados
     /// </summary>
     FPageSize: Integer;
     ///
@@ -73,15 +73,15 @@ type
     procedure ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
   protected
     /// <summary>
-    /// Classe para controle de evento interno com os eventos da interface do dataset
+    ///   Classe para controle de evento interno com os eventos da interface do dataset
     /// </summary>
     FDataSetEvents: TDataSetEvents;
     /// <summary>
-    /// Usado em relacionamento mestre-detalhe, guarda qual objeto pai
+    ///   Usado em relacionamento mestre-detalhe, guarda qual objeto pai
     /// </summary>
     FOwnerMasterObject: TObject;
     /// <summary>
-    /// Uso interno para fazer mapeamento do registro dataset
+    ///   Uso interno para fazer mapeamento do registro dataset
     /// </summary>
     FCurrentInternal: M;
     FMasterObject: TDictionary<string, TDataSetBaseAdapter<M>>;
@@ -134,8 +134,8 @@ type
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
       AColumnsNameRef: string): Boolean; virtual;
     /// <summary>
-    /// Uso na interface para ler, gravar e alterar dados do registro atual
-    /// no dataset, pelo objeto.
+    ///   Uso na interface para ler, gravar e alterar dados do registro atual
+    ///   no dataset, pelo objeto.
     /// </summary>
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
@@ -203,7 +203,7 @@ begin
   FAutoNextPacket := True;
   FExplorer := TMappingExplorer.GetInstance;
   /// <summary>
-  /// Variável que identifica o campo que guarda o estado do registro.
+  ///   Variável que identifica o campo que guarda o estado do registro.
   /// </summary>
   FInternalIndex := 0;
   FCheckedFieldEvents := False;
@@ -555,8 +555,9 @@ procedure TDataSetBaseAdapter<M>.DoAfterScroll(DataSet: TDataSet);
 begin
   if Assigned(FDataSetEvents.AfterScroll) then
     FDataSetEvents.AfterScroll(DataSet);
+
   /// <summary>
-  /// Controle de paginação de registros retornados do banco de dados
+  ///   Controle de paginação de registros retornados do banco de dados
   /// </summary>
   if FPageSize > -1 then
     if FOrmDataSet.State in [dsBrowse] then

@@ -42,9 +42,8 @@ uses
 type
   TObjectManagerAbstract<M: class, constructor> = class abstract
   protected
-    FFetchingRecords: Boolean;
     /// <summary>
-    /// Instancia a class que mapea todas as class do tipo Entity
+    ///   Instancia a class que mapea todas as class do tipo Entity
     /// </summary>
     FExplorer: IMappingExplorerStrategy;
     function FindSQLInternal(const ASQL: String): TObjectList<M>; virtual; abstract;
@@ -88,7 +87,6 @@ type
       const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
     property Explorer: IMappingExplorerStrategy read FExplorer;
-    property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
   end;
 
 implementation

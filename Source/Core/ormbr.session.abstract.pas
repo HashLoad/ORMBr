@@ -45,7 +45,7 @@ uses
 
 type
   /// <summary>
-  /// M - Sessão Abstract
+  ///   M - Sessão Abstract
   /// </summary>
   TSessionAbstract<M: class, constructor> = class abstract
   protected
@@ -56,6 +56,8 @@ type
     FManager: TObjectManagerAbstract<M>;
     FResultParams: TParams;
     FFindWhereUsed: Boolean;
+    FFindWhereRefreshUsed: Boolean;
+    FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
   public
@@ -64,7 +66,7 @@ type
     function ExistSequence: Boolean; virtual;
     function ModifiedFields: TDictionary<string, TList<string>>; virtual;
     /// <summary>
-    /// ObjectSet
+    ///   ObjectSet
     /// </summary>
     procedure Insert(const AObject: M); overload; virtual;
     procedure Insert(const AObjectList: TObjectList<M>); overload; virtual; abstract;
@@ -73,15 +75,14 @@ type
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual;
-    procedure NextPacketList(
-      const AObjectList: TObjectList<M>); overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     function NextPacketList: TObjectList<M>; overload; virtual; abstract;
     function NextPacketList(const APageSize,
       APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     /// <summary>
-    /// DataSet
+    ///   DataSet
     /// </summary>
     procedure Open; virtual;
     procedure OpenID(const AID: Variant); virtual;
@@ -92,7 +93,7 @@ type
     function SelectAssociation(const AObject: TObject): String; virtual;
     function ResultParams: TParams;
     /// <summary>
-    /// DataSet e ObjectSet
+    ///   DataSet e ObjectSet
     /// </summary>
     procedure ModifyFieldsCompare(const AKey: string; const AObjectSource,
       AObjectUpdate: TObject); virtual;
@@ -106,6 +107,8 @@ type
     function FindWhere(const AWhere: string;
       const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
+
+    property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
   end;
 
 implementation
@@ -120,8 +123,9 @@ begin
   FModifiedFields := TObjectDictionary<string, TList<string>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<M>.Create;
   FResultParams := TParams.Create;
+  FFetchingRecords := False;
   /// <summary>
-  /// Inicia uma lista interna para gerenciar campos alterados
+  ///   Inicia uma lista interna para gerenciar campos alterados
   /// </summary>
   FModifiedFields.Clear;
   FModifiedFields.TrimExcess;
@@ -162,6 +166,7 @@ end;
 function TSessionAbstract<M>.Find(const AID: string): M;
 begin
   FFindWhereUsed := False;
+  FFetchingRecords := False;
   Result := FManager.Find(AID);
 end;
 
@@ -169,6 +174,7 @@ function TSessionAbstract<M>.FindWhere(const AWhere,
   AOrderBy: string): TObjectList<M>;
 begin
   FFindWhereUsed := True;
+  FFetchingRecords := False;
   FWhere := AWhere;
   FOrderBy := AOrderBy;
   if FPageSize > -1 then
@@ -182,12 +188,14 @@ end;
 function TSessionAbstract<M>.Find(const AID: Integer): M;
 begin
   FFindWhereUsed := False;
+  FFetchingRecords := False;
   Result := FManager.Find(AID);
 end;
 
 function TSessionAbstract<M>.Find: TObjectList<M>;
 begin
   FFindWhereUsed := False;
+  FFetchingRecords := False;
   Result := FManager.Find;
 end;
 
@@ -210,16 +218,16 @@ begin
       if LProperty.IsNoUpdate then
         Continue;
       /// <summary>
-      /// Validação para entrar no IF somente propriedades que o tipo não
-      ///  esteja na lista de tipos.
+      ///   Validação para entrar no IF somente propriedades que o tipo não
+      ///   esteja na lista de tipos.
       /// </summary>
       if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1) then
       begin
         if not FModifiedFields.ContainsKey(AKey) then
           FModifiedFields.Add(AKey, TList<string>.Create);
         /// <summary>
-        /// Se o tipo da property for tkRecord provavelmente tem Nullable nela
-        /// Se não for tkRecord entra no ELSE e pega o valor de forma direta
+        ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
+        ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
         /// </summary>
         if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
         begin
@@ -268,22 +276,22 @@ end;
 
 procedure TSessionAbstract<M>.Open;
 begin
-
+  FFetchingRecords := False;
 end;
 
 procedure TSessionAbstract<M>.OpenID(const AID: Variant);
 begin
-
+  FFetchingRecords := False;
 end;
 
 procedure TSessionAbstract<M>.OpenSQL(const ASQL: string);
 begin
-
+  FFetchingRecords := False;
 end;
 
 procedure TSessionAbstract<M>.OpenWhere(const AWhere, AOrderBy: string);
 begin
-
+  FFetchingRecords := False;
 end;
 
 procedure TSessionAbstract<M>.RefreshRecord(const AColumns: TParams);

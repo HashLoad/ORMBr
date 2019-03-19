@@ -270,15 +270,18 @@ var
   LBookMark: TBookmark;
 begin
   inherited;
-  FOrmDataSet.DisableControls;
-  DisableDataSetEvents;
-  LBookMark := FOrmDataSet.Bookmark;
-  try
-    FSession.NextPacket;
-  finally
-    FOrmDataSet.GotoBookmark(LBookMark);
-    FOrmDataSet.EnableControls;
-    EnableDataSetEvents;
+  if not FSession.FetchingRecords then
+  begin
+    FOrmDataSet.DisableControls;
+    DisableDataSetEvents;
+    LBookMark := FOrmDataSet.Bookmark;
+    try
+      FSession.NextPacket;
+    finally
+      FOrmDataSet.GotoBookmark(LBookMark);
+      FOrmDataSet.EnableControls;
+      EnableDataSetEvents;
+    end;
   end;
 end;
 

@@ -360,16 +360,12 @@ end;
 function TObjectManager<M>.NextPacket: IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorNextPacket;
-  if Result.FetchingAll then
-    FFetchingRecords := True;
 end;
 
 function TObjectManager<M>.NextPacket(const APageSize,
   APageNext: Integer): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), APageSize, APageNext);
-  if Result.FetchingAll then
-    FFetchingRecords := True;
 end;
 
 function TObjectManager<M>.NextPacketList: TObjectList<M>;
@@ -406,8 +402,6 @@ begin
                                    AOrderBy,
                                    APageSize,
                                    APageNext);
-  if Result.FetchingAll then
-    FFetchingRecords := True;
 end;
 
 function TObjectManager<M>.NextPacketList(const AWhere, AOrderBy: String;
@@ -455,6 +449,13 @@ begin
       FillAssociation(AObjectList.Last);
     end;
   finally
+    /// <summary>
+    ///   Essa tag é controlada pela session, mas como esse método fornece
+    ///   dados para a session, tiver que muda-la aqui.
+    /// </summary>
+    if LResultSet.RecordCount = 0 then
+      TSessionAbstract<M>(FOwner).FetchingRecords := True;
+
     LResultSet.Close;
   end;
 end;
@@ -478,6 +479,13 @@ begin
       FillAssociation(AObjectList.Last);
     end;
   finally
+    /// <summary>
+    ///   Essa tag é controlada pela session, mas como esse método fornece
+    ///   dados para a session, tiver que muda-la aqui.
+    /// </summary>
+    if LResultSet.RecordCount = 0 then
+      TSessionAbstract<M>(FOwner).FetchingRecords := True;
+
     LResultSet.Close;
   end;
 end;

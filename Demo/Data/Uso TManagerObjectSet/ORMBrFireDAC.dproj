@@ -1,0 +1,216 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C06AD709-8B65-4BEC-A7D8-269EF65D5035}</ProjectGuid>
+        <MainSource>ORMBrFireDAC.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <TargetedPlatforms>1153</TargetedPlatforms>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <ProjectVersion>18.5</ProjectVersion>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='iOSDevice64' and '$(Cfg_2)'=='true') or '$(Cfg_2_iOSDevice64)'!=''">
+        <Cfg_2_iOSDevice64>true</Cfg_2_iOSDevice64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_E>false</DCC_E>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+        <DCC_N>false</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <SanitizedProjectName>ORMBrFireDAC</SanitizedProjectName>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_iOSDevice64)'!=''">
+        <BT_BuildType>Debug</BT_BuildType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="uMainFormORM.pas">
+            <Form>Form3</Form>
+        </DCCReference>
+        <DCCReference Include="ormbr.model.client.pas"/>
+        <DCCReference Include="ormbr.model.detail.pas"/>
+        <DCCReference Include="ormbr.model.lookup.pas"/>
+        <DCCReference Include="ormbr.model.master.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.bind.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.deleter.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.factory.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.inserter.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.selecter.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.command.updater.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.commands.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.absolutedb.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.firebird.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.interbase.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mssql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mysql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.oracle.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.postgresql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.sqlite.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.interfaces.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.driver.register.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.encddecd.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.json.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.json.utils.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.attributes.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.classes.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.exceptions.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.explorer.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.explorerstrategy.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.popular.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.register.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.repository.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.rttiutils.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.objects.helper.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.objects.manager.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.objects.manager.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.rest.json.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.session.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.database.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.lazy.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.mapping.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.types.nullable.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.utils.pas"/>
+        <DCCReference Include="..\..\..\Source\Monitor\ormbr.form.monitor.pas">
+            <Form>CommandMonitor</Form>
+        </DCCReference>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.clientdataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.dataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.container.fdmemtable.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.abstract.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.bind.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.clientdataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.consts.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.events.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.fdmemtable.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.fields.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.manager.dataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.session.dataset.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.manager.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.bind.attributes.pas"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">ORMBrFireDAC.dpr</Source>
+                </Source>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="iOSDevice64">True</Platform>
+                <Platform value="Linux64">True</Platform>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

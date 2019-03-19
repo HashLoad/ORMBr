@@ -105,10 +105,9 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  FManager.FetchingRecords := False;
   LDBResultSet := FManager.SelectInternalID(AID);
   /// <summary>
-  /// Popula o DataSet em memória com os registros retornardos no comando SQL
+  ///   Popula o DataSet em memória com os registros retornardos no comando SQL
   /// </summary>
   PopularDataSet(LDBResultSet);
 end;
@@ -118,13 +117,12 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  FManager.FetchingRecords := False;
   if ASQL = '' then
     LDBResultSet := FManager.SelectInternalAll
   else
     LDBResultSet := FManager.SelectInternal(ASQL);
   /// <summary>
-  /// Popula o DataSet em memória com os registros retornardos no comando SQL
+  ///   Popula o DataSet em memória com os registros retornardos no comando SQL
   /// </summary>
   PopularDataSet(LDBResultSet);
 end;
@@ -167,62 +165,80 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  if not FManager.FetchingRecords then
-  begin
-    LDBResultSet := FManager.NextPacket;
+  LDBResultSet := FManager.NextPacket;
+  if LDBResultSet.RecordCount > 0 then
     /// <summary>
-    /// Popula o DataSet em memória com os registros retornardos no comando SQL
+    ///   Popula o DataSet em memória com os registros retornardos no comando SQL
     /// </summary>
-    PopularDataSet(LDBResultSet);
-  end;
+    PopularDataSet(LDBResultSet)
+  else
+    FFetchingRecords := True;
 end;
 
 procedure TSessionDataSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
 begin
   inherited;
-  if not FManager.FetchingRecords then
+  if not FFetchingRecords then
   begin
     FPageNext := FPageNext + FPageSize;
     if FFindWhereUsed then
       FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
     else
       FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+    /// <summary>
+    ///    if AObjectList <> nil then
+    ///      if AObjectList.RecordCount = 0 then
+    ///        FFetchingRecords := True;
+    ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
+    ///  método NextPacketList() dentro do FManager.
+    /// </summary>
   end;
 end;
 
 function TSessionDataSet<M>.NextPacketList: TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
+  Result := nil;
+  if not FFetchingRecords then
   begin
     FPageNext := FPageNext + FPageSize;
     if FFindWhereUsed then
       Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
     else
       Result := FManager.NextPacketList(FPageSize, FPageNext);
-  end
-  else
-    Result := nil;
+
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 function TSessionDataSet<M>.NextPacketList(const APageSize,
   APageNext: Integer): TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
-    Result := FManager.NextPacketList(APageSize, APageNext)
-  else
-    Result := nil;
+  Result := nil;
+  if not FFetchingRecords then
+  begin
+    Result := FManager.NextPacketList(APageSize, APageNext);
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 function TSessionDataSet<M>.NextPacketList(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
-    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext)
-  else
-    Result := nil;
+  Result := nil;
+  if not FFetchingRecords then
+  begin
+    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 procedure TSessionDataSet<M>.PopularDataSet(const ADBResultSet: IDBResultSet);

@@ -51,9 +51,10 @@ type
                  {$ENDIF}
     FRepository: TDictionary<string, TObject>;
     FNestedList: TDictionary<string, TObjectList<TObject>>;
+    FCurrentIndex: Integer;
     function Resolver<T: class, constructor>: TObjectSetBaseAdapter<T>;
+    procedure ListChanged<T: class, constructor>(Sender: TObject; const Item: T; Action: TCollectionNotification);
   public
-
     constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
                                           {$ELSE}IDBConnection);
                                           {$ENDIF}
@@ -64,7 +65,8 @@ type
     function Find<T: class, constructor>(const AID: Integer): T; overload;
     function Find<T: class, constructor>(const AID: String): T; overload;
     {$IFDEF DRIVERRESTFUL}
-    function Find<T: class, constructor>(const AMethodName: String; const AParams: array of string): TManagerObjectSet; overload;
+    function Find<T: class, constructor>(const AMethodName: String;
+      const AParams: array of string): TManagerObjectSet; overload;
     {$ENDIF}
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TManagerObjectSet;
@@ -77,12 +79,15 @@ type
     function Modify<T: class, constructor>(const AObject: T): TManagerObjectSet;
     function LoadLazy<T: class, constructor>(const AOwner, AObject: TObject): TManagerObjectSet;
     function NextPacket<T: class, constructor>: TManagerObjectSet;
+    function New<T: class, constructor>: TManagerObjectSet; overload;
+    function New<T: class, constructor>(var AObject: T): TManagerObjectSet; overload;
+    function SelectCurrenct<T: class, constructor>(const AIndex: Integer): TManagerObjectSet;
+    function Current<T: class, constructor>: T;
   end;
 
 implementation
 
 { TManagerObjectSet }
-
 constructor TManagerObjectSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
                                                         {$ELSE}IDBConnection);
                                                         {$ENDIF}
@@ -90,6 +95,12 @@ begin
   FConnection := AConnection;
   FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
   FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
+  FCurrentIndex := 0;
+end;
+
+function TManagerObjectSet.Current<T>: T;
+begin
+  Result := T(FNestedList.Items[TClass(T).ClassName].Items[FCurrentIndex]);
 end;
 
 destructor TManagerObjectSet.Destroy;
@@ -109,6 +120,23 @@ begin
   begin
     Result := TObjectList<T>(FNestedList.Items[LClassName]);
   end;
+end;
+
+function TManagerObjectSet.New<T>: TManagerObjectSet;
+var
+  LNewObject: T;
+begin
+  Resolver<T>.New(LNewObject);
+  FNestedList.Items[TClass(T).ClassName].Add(LNewObject);
+  FCurrentIndex := FNestedList.Items[TClass(T).ClassName].Count -1;
+  Result := Self;
+end;
+
+function TManagerObjectSet.New<T>(var AObject: T): TManagerObjectSet;
+begin
+  AObject := nil;
+  Resolver<T>.New(AObject);
+  Result := Self;
 end;
 
 function TManagerObjectSet.Delete<T>(const AObject: T): TManagerObjectSet;
@@ -158,7 +186,10 @@ var
   LObjectList: TObjectList<T>;
 begin
   LObjectList := Resolver<T>.Find;
-  /// <summary> Limpa a lista de objectos </summary>
+  LObjectList.OnNotify := ListChanged<T>;
+  /// <summary>
+  ///   Lista de objetos
+  /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
@@ -173,6 +204,15 @@ begin
     Result := TObjectSetBaseAdapter<T>(FRepository.Items[LClassName]);
 end;
 
+function TManagerObjectSet.SelectCurrenct<T>(const AIndex: Integer): TManagerObjectSet;
+begin
+  FCurrentIndex := AIndex;
+//  if FNestedList.Count > 0 then
+//    Resolver<T>.BindNotification(FNestedList.Items[TClass(T)
+//                                   .ClassName].Items[FCurrentIndex], cnExtracting);
+  Result := Self;
+end;
+
 function TManagerObjectSet.Update<T>(const AObject: T): TManagerObjectSet;
 begin
   Resolver<T>.Update(AObject);
@@ -184,7 +224,10 @@ var
   LObjectList: TObjectList<T>;
 begin
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
-  /// <summary> Limpa a lista de objectos </summary>
+  LObjectList.OnNotify := ListChanged<T>;
+  /// <summary>
+  ///   Lista de objetos
+  /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;
@@ -193,6 +236,40 @@ function TManagerObjectSet.Insert<T>(const AObject: T): TManagerObjectSet;
 begin
   Resolver<T>.Insert(AObject);
   Result := Self;
+end;
+
+procedure TManagerObjectSet.ListChanged<T>(Sender: TObject; const Item: T;
+  Action: TCollectionNotification);
+begin
+  if Action = cnAdding then // Before
+  begin
+
+  end
+  else
+  if Action = cnAdded then // After
+  begin
+
+  end
+  else
+  if Action = cnDeleting then // Before
+  begin
+
+  end
+  else
+  if Action = cnRemoved then // After
+  begin
+
+  end
+  else
+  if Action = cnExtracting then // Before
+  begin
+
+  end
+  else
+  if Action = cnExtracted then // After
+  begin
+
+  end;
 end;
 
 function TManagerObjectSet.LoadLazy<T>(const AOwner, AObject: TObject): TManagerObjectSet;
@@ -228,7 +305,10 @@ var
   LObjectList: TObjectList<T>;
 begin
   LObjectList := Resolver<T>.Find(AMethodName, AParams);
-  /// <summary> Limpa a lista de objectos </summary>
+  LObjectList.OnNotify := ListChanged<T>;
+  /// <summary>
+  ///   Lista de objetos
+  /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
   Result := Self;
 end;

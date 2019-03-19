@@ -63,6 +63,7 @@ type
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     function NextPacket(const AWhere, AOrderby: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+    procedure New(var AObject: M); virtual; abstract;
   end;
 
 implementation

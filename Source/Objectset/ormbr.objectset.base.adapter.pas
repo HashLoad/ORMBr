@@ -84,6 +84,7 @@ type
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
+    procedure New(var AObject: M); override;
   end;
 
 implementation
@@ -114,15 +115,15 @@ begin
   if ASourceObject.GetType(LRttiType) then
   begin
     /// <summary>
-    /// Cria um novo objeto para ser guardado na lista com o estado atual do ASourceObject.
+    ///   Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
     /// </summary>
     LStateObject := ASourceObject.ClassType.Create;
     /// <summary>
-    /// Gera uma chave de identificação unica para cada item da lista
+    ///   Gera uma chave de identificação unica para cada item da lista
     /// </summary>
     LKey := GenerateKey(ASourceObject);
     /// <summary>
-    /// Guarda o novo objeto na lista, identificado pela chave
+    ///   Guarda o novo objeto na lista, identificado pela chave
     /// </summary>
     FObjectState.Add(LKey, LStateObject);
     try
@@ -133,7 +134,7 @@ begin
         if LProperty.IsNotCascade then
           Continue;
         /// <summary>
-        /// Validação para entrar no IF somente propriedades que o tipo não esteja na lista
+        ///   Validação para entrar no IF somente propriedades que o tipo não esteja na lista
         /// </summary>
         if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_2) then
         begin
@@ -238,6 +239,13 @@ procedure TObjectSetBaseAdapter<M>.Modify(const AObject: M);
 begin
   FObjectState.Clear;
   AddObjectState(AObject);
+end;
+
+procedure TObjectSetBaseAdapter<M>.New(var AObject: M);
+begin
+  inherited;
+  AObject := M.Create;
+  AObject.SetDefaultValue;
 end;
 
 function TObjectSetBaseAdapter<M>.NextPacket(const AWhere, AOrderBy: String;

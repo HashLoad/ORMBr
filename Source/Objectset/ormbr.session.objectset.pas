@@ -84,19 +84,29 @@ function TSessionObjectSet<M>.NextPacketList(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
-    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext)
-  else
-    Result := nil;
+  Result := nil;
+  if not FFetchingRecords then
+  begin
+    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 function TSessionObjectSet<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
-    Result := FManager.NextPacketList(APageSize, APageNext)
-  else
-    Result := nil;
+  Result := nil;
+  if not FFetchingRecords then
+  begin
+    Result := FManager.NextPacketList(APageSize, APageNext);
+
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 destructor TSessionObjectSet<M>.Destroy;
@@ -108,29 +118,40 @@ end;
 procedure TSessionObjectSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
 begin
   inherited;
-  if not FManager.FetchingRecords then
+  if not FFetchingRecords then
   begin
     FPageNext := FPageNext + FPageSize;
     if FFindWhereUsed then
       FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
     else
       FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+
+    /// <summary>
+    ///    if AObjectList <> nil then
+    ///      if AObjectList.RecordCount = 0 then
+    ///        FFetchingRecords := True;
+    ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
+    ///  método NextPacketList() dentro do FManager.
+    /// </summary>
   end;
 end;
 
 function TSessionObjectSet<M>.NextPacketList: TObjectList<M>;
 begin
   inherited;
-  if not FManager.FetchingRecords then
+  Result := nil;
+  if not FFetchingRecords then
   begin
     FPageNext := FPageNext + FPageSize;
     if FFindWhereUsed then
       Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
     else
       Result := FManager.NextPacketList(FPageSize, FPageNext);
-  end
-  else
-    Result := nil;
+
+    if Result <> nil then
+      if Result.Count = 0 then
+        FFetchingRecords := True;
+  end;
 end;
 
 end.
