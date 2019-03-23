@@ -118,96 +118,103 @@ var
   LObject: TObject;
   LDataSet: TDataSet;
   LField: TField;
+  LReadOnly: Boolean;
 begin
   /// <summary>
-  /// Busca lista de columnas do mapeamento
+  ///   Busca lista de columnas do mapeamento
   /// </summary>
   LColumns := TMappingExplorer
                 .GetInstance
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
+    LProperty := LColumn.ColumnProperty;
+    LField := ADataSet.FieldByName(LColumn.ColumnName);
+    /// <summary>
+    ///   Possibilitar popular o dado nos campos ReadOnly=True que são JoinColumn.
+    /// </summary>
+    LReadOnly := LField.ReadOnly;
+    LField.ReadOnly := False;
     try
-      if LColumn.IsJoinColumn then
-        Continue;
-
-      LProperty := LColumn.ColumnProperty;
-      LField := ADataSet.FieldByName(LColumn.ColumnName);
-      case LProperty.PropertyType.TypeKind of
-        tkEnumeration:
-          begin
-            LValue := LProperty.GetEnumToFieldValue(AObject, LColumn.FieldType).AsVariant;
-            LSameText := (LField.Value = LValue);
-            if not LSameText then
-              LField.Value := LValue;
-          end;
-        tkClass:
-          begin
-            if LColumn.FieldType in [ftDataSet] then
+      try
+        case LProperty.PropertyType.TypeKind of
+          tkEnumeration:
             begin
-              case LField.DataType of
-                ftDataSet:
-                  begin
-                    LDataSet := (LField as TDataSetField).NestedDataSet;
-                    LDataSet.DisableControls;
-                    try
-                      if LProperty.IsList then
-                      begin
-                        LObjectList := TObjectList<TObject>(LProperty.GetValue(AObject).AsObject);
-                        if LObjectList <> nil then
+              LValue := LProperty.GetEnumToFieldValue(AObject, LColumn.FieldType).AsVariant;
+              LSameText := (LField.Value = LValue);
+              if not LSameText then
+                LField.Value := LValue;
+            end;
+          tkClass:
+            begin
+              if LColumn.FieldType in [ftDataSet] then
+              begin
+                case LField.DataType of
+                  ftDataSet:
+                    begin
+                      LDataSet := (LField as TDataSetField).NestedDataSet;
+                      LDataSet.DisableControls;
+                      try
+                        if LProperty.IsList then
                         begin
-                          while not LDataSet.Eof do
-                            LDataSet.Delete;
-                          for LObject in LObjectList do
+                          LObjectList := TObjectList<TObject>(LProperty.GetValue(AObject).AsObject);
+                          if LObjectList <> nil then
+                          begin
+                            while not LDataSet.Eof do
+                              LDataSet.Delete;
+                            for LObject in LObjectList do
+                            begin
+                              LDataSet.Append;
+                              SetPropertyToField(LObject, LDataSet);
+                              LDataSet.Post;
+                            end;
+                          end;
+                        end
+                        else
+                        begin
+                          LObject := LProperty.GetNullableValue(AObject).AsObject;
+                          if LObject <> nil then
                           begin
                             LDataSet.Append;
                             SetPropertyToField(LObject, LDataSet);
                             LDataSet.Post;
                           end;
                         end;
-                      end
-                      else
-                      begin
-                        LObject := LProperty.GetNullableValue(AObject).AsObject;
-                        if LObject <> nil then
-                        begin
-                          LDataSet.Append;
-                          SetPropertyToField(LObject, LDataSet);
-                          LDataSet.Post;
-                        end;
+                      finally
+                        LDataSet.First;
+                        LDataSet.EnableControls;
                       end;
-                    finally
-                      LDataSet.First;
-                      LDataSet.EnableControls;
                     end;
-                  end;
+                end;
               end;
-            end;
-          end
-      else
-        if LProperty.IsBlob then
-        begin
-          if ADataSet.FieldByName(LColumn.ColumnName).IsBlob then
-            TBlobField(ADataSet
-                         .FieldByName(LColumn.ColumnName))
-                           .AsBytes := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
-          else
-            raise Exception.CreateFmt(cNOTFIELDTYPEBLOB,
-                                     [ADataSet.FieldByName(LColumn.ColumnName).FieldName]);
-        end
+            end
         else
-        begin
-          LValue := LProperty.GetNullableValue(AObject).AsVariant;
-          LSameText := (ADataSet.FieldByName(LColumn.ColumnName).Value = LValue);
-          if not LSameText then
-            ADataSet.FieldByName(LColumn.ColumnName).Value := LValue;
+          if LProperty.IsBlob then
+          begin
+            if ADataSet.FieldByName(LColumn.ColumnName).IsBlob then
+              TBlobField(ADataSet
+                           .FieldByName(LColumn.ColumnName))
+                             .AsBytes := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
+            else
+              raise Exception.CreateFmt(cNOTFIELDTYPEBLOB,
+                                       [ADataSet.FieldByName(LColumn.ColumnName).FieldName]);
+          end
+          else
+          begin
+            LValue := LProperty.GetNullableValue(AObject).AsVariant;
+            LSameText := (ADataSet.FieldByName(LColumn.ColumnName).Value = LValue);
+            if not LSameText then
+              ADataSet.FieldByName(LColumn.ColumnName).Value := LValue;
+          end;
         end;
+      except
+        on E: Exception do
+          raise Exception.Create('Column : ' + LColumn.ColumnName
+                                             + sLineBreak
+                                             + E.Message);
       end;
-    except
-      on E: Exception do
-        raise Exception.Create('Column : ' + LColumn.ColumnName
-                                           + sLineBreak
-                                           + E.Message);
+    finally
+      LField.ReadOnly := LReadOnly;
     end;
   end;
 end;
@@ -570,7 +577,7 @@ begin
       ADataSet.FieldByName(LColumn.ColumnName).Visible := False;
 
     /// <summary>
-    /// Criar TFields de campos do tipo TDataSetField
+    ///   Criar TFields de campos do tipo TDataSetField
     /// </summary>
     if LColumn.FieldType in [ftDataSet] then
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
@@ -595,11 +602,11 @@ begin
   ADataSet.Fields[ADataSet.Fields.Count -1].Visible := False;
   ADataSet.Fields[ADataSet.Fields.Count -1].Index   := 0;
   /// <summary>
-  /// Adiciona Fields Calcs
+  ///   Adiciona Fields Calcs
   /// </summary>
   SetCalcFieldDefsObjectClass(ADataSet, AObject);
   /// <summary>
-  /// Adicionar Fields Aggregates
+  ///   Adicionar Fields Aggregates
   /// </summary>
   SetAggregateFieldDefsObjectClass(ADataSet, AObject);
 end;

@@ -385,7 +385,9 @@ begin
   TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
   FOrmDataSet.First;
-  /// <summary> Popula Associations </summary>
+  /// <summary>
+  ///   Popula Associations
+  /// </summary>
   if FMasterObject.Count > 0 then
     PopularDataSetChilds(AObject);
 end;
