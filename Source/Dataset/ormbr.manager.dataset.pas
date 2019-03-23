@@ -107,6 +107,7 @@ type
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TManagerDataSet;
     function NestedList<T: class>: TObjectList<T>;
+    function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerDataSet;
   end;
 
 implementation
@@ -301,6 +302,11 @@ function TManagerDataSet.ApplyUpdates<T>(const MaxErros: Integer): TManagerDataS
 begin
   Resolver<T>.ApplyUpdates(MaxErros);
   Result := Self;
+end;
+
+function TManagerDataSet.AutoNextPacket<T>(const AValue: Boolean): TManagerDataSet;
+begin
+  Resolver<T>.AutoNextPacket := AValue;
 end;
 
 function TManagerDataSet.Open<T>(const AID: String): TManagerDataSet;
