@@ -25,7 +25,7 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-unit ormbr.dml.generator.absolutedb;
+unit ormbr.dml.generator.elevatedb;
 
 interface
 
@@ -47,7 +47,7 @@ type
   /// <summary>
   /// Classe de banco de dados AbsoluteDB
   /// </summary>
-  TDMLGeneratorAbsoluteDB = class(TDMLGeneratorAbstract)
+  TDMLGeneratorElevateDB = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
@@ -61,26 +61,28 @@ type
       ACommandInsert: TDMLCommandInsert): Int64; override;
     function GeneratorSequenceNextValue(AObject: TObject;
       ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorPageNext(const ACommandSelect: string;
+      APageSize, APageNext: Integer): string; override;
   end;
 
 implementation
 
-{ TDMLGeneratorAbsoluteDB }
+{ TDMLGeneratorElevateDB }
 
-constructor TDMLGeneratorAbsoluteDB.Create;
+constructor TDMLGeneratorElevateDB.Create;
 begin
   inherited;
   FDateFormat := 'dd/MM/yyyy';
   FTimeFormat := 'HH:MM:SS';
 end;
 
-destructor TDMLGeneratorAbsoluteDB.Destroy;
+destructor TDMLGeneratorElevateDB.Destroy;
 begin
 
   inherited;
 end;
 
-function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(
+function TDMLGeneratorElevateDB.GetGeneratorSelect(
   const ACriteria: ICriteria): string;
 begin
   inherited;
@@ -89,7 +91,19 @@ begin
   Result := ACriteria.AsString;
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSelectAll(AClass: TClass;
+function TDMLGeneratorElevateDB.GeneratorPageNext(const ACommandSelect: string;
+  APageSize, APageNext: Integer): string;
+begin
+  if APageNext = 0 then
+    APageNext := 1;
+
+  if APageSize > 0 then
+    Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
+  else
+    Result := ACommandSelect;
+end;
+
+function TDMLGeneratorElevateDB.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
   LTable: TTableMapping;
@@ -124,7 +138,7 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSelectWhere(AClass: TClass; AWhere,
+function TDMLGeneratorElevateDB.GeneratorSelectWhere(AClass: TClass; AWhere,
   AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
@@ -138,16 +152,15 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSequenceCurrentValue(AObject: TObject;
+function TDMLGeneratorElevateDB.GeneratorSequenceCurrentValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s',
-                                   [ACommandInsert.Table.Name,
-                                    ACommandInsert.PrimaryKey.Columns.Items[0],
+  Result := ExecuteSequence(Format('SELECT MAX(%s) FROM %s',
+                                   [ACommandInsert.PrimaryKey.Columns.Items[0],
                                     ACommandInsert.Table.Name]));
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSequenceNextValue(AObject: TObject;
+function TDMLGeneratorElevateDB.GeneratorSequenceNextValue(AObject: TObject;
   ACommandInsert: TDMLCommandInsert): Int64;
 begin
   Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert)
@@ -155,6 +168,6 @@ function TDMLGeneratorAbsoluteDB.GeneratorSequenceNextValue(AObject: TObject;
 end;
 
 initialization
-  TDriverRegister.RegisterDriver(dnAbsoluteDB, TDMLGeneratorAbsoluteDB.Create);
+  TDriverRegister.RegisterDriver(dnAbsoluteDB, TDMLGeneratorElevateDB.Create);
 
 end.

@@ -33,10 +33,10 @@ uses
   ormbr.factory.interfaces;
 
 const
-  TStrDriverName: array[dnMSSQL..dnMongoDB] of
+  TStrDriverName: array[dnMSSQL..dnNexusDB] of
                   string = ('MSSQL','MySQL','Firebird','SQLite','Interbase','DB2',
                             'Oracle','Informix','PostgreSQL','ADS','ASA',
-                            'AbsoluteDB','MongoDB');
+                            'AbsoluteDB','MongoDB','ElevateDB','NexusDB');
 implementation
 
 end.
