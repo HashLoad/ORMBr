@@ -106,7 +106,8 @@ end;
 procedure TDataSetAdapter<M>.DoAfterScroll(DataSet: TDataSet);
 begin
   if DataSet.State in [dsBrowse] then
-    OpenDataSetChilds;
+    if not FOrmDataSet.Eof then
+      OpenDataSetChilds;
   inherited;
 end;
 
