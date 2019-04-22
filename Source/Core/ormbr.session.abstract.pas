@@ -35,6 +35,7 @@ uses
   DB,
   Rtti,
   TypInfo,
+  SysUtils,
   Generics.Collections,
   /// ORMBr
   ormbr.core.consts,
@@ -49,6 +50,9 @@ type
   /// </summary>
   TSessionAbstract<M: class, constructor> = class abstract
   protected
+    {$IFDEF USEBINDSOURCE}
+    FOnPropertyEvent: TProc<TRttiProperty, String>;
+    {$ENDIF}
     FPageSize: Integer;
     FPageNext: Integer;
     FModifiedFields: TDictionary<string, TList<string>>;
@@ -109,14 +113,21 @@ type
     function DeleteList: TObjectList<M>; virtual;
 
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
+    {$IFDEF USEBINDSOURCE}
+    property OnPropertyEvent: TProc<TRttiProperty, String> read FOnPropertyEvent
+                                                          write FOnPropertyEvent;
+    {$ENDIF}
   end;
 
 implementation
 
 uses
-  ormbr.objects.helper;
+  ormbr.objects.helper,
+  ormbr.mapping.explorer,
+  ormbr.mapping.classes;
 
 { TSessionAbstract<M> }
+
 constructor TSessionAbstract<M>.Create(const APageSize: Integer = -1);
 begin
   FPageSize := APageSize;
@@ -207,60 +218,73 @@ end;
 procedure TSessionAbstract<M>.ModifyFieldsCompare(const AKey: string;
   const AObjectSource, AObjectUpdate: TObject);
 var
-  LRttiType: TRttiType;
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
   LProperty: TRttiProperty;
-  LColumn: TCustomAttribute;
 begin
-  AObjectSource.GetType(LRttiType);
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(AObjectSource.ClassType);
   try
-    for LProperty in LRttiType.GetProperties do
+    for LColumn in LColumns do
     begin
+      LProperty := LColumn.ColumnProperty;
       if LProperty.IsNoUpdate then
         Continue;
+      if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
+        Continue;
+      if not FModifiedFields.ContainsKey(AKey) then
+        FModifiedFields.Add(AKey, TList<string>.Create);
       /// <summary>
-      ///   Validação para entrar no IF somente propriedades que o tipo não
-      ///   esteja na lista de tipos.
+      ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
+      ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
       /// </summary>
-      if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1) then
+      if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
       begin
-        if not FModifiedFields.ContainsKey(AKey) then
-          FModifiedFields.Add(AKey, TList<string>.Create);
-        /// <summary>
-        ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
-        ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
-        /// </summary>
-        if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
+        if LProperty.IsBlob then
         begin
-          if LProperty.IsBlob then
+          if LProperty.GetValue(AObjectSource).AsType<TBlob>.ToSize <>
+             LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
           begin
-            if LProperty.GetValue(AObjectSource).AsType<TBlob>.ToSize <>
-               LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
-            begin
-              LColumn := LProperty.GetColumn;
-              if LColumn <> nil then
-                FModifiedFields.Items[AKey].Add(Column(LColumn).ColumnName);
-            end;
-          end
-          else
-          begin
-            if LProperty.GetNullableValue(AObjectSource).AsType<Variant> <>
-               LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
-            begin
-              LColumn := LProperty.GetColumn;
-              if LColumn <> nil then
-                FModifiedFields.Items[AKey].Add(Column(LColumn).ColumnName);
-            end;
+            FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+            /// <summary>
+            ///   Bind object property in control
+            /// </summary>
+            {$IFDEF USEBINDSOURCE}
+            if Assigned(FOnPropertyEvent) then
+              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+            {$ENDIF}
           end;
         end
         else
         begin
-          if LProperty.GetValue(AObjectSource).AsType<Variant> <>
-             LProperty.GetValue(AObjectUpdate).AsType<Variant> then
+          if LProperty.GetNullableValue(AObjectSource).AsType<Variant> <>
+             LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
           begin
-            LColumn := LProperty.GetColumn;
-            if LColumn <> nil then
-              FModifiedFields.Items[AKey].Add(Column(LColumn).ColumnName);
+            FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+            /// <summary>
+            ///   Bind object property in control
+            /// </summary>
+            {$IFDEF USEBINDSOURCE}
+            if Assigned(FOnPropertyEvent) then
+              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+            {$ENDIF}
           end;
+        end;
+      end
+      else
+      begin
+        if LProperty.GetValue(AObjectSource).AsType<Variant> <>
+           LProperty.GetValue(AObjectUpdate).AsType<Variant> then
+        begin
+          FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+          /// <summary>
+          ///   Bind object property in control
+          /// </summary>
+          {$IFDEF USEBINDSOURCE}
+          if Assigned(FOnPropertyEvent) then
+            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+          {$ENDIF}
         end;
       end;
     end;

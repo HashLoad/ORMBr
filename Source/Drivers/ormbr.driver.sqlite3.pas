@@ -133,9 +133,9 @@ procedure TDriverSQLite3.Disconnect;
 begin
   inherited;
   /// <summary>
-  /// Esse driver nativo, por motivo de erro, tem que manter a conexão aberta
-  /// até o final do uso da aplicação.
-  /// O FConnection.Connected := False; é chamado no Destroy;
+  ///   Esse driver nativo, por motivo de erro, tem que manter a conexão aberta
+  ///   até o final do uso da aplicação.
+  ///   O FConnection.Connected := False; é chamado no Destroy;
   /// </summary>
 end;
 
@@ -153,9 +153,9 @@ var
 begin
   LExeSQL := TSQLitePreparedStatement.Create(FConnection);
   /// <summary>
-  /// Tem um Bug no método SetParamVariant(Name, Value) passando parêmetro NAME,
-  /// por isso usei passando o INDEX.
-  /// </summary>
+  ///   Tem um Bug no método SetParamVariant(Name, Value) passando parêmetro NAME,
+  ///   por isso usei passando o INDEX.
+  ///   </summary>
   LExeSQL.ClearParams;
   for LFor := 0 to AParams.Count -1 do
     LExeSQL.SetParamVariant(AParams.Items[LFor].Name, AParams.Items[LFor].Value);
@@ -298,7 +298,7 @@ begin
   FDataSet := ADataSet;
   FFieldDefs := TFieldDefs.Create(nil);
   FDataSetInternal := TClientDataSet.Create(nil);
-
+  LField := nil;
   for LFor := 0 to FDataSet.FieldCount -1 do
   begin
     case FDataSet.Fields[LFor].FieldType of
@@ -317,7 +317,7 @@ begin
   end;
   FDataSetInternal.CreateDataSet;
   /// <summary>
-  /// Criar os FieldDefs, pois nesse driver não cria automaticamente.
+  ///   Criar os FieldDefs, pois nesse driver não cria automaticamente.
   /// </summary>
   CreateFieldDefs;
 end;
@@ -360,7 +360,7 @@ end;
 function TDriverResultSetSQLite3.GetFieldValue(const AFieldIndex: Integer): Variant;
 begin
   inherited;
-  if AFieldIndex > FDataSet.FieldCount -1 then
+  if Cardinal(AFieldIndex) > FDataSet.FieldCount -1 then
     Exit(Variants.Null);
 
   if FDataSet.Fields[AFieldIndex].IsNull then

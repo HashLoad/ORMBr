@@ -194,44 +194,45 @@ begin
 
   for LColumn in LColumns do
   begin
+    if Length(LColumn.DefaultValue) = 0 then
+      Continue;
+
     LProperty := LColumn.ColumnProperty;
     LValue := StringReplace(LColumn.DefaultValue, '''', '', [rfReplaceAll]);
-    if Length(LColumn.DefaultValue) > 0 then
-    begin
-      case LProperty.PropertyType.TypeKind of
-        tkString, tkWString, tkUString, tkWChar, tkLString, tkChar:
-          LProperty.SetValue(Self, TValue.FromVariant(LValue).AsString);
-        tkInteger, tkSet, tkInt64:
-          LProperty.SetValue(Self, StrToIntDef(LValue, 0));
-        tkFloat:
-          begin
-            if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then // TDateTime
-              LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDateTime>)
-            else
-            if LProperty.PropertyType.Handle = TypeInfo(TDate) then // TDate
-              LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDate>)
-            else
-            if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
-              LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<TTime>)
-            else
-              LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<Double>);
+
+    case LProperty.PropertyType.TypeKind of
+      tkString, tkWString, tkUString, tkWChar, tkLString, tkChar:
+        LProperty.SetValue(Self, TValue.FromVariant(LValue).AsString);
+      tkInteger, tkSet, tkInt64:
+        LProperty.SetValue(Self, StrToIntDef(LValue, 0));
+      tkFloat:
+        begin
+          if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then // TDateTime
+            LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDateTime>)
+          else
+          if LProperty.PropertyType.Handle = TypeInfo(TDate) then // TDate
+            LProperty.SetValue(Self, TValue.FromVariant(Date).AsType<TDate>)
+          else
+          if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
+            LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<TTime>)
+          else
+            LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<Double>);
+        end;
+      tkRecord:
+        LProperty.SetNullableValue(Self, LProperty.PropertyType.Handle, LValue);
+      tkEnumeration:
+        begin
+          case LColumn.FieldType of
+            ftString, ftFixedChar:
+              LProperty.SetValue(Self, LProperty.GetEnumStringValue(Self, LValue));
+            ftInteger:
+              LProperty.SetValue(Self, LProperty.GetEnumIntegerValue(Self, LValue));
+            ftBoolean:
+              LProperty.SetValue(Self, TValue.FromVariant(LValue).AsBoolean);
+          else
+            raise Exception.Create(cENUMERATIONSTYPEERROR);
           end;
-        tkRecord:
-          LProperty.SetNullableValue(Self, LProperty.PropertyType.Handle, LValue);
-        tkEnumeration:
-          begin
-            case LColumn.FieldType of
-              ftString, ftFixedChar:
-                LProperty.SetValue(Self, LProperty.GetEnumStringValue(Self, LValue));
-              ftInteger:
-                LProperty.SetValue(Self, LProperty.GetEnumIntegerValue(Self, LValue));
-              ftBoolean:
-                LProperty.SetValue(Self, TValue.FromVariant(LValue).AsBoolean);
-            else
-              raise Exception.Create(cENUMERATIONSTYPEERROR);
-            end;
-          end;
-      end;
+        end;
     end;
   end;
 end;

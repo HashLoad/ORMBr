@@ -198,15 +198,6 @@ begin
   end;
 end;
 
-function TDriverFireDAC.ExecuteSQL(const ASQL: string): IDBResultSet;
-var
-  LDBQuery: IDBQuery;
-begin
-  LDBQuery := TDriverQueryFireDAC.Create(FConnection);
-  LDBQuery.CommandText := ASQL;
-  Result := LDBQuery.ExecuteQuery;
-end;
-
 procedure TDriverFireDAC.AddScript(const ASQL: string);
 begin
   inherited;
@@ -240,6 +231,15 @@ begin
   Result := TDriverQueryFireDAC.Create(FConnection);
 end;
 
+function TDriverFireDAC.ExecuteSQL(const ASQL: string): IDBResultSet;
+var
+  LDBQuery: IDBQuery;
+begin
+  LDBQuery := TDriverQueryFireDAC.Create(FConnection);
+  LDBQuery.CommandText := ASQL;
+  Result := LDBQuery.ExecuteQuery;
+end;
+
 function TDriverFireDAC.CreateResultSet(const ASQL: string): IDBResultSet;
 var
   LDBQuery: IDBQuery;
@@ -253,15 +253,15 @@ end;
 
 constructor TDriverQueryFireDAC.Create(AConnection: TFDConnection);
 begin
-  if AConnection <> nil then
-  begin
-     FFDQuery := TFDQuery.Create(nil);
-     try
-       FFDQuery.Connection := AConnection;
-     except
-       FFDQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FFDQuery := TFDQuery.Create(nil);
+  try
+    FFDQuery.Connection := AConnection;
+  except
+    FFDQuery.Free;
+    raise;
   end;
 end;
 

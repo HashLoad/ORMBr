@@ -167,14 +167,14 @@ var
   LDataSet: TClientDataSet;
 begin
   inherited;
-  if FMasterObject.Count > 0 then
+  if FMasterObject.Count = 0 then
+    Exit;
+
+  for LChild in FMasterObject do
   begin
-    for LChild in FMasterObject do
-    begin
-      LDataSet := TClientDataSetAdapter<M>(LChild.Value).FOrmDataSet;
-      if LDataSet.Active then
-        LDataSet.EmptyDataSet;
-    end;
+    LDataSet := TClientDataSetAdapter<M>(LChild.Value).FOrmDataSet;
+    if LDataSet.Active then
+      LDataSet.EmptyDataSet;
   end;
 end;
 
@@ -326,18 +326,18 @@ begin
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
     /// <summary>
-    /// Executa o ApplyInternal de toda a hierarquia de dataset filho.
+    ///   Executa o ApplyInternal de toda a hierarquia de dataset filho.
     /// </summary>
-    if FMasterObject.Count > 0 then
+    if FMasterObject.Count = 0 then
+      Exit;
+
+    for LDetail in FMasterObject.Values do
     begin
-      for LDetail in FMasterObject.Values do
-      begin
-        /// Before Apply
-        LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
-        LDetail.ApplyInternal(MaxErros);
-        /// After Apply
-        LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
-      end;
+      /// Before Apply
+      LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
+      LDetail.ApplyInternal(MaxErros);
+      /// After Apply
+      LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
     end;
   finally
     FOrmDataSet.GotoBookmark(LRecnoBook);
@@ -353,11 +353,11 @@ var
 begin
   inherited;
   /// Filtar somente os registros excluídos
-  if FSession.DeleteList.Count > 0 then
-  begin
-    for LFor := 0 to FSession.DeleteList.Count -1 do
-      FSession.Delete(FSession.DeleteList.Items[LFor]);
-  end;
+  if FSession.DeleteList.Count = 0 then
+    Exit;
+
+  for LFor := 0 to FSession.DeleteList.Count -1 do
+    FSession.Delete(FSession.DeleteList.Items[LFor]);
 end;
 
 procedure TClientDataSetAdapter<M>.ApplyInserter(const MaxErros: Integer);
@@ -398,7 +398,7 @@ begin
                      .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
            end;
           /// <summary>
-          /// Atualiza o valor do AutoInc nas sub tabelas
+          ///   Atualiza o valor do AutoInc nas sub tabelas
           /// </summary>
           SetAutoIncValueChilds;
         end;
@@ -426,24 +426,24 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-       /// Edit
-       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
-       begin
-         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
-            (FConnection.GetDriverName in [dnMongoDB]) then
-         begin
-           LObject := M.Create;
-           try
-             TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
-             FSession.Update(LObject, M.ClassName);
-           finally
-             LObject.Free;
-           end;
-         end;
-         FOrmDataSet.Edit;
-         FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
-         FOrmDataSet.Post;
-       end;
+      /// Edit
+      if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
+      begin
+        if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
+           (FConnection.GetDriverName in [dnMongoDB]) then
+        begin
+          LObject := M.Create;
+          try
+            TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+            FSession.Update(LObject, M.ClassName);
+          finally
+            LObject.Free;
+          end;
+        end;
+        FOrmDataSet.Edit;
+        FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
+        FOrmDataSet.Post;
+      end;
     end;
   finally
     FOrmDataSet.Filtered := False;

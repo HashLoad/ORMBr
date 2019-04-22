@@ -46,7 +46,7 @@ uses
 
 type
   /// <summary>
-  /// M - Sessão Abstract
+  ///   M - Sessão Abstract
   /// </summary>
   TSessionObjectSet<M: class, constructor> = class(TSessionAbstract<M>)
   protected
@@ -85,28 +85,28 @@ function TSessionObjectSet<M>.NextPacketList(const AWhere, AOrderBy: String;
 begin
   inherited;
   Result := nil;
-  if not FFetchingRecords then
-  begin
-    Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
-
-    if Result <> nil then
-      if Result.Count = 0 then
-        FFetchingRecords := True;
-  end;
+  if FFetchingRecords then
+    Exit;
+  Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+  if Result = nil then
+    Exit;
+  if Result.Count > 0 then
+    Exit;
+  FFetchingRecords := True;
 end;
 
 function TSessionObjectSet<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
 begin
   inherited;
   Result := nil;
-  if not FFetchingRecords then
-  begin
-    Result := FManager.NextPacketList(APageSize, APageNext);
-
-    if Result <> nil then
-      if Result.Count = 0 then
-        FFetchingRecords := True;
-  end;
+  if FFetchingRecords then
+    Exit;
+  Result := FManager.NextPacketList(APageSize, APageNext);
+  if Result = nil then
+    Exit;
+  if Result.Count > 0 then
+    Exit;
+  FFetchingRecords := True;
 end;
 
 destructor TSessionObjectSet<M>.Destroy;
@@ -118,40 +118,42 @@ end;
 procedure TSessionObjectSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
 begin
   inherited;
-  if not FFetchingRecords then
-  begin
-    FPageNext := FPageNext + FPageSize;
-    if FFindWhereUsed then
-      FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
-    else
-      FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+  if FFetchingRecords then
+    Exit;
+  FPageNext := FPageNext + FPageSize;
+  if FFindWhereUsed then
+    FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+  else
+    FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
 
-    /// <summary>
-    ///    if AObjectList <> nil then
-    ///      if AObjectList.RecordCount = 0 then
-    ///        FFetchingRecords := True;
-    ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-    ///  método NextPacketList() dentro do FManager.
-    /// </summary>
-  end;
+  /// <summary>
+  ///    if AObjectList = nil then
+  ///      Exit;
+  ///    if AObjectList.RecordCount > 0 then
+  ///      Exit;
+  ///    FFetchingRecords := True;
+  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
+  ///  método NextPacketList() dentro do FManager.
+  /// </summary>
 end;
 
 function TSessionObjectSet<M>.NextPacketList: TObjectList<M>;
 begin
   inherited;
   Result := nil;
-  if not FFetchingRecords then
-  begin
-    FPageNext := FPageNext + FPageSize;
-    if FFindWhereUsed then
-      Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
-    else
-      Result := FManager.NextPacketList(FPageSize, FPageNext);
+  if FFetchingRecords then
+    Exit;
+  FPageNext := FPageNext + FPageSize;
+  if FFindWhereUsed then
+    Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+  else
+    Result := FManager.NextPacketList(FPageSize, FPageNext);
 
-    if Result <> nil then
-      if Result.Count = 0 then
-        FFetchingRecords := True;
-  end;
+  if Result = nil then
+    Exit;
+  if Result.Count > 0 then
+    Exit;
+  FFetchingRecords := True;
 end;
 
 end.

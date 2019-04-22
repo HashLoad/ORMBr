@@ -102,9 +102,8 @@ begin
   FConnection := AConnection as TABSDatabase;
   FDriverName := ADriverName;
   if not FileExists(FConnection.DatabaseFileName) then
-  begin
     FConnection.CreateDatabase;
-  end;
+
   FSQLScript := TABSQuery.Create(nil);
   try
     FSQLScript.DatabaseName := FConnection.DatabaseName;
@@ -225,15 +224,15 @@ end;
 
 constructor TDriverQueryAbsoluteDB.Create(AConnection: TABSDatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TABSQuery.Create(nil);
-     try
-       FSQLQuery.DatabaseName := AConnection.DatabaseName;
-     except
-       FSQLQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TABSQuery.Create(nil);
+  try
+    FSQLQuery.DatabaseName := AConnection.DatabaseName;
+  except
+    FSQLQuery.Free;
+    raise;
   end;
 end;
 

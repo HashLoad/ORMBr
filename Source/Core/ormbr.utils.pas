@@ -109,7 +109,7 @@ var
 begin
   // YYYY-MM-DD   Thh:mm:ss  or  YYYY-MM-DDThh:mm:ss
   // 1234567890   123456789      1234567890123456789
-  Result := 0;
+  Result := StrToDateTimeDef(AValue, 0);
   case Length(AValue) of
     9:
       if (AValue[1] = 'T') and (AValue[4] = ':') and (AValue[7] = ':') then

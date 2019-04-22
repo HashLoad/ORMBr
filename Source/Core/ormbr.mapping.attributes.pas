@@ -835,21 +835,21 @@ constructor Indexe.Create(const AName, AColumns: string;
   const AUnique: Boolean;
   const ADescription: string);
 var
-  rColumns: TStringList;
-  iFor: Integer;
+  LColumns: TStringList;
+  LFor: Integer;
 begin
   FName := AName;
   if Length(AColumns) > 0 then
   begin
-    rColumns := TStringList.Create;
+    LColumns := TStringList.Create;
     try
-      rColumns.Duplicates := dupError;
-      ExtractStrings([',', ';'], [' '], PChar(AColumns), rColumns);
-      SetLength(FColumns, rColumns.Count);
-      for iFor := 0 to rColumns.Count -1 do
-        FColumns[iFor] := Trim(rColumns[iFor]);
+      LColumns.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(AColumns), LColumns);
+      SetLength(FColumns, LColumns.Count);
+      for LFor := 0 to LColumns.Count -1 do
+        FColumns[LFor] := Trim(LColumns[LFor]);
     finally
-      rColumns.Free;
+      LColumns.Free;
     end;
   end;
   FSortingOrder := ASortingOrder;

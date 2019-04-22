@@ -41,8 +41,8 @@ uses
 
 type
   /// <summary>
-  /// Unit : ormbr.dml.generator.pas
-  /// Classe : TDMLGeneratorAbstract
+  ///   Unit : ormbr.dml.generator.pas
+  ///   Classe : TDMLGeneratorAbstract
   /// </summary>
   IDMLGeneratorCommand = interface
     ['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']
@@ -57,13 +57,12 @@ type
       AAssociation: TAssociationMapping): string;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
       AModifiedFields: TList<string>): string; overload;
-    function GeneratorInsert(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): string;
+    function GeneratorInsert(AObject: TObject): string;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64;
     function GeneratorPageNext(const ACommandSelect: string;
       APageSize, APageNext: Integer): string;
   end;

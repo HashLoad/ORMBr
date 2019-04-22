@@ -152,19 +152,19 @@ begin
                                LMethod: TRttiMethod;
                              begin
                                LRttiType := LContext.GetType(TypeInfo(T));
-                               if LRttiType <> nil then
+                               if LRttiType = nil then
+                                 Exit;
+
+                               LMethod := LRttiType.GetMethod('Create');
+                               if Assigned(LMethod) then
                                begin
-                                 LMethod := LRttiType.GetMethod('Create');
-                                 if Assigned(LMethod) then
-                                 begin
-                                    LObject := LRttiType.AsInstance.MetaclassType.Create;
-                                    if LRttiType.IsList then
-                                      LValue := LMethod.Invoke(LObject, [True])
-                                    else
-                                      LValue := LMethod.Invoke(LObject, []);
-                                 end;
-                                 Result := LValue.AsType<T>;
+                                  LObject := LRttiType.AsInstance.MetaclassType.Create;
+                                  if LRttiType.IsList then
+                                    LValue := LMethod.Invoke(LObject, [True])
+                                  else
+                                    LValue := LMethod.Invoke(LObject, []);
                                end;
+                               Result := LValue.AsType<T>;
                              end);
   Result := FLazy();
 end;

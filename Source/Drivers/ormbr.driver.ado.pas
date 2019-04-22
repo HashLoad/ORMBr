@@ -221,15 +221,14 @@ end;
 
 constructor TDriverQueryADO.Create(AConnection: TADOConnection);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TADOQuery.Create(nil);
-     try
-       FSQLQuery.Connection := AConnection;
-     except
-       FSQLQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+  FSQLQuery := TADOQuery.Create(nil);
+  try
+    FSQLQuery.Connection := AConnection;
+  except
+    FSQLQuery.Free;
+    raise;
   end;
 end;
 

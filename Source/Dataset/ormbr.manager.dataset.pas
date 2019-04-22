@@ -201,45 +201,43 @@ var
   LClassName: String;
   LMasterName: String;
 begin
+  Result := Self;
   LClassName := TClass(T).ClassName;
   LMasterName := TClass(M).ClassName;
-  if not FRepository.ContainsKey(LClassName) then
-  begin
-    if FRepository.ContainsKey(LMasterName) then
-    begin
-      LMaster := TDataSetBaseAdapter<T>(FRepository.Items[LMasterName]);
-      if LMaster <> nil then
-      begin
-        /// <summary> Checagem do tipo do dataset definido para uso </summary>
-        {$IFDEF USEFDMEMTABLE}
-          if ADataSet is TFDMemTable then
-            {$IFDEF DRIVERRESTFUL}
-            LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-            {$ELSE}
-            LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-            {$ENDIF}
-          else
-            raise Exception.Create('Is not TFDMemTable type');
-        {$ENDIF}
-        {$IFDEF USECLIENTDATASET}
-          if ADataSet is TClientDataSet then
-            {$IFDEF DRIVERRESTFUL}
-            LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-            {$ELSE}
-            LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-            {$ENDIF}
-          else
-            raise Exception.Create('Is not TClientDataSet type');
-        {$ENDIF}
-        {$IFNDEF USEMEMDATASET}
-          raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
-        {$ENDIF}
-        /// <summary> Adiciona o container ao repositório </summary>
-        FRepository.Add(LClassName, LDataSetAdapter);
-      end;
-    end;
-  end;
-  Result := Self;
+  if FRepository.ContainsKey(LClassName) then
+    Exit;
+  if not FRepository.ContainsKey(LMasterName) then
+    Exit;
+  LMaster := TDataSetBaseAdapter<T>(FRepository.Items[LMasterName]);
+  if LMaster = nil then
+    Exit;
+
+  /// <summary> Checagem do tipo do dataset definido para uso </summary>
+  {$IFDEF USEFDMEMTABLE}
+    if ADataSet is TFDMemTable then
+      {$IFDEF DRIVERRESTFUL}
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+      {$ELSE}
+      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+      {$ENDIF}
+    else
+      raise Exception.Create('Is not TFDMemTable type');
+  {$ENDIF}
+  {$IFDEF USECLIENTDATASET}
+    if ADataSet is TClientDataSet then
+      {$IFDEF DRIVERRESTFUL}
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+      {$ELSE}
+      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
+      {$ENDIF}
+    else
+      raise Exception.Create('Is not TClientDataSet type');
+  {$ENDIF}
+  {$IFNDEF USEMEMDATASET}
+    raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
+  {$ENDIF}
+  /// <summary> Adiciona o container ao repositório </summary>
+  FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
 function TManagerDataSet.AddAdapter<T>(ADataSet: TDataSet;
@@ -248,36 +246,35 @@ var
   LDataSetAdapter: TDataSetBaseAdapter<T>;
   LClassName: String;
 begin
-  LClassName := TClass(T).ClassName;
-  if not FRepository.ContainsKey(LClassName) then
-  begin
-    {$IFDEF USEFDMEMTABLE}
-      if ADataSet is TFDMemTable then
-        {$IFDEF DRIVERRESTFUL}
-        LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-        {$ELSE}
-        LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-        {$ENDIF}
-      else
-        raise Exception.Create('Is not TFDMemTable type');
-    {$ENDIF}
-    {$IFDEF USECLIENTDATASET}
-      if ADataSet is TClientDataSet then
-        {$IFDEF DRIVERRESTFUL}
-        LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-        {$ELSE}
-        LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-        {$ENDIF}
-      else
-        raise Exception.Create('Is not TClientDataSet type');
-    {$ENDIF}
-    {$IFNDEF USEMEMDATASET}
-      raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
-    {$ENDIF}
-    /// <summary> Adiciona o container ao repositório </summary>
-    FRepository.Add(LClassName, LDataSetAdapter);
-  end;
   Result := Self;
+  LClassName := TClass(T).ClassName;
+  if FRepository.ContainsKey(LClassName) then
+    Exit;
+  {$IFDEF USEFDMEMTABLE}
+    if ADataSet is TFDMemTable then
+      {$IFDEF DRIVERRESTFUL}
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+      {$ELSE}
+      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+      {$ENDIF}
+    else
+      raise Exception.Create('Is not TFDMemTable type');
+  {$ENDIF}
+  {$IFDEF USECLIENTDATASET}
+    if ADataSet is TClientDataSet then
+      {$IFDEF DRIVERRESTFUL}
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+      {$ELSE}
+      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
+      {$ENDIF}
+    else
+      raise Exception.Create('Is not TClientDataSet type');
+  {$ENDIF}
+  {$IFNDEF USEMEMDATASET}
+    raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
+  {$ENDIF}
+  /// <summary> Adiciona o container ao repositório </summary>
+  FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
 function TManagerDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields: string;
@@ -285,17 +282,16 @@ function TManagerDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields: stri
 var
   LObject: TDataSetBaseAdapter<M>;
 begin
-  LObject := Resolver<M>;
-  if LObject <> nil then
-  begin
-    Resolver<T>.AddLookupField(AFieldName,
-                               AKeyFields,
-                               LObject,
-                               ALookupKeyFields,
-                               ALookupResultField,
-                               ADisplayLabel);
-  end;
   Result := Self;
+  LObject := Resolver<M>;
+  if LObject = nil then
+    Exit;
+  Resolver<T>.AddLookupField(AFieldName,
+                             AKeyFields,
+                             LObject,
+                             ALookupKeyFields,
+                             ALookupResultField,
+                             ADisplayLabel);
 end;
 
 function TManagerDataSet.ApplyUpdates<T>(const MaxErros: Integer): TManagerDataSet;
@@ -345,11 +341,11 @@ var
   LClassName: String;
 begin
   LClassName := TClass(T).ClassName;
-  if FRepository.ContainsKey(LClassName) then
-  begin
-    FRepository.Remove(LClassName);
-    FRepository.TrimExcess;
-  end;
+  if not FRepository.ContainsKey(LClassName) then
+    Exit;
+
+  FRepository.Remove(LClassName);
+  FRepository.TrimExcess;
 end;
 
 function TManagerDataSet.Resolver<T>: TDataSetBaseAdapter<T>;

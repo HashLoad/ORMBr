@@ -93,7 +93,7 @@ begin
   begin
     FBlobField := Value;
     /// <summary>
-    /// Gera Stream do BlobField e armazena em var interna
+    ///   Gera Stream do BlobField e armazena em var interna
     /// </summary>
     BuildBlobFieldToStream;
   end
@@ -105,7 +105,7 @@ procedure TBlob.SetBytes(const Value: TBytes);
 begin
   FBase64Bytes := Value;
   /// <summary>
-  /// Codifica os Bytes em string
+  ///   Codifica os Bytes em string
   /// </summary>
   FBase64String := TNetEncoding
                      .Base64
@@ -144,15 +144,15 @@ begin
       TBlobField(FBlobField).SaveToStream(LSourceStream);
       LSourceStream.Position := 0;
       /// <summary>
-      /// Compressão dos dados
+      ///   Compressão dos dados
       /// </summary>
 //      CompressStream(LSourceStream, LTargetStream);
       /// <summary>
-      /// Gera cadeia de Bytes
+      ///   Gera cadeia de Bytes
       /// </summary>
       FBase64Bytes := StreamToByteArray(LSourceStream);
       /// <summary>
-      /// Codifica os Bytes em string
+      ///   Codifica os Bytes em string
       /// </summary>
       FBase64String := TNetEncoding
                          .Base64
@@ -280,15 +280,15 @@ begin
     LSourceStream.LoadFromFile(AFileName);
     LSourceStream.Position := 0;
     /// <summary>
-    /// Compressão dos dados
+    ///   Compressão dos dados
     /// </summary>
 //      CompressStream(LSourceStream, LTargetStream);
     /// <summary>
-    /// Gera cadeia de Bytes
+    ///   Gera cadeia de Bytes
     /// </summary>
     FBase64Bytes := StreamToByteArray(LSourceStream);
     /// <summary>
-    /// Codifica os Bytes em string
+    ///   Codifica os Bytes em string
     /// </summary>
     FBase64String := TNetEncoding
                        .Base64

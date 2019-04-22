@@ -55,10 +55,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorPageNext(const ACommandSelect: string;
       APageSize: Integer; APageNext: Integer): string; override;
   end;
@@ -145,24 +145,24 @@ begin
      Result := Format(cSelectRow, [oCriteria.AsString]);
      Result := Result + sLineBreak +
                '   WHERE ROWNUM <= %s) ' + sLineBreak +
-               'WHERE ROWINI >= %s';
+               'WHERE ROWINI > %s';
   end
   else
      Result := oCriteria.AsString;
 end;
 
-function TDMLGeneratorOracle.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorOracle.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT %s.CURRVAL FROM DUAL',
-                                   [ACommandInsert.Sequence.Name]));
+                                   [AAutoInc.Sequence.Name]));
 end;
 
-function TDMLGeneratorOracle.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorOracle.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT %s.NEXTVAL FROM DUAL',
-                                   [ACommandInsert.Sequence.Name]));
+                                   [AAutoInc.Sequence.Name]));
 end;
 
 initialization

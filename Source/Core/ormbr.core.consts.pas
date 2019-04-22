@@ -35,7 +35,7 @@ uses
   TypInfo;
 
 const
-  cENUMERATIONSTYPEERROR = 'Invalid type. Type enumerator supported [ftBoolena, ftInteger, ftFixedChar, ftString]';
+  cENUMERATIONSTYPEERROR = 'Invalid type. Type enumerator supported [ftBoolean, ftInteger, ftFixedChar, ftString]';
   cMESSAGEPKNOTFOUND = 'PrimaryKey not found on your model!';
   cMESSAGECOLUMNNOTFOUND = 'Nenhum atributo [Column()] foi definido nas propriedades da classe [ %s ]';
   cPROPERTYTYPES_1 = [tkUnknown,

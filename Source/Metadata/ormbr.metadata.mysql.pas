@@ -166,27 +166,27 @@ begin
     oTable.Name := VarToStr(oDBResultSet.GetFieldValue('table_name'));
     oTable.Description := VarToStr(oDBResultSet.GetFieldValue('table_description'));
     /// <summary>
-    /// Extrair colunas da tabela
+    ///   Extrair colunas da tabela
     /// </summary>
     GetColumns(oTable);
     /// <summary>
-    /// Extrair Primary Key da tabela
+    ///   Extrair Primary Key da tabela
     /// </summary>
     GetPrimaryKey(oTable);
     /// <summary>
-    /// Extrair Foreign Keys da tabela
+    ///   Extrair Foreign Keys da tabela
     /// </summary>
     GetForeignKeys(oTable);
     /// <summary>
-    /// Extrair Indexes da tabela
+    ///   Extrair Indexes da tabela
     /// </summary>
     GetIndexeKeys(oTable);
     /// <summary>
-    /// Extrair Checks da tabela
+    ///   Extrair Checks da tabela
     /// </summary>
     GetChecks(oTable);
     /// <summary>
-    /// Adiciona na lista de tabelas extraidas
+    ///   Adiciona na lista de tabelas extraidas
     /// </summary>
     FCatalogMetadata.Tables.Add(UpperCase(oTable.Name), oTable);
   end;
@@ -209,17 +209,17 @@ var
   function ResolveIntegerNullValue(AValue: Variant): Integer;
   begin
     Result := 0;
-    if AValue <> Null then
-    begin
-      try
-        Result := VarAsType(AValue, varInteger);
-      except
-        on E: Exception do
-        begin
-          raise Exception.Create(E.Message + sLineBreak +
-                                 'Table: ' + ATable.Name + sLineBreak +
-                                 'Column: ' + oColumn.Name);
-        end;
+    if AValue = Null then
+      Exit;
+
+    try
+      Result := VarAsType(AValue, varInteger);
+    except
+      on E: Exception do
+      begin
+        raise Exception.Create(E.Message + sLineBreak +
+                               'Table: ' + ATable.Name + sLineBreak +
+                               'Column: ' + oColumn.Name);
       end;
     end;
   end;
@@ -242,7 +242,7 @@ begin
     oColumn.TypeName := VarToStr(oDBResultSet.GetFieldValue('column_typename'));
     SetFieldType(oColumn);
     /// <summary>
-    /// Resolve Field Type
+    ///   Resolve Field Type
     /// </summary>
     GetFieldTypeDefinition(oColumn);
     ATable.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
@@ -279,7 +279,7 @@ begin
     ATable.PrimaryKey.Name := VarToStr(oDBResultSet.GetFieldValue('pk_name'));
     ATable.PrimaryKey.Description := VarToStr(oDBResultSet.GetFieldValue('pk_description'));
     /// <summary>
-    /// Extrai as columnas da primary key
+    ///   Extrai as columnas da primary key
     /// </summary>
     GetPrimaryKeyColumns(ATable.PrimaryKey);
   end;
@@ -298,14 +298,14 @@ procedure TCatalogMetadataMySQL.GetForeignKeys(ATable: TTableMIK);
     while oDBResultSet.NotEof do
     begin
       /// <summary>
-      /// Coluna tabela source
+      ///   Coluna tabela source
       /// </summary>
       oFromField := TColumnMIK.Create(ATable);
       oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
       oFromField.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger) -1;
       AForeignKey.FromFields.Add(FormatFloat('000000', oFromField.Position), oFromField);
       /// <summary>
-      /// Coluna tabela referencia
+      ///   Coluna tabela referencia
       /// </summary>
       oToField := TColumnMIK.Create(ATable);
       oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
@@ -333,19 +333,19 @@ begin
     oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
     ATable.ForeignKeys.Add(oForeignKey.Name, oForeignKey);
     /// <summary>
-    /// Coluna tabela master
+    ///   Coluna tabela master
     /// </summary>
     oFromField := TColumnMIK.Create(ATable);
     oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
     oForeignKey.FromFields.Add(oFromField.Name, oFromField);
     /// <summary>
-    /// Coluna tabela referencia
+    ///   Coluna tabela referencia
     /// </summary>
     oToField := TColumnMIK.Create(ATable);
     oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
     oForeignKey.ToFields.Add(oToField.Name, oToField);
     /// <summary>
-    /// Gera a lista de campos do foreignkey
+    ///   Gera a lista de campos do foreignkey
     /// </summary>
 //    GetForeignKeyColumns(oForeignKey);
   end;
@@ -431,7 +431,7 @@ begin
     oIndexeKey.Unique := VarAsType(oDBResultSet.GetFieldValue('indexe_unique'), varInteger) = 0;
     ATable.IndexeKeys.Add(UpperCase(oIndexeKey.Name), oIndexeKey);
     /// <summary>
-    /// Gera a lista de campos do indexe
+    ///   Gera a lista de campos do indexe
     /// </summary>
     GetIndexeKeyColumns(oIndexeKey);
   end;
@@ -457,55 +457,57 @@ end;
 
 function TCatalogMetadataMySQL.GetSelectPrimaryKey(ATableName: string): string;
 begin
-   Result := ' select rc.constraint_name as pk_name, ' +
-             '        ''''               as pk_description ' +
-             ' from information_schema.table_constraints rc ' +
-             ' where (rc.constraint_type = ''PRIMARY KEY'') ' +
-             ' and   (rc.table_name = ' + QuotedStr(ATableName) + ')' +
-             ' order by rc.constraint_name ';
+  Result := ' select rc.constraint_name as pk_name, ' +
+            '        ''''               as pk_description ' +
+            ' from information_schema.table_constraints rc ' +
+            ' where (rc.constraint_type = ''PRIMARY KEY'') ' +
+            ' and   (rc.table_name in(' + QuotedStr(ATableName) + ')) ' +
+            ' and   (rc.table_schema = database()) ' +
+            ' order by rc.constraint_name ';
 end;
 
 function TCatalogMetadataMySQL.GetSelectPrimaryKeyColumns(APrimaryKeyName: string): string;
 begin
-   Result := ' select c.column_name       as column_name, ' +
-             '        c.ordinal_position  as column_position ' +
-             ' from information_schema.key_column_usage c ' +
-             ' inner join information_schema.table_constraints t on c.table_name = t.table_name ' +
-             '                                                  and c.constraint_schema = database() ' +
-             '                                                  and t.constraint_schema = database() ' +
-             '                                                  and t.constraint_name = c.constraint_name ' +
-             '                                                  and t.constraint_type = ''PRIMARY KEY'' ' +
-             ' where t.table_name = ' + QuotedStr(APrimaryKeyName) +
-             ' order by t.table_name, ' +
-             '          t.constraint_name, ' +
-             '          c.ordinal_position ';
+  Result := ' select c.column_name       as column_name, ' +
+            '        c.ordinal_position  as column_position ' +
+            ' from information_schema.key_column_usage c ' +
+            ' inner join information_schema.table_constraints t on c.table_name = t.table_name ' +
+            '                                                  and c.constraint_schema = database() ' +
+            '                                                  and t.constraint_schema = database() ' +
+            '                                                  and t.constraint_name = c.constraint_name ' +
+            '                                                  and t.constraint_type = ''PRIMARY KEY'' ' +
+            ' where t.table_name in(' + QuotedStr(APrimaryKeyName) + ') ' +
+            ' order by t.table_name, ' +
+            '          t.constraint_name, ' +
+            '          c.ordinal_position ';
 end;
 
 function TCatalogMetadataMySQL.GetSelectSequences: string;
 begin
-  Result :=  ' select table_name    as name, ' +
-             '        table_comment as description ' +
-             ' from information_schema.tables ' +
-             ' where table_schema = database() ' +
-             ' and auto_increment is not null';
+ Result :=  ' select table_name    as name, ' +
+            '        table_comment as description ' +
+            ' from information_schema.tables ' +
+            ' where (table_schema = database()) ' +
+            ' and   (auto_increment is not null) ';
 end;
 
 function TCatalogMetadataMySQL.GetSelectTableColumns(ATableName: string): string;
 begin
-   Result := ' select column_name              as column_name, ' +
-             '        ordinal_position         as column_position, ' +
-             '        character_maximum_length as column_size, ' +
-             '        numeric_precision        as column_precision, ' +
-             '        numeric_scale            as column_scale, ' +
-             '        collation_name           as column_collation, ' +
-             '        is_nullable              as column_nullable, ' +
-             '        column_default           as column_defaultvalue, ' +
-             '        column_comment           as column_description, ' +
-             '  upper(data_type)               as column_typename, ' +
-             '        character_set_name       as column_charset ' +
-             ' from information_schema.columns ' +
-             ' where table_name in (' + QuotedStr(ATableName) + ') ' +
-             ' order by ordinal_position' ;
+  Result := ' select column_name              as column_name, ' +
+            '        ordinal_position         as column_position, ' +
+            '        character_maximum_length as column_size, ' +
+            '        numeric_precision        as column_precision, ' +
+            '        numeric_scale            as column_scale, ' +
+            '        collation_name           as column_collation, ' +
+            '        is_nullable              as column_nullable, ' +
+            '        column_default           as column_defaultvalue, ' +
+            '        column_comment           as column_description, ' +
+            '  upper(data_type)               as column_typename, ' +
+            '        character_set_name       as column_charset ' +
+            ' from information_schema.columns ' +
+            ' where (table_name in(' + QuotedStr(ATableName) + ')) ' +
+            ' and   (table_schema = database()) ' +
+            ' order by ordinal_position' ;
 end;
 
 function TCatalogMetadataMySQL.GetSelectTables: string;
@@ -513,8 +515,8 @@ begin
   Result := ' select table_name as table_name, ' +
             '        ''''       as table_description ' +
             ' from information_schema.tables ' +
-            ' where table_type = ''BASE TABLE'' ' +
-            ' and table_schema = database() ' +
+            ' where (table_type = ''BASE TABLE'') ' +
+            ' and   (table_schema = database()) ' +
             ' order by table_name';
 end;
 
@@ -535,11 +537,12 @@ begin
             '        kc.position_in_unique_constraint as column_referenceposition, ' +
             '        ''''                             as fk_description ' +
             ' from information_schema.key_column_usage kc ' +
-            '  inner join information_schema.referential_constraints rc on kc.constraint_name = rc.constraint_name ' +
-            '                                                          and kc.table_name = rc.table_name ' +
-            '                                                          and kc.constraint_schema = database() ' +
-            '                                                          and rc.constraint_schema = database() ' +
-            ' where rc.table_name in(' + QuotedStr(ATableName) + ') ' +
+            ' inner join information_schema.referential_constraints rc on kc.constraint_name = rc.constraint_name ' +
+            '                                                         and kc.table_name = rc.table_name ' +
+            '                                                         and kc.constraint_schema = database() ' +
+            '                                                         and rc.constraint_schema = database() ' +
+            ' where (rc.table_name in(' + QuotedStr(ATableName) + ')) ' +
+            ' and   (rc.table_schema = database()) ' +
             ' order by rc.constraint_name, kc.position_in_unique_constraint';
 end;
 
@@ -550,10 +553,10 @@ end;
 
 function TCatalogMetadataMySQL.GetSelectViews: string;
 begin
-   Result := ' select v.table_name      as view_name, ' +
-             '        v.view_definition as view_script, ' +
-             '        ''''              as view_description' +
-             ' from information_schema.views v';
+  Result := ' select v.table_name      as view_name, ' +
+            '        v.view_definition as view_script, ' +
+            '        ''''              as view_description ' +
+            ' from information_schema.views v';
 end;
 
 function TCatalogMetadataMySQL.GetSelectIndexe(ATableName: string): string;
@@ -562,19 +565,21 @@ begin
             '        idx.non_unique as indexe_unique, ' +
             '        idx.comment    as indexe_description ' +
             ' from information_schema.statistics idx ' +
-            ' where idx.index_name not in (''PRIMARY'') ' +
-            ' and   idx.table_name in(' + QuotedStr(ATableName) + ') ' +
+            ' where (idx.index_name not in (''PRIMARY'')) ' +
+            ' and   (idx.table_name in(' + QuotedStr(ATableName) + ')) ' +
+            ' and   (idx.table_schema = database()) ' +
             ' order by idx.table_name, idx.index_name';
 end;
 
 function TCatalogMetadataMySQL.GetSelectIndexeColumns(AIndexeName: string): string;
 begin
-   Result := ' select idx.column_name  as column_name, ' +
-             '        idx.seq_in_index as column_position, ' +
-             '        idx.comment      as column_description ' +
-             ' from information_schema.statistics idx ' +
-             ' where idx.index_name in(' + QuotedStr(AIndexeName) + ') ' +
-             ' order by idx.index_name, idx.seq_in_index';
+  Result := ' select idx.column_name  as column_name, ' +
+            '        idx.seq_in_index as column_position, ' +
+            '        idx.comment      as column_description ' +
+            ' from information_schema.statistics idx ' +
+            ' where (idx.index_name in(' + QuotedStr(AIndexeName) + ')) ' +
+            ' and   (idx.table_schema = database()) ' +
+            ' order by idx.index_name, idx.seq_in_index';
 end;
 
 initialization

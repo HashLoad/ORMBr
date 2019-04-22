@@ -79,30 +79,28 @@ begin
 end;
 
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
+var
+  LValue: TList<string>;
 begin
   if not (FOrmDataSet.State in [dsInsert, dsEdit]) then
     Exit;
-
-  if Field <> nil then
+  if Field = nil then
+    Exit;
+  if (Field.FieldKind <> fkData) or (Field.FieldName = cInternalField) then
+    Exit;
+  /// <summary> Só adiciona a lista se for edição </summary>
+  if FOrmDataSet.State in [dsEdit] then
   begin
-    if (Field.FieldKind = fkData) and (Field.FieldName <> cInternalField) then
-    begin
-      /// <summary> Só adiciona a lista se for edição </summary>
-      if FOrmDataSet.State in [dsEdit] then
-      begin
-        with FSession.ModifiedFields.Items[M.ClassName] do
-        begin
-          if IndexOf(Field.FieldName) = -1 then
-            Add(Field.FieldName);
-        end;
-      end;
-      /// <summary>
-      /// Atualiza o registro da tabela externa, se o campo alterado
-      /// pertencer a um relacionamento OneToOne ou ManyToOne
-      /// </summary>
-      RefreshDataSetOneToOneChilds(Field.FieldName);
-    end;
+    LValue := FSession.ModifiedFields.Items[M.ClassName];
+    if LValue <> nil then
+      if LValue.IndexOf(Field.FieldName) = -1 then
+        LValue.Add(Field.FieldName);
   end;
+  /// <summary>
+  ///   Atualiza o registro da tabela externa, se o campo alterado
+  ///   pertencer a um relacionamento OneToOne ou ManyToOne
+  /// </summary>
+  RefreshDataSetOneToOneChilds(Field.FieldName);
 end;
 
 procedure TDataSetAbstract<M>.RefreshDataSetOneToOneChilds(AFieldName: string);

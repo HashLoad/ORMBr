@@ -95,6 +95,7 @@ var
 begin
   LMasterCurrent := oDataSnapMaster.Current;
   LMasterCurrent.description := 'Registro Alterado Pelo Object';
+  LMasterCurrent.registerdate := Now;
   oDataSnapMaster.Save(LMasterCurrent);
 end;
 
@@ -120,12 +121,12 @@ begin
   oDataSnapClient := TContainerRESTFDMemTable<Tclient>.Create(FDClient, oDataSnapMaster.This);
   // DBComboBoxLookup
   oDataSnapLookup := TContainerRESTFDMemTable<Tlookup>.Create(FDLookup);
-//  oDataSnapDetail.AddLookupField('fieldname',
-//                                 'lookup_id',
-//                                 oDataSnapLookup.This,
-//                                 'lookup_id',
-//                                 'lookup_description',
-//                                 'Descrição Lookup');
+  oDataSnapDetail.AddLookupField('fieldname',
+                                 'lookup_id',
+                                 oDataSnapLookup.This,
+                                 'lookup_id',
+                                 'lookup_description',
+                                 'Descrição Lookup');
 
   oDataSnapMaster.Open;
 //  oDataSnapMaster.Open(74);

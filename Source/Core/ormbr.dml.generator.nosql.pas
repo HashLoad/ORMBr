@@ -40,13 +40,12 @@ type
       AAssociation: TAssociationMapping): string; override;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
       AModifiedFields: TList<string>): string; override;
-    function GeneratorInsert(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): string; override;
+    function GeneratorInsert(AObject: TObject): string; override;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -84,8 +83,7 @@ begin
   Result := '';
 end;
 
-function TDMLGeneratorNoSQL.GeneratorInsert(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): string;
+function TDMLGeneratorNoSQL.GeneratorInsert(AObject: TObject): string;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
@@ -203,14 +201,14 @@ begin
   end;
 end;
 
-function TDMLGeneratorNoSQL.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorNoSQL.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := 0;
 end;
 
-function TDMLGeneratorNoSQL.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorNoSQL.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := 0;
 end;
@@ -234,7 +232,7 @@ begin
       .Append('command=find, ')
         .Append('collection=' + LTable.Name);
     /// <summary>
-    /// PrimaryKey
+    ///   PrimaryKey
     /// </summary>
     if VarToStr(AID) <> '-1' then
     begin

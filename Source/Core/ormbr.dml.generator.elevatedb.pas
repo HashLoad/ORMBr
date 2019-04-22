@@ -57,10 +57,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorPageNext(const ACommandSelect: string;
       APageSize, APageNext: Integer): string; override;
   end;
@@ -152,19 +152,19 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorElevateDB.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorElevateDB.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT MAX(%s) FROM %s',
-                                   [ACommandInsert.PrimaryKey.Columns.Items[0],
-                                    ACommandInsert.Table.Name]));
+                                   [AAutoInc.PrimaryKey.Columns.Items[0],
+                                    AAutoInc.Sequence.TableName]));
 end;
 
-function TDMLGeneratorElevateDB.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorElevateDB.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert)
-          + ACommandInsert.Sequence.Increment;
+  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc)
+          + AAutoInc.Sequence.Increment;
 end;
 
 initialization

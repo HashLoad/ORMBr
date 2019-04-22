@@ -45,7 +45,7 @@ uses
 
 type
   /// <summary>
-  /// M - Object M
+  ///   M - Object M
   /// </summary>
   TObjectSetAdapter<M: class, constructor> = class(TObjectSetBaseAdapter<M>)
   private
@@ -94,7 +94,7 @@ var
 begin
   inherited;
   /// <summary>
-  /// Controle de transação externa, controlada pelo desenvolvedor
+  ///   Controle de transação externa, controlada pelo desenvolvedor
   /// </summary>
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
@@ -105,11 +105,11 @@ begin
       FConnection.StartTransaction;
     try
       /// <summary>
-      /// Executa comando delete em cascade
+      ///   Executa comando delete em cascade
       /// </summary>
       CascadeActionsExecute(AObject, CascadeDelete);
       /// <summary>
-      /// Executa comando delete master
+      ///   Executa comando delete master
       /// </summary>
       FSession.Delete(AObject);
       ///
@@ -186,7 +186,7 @@ var
 begin
   inherited;
   /// <summary>
-  /// Controle de transação externa, controlada pelo desenvolvedor
+  ///   Controle de transação externa, controlada pelo desenvolvedor
   /// </summary>
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
@@ -238,7 +238,7 @@ var
 begin
   inherited;
   /// <summary>
-  /// Controle de transação externa, controlada pelo desenvolvedor
+  ///   Controle de transação externa, controlada pelo desenvolvedor
   /// </summary>
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
@@ -263,7 +263,7 @@ begin
           FObjectState.TrimExcess;
         end;
         /// <summary>
-        /// Remove o item excluído em Update Mestre-Detalhe
+        ///   Remove o item excluído em Update Mestre-Detalhe
         /// </summary>
         for LObject in FObjectState.Values do
           FSession.Delete(LObject);
@@ -283,7 +283,7 @@ begin
       FConnection.Disconnect;
     FObjectState.Clear;
     /// <summary>
-    /// Após executar o comando SQL Update, limpa a lista de campos alterados.
+    ///   Após executar o comando SQL Update, limpa a lista de campos alterados.
     /// </summary>
     FSession.ModifiedFields.Clear;
     FSession.ModifiedFields.TrimExcess;

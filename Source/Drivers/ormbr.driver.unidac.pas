@@ -161,13 +161,12 @@ end;
 procedure TDriverUniDAC.ExecuteScripts;
 begin
   inherited;
-  if FSQLScript.SQL.Count > 0 then
-  begin
-    try
-      FSQLScript.Execute;
-    finally
-      FSQLScript.SQL.Clear;
-    end;
+  if FSQLScript.SQL.Count = 0 then
+    Exit;
+  try
+    FSQLScript.Execute;
+  finally
+    FSQLScript.SQL.Clear;
   end;
 end;
 
@@ -226,15 +225,15 @@ end;
 
 constructor TDriverQueryUniDAC.Create(AConnection: TUniConnection);
 begin
-  if AConnection <> nil then
-  begin
-    FFDQuery := TUniQuery.Create(nil);
-    try
-      FFDQuery.Connection := AConnection;
-    except
-      FFDQuery.Free;
-      raise;
-    end;
+  if AConnection = nil then
+    Exit;
+
+  FFDQuery := TUniQuery.Create(nil);
+  try
+    FFDQuery.Connection := AConnection;
+  except
+    FFDQuery.Free;
+    raise;
   end;
 end;
 

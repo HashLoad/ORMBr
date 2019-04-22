@@ -23,11 +23,13 @@ uses
   StrUtils,
   Generics.Collections,
   /// ORMBr
-  ormbr.manager.dataset,
+  // SQLDirect
   ormbr.factory.interfaces,
   ormbr.factory.sqldirect,
+
+  ormbr.manager.dataset,
+
   ormbr.dml.generator.firebird,
-  ormbr.rest.json,
   /// modelos usados
   ormbr.model.master,
   ormbr.model.detail,
@@ -70,6 +72,7 @@ type
     FDLookup: TClientDataSet;
     Button5: TButton;
     SDDatabase1: TSDDatabase;
+    DBCheckBox1: TDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);

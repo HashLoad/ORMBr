@@ -56,10 +56,10 @@ type
       AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorPageNext(const ACommandSelect: string;
       APageSize, APageNext: Integer): string; override;
   end;
@@ -164,19 +164,18 @@ begin
     Result := Result + ' ORDER BY ' + AOrderBy;
 end;
 
-function TDMLGeneratorMSSql.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMSSql.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := ExecuteSequence(
-              Format('SELECT CURRENT_VALUE FROM SYS.SEQUENCES WHERE NAME = ''%s''',
-                     [ACommandInsert.Sequence.Name]) );
+  Result := ExecuteSequence(Format('SELECT CURRENT_VALUE FROM SYS.SEQUENCES WHERE NAME = ''%s''',
+                                   [AAutoInc.Sequence.Name]) );
 end;
 
-function TDMLGeneratorMSSql.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMSSql.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT NEXT VALUE FOR %s ',
-                                   [ACommandInsert.Sequence.Name]));
+                                   [AAutoInc.Sequence.Name]));
 end;
 
 initialization

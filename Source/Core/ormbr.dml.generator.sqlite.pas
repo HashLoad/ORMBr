@@ -53,10 +53,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -125,31 +125,31 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorSQLite.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 var
   LSQL: String;
 begin
   Result := ExecuteSequence(Format('SELECT SEQ AS SEQUENCE FROM SQLITE_SEQUENCE ' +
-                                   'WHERE NAME = ''%s''', [ACommandInsert.Sequence.Name]));
+                                   'WHERE NAME = ''%s''', [AAutoInc.Sequence.Name]));
   if Result = 0 then
   begin
     LSQL := Format('INSERT INTO SQLITE_SEQUENCE (NAME, SEQ) VALUES (''%s'', 0)',
-                   [ACommandInsert.Sequence.Name]);
+                   [AAutoInc.Sequence.Name]);
     FConnection.ExecuteDirect(LSQL);
   end;
 end;
 
-function TDMLGeneratorSQLite.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorSQLite.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 var
   LSQL: String;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert);
+  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
   LSQL := Format('UPDATE SQLITE_SEQUENCE SET SEQ = SEQ + %s WHERE NAME = ''%s''',
-                 [IntToStr(ACommandInsert.Sequence.Increment), ACommandInsert.Sequence.Name]);
+                 [IntToStr(AAutoInc.Sequence.Increment), AAutoInc.Sequence.Name]);
   FConnection.ExecuteDirect(LSQL);
-  Result := Result + ACommandInsert.Sequence.Increment;
+  Result := Result + AAutoInc.Sequence.Increment;
 end;
 
 initialization

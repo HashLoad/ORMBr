@@ -55,10 +55,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -127,19 +127,19 @@ begin
     Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorMySQL.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMySQL.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
                                    'FROM INFORMATION_SCHEMA.TABLES ' +
                                    'WHERE TABLE_SCHEMA = DATABASE() ' +
-                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(ACommandInsert.Table.Name)]));
+                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(AAutoInc.Sequence.TableName)]));
 end;
 
-function TDMLGeneratorMySQL.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorMySQL.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert);
+  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
 end;
 
 initialization

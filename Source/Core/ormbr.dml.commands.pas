@@ -30,30 +30,18 @@ unit ormbr.dml.commands;
 interface
 
 uses
-  ormbr.objects.helper,
   ormbr.mapping.classes;
 
 type
-  TDMLCommand = class abstract
-  protected
-    FWarning: string;
-    FCommand: string;
-  public
-    property Warning: string read FWarning;
-    property Command: string read FCommand;
-  end;
-
-  TDMLCommandInsert = class(TDMLCommand)
+  TDMLCommandAutoInc = class
   private
-    FTable: TTableMapping;
     FSequence: TSequenceMapping;
-    FExistSequence: Boolean;
     FPrimaryKey: TPrimaryKeyMapping;
+    FExistSequence: Boolean;
   public
-    property Table: TTableMapping read FTable write FTable;
     property Sequence: TSequenceMapping read FSequence write FSequence;
-    property ExistSequence: Boolean read FExistSequence write FExistSequence;
     property PrimaryKey: TPrimaryKeyMapping read FPrimaryKey write FPrimaryKey;
+    property ExistSequence: Boolean read FExistSequence write FExistSequence;
   end;
 
 implementation

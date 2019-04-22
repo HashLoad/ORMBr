@@ -74,7 +74,7 @@ type
     function  IsNullValue(AObject: TObject): Boolean;
     function  IsPrimaryKey(AClass: TClass): Boolean;
     function  IsList: Boolean;
-    function  GetAssociation: TCustomAttribute;
+    function  GetAssociation: TArray<Association>;
     function  GetRestriction: TCustomAttribute;
     function  GetDictionary: Dictionary;
     function  GetCalcField: TCustomAttribute;
@@ -103,20 +103,24 @@ uses
   ormbr.core.consts,
   ormbr.mapping.explorer,
   ormbr.types.blob,
+  ormbr.utils,
   ormbr.objects.helper;
 
 { TRttiPropertyHelper }
 
-function TRttiPropertyHelper.GetAssociation: TCustomAttribute;
+function TRttiPropertyHelper.GetAssociation: TArray<Association>;
 var
-  LAttribute: TCustomAttribute;
+  LAttrib: TCustomAttribute;
 begin
-   for LAttribute in Self.GetAttributes do
-   begin
-      if LAttribute is Association then // Association
-         Exit(LAttribute);
-   end;
-   Exit(nil);
+  Result := nil;
+  for LAttrib in Self.GetAttributes do
+  begin
+    if LAttrib is Association then // Association
+    begin
+      SetLength(Result, 1);
+      Result[0] := Association(LAttrib);
+    end;
+  end;
 end;
 
 function TRttiPropertyHelper.GetCalcField: TCustomAttribute;
@@ -177,20 +181,17 @@ begin
   Result := nil;
   if AValue = Null then
     Exit;
-
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
-  if LEnumerationList <> nil then
+  if LEnumerationList = nil then
+    Exit;
+  for LEnumeration in LEnumerationList do
   begin
-    for LEnumeration in LEnumerationList do
-    begin
-      if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
-      begin
-        LIndex := LEnumeration.EnumValues.IndexOf(AValue);
-        if LIndex > -1 then
-          Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
-      end;
-    end;
+    if Self.PropertyType.AsOrdinal <> LEnumeration.OrdinalType then
+      Continue;
+    LIndex := LEnumeration.EnumValues.IndexOf(AValue);
+    if LIndex > -1 then
+      Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
   end;
 end;
 
@@ -204,17 +205,15 @@ begin
   Result := nil;
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
-  if LEnumerationList <> nil then
+  if LEnumerationList = nil then
+    Exit;
+  for LEnumeration in LEnumerationList do
   begin
-    for LEnumeration in LEnumerationList do
-    begin
-      if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
-      begin
-        LIndex := LEnumeration.EnumValues.IndexOf(AValue);
-        if LIndex > -1 then
-          Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
-      end;
-    end;
+    if Self.PropertyType.AsOrdinal <> LEnumeration.OrdinalType then
+      Continue;
+    LIndex := LEnumeration.EnumValues.IndexOf(AValue);
+    if LIndex > -1 then
+      Result := TValue.FromOrdinal(Self.PropertyType.Handle, LIndex);
   end;
 end;
 
@@ -228,30 +227,39 @@ begin
   Result := nil;
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
-  if LEnumerationList <> nil then
+  if LEnumerationList = nil then
+    Exit;
+  LValue := Self.GetValue(AInstance);
+  if LValue.AsOrdinal < 0 then
+    Exit;
+  for LEnumeration in LEnumerationList do
   begin
-    LValue := Self.GetValue(AInstance);
-    if LValue.AsOrdinal >= 0 then
-    begin
-      for LEnumeration in LEnumerationList do
-      begin
-        if Self.PropertyType.AsOrdinal = LEnumeration.OrdinalType then
-        begin
-          case AFieldType of
-            ftFixedChar:
-              Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
-            ftString:
-              Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
-            ftInteger:
-              Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
-            ftBoolean:
-              Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(-1)));
-          else
-            raise Exception.Create(cENUMERATIONSTYPEERROR);
-          end
-        end;
-      end;
-    end;
+    if Self.PropertyType.AsOrdinal <> LEnumeration.OrdinalType then
+      Continue;
+    case AFieldType of
+      ftFixedChar:
+        Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
+      ftString:
+        Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
+      ftInteger:
+        Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
+      ftBoolean:
+        Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(0)));
+    else
+      raise Exception.Create(cENUMERATIONSTYPEERROR);
+    end
+  end;
+  /// <summary>
+  ///   Usar tipo Boolean nativo na propriedade da classe modelo.
+  /// </summary>
+  if Result.IsEmpty then
+  begin
+    case AFieldType of
+      ftBoolean:
+        Result := TValue.From<Variant>(Self.GetValue(AInstance).AsVariant);
+    else
+      raise Exception.Create(cENUMERATIONSTYPEERROR);
+    end
   end;
 end;
 
@@ -304,12 +312,12 @@ begin
   begin
     LValue := Self.GetValue(AInstance);
     LHasValueField := Self.PropertyType.GetField('FHasValue');
-    if Assigned(LHasValueField) then
-    begin
-      LValueField := Self.PropertyType.GetField('FValue');
-      if Assigned(LValueField) then
-        Result := LValueField.GetValue(LValue.GetReferenceToRawData);
-    end
+    if not Assigned(LHasValueField) then
+      Exit;
+
+    LValueField := Self.PropertyType.GetField('FValue');
+    if Assigned(LValueField) then
+      Result := LValueField.GetValue(LValue.GetReferenceToRawData);
   end
   else
     Result := Self.GetValue(AInstance);
@@ -369,15 +377,18 @@ end;
 
 function TRttiPropertyHelper.IsNotCascade: Boolean;
 var
-  LAttribute: TCustomAttribute;
+  LAttribute: Association;
+  LAssociationList: TArray<Association>;
 begin
-  LAttribute := Self.GetAssociation;
-  if LAttribute <> nil then
-  begin
-    if CascadeNone in Self.GetCascadeActions then
-      Exit(True);
-  end;
-  Exit(False);
+  Result := False;
+  LAssociationList := Self.GetAssociation;
+  if LAssociationList = nil then
+    Exit;
+  LAttribute := LAssociationList[0];
+  if LAttribute = nil then
+    Exit;
+  if CascadeNone in Self.GetCascadeActions then
+    Result := True;
 end;
 
 function TRttiPropertyHelper.IsBlob: Boolean;
@@ -387,9 +398,8 @@ var
   LTypeInfo: PTypeInfo;
 begin
   LTypeInfo := Self.PropertyType.Handle;
-  Result := Assigned(LTypeInfo)
-    and (LTypeInfo.Kind = tkRecord)
-      and StartsText(LPrefixString, GetTypeName(LTypeInfo));
+  Result := Assigned(LTypeInfo) and (LTypeInfo.Kind = tkRecord)
+                                and StartsText(LPrefixString, GetTypeName(LTypeInfo));
 end;
 
 function TRttiPropertyHelper.IsCheck: Boolean;
@@ -449,9 +459,8 @@ var
   LTypeInfo: PTypeInfo;
 begin
   LTypeInfo := Self.PropertyType.Handle;
-  Result := Assigned(LTypeInfo)
-    and (LTypeInfo.Kind = tkRecord)
-      and StartsText(LPrefixString, GetTypeName(LTypeInfo));
+  Result := Assigned(LTypeInfo) and (LTypeInfo.Kind = tkRecord)
+                                and StartsText(LPrefixString, GetTypeName(LTypeInfo));
 end;
 
 function TRttiPropertyHelper.IsList: Boolean;
@@ -471,26 +480,26 @@ function TRttiPropertyHelper.IsNotNull: Boolean;
 var
   LAttribute: TCustomAttribute;
 begin
-   LAttribute := Self.GetRestriction;
-   if LAttribute <> nil then
-   begin
-     if NotNull in Restrictions(LAttribute).Restrictions then
-       Exit(True);
-   end;
-   Exit(False);
+  Result := False;
+  LAttribute := Self.GetRestriction;
+  if LAttribute = nil then
+    Exit;
+
+  if NotNull in Restrictions(LAttribute).Restrictions then
+    Exit(True);
 end;
 
 function TRttiPropertyHelper.IsNoUpdate: Boolean;
 var
   LAttribute: TCustomAttribute;
 begin
+  Result := False;
   LAttribute := Self.GetRestriction;
-  if LAttribute <> nil then
-  begin
-    if NoUpdate in Restrictions(LAttribute).Restrictions then
-      Exit(True);
-  end;
-  Exit(False);
+  if LAttribute = nil then
+    Exit;
+
+  if NoUpdate in Restrictions(LAttribute).Restrictions then
+    Exit(True);
 end;
 
 function TRttiPropertyHelper.IsNullable: Boolean;
@@ -500,9 +509,8 @@ var
   LTypeInfo: PTypeInfo;
 begin
   LTypeInfo := Self.PropertyType.Handle;
-  Result := Assigned(LTypeInfo)
-    and (LTypeInfo.Kind = tkRecord)
-      and StartsText(LPrefixString, GetTypeName(LTypeInfo));
+  Result := Assigned(LTypeInfo) and (LTypeInfo.Kind = tkRecord)
+                                and StartsText(LPrefixString, GetTypeName(LTypeInfo));
 end;
 
 function TRttiPropertyHelper.ResolveNullableValue(AObject: TObject): Boolean;
@@ -570,45 +578,48 @@ var
   LPrimaryKey: TPrimaryKeyMapping;
   LColumnName: string;
 begin
+  Result := False;
   LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
-  if LPrimaryKey <> nil then
-  begin
-    for LColumnName in LPrimaryKey.Columns do
-      if SameText(LColumnName, Column(Self.GetColumn).ColumnName) then
-        Exit(True);
-  end;
-  Exit(False);
+  if LPrimaryKey = nil then
+    Exit;
+
+  for LColumnName in LPrimaryKey.Columns do
+    if SameText(LColumnName, Column(Self.GetColumn).ColumnName) then
+      Exit(True);
 end;
 
 function TRttiPropertyHelper.IsNoValidate: Boolean;
 var
   LAttribute: TCustomAttribute;
 begin
+  Result := False;
   LAttribute := Self.GetRestriction;
-  if LAttribute <> nil then
-  begin
-    if NoValidate in Restrictions(LAttribute).Restrictions then
-      Exit(True);
-  end;
-  Exit(False);
+  if LAttribute = nil then
+    Exit;
+
+  if NoValidate in Restrictions(LAttribute).Restrictions then
+    Exit(True);
 end;
 
 function TRttiPropertyHelper.IsUnique: Boolean;
 var
   LAttribute: TCustomAttribute;
 begin
-   LAttribute := Self.GetRestriction;
-   if LAttribute <> nil then
-   begin
-     if Unique in Restrictions(LAttribute).Restrictions then
-       Exit(True);
-   end;
-   Exit(False);
+  Result := False;
+  LAttribute := Self.GetRestriction;
+  if LAttribute = nil then
+    Exit;
+
+  if Unique in Restrictions(LAttribute).Restrictions then
+    Exit(True);
 end;
 
 procedure TRttiPropertyHelper.SetNullableValue(AInstance: Pointer;
   ATypeInfo: PTypeInfo; AValue: Variant);
+var
+  LUtils: IUtilSingleton;
 begin
+  LUtils := TUtilSingleton.GetInstance;
   if ATypeInfo = TypeInfo(Nullable<Integer>) then
     if TVarData(AValue).VType <= varNull then
       Self.SetValue(AInstance, TValue.From(Nullable<Integer>.Create(AValue)))
@@ -622,7 +633,7 @@ begin
     if TVarData(AValue).VType <= varNull then
       Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>.Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>.Create(TDateTime(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>.Create(LUtils.Iso8601ToDateTime(AValue))))
   else
   if ATypeInfo = TypeInfo(Nullable<Currency>) then
     if TVarData(AValue).VType <= varNull then
@@ -657,12 +668,12 @@ begin
   LLength := -1;
   for LAttrib in Self.GetAttributes do
   begin
-     if LAttrib is AggregateField then // AggregateField
-     begin
-       Inc(LLength);
-       SetLength(Result, LLength+1);
-       Result[LLength] := LAttrib;
-     end;
+     if not (LAttrib is AggregateField) then // AggregateField
+       Continue;
+
+     Inc(LLength);
+     SetLength(Result, LLength+1);
+     Result[LLength] := LAttrib;
   end;
 end;
 
@@ -675,12 +686,12 @@ begin
   LLength := -1;
   for LAttrib in Self.GetAttributes do
   begin
-     if LAttrib is PrimaryKey then // PrimaryKey
-     begin
-       Inc(LLength);
-       SetLength(Result, LLength+1);
-       Result[LLength] := LAttrib;
-     end;
+     if not (LAttrib is PrimaryKey) then // PrimaryKey
+       Continue;
+
+     Inc(LLength);
+     SetLength(Result, LLength+1);
+     Result[LLength] := LAttrib;
   end;
 end;
 

@@ -233,20 +233,20 @@ end;
 
 constructor TDriverQueryIBExpress.Create(AConnection: TIBDatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TIBQuery.Create(nil);
-     try
-       FSQLQuery.Database := AConnection;
-       FSQLQuery.Transaction := AConnection.DefaultTransaction;
-       FSQLQuery.UniDirectional := True;
-     except
-       on E: Exception do
-       begin
-         FSQLQuery.Free;
-         raise Exception.Create(E.Message);
-       end;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TIBQuery.Create(nil);
+  try
+    FSQLQuery.Database := AConnection;
+    FSQLQuery.Transaction := AConnection.DefaultTransaction;
+    FSQLQuery.UniDirectional := True;
+  except
+    on E: Exception do
+    begin
+      FSQLQuery.Free;
+      raise Exception.Create(E.Message);
+    end;
   end;
 end;
 

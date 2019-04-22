@@ -154,8 +154,8 @@ end;
 function TDMLCommandFactory.ExistSequence: Boolean;
 begin
   Result := False;
-  if FCommandInserter.Sequence <> nil then
-    Exit(FCommandInserter.Sequence.ExistSequence);
+  if FCommandInserter.AutoInc <> nil then
+    Exit(FCommandInserter.AutoInc.ExistSequence);
 end;
 
 procedure TDMLCommandFactory.GeneratorDelete(const AObject: TObject);
@@ -165,7 +165,7 @@ begin
   LSQLText := FCommandDeleter.GenerateDelete(AObject);
   FDMLCommand := FCommandDeleter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandDeleter.Params);
@@ -180,7 +180,7 @@ begin
   LSQLText := FCommandInserter.GenerateInsert(AObject);
   FDMLCommand := FCommandInserter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandInserter.Params);
@@ -197,7 +197,7 @@ begin
                 .GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -213,7 +213,7 @@ begin
   LSQLText := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -228,7 +228,7 @@ begin
 
   FDMLCommand := ASQL;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -246,7 +246,7 @@ begin
   LSQLText := FCommandSelecter.GenerateSelectAll(AClass);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -268,7 +268,7 @@ begin
   LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -284,7 +284,7 @@ begin
   LSQLText := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -307,7 +307,7 @@ begin
   LSQLText := FCommandSelecter.GenerateSelectID(AClass, AID);
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -322,7 +322,7 @@ begin
   LSQLText := FCommandSelecter.GenerateNextPacket;
   FDMLCommand := FCommandSelecter.GetDMLCommand;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
@@ -340,7 +340,7 @@ begin
   if FDMLCommand = '' then
     Exit;
   /// <summary>
-  /// Envia comando para tela do monitor.
+  ///   Envia comando para tela do monitor.
   /// </summary>
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandUpdater.Params);

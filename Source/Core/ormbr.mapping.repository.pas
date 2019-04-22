@@ -78,7 +78,7 @@ var
 begin
   FRepository := TRepository.Create;
   /// <summary>
-  /// Entitys
+  ///   Entitys
   /// </summary>
   if AEntity <> nil then
     for LClass in AEntity do
@@ -90,7 +90,7 @@ begin
       FRepository.EntityList[LClass.ClassParent].Add(LClass);
 
   /// <summary>
-  /// Views
+  ///   Views
   /// </summary>
   if AView <> nil then
     for LClass in AView do
@@ -112,10 +112,10 @@ function TMappingRepository.FindEntityByName(const ClassName: string): TClass;
 var
   LClass: TClass;
 begin
-  for LClass in List.Entitys do
-     if SameText(LClass.ClassName, ClassName) then
-        Exit(LClass);
   Result := nil;
+  for LClass in List.Entitys do
+    if SameText(LClass.ClassName, ClassName) then
+      Exit(LClass);
 end;
 
 function TMappingRepository.FindEntity(AClass: TClass): TList<TClass>;

@@ -238,19 +238,19 @@ end;
 
 constructor TDriverQueryFIBPlus.Create(AConnection: TFIBDatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TFIBQuery.Create(nil);
-     try
-       FSQLQuery.Database := AConnection;
-       FSQLQuery.Transaction := AConnection.DefaultTransaction;
-     except
-       on E: Exception do
-       begin
-         FSQLQuery.Free;
-         raise Exception.Create(E.Message);
-       end;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TFIBQuery.Create(nil);
+  try
+    FSQLQuery.Database := AConnection;
+    FSQLQuery.Transaction := AConnection.DefaultTransaction;
+  except
+    on E: Exception do
+    begin
+      FSQLQuery.Free;
+      raise Exception.Create(E.Message);
+    end;
   end;
 end;
 

@@ -103,22 +103,22 @@ var
   LField: TField;
 begin
   LField := GetFieldType(ADataSet, AFieldType);
-  if LField <> nil then
-  begin
-     LField.Name         := ADataSet.Name + AFieldName;
-     LField.FieldName    := AFieldName;
-     LField.DisplayLabel := AFieldName;
-     LField.Calculated   := False;
-     LField.DataSet      := ADataSet;
-     LField.FieldKind    := fkData;
-     //
-     case AFieldType of
-       ftBytes, ftVarBytes, ftFixedChar, ftString, ftFixedWideChar, ftWideString:
-         begin
-           if ASize > 0 then
-             LField.Size := ASize;
-         end;
-     end;
+  if LField = nil then
+    Exit;
+
+  LField.Name         := ADataSet.Name + AFieldName;
+  LField.FieldName    := AFieldName;
+  LField.DisplayLabel := AFieldName;
+  LField.Calculated   := False;
+  LField.DataSet      := ADataSet;
+  LField.FieldKind    := fkData;
+  //
+  case AFieldType of
+    ftBytes, ftVarBytes, ftFixedChar, ftString, ftFixedWideChar, ftWideString:
+      begin
+        if ASize > 0 then
+          LField.Size := ASize;
+      end;
   end;
 end;
 
@@ -135,25 +135,25 @@ var
   LField: TField;
 begin
   LField := GetFieldType(ADataSet, AFieldType);
-  if LField <> nil then
-  begin
-     LField.Name              := ADataSet.Name + '_' + AFieldName;
-     LField.FieldName         := AFieldName;
-     LField.DataSet           := ADataSet;
-     LField.FieldKind         := fkLookup;
-     LField.KeyFields         := AKeyFields;
-     LField.Lookup            := True;
-     LField.LookupDataSet     := ALookupDataSet;
-     LField.LookupKeyFields   := ALookupKeyFields;
-     LField.LookupResultField := ALookupResultField;
-     LField.DisplayLabel      := ADisplayLabel;
-     case AFieldType of
-       ftLargeint, ftString, ftWideString, ftFixedChar, ftFixedWideChar:
-         begin
-           if ASize > 0 then
-             LField.Size := ASize;
-         end;
-     end;
+  if LField = nil then
+    Exit;
+
+  LField.Name              := ADataSet.Name + '_' + AFieldName;
+  LField.FieldName         := AFieldName;
+  LField.DataSet           := ADataSet;
+  LField.FieldKind         := fkLookup;
+  LField.KeyFields         := AKeyFields;
+  LField.Lookup            := True;
+  LField.LookupDataSet     := ALookupDataSet;
+  LField.LookupKeyFields   := ALookupKeyFields;
+  LField.LookupResultField := ALookupResultField;
+  LField.DisplayLabel      := ADisplayLabel;
+  case AFieldType of
+    ftLargeint, ftString, ftWideString, ftFixedChar, ftFixedWideChar:
+      begin
+        if ASize > 0 then
+          LField.Size := ASize;
+      end;
   end;
 end;
 
@@ -247,21 +247,21 @@ begin
     raise Exception.Create('O Campo calculado : ' + AFieldName + ' já existe');
 
   LField := GetFieldType(ADataSet, AFieldType);
-  if LField <> nil then
-  begin
-    LField.Name       := ADataSet.Name + AFieldName;
-    LField.FieldName  := AFieldName;
-    LField.Calculated := True;
-    LField.DataSet    := ADataSet;
-    LField.FieldKind  := fkInternalCalc;
-    //
-    case AFieldType of
-       ftLargeint, ftString, ftWideString, ftFixedChar, ftFixedWideChar:
-        begin
-          if ASize > 0 then
-            LField.Size := ASize;
-        end;
-    end;
+  if LField = nil then
+    Exit;
+
+  LField.Name       := ADataSet.Name + AFieldName;
+  LField.FieldName  := AFieldName;
+  LField.Calculated := True;
+  LField.DataSet    := ADataSet;
+  LField.FieldKind  := fkInternalCalc;
+  //
+  case AFieldType of
+     ftLargeint, ftString, ftWideString, ftFixedChar, ftFixedWideChar:
+      begin
+        if ASize > 0 then
+          LField.Size := ASize;
+      end;
   end;
 end;
 
@@ -276,20 +276,20 @@ begin
      raise Exception.Create('O Campo agregado de nome : ' + AFieldName + ' já existe');
 
   LField := TAggregateField.Create(ADataSet);
-  if LField <> nil then
-  begin
-    LField.Name         := ADataSet.Name + AFieldName;
-    LField.FieldKind    := fkAggregate;
-    LField.FieldName    := AFieldName;
-    LField.DisplayLabel := AFieldName;
-    LField.DataSet      := ADataSet;
-    LField.Expression   := AExpression;
-    LField.Active       := True;
-    LField.Alignment    := AAlignment;
-    //
-    if Length(ADisplayFormat) > 0 then
-       LField.DisplayFormat := ADisplayFormat;
-  end;
+  if LField = nil then
+    Exit;
+
+  LField.Name         := ADataSet.Name + AFieldName;
+  LField.FieldKind    := fkAggregate;
+  LField.FieldName    := AFieldName;
+  LField.DisplayLabel := AFieldName;
+  LField.DataSet      := ADataSet;
+  LField.Expression   := AExpression;
+  LField.Active       := True;
+  LField.Alignment    := AAlignment;
+  //
+  if Length(ADisplayFormat) > 0 then
+    LField.DisplayFormat := ADisplayFormat;
 end;
 
 end.

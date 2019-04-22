@@ -27,7 +27,7 @@ uses
 
 type
   /// <summary>
-  /// Fábrica de conexão concreta com UniDAC
+  ///   Fábrica de conexão concreta com UniDAC
   /// </summary>
   TFactoryUniDAC = class(TFactoryConnection)
   public

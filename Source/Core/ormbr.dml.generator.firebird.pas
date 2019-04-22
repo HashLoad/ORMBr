@@ -56,10 +56,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -96,14 +96,10 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  LTable := TMappingExplorer
-              .GetInstance
-                .GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
   /// OrderBy
-  LOrderBy := TMappingExplorer
-                .GetInstance
-                  .GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     LOrderByList := TStringList.Create;
@@ -136,19 +132,19 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorFirebird.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorFirebird.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := ExecuteSequence(
-    Format('SELECT GEN_ID(%s, 0) FROM RDB$DATABASE;', [ACommandInsert.Sequence.Name]));
+  Result := ExecuteSequence(Format('SELECT GEN_ID(%s, 0) FROM RDB$DATABASE;',
+                                   [AAutoInc.Sequence.Name]));
 end;
 
-function TDMLGeneratorFirebird.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorFirebird.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := ExecuteSequence(
-    Format('SELECT GEN_ID(%s, %s) FROM RDB$DATABASE;', [ACommandInsert.Sequence.Name,
-      IntToStr(ACommandInsert.Sequence.Increment)]));
+  Result := ExecuteSequence(Format('SELECT GEN_ID(%s, %s) FROM RDB$DATABASE;',
+                                   [AAutoInc.Sequence.Name,
+                           IntToStr(AAutoInc.Sequence.Increment)]));
 end;
 
 initialization

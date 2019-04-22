@@ -33,7 +33,9 @@ uses
   DB,
   Rtti,
   StrUtils,
+  SysUtils,
   TypInfo,
+  Variants,
   ormbr.core.consts,
   ormbr.command.abstract,
   ormbr.mapping.classes,
@@ -49,21 +51,19 @@ uses
 type
   TCommandInserter = class(TDMLCommandAbstract)
   private
-    FDMLCommandInsert: TDMLCommandInsert;
+    FDMLAutoInc: TDMLCommandAutoInc;
     function GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
+    function IfThenBoolean(AValue: Variant): Boolean;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     destructor Destroy; override;
     function GenerateInsert(AObject: TObject): string;
-    property Sequence: TDMLCommandInsert read FDMLCommandInsert;
+    function AutoInc: TDMLCommandAutoInc;
   end;
 
 implementation
-
-uses
-  SysUtils;
 
 { TCommandInserter }
 
@@ -71,12 +71,12 @@ constructor TCommandInserter.Create(AConnection: IDBConnection;
   ADriverName: TDriverName; AObject: TObject);
 begin
   inherited Create(AConnection, ADriverName, AObject);
+  FDMLAutoInc := TDMLCommandAutoInc.Create;
 end;
 
 destructor TCommandInserter.Destroy;
 begin
-  if Assigned(FDMLCommandInsert) then
-    FDMLCommandInsert.Free;
+  FDMLAutoInc.Free;
   inherited;
 end;
 
@@ -85,20 +85,9 @@ var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
+  LBooleanValue: Integer;
 begin
-  if not Assigned(FDMLCommandInsert) then
-    FDMLCommandInsert := TDMLCommandInsert.Create;
-
-  FDMLCommandInsert.Table := TMappingExplorer.GetInstance
-                                             .GetMappingTable(AObject.ClassType);
-  FDMLCommandInsert.Sequence := TMappingExplorer.GetInstance
-                                                .GetMappingSequence(AObject.ClassType);
-  if FDMLCommandInsert.Sequence <> nil then
-    FDMLCommandInsert.ExistSequence := True
-  else
-    FDMLCommandInsert.ExistSequence := False;
-
-  FCommand := FGeneratorCommand.GeneratorInsert(AObject, FDMLCommandInsert);
+  FCommand := FGeneratorCommand.GeneratorInsert(AObject);
   Result := FCommand;
   FParams.Clear;
   /// <summary>
@@ -109,7 +98,7 @@ begin
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
 
   LPrimaryKey := TMappingExplorer.GetInstance
-                                 .GetMappingPrimaryKey(AObject.ClassType);
+                                   .GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.ColumnProperty.IsNullValue(AObject) then
@@ -123,15 +112,24 @@ begin
     /// </summary>
     if LPrimaryKey <> nil then
     begin
-      FDMLCommandInsert.PrimaryKey := LPrimaryKey;
       if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
+      begin
         if LPrimaryKey.AutoIncrement then
+        begin
+          FDMLAutoInc.Sequence := TMappingExplorer
+                                  .GetInstance
+                                    .GetMappingSequence(AObject.ClassType);
+          FDMLAutoInc.ExistSequence := IfThenBoolean(FDMLAutoInc.Sequence <> nil);
+          FDMLAutoInc.PrimaryKey := LPrimaryKey;
+
           LColumn.ColumnProperty.SetValue(AObject,
                                           FGeneratorCommand
-                                            .GeneratorSequenceNextValue(AObject, FDMLCommandInsert));
+                                            .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
+        end;
+      end;
     end;
     /// <summary>
-    /// Alimenta cada parâmetro com o valor de cada propriedade do objeto.
+    ///   Alimenta cada parâmetro com o valor de cada propriedade do objeto.
     /// </summary>
     with FParams.Add as TParam do
     begin
@@ -139,6 +137,16 @@ begin
       DataType := LColumn.FieldType;
       ParamType := ptInput;
       Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+      /// <summary>
+      ///   Tratamento para o tipo ftBoolean nativo, indo como Integer
+      ///   para gravar no banco.
+      /// </summary>
+      if DataType in [ftBoolean] then
+      begin
+        LBooleanValue := Integer(Value);
+        DataType := ftInteger;
+        Value := LBooleanValue;
+      end;
     end;
   end;
 end;
@@ -146,6 +154,7 @@ end;
 function TCommandInserter.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
+  Result := Null;
   case AProperty.PropertyType.TypeKind of
     tkEnumeration:
       Result := AProperty.GetEnumToFieldValue(AInstance, AFieldType).AsVariant;
@@ -155,6 +164,16 @@ begin
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
   end;
+end;
+
+function TCommandInserter.IfThenBoolean(AValue: Variant): Boolean;
+begin
+  Result := AValue;
+end;
+
+function TCommandInserter.AutoInc: TDMLCommandAutoInc;
+begin
+  Result := FDMLAutoInc;
 end;
 
 end.

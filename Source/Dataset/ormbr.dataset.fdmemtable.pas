@@ -194,14 +194,14 @@ var
   LDataSet: TFDMemTable;
 begin
   inherited;
-  if FMasterObject.Count > 0 then
+  if FMasterObject.Count = 0 then
+    Exit;
+
+  for LChild in FMasterObject do
   begin
-    for LChild in FMasterObject do
-    begin
-      LDataSet := TFDMemTableAdapter<M>(LChild.Value).FOrmDataSet;
-      if LDataSet.Active then
-        LDataSet.EmptyDataSet;
-    end;
+    LDataSet := TFDMemTableAdapter<M>(LChild.Value).FOrmDataSet;
+    if LDataSet.Active then
+      LDataSet.EmptyDataSet;
   end;
 end;
 
@@ -253,18 +253,18 @@ begin
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
     /// <summary>
-    /// Executa o ApplyInternal de toda a hierarquia de dataset filho.
+    ///   Executa o ApplyInternal de toda a hierarquia de dataset filho.
     /// </summary>
-    if FMasterObject.Count > 0 then
+    if FMasterObject.Count = 0 then
+      Exit;
+
+    for LDetail in FMasterObject.Values do
     begin
-      for LDetail in FMasterObject.Values do
-      begin
-        /// Before Apply
-        LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet);
-        LDetail.ApplyInternal(MaxErros);
-        /// After Apply
-        LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, MaxErros);
-      end;
+      /// Before Apply
+      LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet);
+      LDetail.ApplyInternal(MaxErros);
+      /// After Apply
+      LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, MaxErros);
     end;
   finally
     FOrmDataSet.GotoBookmark(LRecnoBook);
@@ -281,11 +281,11 @@ var
 begin
   inherited;
   /// Filtar somente os registros excluídos
-  if FSession.DeleteList.Count > 0 then
-  begin
-    for LFor := 0 to FSession.DeleteList.Count -1 do
-      FSession.Delete(FSession.DeleteList.Items[LFor]);
-  end;
+  if FSession.DeleteList.Count = 0 then
+    Exit;
+
+  for LFor := 0 to FSession.DeleteList.Count -1 do
+    FSession.Delete(FSession.DeleteList.Items[LFor]);
 end;
 
 procedure TFDMemTableAdapter<M>.ApplyInserter(const MaxErros: Integer);
@@ -306,8 +306,8 @@ begin
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
        begin
          /// <summary>
-         /// Ao passar como parametro a propriedade Current, e disparado o metodo
-         /// que atualiza a var FCurrentInternal, para ser usada abaixo.
+         ///   Ao passar como parametro a propriedade Current, e disparado o metodo
+         ///   que atualiza a var FCurrentInternal, para ser usada abaixo.
          /// </summary>
          FSession.Insert(Current);
          FOrmDataSet.Edit;
@@ -326,7 +326,7 @@ begin
                       .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
            end;
            /// <summary>
-           /// Atualiza o valor do AutoInc nas sub tabelas
+           ///   Atualiza o valor do AutoInc nas sub tabelas
            /// </summary>
            SetAutoIncValueChilds;
          end;

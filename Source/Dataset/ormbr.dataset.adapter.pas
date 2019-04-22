@@ -175,7 +175,6 @@ begin
       Continue;
     if LColumn.FieldType in [ftDataSet, ftADT] then
       Continue;
-
     if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
       raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
                                   FOrmDataSet.FieldByName(LColumn.ColumnName).ConstraintErrorMessage);
@@ -189,36 +188,34 @@ var
   LObject: TObject;
 begin
   inherited;
-  if FOrmDataSet.Active then
-  begin
-    if FOrmDataSet.RecordCount > 0 then
+  if not FOrmDataSet.Active then
+    Exit;
+  if FOrmDataSet.RecordCount = 0 then
+    Exit;
+  /// <summary>
+  ///   Se Count > 0, identifica-se que é o objeto é o Master
+  /// </summary>
+  if FMasterObject.Count = 0 then
+    Exit;
+
+  /// <summary>
+  ///   Popula o objeto com o registro atual do dataset Master para filtar
+  ///   os filhos com os valores das chaves.
+  /// </summary>
+  LObject := M.Create;
+  try
+    TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+    for LDataSetChild in FMasterObject.Values do
     begin
+      LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
       /// <summary>
-      /// Se Count > 0, identifica-se que é o objeto é o Master
+      ///   Monta o comando SQL para abrir registros filhos
       /// </summary>
-      if FMasterObject.Count > 0 then
-      begin
-        /// <summary>
-        /// Popula o objeto com o registro atual do dataset Master para filtar
-        /// os filhos com os valores das chaves.
-        /// </summary>
-        LObject := M.Create;
-        try
-          TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
-          for LDataSetChild in FMasterObject.Values do
-          begin
-            LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
-            /// <summary>
-            /// Monta o comando SQL para abrir registros filhos
-            /// </summary>
-            if Length(LSQL) > 0 then
-              LDataSetChild.OpenSQLInternal(LSQL);
-          end;
-        finally
-          LObject.Free;
-        end;
-      end;
+      if Length(LSQL) > 0 then
+        LDataSetChild.OpenSQLInternal(LSQL);
     end;
+  finally
+    LObject.Free;
   end;
 end;
 
@@ -230,39 +227,38 @@ begin
   inherited;
   if AOwner <> nil then
   begin
-    if FOwnerMasterObject = nil then
+    if FOwnerMasterObject <> nil then
+      Exit;
+    if FOrmDataSet.Active then
+      Exit;
+
+    SetMasterObject(AOwner);
+    LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
+    if LOwnerObject <> nil then
     begin
-      if not FOrmDataSet.Active then
-      begin
-        SetMasterObject(AOwner);
-        LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-        if LOwnerObject <> nil then
-        begin
-          /// <summary>
-          /// Popula o objeto com o registro atual do dataset Master para filtar
-          /// os filhos com os valores das chaves.
-          /// </summary>
-          TBindObject
-            .GetInstance
-              .SetFieldToProperty(LOwnerObject.FOrmDataSet,
-                          TObject(LOwnerObject.FCurrentInternal));
-          LSQL := FSession.SelectAssociation(LOwnerObject.FCurrentInternal);
-          if Length(LSQL) > 0 then
-            OpenSQLInternal(LSQL);
-        end;
-      end;
+      /// <summary>
+      /// Popula o objeto com o registro atual do dataset Master para filtar
+      /// os filhos com os valores das chaves.
+      /// </summary>
+      TBindObject
+        .GetInstance
+          .SetFieldToProperty(LOwnerObject.FOrmDataSet,
+                      TObject(LOwnerObject.FCurrentInternal));
+      LSQL := FSession.SelectAssociation(LOwnerObject.FCurrentInternal);
+      if Length(LSQL) > 0 then
+        OpenSQLInternal(LSQL);
     end;
   end
   else
   begin
-    if FOwnerMasterObject <> nil then
-    begin
-      if TDataSetBaseAdapter<M>(FOwnerMasterObject).FOrmDataSet.Active then
-      begin
-        SetMasterObject(nil);
-        Close;
-      end;
-    end
+    if FOwnerMasterObject = nil then
+      Exit;
+
+    if not TDataSetBaseAdapter<M>(FOwnerMasterObject).FOrmDataSet.Active then
+      Exit;
+
+    SetMasterObject(nil);
+    Close;
   end;
 end;
 
@@ -271,18 +267,18 @@ var
   LBookMark: TBookmark;
 begin
   inherited;
-  if not FSession.FetchingRecords then
-  begin
-    FOrmDataSet.DisableControls;
-    DisableDataSetEvents;
-    LBookMark := FOrmDataSet.Bookmark;
-    try
-      FSession.NextPacket;
-    finally
-      FOrmDataSet.GotoBookmark(LBookMark);
-      FOrmDataSet.EnableControls;
-      EnableDataSetEvents;
-    end;
+  if FSession.FetchingRecords then
+    Exit;
+
+  FOrmDataSet.DisableControls;
+  DisableDataSetEvents;
+  LBookMark := FOrmDataSet.Bookmark;
+  try
+    FSession.NextPacket;
+  finally
+    FOrmDataSet.GotoBookmark(LBookMark);
+    FOrmDataSet.EnableControls;
+    EnableDataSetEvents;
   end;
 end;
 
@@ -304,35 +300,32 @@ begin
 
   for LAssociation in LAssociations do
   begin
-    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-    begin
-      /// <summary>
-      /// Checa se o campo que recebeu a alteração, é um campo de associação
-      /// Se for é feito um novo select para atualizar a propriedade associada.
-      /// </summary>
-      if LAssociation.ColumnsName.IndexOf(AFieldName) > -1 then
-      begin
-        if FMasterObject.ContainsKey(LAssociation.ClassNameRef) then
-        begin
-          LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
-          if LDataSetChild <> nil then
-          begin
-            /// <summary>
-            /// Popula o objeto com o registro atual do dataset Master para filtar
-            /// os filhos com os valores das chaves.
-            /// </summary>
-            LObject := M.Create;
-            try
-              TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
-              LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
-              if Length(LSQL) > 0 then
-                LDataSetChild.OpenSQLInternal(LSQL);
-            finally
-              LObject.Free;
-            end;
-          end;
-        end;
-      end;
+    if not (LAssociation.Multiplicity in [OneToOne, ManyToOne]) then
+      Continue;
+    /// <summary>
+    ///   Checa se o campo que recebeu a alteração, é um campo de associação
+    ///   Se for é feito um novo select para atualizar a propriedade associada.
+    /// </summary>
+    if LAssociation.ColumnsName.IndexOf(AFieldName) = -1 then
+      Continue;
+    if not FMasterObject.ContainsKey(LAssociation.ClassNameRef) then
+      Continue;
+    LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
+    if LDataSetChild = nil then
+      Continue;
+
+    /// <summary>
+    /// Popula o objeto com o registro atual do dataset Master para filtar
+    /// os filhos com os valores das chaves.
+    /// </summary>
+    LObject := M.Create;
+    try
+      TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+      LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
+      if Length(LSQL) > 0 then
+        LDataSetChild.OpenSQLInternal(LSQL);
+    finally
+      LObject.Free;
     end;
   end;
 end;

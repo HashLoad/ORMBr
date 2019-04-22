@@ -111,6 +111,7 @@ begin
   Memo1.Lines.Add(' ');
   Memo1.Lines.Add('RECRIADO O OBJECT ATRAVÉS DO JSON ACIMA, MUDADOS ALGUMAS INFORMAÇÕES A GERADO NOVO JSON PARA TESTAR.');
   Memo1.Lines.Add('Person.Salary := 200.20');
+  Memo1.Lines.Add('Person.Date := Now + 1');
   Memo1.Lines.Add('Person.Pessoas[1].Salary := 555.55');
   Memo1.Lines.Add(' ');
   try

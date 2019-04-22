@@ -211,6 +211,7 @@ begin
     begin
       if      FDriverName = dnADS   then AColumn.TypeName := 'LOGICAL'
       else if FDriverName = dnASA   then AColumn.TypeName := 'BIT'
+      else if FDriverName = dnMSSQL then AColumn.TypeName := 'BIT'
       else                               AColumn.TypeName := 'BOOLEAN';
     end;
     ftByte, ftShortint, ftSmallint, ftWord:

@@ -37,6 +37,7 @@ uses
   Variants,
   TypInfo,
   Generics.Collections,
+  /// ORMBr
   ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.mapping.classes,
@@ -44,7 +45,9 @@ uses
   ormbr.command.abstract,
   ormbr.factory.interfaces,
   ormbr.types.database,
-  ormbr.types.blob;
+  ormbr.types.blob,
+  ormbr.objects.helper,
+  ormbr.mapping.explorer;
 
 type
   TCommandUpdater = class(TDMLCommandAbstract)
@@ -59,10 +62,6 @@ type
   end;
 
 implementation
-
-uses
-  ormbr.objects.helper,
-  ormbr.mapping.explorer;
 
 { TCommandUpdater }
 
@@ -97,6 +96,7 @@ var
   LProperty: TRttiProperty;
   LKey: String;
   LFieldType: Column;
+  LBooleanValue: Integer;
 begin
   Result := '';
   FCommand := '';
@@ -104,8 +104,8 @@ begin
     Exit;
 
   /// <summary>
-  /// Variavel local é usado como parâmetro para montar o script só com os
-  /// campos PrimaryKey.
+  ///   Variavel local é usado como parâmetro para montar o script só com os
+  ///   campos PrimaryKey.
   /// </summary>
   LParams := TParams.Create(nil);
   try
@@ -129,8 +129,8 @@ begin
                   .GeneratorUpdate(AObject, LParams, AModifiedFields);
     Result := FCommand;
     /// <summary>
-    /// Gera todos os parâmetros, sendo os campos alterados primeiro e o do
-    /// PrimaryKey por último, usando LParams criado local.
+    ///   Gera todos os parâmetros, sendo os campos alterados primeiro e o do
+    ///   PrimaryKey por último, usando LParams criado local.
     /// </summary>
     AObject.GetType(LObjectType);
     for LKey in AModifiedFields do
@@ -138,18 +138,28 @@ begin
       LProperty := LObjectType.GetProperty(LKey);
       if LProperty = nil then
         Continue;
-
       if LProperty.IsNoUpdate then
         Continue;
-
       LFieldType := LProperty.GetColumn;
+      if LFieldType = nil then
+        Continue;
+
       with LParams.Add as TParam do
       begin
         Name := LKey;
-        if LFieldType <> nil then
-          DataType := LFieldType.FieldType;
+        DataType := LFieldType.FieldType;
         ParamType := ptInput;
         Value := GetParamValue(AObject, LProperty, DataType);
+        /// <summary>
+        ///   Tratamento para o tipo ftBoolean nativo, indo como Integer
+        ///   para gravar no banco.
+        /// </summary>
+        if DataType in [ftBoolean] then
+        begin
+          LBooleanValue := Integer(Value);
+          DataType := ftInteger;
+          Value := LBooleanValue;
+        end;
       end;
     end;
     FParams.Clear;

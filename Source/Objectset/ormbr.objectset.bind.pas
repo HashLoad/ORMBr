@@ -134,15 +134,14 @@ begin
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-    if LColumn.ColumnProperty.IsWritable then
-    begin
-      try
-        SetFieldToProperty(ADataSet.GetField(LColumn.ColumnName), LColumn, AObject);
-      except
-        on E: Exception do
-          raise Exception.Create('Problem when binding column "' +
-                                 LColumn.ColumnName + '" - ' + E.Message);
-      end;
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    try
+      SetFieldToProperty(ADataSet.GetField(LColumn.ColumnName), LColumn, AObject);
+    except
+      on E: Exception do
+        raise Exception.Create('Problem when binding column "' +
+                               LColumn.ColumnName + '" - ' + E.Message);
     end;
   end;
 end;
@@ -156,51 +155,52 @@ var
   LObject: TObject;
   LADTField: TADTField;
 begin
-  if AColumn.FieldType in [ftDataSet] then
-  begin
-    case AField.DataType of
-      ftDataSet:
+  if not (AColumn.FieldType in [ftDataSet]) then
+    Exit;
+  case AField.DataType of
+    ftDataSet:
+      begin
+        LSource := (AField as TDataSetField).NestedDataSet;
+        if LProperty.IsList then
         begin
-          LSource := (AField as TDataSetField).NestedDataSet;
-          if LProperty.IsList then
-          begin
-            LObjectList := LProperty.GetNullableValue(AObject).AsObject;
-            if LObjectList <> nil then
+          LObjectList := LProperty.GetNullableValue(AObject).AsObject;
+          if LObjectList = nil then
+            Exit;
+
+          LObjectList.MethodCall('Clear', []);
+          LSource.DisableControls;
+          LSource.First;
+          try
+            while not LSource.Eof do
             begin
-              LObjectList.MethodCall('Clear', []);
-              LSource.DisableControls;
-              LSource.First;
-              try
-                while not LSource.Eof do
-                begin
-                  LObject := LProperty.GetObjectTheList;
-                  FillDataSetField(LSource, LObject);
-                  LObjectList.MethodCall('Add', [LObject]);
-                  LSource.Next;
-                end;
-              finally
-                LSource.First;
-                LSource.EnableControls;
-              end;
-            end;
-          end
-          else
-          begin
-            LObject := LProperty.GetNullableValue(AObject).AsObject;
-            if LObject <> nil then
+              LObject := LProperty.GetObjectTheList;
               FillDataSetField(LSource, LObject);
+              LObjectList.MethodCall('Add', [LObject]);
+              LSource.Next;
+            end;
+          finally
+            LSource.First;
+            LSource.EnableControls;
           end;
-        end;
-      ftADT:
+        end
+        else
         begin
           LObject := LProperty.GetNullableValue(AObject).AsObject;
-          if LObject <> nil then
-          begin
-            LADTField := (AField as TADTField);
-            FillADTField(LADTField, LObject);
-          end;
+          if LObject = nil then
+            Exit;
+
+          FillDataSetField(LSource, LObject);
         end;
-    end;
+      end;
+    ftADT:
+      begin
+        LObject := LProperty.GetNullableValue(AObject).AsObject;
+        if LObject = nil then
+          Exit;
+
+        LADTField := (AField as TADTField);
+        FillADTField(LADTField, LObject);
+      end;
   end;
 end;
 
@@ -215,15 +215,14 @@ begin
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-    if LColumn.ColumnProperty.IsWritable then
-    begin
-      try
-        SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
-      except
-        on E: Exception do
-          raise Exception.Create('Problem when binding column "' +
-                                 LColumn.ColumnName + '" - ' + E.Message);
-      end;
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    try
+      SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
+    except
+      on E: Exception do
+        raise Exception.Create('Problem when binding column "' +
+                               LColumn.ColumnName + '" - ' + E.Message);
     end;
   end;
 end;
@@ -303,7 +302,7 @@ begin
     ftInteger:
       LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
     ftBoolean:
-      LProperty.SetValue(AObject, AField.AsBoolean);
+      LProperty.SetValue(AObject, TValue.From<Variant>(AField.Value).AsType<Boolean>);
   else
     raise Exception.Create(cENUMERATIONSTYPEERROR);
   end;
@@ -321,21 +320,21 @@ begin
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-    if LColumn.ColumnProperty.IsWritable then
-    begin
-      /// <summary>
-      /// Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-      /// coleção para a outra, dessa forma antes de popular a propriedade da
-      /// classe, é verificado se o nome dessa propriedade existe na coleção
-      /// de dados selecionada.
-      /// </summary>
-      LField := ADataSet.FieldList.Find(LColumn.ColumnName);
-      if LField = nil then
-        LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    /// <summary>
+    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    ///   coleção para a outra, dessa forma antes de popular a propriedade da
+    ///   classe, é verificado se o nome dessa propriedade existe na coleção
+    ///   de dados selecionada.
+    /// </summary>
+    LField := ADataSet.FieldList.Find(LColumn.ColumnName);
+    if LField = nil then
+      LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
 
-      if LField <> nil then
-        SetFieldToProperty(LField, LColumn, AObject);
-    end;
+    if LField = nil then
+      Exit;
+    SetFieldToProperty(LField, LColumn, AObject);
   end;
 end;
 
@@ -350,18 +349,17 @@ begin
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-    if LColumn.ColumnProperty.IsWritable then
-    begin
-      /// <summary>
-      /// Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-      /// coleção para a outra, dessa forma antes de popular a propriedade da
-      /// classe, é verificado se o nome dessa propriedade existe na coleção
-      /// de dados selecionada.
-      /// </summary>
-      if AADTField.Fields.FindField(LColumn.ColumnName) <> nil then
-        SetFieldToProperty(AADTField.Fields.FieldByName(LColumn.ColumnName),
-                           LColumn, AObject);
-    end;
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    /// <summary>
+    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    ///   coleção para a outra, dessa forma antes de popular a propriedade da
+    ///   classe, é verificado se o nome dessa propriedade existe na coleção
+    ///   de dados selecionada.
+    /// </summary>
+    if AADTField.Fields.FindField(LColumn.ColumnName) <> nil then
+      SetFieldToProperty(AADTField.Fields.FieldByName(LColumn.ColumnName),
+                         LColumn, AObject);
   end;
 end;
 

@@ -224,13 +224,13 @@ object Form3: TForm3
   object DataSource2: TDataSource
     DataSet = FDDetail
     Left = 422
-    Top = 146
+    Top = 122
   end
   object DataSource3: TDataSource
     AutoEdit = False
     DataSet = FDClient
-    Left = 426
-    Top = 202
+    Left = 424
+    Top = 178
   end
   object FDMaster: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -253,7 +253,7 @@ object Form3: TForm3
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     Left = 356
-    Top = 148
+    Top = 120
   end
   object FDClient: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -263,8 +263,8 @@ object Form3: TForm3
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 354
-    Top = 202
+    Left = 356
+    Top = 170
   end
   object FDLookup: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -274,7 +274,7 @@ object Form3: TForm3
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 354
-    Top = 256
+    Left = 356
+    Top = 220
   end
 end

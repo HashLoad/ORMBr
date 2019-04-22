@@ -273,12 +273,16 @@ begin
   metaClass := nil;
   Method := nil;
   for Method in ARttiType.GetMethods do
-    if Method.HasExtendedInfo and Method.IsConstructor then
-      if Length(Method.GetParameters) = 0 then
-      begin
-        metaClass := ARttiType.AsInstance.MetaclassType;
-        Break;
-      end;
+  begin
+    if not (Method.HasExtendedInfo and Method.IsConstructor) then
+      Continue;
+
+    if Length(Method.GetParameters) > 0 then
+      Continue;
+
+    metaClass := ARttiType.AsInstance.MetaclassType;
+    Break;
+  end;
   if Assigned(metaClass) then
     Result := Method.Invoke(metaClass, []).AsObject
   else

@@ -131,7 +131,7 @@ begin
     LProperty := LColumn.ColumnProperty;
     LField := ADataSet.FieldByName(LColumn.ColumnName);
     /// <summary>
-    ///   Possibilitar popular o dado nos campos ReadOnly=True que são JoinColumn.
+    ///   Possibilita popular o dado nos campos ReadOnly=True que são JoinColumn.
     /// </summary>
     LReadOnly := LField.ReadOnly;
     LField.ReadOnly := False;
@@ -147,45 +147,46 @@ begin
             end;
           tkClass:
             begin
-              if LColumn.FieldType in [ftDataSet] then
-              begin
-                case LField.DataType of
-                  ftDataSet:
-                    begin
-                      LDataSet := (LField as TDataSetField).NestedDataSet;
-                      LDataSet.DisableControls;
-                      try
-                        if LProperty.IsList then
+              if not (LColumn.FieldType in [ftDataSet]) then
+                Exit;
+
+              case LField.DataType of
+                ftDataSet:
+                  begin
+                    LDataSet := (LField as TDataSetField).NestedDataSet;
+                    LDataSet.DisableControls;
+                    try
+                      if LProperty.IsList then
+                      begin
+                        LObjectList := TObjectList<TObject>(LProperty.GetValue(AObject).AsObject);
+                        if LObjectList = nil then
+                          Exit;
+
+                        while not LDataSet.Eof do
+                          LDataSet.Delete;
+
+                        for LObject in LObjectList do
                         begin
-                          LObjectList := TObjectList<TObject>(LProperty.GetValue(AObject).AsObject);
-                          if LObjectList <> nil then
-                          begin
-                            while not LDataSet.Eof do
-                              LDataSet.Delete;
-                            for LObject in LObjectList do
-                            begin
-                              LDataSet.Append;
-                              SetPropertyToField(LObject, LDataSet);
-                              LDataSet.Post;
-                            end;
-                          end;
-                        end
-                        else
-                        begin
-                          LObject := LProperty.GetNullableValue(AObject).AsObject;
-                          if LObject <> nil then
-                          begin
-                            LDataSet.Append;
-                            SetPropertyToField(LObject, LDataSet);
-                            LDataSet.Post;
-                          end;
+                          LDataSet.Append;
+                          SetPropertyToField(LObject, LDataSet);
+                          LDataSet.Post;
                         end;
-                      finally
-                        LDataSet.First;
-                        LDataSet.EnableControls;
+                      end
+                      else
+                      begin
+                        LObject := LProperty.GetNullableValue(AObject).AsObject;
+                        if LObject = nil then
+                          Exit;
+
+                        LDataSet.Append;
+                        SetPropertyToField(LObject, LDataSet);
+                        LDataSet.Post;
                       end;
+                    finally
+                      LDataSet.First;
+                      LDataSet.EnableControls;
                     end;
-                end;
+                  end;
               end;
             end
         else
@@ -365,29 +366,28 @@ begin
                       LCalcField.FieldName,
                       LCalcField.FieldType,
                       LCalcField.Size);
+    if not Assigned(TField(LCalcField.CalcProperty)) then
+      Continue;
+    LDictionary := LCalcField.CalcDictionary;
+     if LDictionary = nil then
+      Continue;
+
     LFieldName := LCalcField.FieldName;
-    if Assigned(TField(LCalcField.CalcProperty)) then
-    begin
-      LDictionary := LCalcField.CalcDictionary;
-       if LDictionary = nil then
-        Continue;
+    /// DisplayLabel
+    if Length(LDictionary.DisplayLabel) > 0 then
+      ADataSet.FieldByName(LFieldName).DisplayLabel := LDictionary.DisplayLabel;
 
-      /// DisplayLabel
-      if Length(LDictionary.DisplayLabel) > 0 then
-        ADataSet.FieldByName(LFieldName).DisplayLabel := LDictionary.DisplayLabel;
+    /// DisplayFormat
+    if Length(LDictionary.DisplayFormat) > 0 then
+      TDateField(ADataSet.FieldByName(LFieldName)).DisplayFormat := LDictionary.DisplayFormat;
 
-      /// DisplayFormat
-      if Length(LDictionary.DisplayFormat) > 0 then
-        TDateField(ADataSet.FieldByName(LFieldName)).DisplayFormat := LDictionary.DisplayFormat;
+    /// EditMask
+    if Length(LDictionary.EditMask) > 0 then
+      ADataSet.FieldByName(LFieldName).EditMask := LDictionary.EditMask;
 
-      /// EditMask
-      if Length(LDictionary.EditMask) > 0 then
-        ADataSet.FieldByName(LFieldName).EditMask := LDictionary.EditMask;
-
-      /// Alignment
-      if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
-        ADataSet.FieldByName(LFieldName).Alignment := LDictionary.Alignment;
-    end;
+    /// Alignment
+    if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
+      ADataSet.FieldByName(LFieldName).Alignment := LDictionary.Alignment;
   end;
 end;
 
@@ -398,78 +398,72 @@ var
   LColumns: TColumnMappingList;
   LDictionary: Dictionary;
   LFieldName: string;
+  LField: TField;
 begin
-   LColumns := TMappingExplorer
-                 .GetInstance
-                   .GetMappingColumn(AObject.ClassType);
-   if LColumns = nil then
-     Exit;
+  LColumns := TMappingExplorer
+                .GetInstance
+                  .GetMappingColumn(AObject.ClassType);
+  if LColumns = nil then
+    Exit;
 
-   for LColumn in LColumns do
-   begin
-     LFieldName := LColumn.ColumnName;
-     if Assigned(TField(LColumn.ColumnProperty)) then
-     begin
-        LDictionary := LColumn.ColumnDictionary;
-        if LDictionary = nil then
-          Continue;
+  try
+    for LColumn in LColumns do
+    begin
+      if not Assigned(TField(LColumn.ColumnProperty)) then
+        Continue;
+      LDictionary := LColumn.ColumnDictionary;
+      if LDictionary = nil then
+        Continue;
 
-        /// DisplayLabel
-        if Length(LDictionary.DisplayLabel) > 0 then
-          ADataSet
-            .FieldByName(LFieldName)
-              .DisplayLabel := LDictionary.DisplayLabel;
+      LFieldName := LColumn.ColumnName;
+      LField := ADataSet.FieldByName(LFieldName);
+      /// DisplayLabel
+      if Length(LDictionary.DisplayLabel) > 0 then
+        LField.DisplayLabel := LDictionary.DisplayLabel;
 
-        /// ConstraintErrorMessage
-        if Length(LDictionary.ConstraintErrorMessage) > 0 then
-          ADataSet
-            .FieldByName(LFieldName)
-              .ConstraintErrorMessage := LDictionary.ConstraintErrorMessage;
+      /// ConstraintErrorMessage
+      if Length(LDictionary.ConstraintErrorMessage) > 0 then
+        LField.ConstraintErrorMessage := LDictionary.ConstraintErrorMessage;
 
-        /// Origin
-        if Length(LDictionary.Origin) > 0 then
-          ADataSet
-            .FieldByName(LFieldName)
-              .Origin := LDictionary.Origin;
+      /// Origin
+      if Length(LDictionary.Origin) > 0 then
+        LField.Origin := LDictionary.Origin;
 
-        /// DefaultExpression
-        if Length(LDictionary.DefaultExpression) > 0 then
-        begin
-           if LDictionary.DefaultExpression = 'Date' then
-             ADataSet
-               .FieldByName(LFieldName)
-                 .DefaultExpression := QuotedStr(DateToStr(Date))
-           else
-           if LDictionary.DefaultExpression = 'Now' then
-             ADataSet
-               .FieldByName(LFieldName)
-                 .DefaultExpression := QuotedStr(DateTimeToStr(Now))
-           else
-             ADataSet
-               .FieldByName(LFieldName)
-                 .DefaultExpression := LDictionary.DefaultExpression;
-        end;
+      /// DisplayFormat
+      if Length(LDictionary.DisplayFormat) > 0 then
+        TNumericField(LField).DisplayFormat := LDictionary.DisplayFormat;
 
-        /// DisplayFormat
-        if Length(LDictionary.DisplayFormat) > 0 then
-          TDateField(ADataSet.FieldByName(LFieldName))
-            .DisplayFormat := LDictionary.DisplayFormat;
+      /// EditMask
+      if Length(LDictionary.EditMask) > 0 then
+        LField.EditMask := LDictionary.EditMask;
 
-        /// EditMask
-        if Length(LDictionary.EditMask) > 0 then
-          ADataSet
-            .FieldByName(LFieldName).EditMask := LDictionary.EditMask;
+      /// Alignment
+      if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
+        LField.Alignment := LDictionary.Alignment;
 
-        /// Alignment
-        if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
-          ADataSet
-            .FieldByName(LFieldName).Alignment := LDictionary.Alignment;
+  //    /// Origin
+  //    LField.Origin := AObject.GetTable.Name + '.' + LFieldName;
 
-        /// Origin
-        ADataSet
-          .FieldByName(LFieldName).Origin := AObject.GetTable.Name + '.' + LFieldName;
-     end;
-   end;
+      /// DefaultExpression
+      if Length(LDictionary.DefaultExpression) > 0 then
+      begin
+        LField.DefaultExpression := LDictionary.DefaultExpression;
+        if LDictionary.DefaultExpression = 'Date' then
+          LField.DefaultExpression := QuotedStr(DateToStr(Date))
+        else
+        if LDictionary.DefaultExpression = 'Now' then
+         LField.DefaultExpression := QuotedStr(DateTimeToStr(Now));
+      end;
+    end;
+  except
+    on E: Exception do
+    begin
+      raise Exception.Create('ormbr.dataset.bind->SetDataDictionary()'
+                            + sLineBreak
+                            + sLineBreak
+                            + 'Column: ' + LFieldName);
+    end;
+  end;
 end;
 
 procedure TBindDataSet.SetFieldToField(const AResultSet: IDBResultSet;
@@ -481,63 +475,69 @@ var
   LSource: TDataSet;
   LTarget: TDataSet;
   LADTField: TADTField;
+  LField: TField;
 begin
-  for LFor := 1 to ADataSet.Fields.Count -1 do
-  begin
-     if (ADataSet.Fields[LFor].FieldKind = fkData) and
-        (ADataSet.Fields[LFor].FieldName <> cInternalField) then
-     begin
-        LReadOnly := ADataSet.Fields[LFor].ReadOnly;
-        ADataSet.Fields[LFor].ReadOnly := False;
-        try
-          if ADataSet.Fields[LFor].IsBlob then
-          begin
-            LFieldValue := AResultSet.GetFieldValue(ADataSet.Fields[LFor].FieldName);
-            if LFieldValue <> Null then
+  try
+    for LFor := 1 to ADataSet.Fields.Count -1 do
+    begin
+      LField := ADataSet.Fields[LFor];
+      if (LField.FieldKind <> fkData) or (LField.FieldName = cInternalField) then
+        Continue;
+
+      LReadOnly := LField.ReadOnly;
+      LField.ReadOnly := False;
+      try
+        if LField.IsBlob then
+        begin
+          LFieldValue := AResultSet.GetFieldValue(LField.FieldName);
+          if LFieldValue = Null then
+            Continue;
+          case LField.DataType of
+            ftMemo, ftWideMemo, ftFmtMemo:
+              LField.AsString := LFieldValue;
+            ftBlob, ftGraphic, ftOraBlob, ftOraClob:
+              LField.AsBytes := LFieldValue;
+          end;
+        end
+        else
+        begin
+          case LField.DataType of
+            ftDataSet:
             begin
-              case ADataSet.Fields[LFor].DataType of
-                ftMemo, ftWideMemo, ftFmtMemo:
-                  ADataSet.Fields[LFor].AsString := LFieldValue;
-                ftBlob, ftGraphic, ftOraBlob, ftOraClob:
-                  ADataSet.Fields[LFor].AsBytes := LFieldValue;
+              case AResultSet.GetFieldType(LField.FieldName) of
+                ftDataSet:
+                  begin
+                    LSource := (AResultSet.GetField(LField.FieldName) as TDataSetField).NestedDataSet;
+                    LTarget := (LField as TDataSetField).NestedDataSet;
+                    if (LSource <> nil) and (LTarget <> nil) then
+                      FillDataSetField(LSource, LTarget);
+                  end;
+                ftADT:
+                  begin
+                    LADTField := (AResultSet.GetField(LField.FieldName) as TADTField);
+                    LTarget   := (LField as TDataSetField).NestedDataSet;
+                    if (LTarget <> nil) and (LADTField <> nil) then
+                      FillADTField(LADTField, LTarget);
+                  end;
+  //                  ftVarBytes:
+  //                    begin
+  //                      Forma de tratar para o UniDAC, mas esta parado por enquanto.
+  //                    end;
               end;
             end;
-          end
           else
-          begin
-            case ADataSet.Fields[LFor].DataType of
-              ftDataSet:
-              begin
-                case AResultSet.GetFieldType(ADataSet.Fields[LFor].FieldName) of
-                  ftDataSet:
-                    begin
-                      LSource := (AResultSet.GetField(ADataSet.Fields[LFor].FieldName) as TDataSetField).NestedDataSet;
-                      LTarget := (ADataSet.Fields[LFor] as TDataSetField).NestedDataSet;
-                      if (LSource <> nil) and (LTarget <> nil) then
-                        FillDataSetField(LSource, LTarget);
-                    end;
-                  ftADT:
-                    begin
-                      LADTField := (AResultSet.GetField(ADataSet.Fields[LFor].FieldName) as TADTField);
-                      LTarget   := (ADataSet.Fields[LFor] as TDataSetField).NestedDataSet;
-                      if (LTarget <> nil) and (LADTField <> nil) then
-                        FillADTField(LADTField, LTarget);
-                    end;
-//                  ftVarBytes:
-//                    begin
-//                      Forma de tratar para o UniDAC, mas esta parado por enquanto.
-//                    end;
-                end;
-              end;
-            else
-              ADataSet.Fields[LFor].Value := AResultSet
-                                               .GetFieldValue(ADataSet.Fields[LFor].FieldName);
-            end
-          end;
-        finally
-          ADataSet.Fields[LFor].ReadOnly := LReadOnly;
+            LField.Value := AResultSet.GetFieldValue(LField.FieldName);
+          end
         end;
-     end;
+      finally
+        LField.ReadOnly := LReadOnly;
+      end;
+    end;
+  except
+    on E: Exception do
+    begin
+      raise Exception.Create(E.Message);
+    end;
   end;
 end;
 
@@ -548,6 +548,7 @@ var
   LColumns: TColumnMappingList;
   LPrimaryKey: TPrimaryKeyMapping;
   LFor: Integer;
+  LField: TField;
 begin
   ADataSet.Close;
   ADataSet.FieldDefs.Clear;
@@ -563,18 +564,22 @@ begin
                                             LColumn.FieldType,
                                             LColumn.Size);
     end;
+    LField := ADataSet.FieldByName(LColumn.ColumnName);
     /// IsWritable
     if not LColumn.ColumnProperty.IsWritable then
-      ADataSet.FieldByName(LColumn.ColumnName).ReadOnly := True;
+      LField.ReadOnly := True;
+
     /// IsJoinColumn
     if LColumn.IsJoinColumn then
-      ADataSet.FieldByName(LColumn.ColumnName).ReadOnly := True;
+      LField.ReadOnly := True;
+
     /// NotNull the restriction
     if LColumn.IsNotNull then
-      ADataSet.FieldByName(LColumn.ColumnName).Required := True;
+      LField.Required := True;
+
     /// Hidden the restriction
     if LColumn.IsHidden then
-      ADataSet.FieldByName(LColumn.ColumnName).Visible := False;
+      LField.Visible := False;
 
     /// <summary>
     ///   Criar TFields de campos do tipo TDataSetField
@@ -633,8 +638,8 @@ begin
     begin
       ATarget.Append;
       /// <summary>
-      /// Usando Mongo com FireDAC o TField[0] é do tipo TDataSet (TDataSetField) e
-      /// esse DataSet, vem com 1 TField do tipo TADTField, nesse caso o tratamento especial.
+      ///   Usando Mongo com FireDAC o TField[0] é do tipo TDataSet (TDataSetField) e
+      ///   esse DataSet, vem com 1 TField do tipo TADTField, nesse caso o tratamento especial.
       /// </summary>
       if ASource.Fields[0] is TADTField then
       begin

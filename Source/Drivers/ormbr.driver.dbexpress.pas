@@ -222,15 +222,15 @@ end;
 
 constructor TDriverQueryDBExpress.Create(AConnection: TSQLConnection);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TSQLQuery.Create(nil);
-     try
-       FSQLQuery.SQLConnection := AConnection;
-     except
-       FSQLQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TSQLQuery.Create(nil);
+  try
+    FSQLQuery.SQLConnection := AConnection;
+  except
+    FSQLQuery.Free;
+    raise;
   end;
 end;
 

@@ -97,7 +97,7 @@ object Form3: TForm3
     Width = 840
     Height = 25
     DataSource = DataSource1
-    TabOrder = 10
+    TabOrder = 11
   end
   object Button2: TButton
     Left = 8
@@ -105,7 +105,7 @@ object Form3: TForm3
     Width = 113
     Height = 25
     Caption = 'ApplyUpdates'
-    TabOrder = 11
+    TabOrder = 12
     OnClick = Button2Click
   end
   object DBGrid2: TDBGrid
@@ -114,7 +114,7 @@ object Form3: TForm3
     Width = 848
     Height = 96
     DataSource = DataSource2
-    TabOrder = 8
+    TabOrder = 9
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -183,7 +183,7 @@ object Form3: TForm3
     Height = 21
     DataField = 'AGGPRICE'
     DataSource = DataSource2
-    TabOrder = 9
+    TabOrder = 10
   end
   object Button1: TButton
     Left = 132
@@ -191,7 +191,7 @@ object Form3: TForm3
     Width = 75
     Height = 25
     Caption = 'Object Post'
-    TabOrder = 12
+    TabOrder = 13
     OnClick = Button1Click
   end
   object Button3: TButton
@@ -200,7 +200,7 @@ object Form3: TForm3
     Width = 116
     Height = 25
     Caption = 'Show SQL Monitor'
-    TabOrder = 14
+    TabOrder = 16
     OnClick = Button3Click
   end
   object DBImage1: TDBImage
@@ -221,7 +221,7 @@ object Form3: TForm3
     Width = 145
     Height = 25
     Caption = 'Usando OpenWhere()'
-    TabOrder = 13
+    TabOrder = 14
     OnClick = Button4Click
   end
   object Button5: TButton
@@ -232,6 +232,16 @@ object Form3: TForm3
     Caption = 'Refresh'
     TabOrder = 15
     OnClick = Button5Click
+  end
+  object DBCheckBox1: TDBCheckBox
+    Left = 279
+    Top = 236
+    Width = 97
+    Height = 17
+    Caption = 'Inativo'
+    DataField = 'INATIVO'
+    DataSource = DataSource1
+    TabOrder = 8
   end
   object DataSource1: TDataSource
     DataSet = FDMaster

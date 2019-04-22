@@ -166,13 +166,12 @@ begin
   inherited;
   FConnection.Connected := True;
   try
-    if FSQLScript.SQL.Count > 0 then
-    begin
-      try
-        FSQLScript.ExecSQL;
-      finally
-        FSQLScript.SQL.Clear;
-      end;
+    if FSQLScript.SQL.Count = 0 then
+      Exit;
+    try
+      FSQLScript.ExecSQL;
+    finally
+      FSQLScript.SQL.Clear;
     end;
   finally
     FConnection.Connected := False;
@@ -229,15 +228,14 @@ end;
 
 constructor TDriverQueryFireDAC.Create(AConnection: TSDDatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FFDQuery := TSDQuery.Create(nil);
-     try
-       FFDQuery.DatabaseName := AConnection.DatabaseName;
-     except
-       FFDQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+  FFDQuery := TSDQuery.Create(nil);
+  try
+    FFDQuery.DatabaseName := AConnection.DatabaseName;
+  except
+    FFDQuery.Free;
+    raise;
   end;
 end;
 

@@ -39,7 +39,7 @@ uses
 
 type
   /// <summary>
-  /// Classe de conexões abstract
+  ///   Classe de conexões abstract
   /// </summary>
   TDriverConnection = class abstract
   protected
@@ -64,7 +64,7 @@ type
   end;
 
   /// <summary>
-  /// Classe de trasações abstract
+  ///   Classe de trasações abstract
   /// </summary>
   TDriverTransaction = class abstract(TInterfacedObject, IDBTransaction)
   public
@@ -160,7 +160,7 @@ constructor TDriverResultSet<T>.Create(ADataSet: T);
 begin
   Create;
   /// <summary>
-  /// Guarda RecordCount do último SELECT executado no IDBResultSet
+  ///   Guarda RecordCount do último SELECT executado no IDBResultSet
   /// </summary>
   try
   FRecordCount := FDataSet.RecordCount;
@@ -180,22 +180,12 @@ begin
   Result := FDataSet.FieldDefs;
 end;
 
-//function TDriverResultSet<T>.DataSet: TDataSet;
-//begin
-//  Result := FDataSet;
-//end;
-
 { TDriverResultSetBase }
 
 function TDriverResultSetBase.RecordCount: Integer;
 begin
   Result := FRecordCount;
 end;
-
-//function TDriverResultSetBase.DataSet: TDataSet;
-//begin
-//  Result := nil;
-//end;
 
 constructor TDriverResultSetBase.Create;
 begin
@@ -253,11 +243,10 @@ function TORMBrField.AsBlobText: string;
 var
   LResult: Variant;
 begin
+  Result := '';
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := String(LResult)
-  else
-    Result := '';
+    Result := String(LResult);
 end;
 
 function TORMBrField.AsBlobTextDef(const Def: string): string;
@@ -273,11 +262,10 @@ function TORMBrField.AsBoolean: Boolean;
 var
   LResult: Variant;
 begin
+  Result := False;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Boolean(LResult)
-  else
-    Result := False;
+    Result := Boolean(LResult);
 end;
 
 function TORMBrField.AsBooleanDef(const Def: Boolean): Boolean;
@@ -293,11 +281,10 @@ function TORMBrField.AsCurrency: Currency;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Currency(LResult)
-  else
-    Result := 0;
+    Result := Currency(LResult);
 end;
 
 function TORMBrField.AsCurrencyDef(const Def: Currency): Currency;
@@ -313,11 +300,10 @@ function TORMBrField.AsDateTime: TDateTime;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := TDateTime(LResult)
-  else
-    Result := 0;
+    Result := TDateTime(LResult);
 end;
 
 function TORMBrField.AsDateTimeDef(const Def: TDateTime): TDateTime;
@@ -333,11 +319,10 @@ function TORMBrField.AsDouble: Double;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Double(LResult)
-  else
-    Result := 0;
+    Result := Double(LResult);
 end;
 
 function TORMBrField.AsDoubleDef(const Def: Double): Double;
@@ -353,11 +338,10 @@ function TORMBrField.AsExtended: Extended;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Extended(LResult)
-  else
-    Result := 0;
+    Result := Extended(LResult);
 end;
 
 function TORMBrField.AsExtendedDef(const Def: Extended): Extended;
@@ -373,11 +357,10 @@ function TORMBrField.AsFloat: Double;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Double(LResult)
-  else
-    Result := 0;
+    Result := Double(LResult);
 end;
 
 function TORMBrField.AsFloatDef(const Def: Double): Double;
@@ -393,11 +376,10 @@ function TORMBrField.AsInteger: Int64;
 var
   LResult: Variant;
 begin
+  Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Int64(LResult)
-  else
-    Result := 0;
+    Result := Int64(LResult);
 end;
 
 function TORMBrField.AsIntegerDef(const Def: Int64): Int64;
@@ -413,11 +395,10 @@ function TORMBrField.AsString: string;
 var
   LResult: Variant;
 begin
+  Result := '';
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := String(LResult)
-  else
-    Result := '';
+    Result := String(LResult);
 end;
 
 function TORMBrField.AsStringDef(const Def: string): string;

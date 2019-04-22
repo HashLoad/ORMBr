@@ -230,20 +230,20 @@ end;
 
 constructor TDriverQueryIBObjects.Create(AConnection: TIBODatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TIBOQuery.Create(nil);
-     try
-       FSQLQuery.IB_Connection := AConnection;
-       FSQLQuery.IB_Transaction := AConnection.DefaultTransaction;
-       FSQLQuery.UniDirectional := True;
-     except
-       on E: Exception do
-       begin
-         FSQLQuery.Free;
-         raise Exception.Create(E.Message);
-       end;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TIBOQuery.Create(nil);
+  try
+    FSQLQuery.IB_Connection := AConnection;
+    FSQLQuery.IB_Transaction := AConnection.DefaultTransaction;
+    FSQLQuery.UniDirectional := True;
+  except
+    on E: Exception do
+    begin
+      FSQLQuery.Free;
+      raise Exception.Create(E.Message);
+    end;
   end;
 end;
 

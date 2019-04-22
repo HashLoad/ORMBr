@@ -53,10 +53,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass;
       AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -125,18 +125,18 @@ begin
     Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorPostgreSQL.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorPostgreSQL.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT CURRVAL(''%s'')',
-                                   [ACommandInsert.Sequence.Name]));
+                                   [AAutoInc.Sequence.Name]));
 end;
 
-function TDMLGeneratorPostgreSQL.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorPostgreSQL.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT NEXTVAL(''%s'')',
-                                   [ACommandInsert.Sequence.Name]));
+                                   [AAutoInc.Sequence.Name]));
 end;
 
 initialization

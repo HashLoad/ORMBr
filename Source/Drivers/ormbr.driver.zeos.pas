@@ -227,15 +227,15 @@ end;
 
 constructor TDriverQueryZeos.Create(AConnection: TZConnection);
 begin
-  if AConnection <> nil then
-  begin
-     FSQLQuery := TZReadOnlyQuery.Create(nil);
-     try
-       FSQLQuery.Connection := AConnection;
-     except
-       FSQLQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FSQLQuery := TZReadOnlyQuery.Create(nil);
+  try
+    FSQLQuery.Connection := AConnection;
+  except
+    FSQLQuery.Free;
+    raise;
   end;
 end;
 

@@ -178,28 +178,25 @@ begin
   /// </summary>
   Result := '';
   LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
-  if LAssociationList <> nil then
+  if LAssociationList = nil then
+    Exit;
+  for LAssociation in LAssociationList do
   begin
-    for LAssociation in LAssociationList do
-    begin
-       if LAssociation.ClassNameRef = FObjectInternal.ClassName then
-       begin
-         if not LAssociation.Lazy then
-         begin
-           if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-              Result := FDMLCommandFactory
-                          .GeneratorSelectAssociation(AObject,
-                                                      FObjectInternal.ClassType,
-                                                      LAssociation)
-           else
-           if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-              Result := FDMLCommandFactory
-                          .GeneratorSelectAssociation(AObject,
-                                                      FObjectInternal.ClassType,
-                                                      LAssociation)
-         end;
-       end;
-    end;
+     if LAssociation.ClassNameRef <> FObjectInternal.ClassName then
+       Continue;
+     if LAssociation.Lazy then
+       Continue;
+     if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+        Result := FDMLCommandFactory
+                    .GeneratorSelectAssociation(AObject,
+                                                FObjectInternal.ClassType,
+                                                LAssociation)
+     else
+     if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+        Result := FDMLCommandFactory
+                    .GeneratorSelectAssociation(AObject,
+                                                FObjectInternal.ClassType,
+                                                LAssociation)
   end;
 end;
 
@@ -223,23 +220,20 @@ begin
   ///   Se o driver selecionado for do tipo de banco NoSQL,
   ///   o atributo Association deve ser ignorado.
   /// </summary>
-  if FConnection.GetDriverName <> dnMongoDB then
+  if FConnection.GetDriverName = dnMongoDB then
+    Exit;
+  LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
+  if LAssociationList = nil then
+    Exit;
+  for LAssociation in LAssociationList do
   begin
-    LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
-    if LAssociationList <> nil then
-    begin
-      for LAssociation in LAssociationList do
-      begin
-         if not LAssociation.Lazy then
-         begin
-           if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-              ExecuteOneToOne(AObject, LAssociation.PropertyRtti, LAssociation)
-           else
-           if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-              ExecuteOneToMany(AObject, LAssociation.PropertyRtti, LAssociation);
-         end;
-      end;
-    end;
+     if LAssociation.Lazy then
+       Continue;
+     if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+        ExecuteOneToOne(AObject, LAssociation.PropertyRtti, LAssociation)
+     else
+     if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+        ExecuteOneToMany(AObject, LAssociation.PropertyRtti, LAssociation);
   end;
 end;
 
@@ -254,24 +248,20 @@ begin
   /// </summary>
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
-
   LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);
-  if LAssociationList <> nil then
+  if LAssociationList = nil then
+    Exit;
+  for LAssociation in LAssociationList do
   begin
-    for LAssociation in LAssociationList do
-    begin
-      if LAssociation.Lazy then
-      begin
-        if Pos(LAssociation.ClassNameRef, AObject.ClassName) > 0 then
-        begin
-          if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-            ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
-          else
-          if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-            ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
-        end;
-      end;
-    end;
+    if not LAssociation.Lazy then
+      Continue;
+    if Pos(LAssociation.ClassNameRef, AObject.ClassName) = 0 then
+      Continue;
+    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+      ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
+    else
+    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+      ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
   end;
 end;
 

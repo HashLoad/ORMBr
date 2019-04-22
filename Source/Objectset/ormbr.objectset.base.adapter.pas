@@ -50,7 +50,7 @@ uses
 
 type
   /// <summary>
-  /// M - Object M
+  ///   M - Object M
   /// </summary>
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
   private
@@ -71,11 +71,11 @@ type
   public
     constructor Create; overload; virtual;
     destructor Destroy; override;
-    function ExistSequence: Boolean; override;
-    function ModifiedFields: TDictionary<string, TList<string>>; override;
     procedure Modify(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
+    function ExistSequence: Boolean; override;
+    function ModifiedFields: TDictionary<string, TList<string>>; override;
     function NextPacket: TObjectList<M>; overload; override;
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function NextPacket(const AWhere, AOrderBy: String;
@@ -85,6 +85,9 @@ type
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
     procedure New(var AObject: M); override;
+    {$IFDEF USEBINDSOURCE}
+    procedure SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
+    {$ENDIF}
   end;
 
 implementation
@@ -112,70 +115,65 @@ var
   LObjectItem: TObject;
   LKey: string;
 begin
-  if ASourceObject.GetType(LRttiType) then
-  begin
-    /// <summary>
-    ///   Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
-    /// </summary>
-    LStateObject := ASourceObject.ClassType.Create;
-    /// <summary>
-    ///   Gera uma chave de identificação unica para cada item da lista
-    /// </summary>
-    LKey := GenerateKey(ASourceObject);
-    /// <summary>
-    ///   Guarda o novo objeto na lista, identificado pela chave
-    /// </summary>
-    FObjectState.Add(LKey, LStateObject);
-    try
-      for LProperty in LRttiType.GetProperties do
-      begin
-        if not LProperty.IsWritable then
-          Continue;
-        if LProperty.IsNotCascade then
-          Continue;
-        /// <summary>
-        ///   Validação para entrar no IF somente propriedades que o tipo não esteja na lista
-        /// </summary>
-        if not (LProperty.PropertyType.TypeKind in cPROPERTYTYPES_2) then
-        begin
-          case LProperty.PropertyType.TypeKind of
-            tkRecord:
-              begin
-                if LProperty.IsNullable then
-                  LProperty.SetNullableValue(LStateObject,
-                                             LProperty.PropertyType.Handle,
-                                             LProperty.GetNullableValue(ASourceObject).AsType<Variant>)
-                else
-                if LProperty.IsBlob then
-                  LProperty.SetNullableValue(LStateObject,
-                                             LProperty.PropertyType.Handle,
-                                             LProperty.GetNullableValue(ASourceObject).AsType<TBlob>.ToBytes)
-              end;
-            tkClass:
-              begin
-                if LProperty.IsList then
-                begin
-                  LObjectList := TObjectList<TObject>(LProperty.GetValue(ASourceObject).AsObject);
-                  for LObjectItem in LObjectList do
-                  begin
-                    if LObjectItem <> nil then
-                      AddObjectState(LObjectItem);
-                  end;
-                end
-                else
-                  AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
-              end;
-          else
-            begin
-              LProperty.SetValue(LStateObject, LProperty.GetValue(ASourceObject));
-            end;
+  if not ASourceObject.GetType(LRttiType) then
+    Exit;
+  /// <summary>
+  ///   Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
+  /// </summary>
+  LStateObject := ASourceObject.ClassType.Create;
+  /// <summary>
+  ///   Gera uma chave de identificação unica para cada item da lista
+  /// </summary>
+  LKey := GenerateKey(ASourceObject);
+  /// <summary>
+  ///   Guarda o novo objeto na lista, identificado pela chave
+  /// </summary>
+  FObjectState.Add(LKey, LStateObject);
+  try
+    for LProperty in LRttiType.GetProperties do
+    begin
+      if not LProperty.IsWritable then
+        Continue;
+      if LProperty.IsNotCascade then
+        Continue;
+      if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_2 then
+        Continue;
+      case LProperty.PropertyType.TypeKind of
+        tkRecord:
+          begin
+            if LProperty.IsNullable then
+              LProperty.SetNullableValue(LStateObject,
+                                         LProperty.PropertyType.Handle,
+                                         LProperty.GetNullableValue(ASourceObject).AsType<Variant>)
+            else
+            if LProperty.IsBlob then
+              LProperty.SetNullableValue(LStateObject,
+                                         LProperty.PropertyType.Handle,
+                                         LProperty.GetNullableValue(ASourceObject).AsType<TBlob>.ToBytes)
           end;
+        tkClass:
+          begin
+            if LProperty.IsList then
+            begin
+              LObjectList := TObjectList<TObject>(LProperty.GetValue(ASourceObject).AsObject);
+              for LObjectItem in LObjectList do
+              begin
+                if LObjectItem <> nil then
+                  AddObjectState(LObjectItem);
+              end;
+            end
+            else
+              AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
+          end;
+      else
+        begin
+          LProperty.SetValue(LStateObject, LProperty.GetValue(ASourceObject));
         end;
       end;
-    except
-      on E: Exception do
-        raise Exception.Create('procedure AddObjectState()' + sLineBreak + E.Message);
     end;
+  except
+    on E: Exception do
+      raise Exception.Create('procedure AddObjectState()' + sLineBreak + E.Message);
   end;
 end;
 
@@ -185,20 +183,21 @@ var
   LAssociation: TAssociationMapping;
   LAssociations: TAssociationMappingList;
 begin
-  LAssociations := TMappingExplorer.GetInstance.GetMappingAssociation(AObject.ClassType);
-  if LAssociations <> nil then
+  LAssociations := TMappingExplorer
+                     .GetInstance
+                       .GetMappingAssociation(AObject.ClassType);
+  if LAssociations = nil then
+    Exit;
+  for LAssociation in LAssociations do
   begin
-    for LAssociation in LAssociations do
-    begin
-      if ACascadeAction in LAssociation.CascadeActions then
-      begin
-        if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-          OneToOneCascadeActionsExecute(AObject, LAssociation, ACascadeAction)
-        else
-        if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-          OneToManyCascadeActionsExecute(AObject, LAssociation, ACascadeAction);
-      end;
-    end;
+    if not (ACascadeAction in LAssociation.CascadeActions) then
+      Continue;
+
+    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+      OneToOneCascadeActionsExecute(AObject, LAssociation, ACascadeAction)
+    else
+    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+      OneToManyCascadeActionsExecute(AObject, LAssociation, ACascadeAction);
   end;
 end;
 
@@ -254,7 +253,8 @@ begin
   Result := FSession.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
 end;
 
-function TObjectSetBaseAdapter<M>.NextPacket(const APageSize, APageNext: Integer): TObjectList<M>;
+function TObjectSetBaseAdapter<M>.NextPacket(const APageSize,
+  APageNext: Integer): TObjectList<M>;
 begin
   Result := FSession.NextPacketList(APageSize, APageNext);
 end;
@@ -264,8 +264,10 @@ begin
   FSession.NextPacketList(AObjectList);
 end;
 
-procedure TObjectSetBaseAdapter<M>.OneToManyCascadeActionsExecute(const AObject: TObject;
-  const AAssociation: TAssociationMapping; const ACascadeAction: TCascadeAction);
+procedure TObjectSetBaseAdapter<M>.OneToManyCascadeActionsExecute(
+  const AObject: TObject;
+  const AAssociation: TAssociationMapping;
+  const ACascadeAction: TCascadeAction);
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
@@ -277,86 +279,26 @@ var
   LKey: string;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
-  if LValue.IsObject then
+  if not LValue.IsObject then
+    Exit;
+  LObjectList := TObjectList<TObject>(LValue.AsObject);
+  for LFor := 0 to LObjectList.Count -1 do
   begin
-    LObjectList := TObjectList<TObject>(LValue.AsObject);
-    for LFor := 0 to LObjectList.Count -1 do
-    begin
-      LObject := LObjectList.Items[LFor];
-      if ACascadeAction = CascadeInsert then // Insert
-      begin
-        FSession.Insert(LObject);
-        /// <summary>
-        /// Popula as propriedades de relacionamento com os valores do master
-        /// </summary>
-        if FSession.ExistSequence then
-        begin
-          LPrimaryKey := TMappingExplorer
-                           .GetInstance
-                             .GetMappingPrimaryKeyColumns(AObject.ClassType);
-          if LPrimaryKey = nil then
-            raise Exception.Create(cMESSAGEPKNOTFOUND);
-
-          for LColumn in LPrimaryKey.Columns do
-            SetAutoIncValueChilds(LObject, LColumn);
-        end;
-      end
-      else
-      if ACascadeAction = CascadeDelete then // Delete
-        FSession.Delete(LObject)
-      else
-      if ACascadeAction = CascadeUpdate then // Update
-      begin
-        LKey := GenerateKey(LObject);
-        if FObjectState.ContainsKey(LKey) then
-        begin
-          LObjectKey := FObjectState.Items[LKey];
-          FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
-          UpdateInternal(LObject);
-          FObjectState.Remove(LKey);
-          FObjectState.TrimExcess;
-        end
-        else
-          FSession.Insert(LObject);
-      end;
-      /// <summary> Executa comando em cascade de cada objeto da lista </summary>
-      CascadeActionsExecute(LObject, ACascadeAction);
-    end;
-  end;
-end;
-
-procedure TObjectSetBaseAdapter<M>.OneToOneCascadeActionsExecute(
-  const AObject: TObject; const AAssociation: TAssociationMapping;
-  const ACascadeAction: TCascadeAction);
-var
-  LPrimaryKey: TPrimaryKeyColumnsMapping;
-  LColumn: TColumnMapping;
-  LValue: TValue;
-  LObject: TObject;
-  LObjectKey: TObject;
-  LKey: string;
-begin
-  LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
-  if LValue.IsObject then
-  begin
-    LObject := LValue.AsObject;
+    LObject := LObjectList.Items[LFor];
     if ACascadeAction = CascadeInsert then // Insert
     begin
       FSession.Insert(LObject);
       /// <summary>
-      /// Popula as propriedades de relacionamento com os valores do master
+      ///   Popula as propriedades de relacionamento com os valores do master
       /// </summary>
-      if FSession.ExistSequence then
-      begin
-        LPrimaryKey := TMappingExplorer
-                         .GetInstance
-                           .GetMappingPrimaryKeyColumns(AObject.ClassType);
-        if LPrimaryKey = nil then
-          raise Exception.Create(cMESSAGEPKNOTFOUND);
+      LPrimaryKey := TMappingExplorer
+                       .GetInstance
+                         .GetMappingPrimaryKeyColumns(AObject.ClassType);
+      if LPrimaryKey = nil then
+        raise Exception.Create(cMESSAGEPKNOTFOUND);
 
-        for LColumn in LPrimaryKey.Columns do
-          SetAutoIncValueChilds(LObject, LColumn);
-      end;
+      for LColumn in LPrimaryKey.Columns do
+        SetAutoIncValueChilds(LObject, LColumn);
     end
     else
     if ACascadeAction = CascadeDelete then // Delete
@@ -381,6 +323,67 @@ begin
   end;
 end;
 
+procedure TObjectSetBaseAdapter<M>.OneToOneCascadeActionsExecute(
+  const AObject: TObject; const AAssociation: TAssociationMapping;
+  const ACascadeAction: TCascadeAction);
+var
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
+  LColumn: TColumnMapping;
+  LValue: TValue;
+  LObject: TObject;
+  LObjectKey: TObject;
+  LKey: string;
+begin
+  LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
+  if not LValue.IsObject then
+    Exit;
+  LObject := LValue.AsObject;
+  if LObject = nil then
+    Exit;
+  if ACascadeAction = CascadeInsert then // Insert
+  begin
+    FSession.Insert(LObject);
+    /// <summary>
+    ///   Popula as propriedades de relacionamento com os valores do master
+    /// </summary>
+    LPrimaryKey := TMappingExplorer
+                     .GetInstance
+                       .GetMappingPrimaryKeyColumns(AObject.ClassType);
+    if LPrimaryKey = nil then
+      raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+    for LColumn in LPrimaryKey.Columns do
+      SetAutoIncValueChilds(LObject, LColumn);
+  end
+  else
+  if ACascadeAction = CascadeDelete then // Delete
+    FSession.Delete(LObject)
+  else
+  if ACascadeAction = CascadeUpdate then // Update
+  begin
+    LKey := GenerateKey(LObject);
+    if FObjectState.ContainsKey(LKey) then
+    begin
+      LObjectKey := FObjectState.Items[LKey];
+      FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
+      UpdateInternal(LObject);
+      FObjectState.Remove(LKey);
+      FObjectState.TrimExcess;
+    end
+    else
+      FSession.Insert(LObject);
+  end;
+  /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+  CascadeActionsExecute(LObject, ACascadeAction);
+end;
+
+{$IFDEF USEBINDSOURCE}
+procedure TObjectSetBaseAdapter<M>.SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
+begin
+  FSession.OnPropertyEvent := Aproc;
+end;
+{$ENDIF}
+
 procedure TObjectSetBaseAdapter<M>.SetAutoIncValueChilds(const AObject: TObject;
   const AColumn: TColumnMapping);
 var
@@ -389,19 +392,17 @@ var
 begin
   /// Association
   LAssociations := TMappingExplorer.GetInstance.GetMappingAssociation(AObject.ClassType);
-  if LAssociations <> nil then
+  if LAssociations = nil then
+    Exit;
+  for LAssociation in LAssociations do
   begin
-    for LAssociation in LAssociations do
-    begin
-      if CascadeAutoInc in LAssociation.CascadeActions then
-      begin
-        if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-          SetAutoIncValueOneToOne(AObject, LAssociation, AColumn.ColumnProperty)
-        else
-        if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-          SetAutoIncValueOneToMany(AObject, LAssociation, AColumn.ColumnProperty);
-      end;
-    end;
+    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+      Continue;
+    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+      SetAutoIncValueOneToOne(AObject, LAssociation, AColumn.ColumnProperty)
+    else
+    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+      SetAutoIncValueOneToMany(AObject, LAssociation, AColumn.ColumnProperty);
   end;
 end;
 
@@ -417,23 +418,20 @@ var
   LIndex: Integer;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
-  if LValue.IsObject then
+  if not LValue.IsObject then
+    Exit;
+  LObjectList := TObjectList<TObject>(LValue.AsObject);
+  for LFor := 0 to LObjectList.Count -1 do
   begin
-    LObjectList := TObjectList<TObject>(LValue.AsObject);
-    for LFor := 0 to LObjectList.Count -1 do
-    begin
-      LObject := LObjectList.Items[LFor];
-      if LObject.GetType(LType) then
-      begin
-        LIndex := AAssociation.ColumnsName.IndexOf(AProperty.Name);
-        if LIndex > -1 then
-        begin
-          LProperty := LType.GetProperty(AAssociation.ColumnsNameRef.Items[LIndex]);
-          if LProperty <> nil then
-            LProperty.SetValue(LObject, AProperty.GetValue(AObject));
-        end;
-      end;
-    end;
+    LObject := LObjectList.Items[LFor];
+    if not LObject.GetType(LType) then
+      Continue;
+    LIndex := AAssociation.ColumnsName.IndexOf(AProperty.Name);
+    if LIndex = -1 then
+      Continue;
+    LProperty := LType.GetProperty(AAssociation.ColumnsNameRef.Items[LIndex]);
+    if LProperty <> nil then
+      LProperty.SetValue(LObject, AProperty.GetValue(AObject));
   end;
 end;
 
@@ -447,20 +445,17 @@ var
   LIndex: Integer;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
-  if LValue.IsObject then
-  begin
-    LObject := LValue.AsObject;
-    if LObject.GetType(LType) then
-    begin
-      LIndex := AAssociation.ColumnsName.IndexOf(AProperty.Name);
-      if LIndex > -1 then
-      begin
-        LProperty := LType.GetProperty(AAssociation.ColumnsNameRef.Items[LIndex]);
-        if LProperty <> nil then
-          LProperty.SetValue(LObject, AProperty.GetValue(AObject));
-      end;
-    end;
-  end;
+  if not LValue.IsObject then
+    Exit;
+  LObject := LValue.AsObject;
+  if not LObject.GetType(LType) then
+    Exit;
+  LIndex := AAssociation.ColumnsName.IndexOf(AProperty.Name);
+  if LIndex = -1 then
+    Exit;
+  LProperty := LType.GetProperty(AAssociation.ColumnsNameRef.Items[LIndex]);
+  if LProperty <> nil then
+    LProperty.SetValue(LObject, AProperty.GetValue(AObject));
 end;
 
 procedure TObjectSetBaseAdapter<M>.UpdateInternal(const AObject: TObject);
@@ -479,9 +474,11 @@ begin
   for LColumn in LPrimaryKey.Columns do
     LKey := LKey + '-' + VarToStr(LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant);
   ///
-  if FSession.ModifiedFields.ContainsKey(LKey) then
-    if FSession.ModifiedFields.Items[LKey].Count > 0 then
-      FSession.Update(AObject, LKey);
+  if not FSession.ModifiedFields.ContainsKey(LKey) then
+    Exit;
+  if FSession.ModifiedFields.Items[LKey].Count = 0 then
+    Exit;
+  FSession.Update(AObject, LKey);
 end;
 
 function TObjectSetBaseAdapter<M>.NextPacket: TObjectList<M>;

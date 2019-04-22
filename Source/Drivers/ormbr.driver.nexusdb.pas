@@ -232,16 +232,16 @@ end;
 
 constructor TDriverQueryFireDAC.Create(AConnection: TnxDatabase);
 begin
-  if AConnection <> nil then
-  begin
-     FFDQuery := TnxQuery.Create(nil);
-     try
-       FFDQuery.Session := AConnection.Session;
-       FFDQuery.Database := AConnection;
-     except
-       FFDQuery.Free;
-       raise;
-     end;
+  if AConnection = nil then
+    Exit;
+
+  FFDQuery := TnxQuery.Create(nil);
+  try
+    FFDQuery.Session := AConnection.Session;
+    FFDQuery.Database := AConnection;
+  except
+    FFDQuery.Free;
+    raise;
   end;
 end;
 

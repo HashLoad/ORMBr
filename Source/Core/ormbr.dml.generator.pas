@@ -40,17 +40,16 @@ uses
   Variants,
   TypInfo,
   Generics.Collections,
-  ormbr.utils,
+  /// ORMBr
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
   ormbr.rtti.helper,
-  ormbr.objects.helper,
-  ormbr.mapping.attributes,
   ormbr.types.mapping,
   ormbr.factory.interfaces,
   ormbr.dml.interfaces,
   ormbr.criteria,
-  ormbr.dml.commands;
+  ormbr.dml.commands,
+  ormbr.types.blob;
 
 type
   /// <summary>
@@ -58,9 +57,11 @@ type
   /// </summary>
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
+    FDMLCommands: TDictionary<String, String>;
+    FDMLCriteria: TDictionary<String, ICriteria>;
     function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
-    procedure SetJoinColumn(AClass: TClass; ATable: TTableMapping;
+    procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
   protected
     FConnection: IDBConnection;
@@ -70,7 +71,8 @@ type
     function GetGeneratorSelect(const ACriteria: ICriteria): string; virtual;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
-    constructor Create; virtual; abstract;
+    constructor Create; virtual;
+    destructor Destroy; override;
     procedure SetConnection(const AConnaction: IDBConnection); virtual;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
       AID: Variant): string; virtual; abstract;
@@ -82,35 +84,43 @@ type
       AAssociation: TAssociationMapping): string; virtual;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
       AModifiedFields: TList<string>): string; virtual;
-    function GeneratorInsert(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): string; virtual;
+    function GeneratorInsert(AObject: TObject): string; virtual;
     function GeneratorDelete(AObject: TObject;
       AParams: TParams): string; virtual;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; virtual; abstract;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
     function GeneratorPageNext(const ACommandSelect: string;
       APageSize, APageNext: Integer): string; virtual;
   end;
 
 implementation
 
-uses
-  ormbr.types.blob;
-
 { TDMLGeneratorAbstract }
+
+constructor TDMLGeneratorAbstract.Create;
+begin
+  FDMLCommands := TDictionary<String, String>.Create;
+  FDMLCriteria := TDictionary<String, ICriteria>.Create;
+end;
+
+destructor TDMLGeneratorAbstract.Destroy;
+begin
+  FDMLCommands.Free;
+  FDMLCriteria.Free;
+  inherited;
+end;
 
 function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: string): Int64;
 var
   LDBResultSet: IDBResultSet;
 begin
+  Result := 0;
   LDBResultSet := FConnection.ExecuteSQL(ASQL);
   try
     if LDBResultSet.RecordCount > 0 then
-      Result := VarAsType(LDBResultSet.GetFieldValue(0), varInt64)
-    else
-      Result := 0;
+      Result := VarAsType(LDBResultSet.GetFieldValue(0), varInt64);
   finally
     LDBResultSet.Close;
   end;
@@ -200,18 +210,24 @@ var
   LTable: TTableMapping;
   LCriteria: ICriteria;
 begin
+  Result := '';
+  if FDMLCommands.ContainsKey(AObject.ClassName + 'Delete') then
+  begin
+    Result := FDMLCommands.Items[AObject.ClassName + 'Delete'];
+    Exit;
+  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Delete;
   LCriteria.From(LTable.Name);
-  /// <exception cref="oTable.Name + '.'"></exception>
+  /// <exception cref="LTable.Name + '.'"></exception>
   for LFor := 0 to AParams.Count -1 do
     LCriteria.Where(AParams.Items[LFor].Name + ' = :' +
                     AParams.Items[LFor].Name);
   Result := LCriteria.AsString;
+  FDMLCommands.Add(AObject.ClassName + 'Delete', Result);
 end;
 
-function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): string;
+function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): string;
 var
   LTable: TTableMapping;
   LColumn: TColumnMapping;
@@ -230,9 +246,9 @@ begin
     if LColumn.IsNoInsert then
       Continue;
     /// <summary>
-    /// Set(Campo=Value)
+    ///   Set(Campo=Value)
     /// </summary>
-    /// <exception cref="oTable.Name + '.'"></exception>
+    /// <exception cref="LTable.Name + '.'"></exception>
     LCriteria.&Set(LColumn.ColumnName, ':' +
                    LColumn.ColumnName);
   end;
@@ -261,48 +277,66 @@ var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
-  LCriteria: ICriteria;
   LFor: Integer;
+  LColumnName: String;
 begin
   /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := CreateCriteria.Select.From(LTable.Name);
-  /// Columns
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
-  for LColumn in LColumns do
-  begin
-    if LColumn.IsJoinColumn then
-      Continue;
-    LCriteria.Column(LTable.Name + '.' + LColumn.ColumnName);
-  end;
-  /// JoinColumn
-  SetJoinColumn(AClass, LTable, LCriteria);
-  /// PrimaryKey
-  if VarToStr(AID) <> '-1' then
-  begin
-    LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
-    if LPrimaryKey <> nil then
+  try
+    if FDMLCriteria.ContainsKey(AClass.ClassName) then
     begin
-      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+      Result := FDMLCriteria.Items[AClass.ClassName];
+      Exit;
+    end;
+    Result := CreateCriteria.Select.From(LTable.Name);
+    /// Columns
+    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
+    for LColumn in LColumns do
+    begin
+      if LColumn.IsJoinColumn then
+        Continue;
+      Result.Column(LTable.Name + '.' + LColumn.ColumnName);
+    end;
+    /// <summary>
+    ///   Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
+    /// </summary>
+    GenerateJoinColumn(AClass, LTable, Result);
+    /// <summary>
+    ///   Guarda o ICriteria na lista para não remontar a toda chamada
+    /// </summary>
+    FDMLCriteria.Add(AClass.ClassName, Result);
+  finally
+    Result.Where.Clear;
+    Result.OrderBy.Clear;
+    /// <summary>
+    ///   PrimaryKey
+    /// </summary>
+    if VarToStr(AID) <> '-1' then
+    begin
+      LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+      if LPrimaryKey <> nil then
       begin
-        if LFor = 0 then
+        for LFor := 0 to LPrimaryKey.Columns.Count -1 do
         begin
-          if TVarData(AID).VType = varInteger then
-            LCriteria.Where(LPrimaryKey.Columns[LFor] + ' = ' + IntToStr(AID))
+          LColumnName := LTable.Name + '.' + LPrimaryKey.Columns[LFor];
+          if LFor = 0 then
+          begin
+            if TVarData(AID).VType = varInteger then
+              Result.Where(LColumnName + ' = ' + IntToStr(AID))
+            else
+              Result.Where(LColumnName + ' = ' + QuotedStr(AID));
+          end
           else
-            LCriteria.Where(LPrimaryKey.Columns[LFor] + ' = ' + QuotedStr(AID));
-        end
-        else
-        begin
-          if TVarData(AID).VType = varInteger then
-            LCriteria.&And(LPrimaryKey.Columns[LFor] + ' = ' + IntToStr(AID))
-          else
-            LCriteria.&And(LPrimaryKey.Columns[LFor] + ' = ' + QuotedStr(AID));
+          begin
+            if TVarData(AID).VType = varInteger then
+              Result.&And(LColumnName + ' = ' + IntToStr(AID))
+            else
+              Result.&And(LColumnName + ' = ' + QuotedStr(AID));
+          end;
         end;
       end;
     end;
   end;
-  Result := LCriteria;
 end;
 
 function TDMLGeneratorAbstract.GetPropertyValue(AObject: TObject;
@@ -345,7 +379,7 @@ begin
   FConnection := AConnaction;
 end;
 
-procedure TDMLGeneratorAbstract.SetJoinColumn(AClass: TClass;
+procedure TDMLGeneratorAbstract.GenerateJoinColumn(AClass: TClass;
   ATable: TTableMapping; var ACriteria: ICriteria);
 var
   LJoinList: TJoinColumnMappingList;
@@ -421,25 +455,22 @@ begin
     Exit;
 
   /// <summary>
-  /// Varre a lista de campos alterados para montar o UPDATE
+  ///   Varre a lista de campos alterados para montar o UPDATE
   /// </summary>
-  if AModifiedFields.Count > 0 then
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LCriteria := CreateCriteria.Update(LTable.Name);
+  for LColumnName in AModifiedFields do
   begin
-    LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
-    LCriteria := CreateCriteria.Update(LTable.Name);
-    for LColumnName in AModifiedFields do
-    begin
-      /// <summary>
-      /// SET Field=Value alterado
-      /// </summary>
-      /// <exception cref="oTable.Name + '.'"></exception>
-      LCriteria.&Set(LColumnName, ':' + LColumnName);
-    end;
-    for LFor := 0 to AParams.Count -1 do
-      LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
-
-    Result := LCriteria.AsString;
+    /// <summary>
+    ///   SET Field=Value alterado
+    /// </summary>
+    /// <exception cref="oTable.Name + '.'"></exception>
+    LCriteria.&Set(LColumnName, ':' + LColumnName);
   end;
+  for LFor := 0 to AParams.Count -1 do
+    LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
+
+  Result := LCriteria.AsString;
 end;
 
 end.

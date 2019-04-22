@@ -66,7 +66,8 @@ type
     procedure CommandInsertExecute(const ACommandText: String; const AParams: TParams);
     procedure CommandDeleteExecute(const ACommandText: String; const AParams: TParams);
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent;
+      const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -78,7 +79,7 @@ type
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: string): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -117,7 +118,8 @@ uses
 
 { TDriverMongoFireDAC }
 
-constructor TDriverMongoFireDAC.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverMongoFireDAC.Create(const AConnection: TComponent;
+  const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TFDConnection;
@@ -297,11 +299,12 @@ begin
   Result := TDriverQueryMongoFireDAC.Create(FConnection, FMongoConnection, FMongoEnv);
 end;
 
-function TDriverMongoFireDAC.CreateResultSet: IDBResultSet;
+function TDriverMongoFireDAC.CreateResultSet(const ASQL: string): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin
   LDBQuery := TDriverQueryMongoFireDAC.Create(FConnection, FMongoConnection, FMongoEnv);
+  LDBQuery.CommandText := ASQL;
   Result := LDBQuery.ExecuteQuery;
 end;
 
@@ -313,16 +316,16 @@ begin
   FConnection := AConnection;
   FMongoConnection := AMongoConnection;
   FMongoEnv := AMongoEnv;
-  if AConnection <> nil then
-  begin
-    FFDMongoQuery := TFDMongoQuery.Create(nil);
-    try
-      FFDMongoQuery.Connection := AConnection;
-      FFDMongoQuery.DatabaseName := AConnection.Params.Database;
-    except
-      FFDMongoQuery.Free;
-      raise;
-    end;
+  if AConnection = nil then
+    Exit;
+
+  FFDMongoQuery := TFDMongoQuery.Create(nil);
+  try
+    FFDMongoQuery.Connection := AConnection;
+    FFDMongoQuery.DatabaseName := AConnection.Params.Database;
+  except
+    FFDMongoQuery.Free;
+    raise;
   end;
 end;
 

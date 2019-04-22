@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Default.Personality>
-    <Projects ActiveProject="D:\ORMBr\Demo\Datasnap\Client\ORMBrFireDAC.dproj"/>
-  </Default.Personality>
+	<Default.Personality>
+		<Projects ActiveProject="D:\ORMBr\Demo\Datasnap\Client\ORMBrFireDAC.dproj"/>
+	</Default.Personality>
 </BorlandProject>

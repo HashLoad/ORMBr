@@ -75,7 +75,7 @@ type
 
 implementation
 
-{ TSchemaExtractSQLite }
+{ TSchemaExtractMSSQL }
 
 procedure TCatalogMetadataMSSQL.CreateFieldTypeList;
 begin
@@ -107,6 +107,7 @@ begin
     FFieldType.Add('GUID', ftGuid);
     FFieldType.Add('VARBINARY(MAX)', ftBlob);
     FFieldType.Add('IMAGE', ftGraphic);
+    FFieldType.Add('BIT', ftBoolean);
   end;
 end;
 

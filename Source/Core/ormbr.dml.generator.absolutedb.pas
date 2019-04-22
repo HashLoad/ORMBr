@@ -45,7 +45,7 @@ uses
 
 type
   /// <summary>
-  /// Classe de banco de dados AbsoluteDB
+  ///   Classe de banco de dados AbsoluteDB
   /// </summary>
   TDMLGeneratorAbsoluteDB = class(TDMLGeneratorAbstract)
   protected
@@ -57,10 +57,10 @@ type
       APageSize: Integer; AID: Variant): string; override;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; override;
-    function GeneratorSequenceCurrentValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
-    function GeneratorSequenceNextValue(AObject: TObject;
-      ACommandInsert: TDMLCommandInsert): Int64; override;
+    function GeneratorAutoIncCurrentValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
+    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
 
 implementation
@@ -138,20 +138,20 @@ begin
      Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSequenceCurrentValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorAbsoluteDB.GeneratorAutoIncCurrentValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s',
-                                   [ACommandInsert.Table.Name,
-                                    ACommandInsert.PrimaryKey.Columns.Items[0],
-                                    ACommandInsert.Table.Name]));
+                                   [AAutoInc.Sequence.TableName,
+                                    AAutoInc.PrimaryKey.Columns.Items[0],
+                                    AAutoInc.Sequence.TableName]));
 end;
 
-function TDMLGeneratorAbsoluteDB.GeneratorSequenceNextValue(AObject: TObject;
-  ACommandInsert: TDMLCommandInsert): Int64;
+function TDMLGeneratorAbsoluteDB.GeneratorAutoIncNextValue(AObject: TObject;
+  AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := GeneratorSequenceCurrentValue(AObject, ACommandInsert)
-          + ACommandInsert.Sequence.Increment;
+  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc)
+          + AAutoInc.Sequence.Increment;
 end;
 
 initialization

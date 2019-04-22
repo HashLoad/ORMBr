@@ -233,17 +233,16 @@ var
   InBuf: array of Byte;
   OutBuf: TBytes;
 begin
-  if Input.Size > 0 then
-  begin
-    SetLength(InBuf, Input.Size);
-    Input.Read(InBuf[0], Input.Size);
-    OutBuf := DoDecode(InBuf);
-    Result := Length(OutBuf);
-    Output.Write(OutBuf, Result);
-    SetLength(InBuf, 0);
-  end
-  else
-    Result := 0;
+  Result := 0;
+  if Input.Size = 0 then
+    Exit;
+
+  SetLength(InBuf, Input.Size);
+  Input.Read(InBuf[0], Input.Size);
+  OutBuf := DoDecode(InBuf);
+  Result := Length(OutBuf);
+  Output.Write(OutBuf, Result);
+  SetLength(InBuf, 0);
 end;
 
 function TNetEncoding.DoDecodeStringToBytes(const Input: string): TBytes;
@@ -340,17 +339,16 @@ var
   InBuf: array of Byte;
   OutBuf: TBytes;
 begin
-  if Input.Size > 0 then
-  begin
-    SetLength(InBuf, Input.Size);
-    Input.Read(InBuf[0], Input.Size);
-    OutBuf := DoEncode(InBuf);
-    Result := Length(OutBuf);
-    Output.Write(OutBuf, Result);
-    SetLength(InBuf, 0);
-  end
-  else
-    Result := 0;
+  Result := 0;
+  if Input.Size = 0 then
+    Exit;
+
+  SetLength(InBuf, Input.Size);
+  Input.Read(InBuf[0], Input.Size);
+  OutBuf := DoEncode(InBuf);
+  Result := Length(OutBuf);
+  Output.Write(OutBuf, Result);
+  SetLength(InBuf, 0);
 end;
 
 class function TNetEncoding.GetBase64Encoding: TNetEncoding;
