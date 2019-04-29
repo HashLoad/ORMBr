@@ -208,7 +208,9 @@ begin
         for LColumn in LPrimaryKey.Columns do
           SetAutoIncValueChilds(AObject, LColumn);
       end;
-      /// <summary> Executa comando insert em cascade </summary>
+      /// <summary>
+      ///   Executa comando insert em cascade
+      /// </summary>
       CascadeActionsExecute(AObject, CascadeInsert);
       ///
       if not LInTransaction then
@@ -231,7 +233,7 @@ procedure TObjectSetAdapter<M>.Update(const AObject: M);
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
-  LObject: TObject;
+  LObjectKey: TObject;
   LKey: string;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
@@ -248,25 +250,32 @@ begin
     if not LInTransaction then
       FConnection.StartTransaction;
     try
-      /// <summary> Executa comando update em cascade </summary>
+      /// <summary>
+      ///   Executa comando update em cascade
+      /// </summary>
       CascadeActionsExecute(AObject, CascadeUpdate);
-      /// <summary> Gera a lista com as propriedades que foram alteradas </summary>
+      /// <summary>
+      ///   Gera a lista com as propriedades que foram alteradas
+      /// </summary>
       if TObject(AObject).GetType(LRttiType) then
       begin
         LKey := GenerateKey(AObject);
-        if FObjectState.ContainsKey(LKey) then
+        if FObjectState.TryGetValue(LKey, LObjectKey) then
         begin
-          LObject := FObjectState.Items[LKey];
-          FSession.ModifyFieldsCompare(LKey, AObject, LObject);
+          FSession.ModifyFieldsCompare(LKey, LObjectKey, AObject);
           FSession.Update(AObject, LKey);
+          {$IFDEF USEBINDSOURCE}
+          if Assigned(FSession.OnUpdateEvent) then
+            FSession.OnUpdateEvent(AObject);
+          {$ENDIF}
           FObjectState.Remove(LKey);
           FObjectState.TrimExcess;
         end;
         /// <summary>
         ///   Remove o item excluído em Update Mestre-Detalhe
         /// </summary>
-        for LObject in FObjectState.Values do
-          FSession.Delete(LObject);
+        for LObjectKey in FObjectState.Values do
+          FSession.Delete(LObjectKey);
       end;
       if not LInTransaction then
         FConnection.Commit;

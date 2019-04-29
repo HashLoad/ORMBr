@@ -87,6 +87,7 @@ type
     procedure New(var AObject: M); override;
     {$IFDEF USEBINDSOURCE}
     procedure SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
+    procedure SetOnUpdateEvent(AProc: TProc<TObject>);
     {$ENDIF}
   end;
 
@@ -307,9 +308,8 @@ begin
     if ACascadeAction = CascadeUpdate then // Update
     begin
       LKey := GenerateKey(LObject);
-      if FObjectState.ContainsKey(LKey) then
+      if FObjectState.TryGetValue(LKey, LObjectKey) then
       begin
-        LObjectKey := FObjectState.Items[LKey];
         FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
         UpdateInternal(LObject);
         FObjectState.Remove(LKey);
@@ -362,9 +362,8 @@ begin
   if ACascadeAction = CascadeUpdate then // Update
   begin
     LKey := GenerateKey(LObject);
-    if FObjectState.ContainsKey(LKey) then
+    if FObjectState.TryGetValue(LKey, LObjectKey) then
     begin
-      LObjectKey := FObjectState.Items[LKey];
       FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
       UpdateInternal(LObject);
       FObjectState.Remove(LKey);
@@ -381,6 +380,11 @@ end;
 procedure TObjectSetBaseAdapter<M>.SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
 begin
   FSession.OnPropertyEvent := Aproc;
+end;
+
+procedure TObjectSetBaseAdapter<M>.SetOnUpdateEvent(AProc: TProc<TObject>);
+begin
+  FSession.OnUpdateEvent := AProc;
 end;
 {$ENDIF}
 

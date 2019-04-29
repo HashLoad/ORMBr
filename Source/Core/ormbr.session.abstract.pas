@@ -52,6 +52,7 @@ type
   protected
     {$IFDEF USEBINDSOURCE}
     FOnPropertyEvent: TProc<TRttiProperty, String>;
+    FOnUpdateEvent: TProc<TObject>;
     {$ENDIF}
     FPageSize: Integer;
     FPageNext: Integer;
@@ -116,6 +117,8 @@ type
     {$IFDEF USEBINDSOURCE}
     property OnPropertyEvent: TProc<TRttiProperty, String> read FOnPropertyEvent
                                                           write FOnPropertyEvent;
+    property OnUpdateEvent: TProc<TObject> read FOnUpdateEvent
+                                          write FOnUpdateEvent;
     {$ENDIF}
   end;
 
@@ -251,8 +254,8 @@ begin
             ///   Bind object property in control
             /// </summary>
             {$IFDEF USEBINDSOURCE}
-            if Assigned(FOnPropertyEvent) then
-              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+//            if Assigned(FOnPropertyEvent) then
+//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
             {$ENDIF}
           end;
         end
@@ -266,8 +269,8 @@ begin
             ///   Bind object property in control
             /// </summary>
             {$IFDEF USEBINDSOURCE}
-            if Assigned(FOnPropertyEvent) then
-              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+//            if Assigned(FOnPropertyEvent) then
+//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
             {$ENDIF}
           end;
         end;
@@ -282,8 +285,8 @@ begin
           ///   Bind object property in control
           /// </summary>
           {$IFDEF USEBINDSOURCE}
-          if Assigned(FOnPropertyEvent) then
-            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+//          if Assigned(FOnPropertyEvent) then
+//            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
           {$ENDIF}
         end;
       end;

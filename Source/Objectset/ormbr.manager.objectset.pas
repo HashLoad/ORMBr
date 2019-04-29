@@ -248,6 +248,11 @@ begin
                                    FBindSourceObjectAdapter
                                      .NotificationProperty(AProperty, AClassName);
                                  end);
+  Resolver<T>.SetOnUpdateEvent(procedure(AObject: TObject)
+                               begin
+                                 FBindSourceObjectAdapter
+                                   .BindNotification(AObject, cnExtracted);
+                               end);
 end;
 {$ENDIF}
 

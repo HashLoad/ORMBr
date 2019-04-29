@@ -313,10 +313,9 @@ begin
     LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
     if LDataSetChild = nil then
       Continue;
-
     /// <summary>
-    /// Popula o objeto com o registro atual do dataset Master para filtar
-    /// os filhos com os valores das chaves.
+    ///   Popula o objeto com o registro atual do dataset Master para filtar
+    ///   os filhos com os valores das chaves.
     /// </summary>
     LObject := M.Create;
     try

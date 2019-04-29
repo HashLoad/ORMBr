@@ -439,11 +439,11 @@ begin
   begin
     if not FMasterObject.ContainsKey(LObjectChild.ClassName) then
       Continue;
-    LDataSetChild := TRESTDataSetAdapter<M>(FMasterObject.Items[LObjectChild.ClassName]);
     /// <summary>
     ///   Popular classe ralacionada através do atributo Association() e todos
     ///   as suas classes filhas, caso exista.
     /// </summary>
+    LDataSetChild := TRESTDataSetAdapter<M>(FMasterObject.Items[LObjectChild.ClassName]);
     LDataSetChild.FOrmDataSet.DisableControls;
     LDataSetChild.DisableDataSetEvents;
     try
@@ -473,11 +473,9 @@ begin
       Continue;
     if LAssociation.ColumnsName.IndexOf(AFieldName) = -1 then
       Continue;
-    if not (FMasterObject.ContainsKey(LAssociation.ClassNameRef)) then
+    if not (FMasterObject.TryGetValue(LAssociation.ClassNameRef, LDataSetChild)) then
       Continue;
-    LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
-    if LDataSetChild <> nil then
-      LDataSetChild.FOrmDataSet.Refresh;
+    LDataSetChild.FOrmDataSet.Refresh;
   end;
 end;
 
@@ -566,10 +564,13 @@ begin
   if FOwnerMasterObject = nil then
     Exit;
   FOwner := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-  if FOwner.FMasterObject.ContainsKey(FCurrentInternal.ClassName) then
-    if FOwner.FOrmDataSet.State in [dsEdit] then
-      if FOwner.FOrmDataSet.Fields[FInternalIndex].AsInteger = -1 then
-        FOwner.FOrmDataSet.Fields[FInternalIndex].AsInteger := 2;
+  if not FOwner.FMasterObject.ContainsKey(FCurrentInternal.ClassName) then
+    Exit;
+  if not (FOwner.FOrmDataSet.State in [dsEdit]) then
+    Exit;
+  if FOwner.FOrmDataSet.Fields[FInternalIndex].AsInteger <> -1 then
+    Exit;
+  FOwner.FOrmDataSet.Fields[FInternalIndex].AsInteger := 2;
 end;
 
 end.

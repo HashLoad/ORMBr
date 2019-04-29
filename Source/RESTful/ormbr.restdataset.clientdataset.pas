@@ -203,46 +203,45 @@ var
   LIndexFields: string;
   LClassName: String;
 begin
-  if FOrmDataSet.Active then
-  begin
-    LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
-    if LAssociations <> nil then
-    begin
-      for LAssociation in LAssociations do
-      begin
-        if LAssociation.PropertyRtti.isList then
-          LRttiType := LAssociation.PropertyRtti.GetTypeValue(LAssociation.PropertyRtti.PropertyType)
-        else
-          LRttiType := LAssociation.PropertyRtti.PropertyType;
+  if not FOrmDataSet.Active then
+    Exit;
 
-        LClassName := LRttiType.AsInstance.MetaclassType.ClassName;
-        if FMasterObject.ContainsKey(LClassName) then
-        begin
-          LChild := FMasterObject.Items[LClassName];
-          LFields := '';
-          LIndexFields := '';
-          TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
-          for LFor := 0 to LAssociation.ColumnsName.Count -1 do
-          begin
-            LFields := LFields + LAssociation.ColumnsNameRef[LFor];
-            LIndexFields := LIndexFields + LAssociation.ColumnsName[LFor];
-            if LAssociation.ColumnsName.Count -1 > LFor then
-            begin
-              LFields := LFields + '; ';
-              LIndexFields := LIndexFields + '; ';
-            end;
-          end;
-          TClientDataSet(LChild.FOrmDataSet).IndexFieldNames := LIndexFields;
-          TClientDataSet(LChild.FOrmDataSet).MasterFields := LFields;
-          /// <summary>
-          /// Filtra os registros filhos associados ao LChild caso ele seja
-          /// master de outros objetos.
-          /// </summary>
-          if LChild.FMasterObject.Count > 0 then
-            TRESTClientDataSetAdapter<M>(LChild).FilterDataSetChilds;
-        end;
+  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  if LAssociations = nil then
+    Exit;
+
+  for LAssociation in LAssociations do
+  begin
+    if LAssociation.PropertyRtti.isList then
+      LRttiType := LAssociation.PropertyRtti.GetTypeValue(LAssociation.PropertyRtti.PropertyType)
+    else
+      LRttiType := LAssociation.PropertyRtti.PropertyType;
+
+    LClassName := LRttiType.AsInstance.MetaclassType.ClassName;
+    if not FMasterObject.TryGetValue(LClassName, LChild) then
+      Continue;
+
+    LFields := '';
+    LIndexFields := '';
+    TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+    for LFor := 0 to LAssociation.ColumnsName.Count -1 do
+    begin
+      LFields := LFields + LAssociation.ColumnsNameRef[LFor];
+      LIndexFields := LIndexFields + LAssociation.ColumnsName[LFor];
+      if LAssociation.ColumnsName.Count -1 > LFor then
+      begin
+        LFields := LFields + '; ';
+        LIndexFields := LIndexFields + '; ';
       end;
     end;
+    TClientDataSet(LChild.FOrmDataSet).IndexFieldNames := LIndexFields;
+    TClientDataSet(LChild.FOrmDataSet).MasterFields := LFields;
+    /// <summary>
+    /// Filtra os registros filhos associados ao LChild caso ele seja
+    /// master de outros objetos.
+    /// </summary>
+    if LChild.FMasterObject.Count > 0 then
+      TRESTClientDataSetAdapter<M>(LChild).FilterDataSetChilds;
   end;
 end;
 
@@ -354,36 +353,35 @@ var
   LKeyValues: string;
 begin
   inherited;
-  if FMasterObject.ContainsKey(AObject.ClassName) then
-  begin
-    LChild := FMasterObject.Items[AObject.ClassName];
-    LChild.FOrmDataSet.DisableControls;
-    LChild.DisableDataSetEvents;
-    TClientDataSet(LChild.FOrmDataSet).MasterSource := nil;
-    try
-      AObject.GetType(LRttiType);
-      LKeyFields := '';
-      LKeyValues := '';
-      for LField in AAssociation.ColumnsNameRef do
-      begin
-        LKeyFields := LKeyFields + LField + ', ';
-        LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
-      end;
-      LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
-      LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
-      /// <summary> Evitar duplicidade de registro em memória </summary>
-      if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
-      begin
-        LChild.FOrmDataSet.Append;
-        TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
-        LChild.FOrmDataSet.Post;
-      end;
-    finally
-      TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
-      LChild.FOrmDataSet.First;
-      LChild.FOrmDataSet.EnableControls;
-      LChild.EnableDataSetEvents;
+  if not FMasterObject.TryGetValue(AObject.ClassName, LChild) then
+    Exit;
+
+  LChild.FOrmDataSet.DisableControls;
+  LChild.DisableDataSetEvents;
+  TClientDataSet(LChild.FOrmDataSet).MasterSource := nil;
+  try
+    AObject.GetType(LRttiType);
+    LKeyFields := '';
+    LKeyValues := '';
+    for LField in AAssociation.ColumnsNameRef do
+    begin
+      LKeyFields := LKeyFields + LField + ', ';
+      LKeyValues := LKeyValues + VarToStrDef(LRttiType.GetProperty(LField).GetNullableValue(AObject).AsVariant,'') + ', ';
     end;
+    LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
+    LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
+    /// <summary> Evitar duplicidade de registro em memória </summary>
+    if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
+    begin
+      LChild.FOrmDataSet.Append;
+      TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+      LChild.FOrmDataSet.Post;
+    end;
+  finally
+    TClientDataSet(LChild.FOrmDataSet).MasterSource := FOrmDataSource;
+    LChild.FOrmDataSet.First;
+    LChild.FOrmDataSet.EnableControls;
+    LChild.EnableDataSetEvents;
   end;
 end;
 

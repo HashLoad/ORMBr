@@ -211,11 +211,8 @@ var
   LCriteria: ICriteria;
 begin
   Result := '';
-  if FDMLCommands.ContainsKey(AObject.ClassName + 'Delete') then
-  begin
-    Result := FDMLCommands.Items[AObject.ClassName + 'Delete'];
+  if FDMLCommands.TryGetValue(AObject.ClassName + 'Delete', Result) then
     Exit;
-  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Delete;
   LCriteria.From(LTable.Name);
@@ -283,11 +280,8 @@ begin
   /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
-    if FDMLCriteria.ContainsKey(AClass.ClassName) then
-    begin
-      Result := FDMLCriteria.Items[AClass.ClassName];
+    if FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
       Exit;
-    end;
     Result := CreateCriteria.Select.From(LTable.Name);
     /// Columns
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
