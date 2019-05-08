@@ -152,6 +152,9 @@ begin
   begin
     for LColumnMap in LColumnMapList do
     begin
+      if LColumnMap.IsJoinColumn then
+        Continue;
+
       LColumn := TColumnMIK.Create(ATable);
       LColumn.Name := LColumnMap.ColumnName;
       LColumn.Description := LColumnMap.Description;
@@ -163,7 +166,7 @@ begin
       LColumn.Scale := LColumnMap.Scale;
       LColumn.FieldType := LColumnMap.FieldType;
       /// <summary>
-      /// Resolve Field Type
+      ///   Resolve Field Type
       /// </summary>
       GetFieldTypeDefinition(LColumn);
       try
