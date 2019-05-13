@@ -59,9 +59,7 @@ uses
   ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas',
   ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
   ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas',
-  ormbr.model.anotacoes in 'ormbr.model.anotacoes.pas',
-  ormbr.model.cliente in 'ormbr.model.cliente.pas',
-  ormbr.model.empresa in 'ormbr.model.empresa.pas';
+  ormbr.model.client in 'ormbr.model.client.pas';
 
 {$R *.res}
 

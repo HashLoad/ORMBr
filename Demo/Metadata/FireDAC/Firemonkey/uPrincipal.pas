@@ -68,7 +68,7 @@ var
 begin
   oManager := TModelDbCompare.Create(oConnection);
 //  oManager := TDatabaseCompare.Create(oConnection, oConnection);
-//  oManager.CommandsAutoExecute := False;
+  oManager.CommandsAutoExecute := False;
   oManager.BuildDatabase;
   for cDDL in oManager.GetCommandList do
       Memo1.Lines.Add(cDDL.Command);

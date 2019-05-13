@@ -29,8 +29,7 @@ uses
   ormbr.types.database,
   ormbr.dml.generator.sqlite,
   /// orm model
-  ormbr.model.cliente,
-  ormbr.model.anotacoes,
+  ormbr.model.client,
 
   FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
@@ -45,21 +44,18 @@ type
     DBGrid1: TDBGrid;
     DBNavigator1: TDBNavigator;
     Button2: TButton;
-    DataSource3: TDataSource;
     FDConnection1: TFDConnection;
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     FDClient: TFDMemTable;
-    DBGrid2: TDBGrid;
-    FDMemTable1: TFDMemTable;
     DataSource1: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FDClientAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
     oConn: IDBConnection;
-    oContainerClient: IContainerDataSet<Tcliente>;
-    oContainerAnote: IContainerDataSet<Tanotacoes>;
+    oContainerClient: IContainerDataSet<Tclient>;
 public
     { Public declarations }
   end;
@@ -79,13 +75,19 @@ begin
   oContainerClient.ApplyUpdates(0);
 end;
 
+procedure TForm3.FDClientAfterInsert(DataSet: TDataSet);
+var
+  ID: TGUID;
+begin
+  FDClient.FieldByName('client_id').AsString := GUIDToString(ID);
+end;
+
 procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
   // Client
-  oContainerClient := TContainerFDMemTable<Tcliente>.Create(oConn, FDClient);
-  oContainerAnote := TContainerFDMemTable<Tanotacoes>.Create(oConn, FDMemTable1, oContainerClient.this);
+  oContainerClient := TContainerFDMemTable<Tclient>.Create(oConn, FDClient);
 
   oContainerClient.Open;
 end;

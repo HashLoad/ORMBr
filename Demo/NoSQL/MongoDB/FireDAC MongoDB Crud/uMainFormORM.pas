@@ -105,7 +105,6 @@ var
   LClientList: TObjectList<Tclient>;
   I: Integer;
 begin
-  // Instância da class de conexão via FireDAC
   oConn := TFactoryMongoFireDAC.Create(FDConnection1, dnMongoDB);
 
   // Client
@@ -123,8 +122,8 @@ begin
   oContainerObject := TContainerObjectSet<Tclient>.Create(oConn);
 
   // Somente demonstração de funcionalidade
-  LClientList := oContainerObject.Find;
-//  LClientList := oContainerObject.FindWhere('{"client_id": 2}', '');
+//  LClientList := oContainerObject.Find;
+  LClientList := oContainerObject.FindWhere('{"client_id": 2}', '');
   /// Converte lista para JSON
   try
     Memo1.Lines.Text := TORMBrJson.ObjectListToJsonString<Tclient>(LClientList);

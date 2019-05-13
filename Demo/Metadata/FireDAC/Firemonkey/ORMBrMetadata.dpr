@@ -52,10 +52,10 @@ uses
   ormbr.metadata.classe.factory in '..\..\..\..\Source\Metadata\ormbr.metadata.classe.factory.pas',
   ormbr.metadata.model in '..\..\..\..\Source\Metadata\ormbr.metadata.model.pas',
   ormbr.monitor in '..\..\..\..\Source\Drivers\ormbr.monitor.pas',
-  ormbr.model.client in '..\..\Modelos\ormbr.model.client.pas',
-  ormbr.model.detail in '..\..\Modelos\ormbr.model.detail.pas',
-  ormbr.model.lookup in '..\..\Modelos\ormbr.model.lookup.pas',
-  ormbr.model.master in '..\..\Modelos\ormbr.model.master.pas';
+  ormbr.model.client in '..\..\..\Data\Models\ormbr.model.client.pas',
+  ormbr.model.detail in '..\..\..\Data\Models\ormbr.model.detail.pas',
+  ormbr.model.lookup in '..\..\..\Data\Models\ormbr.model.lookup.pas',
+  ormbr.model.master in '..\..\..\Data\Models\ormbr.model.master.pas';
 
 {$R *.res}
 
