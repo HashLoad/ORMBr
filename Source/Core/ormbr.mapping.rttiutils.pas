@@ -315,21 +315,21 @@ begin
      LAttribute := LColumn.ColumnProperty.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
-         .Validate(LColumn.ColumnDictionary.DisplayLabel,
+         .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                    LColumn.ColumnProperty.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
      LAttribute := LColumn.ColumnProperty.GetMinimumValueConstraint;
      if LAttribute <> nil then
         MinimumValueConstraint(LAttribute)
-          .Validate(LColumn.ColumnDictionary.DisplayLabel,
+          .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                     LColumn.ColumnProperty.GetNullableValue(AObject));
 
      /// <summary> Valida se o valor é menor que ZERO </summary>
      LAttribute := LColumn.ColumnProperty.GetMaximumValueConstraint;
      if LAttribute <> nil then
         MaximumValueConstraint(LAttribute)
-          .Validate(LColumn.ColumnDictionary.DisplayLabel,
+          .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                     LColumn.ColumnProperty.GetNullableValue(AObject));
   end;
   Result := True;
