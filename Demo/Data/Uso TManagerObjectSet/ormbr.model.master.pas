@@ -10,7 +10,6 @@ uses
   Generics.Collections, 
   /// orm 
   ormbr.mapping.attributes,
-//  ormbr.bind.attributes,
   ormbr.types.mapping,
   ormbr.types.lazy,
   ormbr.types.nullable,
@@ -30,7 +29,7 @@ type
   private
     { Private declarations }
     Fmaster_id: Integer;
-    Fdescription: String; //Nullable<String>;
+    Fdescription: Nullable<String>;
     Fregisterdate: TDateTime;
     Fupdatedate: TDate;
     Fclient_id: Integer;
@@ -47,38 +46,32 @@ type
     [Restrictions([NoUpdate, NotNull])]
     [Column('master_id', ftInteger)]
     [Dictionary('master_id','Mensagem de validação','','','',taCenter)]
-//    [BindPropertyControl('edtMaster_ID', 'Text')]
     property master_id: Integer read Fmaster_id write Fmaster_id;
 
     [Column('description', ftString, 60)]
     [Dictionary('description','Mensagem de validação','','','',taLeftJustify)]
-//    [BindPropertyControl('edtMaster_Descricao', 'Text')]
-    property description: {Nullable<}String{>} read Fdescription write Fdescription;
+    property description: Nullable<String> read Fdescription write Fdescription;
 
     [Restrictions([NotNull])]
     [Column('registerdate', ftDateTime)]
     [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1; ',taCenter)]
-//    [BindPropertyControl('edtMaster_Cadastro', 'Text')]
     property registerdate: TDateTime read Fregisterdate write Fregisterdate;
 
     [Restrictions([NotNull])]
     [Column('updatedate', ftDate)]
     [Dictionary('updatedate','Mensagem de validação','Date','','!##/##/####;1; ',taCenter)]
-//    [BindPropertyControl('edtMaster_Alteracao', 'Text')]
     property updatedate: TDate read Fupdatedate write Fupdatedate;
 
     [Restrictions([NotNull])]
     [Column('client_id', ftInteger)]
     [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
-//    [BindPropertyControl('edtClient_ID', 'Text')]
     property client_id: Integer read Fclient_id write Fclient_id;
 
     [Restrictions([NoInsert, NoUpdate])]
     [Column('client_name', ftString, 60)]
     [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin)]
     [Dictionary('Nome do Cliente', '')]
-//    [BindPropertyControl('edtClient_Nome', 'Text')]
     property client_name: string read fclient_name write fclient_name;
 
     [Enumeration(TEnumType.etInteger, '0, 1, 2, 9')]

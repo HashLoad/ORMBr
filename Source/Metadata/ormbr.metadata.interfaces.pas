@@ -35,7 +35,6 @@ uses
   ormbr.types.database;
 
 type
-
   IMetadata = interface
     ['{A172B920-E18C-45FE-8038-8690C4FBFFEE}']
   {$REGION 'Property Getters & Setters'}

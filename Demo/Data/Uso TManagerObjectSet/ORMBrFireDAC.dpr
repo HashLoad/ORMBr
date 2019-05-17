@@ -19,15 +19,6 @@ uses
   ormbr.command.selecter in '..\..\..\Source\Core\ormbr.command.selecter.pas',
   ormbr.command.updater in '..\..\..\Source\Core\ormbr.command.updater.pas',
   ormbr.dml.commands in '..\..\..\Source\Core\ormbr.dml.commands.pas',
-  ormbr.dml.generator.absolutedb in '..\..\..\Source\Core\ormbr.dml.generator.absolutedb.pas',
-  ormbr.dml.generator.firebird in '..\..\..\Source\Core\ormbr.dml.generator.firebird.pas',
-  ormbr.dml.generator.interbase in '..\..\..\Source\Core\ormbr.dml.generator.interbase.pas',
-  ormbr.dml.generator.mssql in '..\..\..\Source\Core\ormbr.dml.generator.mssql.pas',
-  ormbr.dml.generator.mysql in '..\..\..\Source\Core\ormbr.dml.generator.mysql.pas',
-  ormbr.dml.generator.oracle in '..\..\..\Source\Core\ormbr.dml.generator.oracle.pas',
-  ormbr.dml.generator in '..\..\..\Source\Core\ormbr.dml.generator.pas',
-  ormbr.dml.generator.postgresql in '..\..\..\Source\Core\ormbr.dml.generator.postgresql.pas',
-  ormbr.dml.generator.sqlite in '..\..\..\Source\Core\ormbr.dml.generator.sqlite.pas',
   ormbr.dml.interfaces in '..\..\..\Source\Core\ormbr.dml.interfaces.pas',
   ormbr.driver.register in '..\..\..\Source\Core\ormbr.driver.register.pas',
   ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
@@ -56,7 +47,20 @@ uses
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor},
   ormbr.objectset.base.adapter in '..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas',
-  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas';
+  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas',
+  ormbr.dml.generator.absolutedb in '..\..\..\Source\Core\ormbr.dml.generator.absolutedb.pas',
+  ormbr.dml.generator.elevatedb in '..\..\..\Source\Core\ormbr.dml.generator.elevatedb.pas',
+  ormbr.dml.generator.firebird in '..\..\..\Source\Core\ormbr.dml.generator.firebird.pas',
+  ormbr.dml.generator.interbase in '..\..\..\Source\Core\ormbr.dml.generator.interbase.pas',
+  ormbr.dml.generator.mongodb in '..\..\..\Source\Core\ormbr.dml.generator.mongodb.pas',
+  ormbr.dml.generator.mssql in '..\..\..\Source\Core\ormbr.dml.generator.mssql.pas',
+  ormbr.dml.generator.mysql in '..\..\..\Source\Core\ormbr.dml.generator.mysql.pas',
+  ormbr.dml.generator.nexusdb in '..\..\..\Source\Core\ormbr.dml.generator.nexusdb.pas',
+  ormbr.dml.generator.nosql in '..\..\..\Source\Core\ormbr.dml.generator.nosql.pas',
+  ormbr.dml.generator.oracle in '..\..\..\Source\Core\ormbr.dml.generator.oracle.pas',
+  ormbr.dml.generator in '..\..\..\Source\Core\ormbr.dml.generator.pas',
+  ormbr.dml.generator.postgresql in '..\..\..\Source\Core\ormbr.dml.generator.postgresql.pas',
+  ormbr.dml.generator.sqlite in '..\..\..\Source\Core\ormbr.dml.generator.sqlite.pas';
 
 {$R *.res}
 

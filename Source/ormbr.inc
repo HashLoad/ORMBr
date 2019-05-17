@@ -27,7 +27,8 @@
 
 {
   Compiler				CompilerVersion	Defined Symbol	Used BPL
-  Delphi 10.2 Rio		33 				VER323			26
+  Delphi 10.4 ???		34 				VER340			27
+  Delphi 10.3 Rio		33 				VER330			26
   Delphi 10.2 Tokyo		32 				VER320			25
   Delphi 10.1 Berlin	31				VER310			24
   Delphi 10 Seattle		30				VER300          23
@@ -63,6 +64,24 @@
 {$ENDIF}
 
 // Delphi ???
+{$IFDEF VER340}
+  {$DEFINE DELPHI14_UP}
+  {$DEFINE DELPHI15_UP}
+  {$DEFINE DELPHI16_UP}
+  {$DEFINE DELPHI17_UP}
+  {$DEFINE DELPHI18_UP}
+  {$DEFINE DELPHI19_UP}
+  {$DEFINE DELPHI20_UP}
+  {$DEFINE DELPHI21_UP}
+  {$DEFINE DELPHI22_UP}
+  {$DEFINE DELPHI23_UP}
+  {$DEFINE DELPHI24_UP}
+  {$DEFINE DELPHI25_UP}
+  {$DEFINE DELPHI26_UP}
+  {$DEFINE DELPHI27_UP}
+{$ENDIF}
+
+// Delphi Rio
 {$IFDEF VER330}
   {$DEFINE DELPHI14_UP}
   {$DEFINE DELPHI15_UP}
@@ -79,7 +98,7 @@
   {$DEFINE DELPHI26_UP}
 {$ENDIF}
 
-// Delphi TOKYO
+// Delphi Tokyo
 {$IFDEF VER320}
   {$DEFINE DELPHI14_UP}
   {$DEFINE DELPHI15_UP}

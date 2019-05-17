@@ -133,8 +133,8 @@ begin
   if LMaster.MyEnum = fmsSemFrete then
     ShowMessage(oMaster.DataSet.FieldByName('MyEnum').AsString + ' - 9=fmsSemFrete');
 
-//  LMaster.MyEnum := fmsSemFrete;
-//  oMaster.Save(LMaster);
+  LMaster.MyEnum := fmsSemFrete;
+  oMaster.Save(LMaster);
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);

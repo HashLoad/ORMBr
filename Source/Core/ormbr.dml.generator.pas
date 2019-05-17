@@ -53,11 +53,10 @@ uses
 
 type
   /// <summary>
-  /// Classe de conexões abstract
+  ///   Classe de conexões abstract
   /// </summary>
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
-    FDMLCommands: TDictionary<String, String>;
     FDMLCriteria: TDictionary<String, ICriteria>;
     function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
@@ -67,6 +66,7 @@ type
     FConnection: IDBConnection;
     FDateFormat: string;
     FTimeFormat: string;
+    FDMLCriteriaFound: Boolean;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria): string; virtual;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
@@ -101,13 +101,12 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-  FDMLCommands := TDictionary<String, String>.Create;
   FDMLCriteria := TDictionary<String, ICriteria>.Create;
+  FDMLCriteriaFound := False;
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-  FDMLCommands.Free;
   FDMLCriteria.Free;
   inherited;
 end;
@@ -211,8 +210,6 @@ var
   LCriteria: ICriteria;
 begin
   Result := '';
-  if FDMLCommands.TryGetValue(AObject.ClassName + 'Delete', Result) then
-    Exit;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Delete;
   LCriteria.From(LTable.Name);
@@ -221,7 +218,6 @@ begin
     LCriteria.Where(AParams.Items[LFor].Name + ' = :' +
                     AParams.Items[LFor].Name);
   Result := LCriteria.AsString;
-  FDMLCommands.Add(AObject.ClassName + 'Delete', Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): string;
@@ -280,8 +276,12 @@ begin
   /// Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
+    FDMLCriteriaFound := False;
     if FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+    begin
+      FDMLCriteriaFound := True;
       Exit;
+    end;
     Result := CreateCriteria.Select.From(LTable.Name);
     /// Columns
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);

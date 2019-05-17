@@ -33,6 +33,7 @@ interface
 
 uses
   Rtti,
+  Variants,
   Generics.Collections,
   /// ORMBr
   {$IFDEF DRIVERRESTFUL}
@@ -57,6 +58,7 @@ type
     FNestedList: TDictionary<string, TObjectList<TObject>>;
     FCurrentIndex: Integer;
     FSelectedObject: TObject;
+    FOwnerNestedList: Boolean;
     {$IFDEF USEBINDSOURCE}
     FBindSourceObjectAdapter: IBindSourceObjectAdapter;
     {$ENDIF}
@@ -71,38 +73,40 @@ type
     destructor Destroy; override;
     function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
     /// ObjectSet
-    function Find<T: class, constructor>: TManagerObjectSet; overload;
-    function Find<T: class, constructor>(const AID: Integer): T; overload;
-    function Find<T: class, constructor>(const AID: String): T; overload;
+    function Find<T: class, constructor>: TObjectList<T>; overload;
+    function Find<T: class, constructor>(const AID: Variant): T; overload;
     {$IFDEF DRIVERRESTFUL}
     function Find<T: class, constructor>(const AMethodName: String;
-      const AParams: array of string): TManagerObjectSet; overload;
+      const AParams: array of string): TObjectList<T>; overload;
     {$ENDIF}
     function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TManagerObjectSet;
+                                              const AOrderBy: string = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function ModifiedFields<T: class, constructor>: TDictionary<string, TList<string>>;
     function ExistSequence<T: class, constructor>: Boolean;
-    function Insert<T: class, constructor>(const AObject: T): TManagerObjectSet; overload;
-    function Update<T: class, constructor>(const AObject: T): TManagerObjectSet; overload;
-    function Delete<T: class, constructor>(const AObject: T): TManagerObjectSet; overload;
-    function Modify<T: class, constructor>(const AObject: T): TManagerObjectSet; overload;
-    function LoadLazy<T: class, constructor>(const AOwner, AObject: TObject): TManagerObjectSet;
-    function NextPacket<T: class, constructor>: TManagerObjectSet;
-    function New<T: class, constructor>(var AObject: T): TManagerObjectSet; overload;
+    function Insert<T: class, constructor>(const AObject: T): Integer; overload;
+    procedure Modify<T: class, constructor>(const AObject: T); overload;
+    procedure Update<T: class, constructor>(const AObject: T); overload;
+    procedure Delete<T: class, constructor>(const AObject: T); overload;
+    procedure NextPacket<T: class, constructor>(var AObjectList: TObjectList<T>); overload;
+    procedure New<T: class, constructor>(var AObject: T); overload;
+    procedure LoadLazy<T: class, constructor>(const AOwner, AObject: TObject);
     {$IFDEF USEBINDSOURCE}
     function SetBindSourceObjectAdapter<T: class, constructor>(const ABindSourceObject: IBindSourceObjectAdapter): TManagerObjectSet;
     {$ENDIF}
-    function Current<T: class, constructor>: T;
-    function New<T: class, constructor>: TManagerObjectSet; overload;
-    function Insert<T: class, constructor>: TManagerObjectSet; overload;
-    function Modify<T: class, constructor>: TManagerObjectSet; overload;
-    function Update<T: class, constructor>: TManagerObjectSet; overload;
-    function Delete<T: class, constructor>: TManagerObjectSet; overload;
-    function First<T: class, constructor>: TManagerObjectSet;
-    function Next<T: class, constructor>: TManagerObjectSet;
-    function Prior<T: class, constructor>: TManagerObjectSet;
-    function Last<T: class, constructor>: TManagerObjectSet;
+    function Current<T: class, constructor>: T; overload;
+    function Current<T: class, constructor>(const AIndex: Integer): T; overload;
+    function New<T: class, constructor>: Integer; overload;
+   	function Insert<T: class, constructor>: Integer; overload;
+    procedure Modify<T: class, constructor>; overload;
+    procedure Update<T: class, constructor>; overload;
+    procedure Delete<T: class, constructor>; overload;
+    procedure NextPacket<T: class, constructor>; overload;
+    function First<T: class, constructor>: Integer;
+    function Next<T: class, constructor>: Integer;
+    function Prior<T: class, constructor>: Integer;
+    function Last<T: class, constructor>: Integer;
+    property OwnerNestedList: Boolean read FOwnerNestedList write FOwnerNestedList;
   end;
 
 implementation
@@ -117,6 +121,13 @@ begin
   FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
   FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
   FCurrentIndex := 0;
+  FOwnerNestedList := True;
+end;
+
+function TManagerObjectSet.Current<T>(const AIndex: Integer): T;
+begin
+  FCurrentIndex := AIndex;
+  Result := Current<T>;
 end;
 
 function TManagerObjectSet.Current<T>: T;
@@ -124,9 +135,8 @@ begin
   Result := FNestedList.Items[T.ClassName].Items[FCurrentIndex] as T;
 end;
 
-function TManagerObjectSet.Delete<T>(const AObject: T): TManagerObjectSet;
+procedure TManagerObjectSet.Delete<T>(const AObject: T);
 begin
-  Result := Self;
   Resolver<T>.Delete(AObject);
 end;
 
@@ -144,16 +154,14 @@ begin
   Result := nil;
   LClassName := TClass(T).ClassName;
   if FNestedList.ContainsKey(LClassName) then
-  begin
     Result := TObjectList<T>(FNestedList.Items[LClassName]);
-  end;
 end;
 
-function TManagerObjectSet.New<T>: TManagerObjectSet;
+function TManagerObjectSet.New<T>: Integer;
 var
   LNewObject: T;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   Resolver<T>.New(LNewObject);
   FNestedList.Items[TClass(T).ClassName].Add(LNewObject);
   /// <summary>
@@ -162,16 +170,13 @@ begin
   FCurrentIndex := FNestedList.Items[TClass(T).ClassName].Count -1;
 end;
 
-function TManagerObjectSet.New<T>(var AObject: T): TManagerObjectSet;
+procedure TManagerObjectSet.New<T>(var AObject: T);
 begin
   AObject := nil;
   Resolver<T>.New(AObject);
-  Result := Self;
 end;
-
-function TManagerObjectSet.Delete<T>: TManagerObjectSet;
+procedure TManagerObjectSet.Delete<T>;
 begin
-  Result := Self;
   SelectNestedListItem<T>;
   Resolver<T>.Delete(FSelectedObject);
   FNestedList.Items[TClass(T).ClassName].Delete(FCurrentIndex);
@@ -185,14 +190,13 @@ begin
   Result := Resolver<T>.ExistSequence;
 end;
 
-function TManagerObjectSet.Find<T>(const AID: Integer): T;
+function TManagerObjectSet.Find<T>(const AID: Variant): T;
 begin
-  Result := Resolver<T>.Find(AID);
-end;
-
-function TManagerObjectSet.Find<T>(const AID: String): T;
-begin
-  Result := Resolver<T>.Find(AID);
+  if TVarData(AID).VType = varInteger then
+    Result := Resolver<T>.Find(Integer(AID))
+  else
+  if TVarData(AID).VType = varString then
+    Result := Resolver<T>.Find(VarToStr(AID))
 end;
 
 function TManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
@@ -215,17 +219,22 @@ begin
   FRepository.Add(LClassName, LContainer);
 end;
 
-function TManagerObjectSet.Find<T>: TManagerObjectSet;
+function TManagerObjectSet.Find<T>: TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
+  Result := nil;
+  if not FOwnerNestedList then
+  begin
+    Result := Resolver<T>.Find;
+    Exit;
+  end;
   LObjectList := Resolver<T>.Find;
   LObjectList.OnNotify := ListChanged<T>;
   /// <summary>
   ///   Lista de objetos
   /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
-  Result := Self;
 end;
 
 function TManagerObjectSet.Resolver<T>: TObjectSetBaseAdapter<T>;
@@ -261,58 +270,75 @@ begin
   FSelectedObject := FNestedList.Items[TClass(T).ClassName].Items[FCurrentIndex];
 end;
 
-function TManagerObjectSet.Update<T>: TManagerObjectSet;
+procedure TManagerObjectSet.Update<T>;
 begin
-  Result := Self;
   SelectNestedListItem<T>;
   Resolver<T>.Update(FSelectedObject);
 end;
 
-function TManagerObjectSet.Update<T>(const AObject: T): TManagerObjectSet;
+procedure TManagerObjectSet.Update<T>(const AObject: T);
 begin
   Resolver<T>.Update(AObject);
-  Result := Self;
 end;
 
-function TManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TManagerObjectSet;
+function TManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
+  Result := nil;
+  if not FOwnerNestedList then
+  begin
+    Result := Resolver<T>.FindWhere(AWhere, AOrderBy);
+    Exit;
+  end;
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   LObjectList.OnNotify := ListChanged<T>;
   /// <summary>
   ///   Lista de objetos
   /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
-  Result := Self;
 end;
 
-function TManagerObjectSet.First<T>: TManagerObjectSet;
+function TManagerObjectSet.First<T>: Integer;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   FCurrentIndex := 0;
 end;
 
-function TManagerObjectSet.Insert<T>: TManagerObjectSet;
+function TManagerObjectSet.Insert<T>: Integer;
+var
+  LNewObject: T;
 begin
-  Result := Self;
-  New<T>;
+  Result := FCurrentIndex;
+  Resolver<T>.New(LNewObject);
+  FNestedList.Items[TClass(T).ClassName].Add(LNewObject);
+  /// <summary>
+  ///   O último passa a ser o objeto corrente.
+  /// </summary>
+  FCurrentIndex := FNestedList.Items[TClass(T).ClassName].Count -1;
 end;
 
-function TManagerObjectSet.Insert<T>(const AObject: T): TManagerObjectSet;
+function TManagerObjectSet.Insert<T>(const AObject: T): Integer;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   Resolver<T>.Insert(AObject);
+  FNestedList.Items[TClass(T).ClassName].Add(AObject);
+  /// <summary>
+  ///   O último passa a ser o objeto corrente.
+  /// </summary>
+  FCurrentIndex := FNestedList.Items[TClass(T).ClassName].Count -1;
 end;
 
-function TManagerObjectSet.Last<T>: TManagerObjectSet;
+function TManagerObjectSet.Last<T>: Integer;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   FCurrentIndex := FNestedList.Items[TClass(T).ClassName].Count -1;
 end;
 
 procedure TManagerObjectSet.ListChanged<T>(Sender: TObject; const Item: T;
   Action: TCollectionNotification);
+var
+  LClassName: String;
 begin
   if Action = cnAdding then // Before
   begin
@@ -331,7 +357,15 @@ begin
   else
   if Action = cnRemoved then // After
   begin
+    LClassName := TClass(T).ClassName;
+    if not FNestedList.ContainsKey(LClassName) then
+      Exit;
 
+    if FNestedList.Items[LClassName].Count = 0 then
+      Dec(FCurrentIndex);
+
+    if FNestedList.Items[LClassName].Count > 1 then
+      Dec(FCurrentIndex);
   end
   else
   if Action = cnExtracting then // Before
@@ -345,10 +379,9 @@ begin
   end;
 end;
 
-function TManagerObjectSet.LoadLazy<T>(const AOwner, AObject: TObject): TManagerObjectSet;
+procedure TManagerObjectSet.LoadLazy<T>(const AOwner, AObject: TObject);
 begin
   Resolver<T>.LoadLazy(AOwner, AObject);
-  Result := Self;
 end;
 
 function TManagerObjectSet.ModifiedFields<T>: TDictionary<string, TList<string>>;
@@ -356,55 +389,62 @@ begin
   Result := Resolver<T>.ModifiedFields;
 end;
 
-function TManagerObjectSet.Modify<T>: TManagerObjectSet;
+procedure TManagerObjectSet.Modify<T>;
 begin
-  Result := Self;
   SelectNestedListItem<T>;
   Resolver<T>.Modify(FSelectedObject);
 end;
 
-function TManagerObjectSet.Modify<T>(const AObject: T): TManagerObjectSet;
+procedure TManagerObjectSet.Modify<T>(const AObject: T);
 begin
   Resolver<T>.Modify(AObject);
-  Result := Self;
 end;
 
-function TManagerObjectSet.Next<T>: TManagerObjectSet;
+function TManagerObjectSet.Next<T>: Integer;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   if FCurrentIndex < FNestedList.Items[TClass(T).ClassName].Count -1 then
     Inc(FCurrentIndex);
 end;
 
-function TManagerObjectSet.NextPacket<T>: TManagerObjectSet;
+procedure TManagerObjectSet.NextPacket<T>(var AObjectList: TObjectList<T>);
+begin
+  Resolver<T>.NextPacket(AObjectList);
+end;
+
+procedure TManagerObjectSet.NextPacket<T>;
 var
   LObjectList: TObjectList<T>;
 begin
   LObjectList := TObjectList<T>(FNestedList.Items[TClass(T).ClassName]);
   Resolver<T>.NextPacket(LObjectList);
-  Result := Self;
 end;
 
-function TManagerObjectSet.Prior<T>: TManagerObjectSet;
+function TManagerObjectSet.Prior<T>: Integer;
 begin
-  Result := Self;
+  Result := FCurrentIndex;
   if FCurrentIndex > FNestedList.Items[TClass(T).ClassName].Count -1 then
     Dec(FCurrentIndex);
 end;
 
 {$IFDEF DRIVERRESTFUL}
 function TManagerObjectSet.Find<T>(const AMethodName: String;
-  const AParams: array of string): TManagerObjectSet;
+  const AParams: array of string): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
+  Result := nil;
+  if not FOwnerNestedList then
+  begin
+    Result := Resolver<T>.Find(AMethodName, AParams);
+    Exit;
+  end;
   LObjectList := Resolver<T>.Find(AMethodName, AParams);
   LObjectList.OnNotify := ListChanged<T>;
   /// <summary>
   ///   Lista de objetos
   /// </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
-  Result := Self;
 end;
 {$ENDIF}
 

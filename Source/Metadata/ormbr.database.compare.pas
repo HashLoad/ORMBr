@@ -31,6 +31,7 @@ interface
 
 uses
   SysUtils,
+  Classes,
   ormbr.factory.interfaces,
   ormbr.metadata.db.factory,
   ormbr.database.factory,
@@ -124,11 +125,11 @@ procedure TDatabaseCompare.ExtractDatabase;
 begin
   inherited;
   /// <summary>
-  /// Extrai todo metadata com base nos modelos existentes
+  ///   Extrai todo metadata com base nos modelos existentes
   /// </summary>
   FMetadataMaster.ExtractMetadata(FCatalogMaster);
   /// <summary>
-  /// Extrai todo metadata com base banco de dados acessado
+  ///   Extrai todo metadata com base banco de dados acessado
   /// </summary>
   FMetadataTarget.ExtractMetadata(FCatalogTarget);
 end;

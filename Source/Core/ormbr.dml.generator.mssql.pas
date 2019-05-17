@@ -84,16 +84,19 @@ end;
 function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): string;
 const
   cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
+  cCOLUMN = 'ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER';
 var
   LTable: String;
   LWhere: String;
 begin
   inherited;
+  Result := ACriteria.AsString;
+  if FDMLCriteriaFound then
+    Exit;
   LTable := ACriteria.AST.Select.TableNames.Columns[0].Name;
   LWhere := '(ROWNUMBER <= %s) AND (ROWNUMBER > %s)';
-
   ACriteria.SelectSection(secSelect);
-  ACriteria.Column('ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER');
+  ACriteria.Column(cCOLUMN);
   Result := Format(cSQL, [ACriteria.AsString, LTable, LWhere]);
 end;
 
@@ -115,20 +118,13 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  LTable := TMappingExplorer
-              .GetInstance
-                .GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
-
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria)
-  else
-    Result := LCriteria.AsString;
-
+    Result := GetGeneratorSelect(LCriteria);
   /// OrderBy
-  LOrderBy := TMappingExplorer
-                .GetInstance
-                  .GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     Result := Result + ' ORDER BY ';

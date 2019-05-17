@@ -89,7 +89,8 @@ begin
   FDatabaseMetadata := TMetadataRegister.GetInstance.GetMetadata(FConnection.GetDriverName);
   FDatabaseMetadata.Connection := FConnection;
   FDatabaseMetadata.CatalogMetadata := ACatalogMetadata;
-  FDatabaseMetadata.ModelForDatabase := FOwner.ModelForDatabase;
+  if FOwner <> nil then
+    FDatabaseMetadata.ModelForDatabase := FOwner.ModelForDatabase;
   try
     FDatabaseMetadata.GetDatabaseMetadata;
   finally

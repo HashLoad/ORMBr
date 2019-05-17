@@ -34,6 +34,7 @@ interface
 uses
   DB,
   SysUtils,
+  Variants,
   Generics.Collections,
   {$IFDEF USEFDMEMTABLE}
   FireDAC.Comp.Client,
@@ -67,6 +68,7 @@ type
                  {$ENDIF}
     FRepository: TDictionary<string, TObject>;
     FNestedList: TDictionary<string, TObjectList<TObject>>;
+    FOwnerNestedList: Boolean;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
   public
     constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
@@ -74,7 +76,7 @@ type
                                           {$ENDIF}
     destructor Destroy; override;
     {$IFNDEF DRIVERRESTFUL}
-    function NextPacket<T: class, constructor>: TManagerDataSet;
+    procedure NextPacket<T: class, constructor>;
     function GetAutoNextPacket<T: class, constructor>: Boolean;
     procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
     {$ENDIF}
@@ -82,32 +84,32 @@ type
     function AddAdapter<T: class, constructor>(ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
     function AddAdapter<T, M: class, constructor>(ADataSet: TDataSet): TManagerDataSet; overload;
-    function Open<T: class, constructor>: TManagerDataSet; overload;
-    function Open<T: class, constructor>(const AID: Integer): TManagerDataSet; overload;
-    function Open<T: class, constructor>(const AID: String): TManagerDataSet; overload;
-    function OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = ''): TManagerDataSet;
-    function Close<T: class, constructor>: TManagerDataSet;
-    function Save<T: class, constructor>(AObject: T): TManagerDataSet;
-    function LoadLazy<T: class, constructor>(const AOwner: T): TManagerDataSet;
-    function RefreshRecord<T: class, constructor>: TManagerDataSet;
-    function EmptyDataSet<T: class, constructor>: TManagerDataSet;
-    function CancelUpdates<T: class, constructor>: TManagerDataSet;
-    function ApplyUpdates<T: class, constructor>(const MaxErros: Integer): TManagerDataSet;
     function AddLookupField<T, M: class, constructor>(const AFieldName: string;
                                                       const AKeyFields: string;
                                                       const ALookupKeyFields: string;
                                                       const ALookupResultField: string;
                                                       const ADisplayLabel: string = ''): TManagerDataSet;
+    procedure Open<T: class, constructor>; overload;
+    procedure Open<T: class, constructor>(const AID: Integer); overload;
+    procedure Open<T: class, constructor>(const AID: String); overload;
+    procedure OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = '');
+    procedure Close<T: class, constructor>;
+    procedure LoadLazy<T: class, constructor>(const AOwner: T);
+    procedure RefreshRecord<T: class, constructor>;
+    procedure EmptyDataSet<T: class, constructor>;
+    procedure CancelUpdates<T: class, constructor>;
+    procedure ApplyUpdates<T: class, constructor>(const MaxErros: Integer);
+    procedure Save<T: class, constructor>(AObject: T);
     function Current<T: class, constructor>: T;
     function DataSet<T: class, constructor>: TDataSet;
     /// ObjectSet
-    function Find<T: class, constructor>: TManagerDataSet; overload;
-    function Find<T: class, constructor>(const AID: Integer): T; overload;
-    function Find<T: class, constructor>(const AID: String): T; overload;
+    function Find<T: class, constructor>: TObjectList<T>; overload;
+    function Find<T: class, constructor>(const AID: Variant): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TManagerDataSet;
+                                              const AOrderBy: string = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerDataSet;
+    property OwnerNestedList: Boolean read FOwnerNestedList write FOwnerNestedList;
   end;
 
 implementation
@@ -150,48 +152,48 @@ begin
   Result := Resolver<T>.FOrmDataSet;
 end;
 
-function TManagerDataSet.EmptyDataSet<T>: TManagerDataSet;
+procedure TManagerDataSet.EmptyDataSet<T>;
 begin
   Resolver<T>.EmptyDataSet;
-  Result := Self;
 end;
 
-function TManagerDataSet.Find<T>(const AID: Integer): T;
+function TManagerDataSet.Find<T>(const AID: Variant): T;
 begin
-  Result := Resolver<T>.Find(AID);
+  if TVarData(AID).VType = varInteger then
+    Result := Resolver<T>.Find(Integer(AID))
+  else
+  if TVarData(AID).VType = varString then
+    Result := Resolver<T>.Find(VarToStr(AID))
 end;
 
-function TManagerDataSet.Find<T>(const AID: String): T;
-begin
-  Result := Resolver<T>.Find(AID);
-end;
-
-function TManagerDataSet.Find<T>: TManagerDataSet;
+function TManagerDataSet.Find<T>: TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
+  Result := nil;
+  if not FOwnerNestedList then
+  begin
+    Result := Resolver<T>.Find;
+    Exit;
+  end;
   LObjectList := Resolver<T>.Find;
   /// <summary> Limpa a lista de objectos </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
-  Result := Self;
 end;
 
-function TManagerDataSet.CancelUpdates<T>: TManagerDataSet;
+procedure TManagerDataSet.CancelUpdates<T>;
 begin
   Resolver<T>.CancelUpdates;
-  Result := Self;
 end;
 
-function TManagerDataSet.Close<T>: TManagerDataSet;
+procedure TManagerDataSet.Close<T>;
 begin
   Resolver<T>.EmptyDataSet;
-  Result := Self;
 end;
 
-function TManagerDataSet.LoadLazy<T>(const AOwner: T): TManagerDataSet;
+procedure TManagerDataSet.LoadLazy<T>(const AOwner: T);
 begin
   Resolver<T>.LoadLazy(AOwner);
-  Result := Self;
 end;
 
 function TManagerDataSet.AddAdapter<T, M>(ADataSet: TDataSet): TManagerDataSet;
@@ -294,10 +296,9 @@ begin
                              ADisplayLabel);
 end;
 
-function TManagerDataSet.ApplyUpdates<T>(const MaxErros: Integer): TManagerDataSet;
+procedure TManagerDataSet.ApplyUpdates<T>(const MaxErros: Integer);
 begin
   Resolver<T>.ApplyUpdates(MaxErros);
-  Result := Self;
 end;
 
 function TManagerDataSet.AutoNextPacket<T>(const AValue: Boolean): TManagerDataSet;
@@ -305,35 +306,30 @@ begin
   Resolver<T>.AutoNextPacket := AValue;
 end;
 
-function TManagerDataSet.Open<T>(const AID: String): TManagerDataSet;
+procedure TManagerDataSet.Open<T>(const AID: String);
 begin
   Resolver<T>.OpenIDInternal(AID);
-  Result := Self;
 end;
 
-function TManagerDataSet.OpenWhere<T>(const AWhere,
-  AOrderBy: string): TManagerDataSet;
+procedure TManagerDataSet.OpenWhere<T>(const AWhere,
+  AOrderBy: string);
 begin
   Resolver<T>.OpenWhereInternal(AWhere, AOrderBy);
-  Result := Self;
 end;
 
-function TManagerDataSet.Open<T>(const AID: Integer): TManagerDataSet;
+procedure TManagerDataSet.Open<T>(const AID: Integer);
 begin
   Resolver<T>.OpenIDInternal(AID);
-  Result := Self;
 end;
 
-function TManagerDataSet.Open<T>: TManagerDataSet;
+procedure TManagerDataSet.Open<T>;
 begin
   Resolver<T>.OpenSQLInternal('');
-  Result := Self;
 end;
 
-function TManagerDataSet.RefreshRecord<T>: TManagerDataSet;
+procedure TManagerDataSet.RefreshRecord<T>;
 begin
   Resolver<T>.RefreshRecord;
-  Result := Self;
 end;
 
 procedure TManagerDataSet.RemoveAdapter<T>;
@@ -358,27 +354,30 @@ begin
     Result := TDataSetBaseAdapter<T>(FRepository.Items[LClassName]);
 end;
 
-function TManagerDataSet.Save<T>(AObject: T): TManagerDataSet;
+procedure TManagerDataSet.Save<T>(AObject: T);
 begin
   Resolver<T>.Save(AObject);
-  Result := Self;
 end;
 
-function TManagerDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TManagerDataSet;
+function TManagerDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
+  Result := nil;
+  if not FOwnerNestedList then
+  begin
+    Result := Resolver<T>.FindWhere(AWhere, AOrderBy);
+    Exit;
+  end;
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   /// <summary> Limpa a lista de objectos </summary>
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
-  Result := Self;
 end;
 
 {$IFNDEF DRIVERRESTFUL}
-function TManagerDataSet.NextPacket<T>: TManagerDataSet;
+procedure TManagerDataSet.NextPacket<T>;
 begin
   Resolver<T>.NextPacket;
-  Result := Self;
 end;
 
 function TManagerDataSet.GetAutoNextPacket<T>: Boolean;

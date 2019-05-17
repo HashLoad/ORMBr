@@ -128,15 +128,6 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.selecter.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.updater.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.commands.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.absolutedb.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.firebird.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.interbase.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mssql.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mysql.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.oracle.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.postgresql.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.sqlite.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.driver.register.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.encddecd.pas"/>
@@ -168,6 +159,19 @@
         </DCCReference>
         <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
         <DCCReference Include="..\..\..\Source\Objectset\ormbr.manager.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.absolutedb.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.elevatedb.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.firebird.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.interbase.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mongodb.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mssql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.mysql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.nexusdb.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.nosql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.oracle.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.postgresql.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.sqlite.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

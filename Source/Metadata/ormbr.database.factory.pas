@@ -31,6 +31,7 @@ interface
 
 uses
   DB,
+  Classes,
   SysUtils,
   Generics.Collections,
   ormbr.ddl.interfaces,
@@ -100,11 +101,11 @@ begin
   FCatalogTarget := TCatalogMetadataMIK.Create;
   try
     /// <summary>
-    /// Extrai o metadata com base nos modelos existentes e no banco de dados
+    ///   Extrai o metadata com base nos modelos existentes e no banco de dados
     /// </summary>
     ExtractDatabase;
     /// <summary>
-    /// Gera os comandos DDL para atualização do banco da dados.
+    ///   Gera os comandos DDL para atualização do banco da dados.
     /// </summary>
     GenerateDDLCommands(FCatalogMaster, FCatalogTarget);
   finally

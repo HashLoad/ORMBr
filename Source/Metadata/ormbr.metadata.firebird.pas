@@ -83,13 +83,13 @@ implementation
 
 function TCatalogMetadataFirebird.Execute: IDBResultSet;
 var
-  oSQLQuery: IDBQuery;
+  LSQLQuery: IDBQuery;
 begin
   inherited;
-  oSQLQuery := FConnection.CreateQuery;
+  LSQLQuery := FConnection.CreateQuery;
   try
-    oSQLQuery.CommandText := FSQLText;
-    Exit(oSQLQuery.ExecuteQuery);
+    LSQLQuery.CommandText := FSQLText;
+    Exit(LSQLQuery.ExecuteQuery);
   except
     raise
   end;
@@ -124,48 +124,48 @@ end;
 
 procedure TCatalogMetadataFirebird.GetTables;
 var
-  oDBResultSet: IDBResultSet;
-  oTable: TTableMIK;
+  LDBResultSet: IDBResultSet;
+  LTable: TTableMIK;
 begin
   inherited;
   FSQLText := GetSelectTables;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oTable := TTableMIK.Create(FCatalogMetadata);
-    oTable.Name := VarToStr(oDBResultSet.GetFieldValue('table_name'));
-    oTable.Description := VarToStr(oDBResultSet.GetFieldValue('table_description'));
+    LTable := TTableMIK.Create(FCatalogMetadata);
+    LTable.Name := VarToStr(LDBResultSet.GetFieldValue('table_name'));
+    LTable.Description := VarToStr(LDBResultSet.GetFieldValue('table_description'));
     /// <summary>
     /// Extrair colunas da tabela
     /// </summary>
-    GetColumns(oTable);
+    GetColumns(LTable);
     /// <summary>
     /// Extrair Primary Key da tabela
     /// </summary>
-    GetPrimaryKey(oTable);
+    GetPrimaryKey(LTable);
     /// <summary>
     /// Extrair Foreign Keys da tabela
     /// </summary>
-    GetForeignKeys(oTable);
+    GetForeignKeys(LTable);
     /// <summary>
     /// Extrair Indexes da tabela
     /// </summary>
-    GetIndexeKeys(oTable);
+    GetIndexeKeys(LTable);
     /// <summary>
     /// Extrair Checks da tabela
     /// </summary>
-    GetChecks(oTable);
+    GetChecks(LTable);
     /// <summary>
     /// Adiciona na lista de tabelas extraidas
     /// </summary>
-    FCatalogMetadata.Tables.Add(UpperCase(oTable.Name), oTable);
+    FCatalogMetadata.Tables.Add(UpperCase(LTable.Name), LTable);
   end;
 end;
 
 procedure TCatalogMetadataFirebird.GetColumns(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oColumn: TColumnMIK;
+  LDBResultSet: IDBResultSet;
+  LColumn: TColumnMIK;
 
   function ExtractDefaultValue(ADefaultValue: string): string;
   var
@@ -201,60 +201,60 @@ var
 begin
   inherited;
   FSQLText := GetSelectTableColumns(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oColumn := TColumnMIK.Create(ATable);
-    oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-    oColumn.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger);
-    oColumn.Size := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_size'));
-    oColumn.Precision := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_precision'));
-    oColumn.Scale := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_scale'));
-    oColumn.Scale := (oColumn.Scale) * (-1);
-    oColumn.NotNull := ResolveBooleanNullValue(oDBResultSet.GetFieldValue('column_nullable'));
-    oColumn.DefaultValue := ExtractDefaultValue(VarToStr(oDBResultSet.GetFieldValue('column_defaultvalue')));
-    oColumn.Description := VarToStr(oDBResultSet.GetFieldValue('column_description'));
-    oColumn.CharSet := VarToStr(oDBResultSet.GetFieldValue('column_charset'));
-    ResolveFieldType(oColumn,
-                     VarAsType(oDBResultSet.GetFieldValue('column_type'), varInteger),
-                     ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_subtype')));
+    LColumn := TColumnMIK.Create(ATable);
+    LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+    LColumn.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger);
+    LColumn.Size := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_size'));
+    LColumn.Precision := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_precision'));
+    LColumn.Scale := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_scale'));
+    LColumn.Scale := (LColumn.Scale) * (-1);
+    LColumn.NotNull := ResolveBooleanNullValue(LDBResultSet.GetFieldValue('column_nullable'));
+    LColumn.DefaultValue := ExtractDefaultValue(VarToStr(LDBResultSet.GetFieldValue('column_defaultvalue')));
+    LColumn.Description := VarToStr(LDBResultSet.GetFieldValue('column_description'));
+    LColumn.CharSet := VarToStr(LDBResultSet.GetFieldValue('column_charset'));
+    ResolveFieldType(LColumn,
+                     VarAsType(LDBResultSet.GetFieldValue('column_type'), varInteger),
+                     ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_subtype')));
     /// <summary>
     /// Resolve Field Type
     /// </summary>
-    GetFieldTypeDefinition(oColumn);
-    ATable.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+    GetFieldTypeDefinition(LColumn);
+    ATable.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
   end;
 end;
 
 procedure TCatalogMetadataFirebird.GetPrimaryKey(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
+  LDBResultSet: IDBResultSet;
 
   procedure GetPrimaryKeyColumns(APrimaryKey: TPrimaryKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oColumn: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LColumn: TColumnMIK;
   begin
     FSQLText := GetSelectPrimaryKeyColumns(APrimaryKey.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
-      oColumn := TColumnMIK.Create(ATable);
-      oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oColumn.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger);
-      oColumn.NotNull := True;
-      APrimaryKey.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+      LColumn := TColumnMIK.Create(ATable);
+      LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LColumn.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger);
+      LColumn.NotNull := True;
+      APrimaryKey.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
     end;
   end;
 
 begin
   inherited;
   FSQLText := GetSelectPrimaryKey(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    ATable.PrimaryKey.Name := VarToStr(oDBResultSet.GetFieldValue('pk_name'));
-    ATable.PrimaryKey.Description := VarToStr(oDBResultSet.GetFieldValue('pk_description'));
+    ATable.PrimaryKey.Name := VarToStr(LDBResultSet.GetFieldValue('pk_name'));
+    ATable.PrimaryKey.Description := VarToStr(LDBResultSet.GetFieldValue('pk_description'));
     /// <summary>
     /// Extrai as columnas da primary key
     /// </summary>
@@ -266,51 +266,51 @@ procedure TCatalogMetadataFirebird.GetForeignKeys(ATable: TTableMIK);
 
   procedure GetForeignKeyColumns(AForeignKey: TForeignKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oFromField: TColumnMIK;
-    oToField: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LFromField: TColumnMIK;
+    LToField: TColumnMIK;
   begin
     FSQLText := GetSelectForeignKeyColumns(AForeignKey.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
       /// <summary>
       /// Coluna tabela source
       /// </summary>
-      oFromField := TColumnMIK.Create(ATable);
-      oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oFromField.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger);
-      AForeignKey.FromFields.Add(FormatFloat('000000', oFromField.Position), oFromField);
+      LFromField := TColumnMIK.Create(ATable);
+      LFromField.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LFromField.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger);
+      AForeignKey.FromFields.Add(FormatFloat('000000', LFromField.Position), LFromField);
       /// <summary>
       /// Coluna tabela referencia
       /// </summary>
-      oToField := TColumnMIK.Create(ATable);
-      oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
-      oToField.Position := VarAsType(oDBResultSet.GetFieldValue('column_referenceposition'), varInteger);
-      AForeignKey.ToFields.Add(FormatFloat('000000', oToField.Position), oToField);
+      LToField := TColumnMIK.Create(ATable);
+      LToField.Name := VarToStr(LDBResultSet.GetFieldValue('column_reference'));
+      LToField.Position := VarAsType(LDBResultSet.GetFieldValue('column_referenceposition'), varInteger);
+      AForeignKey.ToFields.Add(FormatFloat('000000', LToField.Position), LToField);
     end;
   end;
 
 var
-  oDBResultSet: IDBResultSet;
-  oForeignKey: TForeignKeyMIK;
+  LDBResultSet: IDBResultSet;
+  LForeignKey: TForeignKeyMIK;
 begin
   inherited;
   FSQLText := GetSelectForeignKey(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oForeignKey := TForeignKeyMIK.Create(ATable);
-    oForeignKey.Name := VarToStr(oDBResultSet.GetFieldValue('fk_name'));
-    oForeignKey.FromTable := VarToStr(oDBResultSet.GetFieldValue('table_reference'));
-    oForeignKey.OnUpdate := GetRuleAction(VarToStrDef(oDBResultSet.GetFieldValue('fk_updateaction'), 'RESTRICT'));
-    oForeignKey.OnDelete := GetRuleAction(VarToStrDef(oDBResultSet.GetFieldValue('fk_deleteaction'), 'RESTRICT'));
-    oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
-    ATable.ForeignKeys.Add(UpperCase(oForeignKey.Name), oForeignKey);
+    LForeignKey := TForeignKeyMIK.Create(ATable);
+    LForeignKey.Name := VarToStr(LDBResultSet.GetFieldValue('fk_name'));
+    LForeignKey.FromTable := VarToStr(LDBResultSet.GetFieldValue('table_reference'));
+    LForeignKey.OnUpdate := GetRuleAction(VarToStrDef(LDBResultSet.GetFieldValue('fk_updateaction'), 'RESTRICT'));
+    LForeignKey.OnDelete := GetRuleAction(VarToStrDef(LDBResultSet.GetFieldValue('fk_deleteaction'), 'RESTRICT'));
+    LForeignKey.Description :=  VarToStr(LDBResultSet.GetFieldValue('fk_description'));
+    ATable.ForeignKeys.Add(UpperCase(LForeignKey.Name), LForeignKey);
     /// <summary>
     /// Gera a lista de campos do foreignkey
     /// </summary>
-    GetForeignKeyColumns(oForeignKey);
+    GetForeignKeyColumns(LForeignKey);
   end;
 end;
 
@@ -328,113 +328,113 @@ end;
 
 procedure TCatalogMetadataFirebird.GetSequences;
 var
-  oDBResultSet: IDBResultSet;
-  oSequence: TSequenceMIK;
+  LDBResultSet: IDBResultSet;
+  LSequence: TSequenceMIK;
 begin
   inherited;
   FSQLText := GetSelectSequences;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oSequence := TSequenceMIK.Create(FCatalogMetadata);
-    oSequence.Name := VarToStr(oDBResultSet.GetFieldValue('name'));
-    oSequence.Description := VarToStr(oDBResultSet.GetFieldValue('description'));
-    FCatalogMetadata.Sequences.Add(UpperCase(oSequence.Name), oSequence);
+    LSequence := TSequenceMIK.Create(FCatalogMetadata);
+    LSequence.Name := VarToStr(LDBResultSet.GetFieldValue('name'));
+    LSequence.Description := VarToStr(LDBResultSet.GetFieldValue('description'));
+    FCatalogMetadata.Sequences.Add(UpperCase(LSequence.Name), LSequence);
   end;
 end;
 
 procedure TCatalogMetadataFirebird.GetTriggers(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oTrigger: TTriggerMIK;
+  LDBResultSet: IDBResultSet;
+  LTrigger: TTriggerMIK;
 begin
   inherited;
   FSQLText := '';
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oTrigger := TTriggerMIK.Create(ATable);
-    oTrigger.Name := VarToStr(oDBResultSet.GetFieldValue('name'));
-    oTrigger.Description := '';
-    oTrigger.Script := VarToStr(oDBResultSet.GetFieldValue('sql'));
-    ATable.Triggers.Add(UpperCase(oTrigger.Name), oTrigger);
+    LTrigger := TTriggerMIK.Create(ATable);
+    LTrigger.Name := VarToStr(LDBResultSet.GetFieldValue('name'));
+    LTrigger.Description := '';
+    LTrigger.Script := VarToStr(LDBResultSet.GetFieldValue('sql'));
+    ATable.Triggers.Add(UpperCase(LTrigger.Name), LTrigger);
   end;
 end;
 
 procedure TCatalogMetadataFirebird.GetIndexeKeys(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oIndexeKey: TIndexeKeyMIK;
+  LDBResultSet: IDBResultSet;
+  LIndexeKey: TIndexeKeyMIK;
 
   procedure GetIndexeKeyColumns(AIndexeKey: TIndexeKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oColumn: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LColumn: TColumnMIK;
   begin
     FSQLText := GetSelectIndexeColumns(AIndexeKey.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
-      oColumn := TColumnMIK.Create(ATable);
-      oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oColumn.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger);
-      AIndexeKey.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+      LColumn := TColumnMIK.Create(ATable);
+      LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LColumn.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger);
+      AIndexeKey.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
     end;
   end;
 
 begin
   inherited;
   FSQLText := GetSelectIndexe(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oIndexeKey := TIndexeKeyMIK.Create(ATable);
-    oIndexeKey.Name := VarToStr(oDBResultSet.GetFieldValue('indexe_name'));
-    oIndexeKey.Unique := VarAsType(oDBResultSet.GetFieldValue('indexe_unique'), varBoolean);
-    ATable.IndexeKeys.Add(UpperCase(oIndexeKey.Name), oIndexeKey);
+    LIndexeKey := TIndexeKeyMIK.Create(ATable);
+    LIndexeKey.Name := VarToStr(LDBResultSet.GetFieldValue('indexe_name'));
+    LIndexeKey.Unique := VarAsType(LDBResultSet.GetFieldValue('indexe_unique'), varBoolean);
+    ATable.IndexeKeys.Add(UpperCase(LIndexeKey.Name), LIndexeKey);
     /// <summary>
     /// Gera a lista de campos do indexe
     /// </summary>
-    GetIndexeKeyColumns(oIndexeKey);
+    GetIndexeKeyColumns(LIndexeKey);
   end;
 end;
 
 procedure TCatalogMetadataFirebird.GetViews;
 var
-  oDBResultSet: IDBResultSet;
-  oView: TViewMIK;
+  LDBResultSet: IDBResultSet;
+  LView: TViewMIK;
 
   procedure GetViewColumns(AView: TViewMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oColumn: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LColumn: TColumnMIK;
   begin
     inherited;
     FSQLText := GetSelectViewsColumns(AView.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
-      oColumn := TColumnMIK.Create;
-      oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      AView.Fields.Add(UpperCase(oColumn.Name), oColumn);
+      LColumn := TColumnMIK.Create;
+      LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      AView.Fields.Add(UpperCase(LColumn.Name), LColumn);
     end;
   end;
 
 begin
   inherited;
   FSQLText := GetSelectViews;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oView := TViewMIK.Create(FCatalogMetadata);
-    oView.Name := VarToStr(oDBResultSet.GetFieldValue('view_name'));
-    oView.Script := VarToStr(oDBResultSet.GetFieldValue('view_script'));
-    oView.Description := VarToStr(oDBResultSet.GetFieldValue('view_description'));
-    FCatalogMetadata.Views.Add(UpperCase(oView.Name), oView);
+    LView := TViewMIK.Create(FCatalogMetadata);
+    LView.Name := VarToStr(LDBResultSet.GetFieldValue('view_name'));
+    LView.Script := VarToStr(LDBResultSet.GetFieldValue('view_script'));
+    LView.Description := VarToStr(LDBResultSet.GetFieldValue('view_description'));
+    FCatalogMetadata.Views.Add(UpperCase(LView.Name), LView);
     /// <summary>
     /// Gera a lista de campos da view
     /// </summary>
-    GetViewColumns(oView);
+    GetViewColumns(LView);
   end;
 end;
 

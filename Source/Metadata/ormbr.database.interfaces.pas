@@ -30,6 +30,7 @@ unit ormbr.database.interfaces;
 interface
 
 uses
+  Classes,
   Generics.Collections,
   ormbr.factory.interfaces,
   ormbr.ddl.interfaces,

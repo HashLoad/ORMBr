@@ -26,7 +26,7 @@ uses
   ormbr.manager.dataset,
   ormbr.factory.interfaces,
   ormbr.factory.firedac,
-  ormbr.dml.generator.sqlite,
+  ormbr.dml.generator.firebird,
   ormbr.rest.json,
   /// modelos usados
   ormbr.model.master,
@@ -40,7 +40,7 @@ uses
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL,
-  FireDAC.Phys.MySQLDef;
+  FireDAC.Phys.MySQLDef, FireDAC.Phys.FB, FireDAC.Phys.FBDef;
 
 type
   TForm3 = class(TForm)
@@ -136,7 +136,7 @@ end;
 procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
-  oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
+  oConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
   oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oManager := TManagerDataSet.Create(oConn);

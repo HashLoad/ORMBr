@@ -84,6 +84,9 @@ function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(
   const ACriteria: ICriteria): string;
 begin
   inherited;
+  Result := ACriteria.AsString;
+  if FDMLCriteriaFound then
+    Exit;
   ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s '
                                                 + ACriteria.AST.Select.Columns.Columns[0].Name;
   Result := ACriteria.AsString;
@@ -98,14 +101,10 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  LTable := TMappingExplorer
-              .GetInstance
-                .GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
   /// OrderBy
-  LOrderBy := TMappingExplorer
-                .GetInstance
-                  .GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     LOrderByList := TStringList.Create;
@@ -118,10 +117,9 @@ begin
       LOrderByList.Free;
     end;
   end;
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := GetGeneratorSelect(LCriteria)
-  else
-     Result := LCriteria.AsString;
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorSelectWhere(AClass: TClass; AWhere,
@@ -132,10 +130,9 @@ begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
   LCriteria.OrderBy(AOrderBy);
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := LCriteria.AsString + ' TOP %s, %s'
-  else
-     Result := LCriteria.AsString;
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorAutoIncCurrentValue(AObject: TObject;

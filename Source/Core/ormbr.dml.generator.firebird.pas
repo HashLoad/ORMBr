@@ -44,7 +44,7 @@ uses
 
 type
   /// <summary>
-  /// Classe de banco de dados Firebird
+  ///   Classe de banco de dados Firebird
   /// </summary>
   TDMLGeneratorFirebird = class(TDMLGeneratorAbstract)
   protected
@@ -82,8 +82,11 @@ end;
 function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   inherited;
-  ACriteria.AST.Select.Columns.Columns[0].Name := 'FIRST %s SKIP %s ' +
-                                                  ACriteria.AST.Select.Columns.Columns[0].Name;
+  Result := ACriteria.AsString;
+  if FDMLCriteriaFound then
+    Exit;
+  ACriteria.AST.Select.Columns.Columns[0].Name := 'FIRST %s SKIP %s '
+                                                  + ACriteria.AST.Select.Columns.Columns[0].Name;
   Result := ACriteria.AsString;
 end;
 
@@ -112,10 +115,9 @@ begin
       LOrderByList.Free;
     end;
   end;
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := GetGeneratorSelect(LCriteria)
-  else
-     Result := LCriteria.AsString;
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
@@ -126,10 +128,9 @@ begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
   LCriteria.OrderBy(AOrderBy);
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := GetGeneratorSelect(LCriteria)
-  else
-     Result := LCriteria.AsString;
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorFirebird.GeneratorAutoIncCurrentValue(AObject: TObject;

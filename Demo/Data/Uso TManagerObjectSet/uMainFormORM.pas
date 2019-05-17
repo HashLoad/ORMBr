@@ -36,7 +36,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Intf,
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.Comp.DataSet;
+  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef;
 
 type
   TStringGridHack = class(TStringGrid)
@@ -119,7 +119,7 @@ begin
   MasterStringGridDefinitions;
   DetailStringGridDefinitions;
 
-  FConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
+  FConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
   FConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   FManager := TManagerObjectSet.Create(FConn);
@@ -294,7 +294,7 @@ procedure TForm3.StringGridMasterSelectCell(Sender: TObject; ACol, ARow: Integer
 begin
   if ARow > 0 then
   begin
-    FManager.SelectCurrenct<Tmaster>(ARow -1);
+    FManager.Current<Tmaster>(ARow -1);
     /// <summary>
     /// Preenche os edites com a linha selecionada no grid
     /// </summary>
@@ -302,7 +302,7 @@ begin
     /// <summary>
     /// Preenche a lista de detalhes
     /// </summary>
-    DetailStringGridFill(FManager.NestedList<Tmaster>[ARow -1].detail);
+//    DetailStringGridFill(FManager.NestedList<Tmaster>[ARow -1].detail);
     DetailStringGridFill(FManager.Current<Tmaster>.detail);
     ///
     Edit7.Text := FormatFloat('###,##0.00', FManager.Current<Tmaster>.total);

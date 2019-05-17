@@ -20,13 +20,13 @@ uses
   ormbr.ddl.commands,
   ormbr.database.compare,
   ormbr.database.interfaces,
-  ormbr.types.database;
+  ormbr.types.database, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, FireDAC.Comp.DataSet;
 
 type
   TForm1 = class(TForm)
     Memo1: TMemo;
     Button1: TButton;
-    FDConnection1: TFDConnection;
     FDGUIxWaitCursor1: TFDGUIxWaitCursor;
     FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink;
     FDPhysPgDriverLink1: TFDPhysPgDriverLink;
@@ -35,7 +35,10 @@ type
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
     FDPhysIBDriverLink1: TFDPhysIBDriverLink;
     FDPhysOracleDriverLink1: TFDPhysOracleDriverLink;
+    FDConnection1: TFDConnection;
     FDConnection2: TFDConnection;
+    Button2: TButton;
+    FDMetaInfoQuery1: TFDMetaInfoQuery;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -52,7 +55,16 @@ var
 
 implementation
 
+uses
+  ormbr.database.mapping;
+
 {$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  oConnMaster := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
+  oConnTarget := TFactoryFireDAC.Create(FDConnection2, dnFirebird);
+end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
@@ -64,13 +76,6 @@ begin
   oManager.BuildDatabase;
   for cDDL in oManager.GetCommandList do
       Memo1.Lines.Add(cDDL.Command);
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-begin
-  // Instância da class de conexão via FireDAC
-  oConnMaster := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
-  oConnTarget := TFactoryFireDAC.Create(FDConnection2, dnFirebird);
 end;
 
 end.

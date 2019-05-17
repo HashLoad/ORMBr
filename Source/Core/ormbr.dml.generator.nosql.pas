@@ -19,7 +19,7 @@ uses
 
 type
   /// <summary>
-  /// Classe de conexão concreta com NoSQL
+  ///   Classe de conexão concreta com NoSQL
   /// </summary>
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
@@ -248,7 +248,7 @@ begin
       end;
     end;
     /// <summary>
-    /// Order By
+    ///   Order By
     /// </summary>
     LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
     if LOrderBy <> nil then

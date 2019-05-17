@@ -203,8 +203,8 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 
 begin
    sDirPackage := '';
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Wizard', NomePacote);
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\External', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Projects\Wizard', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Projects\Components\MongoWire', NomePacote);
 end;
 
 // retornar o path do aplicativo

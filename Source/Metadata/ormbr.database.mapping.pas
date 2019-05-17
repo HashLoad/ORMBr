@@ -231,6 +231,7 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
+    function TablesSort: TArray<TPair<String, TTableMIK>>;
     property Name: string read FName write FName;
     property Schema: string read FSchema write FSchema;
     property Tables: TObjectDictionary<string, TTableMIK> read FTables;
@@ -268,15 +269,15 @@ function TTableMIK.FieldsSort: TArray<TPair<string, TColumnMIK>>;
 
   function ToArray: TArray<TPair<string, TColumnMIK>>;
   var
-    oPair: TPair<string, TColumnMIK>;
-    iIndex: Integer;
+    LPair: TPair<string, TColumnMIK>;
+    LIndex: Integer;
   begin
     SetLength(Result, FFields.Count);
-    iIndex := 0;
-    for oPair in FFields do
+    LIndex := 0;
+    for LPair in FFields do
     begin
-      Result[iIndex] := oPair;
-      Inc(iIndex);
+      Result[LIndex] := LPair;
+      Inc(LIndex);
     end;
   end;
 
@@ -311,15 +312,15 @@ function TForeignKeyMIK.FromFieldsSort: TArray<TPair<String, TColumnMIK>>;
 
   function ToArray: TArray<TPair<string, TColumnMIK>>;
   var
-    oPair: TPair<string, TColumnMIK>;
-    iIndex: Integer;
+    LPair: TPair<string, TColumnMIK>;
+    LIndex: Integer;
   begin
     SetLength(Result, FFromFields.Count);
-    iIndex := 0;
-    for oPair in FFromFields do
+    LIndex := 0;
+    for LPair in FFromFields do
     begin
-      Result[iIndex] := oPair;
-      Inc(iIndex);
+      Result[LIndex] := LPair;
+      Inc(LIndex);
     end;
   end;
 
@@ -338,15 +339,15 @@ function TForeignKeyMIK.ToFieldsSort: TArray<TPair<String, TColumnMIK>>;
 
   function ToArray: TArray<TPair<string, TColumnMIK>>;
   var
-    oPair: TPair<string, TColumnMIK>;
-    iIndex: Integer;
+    LPair: TPair<string, TColumnMIK>;
+    LIndex: Integer;
   begin
     SetLength(Result, FToFields.Count);
-    iIndex := 0;
-    for oPair in FToFields do
+    LIndex := 0;
+    for LPair in FToFields do
     begin
-      Result[iIndex] := oPair;
-      Inc(iIndex);
+      Result[LIndex] := LPair;
+      Inc(LIndex);
     end;
   end;
 
@@ -379,15 +380,15 @@ function TIndexeKeyMIK.FieldsSort: TArray<TPair<String, TColumnMIK>>;
 
   function ToArray: TArray<TPair<string, TColumnMIK>>;
   var
-    oPair: TPair<string, TColumnMIK>;
-    iIndex: Integer;
+    LPair: TPair<string, TColumnMIK>;
+    LIndex: Integer;
   begin
     SetLength(Result, FFields.Count);
-    iIndex := 0;
-    for oPair in FFields do
+    LIndex := 0;
+    for LPair in FFields do
     begin
-      Result[iIndex] := oPair;
-      Inc(iIndex);
+      Result[LIndex] := LPair;
+      Inc(LIndex);
     end;
   end;
 
@@ -425,6 +426,33 @@ begin
   inherited;
 end;
 
+function TCatalogMetadataMIK.TablesSort: TArray<TPair<String, TTableMIK>>;
+
+  function ToArray: TArray<TPair<string, TTableMIK>>;
+  var
+    LPair: TPair<string, TTableMIK>;
+    LIndex: Integer;
+  begin
+    SetLength(Result, FTables.Count);
+    LIndex := 0;
+    for LPair in FTables do
+    begin
+      Result[LIndex] := LPair;
+      Inc(LIndex);
+    end;
+  end;
+
+begin
+  Result := ToArray;
+  TArray.Sort<TPair<String, TTableMIK>>(Result,
+    TComparer<TPair<String, TTableMIK>>.Construct(
+      function (const Left, Right: TPair<String, TTableMIK>): Integer
+      begin
+        Result := CompareStr(Left.Key, Right.Key);
+      end)
+    );
+end;
+
 { TColumnMIK }
 
 constructor TColumnMIK.Create(ATable: TTableMIK);
@@ -459,15 +487,15 @@ function TPrimaryKeyMIK.FieldsSort: TArray<TPair<String, TColumnMIK>>;
 
   function ToArray: TArray<TPair<string, TColumnMIK>>;
   var
-    oPair: TPair<string, TColumnMIK>;
-    iIndex: Integer;
+    LPair: TPair<string, TColumnMIK>;
+    LIndex: Integer;
   begin
     SetLength(Result, FFields.Count);
-    iIndex := 0;
-    for oPair in FFields do
+    LIndex := 0;
+    for LPair in FFields do
     begin
-      Result[iIndex] := oPair;
-      Inc(iIndex);
+      Result[LIndex] := LPair;
+      Inc(LIndex);
     end;
   end;
 

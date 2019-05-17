@@ -96,9 +96,6 @@ end;
 function TCommandSelecter.GenerateSelectAll(const AClass: TClass): string;
 begin
   FPageNext := 0;
-  /// <summary>
-  ///   Se o SELECT não foi construido, constroi, se foi, retorna o já existente.
-  /// </summary>
   FCommandSelect := FGeneratorCommand.GeneratorSelectAll(AClass, FPageSize, -1);
   FCommand := FGeneratorCommand
                 .GeneratorPageNext(FCommandSelect, FPageSize, FPageNext);
@@ -148,9 +145,6 @@ end;
 function TCommandSelecter.GenerateNextPacket(const AClass: TClass;
   const APageSize, APageNext: Integer): string;
 begin
-  /// <summary>
-  ///   Se o SELECT não foi contruido, constroi, se foi, retorna o já existente.
-  /// </summary>
   FCommandSelect := FGeneratorCommand.GeneratorSelectAll(AClass, APageSize, -1);
   FCommand := FGeneratorCommand
                 .GeneratorPageNext(FCommandSelect, APageSize, APageNext);

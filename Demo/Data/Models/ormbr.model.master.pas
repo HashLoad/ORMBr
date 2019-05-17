@@ -35,9 +35,9 @@ type
     Fclient_id: Integer;
     Fclient_name: string;
     FEnumer: TMyEnum;
+    FInativo: Boolean;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
-//    FInativo: Boolean;
     function GetTotal: Double;
   public
     { Public declarations }
@@ -73,8 +73,9 @@ type
     [Column('MyEnum', ftInteger)]
     property MyEnum: TMyEnum read FEnumer write FEnumer;
 
-//    [Column('Inativo', ftBoolean)]
-//    property Inativo: Boolean read FInativo write FInativo;
+    [Enumeration(TEnumType.etBoolean, '0, 1')]
+    [Column('Inativo', ftBoolean)]
+    property Inativo: Boolean read FInativo write FInativo;
 
     [Restrictions([NoInsert, NoUpdate])]
     [Column('client_name', ftString, 60)]

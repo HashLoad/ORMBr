@@ -31,19 +31,13 @@ object Form1: TForm1
     TabOrder = 1
     OnClick = Button1Click
   end
-  object FDConnection1: TFDConnection
-    Params.Strings = (
-      'MetaDefSchema=DATABASE'
-      'DriverID=FB'
-      'Database=D:\ORMBr_DBCBr\Demo\Database\MASTER.FDB'
-      'StringFormat=Choose'
-      'Password=masterkey'
-      'User_Name=SYSDBA')
-    TxOptions.AutoStop = False
-    TxOptions.DisconnectAction = xdRollback
-    LoginPrompt = False
-    Left = 152
-    Top = 28
+  object Button2: TButton
+    Left = 153
+    Top = 468
+    Width = 124
+    Height = 25
+    Caption = 'GetTableNames'
+    TabOrder = 2
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'FMX'
@@ -78,18 +72,29 @@ object Form1: TForm1
     Left = 338
     Top = 376
   end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=D:\ORMBr\Demo\Data\Database\database.fdb'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
+    Left = 114
+    Top = 33
+  end
   object FDConnection2: TFDConnection
     Params.Strings = (
-      'MetaDefSchema=DATABASE'
-      'DriverID=FB'
-      'Database=D:\ORMBr_DBCBr\Demo\Database\TARGET.FDB'
-      'StringFormat=Choose'
+      'Database=D:\ORMBr\Demo\Data\Database\database.fdb'
+      'User_Name=SYSDBA'
       'Password=masterkey'
-      'User_Name=SYSDBA')
-    TxOptions.AutoStop = False
-    TxOptions.DisconnectAction = xdRollback
-    LoginPrompt = False
-    Left = 148
-    Top = 86
+      'CharacterSet=WIN1252'
+      'DriverID=FB')
+    Left = 114
+    Top = 102
+  end
+  object FDMetaInfoQuery1: TFDMetaInfoQuery
+    Connection = FDConnection1
+    Left = 624
+    Top = 318
   end
 end

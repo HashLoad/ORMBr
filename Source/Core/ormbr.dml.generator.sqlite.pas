@@ -46,6 +46,8 @@ type
   /// Classe de conexão concreta com dbExpress
   /// </summary>
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
+  protected
+    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -85,14 +87,10 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  LTable := TMappingExplorer
-              .GetInstance
-                .GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
   /// OrderBy
-  LOrderBy := TMappingExplorer
-                .GetInstance
-                  .GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     LOrderByList := TStringList.Create;
@@ -105,10 +103,9 @@ begin
       LOrderByList.Free;
     end;
   end;
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
-  else
-     Result := LCriteria.AsString;
+    GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
@@ -119,10 +116,17 @@ begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
   LCriteria.OrderBy(AOrderBy);
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := LCriteria.AsString + ' LIMIT %s OFFSET %s'
-  else
-     Result := LCriteria.AsString;
+    GetGeneratorSelect(LCriteria);
+end;
+
+function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria): string;
+begin
+  Result := ACriteria.AsString;
+  if FDMLCriteriaFound then
+    Exit;
+  Result := ACriteria.AsString + ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;
