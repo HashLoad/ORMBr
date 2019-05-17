@@ -101,13 +101,17 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
+  {$IFNDEF DRIVERRESTFUL}
   FDMLCriteria := TDictionary<String, ICriteria>.Create;
+  {$ENDIF}
   FDMLCriteriaFound := False;
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
+  {$IFNDEF DRIVERRESTFUL}
   FDMLCriteria.Free;
+  {$ENDIF}
   inherited;
 end;
 
@@ -277,11 +281,13 @@ begin
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
     FDMLCriteriaFound := False;
+    {$IFNDEF DRIVERRESTFUL}
     if FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
     begin
       FDMLCriteriaFound := True;
       Exit;
     end;
+    {$ENDIF}
     Result := CreateCriteria.Select.From(LTable.Name);
     /// Columns
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
@@ -298,7 +304,9 @@ begin
     /// <summary>
     ///   Guarda o ICriteria na lista para não remontar a toda chamada
     /// </summary>
+    {$IFNDEF DRIVERRESTFUL}
     FDMLCriteria.Add(AClass.ClassName, Result);
+    {$ENDIF}
   finally
     Result.Where.Clear;
     Result.OrderBy.Clear;

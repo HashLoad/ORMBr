@@ -121,7 +121,7 @@ begin
   end;
   Result := LCriteria.AsString;
   if APageSize > -1 then
-    GetGeneratorSelect(LCriteria);
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorOracle.GeneratorSelectWhere(AClass: TClass; AWhere: string;
@@ -134,7 +134,7 @@ begin
   LCriteria.OrderBy(AOrderBy);
   Result := LCriteria.AsString;
   if APageSize > -1 then
-    GetGeneratorSelect(LCriteria);
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorOracle.GetGeneratorSelect(const ACriteria: ICriteria): string;

@@ -151,10 +151,9 @@ var
 begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
+  Result := LCriteria.AsString;
   if APageSize > -1 then
-     Result := GetGeneratorSelect(LCriteria)
-  else
-     Result := LCriteria.AsString;
+     Result := GetGeneratorSelect(LCriteria);
 
   if Length(AOrderBy) > 0 then
     Result := Result + ' ORDER BY ' + AOrderBy;

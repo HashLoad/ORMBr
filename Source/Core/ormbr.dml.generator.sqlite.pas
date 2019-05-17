@@ -105,7 +105,7 @@ begin
   end;
   Result := LCriteria.AsString;
   if APageSize > -1 then
-    GetGeneratorSelect(LCriteria);
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
@@ -118,7 +118,7 @@ begin
   LCriteria.OrderBy(AOrderBy);
   Result := LCriteria.AsString;
   if APageSize > -1 then
-    GetGeneratorSelect(LCriteria);
+    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria): string;
@@ -126,7 +126,7 @@ function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria): str
   Result := ACriteria.AsString;
   if FDMLCriteriaFound then
     Exit;
-  Result := ACriteria.AsString + ' LIMIT %s OFFSET %s';
+  Result := Result + ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;
