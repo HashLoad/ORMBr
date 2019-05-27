@@ -930,16 +930,21 @@ begin
 end;
 
 function Enumeration.ValidateEnumValue(const AValue: string): string;
+var
+  LFor: Integer;
 begin
   Result := AValue;
-  {$IFDEF NEXTGEN}
-  if (AValue.Length <> 1) or not CharInSet(AValue.Chars[0], ['A'..'Z', '0'..'9']) then
-  {$ELSE}
-  if (Length(AValue) <> 1) or not CharInSet(AValue[1], ['A'..'Z', '0'..'9']) then
-  {$ENDIF}
-    raise Exception.CreateFmt('Enumeration definido "%s" inválido para o tipo.' +
-                              'Nota: Tipo chars ou strings, defina em maiúsculo.',
-                              [AValue]);
+  for LFor := 0 to Length(AValue) -1 do
+  begin
+    {$IFDEF NEXTGEN}
+    if not CharInSet(AValue.Chars[LFor], ['A'..'Z', '0'..'9']) then
+    {$ELSE}
+    if not CharInSet(AValue[LFor+1], ['A'..'Z', '0'..'9']) then
+    {$ENDIF}
+      raise Exception.CreateFmt('Enumeration definido "%s" inválido para o tipo.' +
+                                'Nota: Tipo chars ou strings, defina em maiúsculo.',
+                                [AValue]);
+  end;
 end;
 
 { Resource }

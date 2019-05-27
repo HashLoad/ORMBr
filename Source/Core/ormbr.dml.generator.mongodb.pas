@@ -14,7 +14,7 @@ uses
 
 type
   /// <summary>
-  /// Classe de conexão concreta com NoSQL
+  ///   Classe de conexão concreta com NoSQL
   /// </summary>
   TDMLGeneratorMongoDB = class(TDMLGeneratorNoSQL)
   protected

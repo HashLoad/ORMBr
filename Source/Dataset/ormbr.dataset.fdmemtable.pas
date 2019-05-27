@@ -313,9 +313,8 @@ begin
          FOrmDataSet.Edit;
          if FSession.ExistSequence then
          begin
-           LPrimaryKey := TMappingExplorer
-                            .GetInstance
-                              .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+           LPrimaryKey := TMappingExplorer.GetInstance
+                            .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
            if LPrimaryKey = nil then
              raise Exception.Create(cMESSAGEPKNOTFOUND);
 

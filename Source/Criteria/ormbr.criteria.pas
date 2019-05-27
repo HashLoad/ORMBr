@@ -414,7 +414,9 @@ begin
     vtBoolean:    Result := BoolChars[vr.VBoolean];
     vtChar:       Result := char(vr.VChar);
     vtExtended:   Result := FloatToStr(vr.VExtended^);
+    {$IFNDEF NEXTGEN}
     vtString:     Result := string(vr.VString^);
+    {$ENDIF}
     vtPointer:    Result := IntToHex(PtrUInt(vr.VPointer),8);
     vtPChar:      Result := string(vr.VPChar^);
     {$IFDEF AUTOREFCOUNT}

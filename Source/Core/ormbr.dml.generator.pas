@@ -27,6 +27,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.dml.generator;
 
 interface
@@ -101,7 +103,7 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-  {$IFNDEF DRIVERRESTFUL}
+  {$IFDEF CACHEGENERATORSQL}
   FDMLCriteria := TDictionary<String, ICriteria>.Create;
   {$ENDIF}
   FDMLCriteriaFound := False;
@@ -109,7 +111,7 @@ end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-  {$IFNDEF DRIVERRESTFUL}
+  {$IFDEF CACHEGENERATORSQL}
   FDMLCriteria.Free;
   {$ENDIF}
   inherited;
@@ -281,7 +283,7 @@ begin
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
     FDMLCriteriaFound := False;
-    {$IFNDEF DRIVERRESTFUL}
+    {$IFDEF CACHEGENERATORSQL}
     if FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
     begin
       FDMLCriteriaFound := True;
@@ -304,7 +306,7 @@ begin
     /// <summary>
     ///   Guarda o ICriteria na lista para não remontar a toda chamada
     /// </summary>
-    {$IFNDEF DRIVERRESTFUL}
+    {$IFDEF CACHEGENERATORSQL}
     FDMLCriteria.Add(AClass.ClassName, Result);
     {$ENDIF}
   finally

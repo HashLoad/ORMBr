@@ -184,9 +184,8 @@ var
   LAssociation: TAssociationMapping;
   LAssociations: TAssociationMappingList;
 begin
-  LAssociations := TMappingExplorer
-                     .GetInstance
-                       .GetMappingAssociation(AObject.ClassType);
+  LAssociations := TMappingExplorer.GetInstance
+                     .GetMappingAssociation(AObject.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -214,9 +213,8 @@ var
   LKey: string;
 begin
   LKey := AObject.ClassName;
-  LPrimaryKey := TMappingExplorer
-                   .GetInstance
-                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetInstance
+                   .GetMappingPrimaryKeyColumns(AObject.ClassType);
   if LPrimaryKey = nil then
     raise Exception.Create(cMESSAGEPKNOTFOUND);
 
@@ -292,9 +290,8 @@ begin
       /// <summary>
       ///   Popula as propriedades de relacionamento com os valores do master
       /// </summary>
-      LPrimaryKey := TMappingExplorer
-                       .GetInstance
-                         .GetMappingPrimaryKeyColumns(AObject.ClassType);
+      LPrimaryKey := TMappingExplorer.GetInstance
+                       .GetMappingPrimaryKeyColumns(AObject.ClassType);
       if LPrimaryKey = nil then
         raise Exception.Create(cMESSAGEPKNOTFOUND);
 
@@ -346,9 +343,8 @@ begin
     /// <summary>
     ///   Popula as propriedades de relacionamento com os valores do master
     /// </summary>
-    LPrimaryKey := TMappingExplorer
-                     .GetInstance
-                       .GetMappingPrimaryKeyColumns(AObject.ClassType);
+    LPrimaryKey := TMappingExplorer.GetInstance
+                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
     if LPrimaryKey = nil then
       raise Exception.Create(cMESSAGEPKNOTFOUND);
 
@@ -469,9 +465,8 @@ var
   LKey: string;
 begin
   LKey := AObject.ClassName;
-  LPrimaryKey := TMappingExplorer
-                   .GetInstance
-                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetInstance
+                   .GetMappingPrimaryKeyColumns(AObject.ClassType);
   if LPrimaryKey = nil then
     raise Exception.Create(cMESSAGEPKNOTFOUND);
 

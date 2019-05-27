@@ -39,7 +39,7 @@ uses
 type
   TDriverName = (dnMSSQL, dnMySQL, dnFirebird, dnSQLite, dnInterbase, dnDB2,
                  dnOracle, dnInformix, dnPostgreSQL, dnADS, dnASA,
-                 dnAbsoluteDB, dnMongoDB, dnElevateDB, dnNexusDB);
+                 dnAbsoluteDB, dnMongoDB, dnElevateDB, dnNexusDB, dnFirebase);
 
   TAsField = class abstract
   protected
