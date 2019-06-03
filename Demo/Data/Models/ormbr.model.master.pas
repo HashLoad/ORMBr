@@ -56,7 +56,7 @@ type
     [Restrictions([NotNull])]
     [Column('registerdate', ftDateTime)]
     [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
-    property registerdate: TDateTime read Fregisterdate write Fregisterdate;
+    property register_date: TDateTime read Fregisterdate write Fregisterdate;
 
     [Restrictions([NotNull])]
     [Column('updatedate', ftDate)]

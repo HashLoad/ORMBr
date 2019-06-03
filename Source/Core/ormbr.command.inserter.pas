@@ -54,7 +54,6 @@ type
     FDMLAutoInc: TDMLCommandAutoInc;
     function GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
-    function IfThenBoolean(AValue: Variant): Boolean;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
@@ -119,7 +118,7 @@ begin
           FDMLAutoInc.Sequence := TMappingExplorer
                                   .GetInstance
                                     .GetMappingSequence(AObject.ClassType);
-          FDMLAutoInc.ExistSequence := IfThenBoolean(FDMLAutoInc.Sequence <> nil);
+          FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
           FDMLAutoInc.PrimaryKey := LPrimaryKey;
 
           LColumn.ColumnProperty.SetValue(AObject,
@@ -143,7 +142,7 @@ begin
       /// </summary>
       if DataType in [ftBoolean] then
       begin
-        LBooleanValue := Integer(Value);
+        LBooleanValue := IfThen(Value, 1, 0);
         DataType := ftInteger;
         Value := LBooleanValue;
       end;
@@ -164,11 +163,6 @@ begin
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
   end;
-end;
-
-function TCommandInserter.IfThenBoolean(AValue: Variant): Boolean;
-begin
-  Result := AValue;
 end;
 
 function TCommandInserter.AutoInc: TDMLCommandAutoInc;

@@ -44,7 +44,7 @@ uses
   ormbr.mapping.explorerstrategy,
   ormbr.dataset.base.adapter,
   ormbr.session.abstract, 
-  ormbr.session.baseurl;
+  ormbr.session.baseurl, ormbr.mapping.classes;
 
 type
   /// <summary>
@@ -56,6 +56,7 @@ type
     FRESTRequest: TRESTRequest;
     FRESTClient: TRESTClient;
     FResource: String;
+    function GetPrimaryKey(const AObject: TObject): TArray<TColumnMapping>;
   public
     constructor Create(const APageSize: Integer = -1); override;
     destructor Destroy; override;
@@ -79,10 +80,9 @@ uses
   JSON,
   ormbr.rest.json,
   ormbr.objects.helper,
-  ormbr.mapping.classes,
   ormbr.mapping.attributes,
   ormbr.restdataset.adapter,
-  ormbr.json.utils;
+  ormbr.json.utils, ormbr.mapping.explorer;
 
 { TSessionDataSnap<M> }
 
@@ -132,8 +132,8 @@ procedure TSessionDataSnap<M>.Delete(const AObject: M);
 var
   LColumn: TColumnMapping;
 begin
-//  for LColumn in AObject.GetPrimaryKey do
-//    Delete(LColumn.PropertyRtti.GetValue(TObject(AObject)).AsInteger);
+  for LColumn in GetPrimaryKey(TObject(AObject)) do
+    Delete(LColumn.ColumnProperty.GetValue(TObject(AObject)).AsInteger);
 end;
 
 destructor TSessionDataSnap<M>.Destroy;
@@ -252,6 +252,33 @@ begin
     FRESTRequest.Execute;
   finally
     FJSON.Free;
+  end;
+end;
+
+function TSessionDataSnap<M>.GetPrimaryKey(const AObject: TObject): TArray<TColumnMapping>;
+var
+  LCols: Integer;
+  LPkList: TList<TColumnMapping>;
+  LColumns: TColumnMappingList;
+  LColumn: TColumnMapping;
+begin
+  LPkList := TList<TColumnMapping>.Create;
+  try
+    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+    for LColumn in LColumns do
+      if LColumn.IsPrimaryKey then
+        LPkList.Add(LColumn);
+    ///
+    if LPkList.Count > 0 then
+    begin
+      SetLength(Result, LPkList.Count);
+      for LCols := 0 to LPkList.Count -1 do
+        Result[LCols] := LPkList.Items[LCols];
+    end
+    else
+      Exit(nil);
+  finally
+    LPkList.Free;
   end;
 end;
 

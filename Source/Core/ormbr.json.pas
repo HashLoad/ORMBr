@@ -35,6 +35,7 @@ uses
   Rtti,
   DB,
   SysUtils,
+  StrUtils,
   Classes,
   Variants,
   TypInfo,
@@ -512,7 +513,7 @@ begin
           if LColumn <> nil then
           begin
             if LColumn.FieldType in [ftBoolean] then
-              AProperty.SetValue(AInstance, Boolean(AValue))
+              AProperty.SetValue(AInstance, IfThen(AValue, Boolean(1), Boolean(0)))
             else
             if LColumn.FieldType in [ftFixedChar, ftString] then
               AProperty.SetValue(AInstance, AProperty.GetEnumStringValue(AInstance, AValue))

@@ -34,6 +34,7 @@ uses
   Rtti,
   Classes,
   SysUtils,
+  StrUtils,
   Variants,
   TypInfo,
   Generics.Collections,
@@ -156,7 +157,7 @@ begin
         /// </summary>
         if DataType in [ftBoolean] then
         begin
-          LBooleanValue := Integer(Value);
+          LBooleanValue := IfThen(Value, 1, 0);
           DataType := ftInteger;
           Value := LBooleanValue;
         end;
