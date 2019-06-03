@@ -232,6 +232,16 @@ object Form3: TForm3
     TabOrder = 15
     OnClick = Button5Click
   end
+  object DBCheckBox1: TDBCheckBox
+    Left = 294
+    Top = 236
+    Width = 97
+    Height = 17
+    Caption = 'DBCheckBox1'
+    DataField = 'Inativo'
+    DataSource = DataSource1
+    TabOrder = 16
+  end
   object DataSource1: TDataSource
     DataSet = FDMaster
     Left = 424

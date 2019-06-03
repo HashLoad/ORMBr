@@ -78,6 +78,7 @@ type
     Button4: TButton;
     DataSource4: TDataSource;
     Button5: TButton;
+    DBCheckBox1: TDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);

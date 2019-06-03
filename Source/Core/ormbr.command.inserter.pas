@@ -32,6 +32,7 @@ interface
 uses
   DB,
   Rtti,
+  Math,
   StrUtils,
   SysUtils,
   TypInfo,
@@ -142,7 +143,7 @@ begin
       /// </summary>
       if DataType in [ftBoolean] then
       begin
-        LBooleanValue := IfThen(Value, 1, 0);
+        LBooleanValue := IfThen(Boolean(Value), 1, 0);
         DataType := ftInteger;
         Value := LBooleanValue;
       end;

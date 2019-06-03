@@ -31,9 +31,9 @@ interface
 
 uses
   DB,
+  Math,
   Classes,
   SysUtils,
-  StrUtils,
   Variants,
   ormbr.types.database,
   ormbr.factory.interfaces;
@@ -266,7 +266,7 @@ begin
   Result := False;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := IfThen(Value, Boolean(1), Boolean(0));
+    Result := Boolean(Value);
 end;
 
 function TORMBrField.AsBooleanDef(const Def: Boolean): Boolean;
