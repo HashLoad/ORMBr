@@ -227,27 +227,28 @@ begin
   Result := nil;
   LEnumerationList := TMappingExplorer
                         .GetInstance.GetMappingEnumeration(AInstance.ClassType);
-  if LEnumerationList = nil then
-    Exit;
-  LValue := Self.GetValue(AInstance);
-  if LValue.AsOrdinal < 0 then
-    Exit;
-  for LEnumeration in LEnumerationList do
+  if LEnumerationList <> nil then
   begin
-    if Self.PropertyType.AsOrdinal <> LEnumeration.OrdinalType then
-      Continue;
-    case AFieldType of
-      ftFixedChar:
-        Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
-      ftString:
-        Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
-      ftInteger:
-        Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
-      ftBoolean:
-        Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(0)));
-    else
-      raise Exception.Create(cENUMERATIONSTYPEERROR);
-    end
+    LValue := Self.GetValue(AInstance);
+    if LValue.AsOrdinal < 0 then
+      Exit;
+    for LEnumeration in LEnumerationList do
+    begin
+      if Self.PropertyType.AsOrdinal <> LEnumeration.OrdinalType then
+        Continue;
+      case AFieldType of
+        ftFixedChar:
+          Result := TValue.From<Char>(LEnumeration.EnumValues[LValue.AsOrdinal][1]);
+        ftString:
+          Result := TValue.From<string>(LEnumeration.EnumValues[LValue.AsOrdinal]);
+        ftInteger:
+          Result := TValue.From<Integer>(StrToIntDef(LEnumeration.EnumValues[LValue.AsOrdinal], 0));
+        ftBoolean:
+          Result := TValue.From<Boolean>(StrToBoolDef(LEnumeration.EnumValues[LValue.AsOrdinal], Boolean(0)));
+      else
+        raise Exception.Create(cENUMERATIONSTYPEERROR);
+      end
+    end;
   end;
   /// <summary>
   ///   Usar tipo Boolean nativo na propriedade da classe modelo.
