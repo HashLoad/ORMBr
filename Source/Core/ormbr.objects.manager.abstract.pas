@@ -56,7 +56,7 @@ type
       const APageSize: Integer); virtual; abstract;
     procedure InsertInternal(const AObject: M); virtual; abstract;
     procedure UpdateInternal(const AObject: TObject;
-      const AModifiedFields: TList<string>); virtual; abstract;
+      const AModifiedFields: TDictionary<string, string>); virtual; abstract;
     procedure DeleteInternal(const AObject: M); virtual; abstract;
     function SelectInternalWhere(const AWhere: string;
       const AOrderBy: string): string; virtual; abstract;

@@ -47,7 +47,7 @@ type
     FObjectState: TDictionary<string, TObject>;
   public
     function ExistSequence: Boolean; virtual; abstract;
-    function ModifiedFields: TDictionary<string, TList<string>>; virtual; abstract;
+    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Integer): M; overload; virtual; abstract;
     function Find(const AID: string): M; overload; virtual; abstract;

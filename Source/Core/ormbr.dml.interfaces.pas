@@ -56,7 +56,7 @@ type
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
       AAssociation: TAssociationMapping): string;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TList<string>): string; overload;
+      AModifiedFields: TDictionary<string, string>): string; overload;
     function GeneratorInsert(AObject: TObject): string;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string;
     function GeneratorAutoIncCurrentValue(AObject: TObject;

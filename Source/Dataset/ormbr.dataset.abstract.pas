@@ -33,9 +33,11 @@ interface
 
 uses
   DB,
+  Rtti,
   Generics.Collections,
   ormbr.dataset.fields,
-  ormbr.session.abstract;
+  ormbr.session.abstract,
+  ormbr.rtti.helper;
 
 type
   /// <summary>
@@ -80,7 +82,10 @@ end;
 
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 var
-  LValue: TList<string>;
+  LValue: TDictionary<string, string>;
+  LContext: TRttiContext;
+  LObjectType: TRttiType;
+  LProperty: TRttiProperty;
 begin
   if not (FOrmDataSet.State in [dsInsert, dsEdit]) then
     Exit;
@@ -93,8 +98,20 @@ begin
   begin
     LValue := FSession.ModifiedFields.Items[M.ClassName];
     if LValue <> nil then
-      if LValue.IndexOf(Field.FieldName) = -1 then
-        LValue.Add(Field.FieldName);
+    begin
+      if not LValue.ContainsKey(Field.FieldName) then
+      begin
+        LObjectType := LContext.GetType(TypeInfo(M));
+        for LProperty in LObjectType.GetProperties do
+        begin
+          if LProperty.GetColumn.ColumnName = Field.FieldName then
+          begin
+            LValue.Add(LProperty.Name, Field.FieldName);
+            Break;
+          end;
+        end;
+      end;
+    end;
   end;
   /// <summary>
   ///   Atualiza o registro da tabela externa, se o campo alterado

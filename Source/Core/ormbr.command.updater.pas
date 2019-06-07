@@ -60,7 +60,7 @@ type
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     function GenerateUpdate(AObject: TObject;
-      AModifiedFields: TList<string>): string;
+      AModifiedFields: TDictionary<string, string>): string;
   end;
 
 implementation
@@ -88,7 +88,7 @@ begin
 end;
 
 function TCommandUpdater.GenerateUpdate(AObject: TObject;
-  AModifiedFields: TList<string>): string;
+  AModifiedFields: TDictionary<string, string>): string;
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LFor: Integer;
@@ -135,7 +135,7 @@ begin
     ///   PrimaryKey por último, usando LParams criado local.
     /// </summary>
     AObject.GetType(LObjectType);
-    for LKey in AModifiedFields do
+    for LKey in AModifiedFields.Keys do
     begin
       LProperty := LObjectType.GetProperty(LKey);
       if LProperty = nil then
@@ -148,7 +148,7 @@ begin
 
       with LParams.Add as TParam do
       begin
-        Name := LKey;
+        Name := LFieldType.ColumnName;
         DataType := LFieldType.FieldType;
         ParamType := ptInput;
         Value := GetParamValue(AObject, LProperty, DataType);

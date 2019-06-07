@@ -18,7 +18,7 @@ uses
     constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1);
     destructor Destroy; override;
     function ExistSequence: Boolean;
-    function ModifiedFields: TDictionary<string, TList<string>>;
+    function ModifiedFields: TDictionary<string, TDictionary<string, string>>;
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
@@ -96,7 +96,7 @@ begin
   FObjectSetAdapter.LoadLazy(AOwner, AObject);
 end;
 
-function TContainerObjectSet<M>.ModifiedFields: TDictionary<string, TList<string>>;
+function TContainerObjectSet<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
 begin
   Result := FObjectSetAdapter.ModifiedFields;
 end;

@@ -82,7 +82,7 @@ type
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
-    function ModifiedFields<T: class, constructor>: TDictionary<string, TList<string>>;
+    function ModifiedFields<T: class, constructor>: TDictionary<string, TDictionary<string, string>>;
     function ExistSequence<T: class, constructor>: Boolean;
     function Insert<T: class, constructor>(const AObject: T): Integer; overload;
     procedure Modify<T: class, constructor>(const AObject: T); overload;
@@ -384,7 +384,7 @@ begin
   Resolver<T>.LoadLazy(AOwner, AObject);
 end;
 
-function TManagerObjectSet.ModifiedFields<T>: TDictionary<string, TList<string>>;
+function TManagerObjectSet.ModifiedFields<T>: TDictionary<string, TDictionary<string, string>>;
 begin
   Result := Resolver<T>.ModifiedFields;
 end;

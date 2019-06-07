@@ -513,7 +513,7 @@ begin
           if LColumn <> nil then
           begin
             if LColumn.FieldType in [ftBoolean] then
-              AProperty.SetValue(AInstance, IfThen(AValue, Boolean(1), Boolean(0)))
+              AProperty.SetValue(AInstance, Boolean(AValue))
             else
             if LColumn.FieldType in [ftFixedChar, ftString] then
               AProperty.SetValue(AInstance, AProperty.GetEnumStringValue(AInstance, AValue))

@@ -85,7 +85,7 @@ type
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
       AAssociation: TAssociationMapping): string; virtual;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TList<string>): string; virtual;
+      AModifiedFields: TDictionary<string, string>): string; virtual;
     function GeneratorInsert(AObject: TObject): string; virtual;
     function GeneratorDelete(AObject: TObject;
       AParams: TParams): string; virtual;
@@ -447,7 +447,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject;
-  AParams: TParams; AModifiedFields: TList<string>): string;
+  AParams: TParams; AModifiedFields: TDictionary<string, string>): string;
 var
   LFor: Integer;
   LTable: TTableMapping;
@@ -463,7 +463,7 @@ begin
   /// </summary>
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Update(LTable.Name);
-  for LColumnName in AModifiedFields do
+  for LColumnName in AModifiedFields.Values do
   begin
     /// <summary>
     ///   SET Field=Value alterado

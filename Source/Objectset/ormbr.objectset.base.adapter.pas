@@ -75,7 +75,7 @@ type
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
     function ExistSequence: Boolean; override;
-    function ModifiedFields: TDictionary<string, TList<string>>; override;
+    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; override;
     function NextPacket: TObjectList<M>; overload; override;
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function NextPacket(const AWhere, AOrderBy: String;
@@ -228,7 +228,7 @@ begin
   FSession.LoadLazy(AOwner, AObject);
 end;
 
-function TObjectSetBaseAdapter<M>.ModifiedFields: TDictionary<string, TList<string>>;
+function TObjectSetBaseAdapter<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
 begin
   Result := FSession.ModifiedFields;
 end;

@@ -39,7 +39,7 @@ type
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
       AAssociation: TAssociationMapping): string; override;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TList<string>): string; override;
+      AModifiedFields: TDictionary<string, string>): string; override;
     function GeneratorInsert(AObject: TObject): string; override;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
@@ -104,7 +104,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GeneratorUpdate(AObject: TObject; AParams: TParams;
-  AModifiedFields: TList<string>): string;
+  AModifiedFields: TDictionary<string, string>): string;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;

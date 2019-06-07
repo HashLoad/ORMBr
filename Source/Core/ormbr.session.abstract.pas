@@ -56,7 +56,7 @@ type
     {$ENDIF}
     FPageSize: Integer;
     FPageNext: Integer;
-    FModifiedFields: TDictionary<string, TList<string>>;
+    FModifiedFields: TDictionary<string, TDictionary<string, string>>;
     FDeleteList: TObjectList<M>;
     FManager: TObjectManagerAbstract<M>;
     FResultParams: TParams;
@@ -69,7 +69,7 @@ type
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
     function ExistSequence: Boolean; virtual;
-    function ModifiedFields: TDictionary<string, TList<string>>; virtual;
+    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual;
     /// <summary>
     ///   ObjectSet
     /// </summary>
@@ -134,7 +134,7 @@ uses
 constructor TSessionAbstract<M>.Create(const APageSize: Integer = -1);
 begin
   FPageSize := APageSize;
-  FModifiedFields := TObjectDictionary<string, TList<string>>.Create([doOwnsValues]);
+  FModifiedFields := TObjectDictionary<string, TDictionary<string, string>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<M>.Create;
   FResultParams := TParams.Create;
   FFetchingRecords := False;
@@ -143,7 +143,7 @@ begin
   /// </summary>
   FModifiedFields.Clear;
   FModifiedFields.TrimExcess;
-  FModifiedFields.Add(M.ClassName, TList<string>.Create);
+  FModifiedFields.Add(M.ClassName, TDictionary<string, string>.Create);
 end;
 
 destructor TSessionAbstract<M>.Destroy;
@@ -157,7 +157,7 @@ begin
   inherited;
 end;
 
-function TSessionAbstract<M>.ModifiedFields: TDictionary<string, TList<string>>;
+function TSessionAbstract<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
 begin
   Result := FModifiedFields;
 end;
@@ -237,7 +237,7 @@ begin
       if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
         Continue;
       if not FModifiedFields.ContainsKey(AKey) then
-        FModifiedFields.Add(AKey, TList<string>.Create);
+        FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
       /// <summary>
       ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
       ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
@@ -249,7 +249,7 @@ begin
           if LProperty.GetValue(AObjectSource).AsType<TBlob>.ToSize <>
              LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
           begin
-            FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+            FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
             /// <summary>
             ///   Bind object property in control
             /// </summary>
@@ -264,7 +264,7 @@ begin
           if LProperty.GetNullableValue(AObjectSource).AsType<Variant> <>
              LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
           begin
-            FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+            FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
             /// <summary>
             ///   Bind object property in control
             /// </summary>
@@ -280,7 +280,7 @@ begin
         if LProperty.GetValue(AObjectSource).AsType<Variant> <>
            LProperty.GetValue(AObjectUpdate).AsType<Variant> then
         begin
-          FModifiedFields.Items[AKey].Add(LColumn.ColumnName);
+          FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
           /// <summary>
           ///   Bind object property in control
           /// </summary>

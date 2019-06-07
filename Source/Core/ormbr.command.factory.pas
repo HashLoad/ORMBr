@@ -74,7 +74,7 @@ type
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; virtual; abstract;
     procedure GeneratorUpdate(const AObject: TObject;
-      const AModifiedFields: TList<string>); virtual; abstract;
+      const AModifiedFields: TDictionary<string, string>); virtual; abstract;
     procedure GeneratorInsert(const AObject: TObject); virtual; abstract;
     procedure GeneratorDelete(const AObject: TObject); virtual; abstract;
   end;
@@ -113,7 +113,7 @@ type
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; override;
     procedure GeneratorUpdate(const AObject: TObject;
-      const AModifiedFields: TList<string>); override;
+      const AModifiedFields: TDictionary<string, string>); override;
     procedure GeneratorInsert(const AObject: TObject); override;
     procedure GeneratorDelete(const AObject: TObject); override;
   end;
@@ -331,7 +331,7 @@ begin
 end;
 
 procedure TDMLCommandFactory.GeneratorUpdate(const AObject: TObject;
-  const AModifiedFields: TList<string>);
+  const AModifiedFields: TDictionary<string, string>);
 var
   LSQLText: String;
 begin

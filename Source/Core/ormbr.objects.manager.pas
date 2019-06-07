@@ -79,7 +79,7 @@ type
     /// </summary>
     procedure InsertInternal(const AObject: M); override;
     procedure UpdateInternal(const AObject: TObject;
-      const AModifiedFields: TList<string>); override;
+      const AModifiedFields: TDictionary<string, string>); override;
     procedure DeleteInternal(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacketList(const AObjectList: TObjectList<M>;
@@ -512,7 +512,7 @@ begin
 end;
 
 procedure TObjectManager<M>.UpdateInternal(const AObject: TObject;
-  const AModifiedFields: TList<string>);
+  const AModifiedFields: TDictionary<string, string>);
 begin
   FDMLCommandFactory.GeneratorUpdate(AObject, AModifiedFields);
 end;
