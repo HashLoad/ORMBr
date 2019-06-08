@@ -163,15 +163,16 @@ begin
 
   FManager.Modify<Tmaster>(LMasterUpd);
 
-  LMasterUpd.description := edtMaster_Descricao.Text;
-  LMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
+  LMasterUpd.client_id := null;
+//  LMasterUpd.description := edtMaster_Descricao.Text;
+//  LMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
   //
-  LMasterUpd.detail.Add(Tdetail.Create);
-  LMasterUpd.detail.Last.detail_id := LMasterUpd.detail.Count + 1;
-  LMasterUpd.detail.Last.master_id := LMasterUpd.master_id;
-  LMasterUpd.detail.Last.lookup_id := 1;
-  LMasterUpd.detail.Last.price := 556.88;
-  LMasterUpd.detail.Last.lookup_description := 'UDATE VIA CASDACE';
+//  LMasterUpd.detail.Add(Tdetail.Create);
+//  LMasterUpd.detail.Last.detail_id := LMasterUpd.detail.Count + 1;
+//  LMasterUpd.detail.Last.master_id := LMasterUpd.master_id;
+//  LMasterUpd.detail.Last.lookup_id := 1;
+//  LMasterUpd.detail.Last.price := 556.88;
+//  LMasterUpd.detail.Last.lookup_description := 'UDATE VIA CASDACE';
 
   // Altera o registro no Banco
   FManager.Update<Tmaster>(LMasterUpd);

@@ -32,7 +32,7 @@ type
     Fdescription: Nullable<String>;
     Fregisterdate: TDateTime;
     Fupdatedate: TDate;
-    Fclient_id: Integer;
+    Fclient_id: Nullable<Integer>;
     Fclient_name: string;
     FEnumer: TMyEnum;
     FInativo: Boolean;
@@ -63,11 +63,11 @@ type
     [Dictionary('updatedate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
     property updatedate: TDate read Fupdatedate write Fupdatedate;
 
-    [Restrictions([NotNull])]
+//    [Restrictions([NotNull])]
     [Column('client_id', ftInteger)]
     [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
-    property client_id: Integer read Fclient_id write Fclient_id;
+    property client_id: Nullable<Integer> read Fclient_id write Fclient_id;
 
     [Enumeration(TEnumType.etInteger, '0, 1, 2, 9')]
     [Column('MyEnum', ftInteger)]

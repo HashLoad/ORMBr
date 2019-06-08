@@ -40,6 +40,7 @@ uses
   TypInfo,
   Generics.Collections,
   /// ORMBr
+  ormbr.utils,
   ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.mapping.classes,
@@ -111,9 +112,8 @@ begin
   /// </summary>
   LParams := TParams.Create(nil);
   try
-    LPrimaryKey := TMappingExplorer
-                     .GetInstance
-                       .GetMappingPrimaryKeyColumns(AObject.ClassType);
+    LPrimaryKey := TMappingExplorer.GetInstance
+                     .GetMappingPrimaryKeyColumns(AObject.ClassType);
     if LPrimaryKey = nil then
       raise Exception.Create(cMESSAGEPKNOTFOUND);
 
@@ -170,7 +170,9 @@ begin
       with FParams.Add as TParam do
       begin
         Name := LParams.Items[LFor].Name;
-        DataType := LParams.Items[LFor].DataType;
+        DataType := TUtilSingleton.IfThen<TFieldType>(LParams.Items[LFor].Value = Null,
+                                                      ftVariant,
+                                                      LParams.Items[LFor].DataType);
         Value := LParams.Items[LFor].Value;
         ParamType := LParams.Items[LFor].ParamType;
       end;

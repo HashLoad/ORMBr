@@ -136,9 +136,12 @@ begin
   try
     // Faz uma cópia do objeto antes dele sofre as mudanças necessárias
     oMaster.Modify(oMasterUpd);
-    oMasterUpd.master_id := StrToInt(edtMaster_ID.Text);
-    oMasterUpd.description := edtMaster_Descricao.Text;
-    oMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
+
+    oMasterUpd.client_id := Null;
+
+//    oMasterUpd.master_id := StrToInt(edtMaster_ID.Text);
+//    oMasterUpd.description := edtMaster_Descricao.Text;
+//    oMasterUpd.updatedate := StrToDate(edtMaster_Alteracao.Text);
     // Altera o registro no Banco
     oMaster.Update(oMasterUpd);
   finally

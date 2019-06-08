@@ -63,6 +63,7 @@ type
     function Iso8601ToDateTime(const AValue: string): TDateTime;
     function ParseCommandNoSQL(const ASubStr, ASQL: string;
       const ADefault: String): string;
+    class function IfThen<T>(ACondition: Boolean; ATrue: T; AFalse: T): T;
   end;
 
 implementation
@@ -101,6 +102,13 @@ begin
   if not Assigned(FInstance) then
     FInstance := TUtilSingleton.CreatePrivate;
    Result := FInstance;
+end;
+
+class function TUtilSingleton.IfThen<T>(ACondition: Boolean; ATrue, AFalse: T): T;
+begin
+  Result := AFalse;
+  if ACondition then
+    Result := ATrue;
 end;
 
 function TUtilSingleton.Iso8601ToDateTime(const AValue: string): TDateTime;

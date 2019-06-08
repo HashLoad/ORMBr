@@ -122,6 +122,7 @@
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas"/>
         <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
         <None Include="ModelSupport_ORMBrFireDAC\default.txaPackage"/>
         <None Include="ModelSupport_ORMBrFireDAC\default.txvpck"/>
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\default.txvpck"/>

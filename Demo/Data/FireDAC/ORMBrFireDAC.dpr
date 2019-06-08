@@ -10,7 +10,8 @@ uses
   ormbr.model.master in 'ormbr.model.master.pas',
   ormbr.driver.firedac in '..\..\..\Source\Drivers\ormbr.driver.firedac.pas',
   ormbr.driver.firedac.transaction in '..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas',
-  ormbr.factory.firedac in '..\..\..\Source\Drivers\ormbr.factory.firedac.pas';
+  ormbr.factory.firedac in '..\..\..\Source\Drivers\ormbr.factory.firedac.pas',
+  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas';
 
 {$R *.res}
 
