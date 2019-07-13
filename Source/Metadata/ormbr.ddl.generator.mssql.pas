@@ -54,8 +54,10 @@ implementation
 
 function TDDLSQLGeneratorMSSQL.GenerateCreateSequence(ASequence: TSequenceMIK): string;
 begin
-  Result := 'CREATE SEQUENCE %s AS int START WITH 0 INCREMENT BY %s;';
-  Result := Format(Result, [ASequence.Name, IntToStr(ASequence.Increment)]);
+  Result := 'CREATE SEQUENCE %s AS int START WITH %s INCREMENT BY %s;';
+  Result := Format(Result, [ASequence.Name,
+                           IntToStr(ASequence.InitialValue),
+                           IntToStr(ASequence.Increment)]);
 end;
 
 function TDDLSQLGeneratorMSSQL.GenerateCreateTable(ATable: TTableMIK): string;

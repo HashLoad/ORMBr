@@ -121,6 +121,7 @@ type
     function GetNextAlphaPropName(out AFieldName: string): Boolean;
     function ParseJSONObject(out AData: TJSONVariantData): Boolean;
     function ParseJSONArray(out AData: TJSONVariantData): Boolean;
+    function CopyIndex: Integer;
     procedure GetNextStringUnEscape(var AStr: string);
   end;
 
@@ -387,7 +388,7 @@ function TJSONObjectORMBr.JSONToValue(const AJson: String): Variant;
 var
   LParser: TJSONParser;
 begin
-  LParser.Init(AJson, 1);
+  LParser.Init(AJson, 0);
   LParser.GetNextJSON(Result);
 end;
 
@@ -778,6 +779,15 @@ begin
   end;
 end;
 
+function TJSONParser.CopyIndex: Integer;
+begin
+  {$IFDEF NEXTGEN}
+  Result := FIndex +1;
+  {$ELSE}
+  Result := FIndex;
+  {$ENDIF}
+end;
+
 procedure TJSONParser.GetNextStringUnEscape(var AStr: String);
 var
   LChar: Char;
@@ -800,7 +810,7 @@ begin
              'r': TJSONObjectORMBr.AppendChar(AStr, #$0d);
              'u':
              begin
-               LCopy := Copy(FJson, FIndex, 4);
+               LCopy := Copy(FJson, CopyIndex, 4);
                if Length(LCopy) <> 4 then
                  Exit;
                Inc(FIndex, 4);
@@ -828,13 +838,13 @@ begin
   begin
     case FJson[LFor] of
       '"': begin // end of String without escape -> direct copy
-             AStr := Copy(FJson, FIndex, LFor - FIndex);
+             AStr := Copy(FJson, CopyIndex, LFor - FIndex);
              FIndex := LFor + 1;
              Result := True;
              Exit;
            end;
       '\': begin // need unescaping
-             AStr := Copy(FJson, FIndex, LFor - FIndex);
+             AStr := Copy(FJson, CopyIndex, LFor - FIndex);
              FIndex := LFor;
              GetNextStringUnEscape(AStr);
              Result := True;
@@ -874,7 +884,7 @@ begin
          Ord(':'),
          Ord('='):
       begin
-        AFieldName := Copy(FJson, FIndex, LFor - FIndex);
+        AFieldName := Copy(FJson, CopyIndex, LFor - FIndex);
         FIndex := LFor + 1;
         Result := True;
         Exit;
@@ -893,19 +903,19 @@ var
 begin
   Result := kNone;
   case GetNextNonWhiteChar of
-    'n': if Copy(FJson, FIndex, 3) = 'ull' then
+    'n': if Copy(FJson, CopyIndex, 3) = 'ull' then
          begin
            Inc(FIndex, 3);
            Result := kNull;
            AValue := Null;
          end;
-    'f': if Copy(FJson, FIndex, 4) = 'alse' then
+    'f': if Copy(FJson, CopyIndex, 4) = 'alse' then
          begin
            Inc(FIndex, 4);
            Result := kFalse;
            AValue := False;
          end;
-    't': if Copy(FJson, FIndex, 3) = 'rue' then
+    't': if Copy(FJson, CopyIndex, 3) = 'rue' then
          begin
            Inc(FIndex, 3);
            Result := kTrue;
@@ -922,7 +932,7 @@ begin
            Result := kArray;
     '-', '0' .. '9':
          begin
-           LStart := FIndex - 1;
+           LStart := CopyIndex - 1;
            while True do
              case FJson[FIndex] of
                '-', '+', '0' .. '9', '.', 'E', 'e':
@@ -930,7 +940,7 @@ begin
              else
                Break;
              end;
-           LStr := Copy(FJson, LStart, FIndex - LStart);
+           LStr := Copy(FJson, LStart, CopyIndex - LStart);
            Val(LStr, LInt64, LErr);
            if LErr = 0 then
            begin
@@ -1088,7 +1098,7 @@ function TJSONVariantData.FromJSON(const AJson: String): Boolean;
 var
   LParser: TJSONParser;
 begin
-  LParser.Init(AJson, 1);
+  LParser.Init(AJson, 0);
   Result := LParser.GetNextJSON(Variant(Self)) in [kObject, kArray];
 end;
 

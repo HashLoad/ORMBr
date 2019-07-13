@@ -173,7 +173,7 @@ begin
       begin
         case ASQL[LFor] of
           '=': LPosI := LFor;
-          ',': begin
+          '&': begin
                  if (not MatchText(ASubStr, ['values','json'])) then
                    Break;
                end;

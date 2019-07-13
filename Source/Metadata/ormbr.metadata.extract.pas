@@ -159,7 +159,7 @@ end;
 
 procedure TCatalogMetadataAbstract.SetFieldType(var AColumnMIK: TColumnMIK);
 begin
-  AColumnMIK.FieldType := FFieldType[AColumnMIK.TypeName];
+  AColumnMIK.FieldType := FFieldType[Trim(AColumnMIK.TypeName)];
 end;
 
 procedure TCatalogMetadataAbstract.SetConnection(const Value: IDBConnection);
