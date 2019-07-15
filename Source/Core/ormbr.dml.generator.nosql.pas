@@ -93,8 +93,8 @@ begin
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
-      .Append('command=insert, ')
-        .Append('collection=' + LTable.Name + ', ')
+      .Append('command=insert& ')
+        .Append('collection=' + LTable.Name + '& ')
           .Append('json=')
             .Append(TORMBrJson.ObjectToJsonString(AObject));
     Result := LCriteria.ToString;
@@ -115,9 +115,9 @@ begin
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
-      .Append('command=update, ')
+      .Append('command=update& ')
         .Append('collection=' + LTable.Name)
-          .Append(', ')
+          .Append('& ')
             .Append('filter={');
     for LFor := 0 to AParams.Count -1 do
     begin
@@ -126,11 +126,11 @@ begin
           .Append(': ')
             .Append(VarToStr(AParams.Items[LFor].Value));
       if LFor < AParams.Count -1 then
-        LCriteria.Append(', ');
+        LCriteria.Append('& ');
     end;
     LCriteria
       .Append('}')
-        .Append(', ')
+        .Append('& ')
           .Append('json=')
             .Append('{"$set":')
               .Append(TORMBrJson.ObjectToJsonString(AObject))
@@ -153,8 +153,8 @@ begin
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
-      .Append('command=delete,')
-        .Append('collection=' + LTable.Name + ',')
+      .Append('command=delete&')
+        .Append('collection=' + LTable.Name + '&')
           .Append('json={');
     for LFor := 0 to AParams.Count -1 do
     begin
@@ -162,11 +162,11 @@ begin
         .Append(AnsiQuotedStr(AParams.Items[LFor].Name, '"'))
           .Append(':')
             .Append(VarToStr(AParams.Items[LFor].Value))
-              .Append(',');
+              .Append('&');
     end;
     LCriteria
       .Append('}')
-        .Replace(', }', '}');
+        .Replace('& }', '}');
     Result := LCriteria.ToString;
   finally
     LCriteria.Free;
@@ -191,9 +191,9 @@ begin
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
-      .Append('command=find, ')
-        .Append('collection=' + LTable.Name + ', ')
-          .Append('filter=' + AWhere + ', ')
+      .Append('command=find& ')
+        .Append('collection=' + LTable.Name + '& ')
+          .Append('filter=' + AWhere + '& ')
             .Append('sort=' + AOrderBy);
     Result := LCriteria.ToString;
   finally
@@ -229,7 +229,7 @@ begin
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
-      .Append('command=find, ')
+      .Append('command=find& ')
         .Append('collection=' + LTable.Name);
     /// <summary>
     ///   PrimaryKey
@@ -239,7 +239,7 @@ begin
       LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
       if LPrimaryKey <> nil then
       begin
-        LCriteria.Append(', filter={');
+        LCriteria.Append('& filter={');
         if TVarData(AID).VType = varInteger then
           LCriteria.Append('"' + LPrimaryKey.Columns[0] + '":' + IntToStr(AID))
         else
@@ -257,7 +257,7 @@ begin
       try
         LOrderByList.Duplicates := dupError;
         ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
-        LCriteria.Append(', sort={');
+        LCriteria.Append('& sort={');
         for LFor := 0 to LOrderByList.Count -1 do
         begin
           LOrderByList[LFor] := UpperCase(LOrderByList[LFor]);
@@ -287,7 +287,7 @@ end;
 function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(
   const ACriteria: string): string;
 begin
-  Result := ACriteria + ', limit=%s, skip=%s';
+  Result := ACriteria + '& limit=%s& skip=%s';
 end;
 
 end.

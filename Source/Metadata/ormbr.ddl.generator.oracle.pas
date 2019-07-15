@@ -79,7 +79,7 @@ function TDDLSQLGeneratorMySQL.GenerateCreateSequence(
 begin
   Result := 'CREATE SEQUENCE %s MINVALUE 1 START WITH %s INCREMENT BY %s NOCACHE;'; // MAXVALUE ????? CACHE ??
   Result := Format(Result, [ASequence.Name,
-                            IntToStr(ASequence.InitialValue +1),
+                            IntToStr(ASequence.InitialValue),
                             IntToStr(ASequence.Increment)]);
 end;
 

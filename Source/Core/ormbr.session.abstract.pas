@@ -228,71 +228,67 @@ begin
   LColumns := TMappingExplorer
                 .GetInstance
                   .GetMappingColumn(AObjectSource.ClassType);
-  try
-    for LColumn in LColumns do
+  for LColumn in LColumns do
+  begin
+    LProperty := LColumn.ColumnProperty;
+    if LProperty.IsNoUpdate then
+      Continue;
+    if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
+      Continue;
+    if not FModifiedFields.ContainsKey(AKey) then
+      FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
+    /// <summary>
+    ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
+    ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
+    /// </summary>
+    if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
     begin
-      LProperty := LColumn.ColumnProperty;
-      if LProperty.IsNoUpdate then
-        Continue;
-      if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
-        Continue;
-      if not FModifiedFields.ContainsKey(AKey) then
-        FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
-      /// <summary>
-      ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
-      ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
-      /// </summary>
-      if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
+      if LProperty.IsBlob then
       begin
-        if LProperty.IsBlob then
-        begin
-          if LProperty.GetValue(AObjectSource).AsType<TBlob>.ToSize <>
-             LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
-          begin
-            FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-            /// <summary>
-            ///   Bind object property in control
-            /// </summary>
-            {$IFDEF USEBINDSOURCE}
-//            if Assigned(FOnPropertyEvent) then
-//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
-            {$ENDIF}
-          end;
-        end
-        else
-        begin
-          if LProperty.GetNullableValue(AObjectSource).AsType<Variant> <>
-             LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
-          begin
-            FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-            /// <summary>
-            ///   Bind object property in control
-            /// </summary>
-            {$IFDEF USEBINDSOURCE}
-//            if Assigned(FOnPropertyEvent) then
-//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
-            {$ENDIF}
-          end;
-        end;
-      end
-      else
-      begin
-        if LProperty.GetValue(AObjectSource).AsType<Variant> <>
-           LProperty.GetValue(AObjectUpdate).AsType<Variant> then
+        if LProperty.GetValue(AObjectSource).AsType<TBlob>.ToSize <>
+           LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
         begin
           FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
           /// <summary>
           ///   Bind object property in control
           /// </summary>
           {$IFDEF USEBINDSOURCE}
-//          if Assigned(FOnPropertyEvent) then
-//            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+//            if Assigned(FOnPropertyEvent) then
+//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+          {$ENDIF}
+        end;
+      end
+      else
+      begin
+        if LProperty.GetNullableValue(AObjectSource).AsType<Variant> <>
+           LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
+        begin
+          FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
+          /// <summary>
+          ///   Bind object property in control
+          /// </summary>
+          {$IFDEF USEBINDSOURCE}
+//            if Assigned(FOnPropertyEvent) then
+//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
           {$ENDIF}
         end;
       end;
+    end
+    else
+    begin
+      if LProperty.GetValue(AObjectSource).AsType<Variant> <>
+         LProperty.GetValue(AObjectUpdate).AsType<Variant> then
+      begin
+        FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
+        /// <summary>
+        ///   Bind object property in control
+        /// </summary>
+        {$IFDEF USEBINDSOURCE}
+//          if Assigned(FOnPropertyEvent) then
+//            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
+        {$ENDIF}
+      end;
     end;
-  except
-    raise;
   end;
 end;
 
