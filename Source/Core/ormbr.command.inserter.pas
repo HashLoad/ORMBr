@@ -122,9 +122,10 @@ begin
           FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
           FDMLAutoInc.PrimaryKey := LPrimaryKey;
 
-          LColumn.ColumnProperty.SetValue(AObject,
-                                          FGeneratorCommand
-                                            .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
+          LColumn.ColumnProperty
+                 .SetNullableValue(AObject,
+                                   LColumn.ColumnProperty.PropertyType.Handle,
+                                   FGeneratorCommand.GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
         end;
       end;
     end;
