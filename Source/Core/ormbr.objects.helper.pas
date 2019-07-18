@@ -216,7 +216,7 @@ begin
           if LProperty.PropertyType.Handle = TypeInfo(TTime) then// TTime
             LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<TTime>)
           else
-            LProperty.SetValue(Self, TValue.FromVariant(Time).AsType<Double>);
+            LProperty.SetValue(Self, StrToFloatDef(LValue, 0));
         end;
       tkRecord:
         LProperty.SetNullableValue(Self, LProperty.PropertyType.Handle, LValue);
