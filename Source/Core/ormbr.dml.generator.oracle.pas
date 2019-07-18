@@ -19,7 +19,7 @@
 
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
-  @author(Isaque Pinheiro <isaquepsp@gmail.com>)
+  @author(Isaque Pinheiro <isaquesp@gmail.com>)
   @author(Skype : ispinheiro)
 
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
@@ -48,8 +48,6 @@ type
   /// Classe de conexão concreta com dbExpress
   /// </summary>
   TDMLGeneratorOracle = class(TDMLGeneratorAbstract)
-  protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -69,7 +67,7 @@ implementation
 
 const
   cSelectRow = 'SELECT * FROM ( ' + sLineBreak +
-               '   SELECT T.*, ROWNUM ROWINI FROM (%s) T';
+               '   SELECT T.*, ROWNUM AS ROWINI FROM (%s) T';
 
 { TDMLGeneratorOracle }
 
@@ -103,10 +101,14 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer
+              .GetInstance
+                .GetMappingTable(AClass);
   LCriteria := GetCriteriaSelect(AClass, AID);
   /// OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer
+                .GetInstance
+                  .GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     LOrderByList := TStringList.Create;
@@ -119,9 +121,15 @@ begin
       LOrderByList.Free;
     end;
   end;
-  Result := LCriteria.AsString;
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+  begin
+     Result := Format(cSelectRow, [LCriteria.AsString]);
+     Result := Result + sLineBreak +
+               '   WHERE ROWNUM <= %s) ' + sLineBreak +
+               'WHERE ROWINI > %s';
+  end
+  else
+     Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorOracle.GeneratorSelectWhere(AClass: TClass; AWhere: string;
@@ -132,20 +140,15 @@ begin
   LCriteria := GetCriteriaSelect(AClass, -1);
   LCriteria.Where(AWhere);
   LCriteria.OrderBy(AOrderBy);
-  Result := LCriteria.AsString;
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
-end;
-
-function TDMLGeneratorOracle.GetGeneratorSelect(const ACriteria: ICriteria): string;
-begin
-  Result := ACriteria.AsString;
-  if FDMLCriteriaFound then
-    Exit;
-  Result := Format(cSelectRow, [ACriteria.AsString]);
-  Result := Result + sLineBreak +
-           '   WHERE ROWNUM <= %s) ' + sLineBreak +
-           'WHERE ROWINI > %s';
+  begin
+     Result := Format(cSelectRow, [LCriteria.AsString]);
+     Result := Result + sLineBreak +
+               '   WHERE ROWNUM <= %s) ' + sLineBreak +
+               'WHERE ROWINI > %s';
+  end
+  else
+     Result := LCriteria.AsString;
 end;
 
 function TDMLGeneratorOracle.GeneratorAutoIncCurrentValue(AObject: TObject;

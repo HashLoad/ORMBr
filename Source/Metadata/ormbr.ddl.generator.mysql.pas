@@ -63,60 +63,60 @@ end;
 
 function TDDLSQLGeneratorMySQL.GenerateCreateTable(ATable: TTableMIK): string;
 var
-  oSQL: TStringBuilder;
-  oColumn: TPair<string,TColumnMIK>;
+  LSQL: TStringBuilder;
+  LColumn: TPair<string,TColumnMIK>;
 begin
-  oSQL := TStringBuilder.Create;
+  LSQL := TStringBuilder.Create;
   Result := inherited GenerateCreateTable(ATable);
   try
     if ATable.Database.Schema <> '' then
-      oSQL.Append(Format(Result, [ATable.Database.Schema + '.' + ATable.Name]))
+      LSQL.Append(Format(Result, [ATable.Database.Schema + '.' + ATable.Name]))
     else
-      oSQL.Append(Format(Result, [ATable.Name]));
+      LSQL.Append(Format(Result, [ATable.Name]));
     /// <summary>
-    /// Add Colunas
+    ///   Add Colunas
     /// </summary>
-    for oColumn in ATable.FieldsSort do
+    for LColumn in ATable.FieldsSort do
     begin
-      oSQL.AppendLine;
-      oSQL.Append('  ' + BuilderCreateFieldDefinition(oColumn.Value));
-      oSQL.Append(',');
+      LSQL.AppendLine;
+      LSQL.Append('  ' + BuilderCreateFieldDefinition(LColumn.Value));
+      LSQL.Append(',');
     end;
     /// <summary>
-    /// Add PrimariKey
+    ///   Add PrimariKey
     /// </summary>
     if ATable.PrimaryKey.Fields.Count > 0 then
     begin
-      oSQL.AppendLine;
-      oSQL.Append(BuilderPrimayKeyDefinition(ATable));
+      LSQL.AppendLine;
+      LSQL.Append(BuilderPrimayKeyDefinition(ATable));
     end;
     /// <summary>
-    /// Add ForeignKey
+    ///   Add ForeignKey
     /// </summary>
     if ATable.ForeignKeys.Count > 0 then
     begin
-      oSQL.Append(',');
-      oSQL.Append(BuilderForeignKeyDefinition(ATable));
+      LSQL.Append(',');
+      LSQL.Append(BuilderForeignKeyDefinition(ATable));
     end;
     /// <summary>
-    /// Add Checks
+    ///   Add Checks
     /// </summary>
     if ATable.Checks.Count > 0 then
     begin
-      oSQL.Append(',');
-      oSQL.Append(BuilderCheckDefinition(ATable));
+      LSQL.Append(',');
+      LSQL.Append(BuilderCheckDefinition(ATable));
     end;
-    oSQL.AppendLine;
-    oSQL.Append(');');
+    LSQL.AppendLine;
+    LSQL.Append(');');
     /// <summary>
-    /// Add Indexe
+    ///   Add Indexe
     /// </summary>
     if ATable.IndexeKeys.Count > 0 then
-      oSQL.Append(BuilderIndexeDefinition(ATable));
-    oSQL.AppendLine;
-    Result := oSQL.ToString;
+      LSQL.Append(BuilderIndexeDefinition(ATable));
+    LSQL.AppendLine;
+    Result := LSQL.ToString;
   finally
-    oSQL.Free;
+    LSQL.Free;
   end;
 end;
 

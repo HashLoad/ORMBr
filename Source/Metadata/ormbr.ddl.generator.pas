@@ -303,7 +303,7 @@ end;
 function TDDLSQLGenerator.BuilderCreateFieldDefinition(AColumn: TColumnMIK): string;
 begin
   Result := AColumn.Name + ' ' +
-            GetFieldTypeDefinition(AColumn)    +
+            GetFieldTypeDefinition(AColumn) +
             GetCreateFieldDefaultDefinition(AColumn) +
             GetFieldNotNullDefinition(AColumn) ;
 end;

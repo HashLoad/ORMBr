@@ -588,9 +588,8 @@ begin
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
   end;
   /// Trata AutoInc
-  LPrimaryKey := TMappingExplorer
-                   .GetInstance
-                     .GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetInstance
+                                 .GetMappingPrimaryKey(AObject.ClassType);
   if LPrimaryKey <> nil then
   begin
     if LPrimaryKey.AutoIncrement then
