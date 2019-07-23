@@ -62,9 +62,10 @@ type
   private
     FContext: TRttiContext;
     constructor CreatePrivate;
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     destructor Destroy; override;
     class function GetInstance: IRttiSingleton;
     function GetRttiType(AClass: TClass): TRttiType;

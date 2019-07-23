@@ -59,7 +59,9 @@ type
   /// </summary>
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
+    {$IFDEF CACHEGENERATORSQL}
     FDMLCriteria: TDictionary<String, ICriteria>;
+    {$ENDIF}
     function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
     procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;

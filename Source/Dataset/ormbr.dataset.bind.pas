@@ -79,9 +79,10 @@ type
       const ATarget: TDataSet);
     procedure CreateFieldsNestedDataSet(const ADataSet: TDataSet;
       const AObject: TObject; const LColumn: TColumnMapping);
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     class function GetInstance: IBindDataSet;
     procedure SetDataDictionary(const ADataSet: TDataSet;
       const AObject: TObject);

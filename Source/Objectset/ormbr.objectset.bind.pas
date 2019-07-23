@@ -80,9 +80,10 @@ type
     procedure FillADTField(const AADTField: TADTField; const AObject: TObject);
     procedure FillDataSetField(const ADataSet: TDataSet;
       const AObject: TObject);
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     class function GetInstance: IBindObject;
     procedure SetFieldToProperty(const ADataSet: TDataSet;
       const AObject: TObject); overload;

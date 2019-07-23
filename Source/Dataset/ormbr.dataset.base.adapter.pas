@@ -133,15 +133,11 @@ type
     procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>; AObject: M);
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
       AColumnsNameRef: string): Boolean; virtual;
-    /// <summary>
-    ///   Uso na interface para ler, gravar e alterar dados do registro atual
-    ///   no dataset, pelo objeto.
-    /// </summary>
+    procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; override;
     destructor Destroy; override;
-    procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
     procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure RefreshRecordInternal(const AObject: TObject); virtual;

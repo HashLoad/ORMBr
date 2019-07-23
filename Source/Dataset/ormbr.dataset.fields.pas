@@ -70,9 +70,10 @@ type
   private
     constructor CreatePrivate;
     function GetFieldType(ADataSet: TDataSet; AFieldType: TFieldType): TField;
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     class function GetInstance: IFieldSingleton;
     procedure AddField(const ADataSet: TDataSet; const AFieldName: String;
       const AFieldType: TFieldType; const ASize: Integer = 0);

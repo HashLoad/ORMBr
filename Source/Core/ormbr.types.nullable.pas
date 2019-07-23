@@ -64,15 +64,15 @@ type
     class operator NotEqual(const a, b: Nullable<T>) : Boolean;
   end;
 
-  NullString = Nullable<string>;
-  NullBoolean = Nullable<Boolean>;
-  NullInteger = Nullable<Integer>;
-  NullInt64 = Nullable<Int64>;
-  NullDouble = Nullable<Double>;
-  NullCurrency = Nullable<Currency>;
-  NullDate = Nullable<TDate>;
-  NullTime = Nullable<TTime>;
-  NullDateTime = Nullable<TDateTime>;
+//  NullString = Nullable<string>;
+//  NullBoolean = Nullable<Boolean>;
+//  NullInteger = Nullable<Integer>;
+//  NullInt64 = Nullable<Int64>;
+//  NullDouble = Nullable<Double>;
+//  NullCurrency = Nullable<Currency>;
+//  NullDate = Nullable<TDate>;
+//  NullTime = Nullable<TTime>;
+//  NullDateTime = Nullable<TDateTime>;
 
 implementation
 
@@ -117,8 +117,8 @@ end;
 
 function Nullable<T>.GetValue: T;
 begin
-  if not HasValue then
-     raise Exception.Create('Invalid operation, Nullable type has no value.');
+//  if not HasValue then
+//     raise Exception.Create('Invalid operation, Nullable type has no value.');
   Result := FValue;
 end;
 
