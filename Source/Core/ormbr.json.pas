@@ -42,7 +42,6 @@ uses
   Generics.Collections,
   /// ormbr
   ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils,
   ormbr.core.consts,
   ormbr.types.blob,
   ormbr.utils,
@@ -185,14 +184,14 @@ implementation
 
 procedure TJSONObjectORMBr.RegisterClassForJSON(const AClasses: array of TClass);
 var
-  LFor, LIdx: integer;
+  LFor, LIdx: Integer;
   LName: String;
 begin
   for LFor := 0 to High(AClasses) do
   begin
     LName := AClasses[LFor].ClassName;
     LIdx := FindClassForJSON(LName);
-    if LIdx>=0 then
+    if LIdx >= 0 then
       Continue;
     LIdx := Length(RegisteredClass);
     SetLength(RegisteredClass, LIdx +1);
@@ -609,6 +608,7 @@ end;
 function TJSONObjectORMBr.ObjectToJSON(AObject: TObject;
   AStoreClassName: Boolean): String;
 var
+  FContext: TRttiContext;
   LTypeInfo: TRttiType;
   LProperty: TRttiProperty;
   {$IFDEF DELPHI15_UP}
@@ -667,9 +667,7 @@ begin
     end;
     Exit;
   end;
-  LTypeInfo := TRttiSingleton
-                 .GetInstance
-                   .GetRttiType(AObject.ClassType);
+  LTypeInfo := FContext.GetType(AObject.ClassType);
   if LTypeInfo = nil then
   begin
     Result := 'null';
@@ -1296,6 +1294,7 @@ end;
 
 function TJSONVariantData.ToNewObject: TObject;
 var
+  FContext: TRttiContext;
   LType: TRttiType;
   LProperty: TRttiProperty;
   LIdx, LFor: Integer;
@@ -1312,7 +1311,7 @@ begin
   if Result = nil then
     Exit;
 
-  LType := TRttiSingleton.GetInstance.GetRttiType(Result.ClassType);
+  LType := FContext.GetType(Result.ClassType);
   if LType <> nil then
   begin
     if LType <> nil then

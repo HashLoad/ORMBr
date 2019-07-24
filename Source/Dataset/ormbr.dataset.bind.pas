@@ -79,9 +79,10 @@ type
       const ATarget: TDataSet);
     procedure CreateFieldsNestedDataSet(const ADataSet: TDataSet;
       const AObject: TObject; const LColumn: TColumnMapping);
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     class function GetInstance: IBindDataSet;
     procedure SetDataDictionary(const ADataSet: TDataSet;
       const AObject: TObject);
@@ -588,9 +589,8 @@ begin
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
   end;
   /// Trata AutoInc
-  LPrimaryKey := TMappingExplorer
-                   .GetInstance
-                     .GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetInstance
+                                 .GetMappingPrimaryKey(AObject.ClassType);
   if LPrimaryKey <> nil then
   begin
     if LPrimaryKey.AutoIncrement then

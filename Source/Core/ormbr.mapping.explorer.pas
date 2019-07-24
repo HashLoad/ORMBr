@@ -72,9 +72,9 @@ type
     constructor CreatePrivate;
   protected
     function GetRepositoryMapping: TMappingRepository; override;
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     destructor Destroy; override;
     class function GetInstance: IMappingExplorerStrategy;
     function GetMappingTable(const AClass: TClass): TTableMapping; override;

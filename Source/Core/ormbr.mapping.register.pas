@@ -33,7 +33,6 @@ uses
   SysUtils,
   Rtti,
   Generics.Collections;
-//  ormbr.session.abstract;
 
 type
   TRegisterClass = class

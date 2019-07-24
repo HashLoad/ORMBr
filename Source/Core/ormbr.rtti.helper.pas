@@ -570,6 +570,9 @@ end;
 function TRttiPropertyHelper.IsNullValue(AObject: TObject): Boolean;
 begin
   Result := False;
+//  if (not Self.IsNotNull) and (Self.IsNullable) then
+//    Exit(ResolveNullableValue(AObject));
+
   if Self.IsNotNull then
     Exit(False);
 

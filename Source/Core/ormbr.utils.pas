@@ -54,11 +54,11 @@ type
     FInstance: IUtilSingleton;
   private
     constructor CreatePrivate;
+  protected
+    constructor Create;
   public
     { Public declarations }
-    constructor Create;
     class function GetInstance: IUtilSingleton;
-
     function DateTimeToIso8601(const AValue: TDateTime): string;
     function Iso8601ToDateTime(const AValue: string): TDateTime;
     function ParseCommandNoSQL(const ASubStr, ASQL: string;
