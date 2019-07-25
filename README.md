@@ -3,7 +3,7 @@
 ![ORMBr Framework](https://www.isaquepinheiro.com.br/imagens/ormbrbitucket.png)  | [![pageseguro.png](http://www.ormbr.com.br/imagens/pagseguro.png)](https://pag.ae/bglQrWD)|
 
 
-# ORMBr Framework for Delphi/Lazaruz   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
+# ORMBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
 ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 
 Durante o desenvolvimento de software, é evidente a preocupação em que se tem em aumentar a produtividade sem abrir mão da qualidade. No que se refere a banco de dados, é possível a utilização de um framework ORM que nos permita focar mais nas regras de negócios da aplicação do que na persistência de dados em si, permitindo um desenvolvimento mais rápido e consistente.
