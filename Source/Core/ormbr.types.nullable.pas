@@ -64,15 +64,15 @@ type
     class operator NotEqual(const a, b: Nullable<T>) : Boolean;
   end;
 
-//  NullString = Nullable<string>;
-//  NullBoolean = Nullable<Boolean>;
-//  NullInteger = Nullable<Integer>;
-//  NullInt64 = Nullable<Int64>;
-//  NullDouble = Nullable<Double>;
-//  NullCurrency = Nullable<Currency>;
-//  NullDate = Nullable<TDate>;
-//  NullTime = Nullable<TTime>;
-//  NullDateTime = Nullable<TDateTime>;
+  NullString = Nullable<string>;
+  NullBoolean = Nullable<Boolean>;
+  NullInteger = Nullable<Integer>;
+  NullInt64 = Nullable<Int64>;
+  NullDouble = Nullable<Double>;
+  NullCurrency = Nullable<Currency>;
+  NullDate = Nullable<TDate>;
+  NullTime = Nullable<TTime>;
+  NullDateTime = Nullable<TDateTime>;
 
 implementation
 
