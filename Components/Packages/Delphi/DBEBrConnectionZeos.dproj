@@ -147,9 +147,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.zeos.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.zeos.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.zeos.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.zeos.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.zeos.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.zeos.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.zeos.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.zeos.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

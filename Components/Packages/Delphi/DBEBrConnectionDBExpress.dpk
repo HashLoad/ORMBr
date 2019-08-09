@@ -38,8 +38,8 @@ requires
 contains
   dbebr.connection.dbexpress in '..\..\Source\dbebr.connection.dbexpress.pas',
   dbebr.connection.dbexpress.reg in '..\..\Source\dbebr.connection.dbexpress.reg.pas',
-  ormbr.driver.dbexpress in '..\..\..\Source\Drivers\ormbr.driver.dbexpress.pas',
-  ormbr.driver.dbexpress.transaction in '..\..\..\Source\Drivers\ormbr.driver.dbexpress.transaction.pas',
-  ormbr.factory.dbexpress in '..\..\..\Source\Drivers\ormbr.factory.dbexpress.pas';
+  ormbr.driver.dbexpress in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.dbexpress.pas',
+  ormbr.driver.dbexpress.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.dbexpress.transaction.pas',
+  ormbr.factory.dbexpress in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.dbexpress.pas';
 
 end.

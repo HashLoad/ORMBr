@@ -148,9 +148,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.dbexpress.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.dbexpress.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.dbexpress.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.dbexpress.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.dbexpress.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.dbexpress.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.dbexpress.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.dbexpress.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

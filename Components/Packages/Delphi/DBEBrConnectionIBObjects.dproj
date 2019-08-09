@@ -117,9 +117,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.ibobjects.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.ibobjects.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.ibobjects.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.ibobjects.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.ibobjects.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.ibobjects.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.ibobjects.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.ibobjects.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

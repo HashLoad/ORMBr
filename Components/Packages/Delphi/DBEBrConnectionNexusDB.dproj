@@ -117,9 +117,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.nexusdb.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.nexusdb.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.nexusdb.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.nexusdb.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.nexusdb.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.nexusdb.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -149,9 +149,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.firedac.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.firedac.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.firedac.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.firedac.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.firedac.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

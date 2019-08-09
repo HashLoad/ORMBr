@@ -147,9 +147,9 @@
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.unidac.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.unidac.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.unidac.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.unidac.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.unidac.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\Drivers\ormbr.driver.unidac.transaction.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Drivers\ormbr.factory.unidac.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
