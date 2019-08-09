@@ -140,14 +140,12 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.session.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.lazy.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.types.mapping.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.nullable.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.utils.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.events.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.fields.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.deleter.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.command.factory.pas"/>
@@ -158,14 +156,16 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.generator.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.interfaces.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.driver.register.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.connection.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
         <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.ast.pas"/>
         <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.pas"/>
         <DCCReference Include="..\..\..\Source\Criteria\ormbr.criteria.serialize.pas"/>
         <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.bind.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.bind.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.dataset.consts.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Core\ormbr.driver.connection.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Core\ormbr.factory.connection.pas"/>
+        <DCCReference Include="..\..\..\Source\DBEBr\Core\ormbr.factory.interfaces.pas"/>
+        <DCCReference Include="..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
