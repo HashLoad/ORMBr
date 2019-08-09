@@ -56,7 +56,6 @@ contains
   ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
   ormbr.session.abstract in '..\..\..\Source\Core\ormbr.session.abstract.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
-  ormbr.types.database in '..\..\..\Source\Core\ormbr.types.database.pas',
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.mapping in '..\..\..\Source\Core\ormbr.types.mapping.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',

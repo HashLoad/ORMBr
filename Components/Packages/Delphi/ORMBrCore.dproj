@@ -139,7 +139,6 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.session.abstract.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.types.database.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.lazy.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.mapping.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.nullable.pas"/>
