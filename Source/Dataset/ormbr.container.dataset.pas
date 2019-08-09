@@ -126,7 +126,7 @@ end;
 
 procedure TContainerDataSet<M>.Close;
 begin
-  FDataSetAdapter.Close;
+  FDataSetAdapter.EmptyDataSet;
 end;
 
 function TContainerDataSet<M>.MasterObject: TDataSetBaseAdapter<M>;

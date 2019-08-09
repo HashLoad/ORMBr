@@ -33,7 +33,6 @@ uses
   SysUtils,
   Generics.Collections,
   ormbr.ddl.interfaces,
-  ormbr.types.database,
   ormbr.ddl.generator,
   ormbr.factory.interfaces;
 

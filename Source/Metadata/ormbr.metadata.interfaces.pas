@@ -31,8 +31,7 @@ interface
 
 uses
   ormbr.factory.interfaces,
-  ormbr.database.mapping,
-  ormbr.types.database;
+  ormbr.database.mapping;
 
 type
   IMetadata = interface

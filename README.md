@@ -28,6 +28,6 @@ O ORMBr não precisa ser instalado, basta adicionar as units no seu projeto e co
 Embarcadero Delphi XE e superior.
 
 ### Versão Atual ###
-1.0.0 (20 Jul 2016)
+3.7.0 (20 Jul 2016)
 
 Copyright (c) 2016 ORMBr Framework Team

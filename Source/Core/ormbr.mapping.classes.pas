@@ -344,9 +344,6 @@ type
 
 implementation
 
-uses
-  ormbr.rtti.helper;
-
 { TOneToOneRelationMapping }
 
 constructor TAssociationMapping.Create(const AMultiplicity: TMultiplicity;

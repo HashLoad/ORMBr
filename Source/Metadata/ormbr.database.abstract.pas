@@ -40,8 +40,7 @@ uses
   ormbr.database.interfaces,
   ormbr.ddl.interfaces,
   ormbr.ddl.register,
-  ormbr.ddl.commands,
-  ormbr.types.database;
+  ormbr.ddl.commands;
 
 type
   TDatabaseAbstract = class abstract(TInterfacedObject, IDatabaseCompare)

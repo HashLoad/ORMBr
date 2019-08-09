@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/08/04 09:23:11.000.287,=rtl.dcp</Transaction>
+    <Transaction>2019/08/04 09:27:48.000.975,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEBrDB.dproj=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Package1.dproj</Transaction>
+    <Transaction>2019/08/04 09:28:06.000.981,=ORMBrCore.dcp</Transaction>
+    <Transaction>2019/08/04 09:29:31.000.246,=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
+    <Transaction>2019/08/04 09:31:02.000.896,=DBEBrCore.dcp</Transaction>
+    <Transaction>2019/08/04 09:39:01.000.596,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.managerdataset.pas=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
+    <Transaction>2019/08/04 09:41:09.000.704,=designide.dcp</Transaction>
+    <Transaction>2019/08/04 09:41:15.000.115,=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
+    <Transaction>2019/08/04 09:41:34.000.328,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.db.reg.pas=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
+    <Transaction>2019/08/04 09:42:48.000.586,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.db.manager.dataset.pas=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.managerdataset.pas</Transaction>
+    <Transaction>2019/08/04 09:43:26.000.445,=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.memdataset.pas</Transaction>
+    <Transaction>2019/08/04 09:43:50.000.315,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.db.dataset.pas=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.memdataset.pas</Transaction>
+    <Transaction>2019/08/04 10:03:48.000.495,=dsnap.dcp</Transaction>
+    <Transaction>2019/08/04 10:10:10.000.326,=D:\PROJETOS-Brasil\ORMBr\Source\Dataset\ormbr.manager.dataset.pas</Transaction>
+    <Transaction>2019/08/05 16:57:49.000.463,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\ORMBrDB.dproj=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEBrDB.dproj</Transaction>
+    <Transaction>2019/08/05 16:58:15.000.447,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\ORMBrDataAccess.dproj=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\ORMBrDB.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

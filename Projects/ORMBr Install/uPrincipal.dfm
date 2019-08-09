@@ -4,11 +4,11 @@ object frmPrincipal: TfrmPrincipal
   ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsNone
-  BorderWidth = 2
+  BorderWidth = 1
   Caption = 'Instalador ORMBr Components'
-  ClientHeight = 637
-  ClientWidth = 720
-  Color = clBtnFace
+  ClientHeight = 639
+  ClientWidth = 722
+  Color = clSilver
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -23,8 +23,8 @@ object frmPrincipal: TfrmPrincipal
   object wizPrincipal: TJvWizard
     Left = 0
     Top = 0
-    Width = 720
-    Height = 637
+    Width = 722
+    Height = 639
     ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
@@ -55,8 +55,8 @@ object frmPrincipal: TfrmPrincipal
     OnCancelButtonClick = wizPrincipalCancelButtonClick
     Color = 4864316
     DesignSize = (
-      720
-      637)
+      722
+      639)
     object wizPgInicio: TJvWizardWelcomePage
       Header.Visible = False
       Header.Height = 50
@@ -89,9 +89,9 @@ object frmPrincipal: TfrmPrincipal
       WaterMark.Image.Layout = ilTop
       WaterMark.Width = 80
       object Label6: TLabel
-        Left = 31
+        Left = 12
         Top = 48
-        Width = 222
+        Width = 267
         Height = 91
         Caption = 
           'Este assistente olhe guiar'#225' no processo de instala'#231#227'o dos compon' +
@@ -99,7 +99,7 @@ object frmPrincipal: TfrmPrincipal
           ' os paths no Type Library.'#13#10#13#10#201' recomend'#225'vel fechar todas as ver' +
           #245'es do Delphi antes de continuar.'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -107,7 +107,7 @@ object frmPrincipal: TfrmPrincipal
         WordWrap = True
       end
       object imgLogomarca: TImage
-        Left = 295
+        Left = 307
         Top = 48
         Width = 230
         Height = 120
@@ -918,7 +918,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 13
         Caption = 'Para maiores informa'#231#245'es sobre o projeto ORMBr visite:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -933,7 +933,7 @@ object frmPrincipal: TfrmPrincipal
           'Ajude o projeto ORMBr doando para mais informa'#231#245'es visite o site' +
           ':'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
@@ -946,7 +946,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 13
         Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -974,7 +974,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 13
         Caption = 'Para baixar os fontes do Projeto ORMBr Framework for Delphi'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -1005,10 +1005,6 @@ object frmPrincipal: TfrmPrincipal
       Color = 3417897
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 65
@@ -1077,7 +1073,7 @@ object frmPrincipal: TfrmPrincipal
         Visible = False
       end
       object Label8: TLabel
-        Left = 219
+        Left = 212
         Top = 117
         Width = 270
         Height = 13
@@ -1090,6 +1086,21 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         Transparent = True
         OnClick = Label8Click
+      end
+      object Label7: TLabel
+        Left = 212
+        Top = 140
+        Width = 177
+        Height = 13
+        Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clSilver
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        OnClick = Label7Click
       end
       object edtPlatform: TComboBox
         Left = 195
@@ -1104,7 +1115,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ItemIndex = 0
         ParentFont = False
-        TabOrder = 1
+        TabOrder = 2
         Text = 'Win32'
         Items.Strings = (
           'Win32')
@@ -1129,7 +1140,7 @@ object frmPrincipal: TfrmPrincipal
       object chkDeixarSomenteLIB: TCheckBox
         Left = 195
         Top = 115
-        Width = 21
+        Width = 16
         Height = 17
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -1139,7 +1150,7 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ParentColor = False
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 4
       end
       object clbDelphiVersion: TCheckListBox
         Left = 17
@@ -1157,7 +1168,7 @@ object frmPrincipal: TfrmPrincipal
         ItemHeight = 13
         ParentCtl3D = False
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 1
         OnClick = clbDelphiVersionClick
       end
       object edtDelphiVersion: TComboBox
@@ -1172,8 +1183,21 @@ object frmPrincipal: TfrmPrincipal
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 3
         Visible = False
+      end
+      object ckbUsarArquivoConfig: TCheckBox
+        Left = 195
+        Top = 138
+        Width = 16
+        Height = 17
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clSilver
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 5
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1203,8 +1227,8 @@ object frmPrincipal: TfrmPrincipal
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
-        Width = 554
-        Height = 524
+        Width = 556
+        Height = 526
         HorzScrollBar.Visible = False
         VertScrollBar.Visible = False
         Align = alClient
@@ -1212,31 +1236,31 @@ object frmPrincipal: TfrmPrincipal
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
-        ExplicitWidth = 554
-        ExplicitHeight = 524
+        ExplicitWidth = 556
+        ExplicitHeight = 526
         inherited pnlBotoesMarcar: TPanel
-          Top = 483
-          Width = 554
+          Top = 485
+          Width = 556
           Color = 3417897
           ParentBackground = False
-          ExplicitTop = 483
-          ExplicitWidth = 554
+          ExplicitTop = 485
+          ExplicitWidth = 556
           inherited btnPacotesDesmarcarTodos: TSpeedButton
-            Left = 504
+            Left = 506
             ExplicitLeft = 504
           end
           inherited btnPacotesMarcarTodos: TSpeedButton
-            Left = 454
+            Left = 456
             ExplicitLeft = 454
           end
         end
         inherited ScrollBox1: TScrollBox
-          Width = 548
-          Height = 477
+          Width = 550
+          Height = 479
           BevelInner = bvNone
           ParentColor = False
-          ExplicitWidth = 548
-          ExplicitHeight = 477
+          ExplicitWidth = 550
+          ExplicitHeight = 479
         end
       end
     end
@@ -1265,10 +1289,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalar: TSpeedButton
         Left = 430
         Top = 463
@@ -1373,7 +1393,7 @@ object frmPrincipal: TfrmPrincipal
         AutoSize = False
         Caption = 'A instala'#231#227'o dos Componentes foi conclu'#237'da com '#234'xito.'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -16
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -1432,7 +1452,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 13
         Caption = 'Para maiores informa'#231#245'es sobre o projeto ORMBr visite:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -1447,7 +1467,7 @@ object frmPrincipal: TfrmPrincipal
           'Ajude o projeto ORMBr doando para mais informa'#231#245'es visite o site' +
           ':'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -1461,7 +1481,7 @@ object frmPrincipal: TfrmPrincipal
         Height = 13
         Caption = 'Para tirar d'#250'vidas, ajudar ou dar sugest'#245'es visite:'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
@@ -1487,7 +1507,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 0
       Top = 71
       Width = 166
-      Height = 524
+      Height = 526
       ItemHeight = 30
       AllowClickableNodes = False
       Color = 4864316
@@ -1505,13 +1525,13 @@ object frmPrincipal: TfrmPrincipal
     object pnlTopo: TPanel
       Left = 0
       Top = 0
-      Width = 720
+      Width = 722
       Height = 71
       Align = alTop
       BevelOuter = bvNone
       Color = 4864316
       ParentBackground = False
-      TabOrder = 4
+      TabOrder = 2
       object Label9: TLabel
         Left = 14
         Top = 19

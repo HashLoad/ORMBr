@@ -1,0 +1,47 @@
+package ORMBrDriversLinks;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ORMBr - Drivers Links'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide;
+
+contains
+  ormbr.driver.link.firebird in '..\..\Source\ormbr.driver.link.firebird.pas',
+  ormbr.driver.link.interbase in '..\..\Source\ormbr.driver.link.interbase.pas',
+  ormbr.driver.link.mongodb in '..\..\Source\ormbr.driver.link.mongodb.pas',
+  ormbr.driver.link.mssql in '..\..\Source\ormbr.driver.link.mssql.pas',
+  ormbr.driver.link.mysql in '..\..\Source\ormbr.driver.link.mysql.pas',
+  ormbr.driver.link.oracle in '..\..\Source\ormbr.driver.link.oracle.pas',
+  ormbr.driver.link.postgresql in '..\..\Source\ormbr.driver.link.postgresql.pas',
+  ormbr.driver.link.sqldirect in '..\..\Source\ormbr.driver.link.sqldirect.pas',
+  ormbr.driver.link.sqlite in '..\..\Source\ormbr.driver.link.sqlite.pas',
+  ormbr.link.reg in '..\..\Source\ormbr.link.reg.pas';
+
+end.

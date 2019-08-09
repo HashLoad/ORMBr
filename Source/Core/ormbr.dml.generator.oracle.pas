@@ -38,7 +38,6 @@ uses
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   ormbr.driver.register,
   ormbr.dml.commands,
   ormbr.criteria;

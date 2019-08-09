@@ -47,7 +47,6 @@ uses
   ormbr.mapping.attributes,
   ormbr.command.abstract,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   ormbr.types.blob,
   ormbr.objects.helper,
   ormbr.mapping.explorer;

@@ -42,8 +42,7 @@ uses
   ormbr.metadata.extract,
   ormbr.database.mapping,
   ormbr.factory.interfaces,
-  ormbr.mapping.rttiutils,
-  ormbr.types.database;
+  ormbr.mapping.rttiutils;
 
 type
   TCatalogMetadataAbsoluteDB = class(TCatalogMetadataAbstract)

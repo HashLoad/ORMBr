@@ -39,8 +39,7 @@ uses
   ormbr.metadata.extract,
   ormbr.database.mapping,
   ormbr.factory.interfaces,
-  ormbr.types.mapping,
-  ormbr.types.database;
+  ormbr.types.mapping;
 
 type
   TCatalogMetadataOracle = class(TCatalogMetadataAbstract)

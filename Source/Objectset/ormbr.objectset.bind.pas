@@ -130,9 +130,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if not LColumn.ColumnProperty.IsWritable then
@@ -211,9 +209,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if not LColumn.ColumnProperty.IsWritable then
@@ -316,9 +312,7 @@ var
   LColumns: TColumnMappingList;
   LField: TField;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if not LColumn.ColumnProperty.IsWritable then
@@ -345,9 +339,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if not LColumn.ColumnProperty.IsWritable then

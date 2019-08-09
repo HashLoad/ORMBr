@@ -33,7 +33,6 @@ uses
   SysUtils,
   Generics.Collections,
   ormbr.dml.interfaces,
-  ormbr.types.database,
   ormbr.factory.interfaces;
 
 type
@@ -46,8 +45,7 @@ type
   public
     class procedure RegisterDriver(const ADriverName: TDriverName;
       const ADriverSQL: IDMLGeneratorCommand);
-    class function GetDriver(
-      const ADriverName: TDriverName): IDMLGeneratorCommand;
+    class function GetDriver(const ADriverName: TDriverName): IDMLGeneratorCommand;
   end;
 
 implementation
@@ -64,8 +62,7 @@ begin
   inherited;
 end;
 
-class function TDriverRegister.GetDriver(
-  const ADriverName: TDriverName): IDMLGeneratorCommand;
+class function TDriverRegister.GetDriver(const ADriverName: TDriverName): IDMLGeneratorCommand;
 begin
   if not FDriver.ContainsKey(ADriverName) then
     raise Exception

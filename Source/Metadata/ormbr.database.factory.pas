@@ -38,8 +38,7 @@ uses
   ormbr.database.abstract,
   ormbr.factory.interfaces,
   ormbr.database.mapping,
-  ormbr.ddl.commands,
-  ormbr.types.database;
+  ormbr.ddl.commands;
 
 type
   TDatabaseFactory = class(TDatabaseAbstract)

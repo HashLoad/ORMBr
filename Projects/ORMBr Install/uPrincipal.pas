@@ -61,6 +61,8 @@ type
     edtDelphiVersion: TComboBox;
     Label1: TLabel;
     Label8: TLabel;
+    ckbUsarArquivoConfig: TCheckBox;
+    Label7: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -83,6 +85,7 @@ type
       const FromPage: TJvWizardCustomPage);
     procedure clbDelphiVersionClick(Sender: TObject);
     procedure Label8Click(Sender: TObject);
+    procedure Label7Click(Sender: TObject);
   private
     FCountErros: Integer;
     oORMBr: TJclBorRADToolInstallations;
@@ -166,7 +169,6 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
   var
     oDirList: TSearchRec;
     iRet: Integer;
-    sDirDpk: string;
   begin
     sDir := IncludeTrailingPathDelimiter(sDir);
     if not DirectoryExists(sDir) then
@@ -204,7 +206,7 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 begin
    sDirPackage := '';
    FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Projects\Wizard', NomePacote);
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Projects\Components\MongoWire', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Packages\Delphi', NomePacote);
 end;
 
 // retornar o path do aplicativo
@@ -292,6 +294,11 @@ begin
 end;
 
 // ler o arquivo .ini de configurações e setar os campos com os valores lidos
+procedure TfrmPrincipal.Label7Click(Sender: TObject);
+begin
+  ckbUsarArquivoConfig.Checked := not ckbUsarArquivoConfig.Checked;
+end;
+
 procedure TfrmPrincipal.Label8Click(Sender: TObject);
 begin
   chkDeixarSomenteLIB.Checked := not chkDeixarSomenteLIB.Checked;
@@ -365,6 +372,7 @@ begin
 end;
 
 procedure TfrmPrincipal.DeixarSomenteLib;
+
   procedure Copiar(const Extensao : string);
   var
     ListArquivos: TStringDynArray;
@@ -377,10 +385,18 @@ procedure TfrmPrincipal.DeixarSomenteLib;
       Arquivo := ExtractFileName(ListArquivos[i]);
       CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary) + Arquivo), False);
     end;
+    ListArquivos := TDirectory.GetFiles(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source', Extensao ,TSearchOption.soAllDirectories ) ;
+    for i := Low(ListArquivos) to High(ListArquivos) do
+    begin
+      Arquivo := ExtractFileName(ListArquivos[i]);
+      CopyFile(PWideChar(ListArquivos[i]), PWideChar(IncludeTrailingPathDelimiter(sDirLibrary) + Arquivo), False);
+    end;
   end;
+
 begin
   // remover os path com o segundo parametro
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source', False);
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source', False);
 
   Copiar('*.dcr');
   Copiar('*.res');
@@ -501,6 +517,7 @@ end;
 procedure TfrmPrincipal.AddLibrarySearchPath;
 begin
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source');
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source');
 
   // --
   with oORMBr.Installations[iVersion] do
@@ -557,7 +574,7 @@ begin
   Sender.Options.Clear;
 
   // não utilizar o dcc32.cfg
-  if (oORMBr.Installations[iVersion].SupportsNoConfig) then
+  if (oORMBr.Installations[iVersion].SupportsNoConfig) and (not ckbUsarArquivoConfig.Checked) then
     Sender.Options.Add('--no-config');
 
   // -B = Build all units
@@ -605,7 +622,12 @@ begin
 
      if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25','d26']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell,Ibx');
-
+  end;
+  if (ckbUsarArquivoConfig.Checked) then
+  begin
+    LArquivoCfg := ChangeFileExt(FPacoteAtual, '.cfg');
+    Sender.Options.SaveToFile(LArquivoCfg);
+    Sender.Options.Clear;
   end;
 end;
 
@@ -1242,9 +1264,6 @@ begin
       MB_OK + MB_ICONERROR
     );
   end;
-
-  // Gravar as configurações em um .ini para utilizar depois
-  GravarConfiguracoes;
 end;
 
 procedure TfrmPrincipal.btnSVNCheckoutUpdateClick(Sender: TObject);
@@ -1334,6 +1353,8 @@ end;
 
 procedure TfrmPrincipal.wizPrincipalFinishButtonClick(Sender: TObject);
 begin
+  // Gravar as configurações em um .ini para utilizar depois
+  GravarConfiguracoes;
   Self.Close;
 end;
 

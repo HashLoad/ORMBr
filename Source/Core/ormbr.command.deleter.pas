@@ -35,8 +35,7 @@ uses
   SysUtils,
   ormbr.command.abstract,
   ormbr.factory.interfaces,
-  ormbr.rtti.helper,
-  ormbr.types.database;
+  ormbr.rtti.helper;
 
 type
   TCommandDeleter = class(TDMLCommandAbstract)

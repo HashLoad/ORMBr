@@ -123,7 +123,7 @@ begin
   FConnection := AConnection;
   FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
   FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
-  FOwnerNestedList := True;
+  FOwnerNestedList := False;
 end;
 
 destructor TManagerDataSet.Destroy;

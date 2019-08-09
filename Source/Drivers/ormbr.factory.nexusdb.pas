@@ -33,8 +33,7 @@ uses
   DB,
   Classes,
   ormbr.factory.connection,
-  ormbr.factory.interfaces,
-  ormbr.types.database;
+  ormbr.factory.interfaces;
 
 type
   /// <summary>

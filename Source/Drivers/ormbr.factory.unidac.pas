@@ -20,7 +20,6 @@ uses
   // ORMbr
   ormbr.factory.connection,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   // ORMBr Unidac
   ormbr.driver.unidac,
   ormbr.driver.unidac.transaction;

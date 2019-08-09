@@ -39,7 +39,6 @@ uses
   ormbr.factory.interfaces,
   ormbr.metadata.interfaces,
   ormbr.database.mapping,
-  ormbr.types.database,
   ormbr.types.mapping;
 
 type

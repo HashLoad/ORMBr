@@ -40,7 +40,7 @@ type
   TSequenceType = (NotInc, AutoInc, TableInc, GuidInc);
   TRestriction = (NotNull, NoInsert, NoUpdate, NoValidate, Unique, Hidden);
   TRestrictions = set of TRestriction;
-  TCascadeAction = (CascadeNone, CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete);
+  TCascadeAction = (CascadeNone, CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete);
   TCascadeActions = set of TCascadeAction;
   TMasterEvent = (AutoPost, AutoEdit, AutoInsert);
   TMasterEvents = set of TMasterEvent;

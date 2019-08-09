@@ -39,8 +39,7 @@ uses
   nxllComponent,
   /// orm
   ormbr.driver.connection,
-  ormbr.factory.interfaces,
-  ormbr.types.database;
+  ormbr.factory.interfaces;
 
 type
   /// <summary>

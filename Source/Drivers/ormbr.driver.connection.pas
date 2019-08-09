@@ -35,7 +35,6 @@ uses
   Classes,
   SysUtils,
   Variants,
-  ormbr.types.database,
   ormbr.factory.interfaces;
 
 type

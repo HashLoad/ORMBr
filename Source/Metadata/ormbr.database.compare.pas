@@ -34,8 +34,7 @@ uses
   Classes,
   ormbr.factory.interfaces,
   ormbr.metadata.db.factory,
-  ormbr.database.factory,
-  ormbr.types.database;
+  ormbr.database.factory;
 
 type
   TDatabaseCompare = class(TDatabaseFactory)

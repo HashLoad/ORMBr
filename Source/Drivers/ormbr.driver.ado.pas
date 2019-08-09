@@ -37,7 +37,6 @@ uses
   ADODB,
   /// orm
   ormbr.driver.connection,
-  ormbr.types.database,
   ormbr.factory.interfaces;
 
 type

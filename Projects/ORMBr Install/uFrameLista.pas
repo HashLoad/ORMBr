@@ -30,16 +30,60 @@ type
     ScrollBox1: TScrollBox;
     Label6: TLabel;
     Bevel2: TBevel;
-    MongoDBCore_dpk: TCheckBox;
+    ConnectionMongoWire_dpk: TCheckBox;
     Label13: TLabel;
     Label1: TLabel;
     ORMBrLibrary_dpk: TCheckBox;
     Label2: TLabel;
     Label3: TLabel;
+    Label7: TLabel;
+    Bevel1: TBevel;
+    ORMBrDriversLinks_dpk: TCheckBox;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    DBEBrConnectionFireDAC_dpk: TCheckBox;
+    Label11: TLabel;
+    Label12: TLabel;
+    DBEBrConnectionDBExpress_dpk: TCheckBox;
+    Label15: TLabel;
+    Label16: TLabel;
+    DBEBrConnectionZeos_dpk: TCheckBox;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label14: TLabel;
+    Label19: TLabel;
+    DBEBrConnectionUniDAC_dpk: TCheckBox;
+    Label20: TLabel;
+    Label21: TLabel;
+    DBEBrConnectionFIBPlus_dpk: TCheckBox;
+    Label22: TLabel;
+    Label23: TLabel;
+    DBEBrConnectionSQLDirect_dpk: TCheckBox;
+    Label24: TLabel;
+    Label25: TLabel;
+    DBEBrConnectionIBObjects_dpk: TCheckBox;
+    Label26: TLabel;
+    Label27: TLabel;
+    DBEBrConnectionNexusDB_dpk: TCheckBox;
+    Label28: TLabel;
+    Label29: TLabel;
+    DBEBrConnectionADO_dpk: TCheckBox;
+    Label4: TLabel;
+    Label5: TLabel;
+    ORMBrCore_dpk: TCheckBox;
+    Label30: TLabel;
+    Label31: TLabel;
+    DBEBrCore_dpk: TCheckBox;
+    Bevel3: TBevel;
+    Label32: TLabel;
+    Bevel4: TBevel;
+    ORMBrDataAccess_dpk: TCheckBox;
+    Label33: TLabel;
+    Label34: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);
-    procedure Label1Click(Sender: TObject);
   private
     FPacotes: TPacotes;
     FUtilizarBotoesMarcar: Boolean;
@@ -94,11 +138,6 @@ begin
   inherited;
 end;
 
-procedure TframePacotes.Label1Click(Sender: TObject);
-begin
-
-end;
-
 // botão para marcar todos os checkboxes
 procedure TframePacotes.btnPacotesMarcarTodosClick(Sender: TObject);
 var
@@ -144,7 +183,6 @@ end;
 // rotina de verificação de dependência e marcação dos pacotes base
 procedure TframePacotes.VerificarCheckboxes(Sender: TObject);
 begin
-  MongoDBCore_dpk.Checked := True;
   if not FUtilizarBotoesMarcar then
   begin
     FUtilizarBotoesMarcar := True;

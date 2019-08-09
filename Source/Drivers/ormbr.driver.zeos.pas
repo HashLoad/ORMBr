@@ -42,7 +42,6 @@ uses
   ZSqlProcessor,
   /// orm
   ormbr.driver.connection,
-  ormbr.types.database,
   ormbr.factory.interfaces;
 
 type

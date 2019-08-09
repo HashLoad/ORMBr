@@ -33,8 +33,7 @@ uses
   DB,
   Classes,
   SysUtils,
-  Variants,
-  ormbr.monitor;
+  Variants;
 
 type
   TDriverName = (dnMSSQL, dnMySQL, dnFirebird, dnSQLite, dnInterbase, dnDB2,
@@ -102,6 +101,12 @@ type
     property CommandText: string read GetCommandText write SetCommandText;
   end;
 
+  ICommandMonitor = interface
+    ['{9AEB5A47-0205-4648-8C8A-F9DA8D88EB64}']
+    procedure Command(const ASQL: string; AParams: TParams);
+    procedure Show;
+  end;
+
   IDBConnection = interface
     ['{4520C97F-8777-4D14-9C14-C79EF86957DB}']
     procedure Connect;
@@ -131,6 +136,12 @@ type
     procedure Rollback;
     function InTransaction: Boolean;
   end;
+
+const
+  TStrDriverName: array[dnMSSQL..dnNexusDB] of
+                  string = ('MSSQL','MySQL','Firebird','SQLite','Interbase','DB2',
+                            'Oracle','Informix','PostgreSQL','ADS','ASA',
+                            'AbsoluteDB','MongoDB','ElevateDB','NexusDB');
 
 implementation
 

@@ -44,8 +44,7 @@ uses
   MongoWireConnection,
   /// ORMBr
   ormbr.driver.connection,
-  ormbr.factory.interfaces,
-  ormbr.types.database;
+  ormbr.factory.interfaces;
 
 type
   TMongoDBQuery = class(TCustomClientDataSet)

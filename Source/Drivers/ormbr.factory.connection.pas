@@ -33,8 +33,6 @@ uses
   Classes,
   DB,
   ormbr.factory.interfaces,
-  ormbr.types.database,
-  ormbr.monitor,
   ormbr.driver.connection;
 
 type

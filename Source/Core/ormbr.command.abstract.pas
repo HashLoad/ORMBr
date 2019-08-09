@@ -32,9 +32,7 @@ interface
 uses
   DB,
   Rtti,
-  ormbr.criteria,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   ormbr.driver.register,
   ormbr.dml.interfaces;
 

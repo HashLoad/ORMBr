@@ -68,7 +68,6 @@ type
 implementation
 
 uses
-  ormbr.rtti.helper,
   ormbr.mapping.attributes;
 
 { EClassNotRegistered }

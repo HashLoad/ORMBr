@@ -45,7 +45,6 @@ uses
   {$IFDEF DRIVERRESTFUL}
   ormbr.client.interfaces,
   {$ENDIF}
-  ormbr.criteria,
   ormbr.objectset.bind,
   ormbr.dataset.bind,
   ormbr.dataset.fields,
@@ -114,7 +113,8 @@ begin
   FSession := TSessionRest<M>.Create(AConnection, Self, APageSize);
 end;
 {$ELSE}
-constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
+constructor TRESTDataSetAdapter<M>.Create(ADataSet: TDataSet; APageSize: Integer;
+  AMasterObject: TObject);
 begin
   inherited Create(ADataSet, APageSize, AMasterObject);
   FSession := TSessionDataSnap<M>.Create(APageSize);

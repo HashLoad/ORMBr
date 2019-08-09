@@ -37,8 +37,7 @@ uses
   ormbr.metadata.register,
   ormbr.metadata.extract,
   ormbr.database.mapping,
-  ormbr.factory.interfaces,
-  ormbr.types.database;
+  ormbr.factory.interfaces;
 
 type
   TCatalogMetadataMySQL = class(TCatalogMetadataAbstract)
