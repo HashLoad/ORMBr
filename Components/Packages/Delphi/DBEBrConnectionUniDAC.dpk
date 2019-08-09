@@ -31,6 +31,19 @@ package DBEBrConnectionUniDAC;
 requires
   rtl,
   designide,
+  {$IFDEF VER210} unidac140, {$ENDIF} // D2010
+  {$IFDEF VER220} unidac150, {$ENDIF} // XE
+  {$IFDEF VER230} unidac160, {$ENDIF} // XE2
+  {$IFDEF VER240} unidac170, {$ENDIF} // XE3
+  {$IFDEF VER250} unidac180, {$ENDIF} // XE4
+  {$IFDEF VER260} unidac190, {$ENDIF} // XE5
+  {$IFDEF VER270} unidac200, {$ENDIF} // XE6
+  {$IFDEF VER280} unidac210, {$ENDIF} // XE7
+  {$IFDEF VER290} unidac220, {$ENDIF} // XE8
+  {$IFDEF VER300} unidac230, {$ENDIF} // Seattle
+  {$IFDEF VER310} unidac240, {$ENDIF} // Berlin
+  {$IFDEF VER320} unidac250, {$ENDIF} // Tokyo
+  {$IFDEF VER330} unidac260, {$ENDIF} // Rio
   DBEBrCore;
 
 contains

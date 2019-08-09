@@ -143,6 +143,7 @@
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="designide.dcp"/>
+        <DCCReference Include="unidac260.dcp"/>
         <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="..\..\Source\dbebr.connection.unidac.pas"/>
         <DCCReference Include="..\..\Source\dbebr.connection.unidac.reg.pas"/>
