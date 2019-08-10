@@ -148,8 +148,9 @@
         <DCCReference Include="dsnap.dcp"/>
         <DCCReference Include="..\..\Source\ormbr.db.manager.dataset.pas"/>
         <DCCReference Include="..\..\Source\ormbr.db.reg.pas"/>
-        <DCCReference Include="..\..\Source\ormbr.db.dataset.pas"/>
         <DCCReference Include="..\..\..\Source\Dataset\ormbr.manager.dataset.pas"/>
+        <DCCReference Include="..\..\Source\ormbr.db.manager.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Objectset\ormbr.manager.objectset.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

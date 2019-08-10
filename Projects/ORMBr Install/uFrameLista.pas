@@ -78,6 +78,9 @@ type
     Bevel3: TBevel;
     Label32: TLabel;
     Bevel4: TBevel;
+    ORMBrDataAccess_dpk: TCheckBox;
+    Label33: TLabel;
+    Label34: TLabel;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

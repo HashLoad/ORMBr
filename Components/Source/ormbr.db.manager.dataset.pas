@@ -21,9 +21,9 @@ type
     procedure SetOwnerNestedList(const Value: Boolean);
   public
     procedure RemoveAdapter<T: class>;
-    function AddAdapter<T: class, constructor>(ADataSet: TDataSet;
+    function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
-    function AddAdapter<T, M: class, constructor>(ADataSet: TDataSet): TManagerDataSet; overload;
+    function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerDataSet; overload;
     function AddLookupField<T, M: class, constructor>(const AFieldName: string;
                                                       const AKeyFields: string;
                                                       const ALookupKeyFields: string;
@@ -60,12 +60,12 @@ implementation
 
 { TDBManagerDataSet }
 
-function TORMBrManagerDataSet.AddAdapter<T, M>(ADataSet: TDataSet): TManagerDataSet;
+function TORMBrManagerDataSet.AddAdapter<T, M>(const ADataSet: TDataSet): TManagerDataSet;
 begin
   Result := FManagerDataSet.AddAdapter<T, M>(ADataSet);
 end;
 
-function TORMBrManagerDataSet.AddAdapter<T>(ADataSet: TDataSet;
+function TORMBrManagerDataSet.AddAdapter<T>(const ADataSet: TDataSet;
   const APageSize: Integer): TManagerDataSet;
 begin
   Result := FManagerDataSet.AddAdapter<T>(ADataSet, APageSize);

@@ -38,7 +38,8 @@ requires
 contains
   ormbr.db.manager.dataset in '..\..\Source\ormbr.db.manager.dataset.pas',
   ormbr.db.reg in '..\..\Source\ormbr.db.reg.pas',
-  ormbr.db.dataset in '..\..\Source\ormbr.db.dataset.pas',
-  ormbr.manager.dataset in '..\..\..\Source\Dataset\ormbr.manager.dataset.pas';
+  ormbr.manager.dataset in '..\..\..\Source\Dataset\ormbr.manager.dataset.pas',
+  ormbr.db.manager.objectset in '..\..\Source\ormbr.db.manager.objectset.pas',
+  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas';
 
 end.

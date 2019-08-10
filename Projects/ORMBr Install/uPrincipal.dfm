@@ -1005,6 +1005,10 @@ object frmPrincipal: TfrmPrincipal
       Color = 3417897
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 65
@@ -1156,7 +1160,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 17
         Top = 84
         Width = 172
-        Height = 401
+        Height = 425
         BorderStyle = bsNone
         Color = 4865343
         Ctl3D = False
@@ -1289,6 +1293,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalar: TSpeedButton
         Left = 430
         Top = 463

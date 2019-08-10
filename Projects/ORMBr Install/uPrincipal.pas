@@ -396,7 +396,7 @@ procedure TfrmPrincipal.DeixarSomenteLib;
 begin
   // remover os path com o segundo parametro
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source', False);
-  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source', False);
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components', False);
 
   Copiar('*.dcr');
   Copiar('*.res');
@@ -466,8 +466,8 @@ var
 
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..5] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery'
+    LISTA_PROIBIDOS: ARRAY[0..7] OF STRING = (
+      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery', 'Win32', 'Packages'
     );
   var
     Str: String;
@@ -517,7 +517,7 @@ end;
 procedure TfrmPrincipal.AddLibrarySearchPath;
 begin
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source');
-  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source');
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components');
 
   // --
   with oORMBr.Installations[iVersion] do
