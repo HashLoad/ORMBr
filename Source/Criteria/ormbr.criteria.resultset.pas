@@ -6,7 +6,7 @@ uses
   Generics.Collections,
   ormbr.criteria,
   ormbr.factory.interfaces,
-  ormbr.objectset.bind;
+  ormbr.bind;
 
 type
   ICriteriaSet = interface
@@ -96,7 +96,7 @@ begin
     while LResultSet.NotEof do
     begin
       LObject := M.Create;
-      TBindObject.GetInstance.SetFieldToProperty(LResultSet, LObject);
+      TBind.Instance.SetFieldToProperty(LResultSet, LObject);
       Result.Add(LObject);
     end;
   finally
@@ -114,7 +114,7 @@ begin
     if LResultSet.RecordCount = 0 then
       Exit(nil);
     Result := M.Create;
-    TBindObject.GetInstance.SetFieldToProperty(LResultSet, Result);
+    TBind.Instance.SetFieldToProperty(LResultSet, Result);
   finally
     LResultSet.Close;
     FConnection.Disconnect;

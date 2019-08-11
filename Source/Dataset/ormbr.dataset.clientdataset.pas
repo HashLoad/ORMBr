@@ -95,9 +95,8 @@ type
 implementation
 
 uses
-  ormbr.dataset.bind,
+  ormbr.bind,
   ormbr.core.consts,
-  ormbr.objectset.bind,
   ormbr.objects.helper,
   ormbr.rtti.helper,
   ormbr.dataset.fields,
@@ -434,7 +433,7 @@ begin
         begin
           LObject := M.Create;
           try
-            TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+            TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
             FSession.Update(LObject, M.ClassName);
           finally
             LObject.Free;

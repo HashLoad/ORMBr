@@ -27,7 +27,7 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-unit ormbr.dataset.bind;
+unit ormbr.bind;
 
 interface
 
@@ -50,7 +50,7 @@ uses
   ormbr.types.nullable;
 
 type
-  IBindDataSet = interface
+  IBind = interface
     ['{8EAF6052-177E-4D4B-9E0A-386799C129FC}']
     procedure SetDataDictionary(const ADataSet: TDataSet;
       const AObject: TObject);
@@ -62,28 +62,53 @@ type
       const ADataSet: TDataSet);
     function GetFieldValue(const ADataSet: TDataSet;
       const AFieldName: string; const AFieldType: TFieldType): string;
+    procedure SetFieldToProperty(const ADataSet: TDataSet;
+      const AObject: TObject); overload;
+    procedure SetFieldToProperty(const ADataSet: IDBResultSet;
+      const AObject: TObject); overload;
+    procedure SetFieldToPropertyClass(const LProperty: TRttiProperty;
+      const AColumn: TColumnMapping; const AField: TField;
+      const AObject: TObject);
   end;
 
-  TBindDataSet = class(TInterfacedObject, IBindDataSet)
+  TBind = class(TInterfacedObject, IBind)
   private
   class var
-    FInstance: IBindDataSet;
+    FInstance: IBind;
     FContext: TRttiContext;
     constructor CreatePrivate;
     procedure SetAggregateFieldDefsObjectClass(const ADataSet: TDataSet;
       const AObject: TObject);
     procedure SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
       const AObject: TObject);
-    procedure FillDataSetField(const ASource, ATarget: TDataSet);
+    procedure FillDataSetField(const ASource, ATarget: TDataSet); overload;
     procedure FillADTField(const AADTField: TADTField;
-      const ATarget: TDataSet);
+      const ATarget: TDataSet); overload;
     procedure CreateFieldsNestedDataSet(const ADataSet: TDataSet;
       const AObject: TObject; const LColumn: TColumnMapping);
+    procedure SetFieldToProperty(const AField: TField;
+      const AColumn: TColumnMapping; const AObject: TObject); overload;
+    procedure SetFieldToPropertyString(const LProperty: TRttiProperty;
+      const AField: TField; const AObject: TObject);
+    procedure SetFieldToPropertyInteger(const LProperty: TRttiProperty;
+      const AField: TField; const AObject: TObject);
+    procedure SetFieldToPropertyDouble(const LProperty: TRttiProperty;
+      const AField: TField; const AObject: TObject);
+    procedure SetFieldToPropertyRecord(const LProperty: TRttiProperty;
+      const AColumn: TColumnMapping; const LRttiType: TRttiType;
+      const AField: TField; const AObject: TObject);
+    procedure SetFieldToPropertyEnumeration(const LProperty: TRttiProperty;
+      const AColumn: TColumnMapping; const AField: TField;
+      const AObject: TObject);
+    procedure FillADTField(const AADTField: TADTField;
+      const AObject: TObject); overload;
+    procedure FillDataSetField(const ADataSet: TDataSet;
+      const AObject: TObject); overload;
   protected
     constructor Create;
   public
     { Public declarations }
-    class function GetInstance: IBindDataSet;
+    class function Instance: IBind;
     procedure SetDataDictionary(const ADataSet: TDataSet;
       const AObject: TObject);
     procedure SetInternalInitFieldDefsObjectClass(const ADataSet: TDataSet;
@@ -94,6 +119,13 @@ type
       const ADataSet: TDataSet);
     function GetFieldValue(const ADataSet: TDataSet; const AFieldName: string;
       const AFieldType: TFieldType): string;
+    procedure SetFieldToProperty(const ADataSet: TDataSet;
+      const AObject: TObject); overload;
+    procedure SetFieldToProperty(const ADataSet: IDBResultSet;
+      const AObject: TObject); overload;
+    procedure SetFieldToPropertyClass(const LProperty: TRttiProperty;
+      const AColumn: TColumnMapping; const AField: TField;
+      const AObject: TObject);
   end;
 
 implementation
@@ -101,13 +133,14 @@ implementation
 uses
   ormbr.dataset.fields,
   ormbr.dataset.consts,
+  ormbr.core.consts,
   ormbr.types.mapping,
   ormbr.mapping.explorer,
   ormbr.types.blob;
 
-{ TBindDataSet }
+{ TBind }
 
-procedure TBindDataSet.SetPropertyToField(const AObject: TObject;
+procedure TBind.SetPropertyToField(const AObject: TObject;
   const ADataSet: TDataSet);
 var
   LColumn: TColumnMapping;
@@ -221,18 +254,18 @@ begin
   end;
 end;
 
-constructor TBindDataSet.Create;
+constructor TBind.Create;
 begin
-   raise Exception.CreateFmt(cCREATEBINDDATASET, ['TBindDataSet', 'TBindDataSet.GetInstance()']);
+   raise Exception.CreateFmt(cCREATEBINDDATASET, ['TBind', 'TBind.GetInstance()']);
 end;
 
-constructor TBindDataSet.CreatePrivate;
+constructor TBind.CreatePrivate;
 begin
    inherited;
    FContext := TRttiContext.Create;
 end;
 
-function TBindDataSet.GetFieldValue(const ADataSet: TDataSet;
+function TBind.GetFieldValue(const ADataSet: TDataSet;
   const AFieldName: string;
   const AFieldType: TFieldType): string;
 begin
@@ -292,7 +325,7 @@ begin
   end;
 end;
 
-procedure TBindDataSet.CreateFieldsNestedDataSet(const ADataSet: TDataSet;
+procedure TBind.CreateFieldsNestedDataSet(const ADataSet: TDataSet;
   const AObject: TObject; const LColumn: TColumnMapping);
 var
   LDataSet: TDataSet;
@@ -315,15 +348,15 @@ begin
   end;
 end;
 
-class function TBindDataSet.GetInstance: IBindDataSet;
+class function TBind.Instance: IBind;
 begin
    if not Assigned(FInstance) then
-      FInstance := TBindDataSet.CreatePrivate;
+      FInstance := TBind.CreatePrivate;
 
    Result := FInstance;
 end;
 
-procedure TBindDataSet.SetAggregateFieldDefsObjectClass(
+procedure TBind.SetAggregateFieldDefsObjectClass(
   const ADataSet: TDataSet; const AObject: TObject);
 var
   LRttiType: TRttiType;
@@ -345,7 +378,7 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
+procedure TBind.SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
   const AObject: TObject);
 var
   LCalcField: TCalcFieldMapping;
@@ -392,7 +425,7 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetDataDictionary(const ADataSet: TDataSet;
+procedure TBind.SetDataDictionary(const ADataSet: TDataSet;
   const AObject: TObject);
 var
   LColumn: TColumnMapping;
@@ -459,7 +492,7 @@ begin
   except
     on E: Exception do
     begin
-      raise Exception.Create('ormbr.dataset.bind->SetDataDictionary()'
+      raise Exception.Create('ormbr.bind->SetDataDictionary()'
                             + sLineBreak
                             + sLineBreak
                             + 'Column: ' + LFieldName);
@@ -467,7 +500,7 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetFieldToField(const AResultSet: IDBResultSet;
+procedure TBind.SetFieldToField(const AResultSet: IDBResultSet;
   const ADataSet: TDataSet);
 var
   LFor: Integer;
@@ -542,7 +575,7 @@ begin
   end;
 end;
 
-procedure TBindDataSet.SetInternalInitFieldDefsObjectClass(
+procedure TBind.SetInternalInitFieldDefsObjectClass(
   const ADataSet: TDataSet; const AObject: TObject);
 var
   LColumn: TColumnMapping;
@@ -616,7 +649,7 @@ begin
   SetAggregateFieldDefsObjectClass(ADataSet, AObject);
 end;
 
-procedure TBindDataSet.FillADTField(const AADTField: TADTField;
+procedure TBind.FillADTField(const AADTField: TADTField;
   const ATarget: TDataSet);
 var
   LFor: Integer;
@@ -627,7 +660,7 @@ begin
   ATarget.Post;
 end;
 
-procedure TBindDataSet.FillDataSetField(const ASource, ATarget: TDataSet);
+procedure TBind.FillDataSetField(const ASource, ATarget: TDataSet);
 var
   LFor: Integer;
 begin
@@ -656,6 +689,262 @@ begin
     end;
   finally
     ASource.EnableControls;
+  end;
+end;
+
+procedure TBind.SetFieldToProperty(const ADataSet: IDBResultSet;
+  const AObject: TObject);
+var
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
+begin
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  for LColumn in LColumns do
+  begin
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    try
+      SetFieldToProperty(ADataSet.GetField(LColumn.ColumnName), LColumn, AObject);
+    except
+      on E: Exception do
+        raise Exception.Create('Problem when binding column "' +
+                               LColumn.ColumnName + '" - ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TBind.SetFieldToPropertyClass(const LProperty: TRttiProperty;
+  const AColumn: TColumnMapping; const AField: TField;
+  const AObject: TObject);
+var
+  LSource: TDataSet;
+  LObjectList: TObject;
+  LObject: TObject;
+  LADTField: TADTField;
+begin
+  if not (AColumn.FieldType in [ftDataSet]) then
+    Exit;
+  case AField.DataType of
+    ftDataSet:
+      begin
+        LSource := (AField as TDataSetField).NestedDataSet;
+        if LProperty.IsList then
+        begin
+          LObjectList := LProperty.GetNullableValue(AObject).AsObject;
+          if LObjectList = nil then
+            Exit;
+
+          LObjectList.MethodCall('Clear', []);
+          LSource.DisableControls;
+          LSource.First;
+          try
+            while not LSource.Eof do
+            begin
+              LObject := LProperty.GetObjectTheList;
+              FillDataSetField(LSource, LObject);
+              LObjectList.MethodCall('Add', [LObject]);
+              LSource.Next;
+            end;
+          finally
+            LSource.First;
+            LSource.EnableControls;
+          end;
+        end
+        else
+        begin
+          LObject := LProperty.GetNullableValue(AObject).AsObject;
+          if LObject = nil then
+            Exit;
+
+          FillDataSetField(LSource, LObject);
+        end;
+      end;
+    ftADT:
+      begin
+        LObject := LProperty.GetNullableValue(AObject).AsObject;
+        if LObject = nil then
+          Exit;
+
+        LADTField := (AField as TADTField);
+        FillADTField(LADTField, LObject);
+      end;
+  end;
+end;
+
+procedure TBind.SetFieldToProperty(const ADataSet: TDataSet;
+  const AObject: TObject);
+var
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
+begin
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  for LColumn in LColumns do
+  begin
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    try
+      SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
+    except
+      on E: Exception do
+        raise Exception.Create('Problem when binding column "' +
+                               LColumn.ColumnName + '" - ' + E.Message);
+    end;
+  end;
+end;
+
+procedure TBind.SetFieldToPropertyString(const LProperty: TRttiProperty;
+  const AField: TField; const AObject: TObject);
+begin
+  if TVarData(AField.Value).VType <= varNull then
+    LProperty.SetValue(AObject, '')
+  else
+    LProperty.SetValue(AObject, AField.AsString);
+end;
+
+procedure TBind.SetFieldToPropertyInteger(const LProperty: TRttiProperty;
+  const AField: TField; const AObject: TObject);
+begin
+  if TVarData(AField.Value).VType <= varNull then
+    LProperty.SetValue(AObject, 0)
+  else
+    LProperty.SetValue(AObject, AField.AsInteger);
+end;
+
+procedure TBind.SetFieldToPropertyDouble(const LProperty: TRttiProperty;
+  const AField: TField; const AObject: TObject);
+begin
+  if TVarData(AField.Value).VType <= varNull then
+    LProperty.SetValue(AObject, 0)
+  else if LProperty.PropertyType.Handle = TypeInfo(TDateTime) then
+    // TDateTime
+    LProperty.SetValue(AObject, StrToDateTime(AField.AsString))
+  else if LProperty.PropertyType.Handle = TypeInfo(TDate) then
+    // TDate
+    LProperty.SetValue(AObject, StrToDate(AField.AsString))
+  else if LProperty.PropertyType.Handle = TypeInfo(TTime) then
+    // TTime
+    LProperty.SetValue(AObject, StrToTime(AField.AsString))
+  else
+    LProperty.SetValue(AObject, AField.AsFloat);
+end;
+
+procedure TBind.SetFieldToPropertyRecord(const LProperty: TRttiProperty;
+  const AColumn: TColumnMapping; const LRttiType: TRttiType;
+  const AField: TField; const AObject: TObject);
+var
+  LBlobField: TBlob;
+begin
+  /// Nullable
+  if LProperty.IsNullable then
+  begin
+    LProperty.SetNullableValue(AObject, LRttiType.Handle, AField.Value);
+  end
+  else if LProperty.IsBlob then
+  begin
+    if AField.IsBlob then
+    begin
+      if (not VarIsEmpty(AField.Value)) and (not VarIsNull(AField.Value)) then
+      begin
+        LBlobField := LProperty.GetValue(AObject).AsType<TBlob>;
+        LBlobField.SetBytes(AField.AsBytes);
+        LProperty.SetValue(AObject, TValue.From<TBlob>(LBlobField));
+      end;
+    end
+    else
+      raise Exception.CreateFmt('Column [%s] must have blob value', [AColumn.ColumnName]);
+  end
+  else
+    LProperty.SetNullableValue(AObject, LProperty.PropertyType.Handle, AField.Value);
+end;
+
+procedure TBind.SetFieldToPropertyEnumeration(
+  const LProperty: TRttiProperty; const AColumn: TColumnMapping;
+  const AField: TField; const AObject: TObject);
+begin
+  case AColumn.FieldType of
+    ftString, ftFixedChar:
+      LProperty.SetValue(AObject, LProperty.GetEnumStringValue(AObject, AField.Value));
+    ftInteger:
+      LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
+    ftBoolean:
+      LProperty.SetValue(AObject, TValue.From<Variant>(AField.Value).AsType<Boolean>);
+  else
+    raise Exception.Create(cENUMERATIONSTYPEERROR);
+  end;
+end;
+
+procedure TBind.FillDataSetField(const ADataSet: TDataSet;
+  const AObject: TObject);
+var
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
+  LField: TField;
+begin
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  for LColumn in LColumns do
+  begin
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    /// <summary>
+    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    ///   coleção para a outra, dessa forma antes de popular a propriedade da
+    ///   classe, é verificado se o nome dessa propriedade existe na coleção
+    ///   de dados selecionada.
+    /// </summary>
+    LField := ADataSet.FieldList.Find(LColumn.ColumnName);
+    if LField = nil then
+      LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
+
+    if LField = nil then
+      Exit;
+    SetFieldToProperty(LField, LColumn, AObject);
+  end;
+end;
+
+procedure TBind.FillADTField(const AADTField: TADTField;
+  const AObject: TObject);
+var
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
+begin
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  for LColumn in LColumns do
+  begin
+    if not LColumn.ColumnProperty.IsWritable then
+      Continue;
+    /// <summary>
+    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    ///   coleção para a outra, dessa forma antes de popular a propriedade da
+    ///   classe, é verificado se o nome dessa propriedade existe na coleção
+    ///   de dados selecionada.
+    /// </summary>
+    if AADTField.Fields.FindField(LColumn.ColumnName) <> nil then
+      SetFieldToProperty(AADTField.Fields.FieldByName(LColumn.ColumnName),
+                         LColumn, AObject);
+  end;
+end;
+
+procedure TBind.SetFieldToProperty(const AField: TField;
+  const AColumn: TColumnMapping; const AObject: TObject);
+var
+  LRttiType: TRttiType;
+  LProperty: TRttiProperty;
+begin
+  LProperty := AColumn.ColumnProperty;
+  LRttiType := LProperty.PropertyType;
+  case LRttiType.TypeKind of
+    tkString, tkWString, tkUString, tkWChar, tkLString, tkChar:
+      SetFieldToPropertyString(LProperty, AField, AObject);
+    tkInteger, tkSet, tkInt64:
+      SetFieldToPropertyInteger(LProperty, AField, AObject);
+    tkFloat:
+      SetFieldToPropertyDouble(LProperty, AField, AObject);
+    tkRecord:
+      SetFieldToPropertyRecord(LProperty, AColumn, LRttiType, AField, AObject);
+    tkEnumeration:
+      SetFieldToPropertyEnumeration(LProperty, AColumn, AField, AObject);
+    tkClass:
+      SetFieldToPropertyClass(LProperty, AColumn, AField, AObject);
   end;
 end;
 

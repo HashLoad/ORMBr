@@ -116,10 +116,9 @@ implementation
 
 uses
   ormbr.utils,
-  ormbr.dataset.bind,
+  ormbr.bind,
   ormbr.mapping.explorer,
   ormbr.rest.json,
-  ormbr.objectset.bind,
   ormbr.mapping.rttiutils,
   ormbr.objects.helper;
 
@@ -336,9 +335,8 @@ begin
                 .GetInstance
                   .Repository
                     .FindEntityByName('T' + LResultSet.Collection).Create;
-  TBindDataSet
-    .GetInstance
-      .SetInternalInitFieldDefsObjectClass(LResultSet, LObject);
+  TBind.Instance
+       .SetInternalInitFieldDefsObjectClass(LResultSet, LObject);
   LResultSet.CreateDataSet;
   LResultSet.LogChanges := False;
   try
@@ -479,9 +477,8 @@ begin
         /// Popula do dataset usado pelo ORMBr
         /// </summary>
         Append;
-        TBindDataSet
-          .GetInstance
-            .SetPropertyToField(LObject, Self);
+        TBind.Instance
+             .SetPropertyToField(LObject, Self);
         Post;
       finally
         LObject.Free;

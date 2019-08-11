@@ -106,8 +106,7 @@ type
 implementation
 
 uses
-  ormbr.dataset.bind,
-  ormbr.objectset.bind,
+  ormbr.bind,
   ormbr.dataset.fields;
 
 { TRESTClientDataSetAdapter<M> }
@@ -374,7 +373,7 @@ begin
     if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
     begin
       LChild.FOrmDataSet.Append;
-      TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+      TBind.Instance.SetPropertyToField(AObject, LChild.FOrmDataSet);
       LChild.FOrmDataSet.Post;
     end;
   finally

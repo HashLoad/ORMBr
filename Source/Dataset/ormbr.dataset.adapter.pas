@@ -42,7 +42,7 @@ uses
   Generics.Collections,
   /// orm
   ormbr.criteria,
-  ormbr.dataset.bind,
+  ormbr.bind,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.session.dataset,
@@ -81,7 +81,6 @@ uses
   ormbr.objects.helper,
   ormbr.rtti.helper,
   ormbr.dataset.fields,
-  ormbr.objectset.bind,
   ormbr.mapping.exceptions;
 
 { TDataSetAdapter<M> }
@@ -119,9 +118,8 @@ begin
   inherited DoBeforeDelete(DataSet);
   /// <summary> Alimenta a lista com registros deletados </summary>
   FSession.DeleteList.Add(M.Create);
-  TBindObject
-    .GetInstance
-      .SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
+  TBind.Instance
+       .SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
 
   /// <summary> Deleta registros de todos os DataSet filhos </summary>
   EmptyDataSetChilds;
@@ -204,7 +202,7 @@ begin
   /// </summary>
   LObject := M.Create;
   try
-    TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+    TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
     for LDataSetChild in FMasterObject.Values do
     begin
       LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
@@ -240,9 +238,8 @@ begin
       /// Popula o objeto com o registro atual do dataset Master para filtar
       /// os filhos com os valores das chaves.
       /// </summary>
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LOwnerObject.FOrmDataSet,
+      TBind.Instance
+           .SetFieldToProperty(LOwnerObject.FOrmDataSet,
                       TObject(LOwnerObject.FCurrentInternal));
       LSQL := FSession.SelectAssociation(LOwnerObject.FCurrentInternal);
       if Length(LSQL) > 0 then
@@ -319,7 +316,7 @@ begin
     /// </summary>
     LObject := M.Create;
     try
-      TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+      TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
       LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
       if Length(LSQL) > 0 then
         LDataSetChild.OpenSQLInternal(LSQL);

@@ -123,7 +123,7 @@ type
 implementation
 
 uses
-  ormbr.objectset.bind,
+  ormbr.bind,
   ormbr.objects.helper,
   ormbr.session.abstract,
   ormbr.rtti.helper;
@@ -282,7 +282,7 @@ begin
       /// <summary>
       ///   Preenche o objeto com os dados do ResultSet
       /// </summary>
-      TBindObject.GetInstance.SetFieldToProperty(LResultSet, LObjectValue);
+      TBind.Instance.SetFieldToProperty(LResultSet, LObjectValue);
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -318,9 +318,8 @@ begin
       /// <summary>
       ///   Popula o objeto com os dados do ResultSet
       /// </summary>
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, LObjectCreate);
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, LObjectCreate);
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -369,9 +368,8 @@ begin
     while LResultSet.NotEof do
     begin
       LObjectList.Add(M.Create);
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -406,9 +404,8 @@ begin
     while LResultSet.NotEof do
     begin
       LObjectList.Add(M.Create);
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -430,9 +427,8 @@ begin
     while LResultSet.NotEof do
     begin
       AObjectList.Add(M.Create);
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -460,9 +456,8 @@ begin
     while LResultSet.NotEof do
     begin
       AObjectList.Add(M.Create);
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -492,9 +487,8 @@ begin
     while LResultSet.NotEof do
     begin
       LObjectList.Add(M.Create);
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -541,9 +535,8 @@ begin
     while LResultSet.NotEof do
     begin
       LObject := M.Create;
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, LObject);
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, LObject);
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>
@@ -572,9 +565,8 @@ begin
     if LResultSet.RecordCount = 1 then
     begin
       Result := M.Create;
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(LResultSet, TObject(Result));
+      TBind.Instance
+           .SetFieldToProperty(LResultSet, TObject(Result));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>

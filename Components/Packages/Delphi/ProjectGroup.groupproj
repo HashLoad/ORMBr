@@ -9,7 +9,7 @@
         <Projects Include="DBEBrCore.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="ORMBrDriversLinks.dproj">
+        <Projects Include="ORMBrDataAccess.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="DBEBrConnectionFireDAC.dproj">
@@ -39,7 +39,7 @@
         <Projects Include="DBEBrConnectionIBObjects.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="ORMBrDataAccess.dproj">
+        <Projects Include="ORMBrDriversLinks.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -68,14 +68,14 @@
     <Target Name="DBEBrCore:Make">
         <MSBuild Projects="DBEBrCore.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ORMBrDriversLinks">
-        <MSBuild Projects="ORMBrDriversLinks.dproj"/>
+    <Target Name="ORMBrDataAccess">
+        <MSBuild Projects="ORMBrDataAccess.dproj"/>
     </Target>
-    <Target Name="ORMBrDriversLinks:Clean">
-        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Clean"/>
+    <Target Name="ORMBrDataAccess:Clean">
+        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrDriversLinks:Make">
-        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Make"/>
+    <Target Name="ORMBrDataAccess:Make">
+        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Make"/>
     </Target>
     <Target Name="DBEBrConnectionFireDAC">
         <MSBuild Projects="DBEBrConnectionFireDAC.dproj"/>
@@ -158,23 +158,23 @@
     <Target Name="DBEBrConnectionIBObjects:Make">
         <MSBuild Projects="DBEBrConnectionIBObjects.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ORMBrDataAccess">
-        <MSBuild Projects="ORMBrDataAccess.dproj"/>
+    <Target Name="ORMBrDriversLinks">
+        <MSBuild Projects="ORMBrDriversLinks.dproj"/>
     </Target>
-    <Target Name="ORMBrDataAccess:Clean">
-        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Clean"/>
+    <Target Name="ORMBrDriversLinks:Clean">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrDataAccess:Make">
-        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Make"/>
+    <Target Name="ORMBrDriversLinks:Make">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBrCore;DBEBrCore;ORMBrDriversLinks;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDataAccess"/>
+        <CallTarget Targets="ORMBrCore;DBEBrCore;ORMBrDataAccess;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;ORMBrDriversLinks:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDataAccess:Clean"/>
+        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;ORMBrDataAccess:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;ORMBrDriversLinks:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDataAccess:Make"/>
+        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;ORMBrDataAccess:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

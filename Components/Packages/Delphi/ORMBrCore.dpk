@@ -76,12 +76,17 @@ contains
   ormbr.criteria.ast in '..\..\..\Source\Criteria\ormbr.criteria.ast.pas',
   ormbr.criteria in '..\..\..\Source\Criteria\ormbr.criteria.pas',
   ormbr.criteria.serialize in '..\..\..\Source\Criteria\ormbr.criteria.serialize.pas',
-  ormbr.objectset.bind in '..\..\..\Source\Objectset\ormbr.objectset.bind.pas',
-  ormbr.dataset.bind in '..\..\..\Source\Dataset\ormbr.dataset.bind.pas',
   ormbr.dataset.consts in '..\..\..\Source\Dataset\ormbr.dataset.consts.pas',
   ormbr.driver.connection in '..\..\..\Source\DBEBr\Core\ormbr.driver.connection.pas',
   ormbr.factory.connection in '..\..\..\Source\DBEBr\Core\ormbr.factory.connection.pas',
   ormbr.factory.interfaces in '..\..\..\Source\DBEBr\Core\ormbr.factory.interfaces.pas',
-  ormbr.types.mapping in '..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas';
+  ormbr.types.mapping in '..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas',
+  ormbr.bind in '..\..\..\Source\Core\ormbr.bind.pas',
+  ormbr.objectset.adapter in '..\..\..\Source\Objectset\ormbr.objectset.adapter.pas',
+  ormbr.objectset.base.adapter in '..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas',
+  ormbr.objectset.abstract in '..\..\..\Source\Objectset\ormbr.objectset.abstract.pas',
+  ormbr.session.objectset in '..\..\..\Source\Objectset\ormbr.session.objectset.pas',
+  ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas',
+  ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas';
 
 end.

@@ -38,8 +38,8 @@ uses
   SysUtils,
   Generics.Collections,
   /// ORMBr
+  ormbr.bind,
   ormbr.objects.manager,
-  ormbr.objectset.bind,
   ormbr.mapping.explorerstrategy,
   ormbr.session.abstract,
   ormbr.factory.interfaces;

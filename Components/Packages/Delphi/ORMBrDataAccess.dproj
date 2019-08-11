@@ -142,14 +142,14 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="ORMBrCore.dcp"/>
-        <DCCReference Include="DBEBrCore.dcp"/>
         <DCCReference Include="designide.dcp"/>
         <DCCReference Include="dsnap.dcp"/>
-        <DCCReference Include="..\..\Source\ormbr.db.manager.dataset.pas"/>
+        <DCCReference Include="DBEBrCore.dcp"/>
+        <DCCReference Include="ORMBrCore.dcp"/>
         <DCCReference Include="..\..\Source\ormbr.db.reg.pas"/>
-        <DCCReference Include="..\..\..\Source\Dataset\ormbr.manager.dataset.pas"/>
+        <DCCReference Include="..\..\Source\ormbr.db.manager.dataset.pas"/>
         <DCCReference Include="..\..\Source\ormbr.db.manager.objectset.pas"/>
+        <DCCReference Include="..\..\..\Source\Dataset\ormbr.manager.dataset.pas"/>
         <DCCReference Include="..\..\..\Source\Objectset\ormbr.manager.objectset.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

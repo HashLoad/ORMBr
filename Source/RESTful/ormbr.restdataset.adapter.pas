@@ -45,8 +45,7 @@ uses
   {$IFDEF DRIVERRESTFUL}
   ormbr.client.interfaces,
   {$ENDIF}
-  ormbr.objectset.bind,
-  ormbr.dataset.bind,
+  ormbr.bind,
   ormbr.dataset.fields,
   ormbr.mapping.classes,
   ormbr.types.mapping,
@@ -195,7 +194,7 @@ begin
       begin
         LObject := M.Create;
         try
-          TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+          TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
           for LDataSetChild in FMasterObject.Values do
             LDataSetChild.FillMastersClass(LDataSetChild, LObject);
           ///
@@ -255,7 +254,7 @@ begin
             a linha comentada MethodCall() a baixo, gera vazamento de memória.
             Tenho que validar isso em outras versões do Delphi. }
 //        LObject.MethodCall('Create', []);
-        TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+        TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
         for LDataSetChild in FMasterObject.Values do
           LDataSetChild.FillMastersClass(LDataSetChild, LObject);
         ///
@@ -298,7 +297,7 @@ begin
   if FOwnerMasterObject = nil then
   begin
     LObject := M.Create;
-    TBindObject.GetInstance.SetFieldToProperty(FOrmDataSet, LObject);
+    TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
     FSession.DeleteList.Add(LObject);
   end;
   /// <summary>
@@ -379,7 +378,7 @@ end;
 procedure TRESTDataSetAdapter<M>.PopularDataSet(const AObject: TObject);
 begin
   FOrmDataSet.Append;
-  TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
+  TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
   FOrmDataSet.First;
   /// <summary>
@@ -487,7 +486,7 @@ begin
   FOrmDataSet.DisableControls;
   try
     FOrmDataSet.Edit;
-    TBindDataSet.GetInstance.SetPropertyToField(AObject, FOrmDataSet);
+    TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
     FOrmDataSet.Post;
     /// <summary> Limpa todos os registros filhos para serem atualizados </summary>
     for LChildDataSet in FMasterObject.Values do
