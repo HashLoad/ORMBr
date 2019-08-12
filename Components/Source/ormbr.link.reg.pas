@@ -13,6 +13,7 @@ uses
   ormbr.driver.link.mysql,
   ormbr.driver.link.mssql,
   ormbr.driver.link.postgresql,
+  ormbr.driver.link.sqldirect,
   ormbr.driver.link.sqlite;
 
 type
@@ -56,6 +57,11 @@ type
     procedure RequiresUnits(Proc: TGetStrProc); override;
   end;
 
+  TORMBrDriverEditorSQLDirect = class(TSelectionEditor)
+  public
+    procedure RequiresUnits(Proc: TGetStrProc); override;
+  end;
+
 procedure register;
 
 implementation
@@ -69,7 +75,8 @@ begin
                                      TORMBrDriverLinkOracle,
                                      TORMBrDriverLinkMongoDB,
                                      TORMBrDriverLinkPostgreSQL,
-                                     TORMBrDriverLinkSQLite
+                                     TORMBrDriverLinkSQLite,
+                                     TORMBrDriverLinkSQLDirect
                                     ]);
   RegisterSelectionEditor(TORMBrDriverLinkFirebird, TORMBrDriverEditorFirebird);
   RegisterSelectionEditor(TORMBrDriverLinkInterbase, TORMBrDriverEditorInterbase);
@@ -79,6 +86,7 @@ begin
   RegisterSelectionEditor(TORMBrDriverLinkMongoDB, TORMBrDriverEditorMongoDB);
   RegisterSelectionEditor(TORMBrDriverLinkPostgreSQL, TORMBrDriverEditorPostgreSQL);
   RegisterSelectionEditor(TORMBrDriverLinkSQLite, TORMBrDriverEditorSQLite);
+  RegisterSelectionEditor(TORMBrDriverLinkSQLDirect, TORMBrDriverEditorSQLDirect);
 end;
 
 { TORMBrDriverEditorFirebird }
@@ -135,6 +143,13 @@ end;
 procedure TORMBrDriverEditorSQLite.RequiresUnits(Proc: TGetStrProc);
 begin
   Proc('ormbr.dml.generator.sqlite');
+end;
+
+{ TORMBrDriverEditorSQLDirect }
+
+procedure TORMBrDriverEditorSQLDirect.RequiresUnits(Proc: TGetStrProc);
+begin
+  Proc('ormbr.dml.generator.sqldirect');
 end;
 
 end.

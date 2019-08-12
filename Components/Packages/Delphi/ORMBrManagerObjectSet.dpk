@@ -1,4 +1,4 @@
-package ORMBrDataAccess;
+package ORMBrManagerObjectSet;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
@@ -25,7 +25,7 @@ package ORMBrDataAccess;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'ORMBr - Data Access'}
+{$DESCRIPTION 'ORMBr - TManager ObjectSet'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -36,10 +36,8 @@ requires
   ORMBrCore;
 
 contains
-  ormbr.db.reg in '..\..\Source\ormbr.db.reg.pas',
-  ormbr.db.manager.dataset in '..\..\Source\ormbr.db.manager.dataset.pas',
   ormbr.db.manager.objectset in '..\..\Source\ormbr.db.manager.objectset.pas',
-  ormbr.manager.dataset in '..\..\..\Source\Dataset\ormbr.manager.dataset.pas',
-  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas';
+  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas',
+  ormbr.db.manager.objectset.reg in '..\..\Source\ormbr.db.manager.objectset.reg.pas';
 
 end.

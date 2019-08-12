@@ -22,6 +22,8 @@ type
     FDriverName: TDriverName;
     function GetDBConnection: IDBConnection; virtual; abstract;
   public
+    constructor Create(const AOwner: TComponent); virtual;
+    destructor Destroy; override;
     procedure Connect;
     procedure Disconnect;
     procedure StartTransaction;
@@ -41,8 +43,6 @@ type
     function CommandMonitor: ICommandMonitor;
     function Connection: IDBConnection;
   published
-    constructor Create(AOwner: TComponent); virtual;
-    destructor Destroy; override;
     property DriverName: TDriverName read FDriverName write FDriverName;
   end;
 
@@ -50,7 +50,7 @@ implementation
 
 { TDBEBrConnectionBase }
 
-constructor TDBEBrConnectionBase.Create(AOwner: TComponent);
+constructor TDBEBrConnectionBase.Create(const AOwner: TComponent);
 begin
 
 end;

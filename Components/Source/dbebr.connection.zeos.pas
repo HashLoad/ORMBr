@@ -23,10 +23,10 @@ type
   private
     FConnection: TZConnection;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TZConnection read FConnection write FConnection;
   end;
 
@@ -34,7 +34,7 @@ implementation
 
 { TDBEBrConnectionZeos }
 
-constructor TDBEBrConnectionZeos.Create(AOwner: TComponent);
+constructor TDBEBrConnectionZeos.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

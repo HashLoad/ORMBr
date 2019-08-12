@@ -9,9 +9,6 @@
         <Projects Include="DBEBrCore.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="ORMBrDataAccess.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="DBEBrConnectionFireDAC.dproj">
             <Dependencies/>
         </Projects>
@@ -45,6 +42,15 @@
         <Projects Include="ConnectionMongoWire.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="ORMBrManagerClientDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerFDMemTable.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerObjectSet.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -70,15 +76,6 @@
     </Target>
     <Target Name="DBEBrCore:Make">
         <MSBuild Projects="DBEBrCore.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="ORMBrDataAccess">
-        <MSBuild Projects="ORMBrDataAccess.dproj"/>
-    </Target>
-    <Target Name="ORMBrDataAccess:Clean">
-        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="ORMBrDataAccess:Make">
-        <MSBuild Projects="ORMBrDataAccess.dproj" Targets="Make"/>
     </Target>
     <Target Name="DBEBrConnectionFireDAC">
         <MSBuild Projects="DBEBrConnectionFireDAC.dproj"/>
@@ -179,14 +176,41 @@
     <Target Name="ConnectionMongoWire:Make">
         <MSBuild Projects="ConnectionMongoWire.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ORMBrManagerClientDataSet">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Clean">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Make">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Clean">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Make">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Clean">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Make">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBrCore;DBEBrCore;ORMBrDataAccess;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks;ConnectionMongoWire"/>
+        <CallTarget Targets="ORMBrCore;DBEBrCore;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks;ConnectionMongoWire;ORMBrManagerClientDataSet;ORMBrManagerFDMemTable;ORMBrManagerObjectSet"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;ORMBrDataAccess:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean;ConnectionMongoWire:Clean"/>
+        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean;ConnectionMongoWire:Clean;ORMBrManagerClientDataSet:Clean;ORMBrManagerFDMemTable:Clean;ORMBrManagerObjectSet:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;ORMBrDataAccess:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make;ConnectionMongoWire:Make"/>
+        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make;ConnectionMongoWire:Make;ORMBrManagerClientDataSet:Make;ORMBrManagerFDMemTable:Make;ORMBrManagerObjectSet:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

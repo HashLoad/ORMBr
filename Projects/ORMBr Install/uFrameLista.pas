@@ -78,9 +78,17 @@ type
     Bevel3: TBevel;
     Label32: TLabel;
     Bevel4: TBevel;
-    ORMBrDataAccess_dpk: TCheckBox;
+    ORMBrManagerClientDataSet_dpk: TCheckBox;
     Label33: TLabel;
     Label34: TLabel;
+    Label35: TLabel;
+    Bevel5: TBevel;
+    Label36: TLabel;
+    Label37: TLabel;
+    ORMBrManagerFDMemTable_dpk: TCheckBox;
+    Label38: TLabel;
+    Label39: TLabel;
+    ORMBrManagerObjectSet_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

@@ -25,10 +25,10 @@ type
   private
     FConnection: TIBODatabase;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TIBODatabase read FConnection write FConnection;
   end;
 
@@ -36,7 +36,7 @@ implementation
 
 { TDBEBrConnectionIBObjects }
 
-constructor TDBEBrConnectionIBObjects.Create(AOwner: TComponent);
+constructor TDBEBrConnectionIBObjects.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

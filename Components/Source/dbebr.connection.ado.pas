@@ -23,10 +23,10 @@ type
   private
     FConnection: TADOConnection;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TADOConnection read FConnection write FConnection;
   end;
 
@@ -34,7 +34,7 @@ implementation
 
 { TDBEBrConnectionADO }
 
-constructor TDBEBrConnectionADO.Create(AOwner: TComponent);
+constructor TDBEBrConnectionADO.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

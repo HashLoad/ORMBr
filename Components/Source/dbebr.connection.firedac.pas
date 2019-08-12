@@ -23,10 +23,10 @@ type
   private
     FConnection: TFDConnection;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TFDConnection read FConnection write FConnection;
   end;
 
@@ -34,7 +34,7 @@ implementation
 
 { TDBEBrConnectionFireDAC }
 
-constructor TDBEBrConnectionFireDAC.Create(AOwner: TComponent);
+constructor TDBEBrConnectionFireDAC.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

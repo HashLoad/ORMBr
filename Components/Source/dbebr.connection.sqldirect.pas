@@ -23,10 +23,10 @@ type
   private
     FConnection: TSDDatabase;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TSDDatabase read FConnection write FConnection;
   end;
 
@@ -34,7 +34,7 @@ implementation
 
 { TDBEBrConnectionSQLDirect }
 
-constructor TDBEBrConnectionSQLDirect.Create(AOwner: TComponent);
+constructor TDBEBrConnectionSQLDirect.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

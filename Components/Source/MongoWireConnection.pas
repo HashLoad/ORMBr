@@ -23,7 +23,7 @@ type
     procedure SetConnected(const Value: Boolean);
     function GetConnected: Boolean;
   public
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(const AOwner: TComponent); virtual;
     destructor Destroy; override;
     function RunCommand(ADoc: String): IJSONDocument;
     function MongoWire: TMongoWire;
@@ -48,7 +48,7 @@ begin
   RegisterComponents('ORMBr-NoSQL', [TMongoWireConnection]);
 end;
 
-constructor TMongoWireConnection.Create(AOwner: TComponent);
+constructor TMongoWireConnection.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
   FDatabase := 'database';

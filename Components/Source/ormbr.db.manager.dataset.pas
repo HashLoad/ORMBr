@@ -20,6 +20,8 @@ type
     function GetOwnerNestedList: Boolean;
     procedure SetOwnerNestedList(const Value: Boolean);
   public
+    constructor Create(AOwner: TComponent);
+    destructor Destroy; override;
     procedure RemoveAdapter<T: class>;
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
@@ -50,9 +52,6 @@ type
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerDataSet;
     property OwnerNestedList: Boolean read GetOwnerNestedList write SetOwnerNestedList;
-  published
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
     property Connection: TDBEBrConnectionBase read GetConnection write SetConnection;
   end;
 

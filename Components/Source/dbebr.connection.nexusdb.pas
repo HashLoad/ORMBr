@@ -24,10 +24,10 @@ type
   private
     FConnection: TnxDatabase;
   public
+    constructor Create(const AOwner: TComponent); override;
+    destructor Destroy; override;
     function GetDBConnection: IDBConnection; override;
   published
-    constructor Create(AOwner: TComponent); override;
-    destructor Destroy; override;
     property Connetion: TnxDatabase read FConnection write FConnection;
   end;
 
@@ -35,7 +35,7 @@ implementation
 
 { TDBEBrConnectionNexusDB }
 
-constructor TDBEBrConnectionNexusDB.Create(AOwner: TComponent);
+constructor TDBEBrConnectionNexusDB.Create(const AOwner: TComponent);
 begin
   inherited Create(AOwner);
 end;

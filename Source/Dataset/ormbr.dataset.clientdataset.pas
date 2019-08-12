@@ -34,7 +34,6 @@ interface
 uses
   DB,
   Rtti,
-  MidasLib,
   Classes,
   SysUtils,
   StrUtils,

@@ -20,6 +20,8 @@ type
     function GetOwnerNestedList: Boolean;
     procedure SetOwnerNestedList(const Value: Boolean);
   public
+    constructor Create(const AOwner: TComponent);
+    destructor Destroy; override;
     function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
     /// ObjectSet
@@ -56,8 +58,6 @@ type
     function Last<T: class, constructor>: Integer;
     property OwnerNestedList: Boolean read GetOwnerNestedList write SetOwnerNestedList;
   published
-    constructor Create(AOwner: TComponent);
-    destructor Destroy; override;
     property Connection: TDBEBrConnectionBase read GetConnection write SetConnection;
   end;
 
@@ -68,7 +68,7 @@ begin
   Result := FManagerObjectSet.AddAdapter<T>(APageSize);
 end;
 
-constructor TORMBrManagerObjectSet.Create(AOwner: TComponent);
+constructor TORMBrManagerObjectSet.Create(const AOwner: TComponent);
 begin
   FOwner := AOwner;
   OwnerNestedList := True;
