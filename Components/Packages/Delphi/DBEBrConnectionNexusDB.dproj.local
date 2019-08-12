@@ -27,9 +27,6 @@
     <Transaction>2019/08/03 12:25:01.000.869,=DBEBrCore.dcp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="DBEBrCore.dcp"/>
-    <File Path="designide.dcp"/>
-    <File Path="rtl.dcp"/>
     <File Path="..\..\..\Components"/>
     <File Path="..\..\Source"/>
     <File Path="..\..\Source\dbebr.connection.nexusdb.pas"/>
@@ -41,5 +38,8 @@
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.pas"/>
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.transaction.pas"/>
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.factory.nexusdb.pas"/>
+    <File Path="DBEBrCore.dcp"/>
+    <File Path="designide.dcp"/>
+    <File Path="rtl.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>

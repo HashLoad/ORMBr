@@ -7,13 +7,7 @@ uses
   ormbr.model.client in 'ormbr.model.client.pas',
   ormbr.model.detail in 'ormbr.model.detail.pas',
   ormbr.model.lookup in 'ormbr.model.lookup.pas',
-  ormbr.model.master in 'ormbr.model.master.pas',
-  ormbr.driver.firedac in '..\..\..\Source\Drivers\ormbr.driver.firedac.pas',
-  ormbr.driver.firedac.transaction in '..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas',
-  ormbr.factory.firedac in '..\..\..\Source\Drivers\ormbr.factory.firedac.pas',
-  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
-  ormbr.factory.connection in '..\..\..\Source\Drivers\ormbr.factory.connection.pas',
-  ormbr.command.selecter in '..\..\..\Source\Core\ormbr.command.selecter.pas';
+  ormbr.model.master in 'ormbr.model.master.pas';
 
 {$R *.res}
 

@@ -36,15 +36,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 1'
+    Caption = 'N'#237'vel 2'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = -3
-    ExplicitTop = 162
+    ExplicitWidth = 61
   end
   object Label3: TLabel
     Left = 0
@@ -52,15 +51,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 1'
+    Caption = 'N'#237'vel 3'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = -3
-    ExplicitTop = 322
+    ExplicitWidth = 61
   end
   object Label4: TLabel
     Left = 0
@@ -68,14 +66,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 1'
+    Caption = 'N'#237'vel 4'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 460
+    ExplicitWidth = 61
   end
   object DBGrid1: TDBGrid
     AlignWithMargins = True

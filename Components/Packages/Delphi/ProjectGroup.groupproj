@@ -42,6 +42,9 @@
         <Projects Include="ORMBrDriversLinks.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="ConnectionMongoWire.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -167,14 +170,23 @@
     <Target Name="ORMBrDriversLinks:Make">
         <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ConnectionMongoWire">
+        <MSBuild Projects="ConnectionMongoWire.dproj"/>
+    </Target>
+    <Target Name="ConnectionMongoWire:Clean">
+        <MSBuild Projects="ConnectionMongoWire.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ConnectionMongoWire:Make">
+        <MSBuild Projects="ConnectionMongoWire.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBrCore;DBEBrCore;ORMBrDataAccess;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks"/>
+        <CallTarget Targets="ORMBrCore;DBEBrCore;ORMBrDataAccess;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks;ConnectionMongoWire"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;ORMBrDataAccess:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean"/>
+        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;ORMBrDataAccess:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean;ConnectionMongoWire:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;ORMBrDataAccess:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make"/>
+        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;ORMBrDataAccess:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make;ConnectionMongoWire:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

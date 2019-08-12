@@ -291,7 +291,7 @@ procedure TForm3.SetValuesEdits(AIndex: Integer);
 begin
   edtMaster_ID.Text        := IntToStr(oMasterList.Items[AIndex -1].master_id);
   edtMaster_Descricao.Text := oMasterList.Items[AIndex -1].description;
-  edtMaster_Cadastro.Text  := DateTimeToStr(oMasterList.Items[AIndex -1].register_date);
+  edtMaster_Cadastro.Text  := DateTimeToStr(oMasterList.Items[AIndex -1].registerdate);
   edtMaster_Alteracao.Text := DateTimeToStr(oMasterList.Items[AIndex -1].updatedate);
   edtClient_ID.Text        := IntToStr(oMasterList.Items[AIndex -1].client_id);
   edtClient_Nome.Text      := oMasterList.Items[AIndex -1].client_name;
@@ -323,7 +323,7 @@ procedure TForm3.MasterStinggGridAddRow(AObject: Tmaster);
 begin
   StringGridMaster.Cells[0, StringGridMaster.RowCount] := IntToStr(AObject.master_id);
   StringGridMaster.Cells[1, StringGridMaster.RowCount] := AObject.description;
-  StringGridMaster.Cells[2, StringGridMaster.RowCount] := DateTimeToStr(AObject.register_date);
+  StringGridMaster.Cells[2, StringGridMaster.RowCount] := DateTimeToStr(AObject.registerdate);
   StringGridMaster.Cells[3, StringGridMaster.RowCount] := DateTimeToStr(AObject.updatedate);
   StringGridMaster.Cells[4, StringGridMaster.RowCount] := IntToStr(AObject.client_id);
   StringGridMaster.Cells[5, StringGridMaster.RowCount] := AObject.client.client_name;

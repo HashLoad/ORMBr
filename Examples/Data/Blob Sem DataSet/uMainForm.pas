@@ -54,7 +54,6 @@ var
 implementation
 
 uses
-  LOG_Class,
   ormbr.encddecd;
 
 {$R *.fmx}
@@ -91,9 +90,6 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-  TLOG_Class.Open;
-  TLOG_Class.Active := True;
-
   // Instância da class de conexão via FireDAC
   FConnection := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
   FContainer  := TContainerObjectSet<TPERSON>.Create(FConnection);

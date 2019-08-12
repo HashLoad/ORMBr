@@ -73,7 +73,6 @@ var
 implementation
 
 uses
-  ormbr.monitor,
   ormbr.form.monitor;
 
 {$R *.dfm}

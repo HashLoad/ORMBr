@@ -119,12 +119,6 @@
         <DCCReference Include="ormbr.model.detail.pas"/>
         <DCCReference Include="ormbr.model.lookup.pas"/>
         <DCCReference Include="ormbr.model.master.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.driver.firedac.transaction.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.firedac.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
-        <DCCReference Include="..\..\..\Source\Drivers\ormbr.factory.connection.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.command.selecter.pas"/>
         <None Include="ModelSupport_ORMBrFireDAC\default.txaPackage"/>
         <None Include="ModelSupport_ORMBrFireDAC\default.txvpck"/>
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\default.txvpck"/>

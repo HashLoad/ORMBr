@@ -26,7 +26,6 @@ uses
   ormbr.factory.ado,
   /// orm injection dependency
   ormbr.criteria,
-  ormbr.types.database,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
   /// orm model
@@ -104,7 +103,7 @@ var
 implementation
 
 uses
-  StrUtils, ormbr.monitor, ormbr.form.monitor;
+  StrUtils, ormbr.form.monitor;
 
 {$R *.dfm}
 

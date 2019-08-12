@@ -295,25 +295,4 @@ object Form3: TForm3
     Left = 496
     Top = 220
   end
-  object DBEBrConnectionFireDAC1: TDBEBrConnectionFireDAC
-    DriverName = dnFirebird
-    Connetion = FDConnection1
-    Left = 204
-    Top = 300
-  end
-  object ORMBrManagerDataSet1: TORMBrManagerDataSet
-    Connection = DBEBrConnectionFireDAC1
-    Left = 342
-    Top = 300
-  end
-  object ORMBrDataSet1: TORMBrDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 447
-    Top = 300
-  end
-  object ORMBrDriverLinkFirebird1: TORMBrDriverLinkFirebird
-    Left = 552
-    Top = 300
-  end
 end

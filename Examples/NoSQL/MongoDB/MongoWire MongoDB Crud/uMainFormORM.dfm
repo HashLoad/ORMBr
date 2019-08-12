@@ -141,7 +141,7 @@ object Form3: TForm3
     Port = 27017
     Connected = False
     Authenticate = False
-    Left = 93
+    Left = 81
     Top = 60
   end
 end

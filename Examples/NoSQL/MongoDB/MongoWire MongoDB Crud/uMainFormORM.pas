@@ -29,7 +29,6 @@ uses
   ormbr.container.objectset.interfaces,
   ormbr.container.objectset,
   ormbr.factory.wire.mongodb,
-  ormbr.types.database,
   ormbr.json,
   ormbr.rest.json,
   /// orm model

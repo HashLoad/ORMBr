@@ -26,7 +26,6 @@ uses
   ormbr.factory.dbexpress,
   /// orm injection dependency
   ormbr.criteria,
-  ormbr.types.database,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
   /// orm model
@@ -250,7 +249,7 @@ begin
   /// 10 representa a quantidadede registros por pacote de retorno para um select muito grande,
   /// defina o quanto achar melhor para sua necessiade
   oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 10);
-  oMasterList := oMaster.Find(5);
+  oMasterList := oMaster.Find;
   /// <summary>
   /// Preenche o grid
   /// </summary>

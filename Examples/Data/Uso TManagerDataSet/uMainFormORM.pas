@@ -42,12 +42,9 @@ uses
   FireDAC.Phys.MySQLDef, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
 
   ormbr.dml.generator.firebird,
-  ormbr.driver.link.firebird,
-  ormbr.db.dataset,
-  ormbr.db.manager.dataset,
-  dbebr.connection.base,
-  dbebr.connection.firedac;
-
+  ormbr.manager.dataset,
+  ormbr.factory.interfaces,
+  ormbr.factory.firedac;
 
 type
   TForm3 = class(TForm)
@@ -85,10 +82,6 @@ type
     FDClient: TClientDataSet;
     FDLookup: TClientDataSet;
     Button5: TButton;
-    DBEBrConnectionFireDAC1: TDBEBrConnectionFireDAC;
-    ORMBrManagerDataSet1: TORMBrManagerDataSet;
-    ORMBrDataSet1: TORMBrDataSet;
-    ORMBrDriverLinkFirebird1: TORMBrDriverLinkFirebird;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -98,8 +91,8 @@ type
     procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
-//    oConn: IDBConnection;
-//    oManager: TManagerDataSet;
+    oConn: IDBConnection;
+    oManager: TManagerDataSet;
   public
     { Public declarations }
   end;
@@ -118,14 +111,14 @@ procedure TForm3.Button1Click(Sender: TObject);
 var
   LCurrent: Tmaster;
 begin
-  LCurrent := ORMBrManagerDataSet1.Current<Tmaster>;
+  LCurrent := oManager.Current<Tmaster>;
   LCurrent.description := 'Object Update Master';
-  ORMBrManagerDataSet1.Save<Tmaster>(LCurrent);
+  oManager.Save<Tmaster>(LCurrent);
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  ORMBrManagerDataSet1.ApplyUpdates<Tmaster>(0);
+  oManager.ApplyUpdates<Tmaster>(0);
 end;
 
 procedure TForm3.Button3Click(Sender: TObject);
@@ -135,22 +128,22 @@ end;
 
 procedure TForm3.Button4Click(Sender: TObject);
 begin
-  ORMBrManagerDataSet1.OpenWhere<Tmaster>('description = ''Master Demo Test 26''', '');
+  oManager.OpenWhere<Tmaster>('description = ''Master Demo Test 26''', '');
 end;
 
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-  ORMBrManagerDataSet1.RefreshRecord<Tmaster>;
+  oManager.RefreshRecord<Tmaster>;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
-//  oConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
+  oConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
 
-//  oManager := TManagerDataSet.Create(oConn);
-  ORMBrManagerDataSet1.Connection.SetCommandMonitor(TCommandMonitor.GetInstance);
-  ORMBrManagerDataSet1.AddAdapter<Tmaster>(FDMaster, 3)
+  oManager := TManagerDataSet.Create(oConn);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
+  oManager.AddAdapter<Tmaster>(FDMaster, 3)
           .AddAdapter<Tdetail, Tmaster>(FDDetail)
           .AddAdapter<Tclient, Tmaster>(FDClient)
           .AddAdapter<Tlookup>(FDLookup)
@@ -159,13 +152,13 @@ begin
                                             'lookup_id',
                                             'lookup_description',
                                             'Descrição Lookup');
-  ORMBrManagerDataSet1.Open<Tmaster>;
+  oManager.Open<Tmaster>;
 //  .OpenWhere<Tmaster>('master_id > 0');
 end;
 
 procedure TForm3.FormDestroy(Sender: TObject);
 begin
-//  oManager.Free
+  oManager.Free
 end;
 
 end.

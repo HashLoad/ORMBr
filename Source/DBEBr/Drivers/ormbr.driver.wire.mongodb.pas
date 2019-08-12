@@ -71,7 +71,7 @@ type
     procedure CommandInsertExecute(const ACommandText: String; const AParams: TParams);
     procedure CommandDeleteExecute(const ACommandText: String; const AParams: TParams);
   public
-    constructor Create(AConnection: TComponent; ADriverName: TDriverName); override;
+    constructor Create(const AConnection: TComponent; const ADriverName: TDriverName); override;
     destructor Destroy; override;
     procedure Connect; override;
     procedure Disconnect; override;
@@ -83,7 +83,7 @@ type
     function IsConnected: Boolean; override;
     function InTransaction: Boolean; override;
     function CreateQuery: IDBQuery; override;
-    function CreateResultSet: IDBResultSet; override;
+    function CreateResultSet(const ASQL: String): IDBResultSet; override;
     function ExecuteSQL(const ASQL: string): IDBResultSet; override;
   end;
 
@@ -124,7 +124,7 @@ uses
 
 { TDriverMongoWire }
 
-constructor TDriverMongoWire.Create(AConnection: TComponent; ADriverName: TDriverName);
+constructor TDriverMongoWire.Create(const AConnection: TComponent; const ADriverName: TDriverName);
 begin
   inherited;
   FConnection := AConnection as TMongoWireConnection;
@@ -301,7 +301,7 @@ begin
   Result := TDriverQueryMongoWire.Create(FConnection);
 end;
 
-function TDriverMongoWire.CreateResultSet: IDBResultSet;
+function TDriverMongoWire.CreateResultSet(const ASQL: String): IDBResultSet;
 var
   LDBQuery: IDBQuery;
 begin

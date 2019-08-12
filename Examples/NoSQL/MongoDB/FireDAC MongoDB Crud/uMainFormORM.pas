@@ -30,7 +30,6 @@ uses
   ormbr.container.objectset.interfaces,
   ormbr.container.objectset,
   ormbr.factory.firedac.mongodb,
-  ormbr.types.database,
   ormbr.json,
   ormbr.rest.json,
   /// orm model

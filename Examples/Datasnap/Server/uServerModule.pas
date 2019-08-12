@@ -15,7 +15,6 @@ uses
   /// ORMBr Conexão database
   ormbr.factory.firedac,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   /// ORMBr
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,

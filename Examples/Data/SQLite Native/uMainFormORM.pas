@@ -32,7 +32,6 @@ uses
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
-  ormbr.types.database,
   /// SQLite
   SQLiteTable3;
 
@@ -94,7 +93,7 @@ var
 implementation
 
 uses
-  ormbr.monitor, ormbr.form.monitor;
+  ormbr.form.monitor;
 
 {$R *.dfm}
 

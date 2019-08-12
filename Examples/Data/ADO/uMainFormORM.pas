@@ -22,7 +22,6 @@ uses
   ExtCtrls,
   MidasLib,
   /// orm factory
-  ormbr.types.database,
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
   ormbr.factory.interfaces,
@@ -91,7 +90,6 @@ var
 implementation
 
 uses
-  ormbr.monitor,
   ormbr.form.monitor;
 
 {$R *.dfm}

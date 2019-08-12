@@ -76,7 +76,6 @@ type
     Button3: TButton;
     DBImage1: TDBImage;
     Button4: TButton;
-    DataSource4: TDataSource;
     Button5: TButton;
     DBCheckBox1: TDBCheckBox;
     procedure FormCreate(Sender: TObject);

@@ -122,13 +122,6 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <FormType>dfm</FormType>
             <DesignClass>TWebModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.json.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.container.objectset.interfaces.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.container.objectset.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.abstract.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.objectset.bind.pas"/>
-        <DCCReference Include="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
         <DCCReference Include="..\..\Data\Models\ormbr.model.client.pas"/>
         <DCCReference Include="..\..\Data\Models\ormbr.model.detail.pas"/>
         <DCCReference Include="..\..\Data\Models\ormbr.model.lookup.pas"/>
@@ -235,10 +228,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
                 </Source>
             </Delphi.Personality>
             <Deployment Version="3">
-                <DeployFile LocalName="js\base64.js" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win64">
-                        <RemoteDir>.\js\</RemoteDir>
-                        <RemoteName>base64.js</RemoteName>
+                <DeployFile LocalName="ModelSupport_ORMBrServer\ORMBrServer\default.txaPackage" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -248,9 +240,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ModelSupport_ORMBrServer\ORMBrServer\default.txaPackage" Configuration="Debug" Class="ProjectFile">
-                    <Platform Name="Win32">
-                        <RemoteDir>.\</RemoteDir>
+                <DeployFile LocalName="images\collapse.png" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win64">
+                        <RemoteDir>.\images\</RemoteDir>
+                        <RemoteName>collapse.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1047,10 +1040,10 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="images\collapse.png" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="js\base64.js" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win64">
-                        <RemoteDir>.\images\</RemoteDir>
-                        <RemoteName>collapse.png</RemoteName>
+                        <RemoteDir>.\js\</RemoteDir>
+                        <RemoteName>base64.js</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

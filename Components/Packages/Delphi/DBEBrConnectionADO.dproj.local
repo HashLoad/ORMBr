@@ -16,11 +16,11 @@
     <Transaction>2019/08/01 16:18:04.000.186,=D:\DBEnginesBr\Source\Drivers\ormbr.driver.ado.transaction.pas</Transaction>
     <Transaction>2019/08/01 17:48:11.000.653,D:\Projetos-Brasil\DBEnginesBr\Components\ORMBrConnectionADO.dproj=D:\Projetos-Brasil\DBEnginesBr\Components\Packages\DBEnginesBrConnectionADO.dproj</Transaction>
     <Transaction>2019/08/01 17:54:38.000.147,D:\Projetos-Brasil\DBEnginesBr\Components\Packages\Delphi\DBEnginesBrConnectionADO.dproj=D:\Projetos-Brasil\DBEnginesBr\Components\Packages\DBEnginesBrConnectionADO.dproj</Transaction>
-    <Transaction>2019/08/01 17:58:50.000.305,=D:\Projetos-Brasil\DBEnginesBr\Components\Source\ormbr.connection.ado.reg.pas</Transaction>
     <Transaction>2019/08/01 17:58:50.000.277,=D:\Projetos-Brasil\DBEnginesBr\Components\Source\ormbr.connection.ado.pas</Transaction>
+    <Transaction>2019/08/01 17:58:50.000.305,=D:\Projetos-Brasil\DBEnginesBr\Components\Source\ormbr.connection.ado.reg.pas</Transaction>
     <Transaction>2019/08/01 18:05:59.000.473,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.factory.ado.pas</Transaction>
-    <Transaction>2019/08/01 18:05:59.000.410,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.ado.transaction.pas</Transaction>
     <Transaction>2019/08/01 18:05:59.000.384,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.ado.pas</Transaction>
+    <Transaction>2019/08/01 18:05:59.000.410,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.ado.transaction.pas</Transaction>
     <Transaction>2019/08/03 11:36:12.000.737,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEnginesBrConnectionADO.dproj=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEBrConnectionADO.dproj</Transaction>
     <Transaction>2019/08/03 12:17:40.000.676,=DBEBrCore.dcp</Transaction>
     <Transaction>2019/08/03 12:17:50.000.021,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.connection.ado.pas=D:\PROJETOS-Brasil\ORMBr\Components\Source\dbebr.connection.ado.pas</Transaction>

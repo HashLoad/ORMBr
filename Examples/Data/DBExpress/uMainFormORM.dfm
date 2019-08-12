@@ -219,41 +219,16 @@ object Form3: TForm3
     Left = 424
     Top = 60
   end
-  object Detail: TORMBrMemDataSet
-    Aggregates = <>
-    AggregatesActive = True
-    Params = <>
-    Left = 330
-    Top = 106
-  end
   object DataSource2: TDataSource
     DataSet = Detail
     Left = 422
     Top = 112
-  end
-  object Client: TORMBrMemDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 334
-    Top = 166
   end
   object DataSource3: TDataSource
     AutoEdit = False
     DataSet = Client
     Left = 426
     Top = 168
-  end
-  object Master: TORMBrMemDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 328
-    Top = 56
-  end
-  object Lookup: TORMBrMemDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 334
-    Top = 220
   end
   object SQLConnection1: TSQLConnection
     DriverName = 'Sqlite'
@@ -270,5 +245,29 @@ object Form3: TForm3
       'Database=..\Database\database.db3')
     Left = 164
     Top = 48
+  end
+  object Master: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 351
+    Top = 63
+  end
+  object Detail: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 351
+    Top = 114
+  end
+  object Client: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 351
+    Top = 171
+  end
+  object Lookup: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 351
+    Top = 234
   end
 end

@@ -383,19 +383,9 @@ procedure TManagerObjectSet.ListChanged<T>(Sender: TObject; const Item: T;
 var
   LClassName: String;
 begin
-  if Action = cnAdding then // Before
-  begin
-
-  end
-  else
   if Action = cnAdded then // After
   begin
     FCurrentIndex := FRepository.Items[TClass(T).ClassName].NestedList.Count -1;
-  end
-  else
-  if Action = cnDeleting then // Before
-  begin
-
   end
   else
   if Action = cnRemoved then // After
@@ -409,11 +399,6 @@ begin
 
     if FRepository.Items[LClassName].NestedList.Count > 1 then
       Dec(FCurrentIndex);
-  end
-  else
-  if Action = cnExtracting then // Before
-  begin
-
   end
   else
   if Action = cnExtracted then // After

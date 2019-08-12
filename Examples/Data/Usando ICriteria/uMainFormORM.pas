@@ -26,7 +26,6 @@ uses
   /// orm injection dependency
   ormbr.criteria,
   ormbr.factory.firedac,
-  ormbr.types.database,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,

@@ -31,14 +31,12 @@ uses
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
   ormbr.factory.dbexpress,
-  ormbr.types.database,
   ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
   ormbr.model.lookup,
-  ormbr.model.client,
-  ormbr.memdataset;
+  ormbr.model.client;
 
 type
   TForm3 = class(TForm)
@@ -49,12 +47,8 @@ type
     Button3: TButton;
     Button4: TButton;
     DBGrid2: TDBGrid;
-    Detail: TORMBrMemDataSet;
     DataSource2: TDataSource;
-    Client: TORMBrMemDataSet;
     DataSource3: TDataSource;
-    Master: TORMBrMemDataSet;
-    Lookup: TORMBrMemDataSet;
     DBEdit1: TDBEdit;
     Label1: TLabel;
     Label2: TLabel;
@@ -72,6 +66,10 @@ type
     Label8: TLabel;
     DBEdit7: TDBEdit;
     DBImage1: TDBImage;
+    Master: TClientDataSet;
+    Detail: TClientDataSet;
+    Client: TClientDataSet;
+    Lookup: TClientDataSet;
     procedure Button3Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);

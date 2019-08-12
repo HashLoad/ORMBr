@@ -320,9 +320,4 @@ object Form3: TForm3
     Left = 354
     Top = 222
   end
-  object DataSource4: TDataSource
-    AutoEdit = False
-    Left = 493
-    Top = 221
-  end
 end
