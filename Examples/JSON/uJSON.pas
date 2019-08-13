@@ -33,6 +33,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -47,7 +48,8 @@ implementation
 uses
   ormbr.model.person,
   ormbr.rest.json,
-  ormbr.json.utils, ormbr.json;
+  ormbr.json.utils,
+  ormbr.json;
 
 {$R *.dfm}
 
@@ -159,6 +161,22 @@ begin
   finally
     jArray.Free;
   end;
+end;
+
+procedure TForm4.Button5Click(Sender: TObject);
+var
+  LJSON: TJSONVariantData;
+begin
+//  LJSON.Init;
+//  LJSON.Kind := jvObject;
+//  LJSON.AddNameValue('ID', 1);
+//  LJSON.AddNameValue('Nome', 'Isaque');
+
+//  LJSON.Kind := jvUndefined;
+//  LJSON.AddValue(LJSON.ToJSON);
+
+  Memo1.Text := LJSON.ToJSON;
+  Memo1.Lines.Add(LJSON.Value['Nome']);
 end;
 
 end.
