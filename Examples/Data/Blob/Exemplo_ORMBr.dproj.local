@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/04/21 16:19:14.000.218,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/05/10 15:05:32.000.696,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/05/10 15:14:35.000.605,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/05/10 15:21:47.000.679,=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
+    <Transaction>2018/05/10 15:22:06.000.186,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.dfm=D:\ORMBr\Demo\Data\Blob\UPrincipal.dfm</Transaction>
+    <Transaction>2018/05/10 15:22:06.000.186,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas=D:\ORMBr\Demo\Data\Blob\UPrincipal.pas</Transaction>
+    <Transaction>2018/05/10 15:22:15.000.293,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Project2.dproj=D:\ORMBr\Demo\Data\Blob\Exemplo_ORMBr.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

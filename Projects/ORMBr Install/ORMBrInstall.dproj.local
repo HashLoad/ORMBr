@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2015/08/07 12:44:54.000.403,D:\ACBr2\Projetos\ACBrInstall Trunk2\ACBrInstall_Trunk2.dproj=D:\ACBr2\Projetos\ACBrInstall Trunk2\ACBrInstall.dproj</Transaction>
-    <Transaction>2018/07/16 13:44:59.000.896,D:\ORMBr\Projects\RESTful Install\ACBrInstall_Trunk2.dproj=D:\ORMBr\Projects\RESTful Install\ORMBrInstall.dproj</Transaction>
+    <Transaction>2015/08/07 12:44:54.000.403,D:\ACBr2\Projetos\ACBrInstall Trunk2\ACBrInstall.dproj=D:\ACBr2\Projetos\ACBrInstall Trunk2\ACBrInstall_Trunk2.dproj</Transaction>
+    <Transaction>2018/07/16 13:44:59.000.896,D:\ORMBr\Projects\RESTful Install\ORMBrInstall.dproj=D:\ORMBr\Projects\RESTful Install\ACBrInstall_Trunk2.dproj</Transaction>
     <Transaction>2018/07/16 16:22:06.000.026,=D:\ORMBr\Projects\RESTful Install\RESTResources.rc</Transaction>
     <Transaction>2018/07/16 16:24:20.000.072,=D:\ORMBr\Projects\RESTful Install\WizardRESTResource.rc</Transaction>
-    <Transaction>2018/07/16 16:24:35.000.438,D:\ORMBr\Projects\RESTful Install\WizardRESTResource.rc=D:\ORMBr\Projects\RESTful Install\RESTResource.rc</Transaction>
+    <Transaction>2018/07/16 16:24:35.000.438,D:\ORMBr\Projects\RESTful Install\RESTResource.rc=D:\ORMBr\Projects\RESTful Install\WizardRESTResource.rc</Transaction>
     <Transaction>2018/07/16 16:43:33.000.024,D:\ORMBr\Projects\RESTful Install\RESTResource.rc=</Transaction>
     <Transaction>2018/07/16 17:51:59.000.371,D:\ORMBr\Projects\RESTful Install\SVN_Class.pas=</Transaction>
     <Transaction>2018/07/16 17:58:08.000.531,=D:\ORMBr\Projects\RESTful Install\RESTResource.rc</Transaction>
-    <Transaction>2018/07/16 17:59:40.000.358,D:\ORMBr\Projects\RESTful Install\RESTResource.rc=D:\ORMBr\Projects\RESTful Install\ServerResource.rc</Transaction>
+    <Transaction>2018/07/16 17:59:40.000.358,D:\ORMBr\Projects\RESTful Install\ServerResource.rc=D:\ORMBr\Projects\RESTful Install\RESTResource.rc</Transaction>
     <Transaction>2018/07/16 18:01:58.000.368,=D:\ORMBr\Projects\RESTful Install\ClientResource .rc</Transaction>
     <Transaction>2018/07/16 19:12:37.000.974,D:\ORMBr\Projects\RESTful Install\ClientResource .rc=</Transaction>
     <Transaction>2018/07/16 19:12:38.000.025,D:\ORMBr\Projects\RESTful Install\ServerResource.rc=</Transaction>

@@ -33,16 +33,13 @@ uses
   DB,
   Rtti,
   Generics.Collections,
-  ormbr.criteria,
-  ormbr.types.mapping,
   ormbr.factory.interfaces,
   ormbr.mapping.classes,
-  ormbr.dml.generator,
   ormbr.command.selecter,
   ormbr.command.inserter,
   ormbr.command.deleter,
   ormbr.command.updater,
-  ormbr.Types.database;
+  ormbr.types.mapping;
 
 type
   TDMLCommandFactoryAbstract = class abstract

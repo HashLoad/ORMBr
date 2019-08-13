@@ -167,13 +167,12 @@ type
 implementation
 
 uses
+  ormbr.bind,
   ormbr.rtti.helper,
   ormbr.objects.helper,
   ormbr.mapping.rttiutils,
   ormbr.dataset.fields,
-  ormbr.dataset.bind,
   ormbr.dataset.consts,
-  ormbr.objectset.bind,
   ormbr.mapping.explorer,
   ormbr.mapping.attributes,
   ormbr.types.mapping;
@@ -189,12 +188,10 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
-  TBindDataSet
-    .GetInstance
-      .SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
-  TBindDataSet
-    .GetInstance
-      .SetDataDictionary(ADataSet, FCurrentInternal);
+  TBind.Instance
+       .SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
+  TBind.Instance
+       .SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
   FExplorer := TMappingExplorer.GetInstance;
@@ -229,9 +226,8 @@ begin
   ///   Aualiza o DataSet com os dados a variável interna
   /// </summary>
   FOrmDataSet.Edit;
-  TBindDataSet
-    .GetInstance
-      .SetPropertyToField(AObject, FOrmDataSet);
+  TBind.Instance
+       .SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
 end;
 
@@ -376,9 +372,8 @@ begin
       /// <summary>
       ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       /// </summary>
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
+      TBind.Instance
+           .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
       /// Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
@@ -425,9 +420,8 @@ begin
       /// <summary>
       ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       /// </summary>
-      TBindObject
-        .GetInstance
-          .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
+      TBind.Instance
+           .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);
@@ -823,8 +817,8 @@ begin
   if FOrmDataSet.RecordCount = 0 then
     Exit(FCurrentInternal);
 
-  TBindObject.GetInstance
-             .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
+  TBind.Instance
+       .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
 
   for LDataSetChild in FMasterObject.Values do
     LDataSetChild.FillMastersClass(LDataSetChild, FCurrentInternal);

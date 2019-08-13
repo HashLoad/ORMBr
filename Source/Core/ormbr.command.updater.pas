@@ -47,7 +47,6 @@ uses
   ormbr.mapping.attributes,
   ormbr.command.abstract,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   ormbr.types.blob,
   ormbr.objects.helper,
   ormbr.mapping.explorer;
@@ -170,9 +169,7 @@ begin
       with FParams.Add as TParam do
       begin
         Name := LParams.Items[LFor].Name;
-        DataType := TUtilSingleton.IfThen<TFieldType>(LParams.Items[LFor].Value = Null,
-                                                      ftVariant,
-                                                      LParams.Items[LFor].DataType);
+        DataType := LParams.Items[LFor].DataType;
         Value := LParams.Items[LFor].Value;
         ParamType := LParams.Items[LFor].ParamType;
       end;

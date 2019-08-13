@@ -36,8 +36,7 @@ uses
   /// ormbr
   ormbr.factory.interfaces,
   ormbr.mapping.classes,
-  ormbr.dml.commands,
-  ormbr.criteria;
+  ormbr.dml.commands;
 
 type
   /// <summary>

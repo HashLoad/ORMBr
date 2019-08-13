@@ -1,0 +1,44 @@
+package DBEBrConnectionADO;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'DBEnginesBr - ADO'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  adortl,
+  DBEBrCore;
+
+contains
+  dbebr.connection.ado in '..\..\Source\dbebr.connection.ado.pas',
+  dbebr.connection.ado.reg in '..\..\Source\dbebr.connection.ado.reg.pas',
+  ormbr.driver.ado in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.ado.pas',
+  ormbr.driver.ado.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.ado.transaction.pas',
+  ormbr.factory.ado in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.ado.pas';
+
+end.

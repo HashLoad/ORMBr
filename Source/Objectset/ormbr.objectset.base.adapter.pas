@@ -71,6 +71,7 @@ type
   public
     constructor Create; overload; virtual;
     destructor Destroy; override;
+    procedure New(var AObject: M); override;
     procedure Modify(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
@@ -84,7 +85,6 @@ type
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
-    procedure New(var AObject: M); override;
     {$IFDEF USEBINDSOURCE}
     procedure SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
     procedure SetOnUpdateEvent(AProc: TProc<TObject>);

@@ -81,9 +81,9 @@ type
     procedure SetAutoNextPacket<T: class, constructor>(const AValue: Boolean);
     {$ENDIF}
     procedure RemoveAdapter<T: class>;
-    function AddAdapter<T: class, constructor>(ADataSet: TDataSet;
+    function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
-    function AddAdapter<T, M: class, constructor>(ADataSet: TDataSet): TManagerDataSet; overload;
+    function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerDataSet; overload;
     function AddLookupField<T, M: class, constructor>(const AFieldName: string;
                                                       const AKeyFields: string;
                                                       const ALookupKeyFields: string;
@@ -123,7 +123,7 @@ begin
   FConnection := AConnection;
   FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
   FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
-  FOwnerNestedList := True;
+  FOwnerNestedList := False;
 end;
 
 destructor TManagerDataSet.Destroy;
@@ -197,7 +197,7 @@ begin
   Resolver<T>.LoadLazy(AOwner);
 end;
 
-function TManagerDataSet.AddAdapter<T, M>(ADataSet: TDataSet): TManagerDataSet;
+function TManagerDataSet.AddAdapter<T, M>(const ADataSet: TDataSet): TManagerDataSet;
 var
   LDataSetAdapter: TDataSetBaseAdapter<T>;
   LMaster: TDataSetBaseAdapter<T>;
@@ -243,7 +243,7 @@ begin
   FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
-function TManagerDataSet.AddAdapter<T>(ADataSet: TDataSet;
+function TManagerDataSet.AddAdapter<T>(const ADataSet: TDataSet;
   const APageSize: Integer): TManagerDataSet;
 var
   LDataSetAdapter: TDataSetBaseAdapter<T>;

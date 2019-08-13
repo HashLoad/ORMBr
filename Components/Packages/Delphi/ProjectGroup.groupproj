@@ -1,0 +1,216 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C403A32F-5943-4559-978D-74063C7B385C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="ORMBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionFireDAC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionZeos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionDBExpress.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionADO.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionFIBPlus.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionUniDAC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionSQLDirect.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionNexusDB.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBEBrConnectionIBObjects.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrDriversLinks.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ConnectionMongoWire.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerClientDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerFDMemTable.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerObjectSet.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ORMBrCore">
+        <MSBuild Projects="ORMBrCore.dproj"/>
+    </Target>
+    <Target Name="ORMBrCore:Clean">
+        <MSBuild Projects="ORMBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrCore:Make">
+        <MSBuild Projects="ORMBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrCore">
+        <MSBuild Projects="DBEBrCore.dproj"/>
+    </Target>
+    <Target Name="DBEBrCore:Clean">
+        <MSBuild Projects="DBEBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrCore:Make">
+        <MSBuild Projects="DBEBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionFireDAC">
+        <MSBuild Projects="DBEBrConnectionFireDAC.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionFireDAC:Clean">
+        <MSBuild Projects="DBEBrConnectionFireDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionFireDAC:Make">
+        <MSBuild Projects="DBEBrConnectionFireDAC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionZeos">
+        <MSBuild Projects="DBEBrConnectionZeos.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionZeos:Clean">
+        <MSBuild Projects="DBEBrConnectionZeos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionZeos:Make">
+        <MSBuild Projects="DBEBrConnectionZeos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionDBExpress">
+        <MSBuild Projects="DBEBrConnectionDBExpress.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionDBExpress:Clean">
+        <MSBuild Projects="DBEBrConnectionDBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionDBExpress:Make">
+        <MSBuild Projects="DBEBrConnectionDBExpress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionADO">
+        <MSBuild Projects="DBEBrConnectionADO.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionADO:Clean">
+        <MSBuild Projects="DBEBrConnectionADO.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionADO:Make">
+        <MSBuild Projects="DBEBrConnectionADO.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionFIBPlus">
+        <MSBuild Projects="DBEBrConnectionFIBPlus.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionFIBPlus:Clean">
+        <MSBuild Projects="DBEBrConnectionFIBPlus.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionFIBPlus:Make">
+        <MSBuild Projects="DBEBrConnectionFIBPlus.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionUniDAC">
+        <MSBuild Projects="DBEBrConnectionUniDAC.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionUniDAC:Clean">
+        <MSBuild Projects="DBEBrConnectionUniDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionUniDAC:Make">
+        <MSBuild Projects="DBEBrConnectionUniDAC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionSQLDirect">
+        <MSBuild Projects="DBEBrConnectionSQLDirect.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionSQLDirect:Clean">
+        <MSBuild Projects="DBEBrConnectionSQLDirect.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionSQLDirect:Make">
+        <MSBuild Projects="DBEBrConnectionSQLDirect.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionNexusDB">
+        <MSBuild Projects="DBEBrConnectionNexusDB.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionNexusDB:Clean">
+        <MSBuild Projects="DBEBrConnectionNexusDB.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionNexusDB:Make">
+        <MSBuild Projects="DBEBrConnectionNexusDB.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBEBrConnectionIBObjects">
+        <MSBuild Projects="DBEBrConnectionIBObjects.dproj"/>
+    </Target>
+    <Target Name="DBEBrConnectionIBObjects:Clean">
+        <MSBuild Projects="DBEBrConnectionIBObjects.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrConnectionIBObjects:Make">
+        <MSBuild Projects="DBEBrConnectionIBObjects.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks">
+        <MSBuild Projects="ORMBrDriversLinks.dproj"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks:Clean">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks:Make">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ConnectionMongoWire">
+        <MSBuild Projects="ConnectionMongoWire.dproj"/>
+    </Target>
+    <Target Name="ConnectionMongoWire:Clean">
+        <MSBuild Projects="ConnectionMongoWire.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ConnectionMongoWire:Make">
+        <MSBuild Projects="ConnectionMongoWire.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Clean">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Make">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Clean">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Make">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Clean">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Make">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ORMBrCore;DBEBrCore;DBEBrConnectionFireDAC;DBEBrConnectionZeos;DBEBrConnectionDBExpress;DBEBrConnectionADO;DBEBrConnectionFIBPlus;DBEBrConnectionUniDAC;DBEBrConnectionSQLDirect;DBEBrConnectionNexusDB;DBEBrConnectionIBObjects;ORMBrDriversLinks;ConnectionMongoWire;ORMBrManagerClientDataSet;ORMBrManagerFDMemTable;ORMBrManagerObjectSet"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ORMBrCore:Clean;DBEBrCore:Clean;DBEBrConnectionFireDAC:Clean;DBEBrConnectionZeos:Clean;DBEBrConnectionDBExpress:Clean;DBEBrConnectionADO:Clean;DBEBrConnectionFIBPlus:Clean;DBEBrConnectionUniDAC:Clean;DBEBrConnectionSQLDirect:Clean;DBEBrConnectionNexusDB:Clean;DBEBrConnectionIBObjects:Clean;ORMBrDriversLinks:Clean;ConnectionMongoWire:Clean;ORMBrManagerClientDataSet:Clean;ORMBrManagerFDMemTable:Clean;ORMBrManagerObjectSet:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ORMBrCore:Make;DBEBrCore:Make;DBEBrConnectionFireDAC:Make;DBEBrConnectionZeos:Make;DBEBrConnectionDBExpress:Make;DBEBrConnectionADO:Make;DBEBrConnectionFIBPlus:Make;DBEBrConnectionUniDAC:Make;DBEBrConnectionSQLDirect:Make;DBEBrConnectionNexusDB:Make;DBEBrConnectionIBObjects:Make;ORMBrDriversLinks:Make;ConnectionMongoWire:Make;ORMBrManagerClientDataSet:Make;ORMBrManagerFDMemTable:Make;ORMBrManagerObjectSet:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

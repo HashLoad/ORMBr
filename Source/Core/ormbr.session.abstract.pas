@@ -65,6 +65,8 @@ type
     FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
+    function Find(const AMethodName: String;
+      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
@@ -105,10 +107,6 @@ type
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Integer): M; overload; virtual;
     function Find(const AID: string): M; overload; virtual;
-    {$IFDEF DRIVERRESTFUL}
-    function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
-    {$ENDIF}
     function FindWhere(const AWhere: string;
       const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;

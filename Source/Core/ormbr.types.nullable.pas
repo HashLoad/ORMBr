@@ -64,15 +64,15 @@ type
     class operator NotEqual(const a, b: Nullable<T>) : Boolean;
   end;
 
-//  NullString = Nullable<string>;
-//  NullBoolean = Nullable<Boolean>;
-//  NullInteger = Nullable<Integer>;
-//  NullInt64 = Nullable<Int64>;
-//  NullDouble = Nullable<Double>;
-//  NullCurrency = Nullable<Currency>;
-//  NullDate = Nullable<TDate>;
-//  NullTime = Nullable<TTime>;
-//  NullDateTime = Nullable<TDateTime>;
+  NullString = Nullable<string>;
+  NullBoolean = Nullable<Boolean>;
+  NullInteger = Nullable<Integer>;
+  NullInt64 = Nullable<Int64>;
+  NullDouble = Nullable<Double>;
+  NullCurrency = Nullable<Currency>;
+  NullDate = Nullable<TDate>;
+  NullTime = Nullable<TTime>;
+  NullDateTime = Nullable<TDateTime>;
 
 implementation
 
@@ -101,7 +101,7 @@ end;
 
 procedure Nullable<T>.Clear;
 begin
-  FHasValue := '';
+  FHasValue := CHasValueFlag;
   FValue := Default(T);
 end;
 
@@ -112,13 +112,13 @@ end;
 
 function Nullable<T>.GetHasValue: Boolean;
 begin
-  Result := Length(FHasValue) > 0;
+  Result := FHasValue <> '';
 end;
 
 function Nullable<T>.GetValue: T;
 begin
-//  if not HasValue then
-//     raise Exception.Create('Invalid operation, Nullable type has no value.');
+  if not HasValue then
+     raise Exception.Create('Invalid operation, Nullable type has no value.');
   Result := FValue;
 end;
 
@@ -158,15 +158,15 @@ end;
 
 class operator Nullable<T>.Implicit(const Value: Nullable<T>): Variant;
 var
-  vValue: TValue;
+  LValue: TValue;
 begin
   if Value.HasValue then
   begin
-    vValue := TValue.From<T>(Value.Value);
-    if vValue.IsType<Boolean> then
-      Result := vValue.AsBoolean
+    LValue := TValue.From<T>(Value.Value);
+    if LValue.IsType<Boolean> then
+      Result := LValue.AsBoolean
     else
-      Result := vValue.AsVariant;
+      Result := LValue.AsVariant;
   end
   else
     Result := Null;
@@ -174,12 +174,12 @@ end;
 
 class operator Nullable<T>.Implicit(const Value: Variant): Nullable<T>;
 var
-  vValue: TValue;
+  LValue: TValue;
 begin
   if not VarIsNullOrEmpty(Value) then
   begin
-    vValue := TValue.FromVariant(Value);
-    Result := Nullable<T>.Create(vValue.AsType<T>);
+    LValue := TValue.FromVariant(Value);
+    Result := Nullable<T>.Create(LValue.AsType<T>);
   end
   else
     Result.Clear;

@@ -1,0 +1,56 @@
+package DBEBrConnectionUniDAC;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'DBEnginesBr - UniDAC'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  {$IFDEF VER210} unidac140, {$ENDIF} // D2010
+  {$IFDEF VER220} unidac150, {$ENDIF} // XE
+  {$IFDEF VER230} unidac160, {$ENDIF} // XE2
+  {$IFDEF VER240} unidac170, {$ENDIF} // XE3
+  {$IFDEF VER250} unidac180, {$ENDIF} // XE4
+  {$IFDEF VER260} unidac190, {$ENDIF} // XE5
+  {$IFDEF VER270} unidac200, {$ENDIF} // XE6
+  {$IFDEF VER280} unidac210, {$ENDIF} // XE7
+  {$IFDEF VER290} unidac220, {$ENDIF} // XE8
+  {$IFDEF VER300} unidac230, {$ENDIF} // Seattle
+  {$IFDEF VER310} unidac240, {$ENDIF} // Berlin
+  {$IFDEF VER320} unidac250, {$ENDIF} // Tokyo
+  {$IFDEF VER330} unidac260, {$ENDIF} // Rio
+  DBEBrCore;
+
+contains
+  dbebr.connection.unidac in '..\..\Source\dbebr.connection.unidac.pas',
+  dbebr.connection.unidac.reg in '..\..\Source\dbebr.connection.unidac.reg.pas',
+  ormbr.driver.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.pas',
+  ormbr.driver.unidac.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.transaction.pas',
+  ormbr.factory.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.unidac.pas';
+
+end.

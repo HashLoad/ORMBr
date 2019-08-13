@@ -115,9 +115,8 @@ type
 implementation
 
 uses
-  ormbr.objectset.bind,
-  ormbr.dataset.fields,
-  ormbr.dataset.bind;
+  ormbr.bind,
+  ormbr.dataset.fields;
 
 { TRESTFDMemTableAdapter<M> }
 
@@ -398,7 +397,7 @@ begin
     if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
     begin
       LChild.FOrmDataSet.Append;
-      TBindDataSet.GetInstance.SetPropertyToField(AObject, LChild.FOrmDataSet);
+      TBind.Instance.SetPropertyToField(AObject, LChild.FOrmDataSet);
       LChild.FOrmDataSet.Post;
     end;
   finally

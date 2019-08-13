@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2018/06/12 11:44:04.000.669,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/12 11:53:05.000.895,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/12 11:54:41.000.631,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/13 16:02:54.000.206,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:09:15.000.659,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:27:48.000.406,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:31:59.000.302,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:33:53.000.780,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:44:49.000.764,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 14:47:02.000.672,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 15:00:42.000.211,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/14 15:02:44.000.093,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/19 15:47:36.000.327,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/26 14:52:43.000.728,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/26 14:58:53.000.816,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/06/26 15:07:34.000.975,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/07 12:57:31.000.673,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/08 16:24:45.000.258,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/09 10:28:07.000.786,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/24 11:02:32.000.793,=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/24 11:06:59.000.464,=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
+    <Transaction>2018/07/24 11:35:35.000.711,D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.fmx=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.fmx</Transaction>
+    <Transaction>2018/07/24 11:35:35.000.711,D:\ORMBr\Demo\Blob Sem DataSet\uMainForm.pas=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2018/07/24 11:35:43.000.532,D:\ORMBr\Demo\Blob Sem DataSet\ORMBrBlob.dproj=C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
+    <Transaction>2018/07/24 11:37:15.000.708,D:\ORMBr\Demo\Blob Sem DataSet\ormbr.model.PERSON.pas=D:\ORMBr\Demo\Data\Blob\ormbr.model.PERSON.pas</Transaction>
+    <Transaction>2018/08/13 16:53:53.000.547,=D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas</Transaction>
+    <Transaction>2018/08/13 16:56:42.000.522,D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas=D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas</Transaction>
+    <Transaction>2018/08/13 17:47:50.000.534,D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas=</Transaction>
+    <Transaction>2018/08/26 15:25:06.000.978,=D:\ORMBr\Source\Core\ormbr.json.pas</Transaction>
+    <Transaction>2018/08/26 15:25:06.000.937,=D:\ORMBr\Source\Core\ormbr.encddecd.pas</Transaction>
+    <Transaction>2018/08/26 15:25:07.000.054,=D:\ORMBr\Source\Core\ormbr.rest.json.pas</Transaction>
+    <Transaction>2018/08/26 15:25:07.000.015,=D:\ORMBr\Source\Core\ormbr.json.utils.pas</Transaction>
+    <Transaction>2018/08/26 15:41:35.000.735,=D:\ORMBr\Source\Core\ormbr.types.blob.pas</Transaction>
+  </Transactions>
+	<ActiveMobileDevice>
+		<NoProfile iOSSimulator="iPhone5"/>
+	</ActiveMobileDevice>
+</BorlandProject>

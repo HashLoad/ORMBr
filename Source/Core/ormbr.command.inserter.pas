@@ -41,7 +41,6 @@ uses
   ormbr.command.abstract,
   ormbr.mapping.classes,
   ormbr.factory.interfaces,
-  ormbr.types.database,
   ormbr.dml.commands,
   ormbr.rtti.helper,
   ormbr.objects.helper,

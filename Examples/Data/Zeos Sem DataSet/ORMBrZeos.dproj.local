@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2019/08/12 08:26:24.851,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.abstract.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.865,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.deleter.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.867,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.factory.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.868,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.inserter.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.870,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.selecter.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.871,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.updater.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.873,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.firebird.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.874,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.interbase.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.875,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.mssql.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.876,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.mysql.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.878,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.879,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.postgresql.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.880,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.generator.sqlite.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.881,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.dml.interfaces.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.883,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.driver.register.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.884,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.encddecd.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.885,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.json.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.886,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.attributes.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.887,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.classes.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.888,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.exceptions.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.889,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.explorer.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.890,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.explorerstrategy.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.891,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.popular.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.892,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.register.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.893,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.rttiutils.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.893,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.mapping.repository.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.894,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.objects.helper.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.895,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.objects.manager.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.896,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.rtti.helper.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.897,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.types.blob.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.898,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.types.lazy.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.900,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.types.nullable.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:24.901,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.utils.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:29.335,D:\PROJETOS-Brasil\ORMBr\Source\Objectset\ormbr.container.objectset.interfaces.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:29.336,D:\PROJETOS-Brasil\ORMBr\Source\Objectset\ormbr.container.objectset.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:29.336,D:\PROJETOS-Brasil\ORMBr\Source\Objectset\ormbr.objectset.abstract.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:29.337,D:\PROJETOS-Brasil\ORMBr\Source\Objectset\ormbr.objectset.adapter.pas=</Transaction>
+    <Transaction>2019/08/12 08:26:29.338,D:\PROJETOS-Brasil\ORMBr\Source\Objectset\ormbr.session.objectset.pas=</Transaction>
+  </Transactions>
+</BorlandProject>

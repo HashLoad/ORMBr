@@ -1,0 +1,44 @@
+package DBEBrConnectionSQLDirect;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'DBEnginesBr - SQLDirect'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  vcldb,
+  DBEBrCore;
+
+contains
+  dbebr.connection.sqldirect in '..\..\Source\dbebr.connection.sqldirect.pas',
+  dbebr.connection.sqldirect.reg in '..\..\Source\dbebr.connection.sqldirect.reg.pas',
+  ormbr.driver.sqldirect in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.pas',
+  ormbr.driver.sqldirect.transaction in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.transaction.pas',
+  ormbr.factory.sqldirect in '..\..\..\Source\Drivers\ormbr.factory.sqldirect.pas';
+
+end.

@@ -75,7 +75,7 @@ type
 implementation
 
 uses
-  ormbr.dataset.bind;
+  ormbr.bind;
 
 { TSessionDataSet<M> }
 
@@ -153,9 +153,8 @@ begin
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;
-    TBindDataSet
-      .GetInstance
-        .SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
+    TBind.Instance
+         .SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
     FOwner.FOrmDataSet.Post;
   end;
 end;
@@ -258,9 +257,8 @@ begin
   while ADBResultSet.NotEof do
   begin
      FOwner.FOrmDataSet.Append;
-     TBindDataSet
-       .GetInstance
-         .SetFieldToField(ADBResultSet, FOwner.FOrmDataSet);
+     TBind.Instance
+          .SetFieldToField(ADBResultSet, FOwner.FOrmDataSet);
      FOwner.FOrmDataSet.Fields[0].AsInteger := -1;
      FOwner.FOrmDataSet.Post;
   end;
