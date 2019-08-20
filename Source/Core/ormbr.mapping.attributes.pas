@@ -589,6 +589,7 @@ begin
   FFieldType := AFieldType;
   FPrecision := APrecision;
   FScale := AScale;
+  FSize := AScale;
   FDescription := ADescription;
 end;
 
