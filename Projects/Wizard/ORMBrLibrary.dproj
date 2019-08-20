@@ -161,7 +161,6 @@
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
-        <DCCReference Include="fmx.dcp"/>
         <DCCReference Include="designide.dcp"/>
         <DCCReference Include="ormbr.reg.pas"/>
         <RcItem Include="Images\icon.bmp">
@@ -211,7 +210,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\19.0\Bpl\ORMBrLibrary.bpl" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\ORMBrLibrary.bpl" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ORMBrLibrary.bpl</RemoteName>
                         <Overwrite>true</Overwrite>

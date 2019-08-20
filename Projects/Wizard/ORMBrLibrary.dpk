@@ -32,7 +32,6 @@ package ORMBrLibrary;
 requires
   rtl,
   dbrtl,
-  fmx,
   designide;
 
 contains
