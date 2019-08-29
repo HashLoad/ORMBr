@@ -37,7 +37,6 @@ requires
 
 contains
   ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas',
-  ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
   ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas',
   ormbr.mapping.attributes in '..\..\..\Source\Core\ormbr.mapping.attributes.pas',
@@ -55,7 +54,6 @@ contains
   ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
   ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
   ormbr.session.abstract in '..\..\..\Source\Core\ormbr.session.abstract.pas',
-  ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',

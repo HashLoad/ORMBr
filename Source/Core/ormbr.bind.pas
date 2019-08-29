@@ -596,6 +596,7 @@ begin
        TFieldSingleton.GetInstance.AddField(ADataSet,
                                             LColumn.ColumnName,
                                             LColumn.FieldType,
+                                            LColumn.Precision,
                                             LColumn.Size);
     end;
     LField := ADataSet.FieldByName(LColumn.ColumnName);

@@ -120,7 +120,6 @@
         <DCCReference Include="vclimg.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.core.consts.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.encddecd.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.json.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.json.utils.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.mapping.attributes.pas"/>
@@ -138,7 +137,6 @@
         <DCCReference Include="..\..\..\Source\Core\ormbr.rest.json.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.session.abstract.pas"/>
-        <DCCReference Include="..\..\..\Source\Core\ormbr.types.blob.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.lazy.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.types.nullable.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.utils.pas"/>

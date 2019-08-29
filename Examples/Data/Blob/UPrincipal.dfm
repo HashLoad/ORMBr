@@ -113,8 +113,8 @@ object Form2: TForm2
   end
   object DataSource1: TDataSource
     DataSet = FDMemTable1
-    Left = 216
-    Top = 48
+    Left = 213
+    Top = 30
   end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -124,8 +124,8 @@ object Form2: TForm2
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 42
-    Top = 80
+    Left = 138
+    Top = 23
   end
   object OpenDialog1: TOpenDialog
     Left = 252

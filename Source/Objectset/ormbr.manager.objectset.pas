@@ -214,9 +214,6 @@ begin
   SelectNestedListItem<T>;
   Resolver<T>.Delete(FSelectedObject);
   FRepository.Items[TClass(T).ClassName].NestedList.Delete(FCurrentIndex);
-
-  if FRepository.Items[TClass(T).ClassName].NestedList.Count > 0 then
-    Dec(FCurrentIndex);
 end;
 
 function TManagerObjectSet.ExistSequence<T>: Boolean;
@@ -230,7 +227,8 @@ begin
     Result := Resolver<T>.Find(Integer(AID))
   else
   if TVarData(AID).VType = varString then
-    Result := Resolver<T>.Find(VarToStr(AID))
+    Result := Resolver<T>.Find(VarToStr(AID));
+  FCurrentIndex := 0;
 end;
 
 function TManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
@@ -273,6 +271,7 @@ begin
   /// </summary>
   FRepository.Items[TClass(T).ClassName].NestedList.Free;
   FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
+  FCurrentIndex := 0;
 end;
 
 function TManagerObjectSet.Resolver<T>: TObjectSetBaseAdapter<T>;
@@ -339,6 +338,7 @@ begin
   /// </summary>
   FRepository.Items[TClass(T).ClassName].NestedList.Free;
   FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
+  FCurrentIndex := 0;
 end;
 
 function TManagerObjectSet.First<T>: Integer;

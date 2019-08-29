@@ -42,7 +42,9 @@ type
   IFieldSingleton = interface
     ['{47DDCFB7-6EB9-41A9-A41F-D9474D7A1E85}']
     procedure AddField(const ADataSet: TDataSet;
-      const AFieldName: String; const AFieldType: TFieldType;
+      const AFieldName: String;
+      const AFieldType: TFieldType;
+      const APrecision: Integer = 0;
       const ASize: Integer = 0);
     procedure AddCalcField(const ADataSet: TDataSet;
                            const AFieldName: string;
@@ -75,8 +77,11 @@ type
   public
     { Public declarations }
     class function GetInstance: IFieldSingleton;
-    procedure AddField(const ADataSet: TDataSet; const AFieldName: String;
-      const AFieldType: TFieldType; const ASize: Integer = 0);
+    procedure AddField(const ADataSet: TDataSet;
+      const AFieldName: String;
+      const AFieldType: TFieldType;
+      const APrecision: Integer = 0;
+      const ASize: Integer = 0);
     procedure AddCalcField(const ADataSet: TDataSet;
                            const AFieldName: string;
                            const AFieldType: TFieldType;
@@ -99,7 +104,10 @@ type
 implementation
 
 procedure TFieldSingleton.AddField(const ADataSet: TDataSet;
-  const AFieldName: String; const AFieldType: TFieldType; const ASize: Integer);
+  const AFieldName: String;
+  const AFieldType: TFieldType;
+  const APrecision: Integer = 0;
+  const ASize: Integer = 0);
 var
   LField: TField;
 begin
@@ -117,6 +125,13 @@ begin
   case AFieldType of
     ftBytes, ftVarBytes, ftFixedChar, ftString, ftFixedWideChar, ftWideString:
       begin
+        if ASize > 0 then
+          LField.Size := ASize;
+      end;
+    ftFMTBcd:
+      begin
+        if APrecision > 0 then
+          TFMTBCDField(LField).Precision := APrecision;
         if ASize > 0 then
           LField.Size := ASize;
       end;
