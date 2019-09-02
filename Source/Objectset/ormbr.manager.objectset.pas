@@ -145,7 +145,7 @@ begin
   Result := False;
   if not FOwnerNestedList then
     Exit;
-  Result := (FCurrentIndex = T(FRepository.Items[T.ClassName].NestedList.Count -1));
+  Result := (FCurrentIndex = FRepository.Items[T.ClassName].NestedList.Count -1);
 end;
 
 constructor TManagerObjectSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
@@ -231,7 +231,7 @@ begin
   Result := False;
   if not FOwnerNestedList then
     Exit;
-  Result := (FCurrentIndex +1 > T(FRepository.Items[T.ClassName].NestedList.Count -1));
+  Result := (FCurrentIndex +1 > FRepository.Items[T.ClassName].NestedList.Count -1);
 end;
 
 function TManagerObjectSet.ExistSequence<T>: Boolean;
