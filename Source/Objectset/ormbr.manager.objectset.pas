@@ -131,12 +131,22 @@ type
     function Next<T: class, constructor>: Integer;
     function Prior<T: class, constructor>: Integer;
     function Last<T: class, constructor>: Integer;
+    function Eof<T: class>: Boolean;
+    function Bof<T: class>: Boolean;
     property OwnerNestedList: Boolean read FOwnerNestedList write FOwnerNestedList;
   end;
 
 implementation
 
 { TManagerObjectSet }
+
+function TManagerObjectSet.Bof<T>: Boolean;
+begin
+  Result := False;
+  if not FOwnerNestedList then
+    Exit;
+  Result := (FCurrentIndex = T(FRepository.Items[T.ClassName].NestedList.Count -1));
+end;
 
 constructor TManagerObjectSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
                                                         {$ELSE}IDBConnection);
@@ -163,7 +173,7 @@ begin
   if not FOwnerNestedList then
     Exit;
   SelectNestedListItem<T>;
-  Result := FRepository.Items[T.ClassName].NestedList.Items[FCurrentIndex] as T;
+  Result := T(FRepository.Items[T.ClassName].NestedList.Items[FCurrentIndex]);
 end;
 
 procedure TManagerObjectSet.Delete<T>(const AObject: T);
@@ -214,6 +224,14 @@ begin
   SelectNestedListItem<T>;
   Resolver<T>.Delete(FSelectedObject);
   FRepository.Items[TClass(T).ClassName].NestedList.Delete(FCurrentIndex);
+end;
+
+function TManagerObjectSet.Eof<T>: Boolean;
+begin
+  Result := False;
+  if not FOwnerNestedList then
+    Exit;
+  Result := (FCurrentIndex +1 > T(FRepository.Items[T.ClassName].NestedList.Count -1));
 end;
 
 function TManagerObjectSet.ExistSequence<T>: Boolean;

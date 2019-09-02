@@ -24,12 +24,13 @@ type
   TDBEBrConnectionIBObjects = class(TDBEBrConnectionBase)
   private
     FConnection: TIBODatabase;
+    procedure SetConnection(const Value: TIBODatabase);
+    function GetConnection: TIBODatabase;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TIBODatabase read FConnection write FConnection;
+    property Connection: TIBODatabase read GetConnection write SetConnection;
   end;
 
 implementation
@@ -47,11 +48,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionIBObjects.GetDBConnection: IDBConnection;
+function TDBEBrConnectionIBObjects.GetConnection: TIBODatabase;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionIBObjects.SetConnection(const Value: TIBODatabase);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryIBObjects.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

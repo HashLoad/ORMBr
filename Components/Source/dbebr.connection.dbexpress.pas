@@ -22,12 +22,13 @@ type
   TDBEBrConnectionDBExpress = class(TDBEBrConnectionBase)
   private
     FConnection: TSQLConnection;
+    procedure SetConnection(const Value: TSQLConnection);
+    function GetConnection: TSQLConnection;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; Override;
   published
-    property Connetion: TSQLConnection read FConnection write FConnection;
+    property Connection: TSQLConnection read GetConnection write SetConnection;
   end;
 
 implementation
@@ -45,11 +46,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionDBExpress.GetDBConnection: IDBConnection;
+function TDBEBrConnectionDBExpress.GetConnection: TSQLConnection;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionDBExpress.SetConnection(const Value: TSQLConnection);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryDBExpress.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

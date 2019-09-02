@@ -65,8 +65,10 @@ type
     FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
+    {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    {$ENDIF}
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
@@ -224,8 +226,7 @@ var
   LProperty: TRttiProperty;
 begin
   LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AObjectSource.ClassType);
+                .GetInstance.GetMappingColumn(AObjectSource.ClassType);
   for LColumn in LColumns do
   begin
     LProperty := LColumn.ColumnProperty;

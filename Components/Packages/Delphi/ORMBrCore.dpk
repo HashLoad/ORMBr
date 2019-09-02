@@ -1,30 +1,27 @@
 package ORMBrCore;
 
 {$R *.res}
-{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
+{$OPTIMIZATION ON}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
+{$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
-{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ORMBr - Core'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
@@ -38,7 +35,6 @@ requires
 contains
   ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
-  ormbr.json.utils in '..\..\..\Source\Core\ormbr.json.utils.pas',
   ormbr.mapping.attributes in '..\..\..\Source\Core\ormbr.mapping.attributes.pas',
   ormbr.mapping.classes in '..\..\..\Source\Core\ormbr.mapping.classes.pas',
   ormbr.mapping.exceptions in '..\..\..\Source\Core\ormbr.mapping.exceptions.pas',
@@ -85,6 +81,8 @@ contains
   ormbr.objectset.abstract in '..\..\..\Source\Objectset\ormbr.objectset.abstract.pas',
   ormbr.session.objectset in '..\..\..\Source\Objectset\ormbr.session.objectset.pas',
   ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas',
-  ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas';
+  ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
+  ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
+  ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas';
 
 end.

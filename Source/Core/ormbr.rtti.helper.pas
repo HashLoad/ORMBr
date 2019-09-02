@@ -661,7 +661,13 @@ begin
     if TVarData(AValue).VType <= varNull then
       Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(TDate(AValue))));
+      Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(TDate(AValue))))
+  else
+  if ATypeInfo = TypeInfo(Nullable<TTime>) then
+    if TVarData(AValue).VType <= varNull then
+      Self.SetValue(AInstance, TValue.From(Nullable<TTime>.Create(AValue)))
+    else
+      Self.SetValue(AInstance, TValue.From(Nullable<TTime>.Create(TTime(AValue))));
 end;
 
 { TRttiTypeHelper }

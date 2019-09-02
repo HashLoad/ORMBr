@@ -35,6 +35,7 @@ interface
 
 uses
   Rtti,
+  TypInfo, {Delphi 2010}
   Variants,
   SysUtils,
   Generics.Collections,

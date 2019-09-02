@@ -22,12 +22,13 @@ type
   TDBEBrConnectionFireDAC = class(TDBEBrConnectionBase)
   private
     FConnection: TFDConnection;
+    procedure SetConnection(const Value: TFDConnection);
+    function GetConnection: TFDConnection;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TFDConnection read FConnection write FConnection;
+    property Connection: TFDConnection read GetConnection write SetConnection;
   end;
 
 implementation
@@ -45,11 +46,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionFireDAC.GetDBConnection: IDBConnection;
+function TDBEBrConnectionFireDAC.GetConnection: TFDConnection;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionFireDAC.SetConnection(const Value: TFDConnection);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryFireDAC.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

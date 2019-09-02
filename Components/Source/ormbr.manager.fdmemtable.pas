@@ -227,7 +227,7 @@ begin
   FConnection := Value;
   if Assigned(FManagerDataSet) then
     FManagerDataSet.Free;
-  FManagerDataSet := TManagerFDMemTable.Create(FConnection.Connection);
+  FManagerDataSet := TManagerFDMemTable.Create(FConnection.DBConnection);
 end;
 
 procedure TORMBrManagerFDMemTable.SetOwnerNestedList(const Value: Boolean);

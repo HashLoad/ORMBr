@@ -5,8 +5,8 @@
     <Transaction>2019/07/26 12:03:17.000.243,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\Package1.dproj=D:\ORMBr\Projects\Components\ORMBrCore.dproj</Transaction>
     <Transaction>2019/07/26 12:06:39.000.143,D:\ORMBr\Source\RESTful\ormbr.restdataset.adapter.pas=</Transaction>
     <Transaction>2019/07/26 12:10:03.000.335,=vclimg.dcp</Transaction>
-    <Transaction>2019/07/26 12:10:03.000.307,=vcl.dcp</Transaction>
     <Transaction>2019/07/26 12:10:03.000.360,=dbrtl.dcp</Transaction>
+    <Transaction>2019/07/26 12:10:03.000.307,=vcl.dcp</Transaction>
     <Transaction>2019/07/29 07:41:47.000.471,D:\ORMBr\Source\Core\ormbr.driver.register.pas=</Transaction>
     <Transaction>2019/07/29 07:52:35.000.406,D:\ORMBr\Source\Core\ormbr.dml.interfaces.pas=</Transaction>
     <Transaction>2019/07/29 08:05:16.000.934,D:\ORMBr\Source\Core\ormbr.command.deleter.pas=</Transaction>

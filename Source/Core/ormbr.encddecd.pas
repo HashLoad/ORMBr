@@ -31,14 +31,15 @@ unit ormbr.encddecd;
 
 interface
 
-{$SCOPEDENUMS ON}
-
 uses
   Classes,
+  StrUtils,
   SysUtils;
 
 type
   TURLEncoding = class;
+
+  TMarshaledAString = PAnsiChar;
 
   TNetEncoding = class
   private
@@ -325,7 +326,7 @@ begin
     OutStr := TBytesStream.Create;
     try
       Encode(InStr, OutStr);
-      SetString(Result, MarshaledAString(OutStr.Memory), OutStr.Size);
+      SetString(Result, TMarshaledAString(OutStr.Memory), OutStr.Size);
     finally
       OutStr.Free;
     end;
@@ -357,9 +358,11 @@ var
 begin
   if FBase64Encoding = nil then
   begin
+{$IFDEF NEXTGEN}
     LEncoding := TBase64Encoding.Create;
     if AtomicCmpExchange(Pointer(FBase64Encoding), Pointer(LEncoding), nil) <> nil then
       LEncoding.Free;
+{$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
     FBase64Encoding.__ObjAddRef;
 {$ENDIF AUTOREFCOUNT}
@@ -373,9 +376,11 @@ var
 begin
   if FHTMLEncoding = nil then
   begin
+{$IFDEF NEXTGEN}
     LEncoding := THTMLEncoding.Create;
     if AtomicCmpExchange(Pointer(FHTMLEncoding), Pointer(LEncoding), nil) <> nil then
       LEncoding.Free;
+{$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
     FHTMLEncoding.__ObjAddRef;
 {$ENDIF AUTOREFCOUNT}
@@ -389,9 +394,11 @@ var
 begin
   if FURLEncoding = nil then
   begin
+{$IFDEF NEXTGEN}
     LEncoding := TURLEncoding.Create;
     if AtomicCmpExchange(Pointer(FURLEncoding), Pointer(LEncoding), nil) <> nil then
       LEncoding.Free;
+{$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
     FURLEncoding.__ObjAddRef;
 {$ENDIF AUTOREFCOUNT}
@@ -829,7 +836,6 @@ var
   Sp, Cp: PChar;
   I: Integer;
   Bytes: TBytes;
-
 begin
   SetLength(Bytes, Length(Input) * 4);
   I := 0;
@@ -863,8 +869,7 @@ begin
         if Ord(Sp^) < 128 then
           Bytes[I] := Byte(Sp^)
         else
-          I := I + TEncoding.UTF8.GetBytes([Sp^], 0, 1, Bytes, I) - 1
-
+          I := I + TEncoding.UTF8.GetBytes(String(Sp^), 0, 1, Bytes, I) - 1;
       end;
       Inc(I);
       Inc(Sp);
@@ -888,10 +893,17 @@ const
   procedure AppendByte(B: Byte; var Buffer: PChar);
   const
     Hex = '0123456789ABCDEF';
+  var
+    StartIndex: Integer;
   begin
+{$IFDEF NEXTGEN}
+    StartIndex := 0;
+{$ELSE}
+    StartIndex := 1;
+{$ENDIF}
     Buffer[0] := '%';
-    Buffer[1] := Hex[B shr 4 + Low(string)];
-    Buffer[2] := Hex[B and $F + Low(string)];
+    Buffer[1] := Hex[B shr 4 + StartIndex];
+    Buffer[2] := Hex[B and $F + StartIndex];
     Inc(Buffer, 3);
   end;
 
@@ -918,7 +930,8 @@ begin
       Rp^ := Sp^;
       Inc(Rp)
     end
-    else if Sp^ = ' ' then
+    else
+    if Sp^ = ' ' then
     begin
       Rp^ := '+';
       Inc(Rp)
@@ -931,7 +944,7 @@ begin
       else
       begin
         // Multi byte char
-        ByteCount := TEncoding.UTF8.GetBytes([Sp^], 0, 1, MultibyteChar, 0);
+        ByteCount := TEncoding.UTF8.GetBytes(String(Sp^), 0, 1, MultibyteChar, 0);
         for I := 0 to ByteCount - 1 do
           AppendByte(MultibyteChar[I], Rp);
       end
@@ -955,20 +968,66 @@ function TURLEncoding.EncodePath(const APath: string; const ExtraUnsafeChars: TU
 var
   LSubPaths: TArray<string>;
   I: Integer;
+  StartIndex: Integer;
+
+  function SplitString(const S, Delimiters: string): TArray<string>;
+  var
+    StartIdx: Integer;
+    FoundIdx: Integer;
+    SplitPoints: Integer;
+    CurrentSplit: Integer;
+    i: Integer;
+  begin
+    Result := nil;
+
+    if S <> '' then
+    begin
+      { Determine the length of the resulting array }
+      SplitPoints := 0;
+      for i := 1 to Length(S) do
+        if IsDelimiter(Delimiters, S, i) then
+          Inc(SplitPoints);
+
+      SetLength(Result, SplitPoints + 1);
+
+      { Split the string and fill the resulting array }
+      StartIdx := 1;
+      CurrentSplit := 0;
+      repeat
+        FoundIdx := FindDelimiter(Delimiters, S, StartIdx);
+        if FoundIdx <> 0 then
+        begin
+          Result[CurrentSplit] := Copy(S, StartIdx, FoundIdx - StartIdx);
+          Inc(CurrentSplit);
+          StartIdx := FoundIdx + 1;
+        end;
+      until CurrentSplit = SplitPoints;
+
+      // copy the remaining part in case the string does not end in a delimiter
+      Result[SplitPoints] := Copy(S, StartIdx, Length(S) - StartIdx + 1);
+    end;
+  end;
+
 begin
+{$IFDEF NEXTGEN}
+  StartIndex := 0;
+{$ELSE}
+  StartIndex := 1;
+{$ENDIF}
   if APath = '' then
     Result := '/'
   else
   begin
-    if APath[Low(APath)] <> '/' then
+    if APath[StartIndex] <> '/' then
       Result := '/'
     else
       Result := '';
-    LSubPaths := APath.Split([Char('/')]);
+    LSubPaths := SplitString(APath, '/');
     for I := 0 to Length(LSubPaths) - 1 do
       Result := Result + Encode(LSubPaths[I], PathUnsafeChars + ExtraUnsafeChars, []) + '/';
-    if (Result <> '/') and (APath[High(APath)] <> '/') then
-      Result := Result.Substring(0, Result.Length - 1); //Remove last '/'
+//    if (Result <> '/') and (APath[High(APath)] <> '/') then
+    if (Result <> '/') and (APath[Length(APath)] <> '/') then
+      Result := Copy(Result, StartIndex, Length(Result) - 1); //Remove last '/'
   end;
 end;
 
@@ -1038,7 +1097,7 @@ function TURLEncoding.Encode(const Input: string; const ASet: TUnsafeChars; cons
 
 const
   XD: array[0..15] of char = ('0', '1', '2', '3', '4', '5', '6', '7',
-                                '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
+                              '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
 var
   Buff: TBytes;
   I: Integer;

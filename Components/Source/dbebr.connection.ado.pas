@@ -22,12 +22,13 @@ type
   TDBEBrConnectionADO = class(TDBEBrConnectionBase)
   private
     FConnection: TADOConnection;
+    procedure SetConnection(const Value: TADOConnection);
+    function GetConnection: TADOConnection;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TADOConnection read FConnection write FConnection;
+    property Connection: TADOConnection read GetConnection write SetConnection;
   end;
 
 implementation
@@ -45,11 +46,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionADO.GetDBConnection: IDBConnection;
+function TDBEBrConnectionADO.GetConnection: TADOConnection;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionADO.SetConnection(const Value: TADOConnection);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryADO.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

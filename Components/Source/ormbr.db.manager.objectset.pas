@@ -19,10 +19,11 @@ type
     procedure SetConnection(const Value: TDBEBrConnectionBase);
     function GetOwnerNestedList: Boolean;
     procedure SetOwnerNestedList(const Value: Boolean);
+    function GetManagerObjectSet: TManagerObjectSet;
   public
     constructor Create(const AOwner: TComponent);
     destructor Destroy; override;
-    function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
+    function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TORMBrManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
@@ -56,6 +57,8 @@ type
     function Next<T: class, constructor>: Integer;
     function Prior<T: class, constructor>: Integer;
     function Last<T: class, constructor>: Integer;
+    function Bof<T: class>: Boolean;
+    function Eof<T: class>: Boolean;
     property OwnerNestedList: Boolean read GetOwnerNestedList write SetOwnerNestedList;
   published
     property Connection: TDBEBrConnectionBase read GetConnection write SetConnection;
@@ -63,9 +66,15 @@ type
 
 implementation
 
-function TORMBrManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
+function TORMBrManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TORMBrManagerObjectSet;
 begin
-  Result := FManagerObjectSet.AddAdapter<T>(APageSize);
+  Result := Self;
+  GetManagerObjectSet.AddAdapter<T>(APageSize);
+end;
+
+function TORMBrManagerObjectSet.Bof<T>: Boolean;
+begin
+  Result := GetManagerObjectSet.Bof<T>;
 end;
 
 constructor TORMBrManagerObjectSet.Create(const AOwner: TComponent);
@@ -76,22 +85,22 @@ end;
 
 function TORMBrManagerObjectSet.Current<T>(const AIndex: Integer): T;
 begin
-  Result := FManagerObjectSet.Current<T>(AIndex);
+  Result := GetManagerObjectSet.Current<T>(AIndex);
 end;
 
 function TORMBrManagerObjectSet.Current<T>: T;
 begin
-  Result := FManagerObjectSet.Current<T>;
+  Result := GetManagerObjectSet.Current<T>;
 end;
 
 procedure TORMBrManagerObjectSet.Delete<T>;
 begin
-  FManagerObjectSet.Delete<T>;
+  GetManagerObjectSet.Delete<T>;
 end;
 
 procedure TORMBrManagerObjectSet.Delete<T>(const AObject: T);
 begin
-  FManagerObjectSet.Delete<T>(AObject);
+  GetManagerObjectSet.Delete<T>(AObject);
 end;
 
 destructor TORMBrManagerObjectSet.Destroy;
@@ -101,29 +110,41 @@ begin
   inherited;
 end;
 
+function TORMBrManagerObjectSet.Eof<T>: Boolean;
+begin
+  Result := GetManagerObjectSet.Eof<T>;
+end;
+
 function TORMBrManagerObjectSet.ExistSequence<T>: Boolean;
 begin
-  Result := FManagerObjectSet.ExistSequence<T>;
+  Result := GetManagerObjectSet.ExistSequence<T>;
 end;
 
 function TORMBrManagerObjectSet.Find<T>: TObjectList<T>;
 begin
-  Result := FManagerObjectSet.Find<T>;
+  Result := GetManagerObjectSet.Find<T>;
 end;
 
 function TORMBrManagerObjectSet.Find<T>(const AID: Variant): T;
 begin
-  Result := FManagerObjectSet.Find<T>(AID);
+  Result := GetManagerObjectSet.Find<T>(AID);
 end;
 
 function TORMBrManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
 begin
-  Result := FManagerObjectSet.FindWhere<T>(AWhere, AOrderBy);
+  Result := GetManagerObjectSet.FindWhere<T>(AWhere, AOrderBy);
 end;
 
 function TORMBrManagerObjectSet.First<T>: Integer;
 begin
-  Result := FManagerObjectSet.First<T>;
+  Result := GetManagerObjectSet.First<T>;
+end;
+
+function TORMBrManagerObjectSet.GetManagerObjectSet: TManagerObjectSet;
+begin
+  if not Assigned(FManagerObjectSet) then
+    FManagerObjectSet := TManagerObjectSet.Create(FConnection.DBConnection);
+  Result := FManagerObjectSet;
 end;
 
 function TORMBrManagerObjectSet.GetConnection: TDBEBrConnectionBase;
@@ -133,100 +154,97 @@ end;
 
 function TORMBrManagerObjectSet.GetOwnerNestedList: Boolean;
 begin
-  Result := FManagerObjectSet.OwnerNestedList;
+  Result := GetManagerObjectSet.OwnerNestedList;
 end;
 
 function TORMBrManagerObjectSet.Insert<T>(const AObject: T): Integer;
 begin
-  Result := FManagerObjectSet.Insert<T>(AObject);
+  Result := GetManagerObjectSet.Insert<T>(AObject);
 end;
 
 function TORMBrManagerObjectSet.Insert<T>: Integer;
 begin
-  Result := FManagerObjectSet.Insert<T>;
+  Result := GetManagerObjectSet.Insert<T>;
 end;
 
 function TORMBrManagerObjectSet.Last<T>: Integer;
 begin
-  Result := FManagerObjectSet.Last<T>;
+  Result := GetManagerObjectSet.Last<T>;
 end;
 
 procedure TORMBrManagerObjectSet.LoadLazy<T>(const AObject: TObject);
 begin
-  FManagerObjectSet.LoadLazy<T>(AObject);
+  GetManagerObjectSet.LoadLazy<T>(AObject);
 end;
 
 function TORMBrManagerObjectSet.ModifiedFields<T>: TDictionary<string, TDictionary<string, string>>;
 begin
-  Result := FManagerObjectSet.ModifiedFields<T>;
+  Result := GetManagerObjectSet.ModifiedFields<T>;
 end;
 
 procedure TORMBrManagerObjectSet.Modify<T>;
 begin
-  FManagerObjectSet.Modify<T>;
+  GetManagerObjectSet.Modify<T>;
 end;
 
 procedure TORMBrManagerObjectSet.Modify<T>(const AObject: T);
 begin
-  FManagerObjectSet.Modify<T>(AObject);
+  GetManagerObjectSet.Modify<T>(AObject);
 end;
 
 function TORMBrManagerObjectSet.NestedList<T>: TObjectList<T>;
 begin
-  Result := FManagerObjectSet.NestedList<T>;
+  Result := GetManagerObjectSet.NestedList<T>;
 end;
 
 procedure TORMBrManagerObjectSet.New<T>(var AObject: T);
 begin
-  FManagerObjectSet.New<T>(AObject);
+  GetManagerObjectSet.New<T>(AObject);
 end;
 
 function TORMBrManagerObjectSet.New<T>: Integer;
 begin
-  Result := FManagerObjectSet.New<T>;
+  Result := GetManagerObjectSet.New<T>;
 end;
 
 function TORMBrManagerObjectSet.Next<T>: Integer;
 begin
-  Result := FManagerObjectSet.Next<T>;
+  Result := GetManagerObjectSet.Next<T>;
 end;
 
 procedure TORMBrManagerObjectSet.NextPacket<T>(var AObjectList: TObjectList<T>);
 begin
-  FManagerObjectSet.NextPacket<T>(AObjectList);
+  GetManagerObjectSet.NextPacket<T>(AObjectList);
 end;
 
 procedure TORMBrManagerObjectSet.NextPacket<T>;
 begin
-  FManagerObjectSet.NextPacket<T>;
+  GetManagerObjectSet.NextPacket<T>;
 end;
 
 function TORMBrManagerObjectSet.Prior<T>: Integer;
 begin
-  Result := FManagerObjectSet.Prior<T>;
+  Result := GetManagerObjectSet.Prior<T>;
 end;
 
 procedure TORMBrManagerObjectSet.SetConnection(const Value: TDBEBrConnectionBase);
 begin
   FConnection := Value;
-  if Assigned(FManagerObjectSet) then
-    FManagerObjectSet.Free;
-  FManagerObjectSet := TManagerObjectSet.Create(FConnection.Connection);
 end;
 
 procedure TORMBrManagerObjectSet.SetOwnerNestedList(const Value: Boolean);
 begin
-  FManagerObjectSet.OwnerNestedList := Value;
+  GetManagerObjectSet.OwnerNestedList := Value;
 end;
 
 procedure TORMBrManagerObjectSet.Update<T>(const AObject: T);
 begin
-  FManagerObjectSet.Update<T>(AObject);
+  GetManagerObjectSet.Update<T>(AObject);
 end;
 
 procedure TORMBrManagerObjectSet.Update<T>;
 begin
-  FManagerObjectSet.Update<T>;
+  GetManagerObjectSet.Update<T>;
 end;
 
 end.

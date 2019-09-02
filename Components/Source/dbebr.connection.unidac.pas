@@ -22,12 +22,13 @@ type
   TDBEBrConnectionUniDAC = class(TDBEBrConnectionBase)
   private
     FConnection: TUniConnection;
+    procedure SetConnection(const Value: TUniConnection);
+    function GetConnection: TUniConnection;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TUniConnection read FConnection write FConnection;
+    property Connection: TUniConnection read GetConnection write SetConnection;
   end;
 
 implementation
@@ -45,11 +46,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionUniDAC.GetDBConnection: IDBConnection;
+function TDBEBrConnectionUniDAC.GetConnection: TUniConnection;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionUniDAC.SetConnection(const Value: TUniConnection);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryUniDAC.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.
