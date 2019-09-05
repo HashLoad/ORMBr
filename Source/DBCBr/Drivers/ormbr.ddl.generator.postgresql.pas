@@ -118,20 +118,12 @@ begin
       LSQL.Append(',');
     end;
     /// <summary>
-    ///   Add PrimariKey
+    ///   Add PrimaryKey
     /// </summary>
     if ATable.PrimaryKey.Fields.Count > 0 then
     begin
       LSQL.AppendLine;
       LSQL.Append(BuilderPrimayKeyDefinition(ATable));
-    end;
-    /// <summary>
-    ///   Add ForeignKey
-    /// </summary>
-    if ATable.ForeignKeys.Count > 0 then
-    begin
-      LSQL.Append(',');
-      LSQL.Append(BuilderForeignKeyDefinition(ATable));
     end;
     /// <summary>
     ///   Add Checks

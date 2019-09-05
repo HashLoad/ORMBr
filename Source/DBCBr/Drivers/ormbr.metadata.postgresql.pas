@@ -314,11 +314,10 @@ begin
   while oDBResultSet.NotEof do
   begin
     oForeignKey := TForeignKeyMIK.Create(ATable);
-    oForeignKey.Name := Format('FK_%s_%s', [VarToStr(oDBResultSet.GetFieldValue('table_reference')),
-                                            VarToStr(oDBResultSet.GetFieldValue('column_name'))]);
+    oForeignKey.Name := VarToStr(oDBResultSet.GetFieldValue('fk_name'));
     oForeignKey.FromTable := VarToStr(oDBResultSet.GetFieldValue('table_reference'));
-    oForeignKey.OnUpdate := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_updateaction'), varInteger));
-    oForeignKey.OnDelete := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_deleteaction'), varInteger));
+    oForeignKey.OnUpdate := GetRuleAction(VarToStr(oDBResultSet.GetFieldValue('fk_updateaction')));
+    oForeignKey.OnDelete := GetRuleAction(VarToStr(oDBResultSet.GetFieldValue('fk_deleteaction')));
     oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
     ATable.ForeignKeys.Add(oForeignKey.Name, oForeignKey);
     /// <summary>
