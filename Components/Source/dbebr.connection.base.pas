@@ -4,6 +4,7 @@ interface
 
 uses
   DB,
+  SysUtils,
   Classes,
   ormbr.factory.interfaces;
 
@@ -20,7 +21,7 @@ type
   protected
     FDBConnection: IDBConnection;
     FDriverName: TDriverName;
-    function GetDBConnection: IDBConnection; virtual; abstract;
+    function GetDBConnection: IDBConnection;
   public
     constructor Create(const AOwner: TComponent); virtual;
     destructor Destroy; override;
@@ -41,7 +42,7 @@ type
     function CreateResultSet(const ASQL: String): IDBResultSet;
     function ExecuteSQL(const ASQL: string): IDBResultSet;
     function CommandMonitor: ICommandMonitor;
-    function Connection: IDBConnection;
+    function DBConnection: IDBConnection;
   published
     property DriverName: TDriverName read FDriverName write FDriverName;
   end;
@@ -81,7 +82,7 @@ begin
   GetDBConnection.Connect;
 end;
 
-function TDBEBrConnectionBase.Connection: IDBConnection;
+function TDBEBrConnectionBase.DBConnection: IDBConnection;
 begin
   Result := GetDBConnection;
 end;
@@ -126,6 +127,13 @@ end;
 function TDBEBrConnectionBase.ExecuteSQL(const ASQL: string): IDBResultSet;
 begin
   Result := GetDBConnection.ExecuteSQL(ASQL);
+end;
+
+function TDBEBrConnectionBase.GetDBConnection: IDBConnection;
+begin
+//  if FDBConnection = nil then
+//    raise Exception.Create('Connection property not set!');
+  Result := FDBConnection;
 end;
 
 function TDBEBrConnectionBase.InTransaction: Boolean;

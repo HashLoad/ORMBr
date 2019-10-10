@@ -23,12 +23,13 @@ type
   TDBEBrConnectionNexusDB = class(TDBEBrConnectionBase)
   private
     FConnection: TnxDatabase;
+    procedure SetConnection(const Value: TnxDatabase);
+    function GetConnection: TnxDatabase;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TnxDatabase read FConnection write FConnection;
+    property Connection: TnxDatabase read GetConnection write SetConnection;
   end;
 
 implementation
@@ -46,11 +47,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionNexusDB.GetDBConnection: IDBConnection;
+function TDBEBrConnectionNexusDB.GetConnection: TnxDatabase;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionNexusDB.SetConnection(const Value: TnxDatabase);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryNexusDB.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

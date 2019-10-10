@@ -27,6 +27,8 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
+{$INCLUDE ..\ormbr.inc}
+
 unit ormbr.dataset.base.adapter;
 
 interface
@@ -34,7 +36,7 @@ interface
 uses
   DB,
   Rtti,
-  TypInfo,
+  TypInfo, {Delphi 2010}
   Classes,
   SysUtils,
   StrUtils,
@@ -188,10 +190,8 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
-  TBind.Instance
-       .SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
-  TBind.Instance
-       .SetDataDictionary(ADataSet, FCurrentInternal);
+  TBind.Instance.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
+  TBind.Instance.SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
   FExplorer := TMappingExplorer.GetInstance;
@@ -226,8 +226,7 @@ begin
   ///   Aualiza o DataSet com os dados a variável interna
   /// </summary>
   FOrmDataSet.Edit;
-  TBind.Instance
-       .SetPropertyToField(AObject, FOrmDataSet);
+  TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
 end;
 
@@ -372,8 +371,7 @@ begin
       /// <summary>
       ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       /// </summary>
-      TBind.Instance
-           .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
+      TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
       /// Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
@@ -420,8 +418,7 @@ begin
       /// <summary>
       ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       /// </summary>
-      TBind.Instance
-           .SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
+      TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);

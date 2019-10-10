@@ -133,16 +133,17 @@ end;
 function TDMLGeneratorMySQL.GeneratorAutoIncCurrentValue(AObject: TObject;
   AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
-                                   'FROM INFORMATION_SCHEMA.TABLES ' +
-                                   'WHERE TABLE_SCHEMA = DATABASE() ' +
-                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(AAutoInc.Sequence.TableName)]));
+  Result := ExecuteSequence('SELECT LAST_INSERT_ID()');
 end;
 
 function TDMLGeneratorMySQL.GeneratorAutoIncNextValue(AObject: TObject;
   AAutoInc: TDMLCommandAutoInc): Int64;
 begin
   Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
+//  Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
+//                                   'FROM INFORMATION_SCHEMA.TABLES ' +
+//                                   'WHERE TABLE_SCHEMA = DATABASE() ' +
+//                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(AAutoInc.Sequence.TableName)]));
 end;
 
 initialization

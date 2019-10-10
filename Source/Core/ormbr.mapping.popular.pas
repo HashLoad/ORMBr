@@ -36,6 +36,7 @@ uses
   Classes,
   Rtti,
   TypInfo,
+  SysUtils,
   StrUtils,
   Generics.Collections,
   ormbr.mapping.rttiutils,
@@ -321,7 +322,8 @@ begin
   end;
 end;
 
-function TMappingPopular.PopularPrimaryKey(ARttiType: TRttiType): TPrimaryKeyMapping;
+function TMappingPopular.PopularPrimaryKey(
+  ARttiType: TRttiType): TPrimaryKeyMapping;
 var
   LAttrib: TCustomAttribute;
 begin
@@ -330,7 +332,8 @@ begin
   begin
     if not (LAttrib is PrimaryKey) then // PrimaryKey
       Continue;
-
+    if Result <> nil then
+      raise Exception.Create('There must be only one PrimaryKey() attribute in your model class.');
     Result := TPrimaryKeyMapping.Create(PrimaryKey(LAttrib).Columns,
                                         PrimaryKey(LAttrib).SequenceType = AutoInc,
                                         PrimaryKey(LAttrib).SortingOrder,
@@ -345,9 +348,7 @@ var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(AClass);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
   if LColumns = nil then
     Exit(nil);
 

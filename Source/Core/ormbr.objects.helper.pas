@@ -36,6 +36,7 @@ uses
   Rtti,
   Variants,
   SysUtils,
+  TypInfo, {Delphi 2010}
   Generics.Collections,
   ormbr.core.consts,
   ormbr.rtti.helper,
@@ -186,9 +187,7 @@ var
   LProperty: TRttiProperty;
   LValue: Variant;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(Self.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(Self.ClassType);
   if LColumns = nil then
     Exit;
 

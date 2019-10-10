@@ -38,7 +38,9 @@ uses
   {$IFDEF HAS_FMX}
   FMX.Graphics,
   {$ELSE}
-  AnsiStrings,
+  {$if CompilerVersion > 21}
+    AnsiStrings,
+  {$ifend}
   Graphics,
   GIFImg,
   JPEG,
@@ -107,16 +109,12 @@ begin
   /// <summary>
   ///   Codifica os Bytes em string
   /// </summary>
-  FBase64String := TNetEncoding
-                     .Base64
-                       .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  FBase64String := ToBytesString;
 end;
 
 function TBlob.ToBytesString: string;
 begin
-  Result := TNetEncoding
-              .Base64
-                .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  Result := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
 end;
 
 function TBlob.ToString: String;
@@ -154,9 +152,7 @@ begin
       /// <summary>
       ///   Codifica os Bytes em string
       /// </summary>
-      FBase64String := TNetEncoding
-                         .Base64
-                           .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+      FBase64String := ToBytesString;
     finally
       LSourceStream.Free;
 //      LTargetStream.Free;
@@ -224,7 +220,8 @@ var
 begin
   AGraphicClass := nil;
   Result := False;
-  if ABufferSize < MinGraphicSize then Exit;
+  if ABufferSize < MinGraphicSize then
+    Exit;
   case LWords[0] of
     $4D42: AGraphicClass := TBitmap;
     $D8FF: AGraphicClass := TJPEGImage;
@@ -233,13 +230,21 @@ begin
   else
     if Int64(ABuffer) = $A1A0A0D474E5089 then
       AGraphicClass := TPNGImage
-    else if LLongWords[0] = $9AC6CDD7 then
+    else
+    if LLongWords[0] = $9AC6CDD7 then
       AGraphicClass := TMetafile
-    else if (LLongWords[0] = 1) and (LLongWords[10] = $464D4520) then
+    else
+    if (LLongWords[0] = 1) and (LLongWords[10] = $464D4520) then
       AGraphicClass := TMetafile
-    else if AnsiStrings.AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
+    else
+{$if CompilerVersion > 21}
+    if AnsiStrings.AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
+{$else}
+    if AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
+{$ifend}
       AGraphicClass := TGIFImage
-    else if LWords[1] = 1 then
+    else
+    if LWords[1] = 1 then
       AGraphicClass := TIcon;
   end;
   Result := (AGraphicClass <> nil);
@@ -290,9 +295,7 @@ begin
     /// <summary>
     ///   Codifica os Bytes em string
     /// </summary>
-    FBase64String := TNetEncoding
-                       .Base64
-                         .EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+    FBase64String := ToBytesString;
   finally
     LSourceStream.Free;
   end;

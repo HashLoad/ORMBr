@@ -379,13 +379,13 @@ begin
   Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Int64(LResult);
+    Result := StrToInt64Def(LResult, 0);
 end;
 
 function TORMBrField.AsIntegerDef(const Def: Int64): Int64;
 begin
   try
-    Result := Int64(FOwner.GetFieldValue(FAsFieldName));
+    Result := StrToInt64Def(FOwner.GetFieldValue(FAsFieldName), 0);
   except
     Result := Def;
   end;

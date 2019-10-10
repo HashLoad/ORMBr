@@ -24,12 +24,13 @@ type
   TDBEBrConnectionFIBPlus = class(TDBEBrConnectionBase)
   private
     FConnection: TFIBDatabase;
+    procedure SetConnection(const Value: TFIBDatabase);
+    function GetConnection: TFIBDatabase;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TFIBDatabase read FConnection write FConnection;
+    property Connection: TFIBDatabase read GetConnection write SetConnection;
   end;
 
 implementation
@@ -47,11 +48,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionFIBPlus.GetDBConnection: IDBConnection;
+function TDBEBrConnectionFIBPlus.GetConnection: TFIBDatabase;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionFIBPlus.SetConnection(const Value: TFIBDatabase);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryFIBPlus.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

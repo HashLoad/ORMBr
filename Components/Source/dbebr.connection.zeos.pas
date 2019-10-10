@@ -22,12 +22,13 @@ type
   TDBEBrConnectionZeos = class(TDBEBrConnectionBase)
   private
     FConnection: TZConnection;
+    procedure SetConnection(const Value: TZConnection);
+    function GetConnection: TZConnection;
   public
     constructor Create(const AOwner: TComponent); override;
     destructor Destroy; override;
-    function GetDBConnection: IDBConnection; override;
   published
-    property Connetion: TZConnection read FConnection write FConnection;
+    property Connection: TZConnection read GetConnection write SetConnection;
   end;
 
 implementation
@@ -45,11 +46,16 @@ begin
   inherited;
 end;
 
-function TDBEBrConnectionZeos.GetDBConnection: IDBConnection;
+function TDBEBrConnectionZeos.GetConnection: TZConnection;
 begin
+  Result := FConnection;
+end;
+
+procedure TDBEBrConnectionZeos.SetConnection(const Value: TZConnection);
+begin
+  FConnection := Value;
   if not Assigned(FDBConnection) then
     FDBConnection := TFactoryZeos.Create(FConnection, FDriverName);
-  Result := FDBConnection;
 end;
 
 end.

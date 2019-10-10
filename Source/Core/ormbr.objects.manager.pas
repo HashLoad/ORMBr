@@ -535,8 +535,10 @@ begin
     while LResultSet.NotEof do
     begin
       LObject := M.Create;
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, LObject);
+      /// <summary>
+      ///   TObject(LObject) = Para D2010
+      /// </summary>
+      TBind.Instance.SetFieldToProperty(LResultSet, TObject(LObject));
       /// <summary>
       ///   Alimenta registros das associações existentes 1:1 ou 1:N
       /// </summary>

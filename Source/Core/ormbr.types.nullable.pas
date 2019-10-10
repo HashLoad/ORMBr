@@ -101,7 +101,7 @@ end;
 
 procedure Nullable<T>.Clear;
 begin
-  FHasValue := CHasValueFlag;
+  FHasValue := '';
   FValue := Default(T);
 end;
 
