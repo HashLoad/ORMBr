@@ -336,6 +336,8 @@ begin
       raise Exception.Create('There must be only one PrimaryKey() attribute in your model class.');
     Result := TPrimaryKeyMapping.Create(PrimaryKey(LAttrib).Columns,
                                         PrimaryKey(LAttrib).SequenceType = AutoInc,
+                                        PrimaryKey(LAttrib).SequenceType = TableInc,
+                                        PrimaryKey(LAttrib).SequenceType = GuidInc,
                                         PrimaryKey(LAttrib).SortingOrder,
                                         PrimaryKey(LAttrib).Unique,
                                         PrimaryKey(LAttrib).Description);

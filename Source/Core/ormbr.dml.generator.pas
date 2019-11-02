@@ -301,22 +301,16 @@ begin
         Continue;
       Result.Column(LTable.Name + '.' + LColumn.ColumnName);
     end;
-    /// <summary>
-    ///   Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
-    /// </summary>
+    // Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
     GenerateJoinColumn(AClass, LTable, Result);
-    /// <summary>
-    ///   Guarda o ICriteria na lista para não remontar a toda chamada
-    /// </summary>
+    // Guarda o ICriteria na lista para não remontar a toda chamada
     {$IFDEF CACHEGENERATORSQL}
     FDMLCriteria.Add(AClass.ClassName, Result);
     {$ENDIF}
   finally
     Result.Where.Clear;
     Result.OrderBy.Clear;
-    /// <summary>
-    ///   PrimaryKey
-    /// </summary>
+    // PrimaryKey
     if VarToStr(AID) <> '-1' then
     begin
       LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);

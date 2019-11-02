@@ -47,21 +47,15 @@ type
     class constructor Create;
     class destructor Destroy;
   public
-    /// <summary>
-    ///   Select for database
-    /// </summary>
+    // Select for database
     class procedure RegisterSelect(const ADBName: TDBName;
       const ACQLSelect: ICQLSelect);
     class function Select(const ADBName: TDBName): ICQLSelect;
-    /// <summary>
-    ///   Select for database
-    /// </summary>
+    // Select for database
     class procedure RegisterWhere(const ADBName: TDBName;
       const ACQLWhere: ICQLWhere);
     class function Where(const ADBName: TDBName): ICQLWhere;
-    /// <summary>
-    ///   Serialize for database
-    /// </summary>
+    // Serialize for database
     class procedure RegisterSerialize(const ADBName: TDBName;
       const ACQLSelect: ICQLSerialize);
     class function Serialize(const ADBName: TDBName): ICQLSerialize;
