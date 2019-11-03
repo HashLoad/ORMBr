@@ -11,14 +11,14 @@ uses
   DUnitX.Loggers.Console,
   DUnitX.Loggers.Xml.NUnit,
   DUnitX.TestFramework,
-  ormbr.driver.connection in '..\Source\Drivers\ormbr.driver.connection.pas',
-  ormbr.factory.connection in '..\Source\Drivers\ormbr.factory.connection.pas',
-  ormbr.factory.interfaces in '..\Source\Drivers\ormbr.factory.interfaces.pas',
   Tests.Driver.FireDAC in 'Tests.Driver.FireDAC.pas',
-  ormbr.driver.firedac in '..\Source\Drivers\ormbr.driver.firedac.pas',
-  ormbr.driver.firedac.transaction in '..\Source\Drivers\ormbr.driver.firedac.transaction.pas',
-  ormbr.factory.firedac in '..\Source\Drivers\ormbr.factory.firedac.pas',
-  Tests.Consts in 'Tests.Consts.pas';
+  Tests.Consts in 'Tests.Consts.pas',
+  ormbr.driver.connection in '..\Source\DBEBr\Core\ormbr.driver.connection.pas',
+  ormbr.factory.connection in '..\Source\DBEBr\Core\ormbr.factory.connection.pas',
+  ormbr.factory.interfaces in '..\Source\DBEBr\Core\ormbr.factory.interfaces.pas',
+  ormbr.driver.firedac in '..\Source\DBEBr\Drivers\ormbr.driver.firedac.pas',
+  ormbr.driver.firedac.transaction in '..\Source\DBEBr\Drivers\ormbr.driver.firedac.transaction.pas',
+  ormbr.factory.firedac in '..\Source\DBEBr\Drivers\ormbr.factory.firedac.pas';
 
 var
   runner : ITestRunner;
