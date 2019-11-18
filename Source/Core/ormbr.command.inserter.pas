@@ -97,7 +97,7 @@ begin
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
 
   LPrimaryKey := TMappingExplorer.GetInstance
-                                   .GetMappingPrimaryKey(AObject.ClassType);
+                                 .GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.ColumnProperty.IsNullValue(AObject) then
@@ -107,7 +107,7 @@ begin
     if LColumn.IsJoinColumn then
       Continue;
     /// <summary>
-    /// Verifica se existe PK, pois autoinc só é usado se existir.
+    ///   Verifica se existe PK, pois autoinc só é usado se existir.
     /// </summary>
     if LPrimaryKey <> nil then
     begin
@@ -117,7 +117,7 @@ begin
         begin
           FDMLAutoInc.Sequence := TMappingExplorer
                                   .GetInstance
-                                    .GetMappingSequence(AObject.ClassType);
+                                  .GetMappingSequence(AObject.ClassType);
           FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
           FDMLAutoInc.PrimaryKey := LPrimaryKey;
 

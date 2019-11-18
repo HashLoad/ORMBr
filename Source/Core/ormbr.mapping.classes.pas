@@ -194,9 +194,13 @@ type
     FSortingOrder: TSortingOrder;
     FUnique: Boolean;
     FAutoIncrement: Boolean;
+    FTableIncrement: Boolean;
+    FGuidIncrement: Boolean;
   public
     constructor Create(const AColumns: TArray<string>;
       const AAutoInc: Boolean;
+      const ATableInc: Boolean;
+      const AGuidInc: Boolean;
       const ASortingOrder: TSortingOrder;
       const AUnique: Boolean;
       const ADescription: string = '');
@@ -206,6 +210,8 @@ type
     property SortingOrder: TSortingOrder read FSortingOrder;
     property Unique: Boolean read FUnique;
     property AutoIncrement: boolean read FAutoIncrement;
+    property TableIncrement: boolean read FTableIncrement;
+    property GuidIncrement: boolean read FGuidIncrement;
   end;
 
   /// IndexeMapping
@@ -387,6 +393,8 @@ end;
 
 constructor TPrimaryKeyMapping.Create(const AColumns: TArray<string>;
   const AAutoInc: Boolean;
+  const ATableInc: Boolean;
+  const AGuidInc: Boolean;
   const ASortingOrder: TSortingOrder;
   const AUnique: Boolean;
   const ADescription: string);
@@ -398,6 +406,8 @@ begin
   FSortingOrder := ASortingOrder;
   FUnique := AUnique;
   FAutoIncrement := AAutoInc;
+  FTableIncrement := ATableInc;
+  FGuidIncrement := AGuidInc;
   FDescription := ADescription;
   if Length(AColumns) > 0 then
   begin

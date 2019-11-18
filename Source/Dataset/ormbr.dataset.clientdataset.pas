@@ -376,8 +376,8 @@ begin
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
       begin
         /// <summary>
-        /// Ao passar como parametro a propriedade Current, e disparado o metodo
-        /// que atualiza a var FCurrentInternal, para ser usada abaixo.
+        ///   Ao passar como parametro a propriedade Current, e disparado o metodo
+        ///   que atualiza a var FCurrentInternal, para ser usada abaixo.
         /// </summary>
         FSession.Insert(Current);
         FOrmDataSet.Edit;
@@ -385,7 +385,7 @@ begin
         begin
            LPrimaryKey := TMappingExplorer
                             .GetInstance
-                              .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+                            .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
            if LPrimaryKey = nil then
              raise Exception.Create(cMESSAGEPKNOTFOUND);
 

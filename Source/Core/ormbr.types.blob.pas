@@ -38,7 +38,7 @@ uses
   {$IFDEF HAS_FMX}
   FMX.Graphics,
   {$ELSE}
-  {$if CompilerVersion > 21}
+  {$if CompilerVersion > 23}
     AnsiStrings,
   {$ifend}
   Graphics,
@@ -237,7 +237,7 @@ begin
     if (LLongWords[0] = 1) and (LLongWords[10] = $464D4520) then
       AGraphicClass := TMetafile
     else
-{$if CompilerVersion > 21}
+{$if CompilerVersion > 23}
     if AnsiStrings.AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
 {$else}
     if AnsiStrLComp(PAnsiChar(@ABuffer), PAnsiChar('GIF'), 3) = 0 then
