@@ -126,6 +126,14 @@ begin
       LSQL.Append(BuilderPrimayKeyDefinition(ATable));
     end;
     /// <summary>
+    ///   Add ForeignKey
+    /// </summary>
+//    if ATable.ForeignKeys.Count > 0 then
+//    begin
+//      LSQL.Append(',');
+//      LSQL.Append(BuilderForeignKeyDefinition(ATable));
+//    end;
+    /// <summary>
     ///   Add Checks
     /// </summary>
     if ATable.Checks.Count > 0 then
