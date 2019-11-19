@@ -93,13 +93,13 @@ begin
     Exit;
   if (Field.FieldKind <> fkData) or (Field.FieldName = cInternalField) then
     Exit;
-  /// <summary> Só adiciona a lista se for edição </summary>
+  // Só adiciona a lista se for edição
   if FOrmDataSet.State in [dsEdit] then
   begin
     LValue := FSession.ModifiedFields.Items[M.ClassName];
     if LValue <> nil then
     begin
-      if not LValue.ContainsKey(Field.FieldName) then
+      if not LValue.ContainsValue(Field.FieldName) then
       begin
         LObjectType := LContext.GetType(TypeInfo(M));
         for LProperty in LObjectType.GetProperties do

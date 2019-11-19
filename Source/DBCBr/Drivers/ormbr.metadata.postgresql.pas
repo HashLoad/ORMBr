@@ -100,13 +100,13 @@ end;
 
 function TCatalogMetadataPostgreSQL.Execute: IDBResultSet;
 var
-  oSQLQuery: IDBQuery;
+  LSQLQuery: IDBQuery;
 begin
   inherited;
-  oSQLQuery := FConnection.CreateQuery;
+  LSQLQuery := FConnection.CreateQuery;
   try
-    oSQLQuery.CommandText := FSQLText;
-    Exit(oSQLQuery.ExecuteQuery);
+    LSQLQuery.CommandText := FSQLText;
+    Exit(LSQLQuery.ExecuteQuery);
   except
     raise
   end;
@@ -153,48 +153,48 @@ end;
 
 procedure TCatalogMetadataPostgreSQL.GetTables;
 var
-  oDBResultSet: IDBResultSet;
-  oTable: TTableMIK;
+  LDBResultSet: IDBResultSet;
+  LTable: TTableMIK;
 begin
   inherited;
   FSQLText := GetSelectTables;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oTable := TTableMIK.Create(FCatalogMetadata);
-    oTable.Name := VarToStr(oDBResultSet.GetFieldValue('table_name'));
-    oTable.Description := VarToStr(oDBResultSet.GetFieldValue('table_description'));
+    LTable := TTableMIK.Create(FCatalogMetadata);
+    LTable.Name := VarToStr(LDBResultSet.GetFieldValue('table_name'));
+    LTable.Description := VarToStr(LDBResultSet.GetFieldValue('table_description'));
     /// <summary>
     /// Extrair colunas da tabela
     /// </summary>
-    GetColumns(oTable);
+    GetColumns(LTable);
     /// <summary>
     /// Extrair Primary Key da tabela
     /// </summary>
-    GetPrimaryKey(oTable);
+    GetPrimaryKey(LTable);
     /// <summary>
     /// Extrair Foreign Keys da tabela
     /// </summary>
-    GetForeignKeys(oTable);
+    GetForeignKeys(LTable);
     /// <summary>
     /// Extrair Indexes da tabela
     /// </summary>
-    GetIndexeKeys(oTable);
+    GetIndexeKeys(LTable);
     /// <summary>
     /// Extrair Checks da tabela
     /// </summary>
-    GetChecks(oTable);
+    GetChecks(LTable);
     /// <summary>
     /// Adiciona na lista de tabelas extraidas
     /// </summary>
-    FCatalogMetadata.Tables.Add(UpperCase(oTable.Name), oTable);
+    FCatalogMetadata.Tables.Add(UpperCase(LTable.Name), LTable);
   end;
 end;
 
 procedure TCatalogMetadataPostgreSQL.GetColumns(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oColumn: TColumnMIK;
+  LDBResultSet: IDBResultSet;
+  LColumn: TColumnMIK;
 
   function ExtractDefaultValue(ADefaultValue: Variant): string;
   begin
@@ -215,57 +215,57 @@ var
 begin
   inherited;
   FSQLText := GetSelectTableColumns(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oColumn := TColumnMIK.Create(ATable);
-    oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-    oColumn.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger) -1;
-    oColumn.Size := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_size'));
-    oColumn.Precision := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_precision'));
-    oColumn.Scale := ResolveIntegerNullValue(oDBResultSet.GetFieldValue('column_scale'));
-    oColumn.NotNull := VarToStr(oDBResultSet.GetFieldValue('column_nullable')) = 'NO';
-    oColumn.DefaultValue := ExtractDefaultValue(VarToStr(oDBResultSet.GetFieldValue('column_defaultvalue')));
-    oColumn.Description := VarToStr(oDBResultSet.GetFieldValue('column_description'));
-    oColumn.TypeName := VarToStr(oDBResultSet.GetFieldValue('column_typename'));
-    SetFieldType(oColumn);
+    LColumn := TColumnMIK.Create(ATable);
+    LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+    LColumn.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger) -1;
+    LColumn.Size := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_size'));
+    LColumn.Precision := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_precision'));
+    LColumn.Scale := ResolveIntegerNullValue(LDBResultSet.GetFieldValue('column_scale'));
+    LColumn.NotNull := VarToStr(LDBResultSet.GetFieldValue('column_nullable')) = 'NO';
+    LColumn.DefaultValue := ExtractDefaultValue(VarToStr(LDBResultSet.GetFieldValue('column_defaultvalue')));
+    LColumn.Description := VarToStr(LDBResultSet.GetFieldValue('column_description'));
+    LColumn.TypeName := VarToStr(LDBResultSet.GetFieldValue('column_typename'));
+    SetFieldType(LColumn);
     /// <summary>
     /// Resolve Field Type
     /// </summary>
-    GetFieldTypeDefinition(oColumn);
-    ATable.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+    GetFieldTypeDefinition(LColumn);
+    ATable.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
   end;
 end;
 
 procedure TCatalogMetadataPostgreSQL.GetPrimaryKey(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
+  LDBResultSet: IDBResultSet;
 
   procedure GetPrimaryKeyColumns(APrimaryKey: TPrimaryKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oColumn: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LColumn: TColumnMIK;
   begin
     FSQLText := GetSelectPrimaryKeyColumns(APrimaryKey.Table.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
-      oColumn := TColumnMIK.Create(ATable);
-      oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oColumn.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger) -1;
-      oColumn.NotNull := True;
-      APrimaryKey.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+      LColumn := TColumnMIK.Create(ATable);
+      LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LColumn.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger) -1;
+      LColumn.NotNull := True;
+      APrimaryKey.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
     end;
   end;
 
 begin
   inherited;
   FSQLText := GetSelectPrimaryKey(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
     ATable.PrimaryKey.Name := Format('PK_%s', [ATable.Name]);
-    ATable.PrimaryKey.Description := VarToStr(oDBResultSet.GetFieldValue('pk_description'));
+    ATable.PrimaryKey.Description := VarToStr(LDBResultSet.GetFieldValue('pk_description'));
     /// <summary>
     /// Extrai as columnas da primary key
     /// </summary>
@@ -277,66 +277,63 @@ procedure TCatalogMetadataPostgreSQL.GetForeignKeys(ATable: TTableMIK);
 
   procedure GetForeignKeyColumns(AForeignKey: TForeignKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oFromField: TColumnMIK;
-    oToField: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LFromField: TColumnMIK;
+    LToField: TColumnMIK;
   begin
 //    FSQLText := GetSelectForeignKeyColumns(AForeignKey.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
       /// <summary>
       /// Coluna tabela source
       /// </summary>
-      oFromField := TColumnMIK.Create(ATable);
-      oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oFromField.Position := VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger) -1;
-      AForeignKey.FromFields.Add(FormatFloat('000000', oFromField.Position), oFromField);
+      LFromField := TColumnMIK.Create(ATable);
+      LFromField.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LFromField.Position := VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger) -1;
+      AForeignKey.FromFields.Add(FormatFloat('000000', LFromField.Position), LFromField);
       /// <summary>
       /// Coluna tabela referencia
       /// </summary>
-      oToField := TColumnMIK.Create(ATable);
-      oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
-      oToField.Position := VarAsType(oDBResultSet.GetFieldValue('column_referenceposition'), varInteger) -1;
-      AForeignKey.ToFields.Add(FormatFloat('000000', oToField.Position), oToField);
+      LToField := TColumnMIK.Create(ATable);
+      LToField.Name := VarToStr(LDBResultSet.GetFieldValue('column_reference'));
+      LToField.Position := VarAsType(LDBResultSet.GetFieldValue('column_referenceposition'), varInteger) -1;
+      AForeignKey.ToFields.Add(FormatFloat('000000', LToField.Position), LToField);
     end;
   end;
 
 var
-  oDBResultSet: IDBResultSet;
-  oForeignKey: TForeignKeyMIK;
-  oFromField: TColumnMIK;
-  oToField: TColumnMIK;
+  LDBResultSet: IDBResultSet;
+  LForeignKey: TForeignKeyMIK;
+  LFromField: TColumnMIK;
+  LToField: TColumnMIK;
 begin
   inherited;
   FSQLText := GetSelectForeignKey(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oForeignKey := TForeignKeyMIK.Create(ATable);
-    oForeignKey.Name := Format('FK_%s_%s', [VarToStr(oDBResultSet.GetFieldValue('table_reference')),
-                                            VarToStr(oDBResultSet.GetFieldValue('column_name'))]);
-    oForeignKey.FromTable := VarToStr(oDBResultSet.GetFieldValue('table_reference'));
-    oForeignKey.OnUpdate := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_updateaction'), varInteger));
-    oForeignKey.OnDelete := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_deleteaction'), varInteger));
-    oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
-    ATable.ForeignKeys.Add(oForeignKey.Name, oForeignKey);
-    /// <summary>
-    /// Coluna tabela master
-    /// </summary>
-    oFromField := TColumnMIK.Create(ATable);
-    oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-    oForeignKey.FromFields.Add(oFromField.Name, oFromField);
-    /// <summary>
-    /// Coluna tabela referencia
-    /// </summary>
-    oToField := TColumnMIK.Create(ATable);
-    oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
-    oForeignKey.ToFields.Add(oToField.Name, oToField);
-    /// <summary>
-    /// Gera a lista de campos do foreignkey
-    /// </summary>
-//    GetForeignKeyColumns(oForeignKey);
+    LForeignKey := TForeignKeyMIK.Create(ATable);
+//    LForeignKey.Name := Format('FK_%s_%s', [VarToStr(LDBResultSet.GetFieldValue('table_reference')),
+//                                            VarToStr(LDBResultSet.GetFieldValue('column_name'))]);
+    LForeignKey.Name := VarToStr(LDBResultSet.GetFieldValue('fk_name'));
+    LForeignKey.FromTable := VarToStr(LDBResultSet.GetFieldValue('table_reference'));
+//    LForeignKey.OnUpdate := GetRuleAction(VarAsType(LDBResultSet.GetFieldValue('fk_updateaction'), varInteger));
+//    LForeignKey.OnDelete := GetRuleAction(VarAsType(LDBResultSet.GetFieldValue('fk_deleteaction'), varInteger));
+    LForeignKey.OnUpdate := GetRuleAction(VarToStr(LDBResultSet.GetFieldValue('fk_updateaction')));
+    LForeignKey.OnDelete := GetRuleAction(VarToStr(LDBResultSet.GetFieldValue('fk_deleteaction')));
+    LForeignKey.Description :=  VarToStr(LDBResultSet.GetFieldValue('fk_description'));
+    ATable.ForeignKeys.Add(LForeignKey.Name, LForeignKey);
+    // Coluna tabela master
+    LFromField := TColumnMIK.Create(ATable);
+    LFromField.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+    LForeignKey.FromFields.Add(LFromField.Name, LFromField);
+    // Coluna tabela referencia
+    LToField := TColumnMIK.Create(ATable);
+    LToField.Name := VarToStr(LDBResultSet.GetFieldValue('column_reference'));
+    LForeignKey.ToFields.Add(LToField.Name, LToField);
+    // Gera a lista de campos do foreignkey
+//    GetForeignKeyColumns(LForeignKey);
   end;
 end;
 
@@ -354,93 +351,93 @@ end;
 
 procedure TCatalogMetadataPostgreSQL.GetSequences;
 var
-  oDBResultSet: IDBResultSet;
-  oSequence: TSequenceMIK;
+  LDBResultSet: IDBResultSet;
+  LSequence: TSequenceMIK;
 begin
   inherited;
   FSQLText := GetSelectSequences;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oSequence := TSequenceMIK.Create(FCatalogMetadata);
-    oSequence.Name := VarToStr(oDBResultSet.GetFieldValue('name'));
-    oSequence.Description := VarToStr(oDBResultSet.GetFieldValue('description'));;
-    FCatalogMetadata.Sequences.Add(UpperCase(oSequence.Name), oSequence);
+    LSequence := TSequenceMIK.Create(FCatalogMetadata);
+    LSequence.Name := VarToStr(LDBResultSet.GetFieldValue('name'));
+    LSequence.Description := VarToStr(LDBResultSet.GetFieldValue('description'));;
+    FCatalogMetadata.Sequences.Add(UpperCase(LSequence.Name), LSequence);
   end;
 end;
 
 procedure TCatalogMetadataPostgreSQL.GetTriggers(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oTrigger: TTriggerMIK;
+  LDBResultSet: IDBResultSet;
+  LTrigger: TTriggerMIK;
 begin
   inherited;
   FSQLText := '';
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oTrigger := TTriggerMIK.Create(ATable);
-    oTrigger.Name := VarToStr(oDBResultSet.GetFieldValue('name'));
-    oTrigger.Description := '';
-    oTrigger.Script := VarToStr(oDBResultSet.GetFieldValue('sql'));
-    ATable.Triggers.Add(UpperCase(oTrigger.Name), oTrigger);
+    LTrigger := TTriggerMIK.Create(ATable);
+    LTrigger.Name := VarToStr(LDBResultSet.GetFieldValue('name'));
+    LTrigger.Description := '';
+    LTrigger.Script := VarToStr(LDBResultSet.GetFieldValue('sql'));
+    ATable.Triggers.Add(UpperCase(LTrigger.Name), LTrigger);
   end;
 end;
 
 procedure TCatalogMetadataPostgreSQL.GetIndexeKeys(ATable: TTableMIK);
 var
-  oDBResultSet: IDBResultSet;
-  oIndexeKey: TIndexeKeyMIK;
+  LDBResultSet: IDBResultSet;
+  LIndexeKey: TIndexeKeyMIK;
 
   procedure GetIndexeKeyColumns(AIndexeKey: TIndexeKeyMIK);
   var
-    oDBResultSet: IDBResultSet;
-    oColumn: TColumnMIK;
+    LDBResultSet: IDBResultSet;
+    LColumn: TColumnMIK;
     iColumn: Integer;
   begin
     FSQLText := GetSelectIndexeColumns(AIndexeKey.Name);
-    oDBResultSet := Execute;
-    while oDBResultSet.NotEof do
+    LDBResultSet := Execute;
+    while LDBResultSet.NotEof do
     begin
-      oColumn := TColumnMIK.Create(ATable);
-      oColumn.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-      oColumn.Position := oColumn.Position + 1; //  VarAsType(oDBResultSet.GetFieldValue('column_position'), varInteger);
-      AIndexeKey.Fields.Add(FormatFloat('000000', oColumn.Position), oColumn);
+      LColumn := TColumnMIK.Create(ATable);
+      LColumn.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+      LColumn.Position := LColumn.Position + 1; //  VarAsType(LDBResultSet.GetFieldValue('column_position'), varInteger);
+      AIndexeKey.Fields.Add(FormatFloat('000000', LColumn.Position), LColumn);
     end;
   end;
 
 begin
   inherited;
   FSQLText := GetSelectIndexe(ATable.Name);
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oIndexeKey := TIndexeKeyMIK.Create(ATable);
-    oIndexeKey.Name := VarToStr(oDBResultSet.GetFieldValue('indexe_name'));
-    oIndexeKey.Unique := VarAsType(oDBResultSet.GetFieldValue('indexe_unique'), varBoolean);
-    ATable.IndexeKeys.Add(UpperCase(oIndexeKey.Name), oIndexeKey);
+    LIndexeKey := TIndexeKeyMIK.Create(ATable);
+    LIndexeKey.Name := VarToStr(LDBResultSet.GetFieldValue('indexe_name'));
+    LIndexeKey.Unique := VarAsType(LDBResultSet.GetFieldValue('indexe_unique'), varBoolean);
+    ATable.IndexeKeys.Add(UpperCase(LIndexeKey.Name), LIndexeKey);
     /// <summary>
     /// Gera a lista de campos do indexe
     /// </summary>
-    GetIndexeKeyColumns(oIndexeKey);
+    GetIndexeKeyColumns(LIndexeKey);
   end;
 end;
 
 procedure TCatalogMetadataPostgreSQL.GetViews;
 var
-  oDBResultSet: IDBResultSet;
-  oView: TViewMIK;
+  LDBResultSet: IDBResultSet;
+  LView: TViewMIK;
 begin
   inherited;
   FSQLText := GetSelectViews;
-  oDBResultSet := Execute;
-  while oDBResultSet.NotEof do
+  LDBResultSet := Execute;
+  while LDBResultSet.NotEof do
   begin
-    oView := TViewMIK.Create(FCatalogMetadata);
-    oView.Name := VarToStr(oDBResultSet.GetFieldValue('view_name'));
-    oView.Script := VarToStr(oDBResultSet.GetFieldValue('view_script'));
-    oView.Description := VarToStr(oDBResultSet.GetFieldValue('view_description'));
-    FCatalogMetadata.Views.Add(UpperCase(oView.Name), oView);
+    LView := TViewMIK.Create(FCatalogMetadata);
+    LView.Name := VarToStr(LDBResultSet.GetFieldValue('view_name'));
+    LView.Script := VarToStr(LDBResultSet.GetFieldValue('view_script'));
+    LView.Description := VarToStr(LDBResultSet.GetFieldValue('view_description'));
+    FCatalogMetadata.Views.Add(UpperCase(LView.Name), LView);
   end;
 end;
 
