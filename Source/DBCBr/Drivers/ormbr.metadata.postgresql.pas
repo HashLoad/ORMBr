@@ -303,39 +303,37 @@ procedure TCatalogMetadataPostgreSQL.GetForeignKeys(ATable: TTableMIK);
   end;
 
 var
-  oDBResultSet: IDBResultSet;
-  oForeignKey: TForeignKeyMIK;
-  oFromField: TColumnMIK;
-  oToField: TColumnMIK;
+  LDBResultSet: IDBResultSet;
+  LForeignKey: TForeignKeyMIK;
+  LFromField: TColumnMIK;
+  LToField: TColumnMIK;
 begin
   inherited;
   FSQLText := GetSelectForeignKey(ATable.Name);
   oDBResultSet := Execute;
   while oDBResultSet.NotEof do
   begin
-    oForeignKey := TForeignKeyMIK.Create(ATable);
-    oForeignKey.Name := VarToStr(oDBResultSet.GetFieldValue('fk_name'));
-    oForeignKey.FromTable := VarToStr(oDBResultSet.GetFieldValue('table_reference'));
-    oForeignKey.OnUpdate := GetRuleAction(VarToStr(oDBResultSet.GetFieldValue('fk_updateaction')));
-    oForeignKey.OnDelete := GetRuleAction(VarToStr(oDBResultSet.GetFieldValue('fk_deleteaction')));
-    oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
-    ATable.ForeignKeys.Add(oForeignKey.Name, oForeignKey);
-    /// <summary>
-    /// Coluna tabela master
-    /// </summary>
-    oFromField := TColumnMIK.Create(ATable);
-    oFromField.Name := VarToStr(oDBResultSet.GetFieldValue('column_name'));
-    oForeignKey.FromFields.Add(oFromField.Name, oFromField);
-    /// <summary>
-    /// Coluna tabela referencia
-    /// </summary>
-    oToField := TColumnMIK.Create(ATable);
-    oToField.Name := VarToStr(oDBResultSet.GetFieldValue('column_reference'));
-    oForeignKey.ToFields.Add(oToField.Name, oToField);
-    /// <summary>
-    /// Gera a lista de campos do foreignkey
-    /// </summary>
-//    GetForeignKeyColumns(oForeignKey);
+    LForeignKey := TForeignKeyMIK.Create(ATable);
+//    LForeignKey.Name := Format('FK_%s_%s', [VarToStr(LDBResultSet.GetFieldValue('table_reference')),
+//                                            VarToStr(LDBResultSet.GetFieldValue('column_name'))]);
+    LForeignKey.Name := VarToStr(LDBResultSet.GetFieldValue('fk_name'));
+    LForeignKey.FromTable := VarToStr(LDBResultSet.GetFieldValue('table_reference'));
+//    LForeignKey.OnUpdate := GetRuleAction(VarAsType(LDBResultSet.GetFieldValue('fk_updateaction'), varInteger));
+//    LForeignKey.OnDelete := GetRuleAction(VarAsType(LDBResultSet.GetFieldValue('fk_deleteaction'), varInteger));
+    LForeignKey.OnUpdate := GetRuleAction(VarToStr(LDBResultSet.GetFieldValue('fk_updateaction')));
+    LForeignKey.OnDelete := GetRuleAction(VarToStr(LDBResultSet.GetFieldValue('fk_deleteaction')));
+    LForeignKey.Description :=  VarToStr(LDBResultSet.GetFieldValue('fk_description'));
+    ATable.ForeignKeys.Add(LForeignKey.Name, LForeignKey);
+    // Coluna tabela master
+    LFromField := TColumnMIK.Create(ATable);
+    LFromField.Name := VarToStr(LDBResultSet.GetFieldValue('column_name'));
+    LForeignKey.FromFields.Add(LFromField.Name, LFromField);
+    // Coluna tabela referencia
+    LToField := TColumnMIK.Create(ATable);
+    LToField.Name := VarToStr(LDBResultSet.GetFieldValue('column_reference'));
+    LForeignKey.ToFields.Add(LToField.Name, LToField);
+    // Gera a lista de campos do foreignkey
+//    GetForeignKeyColumns(LForeignKey);
   end;
 end;
 
