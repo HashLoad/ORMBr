@@ -431,7 +431,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenID(AID);
@@ -441,11 +441,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableConstraints;
