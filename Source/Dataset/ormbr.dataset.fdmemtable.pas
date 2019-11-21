@@ -59,9 +59,7 @@ uses
   ormbr.factory.interfaces;
 
 type
-  /// <summary>
-  /// Captura de eventos específicos do componente TFDMemTable
-  /// </summary>
+  // Captura de eventos específicos do componente TFDMemTable
   TFDMemTableEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TFDDataSetEvent;
@@ -71,10 +69,8 @@ type
     property AfterApplyUpdates: TFDAfterApplyUpdatesEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  /// <summary>
-  /// Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  /// M - Object Model
-  /// </summary>
+  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
+  // M - Object Model
   TFDMemTableAdapter<M: class, constructor> = class(TDataSetAdapter<M>)
   private
     FOrmDataSet: TFDMemTable;
@@ -181,9 +177,7 @@ procedure TFDMemTableAdapter<M>.EmptyDataSet;
 begin
   inherited;
   FOrmDataSet.EmptyDataSet;
-  /// <summary>
-  /// Lista os registros das tabelas filhas relacionadas
-  /// </summary>
+  // Lista os registros das tabelas filhas relacionadas
   EmptyDataSetChilds;
 end;
 
@@ -293,7 +287,7 @@ var
   LColumn: TColumnMapping;
 begin
   inherited;
-  /// Filtar somente os registros inseridos
+  // Filtar somente os registros inseridos
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsInsert));
   FOrmDataSet.Filtered := True;
   if not FOrmDataSet.IsEmpty then
@@ -301,13 +295,11 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-       /// Append/Insert
+       // Append/Insert
        if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
        begin
-         /// <summary>
-         ///   Ao passar como parametro a propriedade Current, e disparado o metodo
-         ///   que atualiza a var FCurrentInternal, para ser usada abaixo.
-         /// </summary>
+         // Ao passar como parametro a propriedade Current, e disparado o metodo
+         // que atualiza a var FCurrentInternal, para ser usada abaixo.
          FSession.Insert(Current);
          FOrmDataSet.Edit;
          if FSession.ExistSequence then
@@ -323,9 +315,7 @@ begin
                LColumn.ColumnProperty
                       .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
            end;
-           /// <summary>
-           ///   Atualiza o valor do AutoInc nas sub tabelas
-           /// </summary>
+           // Atualiza o valor do AutoInc nas sub tabelas
            SetAutoIncValueChilds;
          end;
          FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
@@ -344,7 +334,7 @@ var
   LObject: TObject;
 begin
   inherited;
-  /// Filtar somente os registros modificados
+  // Filtar somente os registros modificados
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsEdit));
   FOrmDataSet.Filtered := True;
   if not FOrmDataSet.IsEmpty then
@@ -352,24 +342,29 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-       /// Edit
-       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
-       begin
-         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
-            (FConnection.GetDriverName in [dnMongoDB]) then
-         begin
-           LObject := M.Create;
-           try
-             TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
-             FSession.Update(LObject, M.ClassName);
-           finally
-             LObject.Free;
-           end;
-         end;
-         FOrmDataSet.Edit;
-         FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
-         FOrmDataSet.Post;
-       end;
+      // Edit
+      if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
+      begin
+        if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
+           (FConnection.GetDriverName in [dnMongoDB]) then
+        begin
+          LObject := M.Create;
+          try
+            TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
+            FSession.Update(LObject, M.ClassName);
+          finally
+            LObject.Free;
+            if FSession.ModifiedFields.ContainsKey(M.ClassName) then
+            begin
+              FSession.ModifiedFields.Items[M.ClassName].Clear;
+              FSession.ModifiedFields.Items[M.ClassName].TrimExcess;
+            end;
+          end;
+        end;
+        FOrmDataSet.Edit;
+        FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
+        FOrmDataSet.Post;
+      end;
     end;
   finally
     FOrmDataSet.Filtered := False;
@@ -383,9 +378,7 @@ var
   LIsConnected: Boolean;
 begin
   inherited;
-  /// <summary>
-  /// Controle de transação externa, controlada pelo desenvolvedor
-  /// </summary>
+  // Controle de transação externa, controlada pelo desenvolvedor
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
   if not LIsConnected then
@@ -393,11 +386,11 @@ begin
   try
     if not LInTransaction then
       FConnection.StartTransaction;
-    /// Before Apply
+    // Before Apply
     DoBeforeApplyUpdates(FOrmDataSet);
     try
       ApplyInternal(MaxErros);
-      /// After Apply
+      // After Apply
       DoAfterApplyUpdates(FOrmDataSet, MaxErros);
       if not LInTransaction then
         FConnection.Commit;
@@ -407,11 +400,6 @@ begin
       raise;
     end;
   finally
-    if FSession.ModifiedFields.ContainsKey(M.ClassName) then
-    begin
-      FSession.ModifiedFields.Items[M.ClassName].Clear;
-      FSession.ModifiedFields.Items[M.ClassName].TrimExcess;
-    end;
     FSession.DeleteList.Clear;
     FSession.DeleteList.TrimExcess;
     if not LIsConnected then

@@ -68,6 +68,7 @@ type
     function  IsUnique: Boolean;
     function  IsHidden: Boolean;
     function  IsNoValidate: Boolean;
+    function  IsVirtualData: Boolean;
     function  IsBlob: Boolean;
     function  IsLazy: Boolean;
     function  IsNullable: Boolean;
@@ -411,6 +412,19 @@ begin
    begin
       if LAttribute is Check then // Check
          Exit(True);
+   end;
+   Exit(False);
+end;
+
+function TRttiPropertyHelper.IsVirtualData: Boolean;
+var
+  LAttribute: TCustomAttribute;
+begin
+   LAttribute := Self.GetRestriction;
+   if LAttribute <> nil then
+   begin
+     if VirtualData in Restrictions(LAttribute).Restrictions then
+       Exit(True);
    end;
    Exit(False);
 end;

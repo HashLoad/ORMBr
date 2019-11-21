@@ -47,9 +47,7 @@ uses
   ormbr.factory.interfaces;
 
 type
-  /// <summary>
-  /// M - Sessão DataSet
-  /// </summary>
+  // M - Sessão DataSet
   TSessionDataSet<M: class, constructor> = class(TSessionAbstract<M>)
   private
     FOwner: TDataSetBaseAdapter<M>;
@@ -106,9 +104,7 @@ var
 begin
   inherited;
   LDBResultSet := FManager.SelectInternalID(AID);
-  /// <summary>
-  ///   Popula o DataSet em memória com os registros retornardos no comando SQL
-  /// </summary>
+  // Popula o DataSet em memória com os registros retornardos no comando SQL
   PopularDataSet(LDBResultSet);
 end;
 
@@ -121,9 +117,7 @@ begin
     LDBResultSet := FManager.SelectInternalAll
   else
     LDBResultSet := FManager.SelectInternal(ASQL);
-  /// <summary>
-  ///   Popula o DataSet em memória com os registros retornardos no comando SQL
-  /// </summary>
+  // Popula o DataSet em memória com os registros retornardos no comando SQL
   PopularDataSet(LDBResultSet);
 end;
 

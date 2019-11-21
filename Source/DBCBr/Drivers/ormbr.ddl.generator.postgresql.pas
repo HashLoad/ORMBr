@@ -118,7 +118,7 @@ begin
       LSQL.Append(',');
     end;
     /// <summary>
-    ///   Add PrimariKey
+    ///   Add PrimaryKey
     /// </summary>
     if ATable.PrimaryKey.Fields.Count > 0 then
     begin

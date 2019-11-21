@@ -45,9 +45,7 @@ uses
   ormbr.objects.manager.abstract;
 
 type
-  /// <summary>
-  ///   M - Sessão Abstract
-  /// </summary>
+  // M - Sessão Abstract
   TSessionAbstract<M: class, constructor> = class abstract
   protected
     {$IFDEF USEBINDSOURCE}
@@ -225,21 +223,20 @@ var
   LColumns: TColumnMappingList;
   LProperty: TRttiProperty;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance.GetMappingColumn(AObjectSource.ClassType);
+  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObjectSource.ClassType);
   for LColumn in LColumns do
   begin
     LProperty := LColumn.ColumnProperty;
+    if LProperty.IsVirtualData then
+      Continue;
     if LProperty.IsNoUpdate then
       Continue;
     if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
       Continue;
     if not FModifiedFields.ContainsKey(AKey) then
       FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
-    /// <summary>
-    ///   Se o tipo da property for tkRecord provavelmente tem Nullable nela
-    ///   Se não for tkRecord entra no ELSE e pega o valor de forma direta
-    /// </summary>
+    // Se o tipo da property for tkRecord provavelmente tem Nullable nela
+    // Se não for tkRecord entra no ELSE e pega o valor de forma direta
     if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
     begin
       if LProperty.IsBlob then
@@ -248,9 +245,7 @@ begin
            LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
         begin
           FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-          /// <summary>
-          ///   Bind object property in control
-          /// </summary>
+          // Bind object property in control
           {$IFDEF USEBINDSOURCE}
 //            if Assigned(FOnPropertyEvent) then
 //              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
@@ -263,9 +258,7 @@ begin
            LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
         begin
           FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-          /// <summary>
-          ///   Bind object property in control
-          /// </summary>
+          // Bind object property in control
           {$IFDEF USEBINDSOURCE}
 //            if Assigned(FOnPropertyEvent) then
 //              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
@@ -279,9 +272,7 @@ begin
          LProperty.GetValue(AObjectUpdate).AsType<Variant> then
       begin
         FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-        /// <summary>
-        ///   Bind object property in control
-        /// </summary>
+        // Bind object property in control
         {$IFDEF USEBINDSOURCE}
 //          if Assigned(FOnPropertyEvent) then
 //            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);

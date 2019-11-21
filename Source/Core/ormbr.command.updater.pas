@@ -105,10 +105,8 @@ begin
   if AModifiedFields.Count = 0 then
     Exit;
 
-  /// <summary>
-  ///   Variavel local é usado como parâmetro para montar o script só com os
-  ///   campos PrimaryKey.
-  /// </summary>
+  // Variavel local é usado como parâmetro para montar o script só com os
+  // campos PrimaryKey.
   LParams := TParams.Create(nil);
   try
     LPrimaryKey := TMappingExplorer.GetInstance
@@ -129,10 +127,8 @@ begin
     FCommand := FGeneratorCommand
                   .GeneratorUpdate(AObject, LParams, AModifiedFields);
     Result := FCommand;
-    /// <summary>
-    ///   Gera todos os parâmetros, sendo os campos alterados primeiro e o do
-    ///   PrimaryKey por último, usando LParams criado local.
-    /// </summary>
+    // Gera todos os parâmetros, sendo os campos alterados primeiro e o do
+    // PrimaryKey por último, usando LParams criado local.
     AObject.GetType(LObjectType);
     for LKey in AModifiedFields.Keys do
     begin
@@ -151,10 +147,8 @@ begin
         DataType := LFieldType.FieldType;
         ParamType := ptInput;
         Value := GetParamValue(AObject, LProperty, DataType);
-        /// <summary>
-        ///   Tratamento para o tipo ftBoolean nativo, indo como Integer
-        ///   para gravar no banco.
-        /// </summary>
+        // Tratamento para o tipo ftBoolean nativo, indo como Integer
+        // para gravar no banco.
         if DataType in [ftBoolean] then
         begin
           LBooleanValue := IfThen(Boolean(Value), 1, 0);

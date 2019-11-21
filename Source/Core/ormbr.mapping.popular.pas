@@ -163,6 +163,7 @@ begin
       Result.Last.IsHidden := LProperty.IsHidden;
       Result.Last.IsPrimaryKey := LProperty.IsPrimaryKey(AClass);
       Result.Last.IsNullable := LProperty.IsNullable;
+      Result.Last.IsVirtualData := LProperty.IsVirtualData;
       Result.Last.DefaultValue := '';
       Result.Last.ColumnDictionary := LProperty.GetDictionary;
 
