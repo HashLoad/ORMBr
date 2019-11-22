@@ -250,9 +250,10 @@ begin
       if FDriverName = dnOracle then AColumn.TypeName := 'DATE'
       else                           AColumn.TypeName := 'TIME';
     ftDateTime:
-      if      FDriverName = dnInterbase then AColumn.TypeName := 'DATE'
-      else if FDriverName = dnFirebird  then AColumn.TypeName := 'DATE'
-      else if FDriverName = dnOracle    then AColumn.TypeName := 'DATE'
+      if      FDriverName = dnInterbase  then AColumn.TypeName := 'DATE'
+      else if FDriverName = dnFirebird   then AColumn.TypeName := 'DATE'
+      else if FDriverName = dnOracle     then AColumn.TypeName := 'DATE'
+      else if FDriverName = dnPostgreSQL then AColumn.TypeName := 'DATE'
       else                                   AColumn.TypeName := 'DATETIME';
     ftTimeStamp, ftOraTimeStamp, ftTimeStampOffset:
       if FDriverName = dnOracle    then AColumn.TypeName := 'DATE'
@@ -291,8 +292,9 @@ begin
     end;
     ftBlob, ftOraBlob:
     begin
-      if FDriverName = dnMSSQL  then AColumn.TypeName := 'VARBINARY(MAX)'
-      else                           AColumn.TypeName := 'BLOB'
+      if      FDriverName = dnMSSQL      then AColumn.TypeName := 'VARBINARY(MAX)'
+      else if FDriverName = dnPostgreSQL then AColumn.TypeName := 'BYTEA'
+      else                                    AColumn.TypeName := 'BLOB'
     end;
     ftGraphic: 
     begin 
