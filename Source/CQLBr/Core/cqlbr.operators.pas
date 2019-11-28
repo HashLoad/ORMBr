@@ -69,12 +69,14 @@ type
 
   TCQLOperators = class(TInterfacedObject, ICQLOperators)
   private
+    FDatabase: TDBName;
+    constructor CreatePrivate(const ADatabase: TDBName);
     function CreateOperator(const AColumnName: String;
       const AValue: Variant;
       const ACompare: TCQLOperatorCompare;
       const ADataType: TCQLDataFieldType): ICQLOperator;
   public
-    class function New: ICQLOperators;
+    class function New(const ADatabase: TDBName): ICQLOperators;
     function IsEqual(const AValue: Extended) : String; overload;
     function IsEqual(const AValue: Integer): String; overload;
     function IsEqual(const AValue: String): String; overload;
@@ -266,6 +268,11 @@ begin
   Result := CreateOperator('', AValue, fcEqual, dftFloat).AsString;
 end;
 
+constructor TCQLOperators.CreatePrivate(const ADatabase: TDBName);
+begin
+  FDatabase := ADatabase;
+end;
+
 function TCQLOperators.IsEqual(const AValue: String): String;
 begin
   Result := CreateOperator('', AValue, fcEqual, dftString).AsString;
@@ -391,7 +398,7 @@ begin
   Result := CreateOperator('', Null, fcIsNull, dftUnknown).AsString;
 end;
 
-class function TCQLOperators.New: ICQLOperators;
+class function TCQLOperators.New(const ADatabase: TDBName): ICQLOperators;
 begin
   Result := Self.Create;
 end;

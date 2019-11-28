@@ -7,10 +7,6 @@ uses
   System.SysUtils,
   Data.DB,
 
-  Data.SqlExpr,
-  Data.DbxSqlite,
-  Datasnap.DBClient,
-
   ormbr.factory.interfaces;
 
 type
