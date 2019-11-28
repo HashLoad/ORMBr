@@ -354,11 +354,6 @@ begin
             FSession.Update(LObject, M.ClassName);
           finally
             LObject.Free;
-            if FSession.ModifiedFields.ContainsKey(M.ClassName) then
-            begin
-              FSession.ModifiedFields.Items[M.ClassName].Clear;
-              FSession.ModifiedFields.Items[M.ClassName].TrimExcess;
-            end;
           end;
         end;
         FOrmDataSet.Edit;
@@ -400,6 +395,11 @@ begin
       raise;
     end;
   finally
+    if FSession.ModifiedFields.ContainsKey(M.ClassName) then
+    begin
+      FSession.ModifiedFields.Items[M.ClassName].Clear;
+      FSession.ModifiedFields.Items[M.ClassName].TrimExcess;
+    end;
     FSession.DeleteList.Clear;
     FSession.DeleteList.TrimExcess;
     if not LIsConnected then

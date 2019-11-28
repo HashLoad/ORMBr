@@ -11,7 +11,6 @@
 #define Vcl_Imaging_pnglang_EInvalidNewSize 64688
 #define Vcl_Imaging_pnglang_EInvalidSpec 64689
 #define Vcl_Imaging_pnglang_EPNGInvalidBitDepthText 64690
-#define ormbr_encddecd_cMEMORYSTREAMERROR 64691
 #define Vcl_Imaging_pnglang_EPNGIHDRNotFirstText 64704
 #define Vcl_Imaging_pnglang_EPNGSizeExceedsText 64705
 #define Vcl_Imaging_pnglang_EPNGUnknownPalEntryText 64706
@@ -849,7 +848,6 @@ BEGIN
 	Vcl_Imaging_pnglang_EInvalidNewSize,	L"The new size provided for image resizing is invalid."
 	Vcl_Imaging_pnglang_EInvalidSpec,	L"The \"Portable Network Graphics\" could not be created because invalid image type parameters have being provided."
 	Vcl_Imaging_pnglang_EPNGInvalidBitDepthText,	L"The \"Portable Network Graphics\" image could not be loaded because it uses an invalid image bit depth."
-	ormbr_encddecd_cMEMORYSTREAMERROR,	L"Out of memory while expanding memory stream"
 	Vcl_Imaging_pnglang_EPNGIHDRNotFirstText,	L"This \"Portable Network Graphics\" image is not supported or it might be invalid.\r\n(IHDR chunk is not the first)"
 	Vcl_Imaging_pnglang_EPNGSizeExceedsText,	L"This \"Portable Network Graphics\" image is not supported because either its width or height exceeds the maximum size of 65535 pixels."
 	Vcl_Imaging_pnglang_EPNGUnknownPalEntryText,	L"There is no such palette entry."

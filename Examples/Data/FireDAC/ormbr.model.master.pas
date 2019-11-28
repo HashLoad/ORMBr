@@ -40,7 +40,7 @@ type
     Fclient: Tclient;
     FEnumInteger: TMyEnumInteger;
     FEnumString: TMyEnumString;
-    FInativo: Boolean;
+//    FInativo: Boolean;
     function GetTotal: Double;
   public
     { Public declarations }
@@ -88,10 +88,10 @@ type
     [Enumeration(TEnumType.etString, 'A, B, C, D')]
     property MyEnumString: TMyEnumString read FEnumString write FEnumString;
 
-    [Column('Inativo', ftBoolean)]
-    [Dictionary('Enum Integer', '')]
-    [Enumeration(TEnumType.etBoolean, '0, 1')]
-    property Inativo: Boolean read FInativo write FInativo;
+//    [Column('Inativo', ftBoolean)]
+//    [Dictionary('Enum Integer', '')]
+//    [Enumeration(TEnumType.etBoolean, '0, 1')]
+//    property Inativo: Boolean read FInativo write FInativo;
 
     [Association(OneToOne, 'client_id', 'client', 'client_id')]
     property client: Tclient read Fclient write Fclient;

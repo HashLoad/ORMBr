@@ -28,6 +28,7 @@ type
     Flookup_id: Integer;
     Flookup_description: String;
     Fprice: Double;
+    FVisto: Boolean;
   public
     { Public declarations }
     [Restrictions([NoUpdate, NotNull])]
@@ -55,6 +56,11 @@ type
     [Column('price', ftFloat, 18, 3)]
     [Dictionary('Preço Unitário','Mensagem de validação','','#,###,##0.00','',taRightJustify)]
     property price: Double read Fprice write Fprice;
+
+    [Restrictions([NoUpdate, NoInsert, VirtualData])]
+    [Column('Visto', ftBoolean)]
+    [Dictionary('Virtual','Mensagem de validação','','','',taRightJustify)]
+    property Visto: Boolean read FVisto write FVisto;
   end;
 
 implementation
