@@ -145,7 +145,9 @@ type
     function Where(const AExpression: String = ''): ICQL; overload;
     function Where(const AExpression: array of const): ICQL; overload;
     function Where(const AExpression: ICQLCriteriaExpression): ICQL; overload;
-    // Operators methods
+    /// <summary>
+    ///   Operators methods
+    /// </summary>
     function Equal(const AValue: String): ICQL; overload;
     function Equal(const AValue: Extended): ICQL overload;
     function Equal(const AValue: Integer): ICQL; overload;
@@ -176,13 +178,17 @@ type
     function NotIn(const AValue: String): ICQL; overload;
     function Exists(const AValue: String): ICQL; overload;
     function NotExists(const AValue: String): ICQL; overload;
-    // Functions methods
+    /// <summary>
+    ///   Functions methods
+    /// </summary>
     function Count: ICQL;
     function Lower: ICQL;
     function Min: ICQL;
     function Max: ICQL;
     function Upper: ICQL;
-    // Result full command sql
+    /// <summary>
+    ///   Result full command sql
+    /// </summary>
     function AsString: String;
   end;
 
@@ -386,8 +392,8 @@ begin
   FActiveOperator := opeNone;
   FAST := TCQLAST.New(ADatabase);
   FAST.Clear;
-  FOperator := TCQLOperators.New;
-  FFunction := TCQLFunctions.New;
+  FOperator := TCQLOperators.New(FDatabase);
+  FFunction := TCQLFunctions.New(FDatabase);
 end;
 
 function TCQL.CreateJoin(AjoinType: TJoinType; const ATableName: String): ICQL;
@@ -498,7 +504,9 @@ begin
   AssertSection([secSelect]);
   LQualifier := FAST.Select.Qualifiers.Add;
   LQualifier.Qualifier := sqDistinct;
-  // Esse método tem que Add o Qualifier já todo parametrizado.
+  /// <summary>
+  ///   Esse método tem que Add o Qualifier já todo parametrizado.
+  /// </summary>
   FAST.Select.Qualifiers.Add(LQualifier);
   Result := Self;
 end;
@@ -549,7 +557,9 @@ begin
   LQualifier := FAST.Select.Qualifiers.Add;
   LQualifier.Qualifier := sqFirst;
   LQualifier.Value := AValue;
-  // Esse método tem que Add o Qualifier já todo parametrizado.
+  /// <summary>
+  ///   Esse método tem que Add o Qualifier já todo parametrizado.
+  /// </summary>
   FAST.Select.Qualifiers.Add(LQualifier);
   Result := Self;
 end;
@@ -925,7 +935,9 @@ begin
   LQualifier := FAST.Select.Qualifiers.Add;
   LQualifier.Qualifier := sqSkip;
   LQualifier.Value := AValue;
-  // Esse método tem que Add o Qualifier já todo parametrizado.
+  /// <summary>
+  ///   Esse método tem que Add o Qualifier já todo parametrizado.
+  /// </summary>
   FAST.Select.Qualifiers.Add(LQualifier);
   Result := Self;
 end;

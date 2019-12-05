@@ -53,7 +53,8 @@ type
 implementation
 
 uses
-  cqlbr.utils;
+  cqlbr.utils,
+  cqlbr.qualifier.firebird;
 
 { TSelect }
 

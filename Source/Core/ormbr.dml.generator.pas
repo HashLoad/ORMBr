@@ -281,7 +281,7 @@ var
   LFor: Integer;
   LColumnName: String;
 begin
-  /// Table
+  // Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
     FDMLCriteriaFound := False;
@@ -293,10 +293,12 @@ begin
     end;
     {$ENDIF}
     Result := CreateCriteria.Select.From(LTable.Name);
-    /// Columns
+    // Columns
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
     for LColumn in LColumns do
     begin
+      if LColumn.IsVirtualData then
+        Continue;
       if LColumn.IsJoinColumn then
         Continue;
       Result.Column(LTable.Name + '.' + LColumn.ColumnName);
@@ -454,17 +456,13 @@ begin
   if AModifiedFields.Count = 0 then
     Exit;
 
-  /// <summary>
-  ///   Varre a lista de campos alterados para montar o UPDATE
-  /// </summary>
+  // Varre a lista de campos alterados para montar o UPDATE
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Update(LTable.Name);
   for LColumnName in AModifiedFields.Values do
   begin
-    /// <summary>
-    ///   SET Field=Value alterado
-    /// </summary>
-    /// <exception cref="oTable.Name + '.'"></exception>
+    // SET Field=Value alterado
+    // <exception cref="oTable.Name + '.'"></exception>
     LCriteria.&Set(LColumnName, ':' + LColumnName);
   end;
   for LFor := 0 to AParams.Count -1 do

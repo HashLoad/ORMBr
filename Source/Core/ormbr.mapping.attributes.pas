@@ -358,7 +358,7 @@ type
     constructor Create(const ADisplayLabel, AConstraintErrorMessage: string;
       const AAlignment: TAlignment;
       const AOrigin: string); overload;
-    /// <summary> OBJECT </summary>
+    /// OBJECT
     constructor Create(const ADefaultExpression: string); overload;
     constructor Create(const ADefaultExpression: Integer); overload;
     constructor Create(const ADefaultExpression: Boolean); overload;

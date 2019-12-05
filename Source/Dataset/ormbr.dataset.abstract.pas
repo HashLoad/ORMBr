@@ -91,6 +91,8 @@ begin
     Exit;
   if Field = nil then
     Exit;
+  if Field.Tag > 0 then
+    Exit;
   if (Field.FieldKind <> fkData) or (Field.FieldName = cInternalField) then
     Exit;
   // Só adiciona a lista se for edição
@@ -113,10 +115,8 @@ begin
       end;
     end;
   end;
-  /// <summary>
-  ///   Atualiza o registro da tabela externa, se o campo alterado
-  ///   pertencer a um relacionamento OneToOne ou ManyToOne
-  /// </summary>
+  // Atualiza o registro da tabela externa, se o campo alterado
+  // pertencer a um relacionamento OneToOne ou ManyToOne
   RefreshDataSetOneToOneChilds(Field.FieldName);
 end;
 

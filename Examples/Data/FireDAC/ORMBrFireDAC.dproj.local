@@ -75,7 +75,7 @@
     <Transaction>2019/07/31 18:40:26.000.201,=D:\ORMBr\Source\Monitor\ormbr.monitor.pas</Transaction>
     <Transaction>2019/07/31 18:41:05.000.848,=D:\ORMBr\Source\Drivers\ormbr.factory.connection.pas</Transaction>
     <Transaction>2019/08/01 11:59:39.000.437,=D:\ORMBr\Source\Core\ormbr.command.selecter.pas</Transaction>
-    <Transaction>2019/08/12 08:05:06.364,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.selecter.pas=</Transaction>
-    <Transaction>2019/08/12 08:05:06.569,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.rtti.helper.pas=</Transaction>
+    <Transaction>2019/08/12 08:05:06.000.569,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.rtti.helper.pas=</Transaction>
+    <Transaction>2019/08/12 08:05:06.000.364,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.command.selecter.pas=</Transaction>
   </Transactions>
 </BorlandProject>

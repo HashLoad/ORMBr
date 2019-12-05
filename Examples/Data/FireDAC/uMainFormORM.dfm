@@ -239,7 +239,6 @@ object Form3: TForm3
     Height = 17
     Caption = 'DBCheckBox1'
     DataField = 'Inativo'
-    DataSource = DataSource1
     TabOrder = 16
   end
   object DataSource1: TDataSource
@@ -260,11 +259,13 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\ORMBr\Demo\Data\Database\database.db3'
+      
+        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Database\databas' +
+        'e.db3'
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 154
-    Top = 44
+    Top = 20
   end
   object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
     Left = 218

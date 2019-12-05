@@ -364,7 +364,7 @@ var
   LColumn: TColumnMapping;
 begin
   inherited;
-  /// Filtar somente os registros inseridos
+  // Filtar somente os registros inseridos
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsInsert));
   FOrmDataSet.Filtered := True;
   if not FOrmDataSet.IsEmpty then
@@ -372,13 +372,11 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-      /// Append/Insert
+      // Append/Insert
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
       begin
-        /// <summary>
-        ///   Ao passar como parametro a propriedade Current, e disparado o metodo
-        ///   que atualiza a var FCurrentInternal, para ser usada abaixo.
-        /// </summary>
+        // Ao passar como parametro a propriedade Current, e disparado o metodo
+        // que atualiza a var FCurrentInternal, para ser usada abaixo.
         FSession.Insert(Current);
         FOrmDataSet.Edit;
         if FSession.ExistSequence then
@@ -395,9 +393,7 @@ begin
               LColumn.ColumnProperty
                      .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
            end;
-          /// <summary>
-          ///   Atualiza o valor do AutoInc nas sub tabelas
-          /// </summary>
+          // Atualiza o valor do AutoInc nas sub tabelas
           SetAutoIncValueChilds;
         end;
         FOrmDataSet.Fields[FInternalIndex].AsInteger := -1;
@@ -416,7 +412,7 @@ var
   LObject: TObject;
 begin
   inherited;
-  /// Filtar somente os registros modificados
+  // Filtar somente os registros modificados
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsEdit));
   FOrmDataSet.Filtered := True;
   if not FOrmDataSet.IsEmpty then
@@ -456,9 +452,7 @@ var
   LIsConnected: Boolean;
 begin
   inherited;
-  /// <summary>
-  /// Controle de transação externa, controlada pelo desenvolvedor
-  /// </summary>
+  // Controle de transação externa, controlada pelo desenvolvedor
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
   if not LIsConnected then
@@ -466,11 +460,11 @@ begin
   try
     if not LInTransaction then
       FConnection.StartTransaction;
-    /// Before Apply
+    // Before Apply
     DoBeforeApplyUpdates(FOrmDataSet, LOwnerData);
     try
       ApplyInternal(MaxErros);
-      /// After Apply
+      // After Apply
       DoAfterApplyUpdates(FOrmDataSet, LOwnerData);
       if not LInTransaction then
         FConnection.Commit;

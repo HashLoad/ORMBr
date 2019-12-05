@@ -34,8 +34,11 @@ uses
 
 type
   TCQLFunctions = class(TInterfacedObject, ICQLFunctions)
+  private
+    FDatabase: TDBName;
+    constructor CreatePrivate(const ADatabase: TDBName);
   public
-    class function New: ICQLFunctions;
+    class function New(const ADatabase: TDBName): ICQLFunctions;
     class function Q(const AValue: String): String;
     function Count(const AValue: String): String;
     function Upper(const AValue: String): String;
@@ -54,9 +57,9 @@ implementation
 
 { TCQLFunctions }
 
-class function TCQLFunctions.New: ICQLFunctions;
+class function TCQLFunctions.New(const ADatabase: TDBName): ICQLFunctions;
 begin
-  Result := Self.Create;
+  Result := Self.CreatePrivate(ADatabase);
 end;
 
 class function TCQLFunctions.Q(const AValue: String): String;
@@ -97,6 +100,11 @@ end;
 function TCQLFunctions.Count(const AValue: String): String;
 begin
   Result := 'Count(' + AValue + ')';
+end;
+
+constructor TCQLFunctions.CreatePrivate(const ADatabase: TDBName);
+begin
+  FDatabase := ADatabase;
 end;
 
 function TCQLFunctions.Lower(const AValue: String): String;

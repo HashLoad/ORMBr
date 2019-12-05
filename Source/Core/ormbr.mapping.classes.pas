@@ -90,10 +90,10 @@ type
     property Name: string read FName;
     property Script: string read FScript;
   end;
-  /// ColumnMappingList
+  // ColumnMappingList
   TTriggerMappingList = class(TObjectList<TTriggerMapping>);
 
-  /// ColumnMapping
+  // ColumnMapping
   TColumnMapping = class(TMappingDescription)
   private
     FColumnName: string;
@@ -113,6 +113,7 @@ type
     FIsPrimaryKey: Boolean;
     FIsNoValidate: Boolean;
     FIsNullable: Boolean;
+    FIsVirtualData: Boolean;
     FProperty: TRttiProperty;
     FDictionary: Dictionary;
   public
@@ -133,6 +134,7 @@ type
     property IsNoValidate: Boolean read FIsNoValidate write FIsNoValidate;
     property IsHidden: Boolean read FIsHidden write FIsHidden;
     property IsNullable: Boolean read FIsNullable write FIsNullable;
+    property IsVirtualData: Boolean read FIsVirtualData write FIsVirtualData;
     property ColumnProperty: TRttiProperty read FProperty write FProperty;
     property ColumnDictionary: Dictionary read FDictionary write FDictionary;
   end;
@@ -183,10 +185,10 @@ type
     property PropertyRtti: TRttiProperty read FProperty;
     property CascadeActions: TCascadeActions read FCascadeActions;
   end;
-  /// AssociationMappingList
+  // AssociationMappingList
   TAssociationMappingList = class(TObjectList<TAssociationMapping>);
 
-  /// PrimaryKeyMapping
+  // PrimaryKeyMapping
   TPrimaryKeyMapping = class(TMappingDescription)
   private
     FName: string;
@@ -214,7 +216,7 @@ type
     property GuidIncrement: boolean read FGuidIncrement;
   end;
 
-  /// IndexeMapping
+  // IndexeMapping
   TPrimaryKeyColumnsMapping = class(TMappingDescription)
   private
     FColumns: TList<TColumnMapping>;
@@ -224,7 +226,7 @@ type
     property Columns: TList<TColumnMapping> read FColumns;
   end;
 
-  /// PrimaryKeyMapping
+  // PrimaryKeyMapping
   TIndexeMapping = class(TPrimaryKeyMapping)
   public
     constructor Create(const AName: string; const AColumns: TArray<string>;
@@ -232,10 +234,10 @@ type
       const AUnique: Boolean;
       const ADescription: string = '');
   end;
-  /// IndexeMappingList
+  // IndexeMappingList
   TIndexeMappingList = class(TObjectList<TIndexeMapping>);
 
-  /// CheckMapping
+  // CheckMapping
   TCheckMapping = class(TMappingDescription)
   private
     FName: string;
@@ -245,10 +247,10 @@ type
     property Name: string read FName;
     property Condition: string read FCondition;
   end;
-  /// CheckMappingList
+  // CheckMappingList
   TCheckMappingList = class(TObjectList<TCheckMapping>);
 
-  /// RestrictionMapping
+  // RestrictionMapping
   TRestrictionMapping = class
   private
     FRestrictions: TRestrictions;
@@ -256,10 +258,10 @@ type
     constructor Create(ARestrictions: TRestrictions);
     property Restrictions: TRestrictions read FRestrictions;
   end;
-  /// RestrictionMappingList
+  // RestrictionMappingList
   TRestrictionMappingList = class(TObjectList<TRestrictionMapping>);
 
-  /// ForeignKeyKeyMapping
+  // ForeignKeyKeyMapping
   TForeignKeyMapping = class(TMappingDescription)
   private
     FName: string;
@@ -281,10 +283,10 @@ type
     property RuleDelete: TRuleAction read FRuleDelete;
     property RuleUpdate: TRuleAction read FRuleUpdate;
   end;
-  /// ForeignKeyMappingList
+  // ForeignKeyMappingList
   TForeignKeyMappingList = class(TObjectList<TForeignKeyMapping>);
 
-  /// JoinColumnMapping
+  // JoinColumnMapping
   TJoinColumnMapping = class
   private
     FColumnName: string;
@@ -306,7 +308,7 @@ type
     property AliasColumn: string read FAliasColumn;
     property AliasRefTable: string read FAliasRefTable;
   end;
-  /// JoinColumnMappingList
+  // JoinColumnMappingList
   TJoinColumnMappingList = class(TObjectList<TJoinColumnMapping>);
 
   TEnumerationMapping = class
@@ -322,10 +324,10 @@ type
     property EnumType: TEnumType read FEnumType;
     property EnumValues: TList<string> read FEnumValues;
   end;
-  /// EnumerationMappingList
+  // EnumerationMappingList
   TEnumerationMappingList = class(TObjectList<TEnumerationMapping>);
 
-  /// ViewMapping
+  // ViewMapping
   TViewMapping = class(TMappingDescription)
   private
     FName: string;
@@ -345,7 +347,7 @@ type
     property FieldName: String read FFieldName;
     property Events: TFieldEvents read FFieldEvents;
   end;
-  /// FieldEventsMappingList
+  // FieldEventsMappingList
   TFieldEventsMappingList = class(TObjectList<TFieldEventsMapping>);
 
 implementation
@@ -366,14 +368,14 @@ begin
   FProperty := AProperty;
   FLazy := ALazy;
   FCascadeActions := ACascadeActions;
-  /// ColumnsName
+  // ColumnsName
   FColumnsName := TList<string>.Create;
   if Length(AColumnsName) > 0 then
   begin
     for LFor := Low(AColumnsName) to High(AColumnsName) do
       FColumnsName.Add(AColumnsName[LFor]);
   end;
-  /// ColumnsNameRef
+  // ColumnsNameRef
   FColumnsNameRef := TList<string>.Create;
   if Length(AColumnsNameRef) > 0 then
   begin
@@ -475,14 +477,14 @@ begin
   FRuleDelete := ARuleDelete;
   FRuleUpdate := ARuleUpdate;
   FDescription := ADescription;
-  /// FromColumns
+  // FromColumns
   FFromColumns := TList<string>.Create;
   if Length(AFromColumns) > 0 then
   begin
     for iFor := Low(AFromColumns) to High(AFromColumns) do
       FFromColumns.Add(Trim(AFromColumns[iFor]));
   end;
-  /// ToColumns
+  // ToColumns
   FToColumns := TList<string>.Create;
   if Length(AToColumns) > 0 then
   begin
@@ -529,7 +531,7 @@ constructor TEnumerationMapping.Create(AOrdinalType: TRttiOrdinalType;
 var
   iFor: Integer;
 begin
-  /// EnumValues
+  // EnumValues
   FOrdinalType := AOrdinalType;
   FEnumType := AEnumType;
   FEnumValues := TList<string>.Create;

@@ -154,9 +154,7 @@ var
   LField: TField;
   LReadOnly: Boolean;
 begin
-  /// <summary>
-  ///   Busca lista de columnas do mapeamento
-  /// </summary>
+  // Busca lista de columnas do mapeamento
   LColumns := TMappingExplorer
                 .GetInstance
                   .GetMappingColumn(AObject.ClassType);
@@ -164,9 +162,7 @@ begin
   begin
     LProperty := LColumn.ColumnProperty;
     LField := ADataSet.FieldByName(LColumn.ColumnName);
-    /// <summary>
-    ///   Possibilita popular o dado nos campos ReadOnly=True que são JoinColumn.
-    /// </summary>
+    // Possibilita popular o dado nos campos ReadOnly=True que são JoinColumn.
     LReadOnly := LField.ReadOnly;
     LField.ReadOnly := False;
     try
@@ -407,19 +403,19 @@ begin
       Continue;
 
     LFieldName := LCalcField.FieldName;
-    /// DisplayLabel
+    // DisplayLabel
     if Length(LDictionary.DisplayLabel) > 0 then
       ADataSet.FieldByName(LFieldName).DisplayLabel := LDictionary.DisplayLabel;
 
-    /// DisplayFormat
+    // DisplayFormat
     if Length(LDictionary.DisplayFormat) > 0 then
       TDateField(ADataSet.FieldByName(LFieldName)).DisplayFormat := LDictionary.DisplayFormat;
 
-    /// EditMask
+    // EditMask
     if Length(LDictionary.EditMask) > 0 then
       ADataSet.FieldByName(LFieldName).EditMask := LDictionary.EditMask;
 
-    /// Alignment
+    // Alignment
     if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
       ADataSet.FieldByName(LFieldName).Alignment := LDictionary.Alignment;
   end;
@@ -451,34 +447,34 @@ begin
 
       LFieldName := LColumn.ColumnName;
       LField := ADataSet.FieldByName(LFieldName);
-      /// DisplayLabel
+      // DisplayLabel
       if Length(LDictionary.DisplayLabel) > 0 then
         LField.DisplayLabel := LDictionary.DisplayLabel;
 
-      /// ConstraintErrorMessage
+      // ConstraintErrorMessage
       if Length(LDictionary.ConstraintErrorMessage) > 0 then
         LField.ConstraintErrorMessage := LDictionary.ConstraintErrorMessage;
 
-      /// Origin
+      // Origin
       if Length(LDictionary.Origin) > 0 then
         LField.Origin := LDictionary.Origin;
 
-      /// DisplayFormat
+      // DisplayFormat
       if Length(LDictionary.DisplayFormat) > 0 then
         TNumericField(LField).DisplayFormat := LDictionary.DisplayFormat;
 
-      /// EditMask
+      // EditMask
       if Length(LDictionary.EditMask) > 0 then
         LField.EditMask := LDictionary.EditMask;
 
-      /// Alignment
+      // Alignment
       if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
         LField.Alignment := LDictionary.Alignment;
 
-  //    /// Origin
+  //    // Origin
   //    LField.Origin := AObject.GetTable.Name + '.' + LFieldName;
 
-      /// DefaultExpression
+      // DefaultExpression
       if Length(LDictionary.DefaultExpression) > 0 then
       begin
         LField.DefaultExpression := LDictionary.DefaultExpression;
@@ -515,6 +511,8 @@ begin
     for LFor := 1 to ADataSet.Fields.Count -1 do
     begin
       LField := ADataSet.Fields[LFor];
+      if LField.Tag > 0 then
+        Continue;
       if (LField.FieldKind <> fkData) or (LField.FieldName = cInternalField) then
         Continue;
 
@@ -600,29 +598,31 @@ begin
                                             LColumn.Size);
     end;
     LField := ADataSet.FieldByName(LColumn.ColumnName);
-    /// IsWritable
+    // Identificador que o campo é de um tipo virtual só recebe dado em cache
+    if LColumn.IsVirtualData then
+      LField.Tag := 9;
+
+    // IsWritable
     if not LColumn.ColumnProperty.IsWritable then
       LField.ReadOnly := True;
 
-    /// IsJoinColumn
+    // IsJoinColumn
     if LColumn.IsJoinColumn then
       LField.ReadOnly := True;
 
-    /// NotNull the restriction
+    // NotNull the restriction
     if LColumn.IsNotNull then
       LField.Required := True;
 
-    /// Hidden the restriction
+    // Hidden the restriction
     if LColumn.IsHidden then
       LField.Visible := False;
 
-    /// <summary>
-    ///   Criar TFields de campos do tipo TDataSetField
-    /// </summary>
+    // Criar TFields de campos do tipo TDataSetField
     if LColumn.FieldType in [ftDataSet] then
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
   end;
-  /// Trata AutoInc
+  // Trata AutoInc
   LPrimaryKey := TMappingExplorer.GetInstance
                                  .GetMappingPrimaryKey(AObject.ClassType);
   if LPrimaryKey <> nil then
@@ -633,20 +633,14 @@ begin
         ADataSet.FieldByName(LPrimaryKey.Columns[LFor]).DefaultExpression := '-1';
     end;
   end;
-  /// <summary>
-  /// TField para controle interno ao Dataset
-  /// </summary>
+  // TField para controle interno ao Dataset
   TFieldSingleton.GetInstance.AddField(ADataSet, cInternalField, ftInteger);
   ADataSet.Fields[ADataSet.Fields.Count -1].DefaultExpression := '-1';
   ADataSet.Fields[ADataSet.Fields.Count -1].Visible := False;
   ADataSet.Fields[ADataSet.Fields.Count -1].Index   := 0;
-  /// <summary>
-  ///   Adiciona Fields Calcs
-  /// </summary>
+  // Adiciona Fields Calcs
   SetCalcFieldDefsObjectClass(ADataSet, AObject);
-  /// <summary>
-  ///   Adicionar Fields Aggregates
-  /// </summary>
+  // Adicionar Fields Aggregates
   SetAggregateFieldDefsObjectClass(ADataSet, AObject);
 end;
 
@@ -702,6 +696,8 @@ begin
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
+    if LColumn.IsVirtualData then
+      Continue;
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
     try
@@ -781,6 +777,8 @@ begin
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
+    if LColumn.IsVirtualData then
+      Continue;
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
     try
@@ -884,6 +882,8 @@ begin
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
+    if LColumn.IsVirtualData then
+      Continue;
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
     /// <summary>

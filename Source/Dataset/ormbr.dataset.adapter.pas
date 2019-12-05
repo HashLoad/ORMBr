@@ -52,9 +52,7 @@ uses
 type
   TDataSetHack = class(TDataSet)
   end;
-  /// <summary>
-  /// M - Object M
-  /// </summary>
+  // M - Object M
   TDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
     procedure ExecuteCheckNotNull;
@@ -90,9 +88,7 @@ constructor TDataSetAdapter<M>.Create(AConnection: IDBConnection;
 begin
   FConnection := AConnection;
   inherited Create(ADataSet, APageSize, AMasterObject);
-  /// <summary>
-  /// Session que será usado pelo Adapter
-  /// </summary>
+  // Session que será usado pelo Adapter
   FSession := TSessionDataSet<M>.Create(Self, AConnection, APageSize);
 end;
 
