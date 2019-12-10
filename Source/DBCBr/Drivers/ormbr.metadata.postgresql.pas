@@ -92,10 +92,13 @@ begin
     FFieldType.Add('SMALLINT', ftSmallint);
     FFieldType.Add('INT', ftInteger);
     FFieldType.Add('BIGINT', ftLargeint);
-    FFieldType.Add('TIMESTAMP', ftTimeStamp);
     FFieldType.Add('INT4', ftInteger);
     FFieldType.Add('INT8', ftLargeint);
     FFieldType.Add('BYTEA', ftBlob);
+    FFieldType.Add('BOOL', ftBoolean);
+    FFieldType.Add('DATE', ftDate);
+    FFieldType.Add('TIME', ftTime);
+    FFieldType.Add('TIMESTAMP', ftTimeStamp);
   end;
 end;
 
