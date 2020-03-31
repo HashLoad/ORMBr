@@ -275,7 +275,7 @@ end;
 
 function TCQL.&Set(const AColumnName, AColumnValue: String): ICQL;
 begin
-  Result := InternalSet(AColumnName, QuotedStr(AColumnValue));
+  Result := InternalSet(AColumnName, {QuotedStr(AColumnValue)} AColumnValue);
 end;
 
 function TCQL.&On(const AExpression: String): ICQL;

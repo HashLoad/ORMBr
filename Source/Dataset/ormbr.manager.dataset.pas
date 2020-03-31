@@ -52,7 +52,7 @@ uses
     ormbr.dataset.clientdataset,
     {$ENDIF}
   {$ENDIF}
-  /// ORMBr Interface
+  // ORMBr Interface
   {$IFDEF DRIVERRESTFUL}
   ormbr.client.interfaces,
   {$ELSE}
@@ -102,7 +102,7 @@ type
     procedure Save<T: class, constructor>(AObject: T);
     function Current<T: class, constructor>: T;
     function DataSet<T: class, constructor>: TDataSet;
-    /// ObjectSet
+    // ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: Variant): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
@@ -178,7 +178,7 @@ begin
     Exit;
   end;
   LObjectList := Resolver<T>.Find;
-  /// <summary> Limpa a lista de objectos </summary>
+  // Limpa a lista de objectos
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
 end;
 
@@ -215,7 +215,7 @@ begin
   if LMaster = nil then
     Exit;
 
-  /// <summary> Checagem do tipo do dataset definido para uso </summary>
+  // Checagem do tipo do dataset definido para uso
   {$IFDEF USEFDMEMTABLE}
     if ADataSet is TFDMemTable then
       {$IFDEF DRIVERRESTFUL}
@@ -239,7 +239,7 @@ begin
   {$IFNDEF USEMEMDATASET}
     raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
   {$ENDIF}
-  /// <summary> Adiciona o container ao repositório </summary>
+  // Adiciona o container ao repositório
   FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
@@ -276,7 +276,7 @@ begin
   {$IFNDEF USEMEMDATASET}
     raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
   {$ENDIF}
-  /// <summary> Adiciona o container ao repositório </summary>
+  // Adiciona o container ao repositório
   FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
@@ -371,7 +371,7 @@ begin
     Exit;
   end;
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
-  /// <summary> Limpa a lista de objectos </summary>
+  // Limpa a lista de objectos
   FNestedList.AddOrSetValue(TClass(T).ClassName, TObjectList<TObject>(LObjectList));
 end;
 

@@ -27,6 +27,7 @@ uses
   ormbr.factory.firedac,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
+  ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,

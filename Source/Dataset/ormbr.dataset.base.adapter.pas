@@ -49,18 +49,12 @@ uses
   ormbr.mapping.explorerstrategy;
 
 type
-  /// <summary>
-  ///   M - Object M
-  /// </summary>
+  // M - Object M
   TDataSetBaseAdapter<M: class, constructor> = class(TDataSetAbstract<M>)
   private
-    /// <summary>
-    ///   Objeto para captura dos eventos do dataset passado pela interface
-    /// </summary>
+    // Objeto para captura dos eventos do dataset passado pela interface
     FOrmDataSetEvents: TDataSet;
-    /// <summary>
-    ///   Controle de paginação vindo do banco de dados
-    /// </summary>
+    // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
     ///
     procedure ExecuteOneToOne(AObject: M; AProperty: TRttiProperty;
@@ -74,17 +68,11 @@ type
     procedure SetAutoNextPacket(const Value: Boolean);
     procedure ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
   protected
-    /// <summary>
-    ///   Classe para controle de evento interno com os eventos da interface do dataset
-    /// </summary>
+    // Classe para controle de evento interno com os eventos da interface do dataset
     FDataSetEvents: TDataSetEvents;
-    /// <summary>
-    ///   Usado em relacionamento mestre-detalhe, guarda qual objeto pai
-    /// </summary>
+    // Usado em relacionamento mestre-detalhe, guarda qual objeto pai
     FOwnerMasterObject: TObject;
-    /// <summary>
-    ///   Uso interno para fazer mapeamento do registro dataset
-    /// </summary>
+    // Uso interno para fazer mapeamento do registro dataset
     FCurrentInternal: M;
     FMasterObject: TDictionary<string, TDataSetBaseAdapter<M>>;
     FLookupsField: TList<TDataSetBaseAdapter<M>>;
@@ -157,12 +145,12 @@ type
                              const ALookupResultField: string;
                              const ADisplayLabel: string = '');
     function Current: M;
-    /// ObjectSet
+    // ObjectSet
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Integer): M; overload; virtual;
     function Find(const AID: String): M; overload; virtual;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual;
-    /// Property
+    // Property
     property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
   end;
 
@@ -195,9 +183,7 @@ begin
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
   FExplorer := TMappingExplorer.GetInstance;
-  /// <summary>
-  ///   Variável que identifica o campo que guarda o estado do registro.
-  /// </summary>
+  // Variável que identifica o campo que guarda o estado do registro.
   FInternalIndex := 0;
   FCheckedFieldEvents := False;
   if AMasterObject <> nil then
@@ -222,9 +208,7 @@ end;
 
 procedure TDataSetBaseAdapter<M>.Save(AObject: M);
 begin
-  /// <summary>
-  ///   Aualiza o DataSet com os dados a variável interna
-  /// </summary>
+  // Aualiza o DataSet com os dados a variável interna
   FOrmDataSet.Edit;
   TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
@@ -255,7 +239,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  /// Guarda o datasetlookup em uma lista para controle interno
+  // Guarda o datasetlookup em uma lista para controle interno
   FLookupsField.Add(TDataSetBaseAdapter<M>(ALookupDataSet));
   LColumns := FExplorer
                 .GetMappingColumn(FLookupsField.Last.FCurrentInternal.ClassType);
@@ -285,9 +269,7 @@ begin
       FOrmDataSet.Open;
       EnableDataSetEvents;
     end;
-    /// <summary>
-    ///   Abre a tabela do TLookupField
-    /// </summary>
+    // Abre a tabela do TLookupField
     FLookupsField.Last.OpenSQLInternal('');
   end;
 end;
@@ -368,11 +350,9 @@ begin
   try
     while not ADatasetBase.FOrmDataSet.Eof do
     begin
-      /// <summary>
-      ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      /// </summary>
+      // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
-      /// Próximo registro
+      // Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
   finally
@@ -380,9 +360,7 @@ begin
     ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
     ADatasetBase.FOrmDataSet.BlockReadSize := 0;
   end;
-  /// <summary>
-  ///   Populando em hierarquia de vários níveis
-  /// </summary>
+  // Populando em hierarquia de vários níveis
   for LDataSetChild in ADatasetBase.FMasterObject.Values do
     LDataSetChild.FillMastersClass(LDataSetChild, LObject);
 end;
@@ -403,7 +381,7 @@ begin
     raise Exception
             .Create('Not in instance ' + LPropertyType.Parent.ClassName + ' - '
                                        + LPropertyType.Name);
-  ///
+  //
   if ADatasetBase.FCurrentInternal.ClassType <>
      LPropertyType.AsInstance.MetaclassType then
     Exit;
@@ -415,20 +393,16 @@ begin
     begin
       LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectType.MethodCall('Create', []);
-      /// <summary>
-      ///   Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      /// </summary>
+      // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
       TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);
-      /// <summary>
-      ///   Populando em hierarquia de vários níveis
-      /// </summary>
+      // Populando em hierarquia de vários níveis
       for LDataSetChild in ADatasetBase.FMasterObject.Values do
         LDataSetChild.FillMastersClass(LDataSetChild, LObjectType);
 
-      /// Próximo registro
+      // Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
   finally
@@ -533,7 +507,6 @@ procedure TDataSetBaseAdapter<M>.DoAfterScroll(DataSet: TDataSet);
 begin
   if Assigned(FDataSetEvents.AfterScroll) then
     FDataSetEvents.AfterScroll(DataSet);
-
   if FPageSize = -1 then
     Exit;
   if not (FOrmDataSet.State in [dsBrowse]) then
@@ -544,9 +517,7 @@ begin
     Exit;
   if not FAutoNextPacket then
     Exit;
-  /// <summary>
-  ///   Controle de paginação de registros retornados do banco de dados
-  /// </summary>
+  // Controle de paginação de registros retornados do banco de dados
   NextPacket;
 end;
 
@@ -562,9 +533,7 @@ var
 begin
   if Assigned(FDataSetEvents.BeforeCancel) then
     FDataSetEvents.BeforeCancel(DataSet);
-  /// <summary>
-  ///   Executa comando Cancel em cascata
-  /// </summary>
+  // Executa comando Cancel em cascata
   if not Assigned(FMasterObject) then
     Exit;
 
@@ -593,9 +562,7 @@ var
 begin
   if Assigned(FDataSetEvents.BeforeClose) then
     FDataSetEvents.BeforeClose(DataSet);
-  /// <summary>
-  ///   Executa o comando Close em cascata
-  /// </summary>
+  // Executa o comando Close em cascata
   if Assigned(FLookupsField) then
     if FLookupsField.Count > 0 then
       for LChild in FLookupsField do
@@ -620,11 +587,11 @@ begin
   if Assigned(FDataSetEvents.BeforeEdit) then
     FDataSetEvents.BeforeEdit(DataSet);
 
-  /// <summary> Checa o Attributo "FieldEvents" nos TFields somente uma vez </summary>
+  // Checa o Attributo "FieldEvents" nos TFields somente uma vez
   if FCheckedFieldEvents then
     Exit;
 
-  /// ForeingnKey da Child
+  // ForeingnKey da Child
   LFieldEvents := FExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
   if LFieldEvents = nil then
     Exit;
@@ -640,13 +607,11 @@ begin
   if Assigned(FDataSetEvents.BeforeInsert) then
     FDataSetEvents.BeforeInsert(DataSet);
 
-  /// <summary>
-  ///   Checa o Attributo "FieldEvents()" nos TFields somente uma vez
-  /// </summary>
+  // Checa o Attributo "FieldEvents()" nos TFields somente uma vez
   if FCheckedFieldEvents then
     Exit;
 
-  /// ForeingnKey da Child
+  // ForeingnKey da Child
   LFieldEvents := FExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
   if LFieldEvents = nil then
     Exit;
@@ -666,10 +631,8 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LField: TField;
 begin
-  /// <summary>
-  ///   Muda o Status do registro, para identificação do ORMBr dos registros que
-  ///   sofreram alterações.
-  /// </summary>
+  // Muda o Status do registro, para identificação do ORMBr dos registros que
+  // sofreram alterações.
   LField := FOrmDataSet.Fields[FInternalIndex];
   case FOrmDataSet.State of
     dsInsert:
@@ -682,16 +645,12 @@ begin
           LField.AsInteger := Integer(FOrmDataSet.State);
       end;
   end;
-  /// <summary>
-  ///   Dispara o evento do componente
-  /// </summary>
+  // Dispara o evento do componente
   if Assigned(FDataSetEvents.BeforePost) then
     FDataSetEvents.BeforePost(DataSet);
 
-  /// <summary>
-  ///   Aplica o Post() em todas as sub-tabelas relacionadas caso estejam em
-  ///   modo Insert ou Edit.
-  /// </summary>
+  // Aplica o Post() em todas as sub-tabelas relacionadas caso estejam em
+  // modo Insert ou Edit.
   if not FOrmDataSet.Active then
     Exit;
   if FOrmDataSet.RecordCount = 0 then
@@ -713,12 +672,10 @@ end;
 
 procedure TDataSetBaseAdapter<M>.DoNewRecord(DataSet: TDataSet);
 begin
-  /// <summary>
-  /// Busca valor da tabela master, caso aqui seja uma tabela detalhe.
-  /// </summary>
-  GetMasterValues;
   if Assigned(FDataSetEvents.OnNewRecord) then
     FDataSetEvents.OnNewRecord(DataSet);
+  // Busca valor da tabela master, caso aqui seja uma tabela detalhe.
+  GetMasterValues;
 end;
 
 procedure TDataSetBaseAdapter<M>.Delete;
@@ -733,47 +690,47 @@ end;
 
 procedure TDataSetBaseAdapter<M>.GetDataSetEvents;
 begin
-  /// Scroll Events
+  // Scroll Events
   if Assigned(FOrmDataSet.BeforeScroll) then
     FDataSetEvents.BeforeScroll := FOrmDataSet.BeforeScroll;
   if Assigned(FOrmDataSet.AfterScroll) then
     FDataSetEvents.AfterScroll := FOrmDataSet.AfterScroll;
-  /// Open Events
+  // Open Events
   if Assigned(FOrmDataSet.BeforeOpen) then
     FDataSetEvents.BeforeOpen := FOrmDataSet.BeforeOpen;
   if Assigned(FOrmDataSet.AfterOpen) then
     FDataSetEvents.AfterOpen := FOrmDataSet.AfterOpen;
-  /// Close Events
+  // Close Events
   if Assigned(FOrmDataSet.BeforeClose) then
     FDataSetEvents.BeforeClose := FOrmDataSet.BeforeClose;
   if Assigned(FOrmDataSet.AfterClose) then
     FDataSetEvents.AfterClose := FOrmDataSet.AfterClose;
-  /// Delete Events
+  // Delete Events
   if Assigned(FOrmDataSet.BeforeDelete) then
     FDataSetEvents.BeforeDelete := FOrmDataSet.BeforeDelete;
   if Assigned(FOrmDataSet.AfterDelete) then
     FDataSetEvents.AfterDelete := FOrmDataSet.AfterDelete;
-  /// Post Events
+  // Post Events
   if Assigned(FOrmDataSet.BeforePost) then
     FDataSetEvents.BeforePost := FOrmDataSet.BeforePost;
   if Assigned(FOrmDataSet.AfterPost) then
     FDataSetEvents.AfterPost := FOrmDataSet.AfterPost;
-  /// Cancel Events
+  // Cancel Events
   if Assigned(FOrmDataSet.BeforeCancel) then
     FDataSetEvents.BeforeCancel := FOrmDataSet.BeforeCancel;
   if Assigned(FOrmDataSet.AfterCancel) then
     FDataSetEvents.AfterCancel := FOrmDataSet.AfterCancel;
-  /// Insert Events
+  // Insert Events
   if Assigned(FOrmDataSet.BeforeInsert) then
     FDataSetEvents.BeforeInsert := FOrmDataSet.BeforeInsert;
   if Assigned(FOrmDataSet.AfterInsert) then
     FDataSetEvents.AfterInsert := FOrmDataSet.AfterInsert;
-  /// Edit Events
+  // Edit Events
   if Assigned(FOrmDataSet.BeforeEdit) then
     FDataSetEvents.BeforeEdit := FOrmDataSet.BeforeEdit;
   if Assigned(FOrmDataSet.AfterEdit) then
     FDataSetEvents.AfterEdit := FOrmDataSet.AfterEdit;
-  /// NewRecord Events
+  // NewRecord Events
   if Assigned(FOrmDataSet.OnNewRecord) then
     FDataSetEvents.OnNewRecord := FOrmDataSet.OnNewRecord
 end;
@@ -785,7 +742,7 @@ var
   LForeignKeys: TForeignKeyMappingList;
 begin
   Result := False;
-  /// ForeingnKey da Child
+  // ForeingnKey da Child
   LForeignKeys := FExplorer.GetMappingForeignKey(ADataSetChild.FCurrentInternal.ClassType);
   if LForeignKeys = nil then
     Exit;
@@ -877,7 +834,7 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
 begin
-  /// Association
+  // Association
   LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
@@ -911,9 +868,7 @@ begin
         end;
       end;
     end;
-    /// <summary>
-    ///   Populando em hierarquia de vários níveis
-    /// </summary>
+    // Populando em hierarquia de vários níveis
     if LDataSetChild.FMasterObject.Count > 0 then
       LDataSetChild.SetAutoIncValueChilds;
   end;

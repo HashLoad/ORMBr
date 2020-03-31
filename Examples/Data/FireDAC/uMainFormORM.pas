@@ -160,8 +160,8 @@ begin
   oContainerMaster.Open;
 
   /// Outras formas para fazer um open, se precisar
-///  oContainerMaster.Open(10);
-///  oContainerMaster.OpenWhere('master_id = 7', '');
+//  oContainerMaster.Open(10);
+//  oContainerMaster.OpenWhere('master_id > 1', '');
 end;
 
 end.
