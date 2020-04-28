@@ -390,7 +390,7 @@ var
 begin
   LJoinExist := TList<string>.Create;
   try
-    /// JoinColumn
+    // JoinColumn
     LJoinList := TMappingExplorer.GetInstance.GetMappingJoinColumn(AClass);
     if LJoinList = nil then
       Exit;
@@ -409,7 +409,7 @@ begin
       if LJoinExist.IndexOf(LJoin.AliasRefTable) = -1 then
       begin
         LJoinExist.Add(LJoin.RefTableName);
-        /// Join Inner, Left, Right, Full
+        // Join Inner, Left, Right, Full
         if LJoin.Join = InnerJoin then
           ACriteria.InnerJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)

@@ -115,18 +115,12 @@ constructor TFDMemTableAdapter<M>.Create(AConnection: IDBConnection; ADataSet: T
   APageSize: Integer; AMasterObject: TObject);
 begin
   inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
-  /// <summary>
-  /// Captura o component TFDMemTable da IDE passado como parâmetro
-  /// </summary>
+  // Captura o component TFDMemTable da IDE passado como parâmetro
   FOrmDataSet := ADataSet as TFDMemTable;
   FMemTableEvents := TFDMemTableEvents.Create;
-  /// <summary>
-  /// Captura e guarda os eventos do dataset
-  /// </summary>
+  // Captura e guarda os eventos do dataset
   GetDataSetEvents;
-  /// <summary>
-  /// Seta os eventos do ORM no dataset, para que ele sejam disparados
-  /// </summary>
+  // Seta os eventos do ORM no dataset, para que ele sejam disparados
   SetDataSetEvents;
   ///
   if not FOrmDataSet.Active then
@@ -245,18 +239,16 @@ begin
     ApplyInserter(MaxErros);
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
-    /// <summary>
-    ///   Executa o ApplyInternal de toda a hierarquia de dataset filho.
-    /// </summary>
+    // Executa o ApplyInternal de toda a hierarquia de dataset filho.
     if FMasterObject.Count = 0 then
       Exit;
 
     for LDetail in FMasterObject.Values do
     begin
-      /// Before Apply
+      // Before Apply
       LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet);
       LDetail.ApplyInternal(MaxErros);
-      /// After Apply
+      // After Apply
       LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, MaxErros);
     end;
   finally
@@ -273,7 +265,7 @@ var
   LFor: Integer;
 begin
   inherited;
-  /// Filtar somente os registros excluídos
+  // Filtar somente os registros excluídos
   if FSession.DeleteList.Count = 0 then
     Exit;
 
@@ -453,7 +445,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenSQL(ASQL);
@@ -463,11 +455,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableConstraints;

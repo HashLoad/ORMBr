@@ -40,22 +40,16 @@ uses
   ormbr.rtti.helper;
 
 type
-  /// <summary>
-  /// M - Object M
-  /// </summary>
+  // M - Object M
   TDataSetAbstract<M: class, constructor> = class abstract
   protected
     FSession: TSessionAbstract<M>;
-    /// <summary>
-    /// Objeto para controle de estado do registro
-    /// </summary>
+    // Objeto para controle de estado do registro
     FOrmDataSource: TDataSource;
     procedure RefreshDataSetOneToOneChilds(AFieldName: string); virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
   public
-    /// <summary>
-    /// Objeto interface com o DataSet passado pela interface.
-    /// </summary>
+    // Objeto interface com o DataSet passado pela interface.
     FOrmDataSet: TDataSet;
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; virtual;

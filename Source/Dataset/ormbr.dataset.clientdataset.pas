@@ -49,9 +49,7 @@ uses
   ormbr.factory.interfaces;
 
 type
-  /// <summary>
-  /// Captura de eventos específicos do componente TClientDataSet
-  /// </summary>
+  // Captura de eventos específicos do componente TClientDataSet
   TClientDataSetEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TRemoteEvent;
@@ -61,10 +59,8 @@ type
     property AfterApplyUpdates: TRemoteEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  /// <summary>
-  /// Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  /// M - Object Model
-  /// </summary>
+  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
+  // M - Object Model
   TClientDataSetAdapter<M: class, constructor> = class(TDataSetAdapter<M>)
   private
     FOrmDataSet: TClientDataSet;
@@ -107,20 +103,14 @@ constructor TClientDataSetAdapter<M>.Create(AConnection: IDBConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
   inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
-  /// <summary>
-  /// Captura o component TClientDataset da IDE passado como parâmetro
-  /// </summary>
+  // Captura o component TClientDataset da IDE passado como parâmetro
   FOrmDataSet := ADataSet as TClientDataSet;
   FClientDataSetEvents := TClientDataSetEvents.Create;
-  /// <summary>
-  /// Captura e guarda os eventos do dataset
-  /// </summary>
+  // Captura e guarda os eventos do dataset
   GetDataSetEvents;
-  /// <summary>
-  /// Seta os eventos do ORM no dataset, para que ele sejam disparados
-  /// </summary>
+  // Seta os eventos do ORM no dataset, para que ele sejam disparados
   SetDataSetEvents;
-  ///
+  //
   if not FOrmDataSet.Active then
   begin
      FOrmDataSet.CreateDataSet;
@@ -153,9 +143,7 @@ procedure TClientDataSetAdapter<M>.EmptyDataSet;
 begin
   inherited;
   FOrmDataSet.EmptyDataSet;
-  /// <summary>
-  /// Lista os registros das tabelas filhas relacionadas
-  /// </summary>
+  // Lista os registros das tabelas filhas relacionadas
   EmptyDataSetChilds;
 end;
 
@@ -219,7 +207,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenID(AID);
@@ -229,11 +217,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableControls;
@@ -253,7 +239,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenSQL(ASQL);
@@ -263,11 +249,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableControls;
@@ -287,7 +271,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);
@@ -297,11 +281,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableControls;
@@ -323,18 +305,16 @@ begin
     ApplyInserter(MaxErros);
     ApplyUpdater(MaxErros);
     ApplyDeleter(MaxErros);
-    /// <summary>
-    ///   Executa o ApplyInternal de toda a hierarquia de dataset filho.
-    /// </summary>
+    // Executa o ApplyInternal de toda a hierarquia de dataset filho.
     if FMasterObject.Count = 0 then
       Exit;
 
     for LDetail in FMasterObject.Values do
     begin
-      /// Before Apply
+      // Before Apply
       LDetail.DoBeforeApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
       LDetail.ApplyInternal(MaxErros);
-      /// After Apply
+      // After Apply
       LDetail.DoAfterApplyUpdates(LDetail.FOrmDataSet, LOwnerData);
     end;
   finally
@@ -350,7 +330,7 @@ var
   LFor: Integer;
 begin
   inherited;
-  /// Filtar somente os registros excluídos
+  // Filtar somente os registros excluídos
   if FSession.DeleteList.Count = 0 then
     Exit;
 

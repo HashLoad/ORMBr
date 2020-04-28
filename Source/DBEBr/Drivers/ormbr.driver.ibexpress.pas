@@ -351,7 +351,6 @@ begin
      FFirstNext := True
   else
      FDataSet.Next;
-
   Result := not FDataSet.Eof;
 end;
 

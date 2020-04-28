@@ -112,17 +112,15 @@ var
   LFor: Integer;
 begin
   inherited DoBeforeDelete(DataSet);
-  /// <summary> Alimenta a lista com registros deletados </summary>
+  // Alimenta a lista com registros deletados
   FSession.DeleteList.Add(M.Create);
   TBind.Instance
        .SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
 
-  /// <summary> Deleta registros de todos os DataSet filhos </summary>
+  // Deleta registros de todos os DataSet filhos
   EmptyDataSetChilds;
-  /// <summary>
-  /// Exclui os registros dos NestedDataSets linkados ao FOrmDataSet
-  /// Recurso usado em banco NoSQL
-  /// </summary>
+  // Exclui os registros dos NestedDataSets linkados ao FOrmDataSet
+  // Recurso usado em banco NoSQL
   for LFor := 0 to TDataSetHack(FOrmDataSet).NestedDataSets.Count - 1 do
   begin
     LDataSet := TDataSetHack(FOrmDataSet).NestedDataSets.Items[LFor];
@@ -186,25 +184,19 @@ begin
     Exit;
   if FOrmDataSet.RecordCount = 0 then
     Exit;
-  /// <summary>
-  ///   Se Count > 0, identifica-se que é o objeto é o Master
-  /// </summary>
+  // Se Count > 0, identifica-se que é o objeto é o Master
   if FMasterObject.Count = 0 then
     Exit;
 
-  /// <summary>
-  ///   Popula o objeto com o registro atual do dataset Master para filtar
-  ///   os filhos com os valores das chaves.
-  /// </summary>
+  // Popula o objeto com o registro atual do dataset Master para filtar
+  // os filhos com os valores das chaves.
   LObject := M.Create;
   try
     TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
     for LDataSetChild in FMasterObject.Values do
     begin
       LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
-      /// <summary>
-      ///   Monta o comando SQL para abrir registros filhos
-      /// </summary>
+      // Monta o comando SQL para abrir registros filhos
       if Length(LSQL) > 0 then
         LDataSetChild.OpenSQLInternal(LSQL);
     end;
@@ -230,10 +222,8 @@ begin
     LOwnerObject := TDataSetBaseAdapter<M>(FOwnerMasterObject);
     if LOwnerObject <> nil then
     begin
-      /// <summary>
-      /// Popula o objeto com o registro atual do dataset Master para filtar
-      /// os filhos com os valores das chaves.
-      /// </summary>
+      // Popula o objeto com o registro atual do dataset Master para filtar
+      // os filhos com os valores das chaves.
       TBind.Instance
            .SetFieldToProperty(LOwnerObject.FOrmDataSet,
                       TObject(LOwnerObject.FCurrentInternal));
@@ -295,10 +285,8 @@ begin
   begin
     if not (LAssociation.Multiplicity in [OneToOne, ManyToOne]) then
       Continue;
-    /// <summary>
-    ///   Checa se o campo que recebeu a alteração, é um campo de associação
-    ///   Se for é feito um novo select para atualizar a propriedade associada.
-    /// </summary>
+    // Checa se o campo que recebeu a alteração, é um campo de associação
+    // Se for é feito um novo select para atualizar a propriedade associada.
     if LAssociation.ColumnsName.IndexOf(AFieldName) = -1 then
       Continue;
     if not FMasterObject.ContainsKey(LAssociation.ClassNameRef) then
@@ -306,10 +294,8 @@ begin
     LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
     if LDataSetChild = nil then
       Continue;
-    /// <summary>
-    ///   Popula o objeto com o registro atual do dataset Master para filtar
-    ///   os filhos com os valores das chaves.
-    /// </summary>
+    // Popula o objeto com o registro atual do dataset Master para filtar
+    // os filhos com os valores das chaves.
     LObject := M.Create;
     try
       TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
@@ -324,9 +310,7 @@ end;
 
 procedure TDataSetAdapter<M>.DoNewRecord(DataSet: TDataSet);
 begin
-  /// <summary>
-  /// Limpa registros do dataset em memória antes de receber os novos registros
-  /// </summary>
+  // Limpa registros do dataset em memória antes de receber os novos registros
   EmptyDataSetChilds;
   inherited DoNewRecord(DataSet);
 end;

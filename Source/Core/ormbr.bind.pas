@@ -618,6 +618,10 @@ begin
     if LColumn.IsHidden then
       LField.Visible := False;
 
+    // IsPrimaryKey
+	if LColumn.IsPrimaryKey then 
+	  LField.ProviderFlags := [pfInWhere, pfInKey];  
+
     // Criar TFields de campos do tipo TDataSetField
     if LColumn.FieldType in [ftDataSet] then
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
