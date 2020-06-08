@@ -139,9 +139,7 @@ end;
 procedure TDataSetAdapter<M>.DoBeforePost(DataSet: TDataSet);
 begin
   inherited DoBeforePost(DataSet);
-  /// <summary>
-  /// Rotina de validação se o campo foi deixado null
-  /// </summary>
+  // Rotina de validação se o campo foi deixado null
   ExecuteCheckNotNull;
 end;
 
@@ -165,7 +163,7 @@ begin
       Continue;
     if LColumn.IsNullable then
       Continue;
-    if LColumn.FieldType in [ftDataSet, ftADT] then
+    if LColumn.FieldType in [ftDataSet, ftADT, ftBlob] then
       Continue;
     if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
       raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,

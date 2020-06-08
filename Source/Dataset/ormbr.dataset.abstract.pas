@@ -37,6 +37,7 @@ uses
   Generics.Collections,
   ormbr.dataset.fields,
   ormbr.session.abstract,
+  ormbr.mapping.classes,
   ormbr.rtti.helper;
 
 type
@@ -58,6 +59,9 @@ type
 
 implementation
 
+uses
+  ormbr.mapping.explorer;
+
 { TDataSetAbstract<M> }
 
 constructor TDataSetAbstract<M>.Create(ADataSet: TDataSet; APageSize: Integer;
@@ -77,9 +81,10 @@ end;
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 var
   LValue: TDictionary<string, string>;
-  LContext: TRttiContext;
-  LObjectType: TRttiType;
-  LProperty: TRttiProperty;
+//  LContext: TRttiContext;
+//  LObjectType: TRttiType;
+  LColumn: TColumnMapping;
+  LColumns: TColumnMappingList;
 begin
   if not (FOrmDataSet.State in [dsInsert, dsEdit]) then
     Exit;
@@ -97,15 +102,29 @@ begin
     begin
       if not LValue.ContainsValue(Field.FieldName) then
       begin
-        LObjectType := LContext.GetType(TypeInfo(M));
-        for LProperty in LObjectType.GetProperties do
+        LColumns := TMappingExplorer.GetInstance.GetMappingColumn(M);
+        for LColumn in LColumns do
         begin
-          if LProperty.GetColumn.ColumnName = Field.FieldName then
-          begin
-            LValue.Add(LProperty.Name, Field.FieldName);
-            Break;
-          end;
+          if LColumn.ColumnProperty = nil then
+            Continue;
+          if LColumn.ColumnProperty.IsVirtualData then
+            Continue;
+          if LColumn.ColumnProperty.IsNoUpdate then
+            Continue;
+          if LColumn.ColumnName <> Field.FieldName then
+            Continue;
+          LValue.Add(LColumn.ColumnProperty.Name, Field.FieldName);
+          Break;
         end;
+//        LObjectType := LContext.GetType(TypeInfo(M));
+//        for LProperty in LObjectType.GetProperties do
+//        begin
+//          if LProperty.GetColumn.ColumnName = Field.FieldName then
+//          begin
+//            LValue.Add(LProperty.Name, Field.FieldName);
+//            Break;
+//          end;
+//        end;
       end;
     end;
   end;

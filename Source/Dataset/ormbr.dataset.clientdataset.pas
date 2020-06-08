@@ -182,9 +182,7 @@ begin
   LOrderBy := AOrderBy;
   if LOrderBy = '' then
   begin
-    LFields := TMappingExplorer
-                  .GetInstance
-                    .GetMappingOrderBy(TClass(M));
+    LFields := TMappingExplorer.GetInstance.GetMappingOrderBy(TClass(M));
     if LFields <> nil then
       LOrderBy := LFields.ColumnsName;
   end;
@@ -192,6 +190,7 @@ begin
   begin
     LOrderBy := StringReplace(UpperCase(LOrderBy), ' ASC' , '', [rfReplaceAll]);
     LOrderBy := StringReplace(UpperCase(LOrderBy), ' DESC', '', [rfReplaceAll]);
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ',', ';', [rfReplaceAll]);
     Result := LOrderBy;
   end;
 end;
