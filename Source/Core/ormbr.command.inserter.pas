@@ -140,8 +140,11 @@ begin
       ///   Tratamento para o tipo ftBoolean nativo, indo como Integer
       ///   para gravar no banco.
       /// </summary>
-      if (FConnection.GetDriverName <> dnPostgreSQL) and
-         (DataType in [ftBoolean]) then
+      if FConnection.GetDriverName = dnPostgreSQL then
+	    Exit;
+      // Tratamento para o tipo ftBoolean nativo, indo como Integer
+      // para gravar no banco.
+      if DataType in [ftBoolean] then
       begin
         LBooleanValue := IfThen(Boolean(Value), 1, 0);
         DataType := ftInteger;
