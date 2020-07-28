@@ -96,9 +96,9 @@ begin
     FFieldType.Add('INT8', ftLargeint);
     FFieldType.Add('BYTEA', ftBlob);
     FFieldType.Add('BOOL', ftBoolean);
+    FFieldType.Add('TIMESTAMP', ftTimeStamp);
     FFieldType.Add('DATE', ftDate);
     FFieldType.Add('TIME', ftTime);
-    FFieldType.Add('TIMESTAMP', ftTimeStamp);
   end;
 end;
 
