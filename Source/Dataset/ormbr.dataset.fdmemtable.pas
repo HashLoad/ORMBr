@@ -205,24 +205,21 @@ function TFDMemTableAdapter<M>.GetIndexFieldNames(AOrderBy: String): String;
 var
   LFields: TOrderByMapping;
   LOrderBy: String;
-  LPosD: Integer;
 begin
   Result := '';
   LOrderBy := AOrderBy;
   if LOrderBy = '' then
   begin
-    LFields := TMappingExplorer
-                  .GetInstance
-                    .GetMappingOrderBy(TClass(M));
+    LFields := TMappingExplorer.GetInstance.GetMappingOrderBy(TClass(M));
     if LFields <> nil then
       LOrderBy := LFields.ColumnsName;
   end;
   if LOrderBy <> '' then
   begin
-    LPosD := Pos(' DESC', UpperCase(LOrderBy));
-    LOrderBy := StringReplace(UpperCase(LOrderBy), ' ASC' , '', [rfReplaceAll]);
-    LOrderBy := StringReplace(UpperCase(LOrderBy), ' DESC', '', [rfReplaceAll]);
-    Result := LOrderBy + ifThen(LPosD > 0, ':D', ':A');
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' ASC' , ':A', [rfReplaceAll]);
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ' DESC', ':D', [rfReplaceAll]);
+    LOrderBy := StringReplace(UpperCase(LOrderBy), ',', ';', [rfReplaceAll]);
+    Result   := LOrderBy;
   end;
 end;
 
@@ -481,7 +478,7 @@ begin
     FConnection.Connect;
   try
     try
-      /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
+      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);
@@ -491,11 +488,9 @@ begin
     end;
   finally
     EnableDataSetEvents;
-    /// <summary> Define a order no dataset </summary>
+    // Define a order no dataset
     FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
-    /// <summary>
-    /// Erro interno do FireDAC se no método First se o dataset estiver vazio
-    /// </summary>
+    // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
     FOrmDataSet.EnableConstraints;

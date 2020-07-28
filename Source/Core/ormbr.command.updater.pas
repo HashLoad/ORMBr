@@ -147,6 +147,8 @@ begin
         DataType := LFieldType.FieldType;
         ParamType := ptInput;
         Value := GetParamValue(AObject, LProperty, DataType);
+        if FConnection.GetDriverName = dnPostgreSQL then
+	      Exit;
         // Tratamento para o tipo ftBoolean nativo, indo como Integer
         // para gravar no banco.
         if (FConnection.GetDriverName <> dnPostgreSQL) and

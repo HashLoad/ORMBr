@@ -127,9 +127,7 @@ begin
         end;
       end;
     end;
-    /// <summary>
-    ///   Alimenta cada parâmetro com o valor de cada propriedade do objeto.
-    /// </summary>
+    // Alimenta cada parâmetro com o valor de cada propriedade do objeto.
     with FParams.Add as TParam do
     begin
       Name := LColumn.ColumnName;
