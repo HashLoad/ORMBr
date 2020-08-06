@@ -97,6 +97,7 @@ type
     function GetFieldType(const AFieldName: string): TFieldType; overload; override;
     function GetField(const AFieldName: string): TField; override;
     function FieldDefs: TFieldDefs; override;
+    function DataSet: TDataSet; override;
   end;
 
 implementation
@@ -334,6 +335,11 @@ begin
   Create;
   FDataSet := ADataSet;
   FRecordCount := FDataSet.RecordCount;
+end;
+
+function TDriverResultSetFIBPlus.DataSet: TDataSet;
+begin
+  Result := FDataSet;
 end;
 
 destructor TDriverResultSetFIBPlus.Destroy;

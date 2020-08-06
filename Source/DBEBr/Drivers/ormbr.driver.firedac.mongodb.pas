@@ -52,9 +52,7 @@ uses
   ormbr.factory.interfaces;
 
 type
-  /// <summary>
-  /// Classe de conexão concreta com FireDAC
-  /// </summary>
+  // Classe de conexão concreta com FireDAC
   TDriverMongoFireDAC = class(TDriverConnection)
   protected
     FConnection: TFDConnection;

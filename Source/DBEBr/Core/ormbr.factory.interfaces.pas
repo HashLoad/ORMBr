@@ -72,10 +72,8 @@ type
     property AsFieldName: String read FAsFieldName write FAsFieldName;
   end;
 
-  /// <summary>
-  ///   Unit : ormbr.driver.connection.pas
-  ///   Classe : TDriverResultSet<T: TDataSet>
-  /// </summary>
+  // Unit : ormbr.driver.connection.pas
+  // Classe : TDriverResultSet<T: TDataSet>
   IDBResultSet = interface
     ['{A8ECADF6-A9AF-4610-8429-3B0A5CD0295C}']
     function GetFetchingAll: Boolean;
@@ -89,6 +87,7 @@ type
     function GetField(const AFieldName: string): TField;
     function GetFieldType(const AFieldName: string): TFieldType;
     function FieldByName(const AFieldName: string): TAsField;
+    function DataSet: TDataSet;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
