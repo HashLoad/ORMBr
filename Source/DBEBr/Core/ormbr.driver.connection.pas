@@ -38,9 +38,7 @@ uses
   ormbr.factory.interfaces;
 
 type
-  /// <summary>
-  ///   Classe de conexões abstract
-  /// </summary>
+  // Classe de conexões abstract
   TDriverConnection = class abstract
   protected
     FDriverName: TDriverName;
@@ -63,9 +61,7 @@ type
     property DriverName: TDriverName read FDriverName;
   end;
 
-  /// <summary>
-  ///   Classe de trasações abstract
-  /// </summary>
+  // Classe de trasações abstract
   TDriverTransaction = class abstract(TInterfacedObject, IDBTransaction)
   public
     constructor Create(AConnection: TComponent); virtual; abstract;
@@ -107,6 +103,7 @@ type
     function FieldByName(const AFieldName: string): TAsField; virtual;
     function RecordCount: Integer; virtual;
     function FieldDefs: TFieldDefs; virtual; abstract;
+    function DataSet: TDataSet; virtual; abstract;
     property FetchingAll: Boolean read GetFetchingAll write SetFetchingAll;
   end;
 
@@ -117,6 +114,7 @@ type
     constructor Create(ADataSet: T); overload; virtual;
     procedure Close; override;
     function FieldDefs: TFieldDefs; override;
+    function DataSet: TDataSet; override;
   end;
 
   TORMBrField = class(TAsField)
@@ -159,13 +157,16 @@ implementation
 constructor TDriverResultSet<T>.Create(ADataSet: T);
 begin
   Create;
-  /// <summary>
-  ///   Guarda RecordCount do último SELECT executado no IDBResultSet
-  /// </summary>
+  // Guarda RecordCount do último SELECT executado no IDBResultSet
   try
   FRecordCount := FDataSet.RecordCount;
   except
   end;
+end;
+
+function TDriverResultSet<T>.DataSet: TDataSet;
+begin
+  Result := FDataSet;
 end;
 
 procedure TDriverResultSet<T>.Close;
