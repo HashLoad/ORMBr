@@ -305,6 +305,7 @@ begin
     begin
       if      FDriverName = dnFirebird  then AColumn.TypeName := 'BLOB SUB_TYPE 1'
       else if FDriverName = dnInterbase then AColumn.TypeName := 'BLOB SUB_TYPE 1'
+      else if FDriverName = dnMSSQL     then AColumn.TypeName := 'NTEXT'
       else if FDriverName = dnOracle    then AColumn.TypeName := 'NCLOB'
       else                                   AColumn.TypeName := 'TEXT';
     end;
@@ -335,7 +336,7 @@ begin
   if MatchStr(AColumn.TypeName, ['SMALLINT','INT','INT4','INT8','INTEGER',
                                  'DATE','TIME','BIGINT','DATETIME','TIMESTAMP',
                                  'REAL','DOUBLE PRECISION','BLOB SUB_TYPE TEXT',
-                                 'TEXT','NUMBER','BLOB SUB_TYPE 1']) then
+                                 'TEXT','NTEXT','NUMBER','BLOB SUB_TYPE 1']) then
     begin
       AColumn.Size := 0;
       AColumn.Precision := 0;

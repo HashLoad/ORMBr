@@ -202,10 +202,18 @@ end;
 function TManagerObjectSet.New<T>: Integer;
 var
   LNewObject: T;
+  LObjectList: TObjectList<T>;
 begin
   Result := -1;
   if not FOwnerNestedList then
     Exit;
+  if not Assigned(FRepository.Items[TClass(T).ClassName].NestedList) then
+  begin
+    LObjectList := TObjectList<T>.Create;
+    LObjectList.OnNotify := ListChanged<T>;
+    FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
+    FCurrentIndex := 0;
+  end;
   Resolver<T>.New(LNewObject);
   FRepository.Items[TClass(T).ClassName].NestedList.Add(LNewObject);
   FCurrentIndex := FRepository.Items[TClass(T).ClassName].NestedList.Count -1;
