@@ -52,7 +52,7 @@ type
     [Dictionary('Descrição Lookup','Mensagem de validação','','','',taLeftJustify)]
     property lookup_description: String read Flookup_description write Flookup_description;
 
-    [Restrictions([NotNull])]
+    [Restrictions([NoUpdate, NotNull])]
     [Column('price', ftFloat, 18, 3)]
     [Dictionary('Preço Unitário','Mensagem de validação','','#,###,##0.00','',taRightJustify)]
     property price: Double read Fprice write Fprice;

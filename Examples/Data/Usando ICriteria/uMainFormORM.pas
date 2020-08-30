@@ -91,6 +91,9 @@ begin
                   .SetConnection(oConn)
                     .SQL(LSQL)
                       .AsResultSet;
+  if LResultSet.DataSet.RecordCount > 0 then
+    ShowMessage('Teste');
+
   try
     if LResultSet.RecordCount > 0 then
       Memo1.Lines.Add(LResultSet.FieldByName('client_name').AsString)
@@ -122,6 +125,9 @@ begin
                   .SetConnection(oConn)
                     .SQL(LSQL)
                       .AsResultSet;
+  if LResultSet.DataSet.RecordCount > 0 then
+    ShowMessage('Teste');
+
   try
     if LResultSet.RecordCount > 0 then
     begin

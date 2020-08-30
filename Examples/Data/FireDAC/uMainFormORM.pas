@@ -78,6 +78,7 @@ type
     Button4: TButton;
     Button5: TButton;
     DBCheckBox1: TDBCheckBox;
+    ClientDataSet1: TClientDataSet;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -157,11 +158,11 @@ begin
                                   'lookup_id',
                                   'lookup_description',
                                   'Descrição Lookup');
-  oContainerMaster.Open;
+//  oContainerMaster.Open;
 
   /// Outras formas para fazer um open, se precisar
 //  oContainerMaster.Open(10);
-//  oContainerMaster.OpenWhere('master_id > 1', '');
+  oContainerMaster.OpenWhere('', 'description desc, master_id asc');
 end;
 
 end.

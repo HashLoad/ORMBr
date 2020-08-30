@@ -73,8 +73,8 @@ type
     property client_id: Integer read Fclient_id write Fclient_id;
 
     [Restrictions([NoInsert, NoUpdate])]
-    [Column('client_name', ftString, 60)]
-    [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin)]
+    [Column('aliascollumn', ftString, 60)]
+    [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin, 'aliascollumn', 'aliastable')]
     [Dictionary('Nome do Cliente', '')]
     property client_name: string read fclient_name write fclient_name;
 

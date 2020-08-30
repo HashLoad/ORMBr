@@ -321,4 +321,20 @@ object Form3: TForm3
     Left = 354
     Top = 222
   end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    FieldDefs = <>
+    IndexDefs = <
+      item
+        Name = 'ClientDataSet1Index1'
+      end
+      item
+        Name = 'ClientDataSet1Index2'
+      end>
+    IndexName = 'Indice'
+    Params = <>
+    StoreDefs = True
+    Left = 576
+    Top = 86
+  end
 end

@@ -73,9 +73,9 @@ type
     [Column('MyEnum', ftInteger)]
     property MyEnum: TMyEnum read FEnumer write FEnumer;
 
-    [Enumeration(TEnumType.etBoolean, '0, 1')]
-    [Column('Inativo', ftBoolean)]
-    property Inativo: Boolean read FInativo write FInativo;
+//    [Enumeration(TEnumType.etBoolean, '0, 1')]
+//    [Column('Inativo', ftBoolean)]
+//    property Inativo: Boolean read FInativo write FInativo;
 
     [Restrictions([NoInsert, NoUpdate])]
     [Column('client_name', ftString, 60)]
