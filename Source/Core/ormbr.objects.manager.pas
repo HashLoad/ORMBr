@@ -222,18 +222,21 @@ begin
   /// </summary>
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
-  LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
-  if LAssociationList = nil then
-    Exit;
-  for LAssociation in LAssociationList do
+  if Assigned(AObject) then
   begin
-     if LAssociation.Lazy then
-       Continue;
-     if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
-        ExecuteOneToOne(AObject, LAssociation.PropertyRtti, LAssociation)
-     else
-     if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
-        ExecuteOneToMany(AObject, LAssociation.PropertyRtti, LAssociation);
+    LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
+    if LAssociationList = nil then
+      Exit;
+    for LAssociation in LAssociationList do
+    begin
+       if LAssociation.Lazy then
+         Continue;
+       if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+          ExecuteOneToOne(AObject, LAssociation.PropertyRtti, LAssociation)
+       else
+       if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+          ExecuteOneToMany(AObject, LAssociation.PropertyRtti, LAssociation);
+    end;
   end;
 end;
 
@@ -279,6 +282,11 @@ begin
     while LResultSet.NotEof do
     begin
       LObjectValue := AProperty.GetNullableValue(AObject).AsObject;
+      if LObjectValue = nil then
+      begin
+        LObjectValue := AProperty.PropertyType.AsInstance.MetaclassType.Create;
+        AProperty.SetValue(AObject, TValue.from<TObject>(LObjectValue));
+      end;
       /// <summary>
       ///   Preenche o objeto com os dados do ResultSet
       /// </summary>

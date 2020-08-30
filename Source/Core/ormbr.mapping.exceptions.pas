@@ -60,6 +60,21 @@ type
     constructor Create(const ADisplayLabel: String; const AValue: Double);
   end;
 
+  ENotEmptyConstraint = class(Exception)
+  public
+    constructor Create(const ADisplayLabel: String);
+  end;
+
+  EMaxLengthConstraint = class(Exception)
+  public
+    constructor Create(const ADisplayLabel: String; const MaxLength: Integer);
+  end;
+
+  EMinLengthConstraint = class(Exception)
+  public
+    constructor Create(const ADisplayLabel: String; const MinLength: Integer);
+  end;
+
   EDefaultExpression = class(Exception)
   public
     constructor Create(const ADefault, AColumnName, AClassName: string);
@@ -117,6 +132,27 @@ constructor EMaximumValueConstraint.Create(const ADisplayLabel: String; const AV
 begin
   inherited CreateFmt('O valor máximo do campo [ %s ] permitido é [ %s ]!',
                       [ADisplayLabel, FloatToStr(AValue)]);
+end;
+
+{ ENotEmptyConstraint }
+
+constructor ENotEmptyConstraint.Create(const ADisplayLabel: String);
+begin
+  inherited CreateFmt('O campo [ %s ] não pode ser vazio!', [ADisplayLabel]);
+end;
+
+{ EMaxLengthConstraint }
+
+constructor EMaxLengthConstraint.Create(const ADisplayLabel: String; const MaxLength: Integer);
+begin
+  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho maior que %s!', [ADisplayLabel, MaxLength.ToString]);
+end;
+
+{ EMinLengthConstraint }
+
+constructor EMinLengthConstraint.Create(const ADisplayLabel: String; const MinLength: Integer);
+begin
+  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho menor que %s!', [ADisplayLabel, MinLength.ToString]);
 end;
 
 end.

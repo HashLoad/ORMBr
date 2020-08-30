@@ -111,6 +111,8 @@ begin
             Continue;
           if LColumn.ColumnProperty.IsNoUpdate then
             Continue;
+          if LColumn.ColumnProperty.IsAssociation then
+            Continue;
           if LColumn.ColumnName <> Field.FieldName then
             Continue;
           LValue.Add(LColumn.ColumnProperty.Name, Field.FieldName);

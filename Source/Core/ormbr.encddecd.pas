@@ -33,13 +33,19 @@ interface
 
 uses
   Classes,
-  StrUtils,
-  SysUtils;
+  SysUtils,
+  StrUtils;
+
+resourcestring
+  SMemoryStreamError = 'Out of memory while expanding memory stream';
+  sErrorDecodingURLText = 'Error decoding URL style (%%XX) encoded string at position %d';
+  sInvalidURLEncodedChar = 'Invalid URL encoded character (%s) at position %d';
+  sInvalidHTMLEncodedChar = 'Invalid HTML encoded character (%s) at position %d';
 
 type
+  _PAnsiChr = PAnsiChar;
+  MarshaledAString = _PAnsiChr;
   TURLEncoding = class;
-
-  TMarshaledAString = PAnsiChar;
 
   TNetEncoding = class
   private
@@ -59,10 +65,8 @@ type
     function DoEncode(const Input: array of Byte): TBytes; overload; virtual;
     function DoEncode(const Input: string): string; overload; virtual; abstract;
     function DoDecodeStringToBytes(const Input: string): TBytes; virtual;
-    function DoEncodeBytesToString(const Input:
-      array of Byte): string; overload; virtual;
-    function DoEncodeBytesToString(const Input: Pointer;
-      Size: Integer): string; overload; virtual;
+    function DoEncodeBytesToString(const Input: array of Byte): string; overload; virtual;
+    function DoEncodeBytesToString(const Input: Pointer; Size: Integer): string; overload; virtual;
   public
     function Decode(const Input, Output: TStream): Integer; overload;
     function Decode(const Input: array of Byte): TBytes; overload;
@@ -72,8 +76,7 @@ type
     function Encode(const Input: string): string; overload;
     function DecodeStringToBytes(const Input: string): TBytes;
     function EncodeBytesToString(const Input: array of Byte): string; overload;
-    function EncodeBytesToString(const Input: Pointer;
-      Size: Integer): string; overload;
+    function EncodeBytesToString(const Input: Pointer; Size: Integer): string; overload;
     class property Base64: TNetEncoding read GetBase64Encoding;
     class property HTML: TNetEncoding read GetHTMLEncoding;
     class property URL: TURLEncoding read GetURLEncoding;
@@ -83,6 +86,7 @@ type
   protected
   const
     kCharsPerLine = 76;
+    kLineSeparator = #13#10;
 
     DecodeTable: array[0..79] of Int8 = (
       62,  -1,  -1,  -1,  63,  52,  53,  54,  55,  56,  57, 58, 59, 60, 61, -1,
@@ -120,13 +124,12 @@ type
 
     procedure InitEncodeState(var State: TEncodeState; const CharSize: Integer);
     procedure InitDecodeState(var State: TDecodeState);
-    function EstimateEncodeLength(const InputLength: UInt64;
-      const CharSize: Integer): UInt64;
+    function EstimateEncodeLength(const InputLength: UInt64; const CharSize: Integer): UInt64;
     function EstimateDecodeLength(const InputLength: UInt64): UInt64;
     function DecodeValue(const Code: Byte): Integer; inline;
     function EncodeValue(const Code: Integer): Byte; inline;
-    function EncodeBytes(Input, Output: PByte; InputLen: Integer;
-      LineSeparator: array of Byte; var State: TEncodeState): Integer;
+    function EncodeBytes(Input, Output: PByte; InputLen: Integer; LineSeparator: array of Byte;
+      var State: TEncodeState): Integer;
     function EncodeBytesEnd(Output: PByte; var State: TEncodeState): Integer;
     function DecodeBytes(Input, Output: PByte; InputLen: Integer; CharSize: Integer;
       var State: TDecodeState): Integer;
@@ -138,13 +141,11 @@ type
     function DoEncode(const Input: string): string; overload; override;
     function DoDecodeStringToBytes(const Input: string): TBytes; override;
     function DoEncodeBytesToString(const Input: array of Byte): string; overload; override;
-    function DoEncodeBytesToString(const Input: Pointer;
-      Size: Integer): string; overload; override;
+    function DoEncodeBytesToString(const Input: Pointer; Size: Integer): string; overload; override;
   public
     constructor Create; overload; virtual;
-    constructor Create(const CharsPerLine: Integer); overload; virtual;
-    constructor Create(const CharsPerLine: Integer;
-      const LineSeparator: string); overload; virtual;
+    constructor Create(CharsPerLine: Integer); overload; virtual;
+    constructor Create(CharsPerLine: Integer; LineSeparator: string); overload; virtual;
   end;
 
   TURLEncoding = class(TNetEncoding)
@@ -161,15 +162,16 @@ type
   private  // Values from: https://github.com/square/okhttp/blob/master/okhttp/src/main/java/com/squareup/okhttp/HttpUrl.java
 //    FormUnsafeChars = '"'':;<=>@[]^`{}|/\?#&!$(),~';
 //    AuthUnsafeChars = '"'':;<=>@[]^`{}|/\?#';
-//    PathUnsafeChars = '"<>^`{}|/\?#';
+//    PathUnsafeChars = '"<>^`{}|/\?#+';
 //    QueryUnsafeChars= '"''<>#';
+    class procedure AppendByte(B: Byte; var Buffer: PChar); static; inline;
     const FormUnsafeChars: TUnsafeChars = [Ord('"'), Ord(''''), Ord(':'), Ord(';'), Ord('<'), Ord('='), Ord('>'),
       Ord('@'), Ord('['), Ord(']'), Ord('^'), Ord('`'), Ord('{'), Ord('}'), Ord('|'), Ord('/'), Ord('\'), Ord('?'), Ord('#'),
       Ord('&'), Ord('!'), Ord('$'), Ord('('), Ord(')'), Ord(','), Ord('~')];
     const AuthUnsafeChars: TUnsafeChars = [Ord('"'), Ord(''''), Ord(':'), Ord(';'), Ord('<'), Ord('='), Ord('>'),
       Ord('@'), Ord('['), Ord(']'), Ord('^'), Ord('`'), Ord('{'), Ord('}'), Ord('|'), Ord('/'), Ord('\'), Ord('?'), Ord('#')];
     const PathUnsafeChars: TUnsafeChars = [Ord('"'), Ord('<'), Ord('>'), Ord('^'), Ord('`'), Ord('{'), Ord('}'), Ord('|'),
-      Ord('/'), Ord('\'), Ord('?'), Ord('#')];
+      Ord('/'), Ord('\'), Ord('?'), Ord('#'), Ord('+')];
     const QueryUnsafeChars: TUnsafeChars = [Ord('"'), Ord(''''), Ord('<'), Ord('>'), Ord('#')];
 
 //    function InternalEncode(const Input: string; const ASet, ExtraUnsafeChars: TUnsafeChars;
@@ -178,44 +180,39 @@ type
 
   protected
     function DoDecode(const Input: string): string; overload; override;
-    function DoEncode(const Input: string): string; overload; override;
+//    function DoEncode(const Input: string): string; overload; override;
+//    function DoDecodeStringToBytes(const Input: string): TBytes; overload; override;
   public
-    function EncodePath(const APath: string; const ExtraUnsafeChars: TUnsafeChars = []): string;
-    function EncodeAuth(const Auth: string; const ExtraUnsafeChars: TUnsafeChars = []): string; inline;
-    function EncodeQuery(const AQuery: string; const ExtraUnsafeChars: TUnsafeChars = []): string; inline;
-    function EncodeForm(const Input: string; const ExtraUnsafeChars: TUnsafeChars = []): string; inline;
+    function EncodePath(const APath: string; const AExtraUnsafeChars: TUnsafeChars = []): string;
+    function EncodeAuth(const Auth: string; const AExtraUnsafeChars: TUnsafeChars = []): string; inline;
+    function EncodeQuery(const AQuery: string; const AExtraUnsafeChars: TUnsafeChars = []): string; inline;
+    function EncodeForm(const AInput: string; const AExtraUnsafeChars: TUnsafeChars = []; AEncoding: TEncoding = nil): string; inline;
     function URLDecode(const AValue: string): string; inline;
-    function FormDecode(const AValue: string): string; inline;
+    function FormDecode(const AValue: string; AEncoding: TEncoding = nil): string; inline;
 
-    function Encode(const Input: string; const ASet: TUnsafeChars; const Options: TEncodeOptions): string; overload;
-    function Decode(const AValue: string; const Options: TDecodeOptions): string; overload;
+    function Encode(const AInput: string; const ASet: TUnsafeChars; const AOptions: TEncodeOptions; AEncoding: TEncoding = nil): string; overload;
+    function Decode(const AValue: string; const AOptions: TDecodeOptions; AEncoding: TEncoding = nil): string; overload;
 
-//    function Encode(const Input: string; const ASet, ExtraUnsafeChars: TUnsafeChars;
+//    function Encode(const Input: string; const ASet, AExtraUnsafeChars: TUnsafeChars;
 //      SpacesAsPlus, EncodePercent: Boolean): string; overload;
 //    function Decode(const Input: string): string; overload;
   end;
 
   THTMLEncoding = class(TNetEncoding)
   protected
-    function DoDecode(const Input: string): string; overload; override;
-    function DoEncode(const Input: string): string; overload; override;
-  end;
-
-  EHTTPException = class(Exception)
+    function DoDecode(const AInput: string): string; overload; override;
+    function DoEncode(const AInput: string): string; overload; override;
   end;
 
 implementation
 
-resourcestring
-  cERRORDECODINGURLTEXT = 'Error decoding URL style (%%XX) encoded string at position %d';
-  cINVALIDURLENCODEDCHAR = 'Invalid URL encoded character (%s) at position %d';
-  cINVALIDHTMLENCODEDCHAR = 'Invalid HTML encoded character (%s) at position %d';
-  cMEMORYSTREAMERROR = 'Out of memory while expanding memory stream';
+//uses
+//  System.RTLConsts;
 
 type
   TPointerStream = class(TCustomMemoryStream)
   public
-    constructor Create(P: Pointer; Size: Integer);
+    constructor Create(P: Pointer; Size: NativeInt);
     function Write(const Buffer; Count: LongInt): LongInt; override;
   end;
 
@@ -224,6 +221,7 @@ type
 function TNetEncoding.DoDecode(const Input: array of Byte): TBytes;
 begin
   if Length(Input) > 0 then
+//    Result := DoDecodeStringToBytes(TEncoding.UTF8.GetString(Input))
     Result := TEncoding.UTF8.GetBytes(DoDecode(TEncoding.UTF8.GetString({$IFDEF DELPHI25_UP}Input{$ELSE}@Input[0]{$ENDIF})))
   else
     SetLength(Result, 0);
@@ -234,16 +232,17 @@ var
   InBuf: array of Byte;
   OutBuf: TBytes;
 begin
-  Result := 0;
-  if Input.Size = 0 then
-    Exit;
-
-  SetLength(InBuf, Input.Size);
-  Input.Read(InBuf[0], Input.Size);
-  OutBuf := DoDecode(InBuf);
-  Result := Length(OutBuf);
-  Output.Write(OutBuf, Result);
-  SetLength(InBuf, 0);
+  if Input.Size > 0 then
+  begin
+    SetLength(InBuf, Input.Size);
+    Input.Read(InBuf[0], Input.Size);
+    OutBuf := DoDecode(InBuf);
+    Result := Length(OutBuf);
+    Output.Write(OutBuf, Result);
+    SetLength(InBuf, 0);
+  end
+  else
+    Result := 0;
 end;
 
 function TNetEncoding.DoDecodeStringToBytes(const Input: string): TBytes;
@@ -281,6 +280,7 @@ end;
 function TNetEncoding.DoEncode(const Input: array of Byte): TBytes;
 begin
   if Length(Input) > 0 then
+//    Result := TEncoding.UTF8.GetBytes(DoEncode(TEncoding.UTF8.GetString(Input)))
     Result := TEncoding.UTF8.GetBytes(DoDecode(TEncoding.UTF8.GetString({$IFDEF DELPHI25_UP}Input{$ELSE}@Input[0]{$ENDIF})))
   else
     SetLength(Result, 0);
@@ -326,7 +326,7 @@ begin
     OutStr := TBytesStream.Create;
     try
       Encode(InStr, OutStr);
-      SetString(Result, TMarshaledAString(OutStr.Memory), OutStr.Size);
+      SetString(Result, MarshaledAString(OutStr.Memory), OutStr.Size);
     finally
       OutStr.Free;
     end;
@@ -340,21 +340,24 @@ var
   InBuf: array of Byte;
   OutBuf: TBytes;
 begin
-  Result := 0;
-  if Input.Size = 0 then
-    Exit;
-
-  SetLength(InBuf, Input.Size);
-  Input.Read(InBuf[0], Input.Size);
-  OutBuf := DoEncode(InBuf);
-  Result := Length(OutBuf);
-  Output.Write(OutBuf, Result);
-  SetLength(InBuf, 0);
+  if Input.Size > 0 then
+  begin
+    SetLength(InBuf, Input.Size);
+    Input.Read(InBuf[0], Input.Size);
+    OutBuf := DoEncode(InBuf);
+    Result := Length(OutBuf);
+    Output.Write(OutBuf, Result);
+    SetLength(InBuf, 0);
+  end
+  else
+    Result := 0;
 end;
 
 class function TNetEncoding.GetBase64Encoding: TNetEncoding;
+{$IFDEF NEXTGEN}
 var
   LEncoding: TBase64Encoding;
+{$ENDIF NEXTGEN}
 begin
   if FBase64Encoding = nil then
   begin
@@ -364,44 +367,51 @@ begin
       LEncoding.Free;
 {$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
-    FBase64Encoding.__ObjAddRef;
-{$ENDIF AUTOREFCOUNT}
+    else
+      FBase64Encoding.__ObjAddRef
+{$ENDIF AUTOREFCOUNT};
   end;
   Result := FBase64Encoding;
 end;
 
 class function TNetEncoding.GetHTMLEncoding: TNetEncoding;
+{$IFDEF NEXTGEN}
 var
   LEncoding: THTMLEncoding;
+{$ENDIF NEXTGEN}
 begin
   if FHTMLEncoding = nil then
   begin
 {$IFDEF NEXTGEN}
     LEncoding := THTMLEncoding.Create;
     if AtomicCmpExchange(Pointer(FHTMLEncoding), Pointer(LEncoding), nil) <> nil then
-      LEncoding.Free;
+      LEncoding.Free
 {$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
-    FHTMLEncoding.__ObjAddRef;
-{$ENDIF AUTOREFCOUNT}
+    else
+      FHTMLEncoding.__ObjAddRef
+{$ENDIF AUTOREFCOUNT};
   end;
   Result := FHTMLEncoding;
 end;
 
 class function TNetEncoding.GetURLEncoding: TURLEncoding;
+{$IFDEF NEXTGEN}
 var
   LEncoding: TURLEncoding;
+{$ENDIF NEXTGEN}
 begin
   if FURLEncoding = nil then
   begin
 {$IFDEF NEXTGEN}
     LEncoding := TURLEncoding.Create;
     if AtomicCmpExchange(Pointer(FURLEncoding), Pointer(LEncoding), nil) <> nil then
-      LEncoding.Free;
+      LEncoding.Free
 {$ENDIF NEXTGEN}
 {$IFDEF AUTOREFCOUNT}
-    FURLEncoding.__ObjAddRef;
-{$ENDIF AUTOREFCOUNT}
+    else
+      FURLEncoding.__ObjAddRef
+{$ENDIF AUTOREFCOUNT};
   end;
   Result := FURLEncoding;
 end;
@@ -456,16 +466,15 @@ end;
 
 constructor TBase64Encoding.Create;
 begin
-  Create(kCharsPerLine, sLineBreak);
+  Create(kCharsPerLine, kLineSeparator);
 end;
 
-constructor TBase64Encoding.Create(const CharsPerLine: Integer);
+constructor TBase64Encoding.Create(CharsPerLine: Integer);
 begin
-  Create(CharsPerLine, sLineBreak);
+  Create(CharsPerLine, kLineSeparator);
 end;
 
-constructor TBase64Encoding.Create(const CharsPerLine: Integer;
-  const LineSeparator: string);
+constructor TBase64Encoding.Create(CharsPerLine: Integer; LineSeparator: string);
 begin
   FCharsPerline := CharsPerLine;
   FLineSeparator := LineSeparator;
@@ -814,157 +823,177 @@ end;
 
 { TURLEncoding }
 
-function TURLEncoding.DoDecode(const Input: string): string;
-
-  function DecodeHexChar(const C: Char): Byte;
-  begin
-    case C of
-       '0'..'9': Result := Ord(C) - Ord('0');
-       'A'..'F': Result := Ord(C) - Ord('A') + 10;
-       'a'..'f': Result := Ord(C) - Ord('a') + 10;
-    else
-      raise EConvertError.Create('');
-    end;
-  end;
-
-  function DecodeHexPair(const C1, C2: Char): Byte; inline;
-  begin
-    Result := DecodeHexChar(C1) shl 4 + DecodeHexChar(C2)
-  end;
-
-var
-  Sp, Cp: PChar;
-  I: Integer;
-  Bytes: TBytes;
-begin
-  SetLength(Bytes, Length(Input) * 4);
-  I := 0;
-  Sp := PChar(Input);
-  Cp := Sp;
-  try
-    while Sp^ <> #0 do
-    begin
-      case Sp^ of
-        '+':
-          Bytes[I] := Byte(' ');
-        '%':
-          begin
-            Inc(Sp);
-            // Look for an escaped % (%%)
-            if (Sp)^ = '%' then
-              Bytes[I] := Byte('%')
-            else
-            begin
-              // Get an encoded byte, may is a single byte (%<hex>)
-              // or part of multi byte (%<hex>%<hex>...) character
-              Cp := Sp;
-              Inc(Sp);
-              if ((Cp^ = #0) or (Sp^ = #0)) then
-                raise EHTTPException.CreateFmt(cERRORDECODINGURLTEXT, [Cp - PChar(Input)]);
-              Bytes[I] := DecodeHexPair(Cp^, Sp^)
-            end;
-          end;
-      else
-        // Accept single and multi byte characters
-        if Ord(Sp^) < 128 then
-          Bytes[I] := Byte(Sp^)
-        else
-          I := I + TEncoding.UTF8.GetBytes(String(Sp^), 0, 1, Bytes, I) - 1;
-      end;
-      Inc(I);
-      Inc(Sp);
-    end;
-  except
-    on E: EConvertError do
-      raise EConvertError.CreateFmt(cINVALIDURLENCODEDCHAR, [Char('%') + Cp^ + Sp^, Cp - PChar(Input)])
-  end;
-  SetLength(Bytes, I);
-  Result := TEncoding.UTF8.GetString(Bytes);
-end;
-
-function TURLEncoding.DoEncode(const Input: string): string;
-// The NoConversion set contains characters as specificed in RFC 1738 and
-// should not be modified unless the standard changes.
+class procedure TURLEncoding.AppendByte(B: Byte; var Buffer: PChar);
+//const
+//  Hex = '0123456789ABCDEF';
+//begin
+//  Buffer[0] := '%';
+//  Buffer[1] := Hex[B shr 4 + Low(string)];
+//  Buffer[2] := Hex[B and $F + Low(string)];
+//  Inc(Buffer, 3);
 const
-  NoConversion = [Ord('A')..Ord('Z'), Ord('a')..Ord('z'), Ord('*'), Ord('@'),
-                  Ord('.'), Ord('_'), Ord('-'), Ord('0')..Ord('9'), Ord('$'),
-                  Ord('!'), Ord(''''), Ord('('), Ord(')')];
-
-  procedure AppendByte(B: Byte; var Buffer: PChar);
-  const
-    Hex = '0123456789ABCDEF';
-  var
-    StartIndex: Integer;
-  begin
-{$IFDEF NEXTGEN}
-    StartIndex := 0;
-{$ELSE}
-    StartIndex := 1;
-{$ENDIF}
-    Buffer[0] := '%';
-    Buffer[1] := Hex[B shr 4 + StartIndex];
-    Buffer[2] := Hex[B and $F + StartIndex];
-    Inc(Buffer, 3);
-  end;
-
+  Hex = '0123456789ABCDEF';
 var
-  Sp, Rp: PChar;
-  MultibyteChar: TBytes;
-  I, ByteCount: Integer;
+  StartIndex: Integer;
 begin
-  // Characters that require more than 1 byte are translated as "percent-encoded byte"
-  // which will be encoded with 3 chars per byte -> %XX
-  // Example: U+00D1 ($F1 in CodePage 1252)
-  //   UTF-8 representation: $C3 $91 (2 bytes)
-  //   URL encode representation: %C3%91
-  //
-  // So the worst case is 4 bytes(max) per Char, and 3 characters to represent each byte
-  SetLength(Result, Length(Input) * 4 * 3);
-  Sp := PChar(Input);
-  Rp := PChar(Result);
-  SetLength(MultibyteChar, 4);
-  while Sp^ <> #0 do
-  begin
-    if Ord(Sp^) in NoConversion then
-    begin
-      Rp^ := Sp^;
-      Inc(Rp)
-    end
-    else
-    if Sp^ = ' ' then
-    begin
-      Rp^ := '+';
-      Inc(Rp)
-    end
-    else
-    begin
-      if (Ord(Sp^) < 128) then
-        // Single byte char
-        AppendByte(Ord(Sp^), Rp)
-      else
-      begin
-        // Multi byte char
-        ByteCount := TEncoding.UTF8.GetBytes(String(Sp^), 0, 1, MultibyteChar, 0);
-        for I := 0 to ByteCount - 1 do
-          AppendByte(MultibyteChar[I], Rp);
-      end
-    end;
-    Inc(Sp);
-  end;
-  SetLength(Result, Rp - PChar(Result));
+{$IFDEF NEXTGEN}
+  StartIndex := 0;
+{$ELSE}
+  StartIndex := 1;
+{$ENDIF}
+  Buffer[0] := '%';
+  Buffer[1] := Hex[B shr 4 + StartIndex];
+  Buffer[2] := Hex[B and $F + StartIndex];
+  Inc(Buffer, 3);
 end;
 
-function TURLEncoding.EncodeAuth(const Auth: string; const ExtraUnsafeChars: TUnsafeChars): string;
+//function TURLEncoding.DoDecodeStringToBytes(const Input: string): TBytes;
+//var
+//  Sp: PChar;
+//  I, J, L: Integer;
+//  Buff: array [0..511] of Char;
+//
+//  procedure InvalidChar;
+//  var
+//    P: PChar;
+//  begin
+//    P := Sp - (J - L - 1) * 3;
+//    raise EConvertError.CreateResFmt(@sInvalidURLEncodedChar, [Char('%') + P^ + (P + 1)^, P - PChar(Input)]);
+//  end;
+//
+//  procedure InvalidText;
+//  begin
+//    raise EConvertError.CreateResFmt(@sErrorDecodingURLText, [Sp - PChar(Input)]);
+//  end;
+//
+//begin
+//  SetLength(Result, Length(Input) * 4);
+//  I := 0;
+//  Sp := PChar(Input);
+//  while Sp^ <> #0 do
+//  begin
+//    case Sp^ of
+//      '+':
+//        Result[I] := Byte(' ');
+//      '%':
+//        begin
+//          Inc(Sp);
+//          // Look for an escaped % (%%)
+//          if Sp^ = '%' then
+//            Result[I] := Byte('%')
+//          else
+//          begin
+//            // Get an encoded byte, may be a single byte (%<hex>)
+//            // or part of multi byte (%<hex>%<hex>...) character
+//            J := 0;
+//            while True do
+//            begin
+//              if (Sp^ = #0) or ((Sp + 1)^ = #0) then
+//                InvalidText;
+//              PCardinal(@Buff[J])^ := PCardinal(Sp)^;
+//              Inc(J, 2);
+//              if ((Sp + 2)^ <> '%') or (J >= High(Buff)) then
+//                Break;
+//              Inc(Sp, 3);
+//            end;
+//            J := J div 2;
+//            L := HexToBin(Buff, Result[I], J);
+//            if L <> J then
+//              InvalidChar;
+//            I := I + L - 1;
+//            Inc(Sp);
+//          end;
+//        end;
+//    else
+//      // Accept single and multi byte characters
+//      if Ord(Sp^) < 128 then
+//        Result[I] := Byte(Sp^)
+//      else
+//        I := I + LocaleCharsFromUnicode(CP_UTF8, 0, Sp, 1,
+//          MarshaledAString(@Result[I]), Length(Result) - I, nil, nil) - 1;
+//    end;
+//    Inc(I);
+//    Inc(Sp);
+//  end;
+//  SetLength(Result, I);
+//end;
+
+function TURLEncoding.DoDecode(const Input: string): string;
 begin
-  Result := Encode(Auth, AuthUnsafeChars + ExtraUnsafeChars, []);
+  Result := TEncoding.UTF8.GetString(DoDecodeStringToBytes(Input));
 end;
 
-function TURLEncoding.EncodeForm(const Input: string; const ExtraUnsafeChars: TUnsafeChars): string;
+//function TURLEncoding.DoEncode(const Input: string): string;
+//// The NoConversion set contains characters as specificed in RFC 1738 and
+//// should not be modified unless the standard changes.
+//const
+//  NoConversion = [Ord('A')..Ord('Z'), Ord('a')..Ord('z'), Ord('*'), Ord('@'),
+//                  Ord('.'), Ord('_'), Ord('-'), Ord('0')..Ord('9'), Ord('$'),
+//                  Ord('!'), Ord(''''), Ord('('), Ord(')')];
+//var
+//  Sp, Rp: PChar;
+//  MultibyteChar: array [0 .. 3] of Byte;
+//  I, ByteCount: Integer;
+//begin
+//  // Characters that require more than 1 byte are translated as "percent-encoded byte"
+//  // which will be encoded with 3 chars per byte -> %XX
+//  // Example: U+00D1 ($F1 in CodePage 1252)
+//  //   UTF-8 representation: $C3 $91 (2 bytes)
+//  //   URL encode representation: %C3%91
+//  //
+//  // So the worst case is 4 bytes(max) per Char, and 3 characters to represent each byte
+//  SetLength(Result, Length(Input) * 4 * 3);
+//  Sp := PChar(Input);
+//  Rp := PChar(Result);
+//  while Sp^ <> #0 do
+//  begin
+//    if Ord(Sp^) in NoConversion then
+//    begin
+//      Rp^ := Sp^;
+//      Inc(Rp)
+//    end
+//    else if Sp^ = ' ' then
+//    begin
+//      Rp^ := '+';
+//      Inc(Rp)
+//    end
+//    else
+//    begin
+//      if (Ord(Sp^) < 128) then
+//        // Single byte char
+//        AppendByte(Ord(Sp^), Rp)
+//      else
+//      begin
+//        // Multi byte char
+//        if IsLeadChar(Sp^) then
+//        begin
+//          ByteCount := LocaleCharsFromUnicode(CP_UTF8, 0, Sp, 2, MarshaledAString(@MultibyteChar[0]), 4, nil, nil);
+//          Inc(Sp);
+//        end
+//        else
+//          ByteCount := LocaleCharsFromUnicode(CP_UTF8, 0, Sp, 1, MarshaledAString(@MultibyteChar[0]), 4, nil, nil);
+//        for I := 0 to ByteCount - 1 do
+//          AppendByte(MultibyteChar[I], Rp);
+//      end;
+//    end;
+//    Inc(Sp);
+//  end;
+//  SetLength(Result, Rp - PChar(Result));
+//end;
+
+function TURLEncoding.EncodeAuth(const Auth: string; const AExtraUnsafeChars: TUnsafeChars): string;
 begin
-  Result := Encode(Input, FormUnsafeChars + ExtraUnsafeChars, [TEncodeOption.SpacesAsPlus, TEncodeOption.EncodePercent]);
+  Result := Encode(Auth, AuthUnsafeChars + AExtraUnsafeChars, []);
 end;
 
-function TURLEncoding.EncodePath(const APath: string; const ExtraUnsafeChars: TUnsafeChars): string;
+function TURLEncoding.EncodeForm(const AInput: string;
+  const AExtraUnsafeChars: TUnsafeChars; AEncoding: TEncoding): string;
+begin
+  Result := Encode(AInput, FormUnsafeChars + AExtraUnsafeChars,
+    [TEncodeOption.SpacesAsPlus, TEncodeOption.EncodePercent], AEncoding);
+end;
+
+function TURLEncoding.EncodePath(const APath: string; const AExtraUnsafeChars: TUnsafeChars = []): string;
 var
   LSubPaths: TArray<string>;
   I: Integer;
@@ -1024,125 +1053,131 @@ begin
       Result := '';
     LSubPaths := SplitString(APath, '/');
     for I := 0 to Length(LSubPaths) - 1 do
-      Result := Result + Encode(LSubPaths[I], PathUnsafeChars + ExtraUnsafeChars, []) + '/';
+      Result := Result + Encode(LSubPaths[I], PathUnsafeChars + AExtraUnsafeChars, []) + '/';
 //    if (Result <> '/') and (APath[High(APath)] <> '/') then
     if (Result <> '/') and (APath[Length(APath)] <> '/') then
       Result := Copy(Result, StartIndex, Length(Result) - 1); //Remove last '/'
   end;
 end;
 
-function TURLEncoding.EncodeQuery(const AQuery: string; const ExtraUnsafeChars: TUnsafeChars): string;
+function TURLEncoding.EncodeQuery(const AQuery: string; const AExtraUnsafeChars: TUnsafeChars): string;
 begin
-  Result := Encode(AQuery, QueryUnsafeChars + ExtraUnsafeChars, []);
+  Result := Encode(AQuery, QueryUnsafeChars + AExtraUnsafeChars, []);
 end;
 
-function TURLEncoding.FormDecode(const AValue: string): string;
+function TURLEncoding.FormDecode(const AValue: string; AEncoding: TEncoding = nil): string;
 begin
-  Result := Decode(AValue, [TDecodeOption.PlusAsSpaces]);
+  Result := Decode(AValue, [TDecodeOption.PlusAsSpaces], AEncoding);
 end;
 
-function TURLEncoding.Decode(const AValue: string; const Options: TDecodeOptions): string;
+function TURLEncoding.Decode(const AValue: string; const AOptions: TDecodeOptions; AEncoding: TEncoding = nil): string;
 
 const
-  H2BConvert: array[Ord('0')..Ord('f')] of SmallInt =
+  H2BConvert: array['0'..'f'] of SmallInt =
     ( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,-1,-1,-1,-1,-1,-1,
      -1,10,11,12,13,14,15,-1,-1,-1,-1,-1,-1,-1,-1,-1,
      -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
      -1,10,11,12,13,14,15);
 
-  function IsHexChar(C: Byte): Boolean; inline;
+  function IsHexChar(C: Char): Boolean; inline;
   begin
-    Result := C in [Ord('0')..Ord('9'), Ord('A')..Ord('F'), Ord('a')..Ord('f')];
+    Result := Ord(C) in [Ord('0')..Ord('9'), Ord('A')..Ord('F'), Ord('a')..Ord('f')];
   end;
 
 var
-  ValueBuff: TBytes;
   Buff: TBytes;
-  Cnt: Integer;
-  Pos: Integer;
-  Len: Integer;
+  Sp: PChar;
+  Rp: PByte;
 begin
-  Cnt := 0;
-  Pos := 0;
-  ValueBuff := TEncoding.UTF8.GetBytes(AValue);
-  Len := Length(ValueBuff);
-  SetLength(Buff, Len);
-  while Pos < Len do
+  SetLength(Buff, Length(AValue));
+  Sp := PChar(AValue);
+  Rp := PByte(Buff);
+  while Sp^ <> #0 do
   begin
-    if (ValueBuff[Pos] = Ord('%')) and ((Pos + 2) < Len)  and IsHexChar(ValueBuff[Pos + 1]) and IsHexChar(ValueBuff[Pos + 2]) then
+    if (Sp^ = '%') and IsHexChar(Sp[1]) and IsHexChar(Sp[2]) then
     begin
-      Buff[Cnt] := (H2BConvert[ValueBuff[Pos + 1]]) shl 4 or H2BConvert[ValueBuff[Pos + 2]];
-      Inc(Pos, 3);
+      Rp^ := (H2BConvert[Sp[1]]) shl 4 or H2BConvert[Sp[2]];
+      Inc(Sp, 3);
     end
-    else
-    begin
-      if (TDecodeOption.PlusAsSpaces in Options) and (ValueBuff[Pos] = Ord('+')) then
-        Buff[Cnt] := Ord(' ')
+    else begin
+      if (TDecodeOption.PlusAsSpaces in AOptions) and (Sp^ = '+') then
+        Rp^ := Ord(' ')
       else
-        Buff[Cnt] := ValueBuff[Pos];
-      Inc(Pos);
+        Rp^ := Ord(Sp^);
+      Inc(Sp);
     end;
-    Inc(Cnt);
+    Inc(Rp);
   end;
-  Result := TEncoding.UTF8.GetString(Buff, 0 , Cnt);
-
+  if AEncoding = nil then
+    AEncoding := TEncoding.UTF8;
+  Result := AEncoding.GetString(Buff, 0, Rp - PByte(Buff));
 end;
 
-function TURLEncoding.Encode(const Input: string; const ASet: TUnsafeChars; const Options: TEncodeOptions): string;
+function TURLEncoding.Encode(const AInput: string; const ASet: TUnsafeChars; const AOptions: TEncodeOptions; AEncoding: TEncoding = nil): string;
 
   function IsHexChar(C: Byte): Boolean; inline;
   begin
     Result := C in [Ord('0')..Ord('9'), Ord('A')..Ord('F'), Ord('a')..Ord('f')];
   end;
 
-const
-  XD: array[0..15] of char = ('0', '1', '2', '3', '4', '5', '6', '7',
-                              '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
 var
   Buff: TBytes;
   I: Integer;
   Len: Integer;
   LSet: TUnsafeChars;
+  Rp: PChar;
 begin
   Result := '';
-  if Input <> '' then
-  begin
-    Buff := TEncoding.UTF8.GetBytes(Input);
-    Len := Length(Buff);
-    I := 0;
-    if (TEncodeOption.SpacesAsPlus in Options) then
-      LSet := ASet + [Ord('+')]
-    else
-      LSet := ASet;
-    if (TEncodeOption.EncodePercent in Options) then
-      LSet := LSet + [Ord('%')];
+  if AInput = '' then
+    Exit;
+  if AEncoding = nil then
+    AEncoding := TEncoding.UTF8;
+  Buff := AEncoding.GetBytes(AInput);
+  Len := Length(Buff);
+  I := 0;
+  LSet := ASet;
+  if (TEncodeOption.SpacesAsPlus in AOptions) then
+    LSet := LSet + [Ord('+')];
+  if (TEncodeOption.EncodePercent in AOptions) then
+    LSet := LSet + [Ord('%')];
 
-    while I < Len do
+  SetLength(Result, Length(Buff) * 3);
+  Rp := PChar(Result);
+  while I < Len do
+  begin
+    if not (TEncodeOption.EncodePercent in AOptions) and (Buff[I] = Ord('%')) and
+       (I + 2 < Len) and IsHexChar(Buff[I + 1]) and IsHexChar(Buff[I + 2]) then
     begin
-      if not(TEncodeOption.EncodePercent in Options) and (I + 2 < Len) and (Buff[I] = Ord('%')) and
-        IsHexChar(Buff[I + 1]) and IsHexChar(Buff[I + 2]) then
+      Rp[0] := '%';
+      Rp[1] := Char(Buff[I + 1]);
+      Rp[2] := Char(Buff[I + 2]);
+      Inc(I, 3);
+      Inc(Rp, 3);
+    end
+    else
+    begin
+      if (Buff[I] >= $21) and (Buff[I] <= $7E) then
       begin
-        Result := Result + '%' + Char(Buff[I + 1]) + Char(Buff[I + 2]);
-        Inc(I, 3);
+        if Buff[I] in LSet then
+          AppendByte(Buff[I], Rp)
+        else
+        begin
+          Rp^ := Char(Buff[I]);
+          Inc(Rp);
+        end;
+      end
+      else if (TEncodeOption.SpacesAsPlus in AOptions) and (Buff[I] = Ord(' ')) then
+      begin
+        Rp^ := '+';
+        Inc(Rp);
       end
       else
-      begin
-        if (Buff[I] >= $21) and (Buff[I] <= $7E) then
-        begin
-          if Buff[I] in LSet then
-            Result := Result + '%' + XD[(Buff[I] shr 4) and $0F] + XD[Buff[I] and $0F]
-          else
-            Result := Result + Char(Buff[I]);
-        end
-        else if (TEncodeOption.SpacesAsPlus in Options) and (Buff[I] = Ord(' ')) then
-          Result := Result + '+'
-        else
-          Result := Result + '%' + XD[(Buff[I] shr 4) and $0F] + XD[Buff[I] and $0F];
+        AppendByte(Buff[I], Rp);
 
-        Inc(I);
-      end;
+      Inc(I);
     end;
   end;
+  SetLength(Result, Rp - PChar(Result));
 end;
 
 function TURLEncoding.URLDecode(const AValue: string): string;
@@ -1152,12 +1187,12 @@ end;
 
 { THTMLEncoding }
 
-function THTMLEncoding.DoEncode(const Input: string): string;
+function THTMLEncoding.DoEncode(const AInput: string): string;
 var
   Sp, Rp: PChar;
 begin
-  SetLength(Result, Length(Input) * 10);
-  Sp := PChar(Input);
+  SetLength(Result, Length(AInput) * 10);
+  Sp := PChar(AInput);
   Rp := PChar(Result);
   // Convert: &, <, >, "
   while Sp^ <> #0 do
@@ -1165,22 +1200,22 @@ begin
     case Sp^ of
       '&':
         begin
-          StrCopy(Rp, '&amp;');
+          StrMove(Rp, '&amp;', 5);
           Inc(Rp, 5);
         end;
       '<':
         begin
-          StrCopy(Rp, '&lt;');
+          StrMove(Rp, '&lt;', 4);
           Inc(Rp, 4);
         end;
        '>':
         begin
-          StrCopy(Rp, '&gt;');
+          StrMove(Rp, '&gt;', 4);
           Inc(Rp, 4);
         end;
       '"':
         begin
-          StrCopy(Rp, '&quot;');
+          StrMove(Rp, '&quot;', 6);
           Inc(Rp, 6);
         end;
       else
@@ -1194,15 +1229,15 @@ begin
   SetLength(Result, Rp - PChar(Result));
 end;
 
-function THTMLEncoding.DoDecode(const Input: string): string;
+function THTMLEncoding.DoDecode(const AInput: string): string;
 var
   Sp, Rp, Cp, Tp: PChar;
   S: string;
   I, Code: Integer;
   Valid: Boolean;
 begin
-  SetLength(Result, Length(Input));
-  Sp := PChar(Input);
+  SetLength(Result, Length(AInput));
+  Sp := PChar(AInput);
   Rp := PChar(Result);
   while Sp^ <> #0 do
   begin
@@ -1214,28 +1249,34 @@ begin
           Valid := False;
           case Sp^ of
             'a':
-              if AnsiStrPos(Sp, 'amp;') = Sp then { do not localize }
+              if StrLComp(Sp, 'amp;', 4) = 0 then { do not localize }
               begin
                 Inc(Sp, 3);
                 Rp^ := '&';
                 Valid := True;
+              end
+              else if StrLComp(Sp, 'apos;', 5) = 0 then { do not localize }
+              begin
+                Inc(Sp, 4);
+                Rp^ := '''';
+                Valid := True;
               end;
             'l':
-              if AnsiStrPos(Sp, 'lt;') = Sp then { do not localize }
+              if StrLComp(Sp, 'lt;', 3) = 0 then { do not localize }
               begin
                 Inc(Sp, 2);
                 Rp^ := '<';
                 Valid := True;
               end;
             'g':
-              if AnsiStrPos(Sp, 'gt;') = Sp then { do not localize }
+              if StrLComp(Sp, 'gt;', 3) = 0 then { do not localize }
               begin
                 Inc(Sp, 2);
                 Rp^ := '>';
                 Valid := True;
               end;
             'q':
-              if AnsiStrPos(Sp, 'quot;') = Sp then { do not localize }
+              if StrLComp(Sp, 'quot;', 5) = 0 then { do not localize }
               begin
                 Inc(Sp, 4);
                 Rp^ := '"';
@@ -1267,8 +1308,10 @@ begin
               end;
           end;
           if not Valid then
-            raise EConvertError.CreateFmt(cINVALIDHTMLENCODEDCHAR,
-              [Cp^ + Sp^, Cp - PChar(Input)])
+          begin
+            Sp := Cp;
+            Rp^ := Sp^;
+          end;
         end
     else
       Rp^ := Sp^;
@@ -1281,7 +1324,7 @@ end;
 
 { TPointerStream }
 
-constructor TPointerStream.Create(P: Pointer; Size: Integer);
+constructor TPointerStream.Create(P: Pointer; Size: NativeInt);
 begin
   SetPointer(P, Size);
 end;
@@ -1297,7 +1340,7 @@ begin
     EndPos := Pos + Count;
     Size := Self.Size;
     if EndPos > Size then
-      raise EStreamError.CreateRes(@cMEMORYSTREAMERROR);
+      raise EStreamError.CreateRes(@SMemoryStreamError);
     Mem := Self.Memory;
     System.Move(Buffer, Pointer(NativeInt(Mem) + Pos)^, Count);
     Self.Position := Pos;

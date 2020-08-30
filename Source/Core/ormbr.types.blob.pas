@@ -36,16 +36,18 @@ uses
   Classes,
   SysUtils,
   {$IFDEF HAS_FMX}
-  FMX.Graphics,
+    FMX.Graphics,
   {$ELSE}
-  {$if CompilerVersion > 23}
-    AnsiStrings,
-  {$ifend}
-  Graphics,
-  GIFImg,
-  JPEG,
-  PngImage,
-  pnglang,
+    // Delphi > 2010 adicionar em:
+    // Option->Delphi Compiler->Unit scope names, "Vcl"
+    Graphics,
+    GIFImg,
+    JPEG,
+    PngImage,
+    pnglang,
+    {$IF COMPILERVERSION > 23}
+      AnsiStrings,
+    {$IFEND}
   {$ENDIF}
   ZLib,
   ormbr.encddecd;
@@ -94,9 +96,7 @@ begin
   if Value.IsBlob then
   begin
     FBlobField := Value;
-    /// <summary>
-    ///   Gera Stream do BlobField e armazena em var interna
-    /// </summary>
+    // Gera Stream do BlobField e armazena em var interna
     BuildBlobFieldToStream;
   end
   else
@@ -106,9 +106,7 @@ end;
 procedure TBlob.SetBytes(const Value: TBytes);
 begin
   FBase64Bytes := Value;
-  /// <summary>
-  ///   Codifica os Bytes em string
-  /// </summary>
+  // Codifica os Bytes em string
   FBase64String := ToBytesString;
 end;
 
@@ -141,17 +139,11 @@ begin
     try
       TBlobField(FBlobField).SaveToStream(LSourceStream);
       LSourceStream.Position := 0;
-      /// <summary>
-      ///   Compressão dos dados
-      /// </summary>
+      // Compressão dos dados
 //      CompressStream(LSourceStream, LTargetStream);
-      /// <summary>
-      ///   Gera cadeia de Bytes
-      /// </summary>
+      // Gera cadeia de Bytes
       FBase64Bytes := StreamToByteArray(LSourceStream);
-      /// <summary>
-      ///   Codifica os Bytes em string
-      /// </summary>
+      // Codifica os Bytes em string
       FBase64String := ToBytesString;
     finally
       LSourceStream.Free;
@@ -284,17 +276,11 @@ begin
   try
     LSourceStream.LoadFromFile(AFileName);
     LSourceStream.Position := 0;
-    /// <summary>
-    ///   Compressão dos dados
-    /// </summary>
+    // Compressão dos dados
 //      CompressStream(LSourceStream, LTargetStream);
-    /// <summary>
-    ///   Gera cadeia de Bytes
-    /// </summary>
+    // Gera cadeia de Bytes
     FBase64Bytes := StreamToByteArray(LSourceStream);
-    /// <summary>
-    ///   Codifica os Bytes em string
-    /// </summary>
+    // Codifica os Bytes em string
     FBase64String := ToBytesString;
   finally
     LSourceStream.Free;

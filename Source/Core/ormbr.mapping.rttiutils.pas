@@ -332,6 +332,18 @@ begin
         MaximumValueConstraint(LAttribute)
           .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                     LColumn.ColumnProperty.GetNullableValue(AObject));
+
+     /// <summary> Valida se o valor é vazio </summary>
+     LAttribute := LColumn.ColumnProperty.GetNotEmptyConstraint;
+     if LAttribute <> nil then
+        NotEmpty(LAttribute)
+          .Validate(LColumn.ColumnProperty, AObject);
+
+     /// <summary> Valida se o tamanho da String é válido</summary>
+     LAttribute := LColumn.ColumnProperty.GetSizeConstraint;
+     if LAttribute <> nil then
+        Size(LAttribute)
+          .Validate(LColumn.ColumnProperty, AObject);
   end;
   Result := True;
 end;

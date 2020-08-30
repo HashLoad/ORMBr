@@ -165,8 +165,9 @@ begin
       Continue;
     if LColumn.FieldType in [ftDataSet, ftADT, ftBlob] then
       Continue;
-    if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
-      raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
+    if LColumn.IsNotNull then
+      if FOrmDataSet.FieldValues[LColumn.ColumnName] = Null then
+        raise EFieldValidate.Create(FCurrentInternal.ClassName + '.' + LColumn.ColumnName,
                                   FOrmDataSet.FieldByName(LColumn.ColumnName).ConstraintErrorMessage);
   end;
 end;

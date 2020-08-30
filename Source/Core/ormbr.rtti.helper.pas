@@ -72,9 +72,11 @@ type
     function  IsBlob: Boolean;
     function  IsLazy: Boolean;
     function  IsNullable: Boolean;
+    function  IsAssociation: Boolean;
     function  IsNullValue(AObject: TObject): Boolean;
     function  IsPrimaryKey(AClass: TClass): Boolean;
     function  IsList: Boolean;
+    function  IsNullIfEmpty: Boolean;
     function  GetAssociation: TArray<Association>;
     function  GetRestriction: TCustomAttribute;
     function  GetDictionary: Dictionary;
@@ -83,6 +85,8 @@ type
     function  GetNotNullConstraint: TCustomAttribute;
     function  GetMinimumValueConstraint: MinimumValueConstraint;
     function  GetMaximumValueConstraint: MaximumValueConstraint;
+    function  GetNotEmptyConstraint: TCustomAttribute;
+    function  GetSizeConstraint: TCustomAttribute;
     function  GetNullableValue(AInstance: Pointer): TValue;
     function  GetTypeValue(ARttiType: TRttiType): TRttiType;
     function  GetObjectTheList: TObject;
@@ -288,6 +292,18 @@ begin
    end;
 end;
 
+function TRttiPropertyHelper.GetNotEmptyConstraint: TCustomAttribute;
+var
+  LAttribute: TCustomAttribute;
+begin
+   for LAttribute in Self.GetAttributes do
+   begin
+      if LAttribute is NotEmpty then // Notmpty
+         Exit(LAttribute);
+   end;
+   Exit(nil);
+end;
+
 function TRttiPropertyHelper.GetNotNullConstraint: TCustomAttribute;
 var
   LAttribute: TCustomAttribute;
@@ -365,6 +381,18 @@ begin
    Exit(nil);
 end;
 
+function TRttiPropertyHelper.GetSizeConstraint: TCustomAttribute;
+var
+  LAttribute: TCustomAttribute;
+begin
+   for LAttribute in Self.GetAttributes do
+   begin
+      if LAttribute is Size then
+         Exit(Size(LAttribute));
+   end;
+   Exit(nil);
+end;
+
 function TRttiPropertyHelper.GetMinimumValueConstraint: MinimumValueConstraint;
 var
   LAttribute: TCustomAttribute;
@@ -391,6 +419,18 @@ begin
     Exit;
   if CascadeNone in Self.GetCascadeActions then
     Result := True;
+end;
+
+function TRttiPropertyHelper.IsAssociation: Boolean;
+var
+  LAttribute: TCustomAttribute;
+begin
+   for LAttribute in Self.GetAttributes do
+   begin
+      if LAttribute is Association then // IsAssociation
+         Exit(True);
+   end;
+   Exit(False);
 end;
 
 function TRttiPropertyHelper.IsBlob: Boolean;
@@ -528,6 +568,18 @@ begin
                                 and StartsText(LPrefixString, GetTypeName(LTypeInfo));
 end;
 
+function TRttiPropertyHelper.IsNullIfEmpty: Boolean;
+var
+  LAttribute: TCustomAttribute;
+begin
+   for LAttribute in Self.GetAttributes do
+   begin
+      if LAttribute is NullIfEmpty then
+         Exit(True);
+   end;
+   Exit(False);
+end;
+
 function TRttiPropertyHelper.ResolveNullableValue(AObject: TObject): Boolean;
 var
   LValue: TValue;
@@ -590,7 +642,7 @@ begin
   if Self.IsNotNull then
     Exit(False);
 
-  if Self.IsNullable then
+  if (Self.IsNullable) or (Self.IsNullIfEmpty) then
     Exit(ResolveNullableValue(AObject));
 end;
 

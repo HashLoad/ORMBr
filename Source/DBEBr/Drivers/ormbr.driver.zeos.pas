@@ -325,7 +325,15 @@ begin
   if FDataSet.Fields[AFieldIndex].IsNull then
      Result := Variants.Null
   else
-     Result := FDataSet.Fields[AFieldIndex].Value;
+  begin
+    case FDataSet.Fields[AFieldIndex].DataType of
+      ftString,
+      ftWideString: Result := FDataSet.Fields[AFieldIndex].AsString;
+    else
+      Result := FDataSet.Fields[AFieldIndex].Value;
+    end;
+
+  end;
 end;
 
 function TDriverResultSetZeos.NotEof: Boolean;

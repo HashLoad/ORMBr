@@ -358,7 +358,7 @@ type
     constructor Create(const ADisplayLabel, AConstraintErrorMessage: string;
       const AAlignment: TAlignment;
       const AOrigin: string); overload;
-    /// OBJECT
+    // OBJECT
     constructor Create(const ADefaultExpression: string); overload;
     constructor Create(const ADefaultExpression: Integer); overload;
     constructor Create(const ADefaultExpression: Boolean); overload;
@@ -427,6 +427,24 @@ type
   public
     constructor Create(const AValue: Double);
     procedure Validate(const ADisplayLabel: String; const AValue: TValue);
+  end;
+
+  NullIfEmpty = class(TCustomAttribute)
+  end;
+
+  NotEmpty = class(TCustomAttribute)
+  public
+    constructor Create;
+    procedure Validate(const AProperty: TRttiProperty; AObject: TObject);
+  end;
+
+  Size = class(TCustomAttribute)
+  private
+    FMin: Integer;
+    FMax: Integer;
+  public
+    constructor create(Max: Integer; Min: Integer = 0);
+    procedure Validate(const AProperty: TRttiProperty; AObject: TObject);
   end;
 
 implementation
@@ -1020,6 +1038,53 @@ begin
   begin
     raise EMaximumValueConstraint.Create(ADisplayLabel, FValue);
   end;
+end;
+
+{ NotEmpty }
+
+constructor NotEmpty.Create;
+begin
+end;
+
+procedure NotEmpty.Validate(const AProperty: TRttiProperty; AObject: TObject);
+var
+  isOk: Boolean;
+begin
+  isOk := True;
+
+  case AProperty.PropertyType.TypeKind of
+    tkString,
+    tkChar,
+    tkWChar,
+    tkLString,
+    tkWString,
+    tkUString: isOk := not (AProperty.GetValue(AObject).AsString.isEmpty);
+
+    tkFloat : isOk := not (AProperty.GetValue(AObject).AsExtended = 0);
+
+    tkInteger,
+    tkInt64 : isOk := not (AProperty.GetValue(AObject).IsEmpty);
+  end;
+
+  if not isOk then
+    raise ENotEmptyConstraint.Create(AProperty.name);
+end;
+
+{ Size }
+
+constructor Size.create(Max: Integer; Min: Integer = 0);
+begin
+  FMin := Min;
+  FMax := Max;
+end;
+
+procedure Size.Validate(const AProperty: TRttiProperty; AObject: TObject);
+begin
+  if (FMax > 0) and (AProperty.GetValue(AObject).AsString.Length > FMax) then
+    raise EMaxLengthConstraint.Create(AProperty.name, FMax);
+
+  if (FMin > 0) and (AProperty.GetValue(AObject).AsString.Length < FMin) then
+    raise EMinLengthConstraint.Create(AProperty.name, FMin);
 end;
 
 end.
