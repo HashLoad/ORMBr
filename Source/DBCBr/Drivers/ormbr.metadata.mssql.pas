@@ -86,11 +86,13 @@ begin
     FFieldType.Add('CHAR', ftFixedChar);
     FFieldType.Add('CARACTER', ftFixedChar);
     FFieldType.Add('DATE', ftDate);
+    FFieldType.Add('SMALLDATETIME', ftDateTime);
     FFieldType.Add('DATETIME', ftDateTime);
     FFieldType.Add('DATETIME2', ftDateTime);
     FFieldType.Add('DECIMAL', ftBCD);
     FFieldType.Add('DOUBLE PRECISION', ftExtended);
     FFieldType.Add('FLOAT', ftFloat);
+    FFieldType.Add('TINYINT', ftInteger);
     FFieldType.Add('INT', ftInteger);
     FFieldType.Add('INTEGER', ftInteger);
     FFieldType.Add('NCHAR', ftFixedWideChar);
@@ -101,9 +103,11 @@ begin
     FFieldType.Add('NUMERIC', ftFloat);
     FFieldType.Add('VARCHAR(MAX)', ftWideMemo);
     FFieldType.Add('TEXT', ftMemo);
+    FFieldType.Add('NTEXT', ftWideMemo);
     FFieldType.Add('SMALLINT', ftSmallint);
     FFieldType.Add('TIME', ftTime);
     FFieldType.Add('GUID', ftGuid);
+    FFieldType.Add('VARBINARY', ftBlob);
     FFieldType.Add('VARBINARY(MAX)', ftBlob);
     FFieldType.Add('IMAGE', ftGraphic);
     FFieldType.Add('BIT', ftBoolean);
@@ -309,7 +313,7 @@ begin
     oForeignKey.OnUpdate := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_updateaction'), varInteger));
     oForeignKey.OnDelete := GetRuleAction(VarAsType(oDBResultSet.GetFieldValue('fk_deleteaction'), varInteger));
     oForeignKey.Description :=  VarToStr(oDBResultSet.GetFieldValue('fk_description'));
-    ATable.ForeignKeys.Add(oForeignKey.Name, oForeignKey);
+    ATable.ForeignKeys.AddOrSetValue(oForeignKey.Name, oForeignKey);
     /// <summary>
     /// Coluna tabela master
     /// </summary>
@@ -562,14 +566,14 @@ end;
 function TCatalogMetadataMSSQL.GetSelectIndexeColumns(AIndexeName: string): string;
 begin
    Result := ' select sc.name              as column_name, ' +
-             '        ic.key_ordinal       as column_position, ' +
+             '        ic.index_column_id   as column_position, ' +
              '        ic.is_descending_key as index_type ' +
              ' from sys.index_columns ic ' +
              ' inner join sys.indexes si on ic.object_id = si.object_id and ic.index_id = si.index_id ' +
              ' inner join sys.columns sc on ic.object_id = sc.object_id and ic.column_id = sc.column_id  ' +
              ' where si.type = 2 and si.name = ' + QuotedStr(AIndexeName) +
              ' order by si.name, ' +
-             '          ic.key_ordinal';
+             '          ic.index_column_id';
 end;
 
 initialization
