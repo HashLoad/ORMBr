@@ -215,9 +215,11 @@ type
     function LessEqThan(const AValue: Integer) : ICQL; overload;
     function IsNull: ICQL;
     function IsNotNull: ICQL;
+    function Like(const AValue: String): ICQL;
     function LikeFull(const AValue: String): ICQL;
     function LikeLeft(const AValue: String): ICQL;
     function LikeRight(const AValue: String): ICQL;
+    function NotLike(const AValue: String): ICQL;
     function NotLikeFull(const AValue: String): ICQL;
     function NotLikeLeft(const AValue: String): ICQL;
     function NotLikeRight(const AValue: String): ICQL;
@@ -476,7 +478,7 @@ type
                           fcBetween, fcNotBetween,
                           fcExists, fcNotExists,
                           fcLikeFull, fcLikeLeft, fcLikeRight,
-                          fcNotLikeFull, fcNotLikeLeft, fcNotLikeRight
+                          fcNotLikeFull, fcNotLikeLeft, fcNotLikeRight, fcLike, fcNotLike
                           );
   TCQLDataFieldType = (dftUnknown, dftString, dftInteger, dftFloat, dftDate, dftArray, dftText);
 
@@ -516,9 +518,11 @@ type
     function IsLessEqThan(const AValue: Integer) : String; overload;
     function IsNull: String;
     function IsNotNull: String;
+    function IsLike(const AValue: String): String;
     function IsLikeFull(const AValue: String): String;
     function IsLikeLeft(const AValue: String): String;
     function IsLikeRight(const AValue: String): String;
+    function IsNotLike(const AValue: String): String;
     function IsNotLikeFull(const AValue: String): String;
     function IsNotLikeLeft(const AValue: String): String;
     function IsNotLikeRight(const AValue: String): String;

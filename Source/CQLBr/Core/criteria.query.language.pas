@@ -145,9 +145,7 @@ type
     function Where(const AExpression: String = ''): ICQL; overload;
     function Where(const AExpression: array of const): ICQL; overload;
     function Where(const AExpression: ICQLCriteriaExpression): ICQL; overload;
-    /// <summary>
-    ///   Operators methods
-    /// </summary>
+    // Operators methods
     function Equal(const AValue: String): ICQL; overload;
     function Equal(const AValue: Extended): ICQL overload;
     function Equal(const AValue: Integer): ICQL; overload;
@@ -164,9 +162,11 @@ type
     function LessEqThan(const AValue: Integer) : ICQL; overload;
     function IsNull: ICQL;
     function IsNotNull: ICQL;
+    function Like(const AValue: String): ICQL;
     function LikeFull(const AValue: String): ICQL;
     function LikeLeft(const AValue: String): ICQL;
     function LikeRight(const AValue: String): ICQL;
+    function NotLike(const AValue: String): ICQL;
     function NotLikeFull(const AValue: String): ICQL;
     function NotLikeLeft(const AValue: String): ICQL;
     function NotLikeRight(const AValue: String): ICQL;
@@ -178,17 +178,13 @@ type
     function NotIn(const AValue: String): ICQL; overload;
     function Exists(const AValue: String): ICQL; overload;
     function NotExists(const AValue: String): ICQL; overload;
-    /// <summary>
-    ///   Functions methods
-    /// </summary>
+    // Functions methods
     function Count: ICQL;
     function Lower: ICQL;
     function Min: ICQL;
     function Max: ICQL;
     function Upper: ICQL;
-    /// <summary>
-    ///   Result full command sql
-    /// </summary>
+    // Result full command sql
     function AsString: String;
   end;
 
@@ -751,6 +747,13 @@ begin
   Result := Self;
 end;
 
+function TCQL.Like(const AValue: String): ICQL;
+begin
+  AssertOperator([opeWhere, opeAND, opeOR]);
+  FActiveExpr.&Ope(FOperator.IsLike(AValue));
+  Result := Self;
+end;
+
 function TCQL.LikeFull(const AValue: String): ICQL;
 begin
   AssertOperator([opeWhere, opeAND, opeOR]);
@@ -845,6 +848,13 @@ function TCQL.NotIn(const AValue: TArray<Double>): ICQL;
 begin
   AssertOperator([opeWhere, opeAND, opeOR]);
   FActiveExpr.&Ope(FOperator.IsNotIn(AValue));
+  Result := Self;
+end;
+
+function TCQL.NotLike(const AValue: String): ICQL;
+begin
+  AssertOperator([opeWhere, opeAND, opeOR]);
+  FActiveExpr.&Ope(FOperator.IsNotLike(AValue));
   Result := Self;
 end;
 

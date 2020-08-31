@@ -93,9 +93,11 @@ type
     function IsLessEqThan(const AValue: Integer) : String; overload;
     function IsNull: String;
     function IsNotNull: String;
+    function IsLike(const AValue: String): String;
     function IsLikeFull(const AValue: String): String;
     function IsLikeLeft(const AValue: String): String;
     function IsLikeRight(const AValue: String): String;
+    function IsNotLike(const AValue: String): String;
     function IsNotLikeFull(const AValue: String): String;
     function IsNotLikeLeft(const AValue: String): String;
     function IsNotLikeRight(const AValue: String): String;
@@ -147,6 +149,8 @@ begin
       begin
         Result := VarToStrDef(FValue, EmptyStr);
         case FCompare of
+          fcLike,
+          fcNotLike:      Result := QuotedStr(TUtils.Concat([Result], EmptyStr));
           fcLikeFull,
           fcNotLikeFull:  Result := QuotedStr(TUtils.Concat(['%', Result, '%'], EmptyStr));
           fcLikeLeft,
@@ -186,9 +190,11 @@ begin
     fcNotBetween   : Result := 'not between';
     fcExists       : Result := 'exists';
     fcNotExists    : Result := 'not exists';
+    fcLike,
     fcLikeFull,
     fcLikeLeft,
     fcLikeRight    : Result := 'like';
+    fcNotLike,
     fcNotLikeFull,
     fcNotLikeLeft,
     fcNotLikeRight : Result := 'not like';
@@ -338,6 +344,11 @@ begin
   Result := CreateOperator('', AValue, fcLess, dftInteger).AsString;
 end;
 
+function TCQLOperators.IsLike(const AValue: String): String;
+begin
+  Result := CreateOperator('', AValue, fcLike, dftString).AsString;
+end;
+
 function TCQLOperators.IsLikeFull(const AValue: String): String;
 begin
   Result := CreateOperator('', AValue, fcLikeFull, dftString).AsString;
@@ -371,6 +382,11 @@ end;
 function TCQLOperators.IsNotEqual(const AValue: Integer): String;
 begin
   Result := CreateOperator('', AValue, fcNotEqual, dftInteger).AsString;
+end;
+
+function TCQLOperators.IsNotLike(const AValue: String): String;
+begin
+  Result := CreateOperator('', AValue, fcNotLike, dftString).AsString;
 end;
 
 function TCQLOperators.IsNotLikeFull(const AValue: String): String;
