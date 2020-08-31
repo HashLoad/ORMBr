@@ -56,8 +56,6 @@ type
     JvCreateProcess1: TJvCreateProcess;
     clbDelphiVersion: TCheckListBox;
     framePacotes1: TframePacotes;
-    Label23: TLabel;
-    edtDelphiVersion: TComboBox;
     Label1: TLabel;
     Label8: TLabel;
     ckbUsarArquivoConfig: TCheckBox;
@@ -227,7 +225,7 @@ begin
   MostraDadosVersao(APlatform);
 
   Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
-               'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
+               'Versão do delphi: ' + clbDelphiVersion.Items[iVersion] + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
                'Plataforma: ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)) + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
                StringOfChar('=', 80);
 
@@ -290,9 +288,10 @@ begin
     for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
     begin
       NomePacote := framePacotes1.Pacotes[iDpk].Hint;
-
       // Esse pacote não tem versão runtime e designer, por isso não deve ter as iniciais DCL
-      if not MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+      if MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+        Continue
+      else
         NomePacote := 'dcl' + NomePacote;
 
       // Busca diretório do pacote
@@ -445,7 +444,7 @@ end;
 // retornar o caminho completo para o arquivo de logs
 function TfrmPrincipal.PathArquivoLog: String;
 begin
-  Result := PathApp + 'log_' + StringReplace(edtDelphiVersion.Text, ' ', '_', [rfReplaceAll]) + '.txt';
+  Result := PathApp + 'log_' + StringReplace(clbDelphiVersion.Items[iVersion], ' ', '_', [rfReplaceAll]) + '.txt';
 end;
 
 // retorna o diretório de sistema atual
@@ -544,11 +543,6 @@ begin
     chkWin64.Checked := ArqIni.ReadBool('CONFIG','Win64',False);
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
 
-    if Trim(edtDelphiVersion.Text) = '' then
-      edtDelphiVersion.ItemIndex := 0;
-
-    edtDelphiVersionChange(edtDelphiVersion);
-
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
       if framePacotes1.Pacotes[I].Enabled then
         framePacotes1.Pacotes[I].Checked := ArqIni.ReadBool('PACOTES', framePacotes1.Pacotes[I].Hint, False);
@@ -564,7 +558,7 @@ begin
   with lbInfo.Items do
   begin
     Clear;
-    Add(edtDelphiVersion.Text + ' ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)));
+    Add(clbDelphiVersion.Items[iVersion] + ' ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)));
     Add('Dir. Instalação  : ' + edtDirDestino.Text);
     Add('Dir. Bibliotecas : ' + sDirLibrary);
   end;
@@ -764,7 +758,6 @@ var
   sVersao: String;
   sTipo: String;
 begin
-  iVersion := edtDelphiVersion.ItemIndex;
   sVersao  := AnsiUpperCase(oORMBr.Installations[iVersion].VersionNumberStr);
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
@@ -869,62 +862,54 @@ begin
   for iFor := 0 to oORMBr.Count - 1 do
   begin
     if      oORMBr.Installations[iFor].VersionNumberStr = 'd3' then
-      edtDelphiVersion.Items.Add('Delphi 3')
+      clbDelphiVersion.Items.Add('Delphi 3')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd4' then
-      edtDelphiVersion.Items.Add('Delphi 4')
+      clbDelphiVersion.Items.Add('Delphi 4')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd5' then
-      edtDelphiVersion.Items.Add('Delphi 5')
+      clbDelphiVersion.Items.Add('Delphi 5')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd6' then
-      edtDelphiVersion.Items.Add('Delphi 6')
+      clbDelphiVersion.Items.Add('Delphi 6')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd7' then
-      edtDelphiVersion.Items.Add('Delphi 7')
+      clbDelphiVersion.Items.Add('Delphi 7')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd9' then
-      edtDelphiVersion.Items.Add('Delphi 2005')
+      clbDelphiVersion.Items.Add('Delphi 2005')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd10' then
-      edtDelphiVersion.Items.Add('Delphi 2006')
+      clbDelphiVersion.Items.Add('Delphi 2006')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd11' then
-      edtDelphiVersion.Items.Add('Delphi 2007')
+      clbDelphiVersion.Items.Add('Delphi 2007')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd12' then
-      edtDelphiVersion.Items.Add('Delphi 2009')
+      clbDelphiVersion.Items.Add('Delphi 2009')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd14' then
-      edtDelphiVersion.Items.Add('Delphi 2010')
+      clbDelphiVersion.Items.Add('Delphi 2010')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd15' then
-      edtDelphiVersion.Items.Add('Delphi XE')
+      clbDelphiVersion.Items.Add('Delphi XE')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd16' then
-      edtDelphiVersion.Items.Add('Delphi XE2')
+      clbDelphiVersion.Items.Add('Delphi XE2')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd17' then
-      edtDelphiVersion.Items.Add('Delphi XE3')
+      clbDelphiVersion.Items.Add('Delphi XE3')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd18' then
-      edtDelphiVersion.Items.Add('Delphi XE4')
+      clbDelphiVersion.Items.Add('Delphi XE4')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd19' then
-      edtDelphiVersion.Items.Add('Delphi XE5')
+      clbDelphiVersion.Items.Add('Delphi XE5')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd20' then
-      edtDelphiVersion.Items.Add('Delphi XE6')
+      clbDelphiVersion.Items.Add('Delphi XE6')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd21' then
-      edtDelphiVersion.Items.Add('Delphi XE7')
+      clbDelphiVersion.Items.Add('Delphi XE7')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd22' then
-      edtDelphiVersion.Items.Add('Delphi XE8')
+      clbDelphiVersion.Items.Add('Delphi XE8')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd23' then
-      edtDelphiVersion.Items.Add('Delphi 10 Seattle')
+      clbDelphiVersion.Items.Add('Delphi 10 Seattle')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd24' then
-      edtDelphiVersion.Items.Add('Delphi 10.1 Berlin')
+      clbDelphiVersion.Items.Add('Delphi 10.1 Berlin')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd25' then
-      edtDelphiVersion.Items.Add('Delphi 10.2 Tokyo')
+      clbDelphiVersion.Items.Add('Delphi 10.2 Tokyo')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd26' then
-      edtDelphiVersion.Items.Add('Delphi 10.3 Rio')
+      clbDelphiVersion.Items.Add('Delphi 10.3 Rio')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd27' then
-      edtDelphiVersion.Items.Add('Delphi 10.3 Sydney');
+      clbDelphiVersion.Items.Add('Delphi 10.3 Sydney');
 
     // -- Evento para saidas de mensagens.
     oORMBr.Installations[iFor].OutputCallback := OutputCallLine;
-  end;
-  //
-  clbDelphiVersion.Items.Text := edtDelphiVersion.Items.Text;
-
-  if edtDelphiVersion.Items.Count > 0 then
-  begin
-    edtDelphiVersion.ItemIndex := 0;
-    iVersion := 0;
   end;
 
   LerConfiguracoes;
@@ -1051,6 +1036,8 @@ begin
       // só instala as versão marcadas para instalar.
       if clbDelphiVersion.Checked[LForListaVer] then
       begin
+        iVersion := LForListaVer;
+        sPathBin := IncludeTrailingPathDelimiter(oORMBr.Installations[iVersion].BinFolderName);
         // Inicia barra de progresso
         pgbInstalacao.Position := 0;
         pgbInstalacao.Max := 0;
@@ -1061,7 +1048,7 @@ begin
           // CreateDirectoryLibrarysNotExist;
           // RemoverDiretoriosEPacotesAntigos(APlatform);
           // AddLibrarySearchPath(APlatform);
-          pgbInstalacao.Max := pgbInstalacao.Max + 3;
+          pgbInstalacao.Max := pgbInstalacao.Max;
         end;
 
         if chkWin64.Checked then
@@ -1070,12 +1057,8 @@ begin
           // CreateDirectoryLibrarysNotExist;
           // RemoverDiretoriosEPacotesAntigos(APlatform);
           // AddLibrarySearchPath(APlatform);
-          pgbInstalacao.Max := pgbInstalacao.Max + 3;
+          pgbInstalacao.Max := pgbInstalacao.Max;
         end;
-
-        // Seleciona a versão no combobox.
-        edtDelphiVersion.ItemIndex := LForListaVer;
-        edtDelphiVersionChange(edtDelphiVersion);
 
         // Win64
         if chkWin64.Checked then
@@ -1171,8 +1154,6 @@ end;
 // da plataforma de compilação
 procedure TfrmPrincipal.edtDelphiVersionChange(Sender: TObject);
 begin
-  iVersion := edtDelphiVersion.ItemIndex;
-  sPathBin := IncludeTrailingPathDelimiter(oORMBr.Installations[iVersion].BinFolderName);
   // -- Plataforma só habilita para Delphi XE2
   // -- Desabilita para versão diferente de Delphi XE2
   //edtPlatform.Enabled := oORMBr.Installations[iVersion].VersionNumber >= 9;

@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = lbInfo
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsNone
   BorderWidth = 1
@@ -25,7 +25,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 722
     Height = 639
-    ActivePage = wizPgInstalacao
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1058,20 +1058,6 @@ object frmPrincipal: TfrmPrincipal
         ShowHint = True
         OnClick = btnSelecDirInstallClick
       end
-      object Label23: TLabel
-        Left = 376
-        Top = 467
-        Width = 93
-        Height = 13
-        Caption = 'ComboBox Invisivel'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clSilver
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        Visible = False
-      end
       object Label8: TLabel
         Left = 212
         Top = 111
@@ -1183,21 +1169,6 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 1
         OnClick = clbDelphiVersionClick
       end
-      object edtDelphiVersion: TComboBox
-        Left = 376
-        Top = 486
-        Width = 172
-        Height = 21
-        Style = csDropDownList
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 6
-        Visible = False
-      end
       object ckbUsarArquivoConfig: TCheckBox
         Left = 195
         Top = 132
@@ -1302,129 +1273,171 @@ object frmPrincipal: TfrmPrincipal
           ExplicitHeight = 479
           inherited Label6: TLabel
             Top = 8
+            ExplicitTop = 8
           end
           inherited Bevel2: TBevel
             Top = 13
+            ExplicitTop = 13
           end
           inherited Label13: TLabel
             Top = 453
+            ExplicitTop = 453
           end
           inherited Label1: TLabel
             Top = 453
+            ExplicitTop = 453
           end
           inherited Label2: TLabel
             Top = 28
+            ExplicitTop = 28
           end
           inherited Label3: TLabel
             Top = 28
+            ExplicitTop = 28
           end
           inherited Label7: TLabel
             Top = 95
+            ExplicitTop = 95
           end
           inherited Bevel1: TBevel
             Top = 102
+            ExplicitTop = 102
           end
           inherited Label8: TLabel
             Top = 114
+            ExplicitTop = 114
           end
           inherited Label9: TLabel
             Top = 114
+            ExplicitTop = 114
           end
           inherited Label10: TLabel
             Top = 233
+            ExplicitTop = 233
           end
           inherited Label11: TLabel
             Top = 255
+            ExplicitTop = 255
           end
           inherited Label12: TLabel
             Top = 255
+            ExplicitTop = 255
           end
           inherited Label15: TLabel
             Top = 278
+            ExplicitTop = 278
           end
           inherited Label16: TLabel
             Top = 278
+            ExplicitTop = 278
           end
           inherited Label17: TLabel
             Top = 301
+            ExplicitTop = 301
           end
           inherited Label18: TLabel
             Top = 301
+            ExplicitTop = 301
           end
           inherited Label14: TLabel
             Top = 323
+            ExplicitTop = 323
           end
           inherited Label19: TLabel
             Top = 323
+            ExplicitTop = 323
           end
           inherited Label20: TLabel
             Top = 345
+            ExplicitTop = 345
           end
           inherited Label21: TLabel
             Top = 345
+            ExplicitTop = 345
           end
           inherited Label22: TLabel
             Top = 367
+            ExplicitTop = 367
           end
           inherited Label23: TLabel
             Top = 367
+            ExplicitTop = 367
           end
           inherited Label24: TLabel
             Top = 389
+            ExplicitTop = 389
           end
           inherited Label25: TLabel
             Top = 389
+            ExplicitTop = 389
           end
           inherited Label26: TLabel
             Top = 411
+            ExplicitTop = 411
           end
           inherited Label27: TLabel
             Top = 411
+            ExplicitTop = 411
           end
           inherited Label28: TLabel
             Top = 433
+            ExplicitTop = 433
           end
           inherited Label29: TLabel
             Top = 433
+            ExplicitTop = 433
           end
           inherited Label4: TLabel
             Top = 51
+            ExplicitTop = 51
           end
           inherited Label5: TLabel
             Top = 51
+            ExplicitTop = 51
           end
           inherited Label30: TLabel
             Top = 73
+            ExplicitTop = 73
           end
           inherited Label31: TLabel
             Top = 73
+            ExplicitTop = 73
           end
           inherited Bevel3: TBevel
             Top = 239
+            ExplicitTop = 239
           end
           inherited Label33: TLabel
             Top = 166
+            ExplicitTop = 166
           end
           inherited Label34: TLabel
             Top = 166
+            ExplicitTop = 166
           end
           inherited Label35: TLabel
             Top = 146
+            ExplicitTop = 146
           end
           inherited Bevel5: TBevel
             Top = 152
+            ExplicitTop = 152
           end
           inherited Label36: TLabel
             Top = 187
+            ExplicitTop = 187
           end
           inherited Label37: TLabel
             Top = 187
+            ExplicitTop = 187
           end
           inherited Label38: TLabel
             Top = 208
+            ExplicitTop = 208
           end
           inherited Label39: TLabel
             Top = 208
+            ExplicitTop = 208
           end
           inherited DBEBrConnectionMongoWire_dpk: TCheckBox
             Top = 452
