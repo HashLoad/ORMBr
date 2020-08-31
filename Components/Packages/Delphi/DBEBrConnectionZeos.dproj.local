@@ -28,5 +28,6 @@
     <Transaction>2019/08/09 17:34:49.000.354,=D:\PROJETOS-Brasil\ORMBr\Source\DBEBr\Drivers\ormbr.driver.zeos.transaction.pas</Transaction>
     <Transaction>2019/08/09 17:34:49.000.320,=D:\PROJETOS-Brasil\ORMBr\Source\DBEBr\Drivers\ormbr.driver.zeos.pas</Transaction>
     <Transaction>2019/08/09 17:34:49.000.396,=D:\PROJETOS-Brasil\ORMBr\Source\DBEBr\Drivers\ormbr.factory.zeos.pas</Transaction>
+    <Transaction>2020/08/31 10:47:40.000.513,D:\PROJETOS-Brasil\ORMBr\Components\Source\dbebr.connection.zeos.reg.pas=</Transaction>
   </Transactions>
 </BorlandProject>

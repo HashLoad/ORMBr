@@ -26,18 +26,17 @@ package ORMBrManagerObjectSet;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ORMBr - TManager ObjectSet'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   dsnap,
   DBEBrCore,
   ORMBrCore;
 
 contains
   ormbr.db.manager.objectset in '..\..\Source\ormbr.db.manager.objectset.pas',
-  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas',
-  ormbr.db.manager.objectset.reg in '..\..\Source\ormbr.db.manager.objectset.reg.pas';
+  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas';
 
 end.

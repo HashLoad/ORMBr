@@ -26,11 +26,11 @@ package ORMBrDriversLinks;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ORMBr - Drivers Links'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
-  designide;
+  rtl;
 
 contains
   ormbr.driver.link.firebird in '..\..\Source\ormbr.driver.link.firebird.pas',
@@ -41,7 +41,6 @@ contains
   ormbr.driver.link.oracle in '..\..\Source\ormbr.driver.link.oracle.pas',
   ormbr.driver.link.postgresql in '..\..\Source\ormbr.driver.link.postgresql.pas',
   ormbr.driver.link.sqldirect in '..\..\Source\ormbr.driver.link.sqldirect.pas',
-  ormbr.driver.link.sqlite in '..\..\Source\ormbr.driver.link.sqlite.pas',
-  ormbr.link.reg in '..\..\Source\ormbr.link.reg.pas';
+  ormbr.driver.link.sqlite in '..\..\Source\ormbr.driver.link.sqlite.pas';
 
 end.

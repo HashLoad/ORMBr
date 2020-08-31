@@ -26,19 +26,18 @@ package ORMBrManagerClientDataSet;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ORMBr - Manager TClientDataSet'}
+{$RUNONLY}
 {$IMPLICITBUILD ON}
 
 requires
   rtl,
-  designide,
   dsnap,
   DBEBrCore,
   ORMBrCore;
 
 contains
   ormbr.manager.clientdataset in '..\..\Source\ormbr.manager.clientdataset.pas',
-  ormbr.db.manager.clientdataset in '..\..\Source\ormbr.db.manager.clientdataset.pas',
-  ormbr.manager.clientdataset.reg in '..\..\Source\ormbr.manager.clientdataset.reg.pas';
+  ormbr.db.manager.clientdataset in '..\..\Source\ormbr.db.manager.clientdataset.pas';
 
 end.
 

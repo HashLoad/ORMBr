@@ -50,13 +50,13 @@
     <Transaction>2019/08/05 18:29:14.000.392,=ORMBrCore.dcp</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="..\..\..\Components"/>
-    <File Path="..\..\Source"/>
-    <File Path="..\..\Source\dbebr.connection.base.pas"/>
     <File Path="dbrtl.dcp"/>
     <File Path="ORMBrCore.dcp"/>
     <File Path="rtl.dcp"/>
     <File Path="vcl.dcp"/>
     <File Path="vclimg.dcp"/>
+    <File Path="..\..\..\Components"/>
+    <File Path="..\..\Source"/>
+    <File Path="..\..\Source\dbebr.connection.base.pas"/>
   </ProjectSortOrder>
 </BorlandProject>
