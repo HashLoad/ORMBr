@@ -30,7 +30,7 @@ type
     ScrollBox1: TScrollBox;
     Label6: TLabel;
     Bevel2: TBevel;
-    ConnectionMongoWire_dpk: TCheckBox;
+    DBEBrConnectionMongoWire_dpk: TCheckBox;
     Label13: TLabel;
     Label1: TLabel;
     ORMBrLibrary_dpk: TCheckBox;
@@ -76,8 +76,6 @@ type
     Label31: TLabel;
     DBEBrCore_dpk: TCheckBox;
     Bevel3: TBevel;
-    Label32: TLabel;
-    Bevel4: TBevel;
     ORMBrManagerClientDataSet_dpk: TCheckBox;
     Label33: TLabel;
     Label34: TLabel;

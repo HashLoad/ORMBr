@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = lbInfo
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsNone
   BorderWidth = 1
@@ -25,7 +25,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 722
     Height = 639
-    ActivePage = wizPgInicio
+    ActivePage = wizPgInstalacao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1005,10 +1005,6 @@ object frmPrincipal: TfrmPrincipal
       Color = 3417897
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 65
@@ -1025,9 +1021,9 @@ object frmPrincipal: TfrmPrincipal
       object Label5: TLabel
         Left = 195
         Top = 65
-        Width = 52
+        Width = 57
         Height = 13
-        Caption = 'Plataforma'
+        Caption = 'Plataformas'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clSilver
         Font.Height = -11
@@ -1063,8 +1059,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btnSelecDirInstallClick
       end
       object Label23: TLabel
-        Left = 373
-        Top = 65
+        Left = 376
+        Top = 467
         Width = 93
         Height = 13
         Caption = 'ComboBox Invisivel'
@@ -1078,7 +1074,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label8: TLabel
         Left = 212
-        Top = 117
+        Top = 111
         Width = 270
         Height = 13
         Caption = 'Deixar somente a pasta LibXX no Library Path do Delphi?'
@@ -1093,7 +1089,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object Label7: TLabel
         Left = 212
-        Top = 140
+        Top = 134
         Width = 177
         Height = 13
         Caption = 'Usar arquivo de configura'#231#227'o (*.cfg)'
@@ -1106,29 +1102,41 @@ object frmPrincipal: TfrmPrincipal
         Transparent = True
         OnClick = Label7Click
       end
-      object edtPlatform: TComboBox
-        Left = 195
-        Top = 84
-        Width = 172
-        Height = 21
-        Style = csDropDownList
+      object LabelWin32: TLabel
+        Left = 212
+        Top = 83
+        Width = 30
+        Height = 13
+        Caption = 'Win32'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
+        Font.Color = clSilver
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = []
-        ItemIndex = 0
         ParentFont = False
-        TabOrder = 2
-        Text = 'Win32'
-        Items.Strings = (
-          'Win32')
+        Transparent = True
+        OnClick = LabelWin32Click
+      end
+      object LabelWin64: TLabel
+        Left = 275
+        Top = 83
+        Width = 30
+        Height = 13
+        Caption = 'Win64'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clSilver
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        Transparent = True
+        OnClick = LabelWin64Click
       end
       object edtDirDestino: TEdit
         Left = 17
         Top = 27
         Width = 487
-        Height = 19
+        Height = 24
         Color = 4865343
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
@@ -1143,7 +1151,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object chkDeixarSomenteLIB: TCheckBox
         Left = 195
-        Top = 115
+        Top = 109
         Width = 16
         Height = 17
         Color = clWhite
@@ -1176,8 +1184,8 @@ object frmPrincipal: TfrmPrincipal
         OnClick = clbDelphiVersionClick
       end
       object edtDelphiVersion: TComboBox
-        Left = 373
-        Top = 84
+        Left = 376
+        Top = 486
         Width = 172
         Height = 21
         Style = csDropDownList
@@ -1187,12 +1195,12 @@ object frmPrincipal: TfrmPrincipal
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 6
         Visible = False
       end
       object ckbUsarArquivoConfig: TCheckBox
         Left = 195
-        Top = 138
+        Top = 132
         Width = 16
         Height = 17
         Font.Charset = DEFAULT_CHARSET
@@ -1202,6 +1210,36 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = []
         ParentFont = False
         TabOrder = 5
+      end
+      object chkWin32: TCheckBox
+        Left = 195
+        Top = 81
+        Width = 16
+        Height = 17
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 2
+      end
+      object chkWin64: TCheckBox
+        Left = 258
+        Top = 81
+        Width = 16
+        Height = 17
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 3
       end
     end
     object wizPgPacotes: TJvWizardInteriorPage
@@ -1224,10 +1262,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1261,10 +1295,205 @@ object frmPrincipal: TfrmPrincipal
         inherited ScrollBox1: TScrollBox
           Width = 550
           Height = 479
+          VertScrollBar.Position = 2
           BevelInner = bvNone
           ParentColor = False
           ExplicitWidth = 550
           ExplicitHeight = 479
+          inherited Label6: TLabel
+            Top = 8
+          end
+          inherited Bevel2: TBevel
+            Top = 13
+          end
+          inherited Label13: TLabel
+            Top = 453
+          end
+          inherited Label1: TLabel
+            Top = 453
+          end
+          inherited Label2: TLabel
+            Top = 28
+          end
+          inherited Label3: TLabel
+            Top = 28
+          end
+          inherited Label7: TLabel
+            Top = 95
+          end
+          inherited Bevel1: TBevel
+            Top = 102
+          end
+          inherited Label8: TLabel
+            Top = 114
+          end
+          inherited Label9: TLabel
+            Top = 114
+          end
+          inherited Label10: TLabel
+            Top = 233
+          end
+          inherited Label11: TLabel
+            Top = 255
+          end
+          inherited Label12: TLabel
+            Top = 255
+          end
+          inherited Label15: TLabel
+            Top = 278
+          end
+          inherited Label16: TLabel
+            Top = 278
+          end
+          inherited Label17: TLabel
+            Top = 301
+          end
+          inherited Label18: TLabel
+            Top = 301
+          end
+          inherited Label14: TLabel
+            Top = 323
+          end
+          inherited Label19: TLabel
+            Top = 323
+          end
+          inherited Label20: TLabel
+            Top = 345
+          end
+          inherited Label21: TLabel
+            Top = 345
+          end
+          inherited Label22: TLabel
+            Top = 367
+          end
+          inherited Label23: TLabel
+            Top = 367
+          end
+          inherited Label24: TLabel
+            Top = 389
+          end
+          inherited Label25: TLabel
+            Top = 389
+          end
+          inherited Label26: TLabel
+            Top = 411
+          end
+          inherited Label27: TLabel
+            Top = 411
+          end
+          inherited Label28: TLabel
+            Top = 433
+          end
+          inherited Label29: TLabel
+            Top = 433
+          end
+          inherited Label4: TLabel
+            Top = 51
+          end
+          inherited Label5: TLabel
+            Top = 51
+          end
+          inherited Label30: TLabel
+            Top = 73
+          end
+          inherited Label31: TLabel
+            Top = 73
+          end
+          inherited Bevel3: TBevel
+            Top = 239
+          end
+          inherited Label33: TLabel
+            Top = 166
+          end
+          inherited Label34: TLabel
+            Top = 166
+          end
+          inherited Label35: TLabel
+            Top = 146
+          end
+          inherited Bevel5: TBevel
+            Top = 152
+          end
+          inherited Label36: TLabel
+            Top = 187
+          end
+          inherited Label37: TLabel
+            Top = 187
+          end
+          inherited Label38: TLabel
+            Top = 208
+          end
+          inherited Label39: TLabel
+            Top = 208
+          end
+          inherited DBEBrConnectionMongoWire_dpk: TCheckBox
+            Top = 452
+            ExplicitTop = 452
+          end
+          inherited ORMBrLibrary_dpk: TCheckBox
+            Top = 27
+            ExplicitTop = 27
+          end
+          inherited ORMBrDriversLinks_dpk: TCheckBox
+            Top = 113
+            ExplicitTop = 113
+          end
+          inherited DBEBrConnectionFireDAC_dpk: TCheckBox
+            Top = 254
+            ExplicitTop = 254
+          end
+          inherited DBEBrConnectionDBExpress_dpk: TCheckBox
+            Top = 277
+            ExplicitTop = 277
+          end
+          inherited DBEBrConnectionZeos_dpk: TCheckBox
+            Top = 300
+            ExplicitTop = 300
+          end
+          inherited DBEBrConnectionUniDAC_dpk: TCheckBox
+            Top = 322
+            ExplicitTop = 322
+          end
+          inherited DBEBrConnectionFIBPlus_dpk: TCheckBox
+            Top = 344
+            ExplicitTop = 344
+          end
+          inherited DBEBrConnectionSQLDirect_dpk: TCheckBox
+            Top = 366
+            ExplicitTop = 366
+          end
+          inherited DBEBrConnectionIBObjects_dpk: TCheckBox
+            Top = 388
+            ExplicitTop = 388
+          end
+          inherited DBEBrConnectionNexusDB_dpk: TCheckBox
+            Top = 410
+            ExplicitTop = 410
+          end
+          inherited DBEBrConnectionADO_dpk: TCheckBox
+            Top = 432
+            ExplicitTop = 432
+          end
+          inherited ORMBrCore_dpk: TCheckBox
+            Top = 50
+            ExplicitTop = 50
+          end
+          inherited DBEBrCore_dpk: TCheckBox
+            Top = 72
+            ExplicitTop = 72
+          end
+          inherited ORMBrManagerClientDataSet_dpk: TCheckBox
+            Top = 164
+            ExplicitTop = 164
+          end
+          inherited ORMBrManagerFDMemTable_dpk: TCheckBox
+            Top = 185
+            ExplicitTop = 185
+          end
+          inherited ORMBrManagerObjectSet_dpk: TCheckBox
+            Top = 206
+            ExplicitTop = 206
+          end
         end
       end
     end
@@ -1293,16 +1522,12 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalar: TSpeedButton
         Left = 430
         Top = 463
         Width = 106
         Height = 25
-        Caption = 'Instalar'
+        Caption = 'Compilar e Instalar'
         OnClick = btnInstalarClick
       end
       object btnVisualizarLogCompilacao: TSpeedButton
@@ -1389,10 +1614,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = 3417897
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58

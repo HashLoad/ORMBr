@@ -26,12 +26,12 @@ uses
   ormbr.factory.zeos,
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
+  ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
-  EncdDecd,
   /// Zeos
   ZAbstractConnection,
   ZConnection;

@@ -22,11 +22,6 @@ uses
   ExtCtrls,
   StrUtils,
   Generics.Collections,
-  /// ORMBr
-//  ormbr.manager.dataset,
-//  ormbr.factory.interfaces,
-//  ormbr.factory.firedac,
-//  ormbr.dml.generator.firebird,
   /// modelos usados
   ormbr.model.master,
   ormbr.model.detail,
@@ -40,7 +35,7 @@ uses
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
-
+  /// ORMBr
   ormbr.dml.generator.firebird,
   ormbr.manager.dataset,
   ormbr.factory.interfaces,

@@ -2,7 +2,7 @@ object framePacotes: TframePacotes
   Left = 0
   Top = 0
   Width = 545
-  Height = 630
+  Height = 525
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   Color = 3417897
@@ -11,13 +11,13 @@ object framePacotes: TframePacotes
   TabOrder = 0
   object pnlBotoesMarcar: TPanel
     Left = 0
-    Top = 589
+    Top = 484
     Width = 545
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 552
+    ExplicitTop = 589
     object btnPacotesDesmarcarTodos: TSpeedButton
       AlignWithMargins = True
       Left = 495
@@ -105,15 +105,16 @@ object framePacotes: TframePacotes
     Left = 3
     Top = 3
     Width = 539
-    Height = 583
+    Height = 478
     Align = alClient
     BevelOuter = bvNone
     BorderStyle = bsNone
     TabOrder = 0
-    ExplicitWidth = 546
+    ExplicitTop = 2
+    ExplicitHeight = 491
     object Label6: TLabel
       Left = 12
-      Top = 10
+      Top = 7
       Width = 74
       Height = 13
       Caption = 'Wizard/Core '
@@ -126,14 +127,14 @@ object framePacotes: TframePacotes
     end
     object Bevel2: TBevel
       Left = 197
-      Top = 15
+      Top = 12
       Width = 330
       Height = 14
       Shape = bsTopLine
     end
     object Label13: TLabel
       Left = 197
-      Top = 486
+      Top = 444
       Width = 184
       Height = 26
       Margins.Left = 5
@@ -150,10 +151,10 @@ object framePacotes: TframePacotes
     end
     object Label1: TLabel
       Left = 34
-      Top = 486
-      Width = 114
+      Top = 444
+      Width = 146
       Height = 13
-      Caption = 'Mongo Wire Connection'
+      Caption = 'DBEBr Connection Mongo Wire'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clSilver
       Font.Height = -11
@@ -163,7 +164,7 @@ object framePacotes: TframePacotes
     end
     object Label2: TLabel
       Left = 34
-      Top = 30
+      Top = 27
       Width = 76
       Height = 13
       Caption = 'ORMBr Register'
@@ -176,7 +177,7 @@ object framePacotes: TframePacotes
     end
     object Label3: TLabel
       Left = 197
-      Top = 30
+      Top = 27
       Width = 276
       Height = 13
       Margins.Left = 5
@@ -190,7 +191,7 @@ object framePacotes: TframePacotes
     end
     object Label7: TLabel
       Left = 12
-      Top = 100
+      Top = 92
       Width = 114
       Height = 13
       Caption = 'ORMBr Drivers Links'
@@ -203,14 +204,14 @@ object framePacotes: TframePacotes
     end
     object Bevel1: TBevel
       Left = 197
-      Top = 107
+      Top = 99
       Width = 330
       Height = 14
       Shape = bsTopLine
     end
     object Label8: TLabel
       Left = 34
-      Top = 119
+      Top = 111
       Width = 96
       Height = 13
       Caption = 'ORMBr Drivers Links'
@@ -223,7 +224,7 @@ object framePacotes: TframePacotes
     end
     object Label9: TLabel
       Left = 197
-      Top = 119
+      Top = 110
       Width = 296
       Height = 26
       Margins.Left = 5
@@ -240,7 +241,7 @@ object framePacotes: TframePacotes
     end
     object Label10: TLabel
       Left = 12
-      Top = 239
+      Top = 224
       Width = 179
       Height = 13
       Caption = 'DBEBr Components Connections'
@@ -253,7 +254,7 @@ object framePacotes: TframePacotes
     end
     object Label11: TLabel
       Left = 34
-      Top = 261
+      Top = 246
       Width = 131
       Height = 13
       Caption = 'DBEBr Connection FireDAC '
@@ -266,7 +267,7 @@ object framePacotes: TframePacotes
     end
     object Label12: TLabel
       Left = 197
-      Top = 261
+      Top = 246
       Width = 199
       Height = 13
       Margins.Left = 5
@@ -280,7 +281,7 @@ object framePacotes: TframePacotes
     end
     object Label15: TLabel
       Left = 34
-      Top = 284
+      Top = 269
       Width = 140
       Height = 13
       Caption = 'DBEBr Connection DBExpress'
@@ -293,7 +294,7 @@ object framePacotes: TframePacotes
     end
     object Label16: TLabel
       Left = 197
-      Top = 284
+      Top = 269
       Width = 211
       Height = 13
       Margins.Left = 5
@@ -307,7 +308,7 @@ object framePacotes: TframePacotes
     end
     object Label17: TLabel
       Left = 34
-      Top = 307
+      Top = 292
       Width = 112
       Height = 13
       Caption = 'DBEBr Connection Zeos'
@@ -320,7 +321,7 @@ object framePacotes: TframePacotes
     end
     object Label18: TLabel
       Left = 197
-      Top = 307
+      Top = 292
       Width = 183
       Height = 13
       Margins.Left = 5
@@ -334,7 +335,7 @@ object framePacotes: TframePacotes
     end
     object Label14: TLabel
       Left = 34
-      Top = 329
+      Top = 314
       Width = 125
       Height = 13
       Caption = 'DBEBr Connection UniDAC'
@@ -347,7 +348,7 @@ object framePacotes: TframePacotes
     end
     object Label19: TLabel
       Left = 197
-      Top = 329
+      Top = 314
       Width = 196
       Height = 13
       Margins.Left = 5
@@ -361,7 +362,7 @@ object framePacotes: TframePacotes
     end
     object Label20: TLabel
       Left = 34
-      Top = 351
+      Top = 336
       Width = 124
       Height = 13
       Caption = 'DBEBr Connection FIBPlus'
@@ -374,7 +375,7 @@ object framePacotes: TframePacotes
     end
     object Label21: TLabel
       Left = 197
-      Top = 351
+      Top = 336
       Width = 195
       Height = 13
       Margins.Left = 5
@@ -388,7 +389,7 @@ object framePacotes: TframePacotes
     end
     object Label22: TLabel
       Left = 34
-      Top = 373
+      Top = 358
       Width = 136
       Height = 13
       Caption = 'DBEBr Connection SQLDirect'
@@ -401,7 +402,7 @@ object framePacotes: TframePacotes
     end
     object Label23: TLabel
       Left = 197
-      Top = 373
+      Top = 358
       Width = 207
       Height = 13
       Margins.Left = 5
@@ -415,7 +416,7 @@ object framePacotes: TframePacotes
     end
     object Label24: TLabel
       Left = 34
-      Top = 395
+      Top = 380
       Width = 131
       Height = 13
       Caption = 'DBEBr Connection IBObject'
@@ -428,7 +429,7 @@ object framePacotes: TframePacotes
     end
     object Label25: TLabel
       Left = 197
-      Top = 395
+      Top = 380
       Width = 202
       Height = 13
       Margins.Left = 5
@@ -442,7 +443,7 @@ object framePacotes: TframePacotes
     end
     object Label26: TLabel
       Left = 34
-      Top = 417
+      Top = 402
       Width = 132
       Height = 13
       Caption = 'DBEBr Connection NexusDB'
@@ -455,7 +456,7 @@ object framePacotes: TframePacotes
     end
     object Label27: TLabel
       Left = 197
-      Top = 417
+      Top = 402
       Width = 203
       Height = 13
       Margins.Left = 5
@@ -469,7 +470,7 @@ object framePacotes: TframePacotes
     end
     object Label28: TLabel
       Left = 34
-      Top = 439
+      Top = 424
       Width = 111
       Height = 13
       Caption = 'DBEBr Connection ADO'
@@ -482,7 +483,7 @@ object framePacotes: TframePacotes
     end
     object Label29: TLabel
       Left = 197
-      Top = 439
+      Top = 424
       Width = 182
       Height = 13
       Margins.Left = 5
@@ -496,7 +497,7 @@ object framePacotes: TframePacotes
     end
     object Label4: TLabel
       Left = 34
-      Top = 53
+      Top = 49
       Width = 59
       Height = 13
       Caption = 'ORMBr Core'
@@ -509,7 +510,7 @@ object framePacotes: TframePacotes
     end
     object Label5: TLabel
       Left = 197
-      Top = 53
+      Top = 49
       Width = 179
       Height = 13
       Margins.Left = 5
@@ -523,7 +524,7 @@ object framePacotes: TframePacotes
     end
     object Label30: TLabel
       Left = 34
-      Top = 75
+      Top = 70
       Width = 55
       Height = 13
       Caption = 'DBEBr Core'
@@ -536,7 +537,7 @@ object framePacotes: TframePacotes
     end
     object Label31: TLabel
       Left = 197
-      Top = 75
+      Top = 70
       Width = 175
       Height = 13
       Margins.Left = 5
@@ -550,34 +551,14 @@ object framePacotes: TframePacotes
     end
     object Bevel3: TBevel
       Left = 197
-      Top = 245
-      Width = 330
-      Height = 14
-      Shape = bsTopLine
-    end
-    object Label32: TLabel
-      Left = 12
-      Top = 464
-      Width = 67
-      Height = 13
-      Caption = 'Mongo Wire'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object Bevel4: TBevel
-      Left = 197
-      Top = 469
+      Top = 230
       Width = 330
       Height = 14
       Shape = bsTopLine
     end
     object Label33: TLabel
       Left = 34
-      Top = 172
+      Top = 159
       Width = 153
       Height = 13
       Caption = 'ORMBr Manager TClientDataSet'
@@ -590,7 +571,7 @@ object framePacotes: TframePacotes
     end
     object Label34: TLabel
       Left = 197
-      Top = 172
+      Top = 159
       Width = 171
       Height = 13
       Margins.Left = 5
@@ -604,7 +585,7 @@ object framePacotes: TframePacotes
     end
     object Label35: TLabel
       Left = 12
-      Top = 152
+      Top = 139
       Width = 168
       Height = 13
       Caption = 'ORMBr Components  Manager'
@@ -617,14 +598,14 @@ object framePacotes: TframePacotes
     end
     object Bevel5: TBevel
       Left = 197
-      Top = 158
+      Top = 145
       Width = 330
       Height = 14
       Shape = bsTopLine
     end
     object Label36: TLabel
       Left = 34
-      Top = 193
+      Top = 180
       Width = 148
       Height = 13
       Caption = 'ORMBr Manager TFDMemTable'
@@ -637,7 +618,7 @@ object framePacotes: TframePacotes
     end
     object Label37: TLabel
       Left = 197
-      Top = 193
+      Top = 180
       Width = 171
       Height = 13
       Margins.Left = 5
@@ -651,7 +632,7 @@ object framePacotes: TframePacotes
     end
     object Label38: TLabel
       Left = 34
-      Top = 214
+      Top = 201
       Width = 129
       Height = 13
       Caption = 'ORMBr Manager ObjectSet'
@@ -664,7 +645,7 @@ object framePacotes: TframePacotes
     end
     object Label39: TLabel
       Left = 197
-      Top = 214
+      Top = 201
       Width = 180
       Height = 13
       Margins.Left = 5
@@ -676,17 +657,17 @@ object framePacotes: TframePacotes
       Font.Style = []
       ParentFont = False
     end
-    object ConnectionMongoWire_dpk: TCheckBox
+    object DBEBrConnectionMongoWire_dpk: TCheckBox
       Left = 12
-      Top = 485
+      Top = 443
       Width = 16
       Height = 17
-      Hint = 'ConnectionMongoWire.dpk'
+      Hint = 'DBEBrConnectionMongoWire.dpk'
       TabOrder = 16
     end
     object ORMBrLibrary_dpk: TCheckBox
       Left = 12
-      Top = 29
+      Top = 26
       Width = 16
       Height = 17
       Hint = 'ORMBrLibrary.dpk'
@@ -697,7 +678,7 @@ object framePacotes: TframePacotes
     end
     object ORMBrDriversLinks_dpk: TCheckBox
       Left = 12
-      Top = 118
+      Top = 110
       Width = 16
       Height = 17
       Hint = 'ORMBrDriversLinks.dpk'
@@ -705,7 +686,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionFireDAC_dpk: TCheckBox
       Left = 12
-      Top = 260
+      Top = 245
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionFireDAC.dpk'
@@ -713,7 +694,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionDBExpress_dpk: TCheckBox
       Left = 12
-      Top = 283
+      Top = 268
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionDBExpress.dpk'
@@ -721,7 +702,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionZeos_dpk: TCheckBox
       Left = 12
-      Top = 306
+      Top = 291
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionZeos.dpk'
@@ -729,7 +710,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionUniDAC_dpk: TCheckBox
       Left = 12
-      Top = 328
+      Top = 313
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionUniDAC.dpk'
@@ -737,7 +718,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionFIBPlus_dpk: TCheckBox
       Left = 12
-      Top = 350
+      Top = 335
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionFIBPlus.dpk'
@@ -745,7 +726,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionSQLDirect_dpk: TCheckBox
       Left = 12
-      Top = 372
+      Top = 357
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionSQLDirect.dpk'
@@ -753,7 +734,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionIBObjects_dpk: TCheckBox
       Left = 12
-      Top = 394
+      Top = 379
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionIBObjects.dpk'
@@ -761,7 +742,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionNexusDB_dpk: TCheckBox
       Left = 12
-      Top = 416
+      Top = 401
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionNexusDB.dpk'
@@ -769,7 +750,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrConnectionADO_dpk: TCheckBox
       Left = 12
-      Top = 438
+      Top = 423
       Width = 16
       Height = 17
       Hint = 'DBEBrConnectionADO.dpk'
@@ -777,7 +758,7 @@ object framePacotes: TframePacotes
     end
     object ORMBrCore_dpk: TCheckBox
       Left = 12
-      Top = 52
+      Top = 48
       Width = 16
       Height = 17
       Hint = 'ORMBrCore.dpk'
@@ -788,7 +769,7 @@ object framePacotes: TframePacotes
     end
     object DBEBrCore_dpk: TCheckBox
       Left = 12
-      Top = 74
+      Top = 69
       Width = 16
       Height = 17
       Hint = 'DBEBrCore.dpk'
@@ -799,7 +780,7 @@ object framePacotes: TframePacotes
     end
     object ORMBrManagerClientDataSet_dpk: TCheckBox
       Left = 12
-      Top = 170
+      Top = 157
       Width = 16
       Height = 17
       Hint = 'ORMBrManagerClientDataSet.dpk'
@@ -807,7 +788,7 @@ object framePacotes: TframePacotes
     end
     object ORMBrManagerFDMemTable_dpk: TCheckBox
       Left = 12
-      Top = 191
+      Top = 178
       Width = 16
       Height = 17
       Hint = 'ORMBrManagerFDMemTable.dpk'
@@ -815,7 +796,7 @@ object framePacotes: TframePacotes
     end
     object ORMBrManagerObjectSet_dpk: TCheckBox
       Left = 12
-      Top = 212
+      Top = 199
       Width = 16
       Height = 17
       Hint = 'ORMBrManagerObjectSet.dpk'

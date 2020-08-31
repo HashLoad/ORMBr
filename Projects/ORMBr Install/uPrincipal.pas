@@ -7,7 +7,7 @@ uses
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, Buttons, pngimage, ShlObj,
-  uFrameLista, IOUtils,
+  uFrameLista, IOUtils, TypInfo,
   Types, JvComponentBase, JvCreateProcess, JvExControls, JvAnimatedImage,
   JvGIFCtrl, JvWizard, JvWizardRouteMapNodes, CheckLst;
 
@@ -23,7 +23,6 @@ type
     wizPgInicio: TJvWizardWelcomePage;
     Label4: TLabel;
     Label5: TLabel;
-    edtPlatform: TComboBox;
     Label2: TLabel;
     edtDirDestino: TEdit;
     Label6: TLabel;
@@ -63,6 +62,10 @@ type
     Label8: TLabel;
     ckbUsarArquivoConfig: TCheckBox;
     Label7: TLabel;
+    chkWin32: TCheckBox;
+    LabelWin32: TLabel;
+    LabelWin64: TLabel;
+    chkWin64: TCheckBox;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -86,6 +89,8 @@ type
     procedure clbDelphiVersionClick(Sender: TObject);
     procedure Label8Click(Sender: TObject);
     procedure Label7Click(Sender: TObject);
+    procedure LabelWin64Click(Sender: TObject);
+    procedure LabelWin32Click(Sender: TObject);
   private
     FCountErros: Integer;
     oORMBr: TJclBorRADToolInstallations;
@@ -98,9 +103,9 @@ type
     sPathBin   : String;
     FPacoteAtual: TFileName;
     procedure BeforeExecute(Sender: TJclBorlandCommandLineTool);
-    procedure AddLibrarySearchPath;
+    procedure AddLibrarySearchPath(const APlatform: TJclBDSPlatform);
     procedure OutputCallLine(const Text: string);
-    procedure SetPlatformSelected;
+    procedure SetPlatformSelected(const APlatform: TJclBDSPlatform);
     procedure CreateDirectoryLibrarysNotExist;
     procedure GravarConfiguracoes;
     procedure LerConfiguracoes;
@@ -113,16 +118,20 @@ type
     procedure AddLibraryPathToDelphiPath(const APath, AProcurarRemover: String);
     procedure FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
     procedure DeixarSomenteLib;
-    procedure RemoverDiretoriosEPacotesAntigos;
+    procedure RemoverDiretoriosEPacotesAntigos(const APlatform: TJclBDSPlatform);
     {$IFNDEF DEBUG}
     function RunAsAdminAndWaitForCompletion(hWnd: HWND; filename: string): Boolean;
     {$ENDIF}
     procedure GetDriveLetters(AList: TStrings);
-    procedure MostraDadosVersao;
+    procedure MostraDadosVersao(const APlatform: TJclBDSPlatform);
     function GetPathORMBrInc: TFileName;
     procedure WriteToTXT( const ArqTXT : String; const ABinaryString : AnsiString;
        const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
        const ForceDirectory : Boolean = False);
+    procedure RunInstall(const AIndex: Integer; const APlatform: TJclBDSPlatform);
+    procedure Logar(const AString: String);
+    procedure MostrarMensagemInstalado(const aMensagem: String; const aErro: String = '');
+    function GetPlatformName: String;
   public
 
   end;
@@ -165,6 +174,212 @@ begin
   end;
 end;
 {$ENDIF}
+
+procedure TfrmPrincipal.RunInstall(const AIndex: Integer; const APlatform: TJclBDSPlatform);
+var
+  iDpk: Integer;
+  iDcl: Integer;
+  bRunOnly: Boolean;
+  NomePacote: String;
+  Cabecalho: String;
+
+  procedure IncrementaBarraProgresso;
+  begin
+    pgbInstalacao.Position := pgbInstalacao.Position + 1;
+    Application.ProcessMessages;
+  end;
+
+  procedure LigarDefineORMBrInc(const ADefineName: String; const Aligar: Boolean);
+  var
+    F: TStringList;
+    I: Integer;
+  begin
+    F := TStringList.Create;
+    try
+      F.LoadFromFile(GetPathORMBrInc);
+      for I := 0 to F.Count - 1 do
+      begin
+        if Pos(ADefineName.ToUpper, F[I].ToUpper) > 0 then
+        begin
+          if Aligar then
+            F[I] := '{$DEFINE ' + ADefineName + '}'
+          else
+            F[I] := '{.$DEFINE ' + ADefineName + '}';
+
+          Break;
+        end;
+      end;
+      F.SaveToFile(GetPathORMBrInc);
+    finally
+      F.Free;
+    end;
+  end;
+
+begin
+//  LigarDefineORMBrInc('DRIVERRESTFUL', True);
+
+  FCountErros := 0;
+
+  // Define dados da plataforna selecionada
+  SetPlatformSelected(APlatform);
+
+  // Mostra dados da versão na tela a ser instaladas
+  MostraDadosVersao(APlatform);
+
+  Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
+               'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
+               'Plataforma: ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)) + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
+               StringOfChar('=', 80);
+
+  WriteToTXT(PathArquivoLog, Cabecalho, False);
+
+  // Cria diretório de biblioteca da versão do delphi selecionada,
+  // só será criado se não existir
+  Logar('Criando diretórios de bibliotecas... [' + GetPlatformName + ']');
+  CreateDirectoryLibrarysNotExist;
+  IncrementaBarraProgresso;
+
+  // Remover paths do delphi
+  Logar('Removendo paths de pacotes antigos instalados... [' + GetPlatformName + ']');
+  RemoverDiretoriosEPacotesAntigos(APlatform);
+  IncrementaBarraProgresso;
+
+  // Adiciona os paths dos fontes na versão do delphi selecionada
+  Logar('Adicionando library paths... [' + GetPlatformName + ']');
+  AddLibrarySearchPath(APlatform);
+  IncrementaBarraProgresso;
+
+  // Compilar os pacotes primeiramente
+  Logar('');
+  Logar('COMPILANDO OS PACOTES...  [' + GetPlatformName + ']');
+  for iDcl := 0 to framePacotes1.Pacotes.Count - 1 do
+  begin
+    NomePacote := framePacotes1.Pacotes[iDcl].Hint;
+
+    // Esse pacote é designer não será compilado no for abaixo.
+    if (NomePacote = 'ORMBrLibrary.dpk') and (tPlatform = bpWin64) then
+    begin
+      IncrementaBarraProgresso;
+      Continue;
+    end;
+    // Busca diretório do pacote
+    ExtrairDiretorioPacote(NomePacote);
+
+    if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDcl].Checked) then
+    begin
+      WriteToTXT(PathArquivoLog, '');
+      FPacoteAtual := sDirPackage + NomePacote;
+      if oORMBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+        Logar(Format('Pacote "%s" compilado.', [NomePacote]))
+      else
+      begin
+        Inc(FCountErros);
+        Logar(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
+
+        // parar no primeiro erro para evitar de compilar outros pacotes que
+        // precisam do pacote que deu erro
+        Break
+      end;
+    end;
+    IncrementaBarraProgresso;
+  end;
+
+  // Instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
+  if (APlatform = bpWin32) then
+  begin
+    for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+    begin
+      NomePacote := framePacotes1.Pacotes[iDpk].Hint;
+
+      // Esse pacote não tem versão runtime e designer, por isso não deve ter as iniciais DCL
+      if not MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+        NomePacote := 'dcl' + NomePacote;
+
+      // Busca diretório do pacote
+      ExtrairDiretorioPacote(NomePacote);
+
+      if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDpk].Checked) then
+      begin
+        WriteToTXT(PathArquivoLog, '');
+        FPacoteAtual := sDirPackage + NomePacote;
+        if oORMBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+          Logar(Format('Pacote "%s" compilado.', [NomePacote]))
+        else
+        begin
+          Inc(FCountErros);
+          Logar(Format('Erro ao compilar o pacote "%s".', [NomePacote]));
+
+          // parar no primeiro erro para evitar de compilar outros pacotes que
+          // precisam do pacote que deu erro
+          Break
+        end;
+      end;
+      IncrementaBarraProgresso;
+    end;
+
+    if (FCountErros <= 0) then
+    begin
+      Logar('');
+      Logar('INSTALANDO OS PACOTES... [' + GetPlatformName + ']');
+
+      for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+      begin
+        NomePacote := framePacotes1.Pacotes[iDpk].Hint;
+
+        // Esse pacote não tem versão runtime e designer, por isso não deve ter as iniciais DCL
+        if not MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+          NomePacote := 'dcl' + NomePacote;
+
+        // Busca diretório do pacote
+        ExtrairDiretorioPacote(NomePacote);
+
+        if IsDelphiPackage(NomePacote) then
+        begin
+          FPacoteAtual := sDirPackage + NomePacote;
+          // instalar somente os pacotes de designtime
+          GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
+          if not bRunOnly then
+          begin
+            // se o pacote estiver marcado instalar, senão desinstalar
+            if framePacotes1.Pacotes[iDpk].Checked then
+            begin
+              WriteToTXT(PathArquivoLog, '');
+
+              if oORMBr.Installations[iVersion].InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+                Logar(Format('Pacote "%s" instalado.', [NomePacote]))
+              else
+              begin
+                Inc(FCountErros);
+                Logar(Format('Ocorreu um erro ao instalar o pacote "%s".', [NomePacote]));
+
+                Break;
+              end;
+            end
+            else
+            begin
+              WriteToTXT(PathArquivoLog, '');
+
+              if oORMBr.Installations[iVersion].UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
+                Logar(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
+            end;
+          end;
+        end;
+        IncrementaBarraProgresso;
+      end;
+    end
+    else
+    begin
+      Logar('');
+      Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
+    end;
+  end
+  else
+  if (APlatform = bpWin64) then
+  begin
+    Logar('');
+    Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
+  end;
+end;
 
 procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 
@@ -307,6 +522,16 @@ begin
   chkDeixarSomenteLIB.Checked := not chkDeixarSomenteLIB.Checked;
 end;
 
+procedure TfrmPrincipal.LabelWin32Click(Sender: TObject);
+begin
+  chkWin32.Checked := not chkWin32.Checked;
+end;
+
+procedure TfrmPrincipal.LabelWin64Click(Sender: TObject);
+begin
+  chkWin64.Checked := not chkWin64.Checked;
+end;
+
 procedure TfrmPrincipal.LerConfiguracoes;
 var
   ArqIni: TIniFile;
@@ -315,8 +540,8 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     edtDirDestino.Text := ArqIni.ReadString('CONFIG', 'DiretorioInstalacao', ExtractFilePath(ParamStr(0)));
-    edtPlatform.ItemIndex := edtPlatform.Items.IndexOf('Win32');
-//    edtDelphiVersion.ItemIndex  := edtDelphiVersion.Items.IndexOf(ArqIni.ReadString('CONFIG', 'DelphiVersao', ''));
+    chkWin32.Checked := ArqIni.ReadBool('CONFIG','Win32',False);
+    chkWin64.Checked := ArqIni.ReadBool('CONFIG','Win64',False);
     chkDeixarSomenteLIB.Checked    := ArqIni.ReadBool('CONFIG','DexarSomenteLib',False);
 
     if Trim(edtDelphiVersion.Text) = '' then
@@ -332,14 +557,14 @@ begin
   end;
 end;
 
-procedure TfrmPrincipal.MostraDadosVersao;
+procedure TfrmPrincipal.MostraDadosVersao(const APlatform: TJclBDSPlatform);
 begin
-  // mostrar ao usuário as informações de compilação
+  // Mostra ao usuário as informações de compilação
   lbInfo.Clear;
   with lbInfo.Items do
   begin
     Clear;
-    Add(edtDelphiVersion.Text + ' ' + edtPlatform.Text);
+    Add(edtDelphiVersion.Text + ' ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)));
     Add('Dir. Instalação  : ' + edtDirDestino.Text);
     Add('Dir. Bibliotecas : ' + sDirLibrary);
   end;
@@ -354,8 +579,8 @@ begin
   ArqIni := TIniFile.Create(PathArquivoIni);
   try
     ArqIni.WriteString('CONFIG', 'DiretorioInstalacao', edtDirDestino.Text);
-//    ArqIni.WriteString('CONFIG', 'DelphiVersao', edtDelphiVersion.Text);
-    ArqIni.WriteString('CONFIG', 'Plataforma', edtPlatform.Text);
+    ArqIni.WriteBool('CONFIG', 'Win32', chkWin32.Checked);
+    ArqIni.WriteBool('CONFIG', 'Win64', chkWin64.Checked);
     ArqIni.WriteBool('CONFIG','DexarSomenteLib', chkDeixarSomenteLIB.Checked);
 
     for I := 0 to framePacotes1.Pacotes.Count - 1 do
@@ -397,7 +622,7 @@ procedure TfrmPrincipal.DeixarSomenteLib;
   end;
 
 begin
-  // remover os path com o segundo parametro
+  // Remover os path com o segundo parametro
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source', False);
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components', False);
 
@@ -506,7 +731,7 @@ begin
                else
                   RemoveFromLibrarySearchPath(ADirRoot + oDirList.Name, tPlatform);
              end;
-             //-- Procura subpastas
+             // Procura subpastas
              FindDirs(ADirRoot + oDirList.Name, bAdicionar);
           end;
        until FindNext(oDirList) <> 0;
@@ -516,26 +741,25 @@ begin
   end;
 end;
 
-// adicionar o paths ao library path do delphi
-procedure TfrmPrincipal.AddLibrarySearchPath;
+// Adicionar o paths ao library path do delphi
+procedure TfrmPrincipal.AddLibrarySearchPath(const APlatform: TJclBDSPlatform);
 begin
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source');
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components');
 
-  // --
   with oORMBr.Installations[iVersion] do
   begin
-    AddToLibraryBrowsingPath(sDirLibrary, tPlatform);
-    AddToLibrarySearchPath(sDirLibrary, tPlatform);
-    AddToDebugDCUPath(sDirLibrary, tPlatform);
+    AddToLibraryBrowsingPath(sDirLibrary, APlatform);
+    AddToLibrarySearchPath(sDirLibrary, APlatform);
+    AddToDebugDCUPath(sDirLibrary, APlatform);
   end;
 
-  // -- adicionar a library path ao path do windows
+  // Adicionar a library path ao path do windows
   AddLibraryPathToDelphiPath(sDirLibrary, 'ormbr');
 end;
 
-// setar a plataforma de compilação
-procedure TfrmPrincipal.SetPlatformSelected;
+// Setar a plataforma de compilação
+procedure TfrmPrincipal.SetPlatformSelected(const APlatform: TJclBDSPlatform);
 var
   sVersao: String;
   sTipo: String;
@@ -544,19 +768,15 @@ begin
   sVersao  := AnsiUpperCase(oORMBr.Installations[iVersion].VersionNumberStr);
   sDirRoot := IncludeTrailingPathDelimiter(edtDirDestino.Text);
 
+  tPlatform   := APlatform;
+
   sTipo := 'Lib\Delphi\';
 
-  if edtPlatform.ItemIndex = 0 then // Win32
-  begin
-    tPlatform   := bpWin32;
-    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao;
-  end
+  if tPlatform = bpWin32 then
+    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao + 'Win32'
   else
-  if edtPlatform.ItemIndex = 1 then // Win64
-  begin
-    tPlatform   := bpWin64;
-    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao + 'x64';
-  end;
+  if tPlatform = bpWin64 then
+    sDirLibrary := sDirRoot + sTipo + 'Lib' + sVersao + 'Win64';
 end;
 
 // Evento disparado a cada ação do instalador
@@ -695,9 +915,6 @@ begin
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd27' then
       edtDelphiVersion.Items.Add('Delphi 10.3 Sydney');
 
-    // -- Evento disparado antes de iniciar a execução do processo.
-    oORMBr.Installations[iFor].DCC32.OnBeforeExecute := BeforeExecute;
-
     // -- Evento para saidas de mensagens.
     oORMBr.Installations[iFor].OutputCallback := OutputCallLine;
   end;
@@ -718,7 +935,7 @@ begin
   oORMBr.Free;
 end;
 
-procedure TfrmPrincipal.RemoverDiretoriosEPacotesAntigos;
+procedure TfrmPrincipal.RemoverDiretoriosEPacotesAntigos(const APlatform: TJclBDSPlatform);
 var
   ListaPaths: TStringList;
   I: Integer;
@@ -731,36 +948,40 @@ begin
     begin
       // remover do search path
       ListaPaths.Clear;
-      ListaPaths.DelimitedText := RawLibrarySearchPath[tPlatform];
+      ListaPaths.DelimitedText := RawLibrarySearchPath[APlatform];
       for I := ListaPaths.Count - 1 downto 0 do
       begin
         if Pos('ORMBR', AnsiUpperCase(ListaPaths[I])) > 0 then
           ListaPaths.Delete(I);
       end;
-      RawLibrarySearchPath[tPlatform] := ListaPaths.DelimitedText;
+      RawLibrarySearchPath[APlatform] := ListaPaths.DelimitedText;
       // remover do browse path
       ListaPaths.Clear;
-      ListaPaths.DelimitedText := RawLibraryBrowsingPath[tPlatform];
+      ListaPaths.DelimitedText := RawLibraryBrowsingPath[APlatform];
       for I := ListaPaths.Count - 1 downto 0 do
       begin
         if Pos('ORMBR', AnsiUpperCase(ListaPaths[I])) > 0 then
           ListaPaths.Delete(I);
       end;
-      RawLibraryBrowsingPath[tPlatform] := ListaPaths.DelimitedText;
+      RawLibraryBrowsingPath[APlatform] := ListaPaths.DelimitedText;
       // remover do Debug DCU path
       ListaPaths.Clear;
-      ListaPaths.DelimitedText := RawDebugDCUPath[tPlatform];
+      ListaPaths.DelimitedText := RawDebugDCUPath[APlatform];
       for I := ListaPaths.Count - 1 downto 0 do
       begin
         if Pos('ORMBR', AnsiUpperCase(ListaPaths[I])) > 0 then
           ListaPaths.Delete(I);
       end;
-      RawDebugDCUPath[tPlatform] := ListaPaths.DelimitedText;
-      // remover pacotes antigos
-      for I := IdePackages.Count - 1 downto 0 do
+      RawDebugDCUPath[APlatform] := ListaPaths.DelimitedText;
+
+      // Remover pacotes antigos da plataform Win32
+      if APlatform = bpWin32 then
       begin
-        if Pos('ORMBR', AnsiUpperCase(IdePackages.PackageFileNames[I])) > 0 then
-          IdePackages.RemovePackage(IdePackages.PackageFileNames[I]);
+        for I := IdePackages.Count - 1 downto 0 do
+        begin
+          if Pos('ORMBR', AnsiUpperCase(IdePackages.PackageFileNames[I])) > 0 then
+            IdePackages.RemovePackage(IdePackages.PackageFileNames[I]);
+        end;
       end;
     end;
   finally
@@ -803,293 +1024,122 @@ begin
   Result := IncludeTrailingPathDelimiter(edtDirDestino.Text) + 'Source\ormbr.inc';
 end;
 
+function TfrmPrincipal.GetPlatformName: String;
+begin
+  case tPlatform of
+    bpWin32: Result := 'Win32';
+    bpWin64: Result := 'Win64';
+    bpOSX32: Result := '';
+  end;
+end;
+
 // botão de compilação e instalação dos pacotes selecionados no treeview
 procedure TfrmPrincipal.btnInstalarClick(Sender: TObject);
 var
-  iDpk: Integer;
-  bRunOnly: Boolean;
-  NomePacote: String;
-  Cabecalho: String;
-  iListaVer: Integer;
-
-  procedure Logar(const AString: String);
-  begin
-    lstMsgInstalacao.Items.Add(AString);
-    lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
-    Application.ProcessMessages;
-
-    WriteToTXT(PathArquivoLog, AString);
-  end;
-
-  procedure MostrarMensagemInstalado(const aMensagem: String; const aErro: String = '');
-  var
-    Msg: String;
-  begin
-
-    if Trim(aErro) = EmptyStr then
-    begin
-      case sDestino of
-        tdSystem: Msg := Format(aMensagem + ' em "%s"', [PathSystem]);
-        tdDelphi: Msg := Format(aMensagem + ' em "%s"', [sPathBin]);
-        tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
-      end;
-    end
-    else
-    begin
-      Inc(FCountErros);
-
-      case sDestino of
-        tdSystem: Msg := Format(aMensagem + ' em "%s": "%s"', [PathSystem, aErro]);
-        tdDelphi: Msg := Format(aMensagem + ' em "%s": "%s"', [sPathBin, aErro]);
-        tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
-      end;
-    end;
-
-    WriteToTXT(PathArquivoLog, '');
-    Logar(Msg);
-  end;
-
-  procedure IncrementaBarraProgresso;
-  begin
-    pgbInstalacao.Position := pgbInstalacao.Position + 1;
-    Application.ProcessMessages;
-  end;
-
-  procedure LigarDefineORMBrInc(const ADefineName: String; const Aligar: Boolean);
-  var
-    F: TStringList;
-    I: Integer;
-  begin
-    F := TStringList.Create;
-    try
-      F.LoadFromFile(GetPathORMBrInc);
-      for I := 0 to F.Count - 1 do
-      begin
-        if Pos(ADefineName.ToUpper, F[I].ToUpper) > 0 then
-        begin
-          if Aligar then
-            F[I] := '{$DEFINE ' + ADefineName + '}'
-          else
-            F[I] := '{.$DEFINE ' + ADefineName + '}';
-
-          Break;
-        end;
-      end;
-      F.SaveToFile(GetPathORMBrInc);
-    finally
-      F.Free;
-    end;
-  end;
-
+  LForListaVer: Integer;
 begin
-//  LigarDefineORMBrInc('DRIVERRESTFUL', True);
+  // Limpar lista de mensagens
+  btnInstalar.Enabled := False;
+  wizPgInstalacao.EnableButton(bkNext, False);
+  wizPgInstalacao.EnableButton(bkBack, False);
+  wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
 
-  for iListaVer := 0 to clbDelphiVersion.Count -1 do
-  begin
-    // só instala as versão marcadas para instalar.
-    if clbDelphiVersion.Checked[iListaVer] then
+  lstMsgInstalacao.Clear;
+  try
+    for LForListaVer := 0 to clbDelphiVersion.Count -1 do
     begin
-      lstMsgInstalacao.Clear;
-      pgbInstalacao.Position := 0;
-
-      // seleciona a versão no combobox.
-      edtDelphiVersion.ItemIndex := iListaVer;
-      edtDelphiVersionChange(edtDelphiVersion);
-
-      // define dados da plataforna selecionada
-      SetPlatformSelected;
-
-      // mostra dados da versão na tela a ser instaladas
-      MostraDadosVersao();
-
-      FCountErros := 0;
-
-      btnInstalar.Enabled := False;
-      wizPgInstalacao.EnableButton(bkNext, False);
-      wizPgInstalacao.EnableButton(bkBack, False);
-      wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), False);
-      try
-        Cabecalho := 'Caminho: ' + edtDirDestino.Text + sLineBreak +
-                     'Versão do delphi: ' + edtDelphiVersion.Text + ' (' + IntToStr(iVersion)+ ')' + sLineBreak +
-                     'Plataforma: ' + edtPlatform.Text + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
-                     StringOfChar('=', 80);
-
-        // limpar o log
-        lstMsgInstalacao.Clear;
-        WriteToTXT(PathArquivoLog, Cabecalho, False);
-
-        // setar barra de progresso
+      // só instala as versão marcadas para instalar.
+      if clbDelphiVersion.Checked[LForListaVer] then
+      begin
+        // Inicia barra de progresso
         pgbInstalacao.Position := 0;
-        pgbInstalacao.Max := (framePacotes1.Pacotes.Count * 2) + 3;
+        pgbInstalacao.Max := 0;
 
-        // *************************************************************************
-        // Cria diretório de biblioteca da versão do delphi selecionada,
-        // só será criado se não existir
-        // *************************************************************************
-        Logar('Criando diretórios de bibliotecas...');
-        CreateDirectoryLibrarysNotExist;
-        IncrementaBarraProgresso;
-
-
-        // *************************************************************************
-        // remover paths do delphi
-        // *************************************************************************
-        Logar('Removendo paths de pacotes antigos instalados...');
-        RemoverDiretoriosEPacotesAntigos;
-        IncrementaBarraProgresso;
-
-
-        // *************************************************************************
-        // Adiciona os paths dos fontes na versão do delphi selecionada
-        // *************************************************************************
-        Logar('Adicionando library paths...');
-        AddLibrarySearchPath;
-        IncrementaBarraProgresso;
-
-
-        // *************************************************************************
-        // compilar os pacotes primeiramente
-        // *************************************************************************
-        Logar('');
-        Logar('COMPILANDO OS PACOTES...');
-        for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
+        if chkWin32.Checked then
         begin
-          NomePacote := ReplaceStr(framePacotes1.Pacotes[iDpk].Name, '_', '.');
-
-          // Busca diretório do pacote
-          ExtrairDiretorioPacote(NomePacote);
-
-          if (IsDelphiPackage(NomePacote)) and (framePacotes1.Pacotes[iDpk].Checked) then
-          begin
-            WriteToTXT(PathArquivoLog, '');
-            FPacoteAtual := sDirPackage + NomePacote;
-            if oORMBr.Installations[iVersion].CompilePackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-              Logar(Format('Pacote "%s" compilado.', [framePacotes1.Pacotes[iDpk].Hint]))
-            else
-            begin
-              Inc(FCountErros);
-              Logar(Format('Erro ao compilar o pacote "%s".', [framePacotes1.Pacotes[iDpk].Hint]));
-
-              // parar no primeiro erro para evitar de compilar outros pacotes que
-              // precisam do pacote que deu erro
-              Break
-            end;
-          end;
-          IncrementaBarraProgresso;
+          pgbInstalacao.Max := pgbInstalacao.Max + (framePacotes1.Pacotes.Count * 3);
+          // CreateDirectoryLibrarysNotExist;
+          // RemoverDiretoriosEPacotesAntigos(APlatform);
+          // AddLibrarySearchPath(APlatform);
+          pgbInstalacao.Max := pgbInstalacao.Max + 3;
         end;
 
-
-        // *************************************************************************
-        // instalar os pacotes somente se não ocorreu erro na compilação e plataforma for Win32
-        // *************************************************************************
-        if (edtPlatform.ItemIndex = 0) then
+        if chkWin64.Checked then
         begin
-          if (FCountErros <= 0) then
-          begin
-            Logar('');
-            Logar('INSTALANDO OS PACOTES...');
-
-            for iDpk := 0 to framePacotes1.Pacotes.Count - 1 do
-            begin
-              NomePacote := ReplaceStr(framePacotes1.Pacotes[iDpk].Name, '_', '.');
-
-              // Busca diretório do pacote
-              ExtrairDiretorioPacote(NomePacote);
-
-              if IsDelphiPackage(NomePacote) then
-              begin
-                FPacoteAtual := sDirPackage + NomePacote;
-                // instalar somente os pacotes de designtime
-                GetDPKFileInfo(sDirPackage + NomePacote, bRunOnly);
-                if not bRunOnly then
-                begin
-                  // se o pacote estiver marcado instalar, senão desinstalar
-                  if framePacotes1.Pacotes[iDpk].Checked then
-                  begin
-                    WriteToTXT(PathArquivoLog, '');
-
-                    if oORMBr.Installations[iVersion].InstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-                      Logar(Format('Pacote "%s" instalado.', [framePacotes1.Pacotes[iDpk].Hint]))
-                    else
-                    begin
-                      Inc(FCountErros);
-                      Logar(Format('Ocorreu um erro ao instalar o pacote "%s".', [framePacotes1.Pacotes[iDpk].Hint]));
-
-                      Break;
-                    end;
-                  end
-                  else
-                  begin
-                    WriteToTXT(PathArquivoLog, '');
-
-                    if oORMBr.Installations[iVersion].UninstallPackage(sDirPackage + NomePacote, sDirLibrary, sDirLibrary) then
-                      Logar(Format('Pacote "%s" removido com sucesso...', [NomePacote]));
-                  end;
-                end;
-              end;
-
-              IncrementaBarraProgresso;
-            end;
-          end
-          else
-          begin
-            Logar('');
-            Logar('Abortando... Ocorreram erros na compilação dos pacotes.');
-          end;
-        end
-        else
-        begin
-          Logar('');
-          Logar('Para a plataforma de 64 bits os pacotes são somente compilados.');
+          pgbInstalacao.Max := pgbInstalacao.Max + framePacotes1.Pacotes.Count;
+          // CreateDirectoryLibrarysNotExist;
+          // RemoverDiretoriosEPacotesAntigos(APlatform);
+          // AddLibrarySearchPath(APlatform);
+          pgbInstalacao.Max := pgbInstalacao.Max + 3;
         end;
 
-        if FCountErros > 0 then
+        // Seleciona a versão no combobox.
+        edtDelphiVersion.ItemIndex := LForListaVer;
+        edtDelphiVersionChange(edtDelphiVersion);
+
+        // Win64
+        if chkWin64.Checked then
         begin
-          if Application.MessageBox(
-            PWideChar(
-              'Ocorreram erros durante o processo de instalação, '+sLineBreak+
-              'para maiores informações verifique o arquivo de log gerado.'+sLineBreak+sLineBreak+
-              'Deseja visualizar o arquivo de log gerado?'
-            ),
-            'Instalação',
-            MB_ICONQUESTION + MB_YESNO
-          ) = ID_YES then
-          begin
-            btnVisualizarLogCompilacao.Click;
-            Break
-          end;
+          oORMBr.Installations[LForListaVer].DCC := (oORMBr.Installations[LForListaVer] as TJclBDSInstallation).DCC64;
+          // Evento disparado antes de iniciar a execução do processo.
+          oORMBr.Installations[LForListaVer].DCC.OnBeforeExecute := BeforeExecute;
+          //
+          RunInstall(LForListaVer, bpWin64);
         end;
 
-        // *************************************************************************
-        // não instalar outros requisitos se ocorreu erro anteriormente
-        // *************************************************************************
-        if FCountErros <= 0 then
-        begin
-          // *************************************************************************
-          // deixar somente a pasta lib se for configurado assim
-          // *************************************************************************
-          if chkDeixarSomenteLIB.Checked then
-          begin
-            Logar('');
-            Logar('INSTALANDO OUTROS REQUISITOS...');
-            try
-              DeixarSomenteLib;
+        // Salto de linha entre plataforma
+        lstMsgInstalacao.Items.Add('');
 
-              MostrarMensagemInstalado('Limpeza library path com sucesso');
-              MostrarMensagemInstalado('Copia dos arquivos necessário.');
-            except
-              on E: Exception do
-              begin
-                MostrarMensagemInstalado('Ocorreu erro ao limpas os path e copiar arquivos' + sLineBreak +E.Message )
-              end;
-            end;
-          end;
+        // Win32
+        if chkWin32.Checked then
+        begin
+          oORMBr.Installations[LForListaVer].DCC := oORMBr.Installations[LForListaVer].DCC32;
+          // Evento disparado antes de iniciar a execução do processo.
+          oORMBr.Installations[LForListaVer].DCC.OnBeforeExecute := BeforeExecute;
+          //
+          RunInstall(LForListaVer, bpWin32);
         end;
-      finally
-        btnInstalar.Enabled := True;
-        wizPgInstalacao.EnableButton(bkBack, True);
-        wizPgInstalacao.EnableButton(bkNext, FCountErros = 0);
-        wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), True);
+      end;
+    end;
+  finally
+    btnInstalar.Enabled := True;
+    wizPgInstalacao.EnableButton(bkBack, True);
+    wizPgInstalacao.EnableButton(bkNext, FCountErros = 0);
+    wizPgInstalacao.EnableButton(TJvWizardButtonKind(bkCancel), True);
+  end;
+
+  if FCountErros > 0 then
+  begin
+    if Application.MessageBox(PWideChar(
+        'Ocorreram erros durante o processo de instalação, '+sLineBreak+
+        'para maiores informações verifique o arquivo de log gerado.'+sLineBreak+sLineBreak+
+        'Deseja visualizar o arquivo de log gerado?'
+      ),
+      'Instalação', MB_ICONQUESTION + MB_YESNO) = ID_YES then
+    begin
+      btnVisualizarLogCompilacao.Click;
+      Exit;
+    end;
+  end;
+
+  // Não instalar outros requisitos se ocorreu erro anteriormente
+  if FCountErros <= 0 then
+  begin
+    // Deixar somente a pasta lib se for configurado assim
+    if chkDeixarSomenteLIB.Checked then
+    begin
+      Logar('');
+      Logar('INSTALANDO OUTROS REQUISITOS...');
+      try
+        DeixarSomenteLib;
+
+        MostrarMensagemInstalado('Limpeza library path com sucesso');
+        MostrarMensagemInstalado('Copia dos arquivos necessário.');
+      except
+        on E: Exception do
+        begin
+          MostrarMensagemInstalado('Ocorreu erro ao limpas os path e copiar arquivos' + sLineBreak + E.Message)
+        end;
       end;
     end;
   end;
@@ -1105,7 +1155,6 @@ begin
       MB_ICONINFORMATION + MB_OK
     );
   end;
-
 end;
 
 // chama a caixa de dialogo para selecionar o diretório de instalação
@@ -1128,7 +1177,7 @@ begin
   // -- Desabilita para versão diferente de Delphi XE2
   //edtPlatform.Enabled := oORMBr.Installations[iVersion].VersionNumber >= 9;
   //if oORMBr.Installations[iVersion].VersionNumber < 9 then
-  edtPlatform.ItemIndex := 0;
+  //edtPlatform.ItemIndex := 0;
 end;
 
 // abrir o endereço do ORMBr quando clicar na propaganda
@@ -1166,19 +1215,13 @@ procedure TfrmPrincipal.wizPgInstalacaoEnterPage(Sender: TObject;
 var
   iFor: Integer;
 begin
-  // para 64 bit somente compilar
-  if tPlatform = bpWin32 then // Win32
-    btnInstalar.Caption := 'Instalar'
-  else // win64
-    btnInstalar.Caption := 'Compilar';
-
   lbInfo.Clear;
   for iFor := 0 to clbDelphiVersion.Count -1 do
   begin
      // Só pega os dados da 1a versão selecionada, para mostrar na tela qual vai iniciar
      if clbDelphiVersion.Checked[iFor] then
      begin
-        lbInfo.Items.Add('Instalar : ' + clbDelphiVersion.Items[ifor] + ' ' + edtPlatform.Text);
+        lbInfo.Items.Add('Instalar : ' + clbDelphiVersion.Items[ifor]);
      end;
   end;
 end;
@@ -1258,11 +1301,10 @@ begin
     );
   end;
 
-  // prevenir plataforma em branco
-  if Trim(edtPlatform.Text) = '' then
+  // Tratar plataforma não selecionada
+  if (not chkWin32.Checked) and (not chkWin64.Checked) then
   begin
     Stop := True;
-    edtPlatform.SetFocus;
     Application.MessageBox(
       'Plataforma de compilação não foi informada.',
       'Erro.',
@@ -1296,6 +1338,9 @@ end;
 
 procedure TfrmPrincipal.clbDelphiVersionClick(Sender: TObject);
 begin
+  if clbDelphiVersion.ItemIndex = -1 then
+    Exit;
+
   if MatchText(oORMBr.Installations[clbDelphiVersion.ItemIndex].VersionNumberStr, ['d3','d4','d5','d6','d7','d9','d10','d11','d12','d13']) then
   begin
     Application.MessageBox(
@@ -1364,9 +1409,9 @@ begin
 end;
 
 
-procedure TfrmPrincipal.WriteToTXT(const ArqTXT: String; const ABinaryString: AnsiString;
-  const AppendIfExists: Boolean; const AddLineBreak: Boolean;
-  const ForceDirectory: Boolean);
+procedure TfrmPrincipal.WriteToTXT( const ArqTXT : String; const ABinaryString : AnsiString;
+       const AppendIfExists : Boolean = True; const AddLineBreak : Boolean = True;
+       const ForceDirectory : Boolean = False);
 var
   FS : TFileStream ;
   LineBreak : AnsiString ;
@@ -1408,6 +1453,43 @@ begin
   finally
      FS.Free ;
   end;
+end;
+
+procedure TfrmPrincipal.Logar(const AString: String);
+begin
+  lstMsgInstalacao.Items.Add(AString);
+  lstMsgInstalacao.ItemIndex := lstMsgInstalacao.Count - 1;
+  Application.ProcessMessages;
+
+  WriteToTXT(PathArquivoLog, AString);
+end;
+
+procedure TfrmPrincipal.MostrarMensagemInstalado(const aMensagem: String; const aErro: String);
+var
+  Msg: String;
+begin
+
+  if Trim(aErro) = EmptyStr then
+  begin
+    case sDestino of
+      tdSystem: Msg := Format(aMensagem + ' em "%s"', [PathSystem]);
+      tdDelphi: Msg := Format(aMensagem + ' em "%s"', [sPathBin]);
+      tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
+    end;
+  end
+  else
+  begin
+    Inc(FCountErros);
+
+    case sDestino of
+      tdSystem: Msg := Format(aMensagem + ' em "%s": "%s"', [PathSystem, aErro]);
+      tdDelphi: Msg := Format(aMensagem + ' em "%s": "%s"', [sPathBin, aErro]);
+      tdNone:   Msg := 'Tipo de destino "nenhum" não aceito!';
+    end;
+  end;
+
+  WriteToTXT(PathArquivoLog, '');
+  Logar(Msg);
 end;
 
 end.
