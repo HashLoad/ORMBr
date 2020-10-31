@@ -21,8 +21,8 @@ uses
   DBCtrls,
   ExtCtrls,
   /// orm interface de conexão
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   ormbr.dml.generator.sqlite,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,

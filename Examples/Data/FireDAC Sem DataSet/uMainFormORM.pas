@@ -22,9 +22,9 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
-  ormbr.factory.firedac,
+  dbebr.factory.firedac,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
   ormbr.dml.generator.sqlite,

@@ -39,8 +39,8 @@ uses
   /// ORMBr
   ormbr.dml.generator.mysql,
   ormbr.manager.dataset,
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac, FireDAC.Phys.SQLiteWrapper.Stat;
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac;
 
 type
   TForm3 = class(TForm)

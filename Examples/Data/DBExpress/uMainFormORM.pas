@@ -26,11 +26,11 @@ uses
   DbxSqlite,
   SqlExpr,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
-  ormbr.factory.dbexpress,
+  dbebr.factory.dbexpress,
   ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.master,

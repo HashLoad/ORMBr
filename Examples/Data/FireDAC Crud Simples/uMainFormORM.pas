@@ -21,12 +21,11 @@ uses
   DBCtrls,
   ExtCtrls,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,
   ormbr.container.fdmemtable,
-  ormbr.factory.firedac,
-  ormbr.types.database,
+  dbebr.factory.firedac,
   ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.client,

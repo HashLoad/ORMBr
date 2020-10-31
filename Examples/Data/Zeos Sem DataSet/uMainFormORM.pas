@@ -22,11 +22,10 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.zeos,
+  dbebr.factory.interfaces,
+  dbebr.factory.zeos,
   /// orm injection dependency
   ormbr.criteria,
-  ormbr.types.database,
   ormbr.objects.manager,
   /// orm model
   ormbr.model.master,
@@ -105,7 +104,6 @@ implementation
 
 uses
   StrUtils,
-  ormbr.monitor,
   ormbr.form.monitor,
   ormbr.mapping.rttiutils;
 
