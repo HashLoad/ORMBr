@@ -35,7 +35,7 @@ uses
   Generics.Collections,
   ormbr.ddl.register,
   ormbr.ddl.generator,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping;
 
 type
@@ -118,7 +118,7 @@ begin
       LSQL.Append(',');
     end;
     /// <summary>
-    ///   Add PrimaryKey
+    ///   Add PrimariKey
     /// </summary>
     if ATable.PrimaryKey.Fields.Count > 0 then
     begin

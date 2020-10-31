@@ -53,9 +53,7 @@ uses
   ormbr.dataset.base.adapter;
 
 type
-  /// <summary>
-  ///   M - Object M
-  /// </summary>
+  // M - Object M
   TRESTDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
     procedure SetMasterDataSetStateEdit;
@@ -309,14 +307,10 @@ end;
 procedure TRESTDataSetAdapter<M>.DoBeforePost(DataSet: TDataSet);
 begin
   inherited DoBeforePost(DataSet);
-  /// <summary>
-  ///   Seta o registro mestre com stado de edição, considerando esse o
-  ///   registro filho sendo incluído ou alterado
-  /// </summary>
+  // Seta o registro mestre com stado de edição, considerando esse o
+  // registro filho sendo incluído ou alterado
   SetMasterDataSetStateEdit;
-  /// <summary>
-  ///   Rotina de validação se o campo foi deixado null
-  /// </summary>
+  // Rotina de validação se o campo foi deixado null
   ExecuteCheckNotNull;
 end;
 
@@ -437,10 +431,8 @@ begin
   begin
     if not FMasterObject.ContainsKey(LObjectChild.ClassName) then
       Continue;
-    /// <summary>
-    ///   Popular classe ralacionada através do atributo Association() e todos
-    ///   as suas classes filhas, caso exista.
-    /// </summary>
+    // Popular classe ralacionada através do atributo Association() e todos
+    // as suas classes filhas, caso exista.
     LDataSetChild := TRESTDataSetAdapter<M>(FMasterObject.Items[LObjectChild.ClassName]);
     LDataSetChild.FOrmDataSet.DisableControls;
     LDataSetChild.DisableDataSetEvents;
@@ -516,7 +508,7 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
 begin
-  /// Association
+  // Association
   LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
@@ -542,10 +534,8 @@ begin
               .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
                 FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
           LDataSetChild.FOrmDataSet.Post;
-          /// <summary>
-          ///   Não deve executar o NEXT aqui, o dataset está com filtro
-          ///   que faz a navegação ao mudar o valor do campo.
-          /// </summary>
+          // Não deve executar o NEXT aqui, o dataset está com filtro
+          // que faz a navegação ao mudar o valor do campo.
         end;
       finally
         LDataSetChild.FOrmDataSet.First;

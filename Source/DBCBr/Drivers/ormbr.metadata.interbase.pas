@@ -32,7 +32,7 @@ interface
 uses
   ormbr.metadata.register,
   ormbr.metadata.extract,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   TCatalogMetadataInterbase = class(TCatalogMetadataAbstract)

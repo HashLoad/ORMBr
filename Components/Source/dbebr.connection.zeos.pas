@@ -7,8 +7,8 @@ uses
   Classes,
   ZConnection,
   dbebr.connection.base,
-  ormbr.factory.zeos,
-  ormbr.factory.interfaces;
+  dbebr.factory.zeos,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

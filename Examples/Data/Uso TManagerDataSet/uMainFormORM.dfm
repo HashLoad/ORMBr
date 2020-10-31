@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'Form3'
-  ClientHeight = 476
+  ClientHeight = 658
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -233,6 +233,19 @@ object Form3: TForm3
     TabOrder = 15
     OnClick = Button5Click
   end
+  object DBGrid3: TDBGrid
+    Left = 8
+    Top = 474
+    Width = 848
+    Height = 96
+    DataSource = DataSource4
+    TabOrder = 16
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
   object DataSource1: TDataSource
     DataSet = FDMaster
     Left = 424
@@ -251,12 +264,10 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      
-        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Database\databas' +
-        'e.fdb'
-      'User_Name=SYSDBA'
+      'Database=database'
+      'User_Name=root'
       'Password=masterkey'
-      'DriverID=FB')
+      'DriverID=MySQL')
     LoginPrompt = False
     Left = 154
     Top = 42
@@ -294,5 +305,17 @@ object Form3: TForm3
     Params = <>
     Left = 496
     Top = 220
+  end
+  object FDLevel3: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 719
+    Top = 57
+  end
+  object DataSource4: TDataSource
+    AutoEdit = False
+    DataSet = FDLevel3
+    Left = 666
+    Top = 57
   end
 end

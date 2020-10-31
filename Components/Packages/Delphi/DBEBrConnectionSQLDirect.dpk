@@ -36,8 +36,8 @@ requires
 
 contains
   dbebr.connection.sqldirect in '..\..\Source\dbebr.connection.sqldirect.pas',
-  ormbr.driver.sqldirect in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.pas',
-  ormbr.driver.sqldirect.transaction in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.transaction.pas',
-  ormbr.factory.sqldirect in '..\..\..\Source\Drivers\ormbr.factory.sqldirect.pas';
+  dbebr.driver.sqldirect in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.pas',
+  dbebr.driver.sqldirect.transaction in '..\..\..\Source\Drivers\ormbr.driver.sqldirect.transaction.pas',
+  dbebr.factory.sqldirect in '..\..\..\Source\Drivers\ormbr.factory.sqldirect.pas';
 
 end.

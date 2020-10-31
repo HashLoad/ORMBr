@@ -131,9 +131,7 @@ end;
 
 function TCQLExpression.IsEmpty: Boolean;
 begin
-  /// <summary>
-  ///   Caso não exista a chamada do WHERE pe considerado Empty.
-  /// </summary>
+  // Caso não exista a chamada do WHERE pe considerado Empty.
   Result := (FOperation = opNone) and (FTerm = '');
 end;
 

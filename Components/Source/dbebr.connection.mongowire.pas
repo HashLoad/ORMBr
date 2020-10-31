@@ -37,7 +37,7 @@ type
     Property Authenticate : Boolean read FAuthenticate write FAuthenticate;
   end;
 
-procedure register;
+//procedure register;
 
 implementation
 

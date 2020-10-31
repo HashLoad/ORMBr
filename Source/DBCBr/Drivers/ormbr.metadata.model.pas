@@ -36,7 +36,7 @@ uses
   ormbr.database.mapping,
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   TModelMetadata = class(TModelMetadataAbstract)

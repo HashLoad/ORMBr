@@ -62,10 +62,6 @@
     <Transaction>2019/08/27 10:13:30.828.pas,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.json.utils.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="dbrtl.dcp"/>
-    <File Path="rtl.dcp"/>
-    <File Path="vcl.dcp"/>
-    <File Path="vclimg.dcp"/>
     <File Path="..\..\..\..\ORMBr"/>
     <File Path="..\..\..\Source"/>
     <File Path="..\..\..\Source\Core"/>
@@ -117,15 +113,14 @@
     <File Path="..\..\..\Source\DBCBr"/>
     <File Path="..\..\..\Source\DBCBr\Core"/>
     <File Path="..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas"/>
-    <File Path="..\..\..\Source\DBEBr"/>
-    <File Path="..\..\..\Source\DBEBr\Core"/>
-    <File Path="..\..\..\Source\DBEBr\Core\ormbr.driver.connection.pas"/>
-    <File Path="..\..\..\Source\DBEBr\Core\ormbr.factory.connection.pas"/>
-    <File Path="..\..\..\Source\DBEBr\Core\ormbr.factory.interfaces.pas"/>
     <File Path="..\..\..\Source\Objectset"/>
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.abstract.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
+    <File Path="dbrtl.dcp"/>
+    <File Path="rtl.dcp"/>
+    <File Path="vcl.dcp"/>
+    <File Path="vclimg.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>

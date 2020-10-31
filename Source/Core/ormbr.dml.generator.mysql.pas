@@ -37,7 +37,7 @@ uses
   ormbr.dml.generator,
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
   ormbr.criteria;
@@ -139,15 +139,14 @@ end;
 function TDMLGeneratorMySQL.GeneratorAutoIncNextValue(AObject: TObject;
   AAutoInc: TDMLCommandAutoInc): Int64;
 begin
-  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
-//  Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
-//                                   'FROM INFORMATION_SCHEMA.TABLES ' +
-//                                   'WHERE TABLE_SCHEMA = DATABASE() ' +
-//                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(AAutoInc.Sequence.TableName)]));
+//  Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
+  Result := ExecuteSequence(Format('SELECT AUTO_INCREMENT ' +
+                                   'FROM INFORMATION_SCHEMA.TABLES ' +
+                                   'WHERE TABLE_SCHEMA = DATABASE() ' +
+                                   'AND   UPPER(TABLE_NAME) IN (%s);', [QuotedStr(AAutoInc.Sequence.TableName)]));
 end;
 
 initialization
   TDriverRegister.RegisterDriver(dnMySQL, TDMLGeneratorMySQL.Create);
 
 end.
-

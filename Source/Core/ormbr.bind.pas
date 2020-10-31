@@ -43,7 +43,7 @@ uses
   ormbr.mapping.attributes,
   ormbr.mapping.rttiutils,
   ormbr.mapping.exceptions,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.rtti.helper,
   ormbr.objects.helper,
@@ -669,10 +669,9 @@ begin
     while not ASource.Eof do
     begin
       ATarget.Append;
-      /// <summary>
-      ///   Usando Mongo com FireDAC o TField[0] é do tipo TDataSet (TDataSetField) e
-      ///   esse DataSet, vem com 1 TField do tipo TADTField, nesse caso o tratamento especial.
-      /// </summary>
+      // Usando Mongo com FireDAC o TField[0] é do tipo TDataSet
+      // (TDataSetField) e esse DataSet, vem com 1 TField do tipo TADTField,
+      // nesse caso o tratamento especial.
       if ASource.Fields[0] is TADTField then
       begin
         for LFor := 0 to TADTField(ASource.Fields[0]).FieldCount -1 do

@@ -36,7 +36,7 @@ uses
   Generics.Collections,
   ormbr.ddl.interfaces,
   ormbr.database.abstract,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping,
   ormbr.ddl.commands;
 

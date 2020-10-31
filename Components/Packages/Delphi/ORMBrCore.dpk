@@ -1,27 +1,30 @@
 package ORMBrCore;
 
 {$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
 {$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
 {$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'ORMBr - Core'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
@@ -71,9 +74,6 @@ contains
   ormbr.criteria in '..\..\..\Source\Criteria\ormbr.criteria.pas',
   ormbr.criteria.serialize in '..\..\..\Source\Criteria\ormbr.criteria.serialize.pas',
   ormbr.dataset.consts in '..\..\..\Source\Dataset\ormbr.dataset.consts.pas',
-  ormbr.driver.connection in '..\..\..\Source\DBEBr\Core\ormbr.driver.connection.pas',
-  ormbr.factory.connection in '..\..\..\Source\DBEBr\Core\ormbr.factory.connection.pas',
-  ormbr.factory.interfaces in '..\..\..\Source\DBEBr\Core\ormbr.factory.interfaces.pas',
   ormbr.types.mapping in '..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas',
   ormbr.bind in '..\..\..\Source\Core\ormbr.bind.pas',
   ormbr.objectset.adapter in '..\..\..\Source\Objectset\ormbr.objectset.adapter.pas',

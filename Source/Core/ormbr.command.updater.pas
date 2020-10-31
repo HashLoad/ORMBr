@@ -46,7 +46,7 @@ uses
   ormbr.mapping.classes,
   ormbr.mapping.attributes,
   ormbr.command.abstract,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.types.blob,
   ormbr.objects.helper,
   ormbr.mapping.explorer;

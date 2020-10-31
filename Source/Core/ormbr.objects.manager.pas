@@ -43,7 +43,7 @@ uses
   ormbr.types.mapping,
   ormbr.mapping.classes,
   ormbr.command.factory,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.explorer,
   ormbr.objects.manager.abstract,
   ormbr.mapping.explorerstrategy;

@@ -33,7 +33,7 @@ uses
   DB,
   Rtti,
   Generics.Collections,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.command.selecter,
   ormbr.command.inserter,

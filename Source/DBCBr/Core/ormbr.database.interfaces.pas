@@ -32,7 +32,7 @@ interface
 uses
   Classes,
   Generics.Collections,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.ddl.interfaces,
   ormbr.ddl.commands;
 

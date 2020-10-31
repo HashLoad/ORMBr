@@ -33,7 +33,7 @@ uses
   SysUtils,
   Generics.Collections,
   ormbr.dml.interfaces,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   TDriverRegister = class

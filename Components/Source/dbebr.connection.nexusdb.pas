@@ -8,8 +8,8 @@ uses
   nxdb,
   nxllComponent,
   dbebr.connection.base,
-  ormbr.factory.nexusdb,
-  ormbr.factory.interfaces;
+  dbebr.factory.nexusdb,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

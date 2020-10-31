@@ -41,7 +41,7 @@ uses
   ormbr.metadata.register,
   ormbr.metadata.extract,
   ormbr.database.mapping,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.rttiutils;
 
 type

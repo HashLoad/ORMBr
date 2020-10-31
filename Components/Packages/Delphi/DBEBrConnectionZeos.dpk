@@ -36,8 +36,8 @@ requires
 
 contains
   dbebr.connection.zeos in '..\..\Source\dbebr.connection.zeos.pas',
-  ormbr.driver.zeos in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.zeos.pas',
-  ormbr.driver.zeos.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.zeos.transaction.pas',
-  ormbr.factory.zeos in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.zeos.pas';
+  dbebr.driver.zeos in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.zeos.pas',
+  dbebr.driver.zeos.transaction in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.zeos.transaction.pas',
+  dbebr.factory.zeos in '..\..\..\Source\DBEBr\Drivers\dbebr.factory.zeos.pas';
 
 end.

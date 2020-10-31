@@ -32,7 +32,7 @@ interface
 uses
   ormbr.ddl.register,
   ormbr.ddl.generator,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.ddl.generator.firebird;
 
 type

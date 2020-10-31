@@ -38,7 +38,7 @@ uses
   /// ormbr
   ormbr.container.dataset.interfaces,
   ormbr.session.abstract,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dataset.base.adapter;
 
 type

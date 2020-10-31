@@ -36,7 +36,7 @@ uses
   ormbr.dml.generator,
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
   ormbr.criteria;

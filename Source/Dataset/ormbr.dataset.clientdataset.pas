@@ -46,7 +46,7 @@ uses
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
   ormbr.mapping.classes,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   // Captura de eventos específicos do componente TClientDataSet
@@ -307,7 +307,6 @@ begin
     // Executa o ApplyInternal de toda a hierarquia de dataset filho.
     if FMasterObject.Count = 0 then
       Exit;
-
     for LDetail in FMasterObject.Values do
     begin
       // Before Apply
@@ -360,18 +359,18 @@ begin
         FOrmDataSet.Edit;
         if FSession.ExistSequence then
         begin
-           LPrimaryKey := TMappingExplorer
-                            .GetInstance
-                            .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
-           if LPrimaryKey = nil then
-             raise Exception.Create(cMESSAGEPKNOTFOUND);
+          LPrimaryKey := TMappingExplorer
+                           .GetInstance
+                           .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+          if LPrimaryKey = nil then
+            raise Exception.Create(cMESSAGEPKNOTFOUND);
 
-           for LColumn in LPrimaryKey.Columns do
-           begin
-            FOrmDataSet.FieldByName(LColumn.ColumnName).Value :=
-              LColumn.ColumnProperty
-                     .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
-           end;
+          for LColumn in LPrimaryKey.Columns do
+          begin
+           FOrmDataSet.FieldByName(LColumn.ColumnName).Value :=
+             LColumn.ColumnProperty
+                    .GetNullableValue(TObject(FCurrentInternal)).AsVariant;
+          end;
           // Atualiza o valor do AutoInc nas sub tabelas
           SetAutoIncValueChilds;
         end;

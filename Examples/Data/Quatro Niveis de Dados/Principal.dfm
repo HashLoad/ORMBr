@@ -21,14 +21,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 1'
+    Caption = 'N'#237'vel 1 (Atendimento)'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitWidth = 61
+    ExplicitWidth = 197
   end
   object Label2: TLabel
     Left = 0
@@ -36,14 +36,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 2'
+    Caption = 'N'#237'vel 2 (Exame)'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitWidth = 61
+    ExplicitWidth = 143
   end
   object Label3: TLabel
     Left = 0
@@ -51,14 +51,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 3'
+    Caption = 'N'#237'vel 3 (Procedimento)'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitWidth = 61
+    ExplicitWidth = 205
   end
   object Label4: TLabel
     Left = 0
@@ -66,14 +66,14 @@ object Form1: TForm1
     Width = 689
     Height = 24
     Align = alTop
-    Caption = 'N'#237'vel 4'
+    Caption = 'N'#237'vel 4 (Setor)'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitWidth = 61
+    ExplicitWidth = 130
   end
   object DBGrid1: TDBGrid
     AlignWithMargins = True
@@ -218,7 +218,9 @@ object Form1: TForm1
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\ORMBr\Demo\Data\Quatro Niveis de Dados\NIVEL4.FDB'
+      
+        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Quatro Niveis de' +
+        ' Dados\NIVEL4.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'CharacterSet=WIN1252'

@@ -37,43 +37,34 @@ uses
   Variants,
   Generics.Collections,
   {$IFDEF USEFDMEMTABLE}
-  FireDAC.Comp.Client,
-    {$IFDEF DRIVERRESTFUL}
-    ormbr.restdataset.fdmemtable,
-    {$ELSE}
-    ormbr.dataset.fdmemtable,
-    {$ENDIF}
+    FireDAC.Comp.Client,
+    {$IFDEF DRIVERRESTFUL}ormbr.restdataset.fdmemtable{$ELSE}ormbr.dataset.fdmemtable{$ENDIF},
   {$ENDIF}
   {$IFDEF USECLIENTDATASET}
-  DBClient,
-    {$IFDEF DRIVERRESTFUL}
-    ormbr.restdataset.clientdataset,
-    {$ELSE}
-    ormbr.dataset.clientdataset,
-    {$ENDIF}
+    DBClient,
+    {$IFDEF DRIVERRESTFUL}.restdataset.clientdataset{$ELSE}ormbr.dataset.clientdataset{$ENDIF},
   {$ENDIF}
   // ORMBr Interface
   {$IFDEF DRIVERRESTFUL}
-  ormbr.client.interfaces,
+    ormbr.client.interfaces
   {$ELSE}
-  ormbr.factory.interfaces,
-  {$ENDIF}
+    dbebr.factory.interfaces
+  {$ENDIF},
   ormbr.dataset.base.adapter;
 
 type
+  IMDConnection = {$IFDEF DRIVERRESTFUL}IRESTConnection{$ELSE}IDBConnection{$ENDIF};
+
   TManagerDataSet = class
   private
-    FConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection;
-                 {$ELSE}IDBConnection;
-                 {$ENDIF}
+    FConnection: IMDConnection;
     FRepository: TDictionary<string, TObject>;
     FNestedList: TDictionary<string, TObjectList<TObject>>;
     FOwnerNestedList: Boolean;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
+    procedure ResolverDataSetType(const ADataSet: TDataSet);
   public
-    constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
-                                          {$ELSE}IDBConnection);
-                                          {$ENDIF}
+    constructor Create(const AConnection: IMDConnection);
     destructor Destroy; override;
     {$IFNDEF DRIVERRESTFUL}
     procedure NextPacket<T: class, constructor>;
@@ -116,9 +107,7 @@ implementation
 
 { TManagerDataSet }
 
-constructor TManagerDataSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
-                                                      {$ELSE}IDBConnection);
-                                                      {$ENDIF}
+constructor TManagerDataSet.Create(const AConnection: IMDConnection);
 begin
   FConnection := AConnection;
   FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
@@ -216,28 +205,19 @@ begin
     Exit;
 
   // Checagem do tipo do dataset definido para uso
-  {$IFDEF USEFDMEMTABLE}
-    if ADataSet is TFDMemTable then
-      {$IFDEF DRIVERRESTFUL}
-      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-      {$ELSE}
-      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-      {$ENDIF}
-    else
-      raise Exception.Create('Is not TFDMemTable type');
-  {$ENDIF}
-  {$IFDEF USECLIENTDATASET}
-    if ADataSet is TClientDataSet then
-      {$IFDEF DRIVERRESTFUL}
-      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-      {$ELSE}
-      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster)
-      {$ENDIF}
-    else
-      raise Exception.Create('Is not TClientDataSet type');
-  {$ENDIF}
-  {$IFNDEF USEMEMDATASET}
-    raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
+  ResolverDataSetType(ADataSet);
+  {$IFDEF DRIVERRESTFUL}
+    {$IFDEF USEFDMEMTABLE}
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+    {$ELSE}
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+    {$ENDIF}
+  {$ELSE}
+    {$IFDEF USEFDMEMTABLE}
+      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+    {$ELSE}
+      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+    {$ENDIF}
   {$ENDIF}
   // Adiciona o container ao repositório
   FRepository.Add(LClassName, LDataSetAdapter);
@@ -253,28 +233,21 @@ begin
   LClassName := TClass(T).ClassName;
   if FRepository.ContainsKey(LClassName) then
     Exit;
-  {$IFDEF USEFDMEMTABLE}
-    if ADataSet is TFDMemTable then
-      {$IFDEF DRIVERRESTFUL}
-      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-      {$ELSE}
-      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-      {$ENDIF}
-    else
-      raise Exception.Create('Is not TFDMemTable type');
-  {$ENDIF}
-  {$IFDEF USECLIENTDATASET}
-    if ADataSet is TClientDataSet then
-      {$IFDEF DRIVERRESTFUL}
-      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-      {$ELSE}
-      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil)
-      {$ENDIF}
-    else
-      raise Exception.Create('Is not TClientDataSet type');
-  {$ENDIF}
-  {$IFNDEF USEMEMDATASET}
-    raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
+
+  // Checagem do tipo do dataset definido para uso
+  ResolverDataSetType(ADataSet);
+  {$IFDEF DRIVERRESTFUL}
+    {$IFDEF USEFDMEMTABLE}
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+    {$ELSE}
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+    {$ENDIF}
+  {$ELSE}
+    {$IFDEF USEFDMEMTABLE}
+      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+    {$ELSE}
+      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+    {$ENDIF}
   {$ENDIF}
   // Adiciona o container ao repositório
   FRepository.Add(LClassName, LDataSetAdapter);
@@ -353,6 +326,21 @@ begin
   LClassName := TClass(T).ClassName;
   if FRepository.ContainsKey(LClassName) then
     Result := TDataSetBaseAdapter<T>(FRepository.Items[LClassName]);
+end;
+
+procedure TManagerDataSet.ResolverDataSetType(const ADataSet: TDataSet);
+begin
+  {$IFDEF USEFDMEMTABLE}
+    if not (ADataSet is TFDMemTable) then
+      raise Exception.Create('Is not TFDMemTable type');
+  {$ENDIF}
+  {$IFDEF USECLIENTDATASET}
+    if not (ADataSet is TClientDataSet) then
+      raise Exception.Create('Is not TClientDataSet type');
+  {$ENDIF}
+  {$IFNDEF USEMEMDATASET}
+    raise Exception.Create('Enable the directive "USEFDMEMTABLE" or "USECLIENTDATASET" in file ormbr.inc');
+  {$ENDIF}
 end;
 
 procedure TManagerDataSet.Save<T>(AObject: T);

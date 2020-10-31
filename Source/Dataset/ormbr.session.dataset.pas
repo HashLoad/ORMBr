@@ -44,7 +44,7 @@ uses
   ormbr.objects.manager.abstract,
   ormbr.session.abstract,
   ormbr.dataset.base.adapter,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   // M - Sessão DataSet

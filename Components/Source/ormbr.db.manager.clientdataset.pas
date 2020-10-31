@@ -36,7 +36,7 @@ uses
   SysUtils,
   Variants,
   Generics.Collections,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dataset.base.adapter,
   ormbr.dataset.clientdataset;
 

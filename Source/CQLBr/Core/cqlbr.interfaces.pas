@@ -149,6 +149,8 @@ type
     function &Or(const AExpression: String): ICQL; overload;
     function &Or(const AExpression: ICQLCriteriaExpression): ICQL; overload;
     function &Set(const AColumnName, AColumnValue: String): ICQL; overload;
+    function &Set(const AColumnName: String; AColumnValue: Integer): ICQL; overload;
+    function &Set(const AColumnName: String; AColumnValue: Extended): ICQL; overload;
     function &Set(const AColumnName: String; const AColumnValue: array of const): ICQL; overload;
     function All: ICQL;
     function Clear: ICQL;
@@ -196,9 +198,7 @@ type
     function Values(const AColumnName, AColumnValue: String): ICQL; overload;
     function Values(const AColumnName: String; const AColumnValue: array of const): ICQL; overload;
     function AsString: String;
-    /// <summary>
-    ///   Operators functions
-    /// </summary>
+    // Operators functions
     function Equal(const AValue: String): ICQL; overload;
     function Equal(const AValue: Extended): ICQL overload;
     function Equal(const AValue: Integer): ICQL; overload;

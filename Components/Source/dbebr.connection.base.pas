@@ -6,7 +6,7 @@ uses
   DB,
   SysUtils,
   Classes,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

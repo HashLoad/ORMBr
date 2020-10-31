@@ -36,7 +36,7 @@ uses
   SysUtils,
   StrUtils,
   Generics.Collections,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.metadata.interfaces,
   ormbr.database.mapping,
   ormbr.types.mapping;

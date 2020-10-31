@@ -36,7 +36,7 @@ uses
   /// ormbr
   ormbr.session.dataset,
   ormbr.container.dataset,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.restdataset.clientdataset;
 
 type

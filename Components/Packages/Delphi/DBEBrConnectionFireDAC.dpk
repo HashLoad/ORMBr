@@ -38,8 +38,8 @@ requires
 
 contains
   dbebr.connection.firedac in '..\..\Source\dbebr.connection.firedac.pas',
-  ormbr.driver.firedac in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.firedac.pas',
-  ormbr.driver.firedac.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.firedac.transaction.pas',
-  ormbr.factory.firedac in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.firedac.pas';
+  dbebr.driver.firedac in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.firedac.pas',
+  dbebr.driver.firedac.transaction in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.firedac.transaction.pas',
+  dbebr.factory.firedac in '..\..\..\Source\DBEBr\Drivers\dbebr.factory.firedac.pas';
 
 end.

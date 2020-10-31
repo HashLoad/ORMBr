@@ -56,7 +56,7 @@ uses
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
   ormbr.mapping.classes,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   // Captura de eventos específicos do componente TFDMemTable

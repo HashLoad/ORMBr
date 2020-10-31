@@ -40,7 +40,7 @@ uses
   ormbr.core.consts,
   ormbr.command.abstract,
   ormbr.mapping.classes,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dml.commands,
   ormbr.rtti.helper,
   ormbr.objects.helper,
@@ -89,9 +89,7 @@ begin
   FCommand := FGeneratorCommand.GeneratorInsert(AObject);
   Result := FCommand;
   FParams.Clear;
-  /// <summary>
-  /// Alimenta a lista de parâmetros do comando Insert com os valores do Objeto.
-  /// </summary>
+  // Alimenta a lista de parâmetros do comando Insert com os valores do Objeto.
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
@@ -106,9 +104,7 @@ begin
       Continue;
     if LColumn.IsJoinColumn then
       Continue;
-    /// <summary>
-    ///   Verifica se existe PK, pois autoinc só é usado se existir.
-    /// </summary>
+    // Verifica se existe PK, pois autoinc só é usado se existir.
     if LPrimaryKey <> nil then
     begin
       if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
@@ -120,7 +116,7 @@ begin
                                   .GetMappingSequence(AObject.ClassType);
           FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
           FDMLAutoInc.PrimaryKey := LPrimaryKey;
-
+          // Popula o campo como o valor gerado pelo AutoInc
           LColumn.ColumnProperty.SetValue(AObject,
                                           FGeneratorCommand
                                             .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
@@ -134,8 +130,10 @@ begin
       DataType := LColumn.FieldType;
       ParamType := ptInput;
       Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+
       if FConnection.GetDriverName = dnPostgreSQL then
-	    Exit;
+	      Exit;
+
       // Tratamento para o tipo ftBoolean nativo, indo como Integer
       // para gravar no banco.
       if DataType in [ftBoolean] then

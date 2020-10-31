@@ -35,7 +35,7 @@ uses
   DB,
   ormbr.mapping.classes,
   ormbr.command.abstract,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.explorer;
 
 type

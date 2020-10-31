@@ -25,6 +25,7 @@ uses
   ormbr.factory.interfaces,
   ormbr.factory.firedac,
   ormbr.manager.objectset,
+  ormbr.dml.generator.mysql,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
@@ -36,7 +37,8 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Intf,
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef;
+  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
+  FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
 
 type
   TStringGridHack = class(TStringGrid)
@@ -119,10 +121,11 @@ begin
   MasterStringGridDefinitions;
   DetailStringGridDefinitions;
 
-  FConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
+  FConn := TFactoryFireDAC.Create(FDConnection1, dnMySQL);
   FConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   FManager := TManagerObjectSet.Create(FConn);
+  FManager.OwnerNestedList := True;
   FManager
     .AddAdapter<Tmaster>(3)
       .Find<Tmaster>;

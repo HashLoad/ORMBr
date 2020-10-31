@@ -7,8 +7,8 @@ uses
   SqlExpr,
   Classes,
   dbebr.connection.base,
-  ormbr.factory.dbexpress,
-  ormbr.factory.interfaces;
+  dbebr.factory.dbexpress,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

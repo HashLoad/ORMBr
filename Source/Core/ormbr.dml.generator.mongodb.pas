@@ -8,7 +8,7 @@ uses
   Generics.Collections,
   ormbr.dml.generator.nosql,
   ormbr.mapping.classes,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands;
 

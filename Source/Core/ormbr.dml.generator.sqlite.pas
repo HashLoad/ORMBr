@@ -35,7 +35,7 @@ uses
   Rtti,
   ormbr.dml.generator,
   ormbr.driver.register,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.mapping.explorer,
   ormbr.dml.commands,

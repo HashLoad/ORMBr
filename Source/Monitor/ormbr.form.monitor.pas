@@ -42,7 +42,7 @@ uses
   {$IFDEF DRIVERRESTFUL}
   ormbr.client.interfaces,
   {$ELSE}
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   {$ENDIF}
   TypInfo;
 

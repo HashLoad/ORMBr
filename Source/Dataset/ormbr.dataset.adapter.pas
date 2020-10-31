@@ -46,7 +46,7 @@ uses
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.session.dataset,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dataset.base.adapter;
 
 type
@@ -251,8 +251,8 @@ begin
   inherited;
   if FSession.FetchingRecords then
     Exit;
-
   FOrmDataSet.DisableControls;
+  // Desabilita os eventos dos TDataSets
   DisableDataSetEvents;
   LBookMark := FOrmDataSet.Bookmark;
   try

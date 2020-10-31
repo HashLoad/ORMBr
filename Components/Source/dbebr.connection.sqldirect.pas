@@ -7,8 +7,8 @@ uses
   Classes,
   SDEngine,
   dbebr.connection.base,
-  ormbr.factory.sqldirect,
-  ormbr.factory.interfaces;
+  dbebr.factory.sqldirect,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

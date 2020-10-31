@@ -35,8 +35,8 @@ requires
 
 contains
   dbebr.connection.fibplus in '..\..\Source\dbebr.connection.fibplus.pas',
-  ormbr.driver.fibplus in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.fibplus.pas',
-  ormbr.driver.fibplus.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.fibplus.transaction.pas',
-  ormbr.factory.fibplus in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.fibplus.pas';
+  dbebr.driver.fibplus in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.fibplus.pas',
+  dbebr.driver.fibplus.transaction in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.fibplus.transaction.pas',
+  dbebr.factory.fibplus in '..\..\..\Source\DBEBr\Drivers\dbebr.factory.fibplus.pas';
 
 end.

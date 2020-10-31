@@ -9,8 +9,8 @@ uses
   IBODataset,
   IB_Access,
   dbebr.connection.base,
-  ormbr.factory.ibobjects,
-  ormbr.factory.interfaces;
+  dbebr.factory.ibobjects,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

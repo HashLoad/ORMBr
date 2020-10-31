@@ -134,6 +134,8 @@ type
     function Select(const AColumnName: String = ''): ICQL; overload;
     function Select(const ACaseExpression: ICQLCriteriaCase): ICQL; overload;
     function &Set(const AColumnName, AColumnValue: String): ICQL; overload;
+    function &Set(const AColumnName: String; AColumnValue: Integer): ICQL; overload;
+    function &Set(const AColumnName: String; AColumnValue: Extended): ICQL; overload;
     function &Set(const AColumnName: String; const AColumnValue: array of const): ICQL; overload;
     function Values(const AColumnName, AColumnValue: String): ICQL; overload;
     function Values(const AColumnName: String; const AColumnValue: array of const): ICQL; overload;
@@ -271,7 +273,7 @@ end;
 
 function TCQL.&Set(const AColumnName, AColumnValue: String): ICQL;
 begin
-  Result := InternalSet(AColumnName, {QuotedStr(AColumnValue)} AColumnValue);
+  Result := InternalSet(AColumnName, QuotedStr(AColumnValue));
 end;
 
 function TCQL.&On(const AExpression: String): ICQL;
@@ -294,6 +296,16 @@ begin
   AssertOperator([opeWhere, opeAND, opeOR]);
   FActiveExpr.&Ope(FOperator.IsIn(AValue));
   Result := Self;
+end;
+
+function TCQL.&Set(const AColumnName: String; AColumnValue: Integer): ICQL;
+begin
+  Result := InternalSet(AColumnName, IntToStr(AColumnValue));
+end;
+
+function TCQL.&Set(const AColumnName: String; AColumnValue: Extended): ICQL;
+begin
+  Result := InternalSet(AColumnName, FloatToStr(AColumnValue));
 end;
 
 function TCQL.All: ICQL;
@@ -553,9 +565,7 @@ begin
   LQualifier := FAST.Select.Qualifiers.Add;
   LQualifier.Qualifier := sqFirst;
   LQualifier.Value := AValue;
-  /// <summary>
-  ///   Esse método tem que Add o Qualifier já todo parametrizado.
-  /// </summary>
+  // Esse método tem que Add o Qualifier já todo parametrizado.
   FAST.Select.Qualifiers.Add(LQualifier);
   Result := Self;
 end;

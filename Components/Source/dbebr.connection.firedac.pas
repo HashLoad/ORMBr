@@ -7,8 +7,8 @@ uses
   Classes,
   FireDAC.Comp.Client,
   dbebr.connection.base,
-  ormbr.factory.firedac,
-  ormbr.factory.interfaces;
+  dbebr.factory.firedac,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

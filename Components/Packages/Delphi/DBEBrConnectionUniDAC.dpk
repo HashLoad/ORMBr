@@ -36,8 +36,8 @@ requires
 
 contains
   dbebr.connection.unidac in '..\..\Source\dbebr.connection.unidac.pas',
-  ormbr.driver.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.pas',
-  ormbr.driver.unidac.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.transaction.pas',
-  ormbr.factory.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.unidac.pas';
+  dbebr.driver.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.pas',
+  dbebr.driver.unidac.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.unidac.transaction.pas',
+  dbebr.factory.unidac in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.unidac.pas';
 
 end.

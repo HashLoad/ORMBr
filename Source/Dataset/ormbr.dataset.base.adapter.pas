@@ -653,11 +653,14 @@ begin
   // modo Insert ou Edit.
   if not FOrmDataSet.Active then
     Exit;
-  if FOrmDataSet.RecordCount = 0 then
-    Exit;
 
+  // Tratamento dos datasets filhos.
   for LDataSetChild in FMasterObject.Values do
   begin
+    if LDataSetChild.FOrmDataSet = nil then
+      Continue;
+    if not LDataSetChild.FOrmDataSet.Active then
+      Continue;
     if not (LDataSetChild.FOrmDataSet.State in [dsInsert, dsEdit]) then
       Continue;
     LDataSetChild.FOrmDataSet.Post;

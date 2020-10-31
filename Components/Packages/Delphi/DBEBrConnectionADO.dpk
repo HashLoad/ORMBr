@@ -36,8 +36,8 @@ requires
 
 contains
   dbebr.connection.ado in '..\..\Source\dbebr.connection.ado.pas',
-  ormbr.driver.ado in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.ado.pas',
-  ormbr.driver.ado.transaction in '..\..\..\Source\DBEBr\Drivers\ormbr.driver.ado.transaction.pas',
-  ormbr.factory.ado in '..\..\..\Source\DBEBr\Drivers\ormbr.factory.ado.pas';
+  dbebr.driver.ado in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.ado.pas',
+  dbebr.driver.ado.transaction in '..\..\..\Source\DBEBr\Drivers\dbebr.driver.ado.transaction.pas',
+  dbebr.factory.ado in '..\..\..\Source\DBEBr\Drivers\dbebr.factory.ado.pas';
 
 end.

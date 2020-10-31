@@ -7,8 +7,8 @@ uses
   Classes,
   Uni,
   dbebr.connection.base,
-  ormbr.factory.unidac,
-  ormbr.factory.interfaces;
+  dbebr.factory.unidac,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

@@ -33,7 +33,7 @@ uses
   SysUtils,
   Rtti,
   ormbr.metadata.model,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.metadata.extract,
   ormbr.database.mapping,
   ormbr.database.abstract;

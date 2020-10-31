@@ -36,7 +36,7 @@ uses
   ormbr.ddl.interfaces,
   ormbr.ddl.register,
   ormbr.ddl.generator,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping;
 
 type

@@ -42,7 +42,7 @@ uses
   ormbr.objects.manager,
   ormbr.mapping.explorerstrategy,
   ormbr.session.abstract,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   /// <summary>

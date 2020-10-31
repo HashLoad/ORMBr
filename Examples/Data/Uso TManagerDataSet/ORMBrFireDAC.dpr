@@ -7,7 +7,8 @@ uses
   ormbr.model.client in '..\Models\ormbr.model.client.pas',
   ormbr.model.detail in '..\Models\ormbr.model.detail.pas',
   ormbr.model.lookup in '..\Models\ormbr.model.lookup.pas',
-  ormbr.model.master in '..\Models\ormbr.model.master.pas';
+  ormbr.model.master in '..\Models\ormbr.model.master.pas',
+  nivel3.model in '..\Uso TManagerObjectSet\nivel3.model.pas';
 
 {$R *.res}
 

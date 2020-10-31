@@ -34,7 +34,7 @@ uses
   Generics.Collections,
   ormbr.ddl.interfaces,
   ormbr.ddl.generator,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   TSQLDriverRegister = class

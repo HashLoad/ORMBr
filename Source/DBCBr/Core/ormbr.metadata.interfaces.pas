@@ -30,7 +30,7 @@ unit ormbr.metadata.interfaces;
 interface
 
 uses
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping;
 
 type

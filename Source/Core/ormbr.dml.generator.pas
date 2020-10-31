@@ -47,7 +47,7 @@ uses
   ormbr.mapping.explorer,
   ormbr.rtti.helper,
   ormbr.types.mapping,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dml.interfaces,
   ormbr.criteria,
   ormbr.dml.commands,

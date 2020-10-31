@@ -34,7 +34,7 @@ uses
   Rtti,
   Generics.Collections,
   ormbr.metadata.register,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.metadata.extract,
   ormbr.database.mapping,
   ormbr.database.abstract;

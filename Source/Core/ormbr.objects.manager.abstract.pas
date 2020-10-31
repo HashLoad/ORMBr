@@ -36,7 +36,7 @@ uses
   Generics.Collections,
   /// ormbr
   ormbr.mapping.classes,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.explorerstrategy;
 
 type

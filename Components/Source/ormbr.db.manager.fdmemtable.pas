@@ -36,7 +36,7 @@ uses
   Variants,
   Generics.Collections,
   FireDAC.Comp.Client,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.dataset.base.adapter,
   ormbr.dataset.fdmemtable;
 

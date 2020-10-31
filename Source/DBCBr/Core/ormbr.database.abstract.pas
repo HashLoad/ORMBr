@@ -35,7 +35,7 @@ uses
   SysUtils,
   Generics.Collections,
   /// ormbr
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping,
   ormbr.database.interfaces,
   ormbr.ddl.interfaces,

@@ -35,7 +35,7 @@ uses
   Rtti,
   ormbr.dml.generator.firebird,
   ormbr.driver.register,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.criteria;
 
 type

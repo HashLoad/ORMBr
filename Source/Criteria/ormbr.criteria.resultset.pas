@@ -5,7 +5,7 @@ interface
 uses
   Generics.Collections,
 //  ormbr.criteria,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.bind;
 
 type

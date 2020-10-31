@@ -32,7 +32,7 @@ interface
 uses
   DB,
   Rtti,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.interfaces;
 
@@ -58,18 +58,12 @@ implementation
 constructor TDMLCommandAbstract.Create(AConnection: IDBConnection;
   ADriverName: TDriverName; AObject: TObject);
 begin
-  /// <summary>
-  /// Driver de Conexão
-  /// </summary>
+  // Driver de Conexão
   FConnection := AConnection;
-  /// <summary>
-  /// Driver do banco de dados
-  /// </summary>
+  // Driver do banco de dados
   FGeneratorCommand := TDriverRegister.GetDriver(ADriverName);
   FGeneratorCommand.SetConnection(AConnection);
-  /// <summary>
-  /// Lista de parâmetros
-  /// </summary>
+  // Lista de parâmetros
   FParams := TParams.Create;
 end;
 

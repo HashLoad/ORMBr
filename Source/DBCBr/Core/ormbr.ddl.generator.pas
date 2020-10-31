@@ -33,7 +33,7 @@ uses
   SysUtils,
   Generics.Collections,
   ormbr.ddl.interfaces,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.database.mapping,
   ormbr.types.mapping;
 

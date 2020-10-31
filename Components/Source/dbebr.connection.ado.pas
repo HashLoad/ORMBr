@@ -7,8 +7,8 @@ uses
   Classes,
   ADODB,
   dbebr.connection.base,
-  ormbr.factory.ado,
-  ormbr.factory.interfaces;
+  dbebr.factory.ado,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

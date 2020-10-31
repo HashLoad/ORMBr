@@ -7,7 +7,7 @@ uses
   Generics.Collections,
   /// ormbr
   ormbr.container.objectset.interfaces,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.objectset.adapter;
 
 type

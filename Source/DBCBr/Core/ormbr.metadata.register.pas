@@ -33,7 +33,7 @@ uses
   SysUtils,
   Generics.Collections,
   ormbr.metadata.extract,
-  ormbr.factory.interfaces;
+  dbebr.factory.interfaces;
 
 type
   TMetadataRegister = class
@@ -96,6 +96,5 @@ initialization
 finalization
    if Assigned(TMetadataRegister.FInstance) then
      TMetadataRegister.FInstance.Free;
-
 end.
 

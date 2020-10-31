@@ -32,7 +32,7 @@ interface
 uses
   SysUtils,
   Classes,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.metadata.db.factory,
   ormbr.database.factory;
 

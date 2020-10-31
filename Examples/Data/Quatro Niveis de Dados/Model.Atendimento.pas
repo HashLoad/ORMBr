@@ -20,7 +20,8 @@ uses
 type
   [Entity]
   [Table('ATENDIMENTOS', '')]
-  [PrimaryKey('POSTO;ATENDIMENTO', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('POSTO', AutoInc, NoSort, False, 'Chave primária')]
+  [Sequence('ATENDIMENTOS')]
   TAtendimento = class
   private
     { Private declarations }
@@ -44,7 +45,8 @@ type
     property Atendimento: Integer read FAtendimento write FAtendimento;
 
     /// NIVEL 2
-    [Association(OneToMany,'POSTO;ATENDIMENTO','EXAMES','POSTO;ATENDIMENTO')]
+    [Association(OneToMany,'POSTO','EXAMES','POSTO')]
+    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
     [Dictionary('Exame do Atendimento')]
     property Exames: TObjectList<TExame> read FExames write FExames;
   end;

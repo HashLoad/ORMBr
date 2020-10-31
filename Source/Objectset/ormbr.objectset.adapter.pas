@@ -38,7 +38,7 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.objectset.base.adapter,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.types.mapping,
   ormbr.objects.helper;
@@ -185,9 +185,7 @@ var
   LIsConnected: Boolean;
 begin
   inherited;
-  /// <summary>
-  ///   Controle de transação externa, controlada pelo desenvolvedor
-  /// </summary>
+  // Controle de transação externa, controlada pelo desenvolvedor
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
   if not LIsConnected then
@@ -208,11 +206,9 @@ begin
         for LColumn in LPrimaryKey.Columns do
           SetAutoIncValueChilds(AObject, LColumn);
       end;
-      /// <summary>
-      ///   Executa comando insert em cascade
-      /// </summary>
+      // Executa comando insert em cascade
       CascadeActionsExecute(AObject, CascadeInsert);
-      ///
+      //
       if not LInTransaction then
         FConnection.Commit;
     except

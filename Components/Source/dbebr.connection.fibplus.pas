@@ -9,8 +9,8 @@ uses
   FIBDataSet,
   FIBDatabase,
   dbebr.connection.base,
-  ormbr.factory.fibplus,
-  ormbr.factory.interfaces;
+  dbebr.factory.fibplus,
+  dbebr.factory.interfaces;
 
 type
   {$IF CompilerVersion > 23}

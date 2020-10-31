@@ -36,16 +36,16 @@ uses
   SysUtils,
   Variants,
   Generics.Collections,
-  /// ORMBr
+  // ORMBr
   {$IFDEF DRIVERRESTFUL}
-  ormbr.restobjectset.adapter,
-  ormbr.client.interfaces,
+    ormbr.restobjectset.adapter,
+    ormbr.client.interfaces,
   {$ELSE}
-  ormbr.objectset.adapter,
-  ormbr.factory.interfaces,
+    ormbr.objectset.adapter,
+    dbebr.factory.interfaces,
   {$ENDIF}
   {$IFDEF USEBINDSOURCE}
-  ormbr.bind.source.interfaces,
+    ormbr.bind.source.interfaces,
   {$ENDIF}
   ormbr.objectset.base.adapter;
 
@@ -60,19 +60,14 @@ type
     property ObjectSet: TObject read FObjectSet write FObjectSet;
     property NestedList: TObjectList<TObject> read FNestedList write FNestedList;
   end;
-  /// <summary>
-  ///   Lista de Container
-  /// </summary>
+  // Lista de Container
   TRepositoryList = TObjectDictionary<string, TRepository>;
+  IMOConnection = {$IFDEF DRIVERRESTFUL}IRESTConnection{$ELSE}IDBConnection{$ENDIF};
 
-  /// <summary>
-  ///   TManagerObjectSet
-  /// </summary>
+  // TManagerObjectSet
   TManagerObjectSet = class
   private
-    FConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection;
-                 {$ELSE}IDBConnection;
-                 {$ENDIF}
+    FConnection: IMOConnection;
     FRepository: TRepositoryList;
     FCurrentIndex: Integer;
     FSelectedObject: TObject;
@@ -86,9 +81,7 @@ type
     procedure SelectNestedListItem<T: class>;
     procedure LoadLazy<T: class, constructor>(const AOwner, AObject: TObject); overload;
   public
-    constructor Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
-                                          {$ELSE}IDBConnection);
-                                          {$ENDIF}
+    constructor Create(const AConnection: IMOConnection);
     destructor Destroy; override;
     {$IFDEF USEBINDSOURCE}
     function SetBindSourceObjectAdapter<T: class, constructor>(const ABindSourceObject: IBindSourceObjectAdapter): TManagerObjectSet;
@@ -107,18 +100,14 @@ type
     function ModifiedFields<T: class, constructor>: TDictionary<string, TDictionary<string, string>>;
     function ExistSequence<T: class, constructor>: Boolean;
     procedure LoadLazy<T: class, constructor>(const AObject: TObject); overload;
-    /// <summary>
-    ///   Métodos para serem usados com a propriedade OwnerNestedList := False;
-    /// </summary>
+    // Métodos para serem usados com a propriedade OwnerNestedList := False;
     function Insert<T: class, constructor>(const AObject: T): Integer; overload;
     procedure Modify<T: class, constructor>(const AObject: T); overload;
     procedure Update<T: class, constructor>(const AObject: T); overload;
     procedure Delete<T: class, constructor>(const AObject: T); overload;
     procedure NextPacket<T: class, constructor>(var AObjectList: TObjectList<T>); overload;
     procedure New<T: class, constructor>(var AObject: T); overload;
-    /// <summary>
-    ///   Métodos para serem usados com a propriedade OwnerNestedList := True;
-    /// </summary>
+    // Métodos para serem usados com a propriedade OwnerNestedList := True;
     function Current<T: class, constructor>: T; overload;
     function Current<T: class, constructor>(const AIndex: Integer): T; overload;
     function New<T: class, constructor>: Integer; overload;
@@ -148,9 +137,7 @@ begin
   Result := (FCurrentIndex = FRepository.Items[T.ClassName].NestedList.Count -1);
 end;
 
-constructor TManagerObjectSet.Create(const AConnection: {$IFDEF DRIVERRESTFUL}IRESTConnection);
-                                                        {$ELSE}IDBConnection);
-                                                        {$ENDIF}
+constructor TManagerObjectSet.Create(const AConnection: IMOConnection);
 begin
   FConnection := AConnection;
   FRepository := TRepositoryList.Create([doOwnsValues]);
@@ -193,7 +180,7 @@ var
 begin
   Result := nil;
   if not FOwnerNestedList then
-    Exit;
+    raise Exception.Create('Enable the OwnerNestedList property');
   LClassName := TClass(T).ClassName;
   if FRepository.ContainsKey(LClassName) then
     Result := TObjectList<T>(FRepository.Items[LClassName].NestedList);
@@ -259,7 +246,7 @@ end;
 
 function TManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
 var
-  LContainer: TObjectSetBaseAdapter<T>;
+  LObjectetAdapter: TObjectSetBaseAdapter<T>;
   LClassName: String;
   LRepository: TRepository;
 begin
@@ -267,16 +254,15 @@ begin
   LClassName := TClass(T).ClassName;
   if FRepository.ContainsKey(LClassName) then
     Exit;
+
   {$IFDEF DRIVERRESTFUL}
-  LContainer := TRESTObjectSetAdapter<T>.Create(FConnection, APageSize);
+    LObjectetAdapter := TRESTObjectSetAdapter<T>.Create(FConnection, APageSize);
   {$ELSE}
-  LContainer := TObjectSetAdapter<T>.Create(FConnection, APageSize);
+    LObjectetAdapter := TObjectSetAdapter<T>.Create(FConnection, APageSize);
   {$ENDIF}
-  /// <summary>
-  ///   Adiciona o container ao repositório de containers
-  /// </summary>
+  // Adiciona o container ao repositório de containers
   LRepository := TRepository.Create;
-  LRepository.ObjectSet := LContainer;
+  LRepository.ObjectSet := LObjectetAdapter;
   FRepository.Add(LClassName, LRepository);
 end;
 
@@ -292,9 +278,7 @@ begin
   end;
   LObjectList := Resolver<T>.Find;
   LObjectList.OnNotify := ListChanged<T>;
-  /// <summary>
-  ///   Lista de objetos
-  /// </summary>
+  // Lista de objetos
   FRepository.Items[TClass(T).ClassName].NestedList.Free;
   FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
   FCurrentIndex := 0;
@@ -359,9 +343,7 @@ begin
   end;
   LObjectList := Resolver<T>.FindWhere(AWhere, AOrderBy);
   LObjectList.OnNotify := ListChanged<T>;
-  /// <summary>
-  ///   Lista de objetos
-  /// </summary>
+  // Lista de objetos
   FRepository.Items[TClass(T).ClassName].NestedList.Free;
   FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
   FCurrentIndex := 0;
@@ -510,9 +492,7 @@ begin
   end;
   LObjectList := Resolver<T>.Find(AMethodName, AParams);
   LObjectList.OnNotify := ListChanged<T>;
-  /// <summary>
-  ///   Lista de objetos
-  /// </summary>
+  // Lista de objetos
   FRepository.Items[TClass(T).ClassName].NestedList.Free;
   FRepository.Items[TClass(T).ClassName].NestedList := TObjectList<TObject>(LObjectList);
 end;

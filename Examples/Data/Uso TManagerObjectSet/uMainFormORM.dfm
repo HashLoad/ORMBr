@@ -2,7 +2,7 @@ object Form3: TForm3
   Left = 0
   Top = 0
   Caption = 'ManagerObjectSet'
-  ClientHeight = 451
+  ClientHeight = 452
   ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -232,12 +232,10 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      
-        'Database=D:\Projetos-Brasil\ORMBr\Examples\Data\Database\databas' +
-        'e.fdb'
-      'User_Name=SYSDBA'
+      'Database=database'
+      'User_Name=root'
       'Password=masterkey'
-      'DriverID=FB')
+      'DriverID=MySQL')
     UpdateOptions.AssignedValues = [uvLockWait]
     TxOptions.Isolation = xiSnapshot
     LoginPrompt = False

@@ -35,7 +35,6 @@ requires
   DBEBrConnectionZeos;
 
 contains
-  dbebr.connection.zeos in '..\..\Source\dbebr.connection.zeos.pas',
   dbebr.connection.zeos.reg in '..\..\Source\dbebr.connection.zeos.reg.pas';
 
 end.

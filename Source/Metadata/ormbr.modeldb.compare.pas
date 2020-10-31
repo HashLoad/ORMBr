@@ -31,7 +31,7 @@ interface
 
 uses
   SysUtils,
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.metadata.db.factory,
   ormbr.metadata.classe.factory,
   ormbr.database.factory;

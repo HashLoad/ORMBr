@@ -34,7 +34,7 @@ uses
   Rtti,
   Generics.Collections,
   /// ormbr
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   ormbr.mapping.classes,
   ormbr.dml.commands;
 

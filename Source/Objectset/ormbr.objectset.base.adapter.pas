@@ -288,9 +288,7 @@ begin
     if ACascadeAction = CascadeInsert then // Insert
     begin
       FSession.Insert(LObject);
-      /// <summary>
-      ///   Popula as propriedades de relacionamento com os valores do master
-      /// </summary>
+      // Popula as propriedades de relacionamento com os valores do master
       LPrimaryKey := TMappingExplorer.GetInstance
                        .GetMappingPrimaryKeyColumns(AObject.ClassType);
       if LPrimaryKey = nil then
@@ -341,9 +339,7 @@ begin
   if ACascadeAction = CascadeInsert then // Insert
   begin
     FSession.Insert(LObject);
-    /// <summary>
-    ///   Popula as propriedades de relacionamento com os valores do master
-    /// </summary>
+    // Popula as propriedades de relacionamento com os valores do master
     LPrimaryKey := TMappingExplorer.GetInstance
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
     if LPrimaryKey = nil then
@@ -391,7 +387,7 @@ var
   LAssociation: TAssociationMapping;
   LAssociations: TAssociationMappingList;
 begin
-  /// Association
+  // Association
   LAssociations := TMappingExplorer.GetInstance.GetMappingAssociation(AObject.ClassType);
   if LAssociations = nil then
     Exit;
