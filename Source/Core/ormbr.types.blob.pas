@@ -111,8 +111,15 @@ begin
 end;
 
 function TBlob.ToBytesString: string;
+var
+  LNetEncoding: TBase64Encoding;
 begin
-  Result := TNetEncoding.Base64.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  LNetEncoding := TBase64Encoding.Create;
+  try
+    Result := LNetEncoding.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
+  finally
+    LNetEncoding.Free;
+  end;
 end;
 
 function TBlob.ToString: String;
@@ -121,10 +128,17 @@ begin
 end;
 
 function TBlob.ToBytesString(const AString: string): Boolean;
+var
+  LNetEncoding: TBase64Encoding;
 begin
-  FBase64Bytes := TNetEncoding.Base64.DecodeStringToBytes(AString);
-  FBase64String := AString;
-  Result := True;
+  LNetEncoding := TBase64Encoding.Create;
+  try
+    FBase64Bytes := LNetEncoding.DecodeStringToBytes(AString);
+    FBase64String := AString;
+    Result := True;
+  finally
+    LNetEncoding.Free;
+  end;
 end;
 
 procedure TBlob.BuildBlobFieldToStream;
