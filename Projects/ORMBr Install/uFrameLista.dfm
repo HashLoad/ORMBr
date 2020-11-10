@@ -17,7 +17,6 @@ object framePacotes: TframePacotes
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 589
     object btnPacotesDesmarcarTodos: TSpeedButton
       AlignWithMargins = True
       Left = 495
@@ -110,8 +109,6 @@ object framePacotes: TframePacotes
     BevelOuter = bvNone
     BorderStyle = bsNone
     TabOrder = 0
-    ExplicitTop = 2
-    ExplicitHeight = 491
     object Label6: TLabel
       Left = 12
       Top = 7
@@ -177,7 +174,7 @@ object framePacotes: TframePacotes
     end
     object Label3: TLabel
       Left = 197
-      Top = 27
+      Top = 29
       Width = 276
       Height = 13
       Margins.Left = 5
@@ -497,7 +494,7 @@ object framePacotes: TframePacotes
     end
     object Label4: TLabel
       Left = 34
-      Top = 49
+      Top = 70
       Width = 59
       Height = 13
       Caption = 'ORMBr Core'
@@ -510,7 +507,7 @@ object framePacotes: TframePacotes
     end
     object Label5: TLabel
       Left = 197
-      Top = 49
+      Top = 72
       Width = 179
       Height = 13
       Margins.Left = 5
@@ -524,7 +521,7 @@ object framePacotes: TframePacotes
     end
     object Label30: TLabel
       Left = 34
-      Top = 70
+      Top = 49
       Width = 55
       Height = 13
       Caption = 'DBEBr Core'
@@ -537,7 +534,7 @@ object framePacotes: TframePacotes
     end
     object Label31: TLabel
       Left = 197
-      Top = 70
+      Top = 51
       Width = 175
       Height = 13
       Margins.Left = 5
@@ -758,25 +755,25 @@ object framePacotes: TframePacotes
     end
     object ORMBrCore_dpk: TCheckBox
       Left = 12
-      Top = 48
+      Top = 69
       Width = 16
       Height = 17
       Hint = 'ORMBrCore.dpk'
       Checked = True
       Enabled = False
       State = cbChecked
-      TabOrder = 1
+      TabOrder = 2
     end
     object DBEBrCore_dpk: TCheckBox
       Left = 12
-      Top = 69
+      Top = 48
       Width = 16
       Height = 17
       Hint = 'DBEBrCore.dpk'
       Checked = True
       Enabled = False
       State = cbChecked
-      TabOrder = 2
+      TabOrder = 1
     end
     object ORMBrManagerClientDataSet_dpk: TCheckBox
       Left = 12

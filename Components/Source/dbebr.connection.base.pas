@@ -6,6 +6,8 @@ uses
   DB,
   SysUtils,
   Classes,
+  dbebr.driver.connection,
+  dbebr.factory.connection,
   dbebr.factory.interfaces;
 
 type

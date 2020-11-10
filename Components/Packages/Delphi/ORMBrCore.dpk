@@ -33,7 +33,8 @@ requires
   rtl,
   vcl,
   vclimg,
-  dbrtl;
+  dbrtl,
+  DBEBrCore;
 
 contains
   ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas',

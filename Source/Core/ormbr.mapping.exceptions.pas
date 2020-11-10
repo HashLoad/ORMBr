@@ -145,14 +145,14 @@ end;
 
 constructor EMaxLengthConstraint.Create(const ADisplayLabel: String; const MaxLength: Integer);
 begin
-  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho maior que %s!', [ADisplayLabel, MaxLength.ToString]);
+  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho maior que %s!', [ADisplayLabel, IntToStr(MaxLength)]);
 end;
 
 { EMinLengthConstraint }
 
 constructor EMinLengthConstraint.Create(const ADisplayLabel: String; const MinLength: Integer);
 begin
-  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho menor que %s!', [ADisplayLabel, MinLength.ToString]);
+  inherited CreateFmt('O campo [ %s ] não pode ter o tamanho menor que %s!', [ADisplayLabel, IntToStr(MinLength)]);
 end;
 
 end.

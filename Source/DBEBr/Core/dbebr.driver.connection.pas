@@ -382,13 +382,13 @@ begin
   Result := 0;
   LResult := FOwner.GetFieldValue(FAsFieldName);
   if LResult <> Null then
-    Result := Int64(LResult);
+    Result := LResult;
 end;
 
 function TDBEBrField.AsIntegerDef(const Def: Int64): Int64;
 begin
   try
-    Result := Int64(FOwner.GetFieldValue(FAsFieldName));
+    Result := FOwner.GetFieldValue(FAsFieldName);
   except
     Result := Def;
   end;

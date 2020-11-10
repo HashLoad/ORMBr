@@ -93,17 +93,9 @@ object Form2: TForm2
     TabOrder = 4
     OnClick = Button1Click
   end
-  object Button2: TButton
-    Left = 104
-    Top = 589
-    Width = 75
-    Height = 25
-    Caption = 'Button2'
-    TabOrder = 5
-  end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\ORMBr\Demo\Data\Blob\blob.fdb'
+      'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Blob\blob.fdb'
       'Password=masterkey'
       'User_Name=SYSDBA'
       'CharacterSet=WIN1252'
@@ -114,7 +106,7 @@ object Form2: TForm2
   object DataSource1: TDataSource
     DataSet = FDMemTable1
     Left = 213
-    Top = 30
+    Top = 24
   end
   object FDMemTable1: TFDMemTable
     FetchOptions.AssignedValues = [evMode]

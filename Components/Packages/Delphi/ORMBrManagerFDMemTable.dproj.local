@@ -54,6 +54,10 @@
     <Transaction>2020/08/31 11:35:54.000.880,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.manager.fdmemtable.reg.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\..\Components"/>
+    <File Path="..\..\Source"/>
+    <File Path="..\..\Source\ormbr.db.manager.fdmemtable.pas"/>
+    <File Path="..\..\Source\ormbr.manager.fdmemtable.pas"/>
     <File Path="DBEBrCore.dcp"/>
     <File Path="dsnap.dcp"/>
     <File Path="FireDAC.dcp"/>
@@ -61,9 +65,5 @@
     <File Path="FireDACCommonDriver.dcp"/>
     <File Path="ORMBrCore.dcp"/>
     <File Path="rtl.dcp"/>
-    <File Path="..\..\..\Components"/>
-    <File Path="..\..\Source"/>
-    <File Path="..\..\Source\ormbr.db.manager.fdmemtable.pas"/>
-    <File Path="..\..\Source\ormbr.manager.fdmemtable.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

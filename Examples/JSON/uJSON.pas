@@ -28,12 +28,10 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
-    Button5: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -149,11 +147,7 @@ procedure TForm4.Button4Click(Sender: TObject);
 var
  jArray: TJSONArray;
 begin
-  Memo1.Clear;
-  Button1Click(Button1);
-
-
-  jArray := TORMBrJSONUtil.JSONStringToJSONArray(Memo1.Text);
+  jArray := TORMBrJSONUtil.JSONStringToJSONArray('[' + Memo1.Text + ']');
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONArray **********');
@@ -161,22 +155,6 @@ begin
   finally
     jArray.Free;
   end;
-end;
-
-procedure TForm4.Button5Click(Sender: TObject);
-var
-  LJSON: TJSONVariantData;
-begin
-//  LJSON.Init;
-//  LJSON.Kind := jvObject;
-//  LJSON.AddNameValue('ID', 1);
-//  LJSON.AddNameValue('Nome', 'Isaque');
-
-//  LJSON.Kind := jvUndefined;
-//  LJSON.AddValue(LJSON.ToJSON);
-
-  Memo1.Text := LJSON.ToJSON;
-  Memo1.Lines.Add(LJSON.Value['Nome']);
 end;
 
 end.

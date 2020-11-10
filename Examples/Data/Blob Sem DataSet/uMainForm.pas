@@ -8,8 +8,8 @@ uses
 
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   ormbr.model.person,
   ormbr.dml.generator.firebird,
   Generics.Collections,

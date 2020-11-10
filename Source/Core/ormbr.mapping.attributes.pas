@@ -1058,7 +1058,7 @@ begin
     tkWChar,
     tkLString,
     tkWString,
-    tkUString: isOk := not (AProperty.GetValue(AObject).AsString.isEmpty);
+    tkUString: isOk := not (AProperty.GetValue(AObject).AsString = '');
 
     tkFloat : isOk := not (AProperty.GetValue(AObject).AsExtended = 0);
 
@@ -1080,10 +1080,10 @@ end;
 
 procedure Size.Validate(const AProperty: TRttiProperty; AObject: TObject);
 begin
-  if (FMax > 0) and (AProperty.GetValue(AObject).AsString.Length > FMax) then
+  if (FMax > 0) and (Length(AProperty.GetValue(AObject).AsString) > FMax) then
     raise EMaxLengthConstraint.Create(AProperty.name, FMax);
 
-  if (FMin > 0) and (AProperty.GetValue(AObject).AsString.Length < FMin) then
+  if (FMin > 0) and (Length(AProperty.GetValue(AObject).AsString) < FMin) then
     raise EMinLengthConstraint.Create(AProperty.name, FMin);
 end;
 

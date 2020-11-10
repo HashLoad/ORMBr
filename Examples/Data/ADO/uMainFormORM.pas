@@ -24,8 +24,9 @@ uses
   /// orm factory
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
-  ormbr.factory.interfaces,
-  ormbr.factory.ado,
+  dbebr.factory.interfaces,
+  dbebr.factory.ado,
+  ormbr.dml.generator.sqlite,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
@@ -143,7 +144,7 @@ begin
   oClient := TContainerClientDataSet<Tclient>.Create(oConn, CDSClient, oMaster.MasterObject);
 
   /// Lookup lista de registro (DBLookupComboBox)
-  oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
+//  oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
 
   /// Campo LookupField pode ser usado em um DBLookupComboBox, ou DBGrid
   oDetail.AddLookupField('fieldname',

@@ -14,8 +14,8 @@ uses
   Generics.Collections,
 
   /// orm interface de conexão
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,
   ormbr.container.objectset.interfaces,
@@ -40,7 +40,6 @@ type
     DBMemo2: TDBMemo;
     Button1: TButton;
     OpenDialog1: TOpenDialog;
-    Button2: TButton;
     Image1: TImage;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);

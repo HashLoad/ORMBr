@@ -118,6 +118,7 @@
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
+    <File Path="DBEBrCore.dcp"/>
     <File Path="dbrtl.dcp"/>
     <File Path="rtl.dcp"/>
     <File Path="vcl.dcp"/>

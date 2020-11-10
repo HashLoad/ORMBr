@@ -291,7 +291,7 @@ begin
     LSourceStream.LoadFromFile(AFileName);
     LSourceStream.Position := 0;
     // Compressão dos dados
-//      CompressStream(LSourceStream, LTargetStream);
+//    CompressStream(LSourceStream, LTargetStream);
     // Gera cadeia de Bytes
     FBase64Bytes := StreamToByteArray(LSourceStream);
     // Codifica os Bytes em string
