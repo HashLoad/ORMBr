@@ -1,0 +1,9 @@
+{
+	"name": "ORMBr",
+	"description": "ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.",
+	"version": "1.0.0",
+	"homepage": "https://www.ormbr.com.br/",
+	"mainsrc": "Source",
+	"projects": [],
+	"dependencies": {}
+}
