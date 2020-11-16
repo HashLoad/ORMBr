@@ -1,4 +1,4 @@
-unit ormbr.dependencies.command.dbebr;
+unit ormbr.dependencies.command.cqlbr;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   System.StrUtils,
   System.SysUtils;
 
-type TORMBrDependenciesCommandDBEBr = class(TORMBrDependenciesCommandBase, IORMBrDependenciesCommand)
+type TORMBrDependenciesCommandCQLBr = class(TORMBrDependenciesCommandBase, IORMBrDependenciesCommand)
 
   private
     FTag: string;
@@ -26,45 +26,45 @@ end;
 
 implementation
 
-{ TORMBrDependenciesCommandDBEBr }
+{ TORMBrDependenciesCommandCQLBr }
 
-constructor TORMBrDependenciesCommandDBEBr.create(ATag: String);
+constructor TORMBrDependenciesCommandCQLBr.create(ATag: String);
 begin
   FTag := ATag;
 end;
 
-destructor TORMBrDependenciesCommandDBEBr.Destroy;
+destructor TORMBrDependenciesCommandCQLBr.Destroy;
 begin
 
   inherited;
 end;
 
-class function TORMBrDependenciesCommandDBEBr.New(ATag: String): IORMBrDependenciesCommand;
+class function TORMBrDependenciesCommandCQLBr.New(ATag: String): IORMBrDependenciesCommand;
 begin
   result := Self.create(ATag);
 end;
 
-function TORMBrDependenciesCommandDBEBr.GetPath: String;
+function TORMBrDependenciesCommandCQLBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\DBEBr\';
+    'Source\CQLBr\';
 
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandDBEBr.UrlDownloadFile: string;
+function TORMBrDependenciesCommandCQLBr.UrlDownloadFile: string;
 var
   version: string;
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
-  result := Format('https://bitbucket.org/isaquepinheiro/dbebr/get/%s.zip',
+  result := Format('https://bitbucket.org/isaquepinheiro/cqlbr/get/%s.zip',
     [version])
 end;
 
-function TORMBrDependenciesCommandDBEBr.ZipFileName: string;
+function TORMBrDependenciesCommandCQLBr.ZipFileName: string;
 begin
-  result := GetPath + 'dbebr.zip';
+  result := GetPath + 'cqlbr.zip';
 
   ForceDirectories(ExtractFilePath(result));
 end;

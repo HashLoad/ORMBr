@@ -16,17 +16,31 @@ type
 
 function NewExecutor: IORMBrDependenciesExecutor;
 
+function CommandCQLBr(ATag: String = ''): IORMBrDependenciesCommand;
+function CommandDBCBr(ATag: String = ''): IORMBrDependenciesCommand;
 function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;
 
 implementation
 
 uses
   ormbr.dependencies.executor,
+  ormbr.dependencies.command.cqlbr,
+  ormbr.dependencies.command.dbcbr,
   ormbr.dependencies.command.dbebr;
 
 function NewExecutor: IORMBrDependenciesExecutor;
 begin
   result := TORMBrDependenciesExecutor.New;
+end;
+
+function CommandCQLBr(ATag: String = ''): IORMBrDependenciesCommand;
+begin
+  result := TORMBrDependenciesCommandCQLBr.New(ATag);
+end;
+
+function CommandDBCBr(ATag: String = ''): IORMBrDependenciesCommand;
+begin
+  result := TORMBrDependenciesCommandDBCBr.New(ATag);
 end;
 
 function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;

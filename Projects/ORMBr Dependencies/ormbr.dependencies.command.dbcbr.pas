@@ -1,4 +1,4 @@
-unit ormbr.dependencies.command.dbebr;
+unit ormbr.dependencies.command.dbcbr;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   System.StrUtils,
   System.SysUtils;
 
-type TORMBrDependenciesCommandDBEBr = class(TORMBrDependenciesCommandBase, IORMBrDependenciesCommand)
+type TORMBrDependenciesCommandDBCBr = class(TORMBrDependenciesCommandBase, IORMBrDependenciesCommand)
 
   private
     FTag: string;
@@ -26,45 +26,45 @@ end;
 
 implementation
 
-{ TORMBrDependenciesCommandDBEBr }
+{ TORMBrDependenciesCommandDBCBr }
 
-constructor TORMBrDependenciesCommandDBEBr.create(ATag: String);
+constructor TORMBrDependenciesCommandDBCBr.create(ATag: String);
 begin
   FTag := ATag;
 end;
 
-destructor TORMBrDependenciesCommandDBEBr.Destroy;
+destructor TORMBrDependenciesCommandDBCBr.Destroy;
 begin
 
   inherited;
 end;
 
-class function TORMBrDependenciesCommandDBEBr.New(ATag: String): IORMBrDependenciesCommand;
+class function TORMBrDependenciesCommandDBCBr.New(ATag: String): IORMBrDependenciesCommand;
 begin
   result := Self.create(ATag);
 end;
 
-function TORMBrDependenciesCommandDBEBr.GetPath: String;
+function TORMBrDependenciesCommandDBCBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\DBEBr\';
+    'Source\DBCBr\';
 
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandDBEBr.UrlDownloadFile: string;
+function TORMBrDependenciesCommandDBCBr.UrlDownloadFile: string;
 var
   version: string;
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
-  result := Format('https://bitbucket.org/isaquepinheiro/dbebr/get/%s.zip',
+  result := Format('https://bitbucket.org/isaquepinheiro/dbcbr/get/%s.zip',
     [version])
 end;
 
-function TORMBrDependenciesCommandDBEBr.ZipFileName: string;
+function TORMBrDependenciesCommandDBCBr.ZipFileName: string;
 begin
-  result := GetPath + 'dbebr.zip';
+  result := GetPath + 'dbcbr.zip';
 
   ForceDirectories(ExtractFilePath(result));
 end;

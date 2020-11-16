@@ -104,13 +104,15 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="ormbr.dependencies.main.pas">
-            <Form>Form1</Form>
+            <Form>frmORMBrDependencies</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="ormbr.dependencies.interfaces.pas"/>
         <DCCReference Include="ormbr.dependencies.executor.pas"/>
         <DCCReference Include="ormbr.dependencies.command.base.pas"/>
         <DCCReference Include="ormbr.dependencies.command.dbebr.pas"/>
+        <DCCReference Include="ormbr.dependencies.command.cqlbr.pas"/>
+        <DCCReference Include="ormbr.dependencies.command.dbcbr.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
