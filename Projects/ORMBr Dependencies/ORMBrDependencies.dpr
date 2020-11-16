@@ -4,7 +4,9 @@ uses
   Vcl.Forms,
   ormbr.dependencies.main in 'ormbr.dependencies.main.pas' {Form1},
   ormbr.dependencies.interfaces in 'ormbr.dependencies.interfaces.pas',
-  ormbr.dependencies.executor in 'ormbr.dependencies.executor.pas';
+  ormbr.dependencies.executor in 'ormbr.dependencies.executor.pas',
+  ormbr.dependencies.command.base in 'ormbr.dependencies.command.base.pas',
+  ormbr.dependencies.command.dbebr in 'ormbr.dependencies.command.dbebr.pas';
 
 {$R *.res}
 

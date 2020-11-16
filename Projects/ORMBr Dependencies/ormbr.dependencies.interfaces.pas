@@ -5,7 +5,7 @@ interface
 type
   IORMBrDependenciesCommand = interface
     ['{0286EC94-9BE4-416D-8F9D-6483ED416B37}']
-    function Execute: IORMBrDependenciesCommand;
+    procedure Execute;
   end;
 
   IORMBrDependenciesExecutor = interface
@@ -14,6 +14,24 @@ type
     function Execute: IORMBrDependenciesExecutor;
   end;
 
+function NewExecutor: IORMBrDependenciesExecutor;
+
+function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;
+
 implementation
+
+uses
+  ormbr.dependencies.executor,
+  ormbr.dependencies.command.dbebr;
+
+function NewExecutor: IORMBrDependenciesExecutor;
+begin
+  result := TORMBrDependenciesExecutor.New;
+end;
+
+function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;
+begin
+  result := TORMBrDependenciesCommandDBEBr.New(ATag);
+end;
 
 end.

@@ -23,14 +23,19 @@ var
 
 implementation
 
+uses
+  ormbr.dependencies.interfaces;
+
 {$R *.dfm}
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
-  saveAs: string;
+  executor : IORMBrDependenciesExecutor;
 begin
-  saveAs := ExtractFilePath(GetModuleName(HInstance)) + 'DBEBr.zip';
-  URLDownloadToFile(nil, PChar(DBEBr), PChar(saveAs), 0, nil);
+  executor := NewExecutor;
+  executor
+    .AddCommand(CommandDBEBr)
+    .Execute;
 end;
 
 end.
