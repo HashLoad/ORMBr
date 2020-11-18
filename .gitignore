@@ -4,3 +4,13 @@
 __history/
 __recovery/
 Win32/
+Projects/ORMBr Dependencies/ORMBrDependencies.dproj.local
+Source/CQLBr/cqlbr.inc
+Source/CQLBr/Core/
+Source/CQLBr/Drivers/
+Source/DBCBr/Core/
+Source/DBCBr/Drivers/
+Source/DBEBr/dbebr.inc
+Source/DBEBr/Core/
+Source/DBEBr/Drivers/
+*.identcache
