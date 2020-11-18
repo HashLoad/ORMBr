@@ -10,39 +10,16 @@ uses
 
 type TORMBrDependenciesCommandCQLBr = class(TORMBrDependenciesCommandBase, IORMBrDependenciesCommand)
 
-  private
-    FTag: string;
-
   protected
     function GetPath: String; override;
     function UrlDownloadFile: string; override;
     function ZipFileName: string; override;
 
-  public
-    constructor create(ATag: String);
-    class function New(ATag: String): IORMBrDependenciesCommand;
-    destructor Destroy; override;
 end;
 
 implementation
 
 { TORMBrDependenciesCommandCQLBr }
-
-constructor TORMBrDependenciesCommandCQLBr.create(ATag: String);
-begin
-  FTag := ATag;
-end;
-
-destructor TORMBrDependenciesCommandCQLBr.Destroy;
-begin
-
-  inherited;
-end;
-
-class function TORMBrDependenciesCommandCQLBr.New(ATag: String): IORMBrDependenciesCommand;
-begin
-  result := Self.create(ATag);
-end;
 
 function TORMBrDependenciesCommandCQLBr.GetPath: String;
 begin

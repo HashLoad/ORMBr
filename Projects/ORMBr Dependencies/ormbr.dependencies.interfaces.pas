@@ -3,6 +3,8 @@ unit ormbr.dependencies.interfaces;
 interface
 
 type
+  TLog = procedure (ALog: String) of object;
+
   IORMBrDependenciesCommand = interface
     ['{0286EC94-9BE4-416D-8F9D-6483ED416B37}']
     procedure Execute;
@@ -13,6 +15,9 @@ type
     function AddCommand(ACommand: IORMBrDependenciesCommand): IORMBrDependenciesExecutor;
     function Execute: IORMBrDependenciesExecutor;
   end;
+
+var
+  ALog: TLog;
 
 function NewExecutor: IORMBrDependenciesExecutor;
 
@@ -35,17 +40,17 @@ end;
 
 function CommandCQLBr(ATag: String = ''): IORMBrDependenciesCommand;
 begin
-  result := TORMBrDependenciesCommandCQLBr.New(ATag);
+  result := TORMBrDependenciesCommandCQLBr.New(ATag, ALog);
 end;
 
 function CommandDBCBr(ATag: String = ''): IORMBrDependenciesCommand;
 begin
-  result := TORMBrDependenciesCommandDBCBr.New(ATag);
+  result := TORMBrDependenciesCommandDBCBr.New(ATag, ALog);
 end;
 
 function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;
 begin
-  result := TORMBrDependenciesCommandDBEBr.New(ATag);
+  result := TORMBrDependenciesCommandDBEBr.New(ATag, ALog);
 end;
 
 end.

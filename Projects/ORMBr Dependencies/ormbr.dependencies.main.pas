@@ -5,7 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Winapi.UrlMon,
-  System.JSON, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.ValEdit;
+  System.JSON, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.ValEdit,
+  System.Generics.Collections,
+  System.UITypes,
+  System.Threading;
 
 type
   TfrmORMBrDependencies = class(TForm)
@@ -13,18 +16,29 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Panel1: TPanel;
-    btnCancel: TButton;
+    btnExit: TButton;
     Panel2: TPanel;
     vlDependencies: TValueListEditor;
+    btnInstall: TButton;
+    mmoLog: TMemo;
     procedure FormCreate(Sender: TObject);
-    procedure btnCancelClick(Sender: TObject);
+    procedure btnExitClick(Sender: TObject);
+    procedure btnInstallClick(Sender: TObject);
   private
     FJSONDependencies: TJSONObject;
 
     function BossFileName: string;
 
+    procedure InstallDependencies;
+
+    function GetCQLVersion: String;
+    function GetDBCVersion: string;
+    function GetDBEVersion: string;
+
     procedure loadJSONDependencies;
     procedure loadDependencies;
+
+    procedure log(AText: String);
     { Private declarations }
   public
     destructor Destroy; override;
@@ -46,9 +60,16 @@ begin
   result := ExtractFilePath(GetModuleName(HInstance)) + 'boss.json';
 end;
 
-procedure TfrmORMBrDependencies.btnCancelClick(Sender: TObject);
+procedure TfrmORMBrDependencies.btnExitClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmORMBrDependencies.btnInstallClick(Sender: TObject);
+begin
+  mmoLog.Lines.Clear;
+  InstallDependencies;
+  MessageDlg('Dependencias baixadas com sucesso.', mtConfirmation, [mbOK], 0);
 end;
 
 destructor TfrmORMBrDependencies.Destroy;
@@ -58,17 +79,36 @@ begin
 end;
 
 procedure TfrmORMBrDependencies.FormCreate(Sender: TObject);
+begin
+  loadDependencies;
+end;
+
+function TfrmORMBrDependencies.GetCQLVersion: String;
+begin
+  result := vlDependencies.Values['cqlbr'];
+end;
+
+function TfrmORMBrDependencies.GetDBCVersion: string;
+begin
+  result := vlDependencies.Values['dbcbr'];
+end;
+
+function TfrmORMBrDependencies.GetDBEVersion: string;
+begin
+  result := vlDependencies.Values['dbebr'];
+end;
+
+procedure TfrmORMBrDependencies.InstallDependencies;
 var
   executor : IORMBrDependenciesExecutor;
 begin
-  loadDependencies;
-
-//  executor := NewExecutor;
-//  executor
-//    .AddCommand(CommandCQLBr)
-//    .AddCommand(CommandDBCBr)
-//    .AddCommand(CommandDBEBr)
-//    .Execute;
+  ALog := log;
+  executor := NewExecutor;
+  executor
+    .AddCommand(CommandCQLBr(GetCQLVersion))
+    .AddCommand(CommandDBCBr(GetDBCVersion))
+    .AddCommand(CommandDBEBr(GetDBEVersion))
+    .Execute;
 end;
 
 procedure TfrmORMBrDependencies.loadDependencies;
@@ -115,6 +155,16 @@ begin
       slf.Free;
     end;
   end;
+end;
+
+procedure TfrmORMBrDependencies.log(AText: String);
+begin
+  TThread.Synchronize(TThread.CurrentThread,
+    procedure
+    begin
+      mmoLog.Lines.Add(AText);
+    end
+    );
 end;
 
 end.

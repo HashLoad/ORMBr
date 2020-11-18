@@ -66,17 +66,25 @@ object frmORMBrDependencies: TfrmORMBrDependencies
     Color = 4864316
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 312
-    ExplicitWidth = 675
-    object btnCancel: TButton
+    object btnExit: TButton
       Left = 560
       Top = 8
       Width = 99
       Height = 25
-      Caption = 'Cancelar'
+      Caption = 'Sair'
+      ModalResult = 8
+      TabOrder = 1
+      OnClick = btnExitClick
+    end
+    object btnInstall: TButton
+      Left = 450
+      Top = 8
+      Width = 99
+      Height = 25
+      Caption = 'Instalar'
       ModalResult = 8
       TabOrder = 0
-      OnClick = btnCancelClick
+      OnClick = btnInstallClick
     end
   end
   object Panel2: TPanel
@@ -89,15 +97,12 @@ object frmORMBrDependencies: TfrmORMBrDependencies
     Color = 3417897
     ParentBackground = False
     TabOrder = 2
-    ExplicitTop = 312
-    ExplicitWidth = 675
-    ExplicitHeight = 41
     object vlDependencies: TValueListEditor
       Left = 0
       Top = 0
       Width = 681
-      Height = 260
-      Align = alClient
+      Height = 145
+      Align = alTop
       Color = 3417897
       DrawingStyle = gdsGradient
       FixedColor = 3417897
@@ -113,12 +118,26 @@ object frmORMBrDependencies: TfrmORMBrDependencies
       TitleCaptions.Strings = (
         'Reposit'#243'rio'
         'Tag')
-      ExplicitTop = 22
-      ExplicitWidth = 385
-      ExplicitHeight = 219
       ColWidths = (
         194
         481)
+    end
+    object mmoLog: TMemo
+      Left = 0
+      Top = 145
+      Width = 681
+      Height = 115
+      Align = alClient
+      BorderStyle = bsNone
+      Color = 3417897
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      ScrollBars = ssVertical
+      TabOrder = 1
     end
   end
 end
