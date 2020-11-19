@@ -1,4 +1,4 @@
-program ORMBrBlob;
+program ORMBrBlobSemDataSet;
 
 uses
   System.StartUpCopy,

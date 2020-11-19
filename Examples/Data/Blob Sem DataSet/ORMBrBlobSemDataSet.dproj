@@ -3,7 +3,7 @@
         <ProjectGuid>{2008357D-03DE-4DBF-A594-4522DA66C458}</ProjectGuid>
         <ProjectVersion>18.5</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
-        <MainSource>ORMBrBlob.dpr</MainSource>
+        <MainSource>ORMBrBlobSemDataSet.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -104,7 +104,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <DCC_Define>HAS_FMX;$(DCC_Define)</DCC_Define>
-        <SanitizedProjectName>ORMBrBlob</SanitizedProjectName>
+        <SanitizedProjectName>ORMBrBlobSemDataSet</SanitizedProjectName>
         <DCC_UnitSearchPath>..\..\..\Source\DBEBr\Core;..\..\..\Source\DBEBr\Drivers;..\..\..\Source\Dataset;..\..\..\Source\Objectset;..\..\..\Source\Core;..\..\..\Source\DBCBr\Core;..\..\..\Source\Criteria;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
@@ -346,7 +346,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">ORMBrBlob.dpr</Source>
+                    <Source Name="MainSource">ORMBrBlobSemDataSet.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\spdGov16_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdGov16_D10T.bpl not found</Excluded_Packages>
@@ -359,9 +359,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ORMBrBlob.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="ORMBrBlobSemDataSet.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>ORMBrBlob.exe</RemoteName>
+                        <RemoteName>ORMBrBlobSemDataSet.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

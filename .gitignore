@@ -29,3 +29,6 @@ Examples/Data/FireDAC Crud Simples/ORMBrFireDACCrudSimples.exe
 Examples/Data/FireDAC Sem DataSet/ORMBrFireDACSemDataSet.exe
 *.txaPackage
 *.tvsconfig
+Examples/Data/FireDAC/ORMBrFireDAC.map
+Examples/Data/IBExpress/ORMBrIBExpress.exe
+Examples/Data/Blob/ORMBrBlob.exe
