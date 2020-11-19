@@ -22,8 +22,8 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.dbexpress,
+  dbebr.factory.interfaces,
+  dbebr.factory.dbexpress,
   /// orm injection dependency
   ormbr.criteria,
   ormbr.container.objectset,
@@ -117,7 +117,7 @@ end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  TCommandMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance; //.Show;
 end;
 
 procedure TForm3.btnOpenClick(Sender: TObject);

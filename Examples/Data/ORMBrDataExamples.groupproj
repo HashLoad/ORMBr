@@ -12,6 +12,18 @@
         <Projects Include="DBExpress\ORMBrDBExpress.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="DBExpress Sem DataSet\ORMBrDBExpressSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireDAC\ORMBrFireDAC.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +59,50 @@
     <Target Name="ORMBrDBExpress:Make">
         <MSBuild Projects="DBExpress\ORMBrDBExpress.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ORMBrDBExpressSemDataSet">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBrDBExpressSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrDBExpressSemDataSet:Clean">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBrDBExpressSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrDBExpressSemDataSet:Make">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBrDBExpressSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrFireDACSemDataSet">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrFireDACSemDataSet:Clean">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrFireDACSemDataSet:Make">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrFireDACCrudSimples">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj"/>
+    </Target>
+    <Target Name="ORMBrFireDACCrudSimples:Clean">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrFireDACCrudSimples:Make">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrFireDAC">
+        <MSBuild Projects="FireDAC\ORMBrFireDAC.dproj"/>
+    </Target>
+    <Target Name="ORMBrFireDAC:Clean">
+        <MSBuild Projects="FireDAC\ORMBrFireDAC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrFireDAC:Make">
+        <MSBuild Projects="FireDAC\ORMBrFireDAC.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Exemplo_ORMBr;ORMBrBlob;ORMBrDBExpress"/>
+        <CallTarget Targets="Exemplo_ORMBr;ORMBrBlob;ORMBrDBExpress;ORMBrDBExpressSemDataSet;ORMBrFireDACSemDataSet;ORMBrFireDACCrudSimples;ORMBrFireDAC"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Exemplo_ORMBr:Clean;ORMBrBlob:Clean;ORMBrDBExpress:Clean"/>
+        <CallTarget Targets="Exemplo_ORMBr:Clean;ORMBrBlob:Clean;ORMBrDBExpress:Clean;ORMBrDBExpressSemDataSet:Clean;ORMBrFireDACSemDataSet:Clean;ORMBrFireDACCrudSimples:Clean;ORMBrFireDAC:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Exemplo_ORMBr:Make;ORMBrBlob:Make;ORMBrDBExpress:Make"/>
+        <CallTarget Targets="Exemplo_ORMBr:Make;ORMBrBlob:Make;ORMBrDBExpress:Make;ORMBrDBExpressSemDataSet:Make;ORMBrFireDACSemDataSet:Make;ORMBrFireDACCrudSimples:Make;ORMBrFireDAC:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

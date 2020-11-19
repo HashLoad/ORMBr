@@ -46,10 +46,8 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=teste_guid'
-      'User_Name=root'
-      'Password=masterkey'
-      'DriverID=MySQL')
+      'Database=..\Database\database.db3'
+      'DriverID=SQLite')
     LoginPrompt = False
     Left = 154
     Top = 42

@@ -22,3 +22,10 @@ Examples/Data/DBExpress/ORMBrDBExpress.dproj.local
 Examples/Data/DBExpress/ORMBrDBExpress.exe
 Examples/Data/ADO/ORMBrADO.dproj.local
 Examples/Data/ADO/ORMBrADO.exe
+Examples/Data/DBExpress Sem DataSet/ORMBrDBExpressSemDataSet.exe
+*.local
+Examples/Data/FireDAC/ORMBrFireDAC.exe
+Examples/Data/FireDAC Crud Simples/ORMBrFireDACCrudSimples.exe
+Examples/Data/FireDAC Sem DataSet/ORMBrFireDACSemDataSet.exe
+*.txaPackage
+*.tvsconfig
