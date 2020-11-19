@@ -14,3 +14,4 @@ Source/DBEBr/dbebr.inc
 Source/DBEBr/Core/
 Source/DBEBr/Drivers/
 *.identcache
+Examples/Data/Blob/Exemplo_ORMBr.exe

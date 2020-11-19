@@ -75,8 +75,12 @@ begin
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);
+var
+  dataBaseFile: string;
 begin
+  dataBaseFile := ExtractFilePath(GetModuleName(HInstance)) + 'blob.fdb';
   // Instância da class de conexão via FireDAC
+  FDConnection1.Params.Database := dataBaseFile;
   FConnection := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
   // Master
   FContainerBlob := TContainerFDMemTable<TPERSON>.Create(FConnection, FDMemTable1, -1);

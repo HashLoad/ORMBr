@@ -47,7 +47,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
@@ -59,6 +58,9 @@
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <SanitizedProjectName>Exemplo_ORMBr</SanitizedProjectName>
+        <DCC_UnitSearchPath>..\..\..\Source\DBEBr\Core;..\..\..\Source\DBEBr\Drivers;..\..\..\Source\Dataset;..\..\..\Source\Objectset;..\..\..\Source\Core;..\..\..\Source\DBCBr\Core;..\..\..\Source\Criteria;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_UsePackage>DBXSqliteDriver;DBXDb2Driver;vclactnband;vclFireDAC;tethering;FireDACADSDriver;JvPluginSystem;ACBr_BPe;TSCompD25;FireDACMSSQLDriver;vcltouch;JvBands;ACBr_NFe;vcldb;ACBr_NFeDanfeFR;svn;JvJans;WiRLServerWizard;ACBr_NFeDanfeESCPOS;JvDotNetCtrls;vclib;FireDACDBXDriver;ACBr_NFSeDanfseFR;vclx;WiRLRunTime;ACBr_SATExtratoRL;ACBr_Reinf;VCLRESTComponents;MARSServerWizard;vclribbon250;remotedb;vclie;fs25;bindengine;JvHMI;FireDACMySQLDriver;ACBr_PAF;ACBr_SATECFVirtual;DataSnapClient;bindcompdbx;ACBr_CTeDacteRL;ACBr_TCP;DBXSybaseASEDriver;IndyIPServer;ACBr_CTe;IndySystem;SMCmpntD25;dsnapcon;DMVC_IDE_Expert_D102Tokyo;ACBr_synapse;ACBre_Social;FireDACMSAccDriver;fmxFireDAC;FireDACInfxDriver;vclimg;fsADO25;Jcl;ACBr_SPEDImportar;ACBr_SPED;ACBr_MDFe;emshosting;ACBr_BoletoRL;ACBr_LFD;frxADO25;DBXOdbcDriver;FireDACTDataDriver;FMXTee;DbxCommonDriver;JvManagedThreads;ACBr_NFSeDanfseRL;xmlrtl;DataSnapNativeClient;fmxobj;JvTimeFramework;frx25;rtl;DbxClientDriver;DBXSybaseASADriver;JvSystem;JvStdCtrls;fsDB25;ACBr_Convenio115;appanalytics;IndyIPClient;bindcompvcl;TeeUI;JvDocking;JvPascalInterpreter;VclSmp;FireDACODBCDriver;JclVcl;DataSnapIndy10ServerTransport;ACBr_Boleto;DataSnapProviderClient;frxIBX25;FireDACMongoDBDriver;ACBr_SEF2;JvControls;JvPrintPreview;ACBr_MDFeDamdfeFR;ACBr_NFSe;DataSnapServerMidas;frxcs25;ZComponent;DBXInterBaseDriver;ACBr_TEFD;ZCore;BarMenuD25;RXLibD25;ACBr_SATWS;svnui;JvGlobus;frxe25;DBXMSSQLDriver;JvMM;ACBr_MDFeDamdfeRL;DatasnapConnectorsFreePascal;bindcompfmx;JvNet;DBXOracleDriver;fsIBX25;inetdb;JvAppFrm;ACBr_Diversos;ACBr_TXTComum;ACBr_GNREGuiaFR;FmxTeeUI;emsedge;fmx;fmxdae;frxDB25;ACBr_CTeDacteFR;JvWizards;frxTee25;ACBr_Ponto;dbexpress;IndyCore;ZParseSql;JvPageComps;dsnap;DataSnapCommon;fsTee25;TSDBD25;JvDB;ACBr_PCNComum;MARS.Utils;DataSnapConnectors;ACBR_DeSTDA;dclribbon250;ACBr_SAT;JclDeveloperTools;FireDACOracleDriver;DBXMySQLDriver;JvCmp;DBXFirebirdDriver;ACBr_Sintegra;FireDACCommonODBC;ACBr_GNRE;IndyIPCommon;JvCustom;vcl;ACBr_NFeDanfeRL;JvXPCtrls;ACBr_SATExtratoESCPOS;FireDACDb2Driver;ACBr_Integrador;ZDbc;TeeDB;JvCore;ACBr_Comum;JvCrypt;FireDACPgDriver;ibmonitor;FireDACASADriver;ACBr_GNREGuiaRL;JvDlgs;JvRuntimeDesign;ibxpress;Tee;DataSnapServer;ibxbindings;vclwinx;FireDACDSDriver;ACBr_OpenSSL;TSDataD25;ACBr_DFeComum;CustomIPTransport;vcldsnap;bindcomp;ZPlain;ACBr_Serial;DBXInformixDriver;frce;frxDBX25;ACBr_BlocoX;dbxcds;ACBr_NFCeECFVirtual;adortl;ACBr_BoletoFR;ACBr_ANe;dsnapxml;dbrtl;inetdbxpress;IndyProtocols;JclContainers;ACBr_MTER;fmxase;$(DCC_UsePackage)</DCC_UsePackage>
@@ -84,6 +86,8 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <AppDPIAwarenessMode>PerMonitor</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -124,6 +128,10 @@
                 <Source>
                     <Source Name="MainSource">Exemplo_ORMBr.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\spdGov16_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdGov16_D10T.bpl not found</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
                 <DeployFile LocalName="Win32\Debug\Exemplo_ORMBr.exe" Configuration="Debug" Class="ProjectOutput">
@@ -141,6 +149,7 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="Win32">
+                        <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
                 </DeployClass>
@@ -276,11 +285,6 @@
                         <Operation>1</Operation>
                         <Extensions>.framework</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.framework</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                     </Platform>
@@ -299,11 +303,6 @@
                         <Extensions>.dylib</Extensions>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
@@ -331,11 +330,6 @@
                         <Operation>1</Operation>
                         <Extensions>.dylib</Extensions>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                        <Extensions>.dylib</Extensions>
-                    </Platform>
                     <Platform Name="Win32">
                         <Operation>0</Operation>
                         <Extensions>.bpl</Extensions>
@@ -355,10 +349,6 @@
                         <Operation>0</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
-                        <Operation>0</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources\StartUp\</RemoteDir>
                         <Operation>0</Operation>
                     </Platform>
@@ -509,27 +499,15 @@
                         <RemoteDir>..\</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>..\</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXInfoPList">
                     <Platform Name="OSX32">
                         <RemoteDir>Contents</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
-                    <Platform Name="OSX64">
-                        <RemoteDir>Contents</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
                 </DeployClass>
                 <DeployClass Name="ProjectOSXResource">
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\Resources</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\Resources</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
@@ -552,10 +530,6 @@
                         <Operation>1</Operation>
                     </Platform>
                     <Platform Name="OSX32">
-                        <RemoteDir>Contents\MacOS</RemoteDir>
-                        <Operation>1</Operation>
-                    </Platform>
-                    <Platform Name="OSX64">
                         <RemoteDir>Contents\MacOS</RemoteDir>
                         <Operation>1</Operation>
                     </Platform>
