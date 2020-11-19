@@ -39,7 +39,7 @@ uses
     FMX.Graphics,
   {$ELSE}
     // Delphi > 2010 adicionar em:
-    // Option->Delphi Compiler->Unit scope names, "Vcl"
+    // Option->Delphi Compiler->Unit scope names, "Vcl", "Vcl.Imaging"
     Graphics,
     GIFImg,
     JPEG,
