@@ -32,3 +32,4 @@ Examples/Data/FireDAC Sem DataSet/ORMBrFireDACSemDataSet.exe
 Examples/Data/FireDAC/ORMBrFireDAC.map
 Examples/Data/IBExpress/ORMBrIBExpress.exe
 Examples/Data/Blob/ORMBrBlob.exe
+Examples/Data/Blob Sem DataSet/ORMBrBlobSemDataSet.exe
