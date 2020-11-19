@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8D8C1B8C-DD5B-4666-8F11-C9B3C8653C30}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Blob\Exemplo_ORMBr.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Blob Sem DataSet\ORMBrBlob.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Exemplo_ORMBr">
+        <MSBuild Projects="Blob\Exemplo_ORMBr.dproj"/>
+    </Target>
+    <Target Name="Exemplo_ORMBr:Clean">
+        <MSBuild Projects="Blob\Exemplo_ORMBr.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Exemplo_ORMBr:Make">
+        <MSBuild Projects="Blob\Exemplo_ORMBr.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrBlob">
+        <MSBuild Projects="Blob Sem DataSet\ORMBrBlob.dproj"/>
+    </Target>
+    <Target Name="ORMBrBlob:Clean">
+        <MSBuild Projects="Blob Sem DataSet\ORMBrBlob.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrBlob:Make">
+        <MSBuild Projects="Blob Sem DataSet\ORMBrBlob.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Exemplo_ORMBr;ORMBrBlob"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Exemplo_ORMBr:Clean;ORMBrBlob:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Exemplo_ORMBr:Make;ORMBrBlob:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

@@ -29,10 +29,10 @@
     <Transaction>2018/08/13 16:53:53.000.547,=D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas</Transaction>
     <Transaction>2018/08/13 16:56:42.000.522,D:\DeveloperFriends\PRJ_Comum\ax_class\LOG_Class.pas=D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas</Transaction>
     <Transaction>2018/08/13 17:47:50.000.534,D:\ORMBr\Demo\Data\Blob Sem DataSet\LOG_Class.pas=</Transaction>
-    <Transaction>2018/08/26 15:25:06.000.937,=D:\ORMBr\Source\Core\ormbr.encddecd.pas</Transaction>
     <Transaction>2018/08/26 15:25:06.000.978,=D:\ORMBr\Source\Core\ormbr.json.pas</Transaction>
-    <Transaction>2018/08/26 15:25:07.000.015,=D:\ORMBr\Source\Core\ormbr.json.utils.pas</Transaction>
+    <Transaction>2018/08/26 15:25:06.000.937,=D:\ORMBr\Source\Core\ormbr.encddecd.pas</Transaction>
     <Transaction>2018/08/26 15:25:07.000.054,=D:\ORMBr\Source\Core\ormbr.rest.json.pas</Transaction>
+    <Transaction>2018/08/26 15:25:07.000.015,=D:\ORMBr\Source\Core\ormbr.json.utils.pas</Transaction>
     <Transaction>2018/08/26 15:41:35.000.735,=D:\ORMBr\Source\Core\ormbr.types.blob.pas</Transaction>
   </Transactions>
 	<ActiveMobileDevice>
