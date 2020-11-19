@@ -125,8 +125,7 @@ end;
 
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-   { TODO -oGabriel -cBug : Verificar com Isaque questão da interface ICommandMonitor }
-//  TCommandMonitor.GetInstance.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button4Click(Sender: TObject);

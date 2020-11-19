@@ -117,7 +117,7 @@ end;
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  TCommandMonitor.GetInstance; //.Show;
+  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.btnOpenClick(Sender: TObject);
