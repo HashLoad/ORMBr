@@ -9,6 +9,9 @@
         <Projects Include="Blob Sem DataSet\ORMBrBlob.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="DBExpress\ORMBrDBExpress.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="ORMBrBlob:Make">
         <MSBuild Projects="Blob Sem DataSet\ORMBrBlob.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ORMBrDBExpress">
+        <MSBuild Projects="DBExpress\ORMBrDBExpress.dproj"/>
+    </Target>
+    <Target Name="ORMBrDBExpress:Clean">
+        <MSBuild Projects="DBExpress\ORMBrDBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrDBExpress:Make">
+        <MSBuild Projects="DBExpress\ORMBrDBExpress.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Exemplo_ORMBr;ORMBrBlob"/>
+        <CallTarget Targets="Exemplo_ORMBr;ORMBrBlob;ORMBrDBExpress"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Exemplo_ORMBr:Clean;ORMBrBlob:Clean"/>
+        <CallTarget Targets="Exemplo_ORMBr:Clean;ORMBrBlob:Clean;ORMBrDBExpress:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Exemplo_ORMBr:Make;ORMBrBlob:Make"/>
+        <CallTarget Targets="Exemplo_ORMBr:Make;ORMBrBlob:Make;ORMBrDBExpress:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

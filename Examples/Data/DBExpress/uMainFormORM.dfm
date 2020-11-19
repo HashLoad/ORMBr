@@ -234,15 +234,8 @@ object Form3: TForm3
     DriverName = 'Sqlite'
     LoginPrompt = False
     Params.Strings = (
-      'DriverUnit=Data.DbxSqlite'
-      
-        'DriverPackageLoader=TDBXSqliteDriverLoader,DBXSqliteDriver240.bp' +
-        'l'
-      
-        'MetaDataPackageLoader=TDBXSqliteMetaDataCommandFactory,DbxSqlite' +
-        'Driver240.bpl'
-      'FailIfMissing=True'
-      'Database=..\Database\database.db3')
+      'DriverName=Sqlite'
+      'Database=..\Database\Database.db3')
     Left = 164
     Top = 48
   end

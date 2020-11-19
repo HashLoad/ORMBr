@@ -15,3 +15,8 @@ Source/DBEBr/Core/
 Source/DBEBr/Drivers/
 *.identcache
 Examples/Data/Blob/Exemplo_ORMBr.exe
+Examples/Data/ORMBrDataExamples.groupproj.local
+Examples/Data/Blob Sem DataSet/ORMBrBlob.exe
+*.stat
+Examples/Data/DBExpress/ORMBrDBExpress.dproj.local
+Examples/Data/DBExpress/ORMBrDBExpress.exe
