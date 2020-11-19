@@ -20,3 +20,5 @@ Examples/Data/Blob Sem DataSet/ORMBrBlob.exe
 *.stat
 Examples/Data/DBExpress/ORMBrDBExpress.dproj.local
 Examples/Data/DBExpress/ORMBrDBExpress.exe
+Examples/Data/ADO/ORMBrADO.dproj.local
+Examples/Data/ADO/ORMBrADO.exe
