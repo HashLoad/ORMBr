@@ -55,7 +55,7 @@ uses
   ormbr.dataset.adapter,
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
-  ormbr.mapping.classes,
+  dbcbr.mapping.classes,
   dbebr.factory.interfaces;
 
 type
@@ -103,11 +103,11 @@ implementation
 
 uses
   ormbr.bind,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
   ormbr.dataset.fields,
-  ormbr.mapping.explorer,
-  ormbr.core.consts;
+  dbcbr.rtti.helper,
+  dbcbr.objects.helper,
+  dbcbr.mapping.explorer,
+  dbcbr.core.consts;
 
 { TFDMemTableAdapter<M> }
 

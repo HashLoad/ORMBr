@@ -34,9 +34,9 @@ uses
   Rtti,
   Generics.Collections,
   /// ormbr
+  ormbr.dml.commands,
   dbebr.factory.interfaces,
-  ormbr.mapping.classes,
-  ormbr.dml.commands;
+  dbcbr.mapping.classes;
 
 type
   /// <summary>

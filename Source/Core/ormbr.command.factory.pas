@@ -33,13 +33,13 @@ uses
   DB,
   Rtti,
   Generics.Collections,
-  dbebr.factory.interfaces,
-  ormbr.mapping.classes,
   ormbr.command.selecter,
   ormbr.command.inserter,
   ormbr.command.deleter,
   ormbr.command.updater,
-  ormbr.types.mapping;
+  dbebr.factory.interfaces,
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping;
 
 type
   TDMLCommandFactoryAbstract = class abstract
@@ -118,8 +118,8 @@ type
 implementation
 
 uses
-  ormbr.objects.helper,
-  ormbr.rtti.helper;
+  dbcbr.objects.helper,
+  dbcbr.rtti.helper;
 
 { TDMLCommandFactory }
 

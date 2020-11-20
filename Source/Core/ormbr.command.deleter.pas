@@ -35,7 +35,7 @@ uses
   SysUtils,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
-  ormbr.rtti.helper;
+  dbcbr.rtti.helper;
 
 type
   TCommandDeleter = class(TDMLCommandAbstract)
@@ -48,10 +48,10 @@ type
 implementation
 
 uses
-  ormbr.objects.helper,
-  ormbr.core.consts,
-  ormbr.mapping.classes,
-  ormbr.mapping.explorer;
+  dbcbr.objects.helper,
+  dbcbr.core.consts,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer;
 
 { TCommandDeleter }
 

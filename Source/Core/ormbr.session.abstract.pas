@@ -38,11 +38,11 @@ uses
   SysUtils,
   Generics.Collections,
   /// ORMBr
-  ormbr.core.consts,
-  ormbr.rtti.helper,
-  ormbr.types.blob,
-  ormbr.mapping.attributes,
-  ormbr.objects.manager.abstract;
+  ormbr.objects.manager.abstract,
+  dbcbr.core.consts,
+  dbcbr.rtti.helper,
+  dbcbr.types.blob,
+  dbcbr.mapping.attributes;
 
 type
   // M - Sessão Abstract
@@ -123,9 +123,9 @@ type
 implementation
 
 uses
-  ormbr.objects.helper,
-  ormbr.mapping.explorer,
-  ormbr.mapping.classes;
+  dbcbr.objects.helper,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.classes;
 
 { TSessionAbstract<M> }
 

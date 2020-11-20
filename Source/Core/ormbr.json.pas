@@ -41,12 +41,12 @@ uses
   TypInfo,
   Generics.Collections,
   /// ormbr
-  ormbr.mapping.attributes,
-  ormbr.core.consts,
-  ormbr.types.blob,
-  ormbr.utils,
-  ormbr.rtti.helper,
-  ormbr.objects.helper;
+  dbcbr.mapping.attributes,
+  dbcbr.core.consts,
+  dbcbr.types.blob,
+  dbcbr.utils,
+  dbcbr.rtti.helper,
+  dbcbr.objects.helper;
 
 type
   TORMBrJsonOption = (joIgnoreEmptyStrings,

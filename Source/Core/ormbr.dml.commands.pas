@@ -30,7 +30,7 @@ unit ormbr.dml.commands;
 interface
 
 uses
-  ormbr.mapping.classes;
+  dbcbr.mapping.classes;
 
 type
   TDMLCommandAutoInc = class

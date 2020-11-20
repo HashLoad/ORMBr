@@ -40,14 +40,14 @@ uses
   Variants,
   Generics.Collections,
   /// orm
-  ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils,
-  ormbr.mapping.exceptions,
   dbebr.factory.interfaces,
-  ormbr.mapping.classes,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
-  ormbr.types.nullable;
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.rttiutils,
+  dbcbr.mapping.exceptions,
+  dbcbr.mapping.classes,
+  dbcbr.rtti.helper,
+  dbcbr.objects.helper,
+  dbcbr.types.nullable;
 
 type
   IBind = interface
@@ -133,10 +133,10 @@ implementation
 uses
   ormbr.dataset.fields,
   ormbr.dataset.consts,
-  ormbr.core.consts,
-  ormbr.types.mapping,
-  ormbr.mapping.explorer,
-  ormbr.types.blob;
+  dbcbr.core.consts,
+  dbcbr.types.mapping,
+  dbcbr.mapping.explorer,
+  dbcbr.types.blob;
 
 { TBind }
 

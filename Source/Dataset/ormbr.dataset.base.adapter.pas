@@ -44,9 +44,9 @@ uses
   /// orm
   ormbr.dataset.events,
   ormbr.dataset.abstract,
-  ormbr.mapping.classes,
   ormbr.session.abstract,
-  ormbr.mapping.explorerstrategy;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorerstrategy;
 
 type
   // M - Object M
@@ -158,14 +158,14 @@ implementation
 
 uses
   ormbr.bind,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
-  ormbr.mapping.rttiutils,
   ormbr.dataset.fields,
   ormbr.dataset.consts,
-  ormbr.mapping.explorer,
-  ormbr.mapping.attributes,
-  ormbr.types.mapping;
+  dbcbr.rtti.helper,
+  dbcbr.objects.helper,
+  dbcbr.mapping.rttiutils,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.attributes,
+  dbcbr.types.mapping;
 
 { TDataSetBaseAdapter<M> }
 
