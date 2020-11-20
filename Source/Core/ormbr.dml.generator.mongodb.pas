@@ -7,7 +7,7 @@ uses
   Classes,
   Generics.Collections,
   ormbr.dml.generator.nosql,
-  ormbr.mapping.classes,
+  dbcbr.mapping.classes,
   dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands;

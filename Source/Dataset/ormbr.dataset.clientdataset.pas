@@ -45,7 +45,7 @@ uses
   ormbr.dataset.adapter,
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
-  ormbr.mapping.classes,
+  dbcbr.mapping.classes,
   dbebr.factory.interfaces;
 
 type
@@ -91,11 +91,11 @@ implementation
 
 uses
   ormbr.bind,
-  ormbr.core.consts,
-  ormbr.objects.helper,
-  ormbr.rtti.helper,
   ormbr.dataset.fields,
-  ormbr.mapping.explorer;
+  dbcbr.core.consts,
+  dbcbr.objects.helper,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.explorer;
 
 { TClientDataSetAdapter<M> }
 

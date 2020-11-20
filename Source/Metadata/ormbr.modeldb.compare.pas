@@ -31,10 +31,10 @@ interface
 
 uses
   SysUtils,
-  dbebr.factory.interfaces,
-  ormbr.metadata.db.factory,
   ormbr.metadata.classe.factory,
-  ormbr.database.factory;
+  dbebr.factory.interfaces,
+  dbcbr.metadata.db.factory,
+  dbcbr.database.factory;
 
 type
   TModelDbCompare = class(TDatabaseFactory)
@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  ormbr.ddl.commands;
+  dbcbr.ddl.commands;
 
 { TModelDbCompare }
 

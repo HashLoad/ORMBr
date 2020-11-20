@@ -35,12 +35,12 @@ uses
   SysUtils,
   Variants,
   ormbr.dml.generator,
-  ormbr.mapping.classes,
-  ormbr.mapping.explorer,
-  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
-  ormbr.criteria;
+  ormbr.criteria,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer,
+  dbebr.factory.interfaces;
 
 type
   /// <summary>

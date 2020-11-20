@@ -39,9 +39,9 @@ uses
   /// ORMBr
   ormbr.objectset.base.adapter,
   dbebr.factory.interfaces,
-  ormbr.mapping.classes,
-  ormbr.types.mapping,
-  ormbr.objects.helper;
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping,
+  dbcbr.objects.helper;
 
 type
   /// <summary>
@@ -68,8 +68,8 @@ implementation
 
 uses
   ormbr.session.objectset,
-  ormbr.mapping.explorer,
-  ormbr.core.consts;
+  dbcbr.mapping.explorer,
+  dbcbr.core.consts;
 
 { TObjectSetAdapter<M> }
 

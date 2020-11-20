@@ -10,10 +10,10 @@ uses
   Variants,
   StrUtils,
   Generics.Collections,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
+  dbcbr.rtti.helper,
+  dbcbr.objects.helper,
+  dbcbr.mapping.classes,
   ormbr.dml.generator,
-  ormbr.mapping.classes,
   ormbr.rest.json,
   ormbr.dml.commands;
 
@@ -51,8 +51,8 @@ type
 implementation
 
 uses
-  ormbr.mapping.explorer,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.attributes;
 
 { TDMLGeneratorNoSQL }
 
