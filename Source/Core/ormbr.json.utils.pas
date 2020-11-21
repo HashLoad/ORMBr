@@ -39,7 +39,7 @@ uses
   DBXJSON,
   {$ENDIF}
   Generics.Collections,
-  ormbr.rest.json;
+  ormbr.json.rest;
 
 type
   TORMBrJSONUtil = class

@@ -156,7 +156,6 @@ begin
       // Compressão dos dados
       CompressStream(LSourceStream, LTargetStream);
       // Gera cadeia de Bytes
-//      FBase64Bytes := StreamToByteArray(LSourceStream);
       FBase64Bytes := StreamToByteArray(LTargetStream);
       // Codifica os Bytes em string
       FBase64String := ToBytesString;
@@ -173,7 +172,7 @@ begin
   begin
     AStream.Position := 0;
     SetLength(Result, AStream.Size);
-    AStream.Read(pointer(Result)^, AStream.Size);
+    AStream.Read(Pointer(Result)^, AStream.Size);
   end
   else
     SetLength(Result, 0);
@@ -198,12 +197,10 @@ begin
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
     DecompressStream(LSourceStream, LTargetStream);
-    if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
+    if not FindGraphicClass(LTargetStream.Memory^, LTargetStream.Size, LGraphicClass) then
       raise EInvalidGraphic.Create('Invalid image');
 
     LGraphic := LGraphicClass.Create;
-//    LSourceStream.Position := 0;
-//    LGraphic.LoadFromStream(LSourceStream);
     LTargetStream.Position := 0;
     LGraphic.LoadFromStream(LTargetStream);
 
@@ -299,7 +296,6 @@ begin
     // Compressão dos dados
     CompressStream(LSourceStream, LTargetStream);
     // Gera cadeia de Bytes
-//    FBase64Bytes := StreamToByteArray(LSourceStream);
     FBase64Bytes := StreamToByteArray(LTargetStream);
     // Codifica os Bytes em string
     FBase64String := ToBytesString;
@@ -324,8 +320,7 @@ begin
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
     DecompressStream(LSourceStream, LTargetStream);
-//    LSourceStream.Position := 0;
-//    ABitmap.LoadFromStream(LSourceStream);
+    //
     LTargetStream.Position := 0;
     ABitmap.LoadFromStream(LTargetStream);
   finally
@@ -351,11 +346,17 @@ begin
   end;
 end;
 
+/// <summary>
+///   clNone    - Não especifica nenhuma compressão; os dados são meramente copiados para o fluxo de saída.
+///   clFastest - Especifica a compressão mais rápida, resultando em um arquivo maior.
+///   clDefault - Compromisso entre velocidade e quantidade de compressão.
+///   clMax     - Especifica a compressão máxima, resultando em um tempo maior para realizar a operação.
+/// </summary>
 procedure TBlob.CompressStream(ASource, ATarget: TStream);
 var
   LStream: TCompressionStream;
 begin
-  LStream := TCompressionStream.Create(clFastest, ATarget);
+  LStream := TCompressionStream.Create(clDefault, ATarget);
   try
     LStream.CopyFrom(ASource, ASource.Size);
     LStream.CompressionRate;
@@ -370,6 +371,8 @@ var
   LRead: Integer;
   LBuffer: Array [0..1023] of Char;
 begin
+  ASource.Seek(0, soFromBeginning);
+  ATarget.Seek(0, soFromBeginning);
   LStream := TDecompressionStream.Create(ASource);
   try
     repeat
