@@ -40,13 +40,13 @@ uses
   Variants,
   Generics.Collections,
   /// ormbr
-  ormbr.types.mapping,
-  ormbr.mapping.classes,
   ormbr.command.factory,
-  dbebr.factory.interfaces,
-  ormbr.mapping.explorer,
   ormbr.objects.manager.abstract,
-  ormbr.mapping.explorerstrategy;
+  dbcbr.types.mapping,
+  dbcbr.mapping.classes,
+  dbebr.factory.interfaces,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.explorerstrategy;
 
 type
   TObjectManager<M: class, constructor> = class sealed(TObjectManagerAbstract<M>)
@@ -124,8 +124,8 @@ implementation
 
 uses
   ormbr.bind,
-  ormbr.objects.helper,
   ormbr.session.abstract,
+  ormbr.objects.helper,
   ormbr.rtti.helper;
 
 { TObjectManager<M> }

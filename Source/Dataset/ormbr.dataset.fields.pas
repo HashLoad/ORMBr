@@ -32,8 +32,7 @@ interface
 uses
   DB,
   Classes,
-  SysUtils,
-  ormbr.mapping.rttiutils;
+  SysUtils;
 
 const
   cInternalField = 'InternalField';

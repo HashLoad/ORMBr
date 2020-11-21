@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  ormbr.rtti.helper;
+  dbcbr.rtti.helper;
 
 { TLazy<T> }
 

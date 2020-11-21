@@ -40,9 +40,9 @@ uses
   Generics.Collections,
   ormbr.core.consts,
   ormbr.rtti.helper,
-  ormbr.mapping.explorer,
-  ormbr.mapping.classes,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.attributes;
 
 type
   TORMBrObject = class

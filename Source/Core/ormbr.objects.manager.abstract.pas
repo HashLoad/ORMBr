@@ -35,9 +35,9 @@ uses
   Rtti,
   Generics.Collections,
   /// ormbr
-  ormbr.mapping.classes,
   dbebr.factory.interfaces,
-  ormbr.mapping.explorerstrategy;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorerstrategy;
 
 type
   TObjectManagerAbstract<M: class, constructor> = class abstract

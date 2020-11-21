@@ -1,13 +1,20 @@
 # Add any directories, files, or patterns you don't want to be tracked by version control
 *.dcu
 *.bpl
+*.map
+*.tvsconfig
+*.txaPackage
+*.local
 __history/
 __recovery/
+Examples/
+Examples/Data/
+Examples/JSON/
 Win32/
-Projects/ORMBr Dependencies/ORMBrDependencies.dproj.local
 Source/CQLBr/cqlbr.inc
 Source/CQLBr/Core/
 Source/CQLBr/Drivers/
+Source/DBEBr/dbcbr.inc
 Source/DBCBr/Core/
 Source/DBCBr/Drivers/
 Source/DBEBr/dbebr.inc

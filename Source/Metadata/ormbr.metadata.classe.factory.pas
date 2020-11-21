@@ -32,11 +32,11 @@ interface
 uses
   SysUtils,
   Rtti,
-  ormbr.metadata.model,
   dbebr.factory.interfaces,
-  ormbr.metadata.extract,
-  ormbr.database.mapping,
-  ormbr.database.abstract;
+  dbcbr.metadata.model,
+  dbcbr.metadata.extract,
+  dbcbr.database.mapping,
+  dbcbr.database.abstract;
 
 type
   TMetadataClasseAbstract = class abstract

@@ -38,12 +38,12 @@ uses
   SysUtils,
   Generics.Collections,
   /// orm
-  ormbr.mapping.classes,
-  ormbr.mapping.explorerstrategy,
   ormbr.objects.manager,
   ormbr.objects.manager.abstract,
   ormbr.session.abstract,
   ormbr.dataset.base.adapter,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorerstrategy,
   dbebr.factory.interfaces;
 
 type

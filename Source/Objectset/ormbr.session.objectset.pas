@@ -40,8 +40,8 @@ uses
   /// ORMBr
   ormbr.bind,
   ormbr.objects.manager,
-  ormbr.mapping.explorerstrategy,
   ormbr.session.abstract,
+  dbcbr.mapping.explorerstrategy,
   dbebr.factory.interfaces;
 
 type

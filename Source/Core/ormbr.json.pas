@@ -41,7 +41,7 @@ uses
   TypInfo,
   Generics.Collections,
   /// ormbr
-  ormbr.mapping.attributes,
+  dbcbr.mapping.attributes,
   ormbr.core.consts,
   ormbr.types.blob,
   ormbr.utils,

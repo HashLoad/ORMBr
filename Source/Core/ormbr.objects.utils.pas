@@ -25,7 +25,7 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-unit ormbr.mapping.rttiutils;
+unit ormbr.objects.utils;
 
 interface
 
@@ -41,9 +41,9 @@ uses
   Variants,
   Generics.Collections,
   /// orm
-  ormbr.mapping.attributes,
-  ormbr.mapping.classes,
-  ormbr.types.mapping;
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping;
 
 type
   IRttiSingleton = interface
@@ -78,8 +78,8 @@ type
 implementation
 
 uses
-  ormbr.mapping.explorer,
-  ormbr.rtti.helper,
+  dbcbr.mapping.explorer,
+  dbcbr.rtti.helper,
   ormbr.objects.helper;
 
 { TRttiSingleton }

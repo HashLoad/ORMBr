@@ -40,16 +40,15 @@ uses
   TypInfo,
   Generics.Collections,
   /// ORMBr
+  ormbr.command.abstract,
   ormbr.utils,
   ormbr.core.consts,
-  ormbr.rtti.helper,
-  ormbr.mapping.classes,
-  ormbr.mapping.attributes,
-  ormbr.command.abstract,
-  dbebr.factory.interfaces,
   ormbr.types.blob,
-  ormbr.objects.helper,
-  ormbr.mapping.explorer;
+  dbebr.factory.interfaces,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.explorer;
 
 type
   TCommandUpdater = class(TDMLCommandAbstract)
@@ -64,6 +63,9 @@ type
   end;
 
 implementation
+
+uses
+  ormbr.objects.helper;
 
 { TCommandUpdater }
 

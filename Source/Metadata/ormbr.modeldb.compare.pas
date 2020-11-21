@@ -31,10 +31,10 @@ interface
 
 uses
   SysUtils,
-  dbebr.factory.interfaces,
-  ormbr.metadata.db.factory,
   ormbr.metadata.classe.factory,
-  ormbr.database.factory;
+  dbebr.factory.interfaces,
+  dbcbr.metadata.db.factory,
+  dbcbr.database.factory;
 
 type
   TModelDbCompare = class(TDatabaseFactory)
@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  ormbr.ddl.commands;
+  dbcbr.ddl.commands;
 
 { TModelDbCompare }
 
@@ -65,14 +65,10 @@ begin
 
   inherited Create(AConnTarget.GetDriverName);
   FModelForDatabase := True;
-  /// <summary>
-  /// Metadata do Model
-  /// </summary>
+  // Metadata do Model
   FMetadataMaster := TMetadataClasseFactory.Create(Self);
   FMetadataMaster.ModelMetadata.Connection := AConnTarget;
-  /// <summary>
-  /// Metadata do Database
-  /// </summary>
+  // Metadata do Database
   FMetadataTarget := TMetadataDBFactory.Create(Self, FConnMaster);
 end;
 
@@ -115,13 +111,9 @@ end;
 procedure TModelDbCompare.ExtractDatabase;
 begin
   inherited;
-  /// <summary>
-  /// Extrai todo metadata com base nos modelos existentes
-  /// </summary>
+  // Extrai todo metadata com base nos modelos existentes
   FMetadataMaster.ExtractMetadata(FCatalogMaster);
-  /// <summary>
-  /// Extrai todo metadata com base banco de dados acessado
-  /// </summary>
+  // Extrai todo metadata com base banco de dados acessado
   FMetadataTarget.ExtractMetadata(FCatalogTarget);
 end;
 

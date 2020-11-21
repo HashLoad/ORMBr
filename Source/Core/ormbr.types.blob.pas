@@ -144,24 +144,25 @@ end;
 procedure TBlob.BuildBlobFieldToStream;
 var
   LSourceStream: TMemoryStream;
-//  LTargetStream: TMemoryStream;
+  LTargetStream: TMemoryStream;
 begin
   if Assigned(FBlobField) then
   begin
     LSourceStream := TMemoryStream.Create;
-//    LTargetStream := TMemoryStream.Create;
+    LTargetStream := TMemoryStream.Create;
     try
       TBlobField(FBlobField).SaveToStream(LSourceStream);
       LSourceStream.Position := 0;
       // Compressão dos dados
-//      CompressStream(LSourceStream, LTargetStream);
+      CompressStream(LSourceStream, LTargetStream);
       // Gera cadeia de Bytes
-      FBase64Bytes := StreamToByteArray(LSourceStream);
+//      FBase64Bytes := StreamToByteArray(LSourceStream);
+      FBase64Bytes := StreamToByteArray(LTargetStream);
       // Codifica os Bytes em string
       FBase64String := ToBytesString;
     finally
       LSourceStream.Free;
-//      LTargetStream.Free;
+      LTargetStream.Free;
     end;
   end;
 end;
@@ -183,12 +184,12 @@ procedure TBlob.ToPicture(APicture: TPicture);
 var
   LGraphic: TGraphic;
   LSourceStream: TMemoryStream;
-//  LTargetStream: TMemoryStream;
+  LTargetStream: TMemoryStream;
   LGraphicClass: TGraphicClass;
 begin
   LGraphic := nil;
   LSourceStream := TMemoryStream.Create;
-//  LTargetStream := TMemoryStream.Create;
+  LTargetStream := TMemoryStream.Create;
   try
     if Length(FBase64Bytes) = 0 then
     begin
@@ -196,17 +197,20 @@ begin
       Exit;
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
-//    DecompressStream(LSourceStream, LTargetStream);
+    DecompressStream(LSourceStream, LTargetStream);
     if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
       raise EInvalidGraphic.Create('Invalid image');
 
     LGraphic := LGraphicClass.Create;
-    LSourceStream.Position := 0;
-    LGraphic.LoadFromStream(LSourceStream);
+//    LSourceStream.Position := 0;
+//    LGraphic.LoadFromStream(LSourceStream);
+    LTargetStream.Position := 0;
+    LGraphic.LoadFromStream(LTargetStream);
+
     APicture.Assign(LGraphic);
   finally
     LSourceStream.Free;
-//    LTargetStream.Free;
+    LTargetStream.Free;
     LGraphic.Free;
   end;
 end;
@@ -285,27 +289,33 @@ end;
 procedure TBlob.LoadFromFile(const AFileName: string);
 var
   LSourceStream: TMemoryStream;
+  LTargetStream: TMemoryStream;
 begin
   LSourceStream := TMemoryStream.Create;
+  LTargetStream := TMemoryStream.Create;
   try
     LSourceStream.LoadFromFile(AFileName);
     LSourceStream.Position := 0;
     // Compressão dos dados
-//    CompressStream(LSourceStream, LTargetStream);
+    CompressStream(LSourceStream, LTargetStream);
     // Gera cadeia de Bytes
-    FBase64Bytes := StreamToByteArray(LSourceStream);
+//    FBase64Bytes := StreamToByteArray(LSourceStream);
+    FBase64Bytes := StreamToByteArray(LTargetStream);
     // Codifica os Bytes em string
     FBase64String := ToBytesString;
   finally
     LSourceStream.Free;
+    LTargetStream.Free;
   end;
 end;
 
 procedure TBlob.ToBitmap(ABitmap: TBitmap);
 var
   LSourceStream: TMemoryStream;
+  LTargetStream: TMemoryStream;
 begin
   LSourceStream := TMemoryStream.Create;
+  LTargetStream := TMemoryStream.Create;
   try
     if Length(FBase64Bytes) = 0 then
     begin
@@ -313,10 +323,14 @@ begin
       Exit;
     end;
     LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
-    LSourceStream.Position := 0;
-    ABitmap.LoadFromStream(LSourceStream);
+    DecompressStream(LSourceStream, LTargetStream);
+//    LSourceStream.Position := 0;
+//    ABitmap.LoadFromStream(LSourceStream);
+    LTargetStream.Position := 0;
+    ABitmap.LoadFromStream(LTargetStream);
   finally
     LSourceStream.Free;
+    LTargetStream.Free;
   end;
 end;
 

@@ -33,10 +33,10 @@ uses
   SysUtils,
   Rtti,
   DB,
-  ormbr.mapping.classes,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
-  ormbr.mapping.explorer;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer;
 
 type
   TCommandSelecter = class(TDMLCommandAbstract)
