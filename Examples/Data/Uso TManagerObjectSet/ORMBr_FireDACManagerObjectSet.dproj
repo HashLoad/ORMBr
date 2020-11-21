@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{C06AD709-8B65-4BEC-A7D8-269EF65D5035}</ProjectGuid>
-        <MainSource>ORMBr_FireDACManagerObjectSet.dpr</MainSource>
+        <MainSource>ORMBr_FiredacManagerObjectSet.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
@@ -52,7 +52,7 @@
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
         <DCC_ImageBase>00400000</DCC_ImageBase>
-        <SanitizedProjectName>ORMBr_FireDACManagerObjectSet</SanitizedProjectName>
+        <SanitizedProjectName>ORMBr_FiredacManagerObjectSet</SanitizedProjectName>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
@@ -129,7 +129,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">ORMBr_FireDACManagerObjectSet.dpr</Source>
+                    <Source Name="MainSource">ORMBr_FiredacManagerObjectSet.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k260.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
@@ -142,9 +142,9 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="ORMBr_FireDACManagerObjectSet.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="ORMBr_FiredacManagerObjectSet.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>ORMBr_FireDACManagerObjectSet.exe</RemoteName>
+                        <RemoteName>ORMBr_FiredacManagerObjectSet.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

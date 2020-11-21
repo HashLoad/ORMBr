@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{8F7E8511-B4EB-4CEB-AF1D-B8892FA95CFF}</ProjectGuid>
-        <MainSource>ORMBr_FireDACCrudSimples.dpr</MainSource>
+        <MainSource>ORMBr_FiredacCrudSimples.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1025</TargetedPlatforms>
@@ -53,7 +53,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
         <DCC_N>false</DCC_N>
-        <SanitizedProjectName>ORMBr_FireDACCrudSimples</SanitizedProjectName>
+        <SanitizedProjectName>ORMBr_FiredacCrudSimples</SanitizedProjectName>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <DCC_S>false</DCC_S>
         <DCC_ImageBase>00400000</DCC_ImageBase>
@@ -132,7 +132,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">ORMBr_FireDACCrudSimples.dpr</Source>
+                    <Source Name="MainSource">ORMBr_FiredacCrudSimples.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\spdGov16_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdGov16_D10T.bpl not found</Excluded_Packages>
@@ -145,9 +145,9 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
-                <DeployFile LocalName="ORMBr_FireDACCrudSimples.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="ORMBr_FiredacCrudSimples.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>ORMBr_FireDACCrudSimples.exe</RemoteName>
+                        <RemoteName>ORMBr_FiredacCrudSimples.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

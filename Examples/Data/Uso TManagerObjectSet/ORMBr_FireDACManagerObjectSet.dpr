@@ -1,4 +1,4 @@
-program ORMBr_FireDACManagerObjectSet;
+program ORMBr_FiredacManagerObjectSet;
 
 uses
   Forms,

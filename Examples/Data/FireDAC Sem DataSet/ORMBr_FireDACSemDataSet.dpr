@@ -1,4 +1,4 @@
-program ORMBr_FireDACSemDataSet;
+program ORMBr_FiredacSemDataSet;
 
 uses
   Forms,

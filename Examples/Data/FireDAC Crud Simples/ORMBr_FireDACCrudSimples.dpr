@@ -1,4 +1,4 @@
-program ORMBr_FireDACCrudSimples;
+program ORMBr_FiredacCrudSimples;
 
 uses
   Forms,
