@@ -34,6 +34,7 @@ uses
   ormbr.model.client,
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
+  ormbr.dml.generator.sqlite,
   ZAbstractConnection,
   ZConnection;
 

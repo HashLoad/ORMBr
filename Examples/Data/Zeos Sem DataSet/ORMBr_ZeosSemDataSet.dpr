@@ -1,4 +1,4 @@
-program ORMBrZeos;
+program ORMBr_ZeosSemDataSet;
 
 uses
   Forms,
