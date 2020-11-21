@@ -7,8 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, System.Generics.Collections,
 
   //ORMBr
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   ormbr.dml.generator.firebird,
   ormbr.ddl.generator.firebird,
   ormbr.metadata.firebird,

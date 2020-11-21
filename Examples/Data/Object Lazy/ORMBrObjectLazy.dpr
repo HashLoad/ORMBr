@@ -1,4 +1,4 @@
-program Exemplo_ORMBr;
+program ORMBrObjectLazy;
 
 uses
   Vcl.Forms,
