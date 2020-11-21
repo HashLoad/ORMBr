@@ -22,17 +22,18 @@ uses
   ExtCtrls,
   MidasLib,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
-  ormbr.factory.sqlite3,
+  dbebr.factory.sqlite3,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
   /// SQLite
+  ormbr.dml.generator.sqlite,
   SQLiteTable3;
 
 type

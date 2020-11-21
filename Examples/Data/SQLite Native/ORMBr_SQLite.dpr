@@ -1,4 +1,4 @@
-program ORMBrSQLite;
+program ORMBr_SQLite;
 
 uses
   Forms,
