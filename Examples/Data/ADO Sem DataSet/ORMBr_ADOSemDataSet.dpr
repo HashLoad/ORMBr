@@ -1,4 +1,4 @@
-program ORMBrADO;
+program ORMBr_ADOSemDataSet;
 
 uses
   Forms,
