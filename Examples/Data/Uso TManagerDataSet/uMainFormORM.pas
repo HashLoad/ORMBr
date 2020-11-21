@@ -27,7 +27,7 @@ uses
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
-  nivel3.model,
+//  nivel3.model,
 
   FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
@@ -144,7 +144,7 @@ begin
   oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
   oManager.AddAdapter<Tmaster>(FDMaster, 3)
           .AddAdapter<Tdetail, Tmaster>(FDDetail)
-          .AddAdapter<TLevel_3, Tdetail>(FDLevel3)
+//          .AddAdapter<TLevel_3, Tdetail>(FDLevel3)
           .AddAdapter<Tclient, Tmaster>(FDClient)
           .AddAdapter<Tlookup>(FDLookup)
           .AddLookupField<Tdetail, Tlookup>('fieldname',
