@@ -42,3 +42,9 @@ Examples/Data/Uso TManagerObjectSet/ORMBr_FireDACManagerObjectSet.exe
 Examples/Data/Varios Niveis de Dados/ORMBr_VariosNiveisDeDados.exe
 Examples/Data/Zeos Sem DataSet/ORMBr_ZeosSemDataSet.exe
 Examples/Data/Zeos/ORMBr_Zeos.exe
+Examples/Data/Blob Sem DataSet/ORMBr_BlobSemDataSet.exe
+Examples/Data/Blob/ORMBr_Blob.exe
+Examples/Data/DBExpress/ORMBr_DBExpress.exe
+Examples/Data/DBExpress Sem DataSet/ORMBr_DBExpressSemDataSet.exe
+Examples/Data/FireDAC Crud Simples/ORMBr_FireDACCrudSimples.exe
+Examples/Data/FireDAC Sem DataSet/ORMBr_FireDACSemDataSet.exe

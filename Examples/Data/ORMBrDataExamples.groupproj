@@ -3,13 +3,13 @@
         <ProjectGuid>{8D8C1B8C-DD5B-4666-8F11-C9B3C8653C30}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj">
+        <Projects Include="FireDAC Crud Simples\ORMBr_FireDACCrudSimples.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj">
+        <Projects Include="FireDAC Sem DataSet\ORMBr_FireDACSemDataSet.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Blob\ORMBrBlob.dproj">
+        <Projects Include="Blob\ORMBr_Blob.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="Blob Sem DataSet\ORMBrBlobSemDataSet.dproj">
@@ -51,7 +51,7 @@
         <Projects Include="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Zeos\ORMBrZeos.dproj">
+        <Projects Include="Zeos\ORMBr_Zeos.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -62,32 +62,32 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="ORMBrFireDACCrudSimples">
-        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj"/>
+    <Target Name="ORMBr_FireDACCrudSimples">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FireDACCrudSimples.dproj"/>
     </Target>
-    <Target Name="ORMBrFireDACCrudSimples:Clean">
-        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj" Targets="Clean"/>
+    <Target Name="ORMBr_FireDACCrudSimples:Clean">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FireDACCrudSimples.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrFireDACCrudSimples:Make">
-        <MSBuild Projects="FireDAC Crud Simples\ORMBrFireDACCrudSimples.dproj" Targets="Make"/>
+    <Target Name="ORMBr_FireDACCrudSimples:Make">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FireDACCrudSimples.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ORMBrFireDACSemDataSet">
-        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj"/>
+    <Target Name="ORMBr_FireDACSemDataSet">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FireDACSemDataSet.dproj"/>
     </Target>
-    <Target Name="ORMBrFireDACSemDataSet:Clean">
-        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj" Targets="Clean"/>
+    <Target Name="ORMBr_FireDACSemDataSet:Clean">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FireDACSemDataSet.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrFireDACSemDataSet:Make">
-        <MSBuild Projects="FireDAC Sem DataSet\ORMBrFireDACSemDataSet.dproj" Targets="Make"/>
+    <Target Name="ORMBr_FireDACSemDataSet:Make">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FireDACSemDataSet.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ORMBrBlob">
-        <MSBuild Projects="Blob\ORMBrBlob.dproj"/>
+    <Target Name="ORMBr_Blob">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj"/>
     </Target>
-    <Target Name="ORMBrBlob:Clean">
-        <MSBuild Projects="Blob\ORMBrBlob.dproj" Targets="Clean"/>
+    <Target Name="ORMBr_Blob:Clean">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrBlob:Make">
-        <MSBuild Projects="Blob\ORMBrBlob.dproj" Targets="Make"/>
+    <Target Name="ORMBr_Blob:Make">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj" Targets="Make"/>
     </Target>
     <Target Name="ORMBrBlobSemDataSet">
         <MSBuild Projects="Blob Sem DataSet\ORMBrBlobSemDataSet.dproj"/>
@@ -206,23 +206,23 @@
     <Target Name="ORMBr_ZeosSemDataSet:Make">
         <MSBuild Projects="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ORMBrZeos">
-        <MSBuild Projects="Zeos\ORMBrZeos.dproj"/>
+    <Target Name="ORMBr_Zeos">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj"/>
     </Target>
-    <Target Name="ORMBrZeos:Clean">
-        <MSBuild Projects="Zeos\ORMBrZeos.dproj" Targets="Clean"/>
+    <Target Name="ORMBr_Zeos:Clean">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ORMBrZeos:Make">
-        <MSBuild Projects="Zeos\ORMBrZeos.dproj" Targets="Make"/>
+    <Target Name="ORMBr_Zeos:Make">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBrFireDACCrudSimples;ORMBrFireDACSemDataSet;ORMBrBlob;ORMBrBlobSemDataSet;ORMBrDBExpress;ORMBrDBExpressSemDataSet;ORMBrIBExpress;ORMBrObjectLazy;ORMBr_QuatroNiveisDeDados;ORMBr_SQLite;ORMBr_SQLiteSemDataSet;ORMBr_FiredacUsandoICriteria;ORMBr_FiredacManagerDataSet;ORMBr_FireDACManagerObjectSet;ORMBr_VariosNiveisDeDados;ORMBr_ZeosSemDataSet;ORMBrZeos"/>
+        <CallTarget Targets="ORMBr_FireDACCrudSimples;ORMBr_FireDACSemDataSet;ORMBr_Blob;ORMBrBlobSemDataSet;ORMBrDBExpress;ORMBrDBExpressSemDataSet;ORMBrIBExpress;ORMBrObjectLazy;ORMBr_QuatroNiveisDeDados;ORMBr_SQLite;ORMBr_SQLiteSemDataSet;ORMBr_FiredacUsandoICriteria;ORMBr_FiredacManagerDataSet;ORMBr_FireDACManagerObjectSet;ORMBr_VariosNiveisDeDados;ORMBr_ZeosSemDataSet;ORMBr_Zeos"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBrFireDACCrudSimples:Clean;ORMBrFireDACSemDataSet:Clean;ORMBrBlob:Clean;ORMBrBlobSemDataSet:Clean;ORMBrDBExpress:Clean;ORMBrDBExpressSemDataSet:Clean;ORMBrIBExpress:Clean;ORMBrObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean;ORMBr_SQLite:Clean;ORMBr_SQLiteSemDataSet:Clean;ORMBr_FiredacUsandoICriteria:Clean;ORMBr_FiredacManagerDataSet:Clean;ORMBr_FireDACManagerObjectSet:Clean;ORMBr_VariosNiveisDeDados:Clean;ORMBr_ZeosSemDataSet:Clean;ORMBrZeos:Clean"/>
+        <CallTarget Targets="ORMBr_FireDACCrudSimples:Clean;ORMBr_FireDACSemDataSet:Clean;ORMBr_Blob:Clean;ORMBrBlobSemDataSet:Clean;ORMBrDBExpress:Clean;ORMBrDBExpressSemDataSet:Clean;ORMBrIBExpress:Clean;ORMBrObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean;ORMBr_SQLite:Clean;ORMBr_SQLiteSemDataSet:Clean;ORMBr_FiredacUsandoICriteria:Clean;ORMBr_FiredacManagerDataSet:Clean;ORMBr_FireDACManagerObjectSet:Clean;ORMBr_VariosNiveisDeDados:Clean;ORMBr_ZeosSemDataSet:Clean;ORMBr_Zeos:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBrFireDACCrudSimples:Make;ORMBrFireDACSemDataSet:Make;ORMBrBlob:Make;ORMBrBlobSemDataSet:Make;ORMBrDBExpress:Make;ORMBrDBExpressSemDataSet:Make;ORMBrIBExpress:Make;ORMBrObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make;ORMBr_SQLite:Make;ORMBr_SQLiteSemDataSet:Make;ORMBr_FiredacUsandoICriteria:Make;ORMBr_FiredacManagerDataSet:Make;ORMBr_FireDACManagerObjectSet:Make;ORMBr_VariosNiveisDeDados:Make;ORMBr_ZeosSemDataSet:Make;ORMBrZeos:Make"/>
+        <CallTarget Targets="ORMBr_FireDACCrudSimples:Make;ORMBr_FireDACSemDataSet:Make;ORMBr_Blob:Make;ORMBrBlobSemDataSet:Make;ORMBrDBExpress:Make;ORMBrDBExpressSemDataSet:Make;ORMBrIBExpress:Make;ORMBrObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make;ORMBr_SQLite:Make;ORMBr_SQLiteSemDataSet:Make;ORMBr_FiredacUsandoICriteria:Make;ORMBr_FiredacManagerDataSet:Make;ORMBr_FireDACManagerObjectSet:Make;ORMBr_VariosNiveisDeDados:Make;ORMBr_ZeosSemDataSet:Make;ORMBr_Zeos:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
