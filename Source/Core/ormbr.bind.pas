@@ -40,7 +40,7 @@ uses
   Variants,
   Generics.Collections,
   /// orm
-  ormbr.mapping.rttiutils,
+  ormbr.objects.utils,
   ormbr.objects.helper,
   ormbr.types.nullable,
   dbcbr.rtti.helper,
@@ -670,9 +670,9 @@ begin
     while not ASource.Eof do
     begin
       ATarget.Append;
-      // Usando Mongo com FireDAC o TField[0] é do tipo TDataSet
-      // (TDataSetField) e esse DataSet, vem com 1 TField do tipo TADTField,
-      // nesse caso o tratamento especial.
+      // Usando Mongo com FireDAC o TField[0] é do tipo TDataSet (TDataSetField)
+      // e esse DataSet, vem com 1 TField do tipo TADTField, nesse caso o
+      // tratamento especial.
       if ASource.Fields[0] is TADTField then
       begin
         for LFor := 0 to TADTField(ASource.Fields[0]).FieldCount -1 do
@@ -890,12 +890,10 @@ begin
       Continue;
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
-    /// <summary>
-    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-    ///   coleção para a outra, dessa forma antes de popular a propriedade da
-    ///   classe, é verificado se o nome dessa propriedade existe na coleção
-    ///   de dados selecionada.
-    /// </summary>
+    // Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    // coleção para a outra, dessa forma antes de popular a propriedade da
+    // classe, é verificado se o nome dessa propriedade existe na coleção
+    // de dados selecionada.
     LField := ADataSet.FieldList.Find(LColumn.ColumnName);
     if LField = nil then
       LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
@@ -917,12 +915,10 @@ begin
   begin
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
-    /// <summary>
-    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-    ///   coleção para a outra, dessa forma antes de popular a propriedade da
-    ///   classe, é verificado se o nome dessa propriedade existe na coleção
-    ///   de dados selecionada.
-    /// </summary>
+    // Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    // coleção para a outra, dessa forma antes de popular a propriedade da
+    // classe, é verificado se o nome dessa propriedade existe na coleção
+    // de dados selecionada.
     if AADTField.Fields.FindField(LColumn.ColumnName) <> nil then
       SetFieldToProperty(AADTField.Fields.FieldByName(LColumn.ColumnName),
                          LColumn, AObject);

@@ -65,14 +65,10 @@ begin
 
   inherited Create(AConnTarget.GetDriverName);
   FModelForDatabase := True;
-  /// <summary>
-  /// Metadata do Model
-  /// </summary>
+  // Metadata do Model
   FMetadataMaster := TMetadataClasseFactory.Create(Self);
   FMetadataMaster.ModelMetadata.Connection := AConnTarget;
-  /// <summary>
-  /// Metadata do Database
-  /// </summary>
+  // Metadata do Database
   FMetadataTarget := TMetadataDBFactory.Create(Self, FConnMaster);
 end;
 
@@ -115,13 +111,9 @@ end;
 procedure TModelDbCompare.ExtractDatabase;
 begin
   inherited;
-  /// <summary>
-  /// Extrai todo metadata com base nos modelos existentes
-  /// </summary>
+  // Extrai todo metadata com base nos modelos existentes
   FMetadataMaster.ExtractMetadata(FCatalogMaster);
-  /// <summary>
-  /// Extrai todo metadata com base banco de dados acessado
-  /// </summary>
+  // Extrai todo metadata com base banco de dados acessado
   FMetadataTarget.ExtractMetadata(FCatalogTarget);
 end;
 

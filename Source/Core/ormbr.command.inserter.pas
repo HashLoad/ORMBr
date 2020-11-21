@@ -42,7 +42,7 @@ uses
   ormbr.core.consts,
   ormbr.types.blob,
   ormbr.objects.helper,
-  ormbr.mapping.rttiutils,
+  ormbr.objects.utils,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.rtti.helper,

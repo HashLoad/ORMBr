@@ -161,7 +161,7 @@ uses
   ormbr.dataset.fields,
   ormbr.dataset.consts,
   ormbr.objects.helper,
-  ormbr.mapping.rttiutils,
+  ormbr.objects.utils,
   ormbr.rtti.helper,
   dbcbr.mapping.explorer,
   dbcbr.mapping.attributes,

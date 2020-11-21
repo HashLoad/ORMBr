@@ -25,7 +25,7 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-unit ormbr.mapping.rttiutils;
+unit ormbr.objects.utils;
 
 interface
 

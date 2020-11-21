@@ -75,28 +75,28 @@ end;
 
 procedure TCommandMonitor.Command(const ASQL: string; AParams: TParams);
 var
-  iFor: Integer;
-  AsValue: string;
+  LFor: Integer;
+  LAsValue: string;
 begin
   MemoSQL.Lines.Add('');
   MemoSQL.Lines.Add(ASQL);
   if AParams <> nil then
   begin
-    for iFor := 0 to AParams.Count -1 do
+    for LFor := 0 to AParams.Count -1 do
     begin
-      if AParams.Items[iFor].Value = Variants.Null then
-        AsValue := 'NULL'
+      if AParams.Items[LFor].Value = Variants.Null then
+        LAsValue := 'NULL'
       else
-      if AParams.Items[iFor].DataType = ftDateTime then
-        AsValue := '"' + DateTimeToStr(AParams.Items[iFor].Value) + '"'
+      if AParams.Items[LFor].DataType = ftDateTime then
+        LAsValue := '"' + DateTimeToStr(AParams.Items[LFor].Value) + '"'
       else
-      if AParams.Items[iFor].DataType = ftDate then
-        AsValue := '"' + DateToStr(AParams.Items[iFor].Value) + '"'
+      if AParams.Items[LFor].DataType = ftDate then
+        LAsValue := '"' + DateToStr(AParams.Items[LFor].Value) + '"'
       else
-        AsValue := '"' + VarToStr(AParams.Items[iFor].Value) + '"';
+        LAsValue := '"' + VarToStr(AParams.Items[LFor].Value) + '"';
 
-      MemoSQL.Lines.Add(AParams.Items[iFor].Name + ' = ' + AsValue + ' (' +
-            GetEnumName(TypeInfo(TFieldType), Ord(AParams.Items[iFor].DataType)) + ')');
+      MemoSQL.Lines.Add(AParams.Items[LFor].Name + ' = ' + LAsValue + ' (' +
+            GetEnumName(TypeInfo(TFieldType), Ord(AParams.Items[LFor].DataType)) + ')');
     end;
   end;
 end;
