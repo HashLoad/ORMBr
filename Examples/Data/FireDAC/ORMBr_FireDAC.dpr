@@ -1,4 +1,4 @@
-program ORMBrFireDAC;
+program ORMBr_FireDAC;
 
 uses
   Forms,

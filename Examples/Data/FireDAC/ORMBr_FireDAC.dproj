@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{F675345B-EE32-4D17-ABE8-39D8F9343CF4}</ProjectGuid>
-        <MainSource>ORMBrFireDAC.dpr</MainSource>
+        <MainSource>ORMBr_FireDAC.dpr</MainSource>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1025</TargetedPlatforms>
@@ -59,7 +59,7 @@
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <DCC_F>false</DCC_F>
-        <SanitizedProjectName>ORMBrFireDAC</SanitizedProjectName>
+        <SanitizedProjectName>ORMBr_FireDAC</SanitizedProjectName>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=;CFBundleName=</VerInfo_Keys>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <DCC_K>false</DCC_K>
@@ -119,7 +119,6 @@
         <DCCReference Include="ormbr.model.detail.pas"/>
         <DCCReference Include="ormbr.model.lookup.pas"/>
         <DCCReference Include="ormbr.model.master.pas"/>
-        <None Include="ModelSupport_ORMBrFireDAC\default.txaPackage"/>
         <None Include="ModelSupport_ORMBrFireDAC\default.txvpck"/>
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\default.txvpck"/>
         <None Include="ModelSupport_ORMBrFireDAC\ORMBrFireDAC\default.txvpck"/>
@@ -209,6 +208,24 @@
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\dml\generator\mysql\default.txvpck"/>
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\dml\generator\mongodb\default.txaPackage"/>
         <None Include="ModelSupport_ORMBrFireDAC\ormbr\dml\generator\nosql\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\uMainFormORM\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\detail\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\master\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\lookup\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\client\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ORMBr_FireDAC\default.txvpck"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\client\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\lookup\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\uMainFormORM\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\master\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ORMBr_FireDAC\default.txaPackage"/>
+        <None Include="ModelSupport_ORMBr_FireDAC\ormbr\model\detail\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -227,7 +244,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">ORMBrFireDAC.dpr</Source>
+                    <Source Name="MainSource">ORMBr_FireDAC.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\spdGov16_D10T.bpl">File c:\program files (x86)\embarcadero\studio\19.0\bin\spdGov16_D10T.bpl not found</Excluded_Packages>
@@ -654,9 +671,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="ORMBrFireDAC.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="ORMBr_FireDAC.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>ORMBrFireDAC.exe</RemoteName>
+                        <RemoteName>ORMBr_FireDAC.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
