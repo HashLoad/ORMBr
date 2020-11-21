@@ -57,6 +57,9 @@
         <Projects Include="Zeos\ORMBr_Zeos.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="ADO\ORMBr_ADO.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -227,14 +230,23 @@
     <Target Name="ORMBr_Zeos:Make">
         <MSBuild Projects="Zeos\ORMBr_Zeos.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ORMBr_ADO">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj"/>
+    </Target>
+    <Target Name="ORMBr_ADO:Clean">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_ADO:Make">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBr_FireDAC;ORMBr_FireDACCrudSimples;ORMBr_FireDACSemDataSet;ORMBr_Blob;ORMBr_BlobSemDataSet;ORMBr_DBExpress;ORMBr_DBExpressSemDataSet;ORMBr_IBExpress;ORMBr_ObjectLazy;ORMBr_QuatroNiveisDeDados;ORMBr_SQLite;ORMBr_SQLiteSemDataSet;ORMBr_FiredacUsandoICriteria;ORMBr_FiredacManagerDataSet;ORMBr_FireDACManagerObjectSet;ORMBr_VariosNiveisDeDados;ORMBr_ZeosSemDataSet;ORMBr_Zeos"/>
+        <CallTarget Targets="ORMBr_FireDAC;ORMBr_FireDACCrudSimples;ORMBr_FireDACSemDataSet;ORMBr_Blob;ORMBr_BlobSemDataSet;ORMBr_DBExpress;ORMBr_DBExpressSemDataSet;ORMBr_IBExpress;ORMBr_ObjectLazy;ORMBr_QuatroNiveisDeDados;ORMBr_SQLite;ORMBr_SQLiteSemDataSet;ORMBr_FiredacUsandoICriteria;ORMBr_FiredacManagerDataSet;ORMBr_FireDACManagerObjectSet;ORMBr_VariosNiveisDeDados;ORMBr_ZeosSemDataSet;ORMBr_Zeos;ORMBr_ADO"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBr_FireDAC:Clean;ORMBr_FireDACCrudSimples:Clean;ORMBr_FireDACSemDataSet:Clean;ORMBr_Blob:Clean;ORMBr_BlobSemDataSet:Clean;ORMBr_DBExpress:Clean;ORMBr_DBExpressSemDataSet:Clean;ORMBr_IBExpress:Clean;ORMBr_ObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean;ORMBr_SQLite:Clean;ORMBr_SQLiteSemDataSet:Clean;ORMBr_FiredacUsandoICriteria:Clean;ORMBr_FiredacManagerDataSet:Clean;ORMBr_FireDACManagerObjectSet:Clean;ORMBr_VariosNiveisDeDados:Clean;ORMBr_ZeosSemDataSet:Clean;ORMBr_Zeos:Clean"/>
+        <CallTarget Targets="ORMBr_FireDAC:Clean;ORMBr_FireDACCrudSimples:Clean;ORMBr_FireDACSemDataSet:Clean;ORMBr_Blob:Clean;ORMBr_BlobSemDataSet:Clean;ORMBr_DBExpress:Clean;ORMBr_DBExpressSemDataSet:Clean;ORMBr_IBExpress:Clean;ORMBr_ObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean;ORMBr_SQLite:Clean;ORMBr_SQLiteSemDataSet:Clean;ORMBr_FiredacUsandoICriteria:Clean;ORMBr_FiredacManagerDataSet:Clean;ORMBr_FireDACManagerObjectSet:Clean;ORMBr_VariosNiveisDeDados:Clean;ORMBr_ZeosSemDataSet:Clean;ORMBr_Zeos:Clean;ORMBr_ADO:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBr_FireDAC:Make;ORMBr_FireDACCrudSimples:Make;ORMBr_FireDACSemDataSet:Make;ORMBr_Blob:Make;ORMBr_BlobSemDataSet:Make;ORMBr_DBExpress:Make;ORMBr_DBExpressSemDataSet:Make;ORMBr_IBExpress:Make;ORMBr_ObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make;ORMBr_SQLite:Make;ORMBr_SQLiteSemDataSet:Make;ORMBr_FiredacUsandoICriteria:Make;ORMBr_FiredacManagerDataSet:Make;ORMBr_FireDACManagerObjectSet:Make;ORMBr_VariosNiveisDeDados:Make;ORMBr_ZeosSemDataSet:Make;ORMBr_Zeos:Make"/>
+        <CallTarget Targets="ORMBr_FireDAC:Make;ORMBr_FireDACCrudSimples:Make;ORMBr_FireDACSemDataSet:Make;ORMBr_Blob:Make;ORMBr_BlobSemDataSet:Make;ORMBr_DBExpress:Make;ORMBr_DBExpressSemDataSet:Make;ORMBr_IBExpress:Make;ORMBr_ObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make;ORMBr_SQLite:Make;ORMBr_SQLiteSemDataSet:Make;ORMBr_FiredacUsandoICriteria:Make;ORMBr_FiredacManagerDataSet:Make;ORMBr_FireDACManagerObjectSet:Make;ORMBr_VariosNiveisDeDados:Make;ORMBr_ZeosSemDataSet:Make;ORMBr_Zeos:Make;ORMBr_ADO:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

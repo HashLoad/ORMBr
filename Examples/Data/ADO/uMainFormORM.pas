@@ -144,7 +144,7 @@ begin
   oClient := TContainerClientDataSet<Tclient>.Create(oConn, CDSClient, oMaster.MasterObject);
 
   /// Lookup lista de registro (DBLookupComboBox)
-//  oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
+  oLookup := TContainerClientDataSet<Tlookup>.Create(oConn, CDSLookup);
 
   /// Campo LookupField pode ser usado em um DBLookupComboBox, ou DBGrid
   oDetail.AddLookupField('fieldname',

@@ -1,4 +1,4 @@
-program ORMBrADO;
+program ORMBr_ADO;
 
 uses
   Forms,
