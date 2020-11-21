@@ -36,3 +36,4 @@ Examples/Data/Blob Sem DataSet/ORMBrBlobSemDataSet.exe
 Examples/Data/Quatro Niveis de Dados/ORMBr_QuatroNiveisDeDados.exe
 Examples/Data/SQLite Native/ORMBr_SQLite.exe
 Examples/Data/SQLite Native Sem DataSet/ORMBr_SQLiteSemDataSet.exe
+Examples/Data/Usando ICriteria/ORMBr_FiredacUsandoICriteria.exe
