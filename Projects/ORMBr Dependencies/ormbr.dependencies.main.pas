@@ -21,22 +21,14 @@ type
     vlDependencies: TValueListEditor;
     btnInstall: TButton;
     mmoLog: TMemo;
-    procedure FormCreate(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
     procedure btnInstallClick(Sender: TObject);
   private
-    FJSONDependencies: TJSONObject;
-
-    function BossFileName: string;
-
     procedure InstallDependencies;
 
-    function GetCQLVersion: String;
+    function GetCQLVersion: string;
     function GetDBCVersion: string;
     function GetDBEVersion: string;
-
-    procedure loadJSONDependencies;
-    procedure loadDependencies;
 
     procedure log(AText: String);
     { Private declarations }
@@ -55,11 +47,6 @@ uses
 
 {$R *.dfm}
 
-function TfrmORMBrDependencies.BossFileName: string;
-begin
-  result := ExtractFilePath(GetModuleName(HInstance)) + 'boss.json';
-end;
-
 procedure TfrmORMBrDependencies.btnExitClick(Sender: TObject);
 begin
   Close;
@@ -74,16 +61,10 @@ end;
 
 destructor TfrmORMBrDependencies.Destroy;
 begin
-  FJSONDependencies.Free;
   inherited;
 end;
 
-procedure TfrmORMBrDependencies.FormCreate(Sender: TObject);
-begin
-  loadDependencies;
-end;
-
-function TfrmORMBrDependencies.GetCQLVersion: String;
+function TfrmORMBrDependencies.GetCQLVersion: string;
 begin
   result := vlDependencies.Values['cqlbr'];
 end;
@@ -109,52 +90,6 @@ begin
     .AddCommand(CommandDBCBr(GetDBCVersion))
     .AddCommand(CommandDBEBr(GetDBEVersion))
     .Execute;
-end;
-
-procedure TfrmORMBrDependencies.loadDependencies;
-var
-  dependencies: TJSONObject;
-  tag: String;
-  repoName: string;
-  i: Integer;
-begin
-  loadJSONDependencies;
-  if not Assigned(FJSONDependencies) then
-    Exit;
-
-  dependencies := FJSONDependencies.GetValue('dependencies') as TJSONObject;
-  vlDependencies.Strings.Clear;
-  for i := 0 to Pred(dependencies.Count) do
-  begin
-    tag := dependencies.Pairs[i].JsonValue.ToString.Replace('"', '');
-    if dependencies.Pairs[i].ToString.Contains('cqlbr') then
-      repoName := 'cqlbr'
-    else
-    if dependencies.Pairs[i].ToString.Contains('dbcbr') then
-      repoName := 'dbcbr'
-    else
-    if dependencies.Pairs[i].ToString.Contains('dbebr') then
-      repoName := 'dbebr';
-
-    vlDependencies.Strings.AddPair(repoName, tag);
-  end;
-end;
-
-procedure TfrmORMBrDependencies.loadJSONDependencies;
-var
-  slf: TStringList;
-begin
-  if FileExists(BossFileName) then
-  begin
-    FreeAndNil(FJSONDependencies);
-    slf := TStringList.Create;
-    try
-      slf.LoadFromFile(BossFileName);
-      FJSONDependencies := TJSONObject.ParseJSONValue(slf.Text) as TJSONObject;
-    finally
-      slf.Free;
-    end;
-  end;
 end;
 
 procedure TfrmORMBrDependencies.log(AText: String);
