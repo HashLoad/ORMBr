@@ -27,6 +27,12 @@
         <Projects Include="IBExpress\ORMBrIBExpress.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Object Lazy\ORMBrObjectLazy.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -107,14 +113,32 @@
     <Target Name="ORMBrIBExpress:Make">
         <MSBuild Projects="IBExpress\ORMBrIBExpress.dproj" Targets="Make"/>
     </Target>
+    <Target Name="ORMBrObjectLazy">
+        <MSBuild Projects="Object Lazy\ORMBrObjectLazy.dproj"/>
+    </Target>
+    <Target Name="ORMBrObjectLazy:Clean">
+        <MSBuild Projects="Object Lazy\ORMBrObjectLazy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrObjectLazy:Make">
+        <MSBuild Projects="Object Lazy\ORMBrObjectLazy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados:Clean">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados:Make">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="ORMBrFireDAC;ORMBrFireDACCrudSimples;ORMBrFireDACSemDataSet;ORMBrBlob;ORMBrBlobSemDataSet;ORMBrDBExpress;ORMBrDBExpressSemDataSet;ORMBrIBExpress"/>
+        <CallTarget Targets="ORMBrFireDAC;ORMBrFireDACCrudSimples;ORMBrFireDACSemDataSet;ORMBrBlob;ORMBrBlobSemDataSet;ORMBrDBExpress;ORMBrDBExpressSemDataSet;ORMBrIBExpress;ORMBrObjectLazy;ORMBr_QuatroNiveisDeDados"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ORMBrFireDAC:Clean;ORMBrFireDACCrudSimples:Clean;ORMBrFireDACSemDataSet:Clean;ORMBrBlob:Clean;ORMBrBlobSemDataSet:Clean;ORMBrDBExpress:Clean;ORMBrDBExpressSemDataSet:Clean;ORMBrIBExpress:Clean"/>
+        <CallTarget Targets="ORMBrFireDAC:Clean;ORMBrFireDACCrudSimples:Clean;ORMBrFireDACSemDataSet:Clean;ORMBrBlob:Clean;ORMBrBlobSemDataSet:Clean;ORMBrDBExpress:Clean;ORMBrDBExpressSemDataSet:Clean;ORMBrIBExpress:Clean;ORMBrObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ORMBrFireDAC:Make;ORMBrFireDACCrudSimples:Make;ORMBrFireDACSemDataSet:Make;ORMBrBlob:Make;ORMBrBlobSemDataSet:Make;ORMBrDBExpress:Make;ORMBrDBExpressSemDataSet:Make;ORMBrIBExpress:Make"/>
+        <CallTarget Targets="ORMBrFireDAC:Make;ORMBrFireDACCrudSimples:Make;ORMBrFireDACSemDataSet:Make;ORMBrBlob:Make;ORMBrBlobSemDataSet:Make;ORMBrDBExpress:Make;ORMBrDBExpressSemDataSet:Make;ORMBrIBExpress:Make;ORMBrObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
