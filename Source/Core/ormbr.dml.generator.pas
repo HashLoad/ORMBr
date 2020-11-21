@@ -46,12 +46,12 @@ uses
   ormbr.criteria,
   ormbr.dml.interfaces,
   ormbr.dml.commands,
+  ormbr.types.blob,
+  ormbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
-  dbcbr.rtti.helper,
-  dbcbr.types.mapping,
-  dbcbr.types.blob;
+  dbcbr.types.mapping;
 
 type
   /// <summary>

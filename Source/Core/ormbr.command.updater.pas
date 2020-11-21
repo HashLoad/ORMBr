@@ -41,14 +41,13 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.command.abstract,
+  ormbr.utils,
+  ormbr.core.consts,
+  ormbr.types.blob,
   dbebr.factory.interfaces,
-  dbcbr.utils,
-  dbcbr.core.consts,
   dbcbr.rtti.helper,
   dbcbr.mapping.classes,
   dbcbr.mapping.attributes,
-  dbcbr.types.blob,
-  dbcbr.objects.helper,
   dbcbr.mapping.explorer;
 
 type
@@ -64,6 +63,9 @@ type
   end;
 
 implementation
+
+uses
+  ormbr.objects.helper;
 
 { TCommandUpdater }
 

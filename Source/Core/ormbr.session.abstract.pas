@@ -39,9 +39,9 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.objects.manager.abstract,
-  dbcbr.core.consts,
-  dbcbr.rtti.helper,
-  dbcbr.types.blob,
+  ormbr.core.consts,
+  ormbr.rtti.helper,
+  ormbr.types.blob,
   dbcbr.mapping.attributes;
 
 type
@@ -123,7 +123,7 @@ type
 implementation
 
 uses
-  dbcbr.objects.helper,
+  ormbr.objects.helper,
   dbcbr.mapping.explorer,
   dbcbr.mapping.classes;
 

@@ -42,11 +42,11 @@ uses
   Generics.Collections,
   /// ormbr
   dbcbr.mapping.attributes,
-  dbcbr.core.consts,
-  dbcbr.types.blob,
-  dbcbr.utils,
-  dbcbr.rtti.helper,
-  dbcbr.objects.helper;
+  ormbr.core.consts,
+  ormbr.types.blob,
+  ormbr.utils,
+  ormbr.rtti.helper,
+  ormbr.objects.helper;
 
 type
   TORMBrJsonOption = (joIgnoreEmptyStrings,

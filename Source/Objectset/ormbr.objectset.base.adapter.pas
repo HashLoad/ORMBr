@@ -41,12 +41,12 @@ uses
   Generics.Collections,
   ormbr.session.abstract,
   ormbr.objectset.abstract,
-  dbcbr.core.consts,
+  ormbr.core.consts,
+  ormbr.rtti.helper,
+  ormbr.types.blob,
+  ormbr.objects.helper,
   dbcbr.mapping.classes,
   dbcbr.types.mapping,
-  dbcbr.rtti.helper,
-  dbcbr.types.blob,
-  dbcbr.objects.helper,
   dbcbr.mapping.explorer;
 
 type

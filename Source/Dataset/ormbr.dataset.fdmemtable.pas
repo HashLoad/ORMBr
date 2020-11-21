@@ -104,10 +104,10 @@ implementation
 uses
   ormbr.bind,
   ormbr.dataset.fields,
-  dbcbr.rtti.helper,
-  dbcbr.objects.helper,
-  dbcbr.mapping.explorer,
-  dbcbr.core.consts;
+  ormbr.rtti.helper,
+  ormbr.objects.helper,
+  ormbr.core.consts,
+  dbcbr.mapping.explorer;
 
 { TFDMemTableAdapter<M> }
 

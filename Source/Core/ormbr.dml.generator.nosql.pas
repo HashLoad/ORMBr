@@ -10,12 +10,12 @@ uses
   Variants,
   StrUtils,
   Generics.Collections,
-  dbcbr.rtti.helper,
-  dbcbr.objects.helper,
-  dbcbr.mapping.classes,
   ormbr.dml.generator,
   ormbr.rest.json,
-  ormbr.dml.commands;
+  ormbr.dml.commands,
+  ormbr.objects.helper,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.classes;
 
 type
   /// <summary>

@@ -38,10 +38,10 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.objectset.base.adapter,
+  ormbr.objects.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
-  dbcbr.types.mapping,
-  dbcbr.objects.helper;
+  dbcbr.types.mapping;
 
 type
   /// <summary>
@@ -68,8 +68,8 @@ implementation
 
 uses
   ormbr.session.objectset,
-  dbcbr.mapping.explorer,
-  dbcbr.core.consts;
+  ormbr.core.consts,
+  dbcbr.mapping.explorer;
 
 { TObjectSetAdapter<M> }
 

@@ -118,8 +118,8 @@ type
 implementation
 
 uses
-  dbcbr.objects.helper,
-  dbcbr.rtti.helper;
+  ormbr.objects.helper,
+  ormbr.rtti.helper;
 
 { TDMLCommandFactory }
 

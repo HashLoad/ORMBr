@@ -39,14 +39,14 @@ uses
   Variants,
   ormbr.command.abstract,
   ormbr.dml.commands,
+  ormbr.core.consts,
+  ormbr.types.blob,
+  ormbr.objects.helper,
+  ormbr.mapping.rttiutils,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
-  dbcbr.core.consts,
   dbcbr.rtti.helper,
-  dbcbr.objects.helper,
-  dbcbr.mapping.rttiutils,
-  dbcbr.mapping.explorer,
-  dbcbr.types.blob;
+  dbcbr.mapping.explorer;
 
 type
   TCommandInserter = class(TDMLCommandAbstract)

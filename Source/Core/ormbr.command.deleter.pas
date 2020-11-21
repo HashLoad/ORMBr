@@ -48,8 +48,8 @@ type
 implementation
 
 uses
-  dbcbr.objects.helper,
-  dbcbr.core.consts,
+  ormbr.objects.helper,
+  ormbr.core.consts,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer;
 

@@ -36,8 +36,8 @@ uses
   /// ormbr
   ormbr.session.dataset,
   ormbr.container.dataset,
-  dbebr.factory.interfaces,
-  ormbr.dataset.clientdataset;
+  ormbr.dataset.clientdataset,
+  dbebr.factory.interfaces;
 
 type
   TContainerClientDataSet<M: class, constructor> = class(TContainerDataSet<M>)

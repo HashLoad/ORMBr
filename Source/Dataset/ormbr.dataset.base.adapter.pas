@@ -160,9 +160,9 @@ uses
   ormbr.bind,
   ormbr.dataset.fields,
   ormbr.dataset.consts,
-  dbcbr.rtti.helper,
-  dbcbr.objects.helper,
-  dbcbr.mapping.rttiutils,
+  ormbr.objects.helper,
+  ormbr.mapping.rttiutils,
+  ormbr.rtti.helper,
   dbcbr.mapping.explorer,
   dbcbr.mapping.attributes,
   dbcbr.types.mapping;

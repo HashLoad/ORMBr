@@ -92,9 +92,9 @@ implementation
 uses
   ormbr.bind,
   ormbr.dataset.fields,
-  dbcbr.core.consts,
-  dbcbr.objects.helper,
-  dbcbr.rtti.helper,
+  ormbr.core.consts,
+  ormbr.objects.helper,
+  ormbr.rtti.helper,
   dbcbr.mapping.explorer;
 
 { TClientDataSetAdapter<M> }
