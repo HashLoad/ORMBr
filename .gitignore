@@ -38,3 +38,4 @@ Examples/Data/SQLite Native/ORMBr_SQLite.exe
 Examples/Data/SQLite Native Sem DataSet/ORMBr_SQLiteSemDataSet.exe
 Examples/Data/Usando ICriteria/ORMBr_FiredacUsandoICriteria.exe
 Examples/Data/Uso TManagerDataSet/ORMBr_FiredacManagerDataSet.exe
+Examples/Data/Uso TManagerObjectSet/ORMBr_FireDACManagerObjectSet.exe

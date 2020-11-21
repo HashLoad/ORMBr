@@ -1,4 +1,4 @@
-program ORMBrFireDAC;
+program ORMBr_FireDACManagerObjectSet;
 
 uses
   Forms,
@@ -7,8 +7,8 @@ uses
   ormbr.model.client in 'ormbr.model.client.pas',
   ormbr.model.detail in 'ormbr.model.detail.pas',
   ormbr.model.lookup in 'ormbr.model.lookup.pas',
-  ormbr.model.master in 'ormbr.model.master.pas',
-  nivel3.model in 'nivel3.model.pas';
+  ormbr.model.master in 'ormbr.model.master.pas';
+//  nivel3.model in 'nivel3.model.pas';
 
 {$R *.res}
 

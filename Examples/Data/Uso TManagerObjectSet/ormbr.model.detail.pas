@@ -13,8 +13,8 @@ uses
   ormbr.types.lazy,
   ormbr.types.nullable,
   ormbr.model.lookup,
-  ormbr.mapping.register,
-  nivel3.model;
+  ormbr.mapping.register;
+//  nivel3.model;
 
 type
   [Entity]
@@ -29,7 +29,7 @@ type
     Flookup_id: Integer;
     Flookup_description: String;
     Fprice: Double;
-    FLevel3: TObjectList<TLevel_3>;
+//    FLevel3: TObjectList<TLevel_3>;
   public
     { Public declarations }
     constructor Create;
@@ -61,9 +61,9 @@ type
     [Dictionary('Preço Unitário','Mensagem de validação','','#,###,##0.00','',taRightJustify)]
     property price: Double read Fprice write Fprice;
 
-    [Association(OneToMany, 'master_id', 'level_3', 'id_master')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
-    property Level3: TObjectList<TLevel_3> read FLevel3 write FLevel3;
+//    [Association(OneToMany, 'master_id', 'level_3', 'id_master')]
+//    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+//    property Level3: TObjectList<TLevel_3> read FLevel3 write FLevel3;
   end;
 
 implementation
@@ -72,12 +72,12 @@ implementation
 
 constructor Tdetail.Create;
 begin
-  FLevel3 := TObjectList<TLevel_3>.Create;
+//  FLevel3 := TObjectList<TLevel_3>.Create;
 end;
 
 destructor Tdetail.Destroy;
 begin
-  FLevel3.Free;
+//  FLevel3.Free;
   inherited;
 end;
 
