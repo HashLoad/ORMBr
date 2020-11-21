@@ -13,7 +13,6 @@ object frmORMBrDependencies: TfrmORMBrDependencies
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel
@@ -114,6 +113,10 @@ object frmORMBrDependencies: TfrmORMBrDependencies
       GradientEndColor = 3417897
       GradientStartColor = 3417897
       ParentFont = False
+      Strings.Strings = (
+        'cqlbr=master'
+        'dbcbr=master'
+        'dbebr=master')
       TabOrder = 0
       TitleCaptions.Strings = (
         'Reposit'#243'rio'
