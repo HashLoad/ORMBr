@@ -493,7 +493,7 @@ begin
         begin
           if AProperty.IsBlob then
           begin
-            LBlob.ToBytesString(AValue);
+            LBlob.ToStringBytes(AValue);
             AProperty.SetValue(AInstance, TValue.From<TBlob>(LBlob));
           end
           else
