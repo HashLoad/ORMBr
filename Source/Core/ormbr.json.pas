@@ -40,7 +40,7 @@ uses
   Variants,
   TypInfo,
   Generics.Collections,
-  /// ormbr
+  // ormbr
   dbcbr.mapping.attributes,
   ormbr.core.consts,
   ormbr.types.blob,
@@ -333,7 +333,7 @@ begin
   AResult := FloatToStr(AValue, FSettingsUS);
 end;
 
-/// <summary> "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss" </summary>
+// "YYYY-MM-DD" "Thh:mm:ss" or "YYYY-MM-DDThh:mm:ss"
 class function TJSONObjectORMBr.DateTimeToJSON(AValue: TDateTime): String;
 begin
   Result := AnsiQuotedStr(TUtilSingleton.GetInstance.DateTimeToIso8601(AValue), '"');
@@ -493,7 +493,7 @@ begin
         begin
           if AProperty.IsBlob then
           begin
-            LBlob.ToBytesString(AValue);
+            LBlob.ToStringBytes(AValue);
             AProperty.SetValue(AInstance, TValue.From<TBlob>(LBlob));
           end
           else

@@ -49,8 +49,15 @@ uses
       AnsiStrings,
     {$IFEND}
   {$ENDIF}
-  ZLib,
-  ormbr.encddecd;
+  // CodeBase64 e DecodeBase64
+  {$IFDEF HAS_NET_ENCODING}
+    System.NetEncoding,
+  {$ELSE IFDEF HAS_SOAP_ENCODING}
+    Soap.EncdDecd,
+  {$ELSE}
+    encddecd,
+  {$IFEND}
+  ZLib;
 
 type
   TBlob = record
@@ -67,19 +74,21 @@ type
     {$ENDIF}
     procedure CompressStream(ASource, ATarget: TStream);
     procedure DecompressStream(ASource, ATarget: TStream);
-    procedure BuildBlobFieldToStream;
+    procedure BuildBlobFieldToStream(const ACompression: Boolean = False);
+    function GetEncodeBase64: String;
+    function GetDecodeBase64(const Value: String): Boolean;
   public
-    procedure SetBlobField(const Value: TBlobField);
+    procedure SetBlobField(const Value: TBlobField; const ACompression: Boolean = False);
     procedure SetBytes(const Value: TBytes);
-    procedure LoadFromFile(const AFileName: string);
+    procedure LoadFromFile(const AFileName: string; const ACompression: Boolean = False);
     procedure SaveToFile(const FileName: string);
     {$IFNDEF HAS_FMX}
-    procedure ToPicture(APicture: TPicture);
+    procedure ToPicture(APicture: TPicture; const ACompression: Boolean = False);
     {$ENDIF}
-    procedure ToBitmap(ABitmap: TBitmap);
+    procedure ToBitmap(ABitmap: TBitmap; const ACompression: Boolean = False);
     function ToBytes: TBytes;
     function ToBytesString: string; overload;
-    function ToBytesString(const AString: string): Boolean; overload;
+    function ToStringBytes(const AString: string): Boolean; overload;
     function ToString: String;
     function ToSize: Integer;
   end;
@@ -91,13 +100,13 @@ const
 
 { TBlob }
 
-procedure TBlob.SetBlobField(const Value: TBlobField);
+procedure TBlob.SetBlobField(const Value: TBlobField; const ACompression: Boolean);
 begin
   if Value.IsBlob then
   begin
     FBlobField := Value;
     // Gera Stream do BlobField e armazena em var interna
-    BuildBlobFieldToStream;
+    BuildBlobFieldToStream(ACompression);
   end
   else
     raise Exception.Create(Format('Column [%s] must have blob value', [Value.FieldName]));
@@ -111,15 +120,8 @@ begin
 end;
 
 function TBlob.ToBytesString: string;
-var
-  LNetEncoding: TBase64Encoding;
 begin
-  LNetEncoding := TBase64Encoding.Create;
-  try
-    Result := LNetEncoding.EncodeBytesToString(FBase64Bytes, Length(FBase64Bytes));
-  finally
-    LNetEncoding.Free;
-  end;
+  Result := GetEncodeBase64;
 end;
 
 function TBlob.ToString: String;
@@ -127,43 +129,37 @@ begin
   Result := FBase64String;
 end;
 
-function TBlob.ToBytesString(const AString: string): Boolean;
-var
-  LNetEncoding: TBase64Encoding;
+function TBlob.ToStringBytes(const AString: string): Boolean;
 begin
-  LNetEncoding := TBase64Encoding.Create;
-  try
-    FBase64Bytes := LNetEncoding.DecodeStringToBytes(AString);
-    FBase64String := AString;
-    Result := True;
-  finally
-    LNetEncoding.Free;
-  end;
+  Result := GetDecodeBase64(AString);
 end;
 
-procedure TBlob.BuildBlobFieldToStream;
+procedure TBlob.BuildBlobFieldToStream(const ACompression: Boolean);
 var
   LSourceStream: TMemoryStream;
   LTargetStream: TMemoryStream;
 begin
-  if Assigned(FBlobField) then
-  begin
-    LSourceStream := TMemoryStream.Create;
-    LTargetStream := TMemoryStream.Create;
-    try
-      TBlobField(FBlobField).SaveToStream(LSourceStream);
-      LSourceStream.Position := 0;
-      // Compressão dos dados
-      CompressStream(LSourceStream, LTargetStream);
-      // Gera cadeia de Bytes
-//      FBase64Bytes := StreamToByteArray(LSourceStream);
-      FBase64Bytes := StreamToByteArray(LTargetStream);
-      // Codifica os Bytes em string
-      FBase64String := ToBytesString;
-    finally
-      LSourceStream.Free;
-      LTargetStream.Free;
-    end;
+  if not Assigned(FBlobField) then
+    Exit;
+  LSourceStream := TMemoryStream.Create;
+  try
+    TBlobField(FBlobField).SaveToStream(LSourceStream);
+    LSourceStream.Position := 0;
+    if ACompression then
+    begin
+      LTargetStream := TMemoryStream.Create;
+      try
+        CompressStream(LSourceStream, LTargetStream);
+        FBase64Bytes := StreamToByteArray(LTargetStream);
+      finally
+        LTargetStream.Free;
+      end;
+    end
+    else
+      FBase64Bytes := StreamToByteArray(LSourceStream);
+    FBase64String := ToBytesString;
+  finally
+    LSourceStream.Free;
   end;
 end;
 
@@ -173,14 +169,14 @@ begin
   begin
     AStream.Position := 0;
     SetLength(Result, AStream.Size);
-    AStream.Read(pointer(Result)^, AStream.Size);
+    AStream.Read(Pointer(Result)^, AStream.Size);
   end
   else
     SetLength(Result, 0);
 end;
 
 {$IFNDEF HAS_FMX}
-procedure TBlob.ToPicture(APicture: TPicture);
+procedure TBlob.ToPicture(APicture: TPicture; const ACompression: Boolean);
 var
   LGraphic: TGraphic;
   LSourceStream: TMemoryStream;
@@ -189,28 +185,38 @@ var
 begin
   LGraphic := nil;
   LSourceStream := TMemoryStream.Create;
-  LTargetStream := TMemoryStream.Create;
   try
     if Length(FBase64Bytes) = 0 then
     begin
       APicture.Assign(nil);
       Exit;
     end;
-    LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
-    DecompressStream(LSourceStream, LTargetStream);
-    if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
-      raise EInvalidGraphic.Create('Invalid image');
-
-    LGraphic := LGraphicClass.Create;
-//    LSourceStream.Position := 0;
-//    LGraphic.LoadFromStream(LSourceStream);
-    LTargetStream.Position := 0;
-    LGraphic.LoadFromStream(LTargetStream);
-
+    LSourceStream.Write(FBase64Bytes, ToSize);
+    if ACompression then
+    begin
+      LTargetStream := TMemoryStream.Create;
+      try
+        DecompressStream(LSourceStream, LTargetStream);
+        if not FindGraphicClass(LTargetStream.Memory^, LTargetStream.Size, LGraphicClass) then
+          raise EInvalidGraphic.Create('Invalid image');
+        LGraphic := LGraphicClass.Create;
+        LTargetStream.Position := 0;
+        LGraphic.LoadFromStream(LTargetStream);
+      finally
+        LTargetStream.Free;
+      end;
+    end
+    else
+    begin
+      if not FindGraphicClass(LSourceStream.Memory^, LSourceStream.Size, LGraphicClass) then
+        raise EInvalidGraphic.Create('Invalid image');
+      LGraphic := LGraphicClass.Create;
+      LSourceStream.Position := 0;
+      LGraphic.LoadFromStream(LSourceStream);
+    end;
     APicture.Assign(LGraphic);
   finally
     LSourceStream.Free;
-    LTargetStream.Free;
     LGraphic.Free;
   end;
 end;
@@ -286,51 +292,65 @@ begin
 end;
 {$ENDIF}
 
-procedure TBlob.LoadFromFile(const AFileName: string);
+procedure TBlob.LoadFromFile(const AFileName: string;
+  const ACompression: Boolean = False);
 var
   LSourceStream: TMemoryStream;
   LTargetStream: TMemoryStream;
 begin
   LSourceStream := TMemoryStream.Create;
-  LTargetStream := TMemoryStream.Create;
   try
     LSourceStream.LoadFromFile(AFileName);
     LSourceStream.Position := 0;
-    // Compressão dos dados
-    CompressStream(LSourceStream, LTargetStream);
-    // Gera cadeia de Bytes
-//    FBase64Bytes := StreamToByteArray(LSourceStream);
-    FBase64Bytes := StreamToByteArray(LTargetStream);
-    // Codifica os Bytes em string
+    if ACompression then
+    begin
+      LTargetStream := TMemoryStream.Create;
+      try
+        CompressStream(LSourceStream, LTargetStream);
+        FBase64Bytes := StreamToByteArray(LTargetStream);
+      finally
+        LTargetStream.Free;
+      end
+    end
+    else
+      FBase64Bytes := StreamToByteArray(LSourceStream);
     FBase64String := ToBytesString;
   finally
     LSourceStream.Free;
-    LTargetStream.Free;
-  end;
+  end
 end;
 
-procedure TBlob.ToBitmap(ABitmap: TBitmap);
+procedure TBlob.ToBitmap(ABitmap: TBitmap; const ACompression: Boolean);
 var
   LSourceStream: TMemoryStream;
   LTargetStream: TMemoryStream;
 begin
   LSourceStream := TMemoryStream.Create;
-  LTargetStream := TMemoryStream.Create;
   try
     if Length(FBase64Bytes) = 0 then
     begin
       ABitmap.Assign(nil);
       Exit;
     end;
-    LSourceStream.Write(FBase64Bytes, Length(FBase64Bytes));
-    DecompressStream(LSourceStream, LTargetStream);
-//    LSourceStream.Position := 0;
-//    ABitmap.LoadFromStream(LSourceStream);
-    LTargetStream.Position := 0;
-    ABitmap.LoadFromStream(LTargetStream);
+    LSourceStream.Write(FBase64Bytes, ToSize);
+    if ACompression then
+    begin
+      LTargetStream := TMemoryStream.Create;
+      try
+        DecompressStream(LSourceStream, LTargetStream);
+        LTargetStream.Position := 0;
+        ABitmap.LoadFromStream(LTargetStream);
+      finally
+        LTargetStream.Free;
+      end;
+    end
+    else
+    begin
+      LSourceStream.Position := 0;
+      ABitmap.LoadFromStream(LSourceStream);
+    end;
   finally
     LSourceStream.Free;
-    LTargetStream.Free;
   end;
 end;
 
@@ -351,11 +371,17 @@ begin
   end;
 end;
 
+/// <summary>
+///   clNone    - Não especifica nenhuma compressão; os dados são meramente copiados para o fluxo de saída.
+///   clFastest - Especifica a compressão mais rápida, resultando em um arquivo maior.
+///   clDefault - Compromisso entre velocidade e quantidade de compressão.
+///   clMax     - Especifica a compressão máxima, resultando em um tempo maior para realizar a operação.
+/// </summary>
 procedure TBlob.CompressStream(ASource, ATarget: TStream);
 var
   LStream: TCompressionStream;
 begin
-  LStream := TCompressionStream.Create(clFastest, ATarget);
+  LStream := TCompressionStream.Create(clDefault, ATarget);
   try
     LStream.CopyFrom(ASource, ASource.Size);
     LStream.CompressionRate;
@@ -370,6 +396,8 @@ var
   LRead: Integer;
   LBuffer: Array [0..1023] of Char;
 begin
+  ASource.Seek(0, soFromBeginning);
+  ATarget.Seek(0, soFromBeginning);
   LStream := TDecompressionStream.Create(ASource);
   try
     repeat
@@ -381,5 +409,64 @@ begin
     LStream.Free;
   end;
 end;
+
+{$IFDEF HAS_NET_ENCODING}
+function TBlob.GetEncodeBase64: String;
+var
+  LNetEncoding: TBase64Encoding;
+begin
+  LNetEncoding := TBase64Encoding.Create;
+  try
+    Result := LNetEncoding.EncodeBytesToString(FBase64Bytes, ToSize);
+  finally
+    LNetEncoding.Free;
+  end;
+end;
+
+function TBlob.GetDecodeBase64(const Value: String): Boolean;
+var
+  LNetEncoding: TBase64Encoding;
+begin
+  Result := False;
+  LNetEncoding := TBase64Encoding.Create;
+  try
+    FBase64Bytes := LNetEncoding.DecodeStringToBytes(Value);
+    FBase64String := Value;
+    Result := True;
+  finally
+    LNetEncoding.Free;
+  end;
+end;
+{$ENDIF}
+
+{$IFDEF HAS_SOAP_ENCODING}
+function TBlob.GetEncodeBase64: String;
+begin
+  Result := EncodeBase64(FBase64Bytes, ToSize);
+end;
+
+function TBlob.GetDecodeBase64(const Value: String): Boolean;
+begin
+  Result := False;
+  FBase64Bytes := DecodeBase64(AString);
+  FBase64String := Value;
+  Result := True;
+end;
+{$ENDIF}
+
+{$IFDEF HAS_ENCDDECD}
+function TBlob.GetEncodeBase64: String;
+begin
+  Result := EncodeBase64(FBase64Bytes, ToSize);
+end;
+
+function TBlob.GetDecodeBase64(const Value: String): Boolean;
+begin
+  Result := False;
+  FBase64Bytes := DecodeBase64(AString);
+  FBase64String := Value;
+  Result := True;
+end;
+{$ENDIF}
 
 end.
