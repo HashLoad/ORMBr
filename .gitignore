@@ -55,3 +55,5 @@ Examples/Data/ADO Sem DataSet/ORMBr_ADOSemDataSet.exe
 Examples/Datasnap/Client/ORMBrFireDAC.exe
 Examples/Datasnap/Client/ORMBrFireDAC.map
 Examples/Datasnap/Server/ORMBrServer.exe
+Examples/JSON/PJson.exe
+Examples/JSON/PJson.rsm

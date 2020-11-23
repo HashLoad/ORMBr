@@ -1,4 +1,4 @@
-{$INCLUDE ..\ormbr.inc}
+{$INCLUDE ..\..\Source\ormbr.inc}
 
 unit uJSON;
 
