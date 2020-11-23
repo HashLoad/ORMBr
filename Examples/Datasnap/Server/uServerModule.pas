@@ -13,8 +13,8 @@ uses
   ormbr.rest.json,
   ormbr.json.utils,
   /// ORMBr Conexão database
-  ormbr.factory.firedac,
-  ormbr.factory.interfaces,
+  dbebr.factory.firedac,
+  dbebr.factory.interfaces,
   /// ORMBr
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,

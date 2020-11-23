@@ -5,8 +5,8 @@ object ORMBr: TORMBr
   Width = 372
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'DriverID=SQLite'
-      'Database=..\..\Data\Database\database.db3')
+      'Database=..\..\Data\Database\database.db3'
+      'DriverID=SQLite')
     LoginPrompt = False
     Left = 156
     Top = 100

@@ -52,3 +52,6 @@ Examples/Data/FireDAC/ORMBr_FireDAC.exe
 Examples/Data/FireDAC/ORMBr_FireDAC.map
 Examples/Data/ADO/ORMBr_ADO.exe
 Examples/Data/ADO Sem DataSet/ORMBr_ADOSemDataSet.exe
+Examples/Datasnap/Client/ORMBrFireDAC.exe
+Examples/Datasnap/Client/ORMBrFireDAC.map
+Examples/Datasnap/Server/ORMBrServer.exe
