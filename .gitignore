@@ -57,3 +57,5 @@ Examples/Datasnap/Client/ORMBrFireDAC.map
 Examples/Datasnap/Server/ORMBrServer.exe
 Examples/JSON/PJson.exe
 Examples/JSON/PJson.rsm
+Examples/NoSQL/MongoDB/FireDAC MongoDB Crud/ORMBrFireDAC.exe
+Examples/Metadata/FireDAC/Firemonkey/ORMBrMetadata.otares
