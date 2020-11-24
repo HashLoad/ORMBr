@@ -34,6 +34,7 @@ type
     procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
+    FJON: String;
   public
     { Public declarations }
   end;
@@ -45,8 +46,6 @@ implementation
 
 uses
   ormbr.model.person,
-  ormbr.rest.json,
-  ormbr.json.utils,
   ormbr.json;
 
 {$R *.dfm}
@@ -73,7 +72,7 @@ begin
     Person.Pessoa.LastName := 'Pinheiro 2';
     Person.Pessoa.Age := 20;
     Person.Pessoa.Salary := 200.20;
-    Person.Imagem.ToBytesString('12345678901234567890');
+    Person.Imagem.ToStringBytes('12345678901234567890');
 
     Person1 := TPersonSub.Create;
     Person1.Id := 3;
@@ -92,7 +91,9 @@ begin
     Person.Pessoas.Add(Person1);
     Person.Pessoas.Add(Person2);
 
-    Memo1.Lines.Text := TORMBrJson.ObjectToJsonString(Person);
+    // Guarda para executar os outros comandos
+    FJON := TORMBrJson.ObjectToJsonString(Person);
+    Memo1.Lines.Text := FJON;
 //    Memo1.Lines.Text := ObjectToJSON(Person);
   finally
     Person.Free;
@@ -104,11 +105,9 @@ procedure TForm4.Button2Click(Sender: TObject);
 var
   Person: TPerson;
 begin
-  Memo1.Clear;
-  Button1Click(Button1);
+  Memo1.Lines.Text := FJON;
 
-
-  Person := TORMbrJson.JSONToObject<TPerson>(Memo1.Lines.Text);
+  Person := TORMbrJson.JSONToObject<TPerson>(FJON);
   Memo1.Lines.Add(' ');
   Memo1.Lines.Add('RECRIADO O OBJECT ATRAVÉS DO JSON ACIMA, MUDADOS ALGUMAS INFORMAÇÕES A GERADO NOVO JSON PARA TESTAR.');
   Memo1.Lines.Add('Person.Salary := 200.20');
@@ -130,10 +129,8 @@ var
  jObject: TJSONObject;
 begin
   Memo1.Clear;
-  Button1Click(Button1);
 
-
-  jObject := TORMBrJSONUtil.JSONStringToJSONObject(Memo1.Text);
+  jObject := TORMBrJSON.JSONStringToJSONObject(FJON);
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONObject **********');
@@ -147,7 +144,9 @@ procedure TForm4.Button4Click(Sender: TObject);
 var
  jArray: TJSONArray;
 begin
-  jArray := TORMBrJSONUtil.JSONStringToJSONArray('[' + Memo1.Text + ']');
+  Memo1.Clear;
+
+  jArray := TORMBrJSON.JSONStringToJSONArray('[' + FJON + ']');
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONArray **********');
