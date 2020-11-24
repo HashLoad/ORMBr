@@ -29,6 +29,7 @@ type
     function GetCQLVersion: string;
     function GetDBCVersion: string;
     function GetDBEVersion: string;
+    function GetJSONVersion: string;
 
     procedure log(AText: String);
     { Private declarations }
@@ -79,6 +80,11 @@ begin
   result := vlDependencies.Values['dbebr'];
 end;
 
+function TfrmORMBrDependencies.GetJSONVersion: string;
+begin
+  result := vlDependencies.Values['jsonbr'];
+end;
+
 procedure TfrmORMBrDependencies.InstallDependencies;
 var
   executor : IORMBrDependenciesExecutor;
@@ -89,6 +95,7 @@ begin
     .AddCommand(CommandCQLBr(GetCQLVersion))
     .AddCommand(CommandDBCBr(GetDBCVersion))
     .AddCommand(CommandDBEBr(GetDBEVersion))
+    .AddCommand(CommandJSONBr(GetJSONVersion))
     .Execute;
 end;
 
