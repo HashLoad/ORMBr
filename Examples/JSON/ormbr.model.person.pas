@@ -10,8 +10,8 @@ uses
   dbcbr.mapping.attributes,
   dbcbr.types.mapping,
   dbcbr.mapping.register,
-  dbcbr.types.nullable,
-  dbcbr.types.blob;
+  ormbr.types.nullable,
+  ormbr.types.blob;
 
 type
   TPersonSub = class
