@@ -49,9 +49,7 @@ uses
   dbcbr.mapping.attributes,
   ormbr.core.consts,
   ormbr.types.blob,
-  ormbr.utils,
   ormbr.rtti.helper,
-  ormbr.objects.helper,
   //
   jsonbr.builders;
 
@@ -113,50 +111,24 @@ class procedure TORMBrJson.DoGetValue(const Sender: TJSONBrObject;
   const AInstance: TObject; const AProperty: TRttiProperty;
   var AResult: Variant; var ABreak: Boolean);
 var
-  LObject: TObject;
   LColumn: Column;
 begin
   // Ao voltar para o método GetValue do JSONBr, executa o comando Exit e sai;
-  ABreak := True;
+  ABreak := False;
   VarClear(AResult);
   try
     case AProperty.PropertyType.TypeKind of
-      tkInt64:
-        AResult := AProperty.GetNullableValue(AInstance).AsInt64;
-      tkInteger, tkSet:
-        AResult := AProperty.GetNullableValue(AInstance).AsInteger;
-      tkUString, tkLString, tkWString, tkString, tkChar, tkWChar:
-        AResult := AProperty.GetNullableValue(AInstance).AsString;
-      tkFloat:
-        if (AProperty.PropertyType.Handle = TypeInfo(TDateTime)) or
-           (AProperty.PropertyType.Handle = TypeInfo(TDate))     or
-           (AProperty.PropertyType.Handle = TypeInfo(TTime))     then
-        begin
-          AResult := TUtilSingleton
-                      .GetInstance
-                        .DateTimeToIso8601(AProperty.GetNullableValue(AInstance).AsExtended);
-        end
-        else
-          AResult := AProperty.GetNullableValue(AInstance).AsCurrency;
-      tkVariant:
-        AResult := AProperty.GetNullableValue(AInstance).AsVariant;
       tkRecord:
         begin
+          ABreak := True;
           if AProperty.IsBlob then
             AResult := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytesString
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;
         end;
-      tkClass:
-        begin
-          LObject := AProperty.GetNullableValue(AInstance).AsObject;
-          if LObject <> nil then
-            TJSONBrVariantData(AResult).Init(FJSONObject.ObjectToJSON(LObject))
-          else
-            AResult := Null;
-        end;
       tkEnumeration:
         begin
+          ABreak := True;
           LColumn := AProperty.GetColumn;
           if LColumn <> nil then
           begin
@@ -172,9 +144,6 @@ begin
               raise Exception.Create(cENUMERATIONSTYPEERROR);
           end;
       end;
-      tkDynArray:;
-//      if IsBlob(PropInfo) then
-//        AResult := BytesToBase64JSONString(GetTByteDynArrayProp(Instance,PropInfo)^);
     end;
   except
     on E: Exception do
@@ -185,41 +154,18 @@ end;
 class procedure TORMBrJson.DoSetValue(const AInstance: TObject;
   const AProperty: TRttiProperty; const AValue: Variant; var ABreak: Boolean);
 var
-  LObject: TObject;
   LBlob: TBlob;
   LColumn: Column;
 begin
   // Ao voltar para o método GetValue do JSONBr, executa o comando Exit e sai;
-  ABreak := True;
+  ABreak := False;
   if (AProperty <> nil) and (AInstance <> nil) then
   begin
     try
       case AProperty.PropertyType.TypeKind of
-        tkString, tkWString, tkUString, tkWChar, tkLString, tkChar:
-          if TVarData(AValue).VType <= varNull then
-            AProperty.SetValue(AInstance, '')
-          else
-            AProperty.SetValue(AInstance, String(AValue));
-        tkInteger, tkSet, tkInt64:
-          AProperty.SetValue(AInstance, Integer(AValue));
-        tkFloat:
-          if TVarData(AValue).VType <= varNull then
-            AProperty.SetValue(AInstance, 0)
-          else
-          if AProperty.PropertyType.Handle = TypeInfo(TDateTime) then
-            AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
-          else
-          if AProperty.PropertyType.Handle = TypeInfo(TDate) then
-            AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
-          else
-          if AProperty.PropertyType.Handle = TypeInfo(TTime) then
-            AProperty.SetValue(AInstance, TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))
-          else
-            AProperty.SetValue(AInstance, Double(AValue));
-        tkVariant:
-          AProperty.SetValue(AInstance, TValue.FromVariant(AValue));
         tkRecord:
           begin
+            ABreak := True;
             if AProperty.IsBlob then
             begin
               LBlob.ToStringBytes(AValue);
@@ -230,14 +176,9 @@ begin
                                          AProperty.PropertyType.Handle,
                                          AValue);
           end;
-        tkClass:
-          begin
-            LObject := AProperty.GetNullableValue(AInstance).AsObject;
-            if LObject <> nil then
-              TJSONBrVariantData(AValue).ToObject(LObject);
-          end;
         tkEnumeration:
           begin
+            ABreak := True;
             LColumn := AProperty.GetColumn;
             if LColumn <> nil then
             begin
@@ -253,7 +194,6 @@ begin
                 raise Exception.Create(cENUMERATIONSTYPEERROR);
             end;
           end;
-        tkDynArray:;
       end;
     except
       on E: Exception do
