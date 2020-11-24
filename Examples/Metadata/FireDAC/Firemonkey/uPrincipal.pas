@@ -13,8 +13,8 @@ uses
   FireDAC.Comp.Client, FireDAC.DApt,
 
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
 
   ormbr.ddl.commands,
 

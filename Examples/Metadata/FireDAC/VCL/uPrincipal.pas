@@ -15,8 +15,8 @@ uses
   FireDAC.Phys.MSSQL, FireDAC.Comp.UI, Data.DB, FireDAC.Comp.Client,
   Vcl.StdCtrls,
   /// orm factory
-  ormbr.factory.interfaces, // TORMBrConnectionFireDAC
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces, // TORMBrConnectionFireDAC
+  dbebr.factory.firedac,
 
   ormbr.database.compare,  // TORMBrDatabaseCompareLink
   ormbr.database.interfaces, // TORMBrDatabaseCompareLink
