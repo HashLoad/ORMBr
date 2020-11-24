@@ -21,3 +21,4 @@ Source/DBEBr/dbebr.inc
 Source/DBEBr/Core/
 Source/DBEBr/Drivers/
 *.identcache
+Source/JSONBr/
