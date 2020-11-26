@@ -83,8 +83,8 @@ begin
       Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
   end;
-  FCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);
-  Result := FCommand;
+  FResultCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);
+  Result := FResultCommand;
 end;
 
 end.

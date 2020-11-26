@@ -44,9 +44,6 @@ uses
     ormbr.objectset.adapter,
     dbebr.factory.interfaces,
   {$ENDIF}
-  {$IFDEF USEBINDSOURCE}
-    ormbr.bind.source.interfaces,
-  {$ENDIF}
   ormbr.objectset.base.adapter;
 
 type
@@ -72,9 +69,6 @@ type
     FCurrentIndex: Integer;
     FSelectedObject: TObject;
     FOwnerNestedList: Boolean;
-    {$IFDEF USEBINDSOURCE}
-    FBindSourceObjectAdapter: IBindSourceObjectAdapter;
-    {$ENDIF}
     function Resolver<T: class, constructor>: TObjectSetBaseAdapter<T>;
     procedure ListChanged<T: class, constructor>(Sender: TObject;
       const Item: T; Action: TCollectionNotification);
@@ -83,12 +77,9 @@ type
   public
     constructor Create(const AConnection: IMOConnection);
     destructor Destroy; override;
-    {$IFDEF USEBINDSOURCE}
-    function SetBindSourceObjectAdapter<T: class, constructor>(const ABindSourceObject: IBindSourceObjectAdapter): TManagerObjectSet;
-    {$ENDIF}
     function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
-    /// ObjectSet
+    // ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: Variant): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
@@ -294,24 +285,6 @@ begin
     raise Exception.Create('Use the AddAdapter<T> method to add the class to manager');
   Result := TObjectSetBaseAdapter<T>(FRepository.Items[LClassName].ObjectSet);
 end;
-
-{$IFDEF USEBINDSOURCE}
-function TManagerObjectSet.SetBindSourceObjectAdapter<T>(
-  const ABindSourceObject: IBindSourceObjectAdapter): TManagerObjectSet;
-begin
-  FBindSourceObjectAdapter := ABindSourceObject;
-  Resolver<T>.SetOnPropertyEvent(procedure(AProperty: TRttiProperty; AClassName: String)
-                                 begin
-                                   FBindSourceObjectAdapter
-                                     .NotificationProperty(AProperty, AClassName);
-                                 end);
-  Resolver<T>.SetOnUpdateEvent(procedure(AObject: TObject)
-                               begin
-                                 FBindSourceObjectAdapter
-                                   .BindNotification(AObject, cnExtracted);
-                               end);
-end;
-{$ENDIF}
 
 procedure TManagerObjectSet.SelectNestedListItem<T>;
 begin

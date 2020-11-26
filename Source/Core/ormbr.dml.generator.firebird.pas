@@ -33,6 +33,7 @@ uses
   Classes,
   SysUtils,
   StrUtils,
+  Variants,
   Rtti,
   ormbr.dml.generator,
   ormbr.driver.register,
@@ -43,9 +44,7 @@ uses
   dbebr.factory.interfaces;
 
 type
-  /// <summary>
-  ///   Classe de banco de dados Firebird
-  /// </summary>
+  // Classe de banco de dados Firebird
   TDMLGeneratorFirebird = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
@@ -82,42 +81,75 @@ end;
 function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   inherited;
-  Result := ACriteria.AsString;
-  if FDMLCriteriaFound then
-    Exit;
-  ACriteria.AST.Select.Columns.Columns[0].Name := 'FIRST %s SKIP %s '
-                                                  + ACriteria.AST.Select.Columns.Columns[0].Name;
+  ACriteria.AST.Select
+           .Columns
+           .Columns[0].Name := 'FIRST %s SKIP %s ' + ACriteria.AST.Select
+                                                              .Columns
+                                                              .Columns[0].Name;
   Result := ACriteria.AsString;
 end;
 
 function TDMLGeneratorFirebird.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
-  LTable: TTableMapping;
   LCriteria: ICriteria;
+  LTable: TTableMapping;
+  LPrimaryKey: TPrimaryKeyMapping;
   LOrderBy: TOrderByMapping;
   LOrderByList: TStringList;
+  LColumnName: String;
   LFor: Integer;
 begin
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, AID);
+    Result := LCriteria.AsString;
+    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
+    if APageSize > -1 then
+      Result := GetGeneratorSelect(LCriteria);
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, AID);
-  /// OrderBy
+  // Where
+  if VarToStr(AID) <> '-1' then
+  begin
+    LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+    if LPrimaryKey <> nil then
+    begin
+      Result := Result + ' WHERE %s ';
+      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+      begin
+        if LFor > 0 then
+         Continue;
+        LColumnName := LTable.Name + '.' + LPrimaryKey.Columns[LFor];
+        if TVarData(AID).VType = varInteger then
+          Result := Result + LColumnName + ' = ' + IntToStr(AID)
+        else
+          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+      end;
+    end;
+  end;
+  // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
+    Result := Result + ' ORDER BY ';
     LOrderByList := TStringList.Create;
     try
       LOrderByList.Duplicates := dupError;
       ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
       for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+      begin
+        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
+        if LFor < LOrderByList.Count -1 then
+          Result := Result + ', ';
+      end;
     finally
       LOrderByList.Free;
     end;
   end;
-  Result := LCriteria.AsString;
-  if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
@@ -125,12 +157,20 @@ function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
 var
   LCriteria: ICriteria;
 begin
-  LCriteria := GetCriteriaSelect(AClass, -1);
-  LCriteria.Where(AWhere);
-  LCriteria.OrderBy(AOrderBy);
-  Result := LCriteria.AsString;
-  if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, -1);
+    Result := LCriteria.AsString;
+    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
+    if APageSize > -1 then
+      Result := GetGeneratorSelect(LCriteria);
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
+  Result := Result + ' WHERE ' + AWhere;
+  if Length(AOrderBy) > 0 then
+    Result := Result + ' ORDER BY ' + AOrderBy;
 end;
 
 function TDMLGeneratorFirebird.GeneratorAutoIncCurrentValue(AObject: TObject;

@@ -42,7 +42,7 @@ uses
   {$ENDIF}
   {$IFDEF USECLIENTDATASET}
     DBClient,
-    {$IFDEF DRIVERRESTFUL}.restdataset.clientdataset{$ELSE}ormbr.dataset.clientdataset{$ENDIF},
+    {$IFDEF DRIVERRESTFUL}ormbr.restdataset.clientdataset{$ELSE}ormbr.dataset.clientdataset{$ENDIF},
   {$ENDIF}
   // ORMBr Interface
   {$IFDEF DRIVERRESTFUL}

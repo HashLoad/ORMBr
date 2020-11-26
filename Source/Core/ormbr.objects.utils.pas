@@ -312,34 +312,34 @@ begin
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
-     /// <summary> Valida se o valor é NULO </summary>
+     // Valida se o valor é NULO
      LAttribute := LColumn.ColumnProperty.GetNotNullConstraint;
      if LAttribute <> nil then
        NotNullConstraint(LAttribute)
          .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                    LColumn.ColumnProperty.GetNullableValue(AObject));
 
-     /// <summary> Valida se o valor é menor que ZERO </summary>
+     // Valida se o valor é menor que ZERO
      LAttribute := LColumn.ColumnProperty.GetMinimumValueConstraint;
      if LAttribute <> nil then
         MinimumValueConstraint(LAttribute)
           .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                     LColumn.ColumnProperty.GetNullableValue(AObject));
 
-     /// <summary> Valida se o valor é menor que ZERO </summary>
+     // Valida se o valor é menor que ZERO
      LAttribute := LColumn.ColumnProperty.GetMaximumValueConstraint;
      if LAttribute <> nil then
         MaximumValueConstraint(LAttribute)
           .Validate(LColumn.ColumnDictionary.ConstraintErrorMessage,
                     LColumn.ColumnProperty.GetNullableValue(AObject));
 
-     /// <summary> Valida se o valor é vazio </summary>
+     // Valida se o valor é vazio
      LAttribute := LColumn.ColumnProperty.GetNotEmptyConstraint;
      if LAttribute <> nil then
         NotEmpty(LAttribute)
           .Validate(LColumn.ColumnProperty, AObject);
 
-     /// <summary> Valida se o tamanho da String é válido</summary>
+     // Valida se o tamanho da String é válido
      LAttribute := LColumn.ColumnProperty.GetSizeConstraint;
      if LAttribute <> nil then
         Size(LAttribute)

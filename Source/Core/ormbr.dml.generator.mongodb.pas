@@ -13,9 +13,7 @@ uses
   ormbr.dml.commands;
 
 type
-  /// <summary>
-  ///   Classe de conexão concreta com NoSQL
-  /// </summary>
+  // Classe de conexão concreta com NoSQL
   TDMLGeneratorMongoDB = class(TDMLGeneratorNoSQL)
   protected
   public

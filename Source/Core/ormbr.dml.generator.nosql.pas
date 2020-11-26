@@ -18,9 +18,7 @@ uses
   dbcbr.mapping.classes;
 
 type
-  /// <summary>
-  ///   Classe de conexão concreta com NoSQL
-  /// </summary>
+  // Classe de conexão concreta com NoSQL
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
     function GetCriteriaSelectNoSQL(const AClass: TClass;
@@ -224,16 +222,14 @@ var
   LFor: Integer;
   LOrder: Integer;
 begin
-  /// Collection
+  // Collection
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
       .Append('command=find& ')
         .Append('collection=' + LTable.Name);
-    /// <summary>
-    ///   PrimaryKey
-    /// </summary>
+    // PrimaryKey
     if VarToStr(AID) <> '-1' then
     begin
       LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
@@ -247,9 +243,7 @@ begin
         LCriteria.Append('}');
       end;
     end;
-    /// <summary>
-    ///   Order By
-    /// </summary>
+    // Order By
     LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
     if LOrderBy <> nil then
     begin
