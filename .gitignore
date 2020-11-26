@@ -23,3 +23,45 @@ Source/DBEBr/Drivers/
 *.identcache
 Source/JSONBr/
 *.stat
+Examples/Data/Blob/Exemplo_ORMBr.exe
+Examples/Data/ORMBrDataExamples.groupproj.local
+Examples/Data/Blob Sem DataSet/ORMBrBlob.exe
+Examples/Data/DBExpress/ORMBrDBExpress.dproj.local
+Examples/Data/DBExpress/ORMBrDBExpress.exe
+Examples/Data/ADO/ORMBrADO.dproj.local
+Examples/Data/ADO/ORMBrADO.exe
+Examples/Data/DBExpress Sem DataSet/ORMBrDBExpressSemDataSet.exe
+Examples/Data/FireDAC/ORMBrFireDAC.exe
+Examples/Data/FireDAC Crud Simples/ORMBrFireDACCrudSimples.exe
+Examples/Data/FireDAC Sem DataSet/ORMBrFireDACSemDataSet.exe
+Examples/Data/FireDAC/ORMBrFireDAC.map
+Examples/Data/IBExpress/ORMBrIBExpress.exe
+Examples/Data/Blob/ORMBrBlob.exe
+Examples/Data/Blob Sem DataSet/ORMBrBlobSemDataSet.exe
+Examples/Data/Quatro Niveis de Dados/ORMBr_QuatroNiveisDeDados.exe
+Examples/Data/SQLite Native/ORMBr_SQLite.exe
+Examples/Data/SQLite Native Sem DataSet/ORMBr_SQLiteSemDataSet.exe
+Examples/Data/Usando ICriteria/ORMBr_FiredacUsandoICriteria.exe
+Examples/Data/Uso TManagerDataSet/ORMBr_FiredacManagerDataSet.exe
+Examples/Data/Uso TManagerObjectSet/ORMBr_FireDACManagerObjectSet.exe
+Examples/Data/Varios Niveis de Dados/ORMBr_VariosNiveisDeDados.exe
+Examples/Data/Zeos Sem DataSet/ORMBr_ZeosSemDataSet.exe
+Examples/Data/Zeos/ORMBr_Zeos.exe
+Examples/Data/Blob Sem DataSet/ORMBr_BlobSemDataSet.exe
+Examples/Data/Blob/ORMBr_Blob.exe
+Examples/Data/DBExpress/ORMBr_DBExpress.exe
+Examples/Data/DBExpress Sem DataSet/ORMBr_DBExpressSemDataSet.exe
+Examples/Data/FireDAC Crud Simples/ORMBr_FireDACCrudSimples.exe
+Examples/Data/FireDAC Sem DataSet/ORMBr_FireDACSemDataSet.exe
+Examples/Data/FireDAC/ORMBr_FireDAC.exe
+Examples/Data/FireDAC/ORMBr_FireDAC.map
+Examples/Data/ADO/ORMBr_ADO.exe
+Examples/Data/ADO Sem DataSet/ORMBr_ADOSemDataSet.exe
+Examples/Datasnap/Client/ORMBrFireDAC.exe
+Examples/Datasnap/Client/ORMBrFireDAC.map
+Examples/Datasnap/Server/ORMBrServer.exe
+Examples/JSON/PJson.exe
+Examples/JSON/PJson.rsm
+Examples/NoSQL/MongoDB/FireDAC MongoDB Crud/ORMBrFireDAC.exe
+Examples/Metadata/FireDAC/Firemonkey/ORMBrMetadata.otares
+Examples/Data/IBExpress/ORMBr_IBExpress.exe
