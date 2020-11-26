@@ -259,9 +259,7 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      
-        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Database\databas' +
-        'e.db3'
+      'Database=..\Database\database.db3'
       'DriverID=SQLite')
     LoginPrompt = False
     Left = 154

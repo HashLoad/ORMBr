@@ -11,7 +11,7 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -95,11 +95,14 @@ object Form2: TForm2
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Blob\blob.fdb'
+      
+        'Database=C:\workspace\Delphi\Frameworks\ORMBr\Examples\Data\Blob' +
+        '\blob.fdb'
       'Password=masterkey'
       'User_Name=SYSDBA'
       'CharacterSet=WIN1252'
       'DriverID=FB')
+    LoginPrompt = False
     Left = 46
     Top = 22
   end

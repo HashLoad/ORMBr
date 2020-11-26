@@ -22,8 +22,8 @@ uses
   ExtCtrls,
   MidasLib,
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.zeos,
+  dbebr.factory.interfaces,
+  dbebr.factory.zeos,
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
   ormbr.dml.generator.sqlite,

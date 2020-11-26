@@ -232,10 +232,8 @@ object Form3: TForm3
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=database'
-      'User_Name=root'
-      'Password=masterkey'
-      'DriverID=MySQL')
+      'Database=..\Database\database.db3'
+      'DriverID=SQLite')
     UpdateOptions.AssignedValues = [uvLockWait]
     TxOptions.Isolation = xiSnapshot
     LoginPrompt = False

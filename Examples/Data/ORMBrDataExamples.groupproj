@@ -1,0 +1,264 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8D8C1B8C-DD5B-4666-8F11-C9B3C8653C30}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="FireDAC\ORMBr_Firedac.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireDAC Crud Simples\ORMBr_FiredacCrudSimples.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FireDAC Sem DataSet\ORMBr_FiredacSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Usando ICriteria\ORMBr_FiredacUsandoICriteria.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Uso TManagerDataSet\ORMBr_FiredacManagerDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Uso TManagerObjectSet\ORMBr_FiredacManagerObjectSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Blob\ORMBr_Blob.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Blob Sem DataSet\ORMBr_BlobSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBExpress\ORMBr_DBExpress.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DBExpress Sem DataSet\ORMBr_DBExpressSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="IBExpress\ORMBr_IBExpress.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Object Lazy\ORMBr_ObjectLazy.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SQLite Native\ORMBr_SQLite.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="SQLite Native Sem DataSet\ORMBr_SQLiteSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Varios Niveis de Dados\ORMBr_VariosNiveisDeDados.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Zeos\ORMBr_Zeos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ADO\ORMBr_ADO.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ADO Sem DataSet\ORMBr_ADOSemDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ORMBr_Firedac">
+        <MSBuild Projects="FireDAC\ORMBr_Firedac.dproj"/>
+    </Target>
+    <Target Name="ORMBr_Firedac:Clean">
+        <MSBuild Projects="FireDAC\ORMBr_Firedac.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_Firedac:Make">
+        <MSBuild Projects="FireDAC\ORMBr_Firedac.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_FiredacCrudSimples">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FiredacCrudSimples.dproj"/>
+    </Target>
+    <Target Name="ORMBr_FiredacCrudSimples:Clean">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FiredacCrudSimples.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_FiredacCrudSimples:Make">
+        <MSBuild Projects="FireDAC Crud Simples\ORMBr_FiredacCrudSimples.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_FiredacSemDataSet">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FiredacSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_FiredacSemDataSet:Clean">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FiredacSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_FiredacSemDataSet:Make">
+        <MSBuild Projects="FireDAC Sem DataSet\ORMBr_FiredacSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_FiredacUsandoICriteria">
+        <MSBuild Projects="Usando ICriteria\ORMBr_FiredacUsandoICriteria.dproj"/>
+    </Target>
+    <Target Name="ORMBr_FiredacUsandoICriteria:Clean">
+        <MSBuild Projects="Usando ICriteria\ORMBr_FiredacUsandoICriteria.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_FiredacUsandoICriteria:Make">
+        <MSBuild Projects="Usando ICriteria\ORMBr_FiredacUsandoICriteria.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerDataSet">
+        <MSBuild Projects="Uso TManagerDataSet\ORMBr_FiredacManagerDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerDataSet:Clean">
+        <MSBuild Projects="Uso TManagerDataSet\ORMBr_FiredacManagerDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerDataSet:Make">
+        <MSBuild Projects="Uso TManagerDataSet\ORMBr_FiredacManagerDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerObjectSet">
+        <MSBuild Projects="Uso TManagerObjectSet\ORMBr_FiredacManagerObjectSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerObjectSet:Clean">
+        <MSBuild Projects="Uso TManagerObjectSet\ORMBr_FiredacManagerObjectSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_FiredacManagerObjectSet:Make">
+        <MSBuild Projects="Uso TManagerObjectSet\ORMBr_FiredacManagerObjectSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_Blob">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj"/>
+    </Target>
+    <Target Name="ORMBr_Blob:Clean">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_Blob:Make">
+        <MSBuild Projects="Blob\ORMBr_Blob.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_BlobSemDataSet">
+        <MSBuild Projects="Blob Sem DataSet\ORMBr_BlobSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_BlobSemDataSet:Clean">
+        <MSBuild Projects="Blob Sem DataSet\ORMBr_BlobSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_BlobSemDataSet:Make">
+        <MSBuild Projects="Blob Sem DataSet\ORMBr_BlobSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_DBExpress">
+        <MSBuild Projects="DBExpress\ORMBr_DBExpress.dproj"/>
+    </Target>
+    <Target Name="ORMBr_DBExpress:Clean">
+        <MSBuild Projects="DBExpress\ORMBr_DBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_DBExpress:Make">
+        <MSBuild Projects="DBExpress\ORMBr_DBExpress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_DBExpressSemDataSet">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBr_DBExpressSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_DBExpressSemDataSet:Clean">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBr_DBExpressSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_DBExpressSemDataSet:Make">
+        <MSBuild Projects="DBExpress Sem DataSet\ORMBr_DBExpressSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_IBExpress">
+        <MSBuild Projects="IBExpress\ORMBr_IBExpress.dproj"/>
+    </Target>
+    <Target Name="ORMBr_IBExpress:Clean">
+        <MSBuild Projects="IBExpress\ORMBr_IBExpress.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_IBExpress:Make">
+        <MSBuild Projects="IBExpress\ORMBr_IBExpress.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_ObjectLazy">
+        <MSBuild Projects="Object Lazy\ORMBr_ObjectLazy.dproj"/>
+    </Target>
+    <Target Name="ORMBr_ObjectLazy:Clean">
+        <MSBuild Projects="Object Lazy\ORMBr_ObjectLazy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_ObjectLazy:Make">
+        <MSBuild Projects="Object Lazy\ORMBr_ObjectLazy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados:Clean">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_QuatroNiveisDeDados:Make">
+        <MSBuild Projects="Quatro Niveis de Dados\ORMBr_QuatroNiveisDeDados.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_SQLite">
+        <MSBuild Projects="SQLite Native\ORMBr_SQLite.dproj"/>
+    </Target>
+    <Target Name="ORMBr_SQLite:Clean">
+        <MSBuild Projects="SQLite Native\ORMBr_SQLite.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_SQLite:Make">
+        <MSBuild Projects="SQLite Native\ORMBr_SQLite.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_SQLiteSemDataSet">
+        <MSBuild Projects="SQLite Native Sem DataSet\ORMBr_SQLiteSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_SQLiteSemDataSet:Clean">
+        <MSBuild Projects="SQLite Native Sem DataSet\ORMBr_SQLiteSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_SQLiteSemDataSet:Make">
+        <MSBuild Projects="SQLite Native Sem DataSet\ORMBr_SQLiteSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_VariosNiveisDeDados">
+        <MSBuild Projects="Varios Niveis de Dados\ORMBr_VariosNiveisDeDados.dproj"/>
+    </Target>
+    <Target Name="ORMBr_VariosNiveisDeDados:Clean">
+        <MSBuild Projects="Varios Niveis de Dados\ORMBr_VariosNiveisDeDados.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_VariosNiveisDeDados:Make">
+        <MSBuild Projects="Varios Niveis de Dados\ORMBr_VariosNiveisDeDados.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_ZeosSemDataSet">
+        <MSBuild Projects="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_ZeosSemDataSet:Clean">
+        <MSBuild Projects="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_ZeosSemDataSet:Make">
+        <MSBuild Projects="Zeos Sem DataSet\ORMBr_ZeosSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_Zeos">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj"/>
+    </Target>
+    <Target Name="ORMBr_Zeos:Clean">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_Zeos:Make">
+        <MSBuild Projects="Zeos\ORMBr_Zeos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_ADO">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj"/>
+    </Target>
+    <Target Name="ORMBr_ADO:Clean">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_ADO:Make">
+        <MSBuild Projects="ADO\ORMBr_ADO.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBr_ADOSemDataSet">
+        <MSBuild Projects="ADO Sem DataSet\ORMBr_ADOSemDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBr_ADOSemDataSet:Clean">
+        <MSBuild Projects="ADO Sem DataSet\ORMBr_ADOSemDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBr_ADOSemDataSet:Make">
+        <MSBuild Projects="ADO Sem DataSet\ORMBr_ADOSemDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ORMBr_Firedac;ORMBr_FiredacCrudSimples;ORMBr_FiredacSemDataSet;ORMBr_FiredacUsandoICriteria;ORMBr_FiredacManagerDataSet;ORMBr_FiredacManagerObjectSet;ORMBr_Blob;ORMBr_BlobSemDataSet;ORMBr_DBExpress;ORMBr_DBExpressSemDataSet;ORMBr_IBExpress;ORMBr_ObjectLazy;ORMBr_QuatroNiveisDeDados;ORMBr_SQLite;ORMBr_SQLiteSemDataSet;ORMBr_VariosNiveisDeDados;ORMBr_ZeosSemDataSet;ORMBr_Zeos;ORMBr_ADO;ORMBr_ADOSemDataSet"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ORMBr_Firedac:Clean;ORMBr_FiredacCrudSimples:Clean;ORMBr_FiredacSemDataSet:Clean;ORMBr_FiredacUsandoICriteria:Clean;ORMBr_FiredacManagerDataSet:Clean;ORMBr_FiredacManagerObjectSet:Clean;ORMBr_Blob:Clean;ORMBr_BlobSemDataSet:Clean;ORMBr_DBExpress:Clean;ORMBr_DBExpressSemDataSet:Clean;ORMBr_IBExpress:Clean;ORMBr_ObjectLazy:Clean;ORMBr_QuatroNiveisDeDados:Clean;ORMBr_SQLite:Clean;ORMBr_SQLiteSemDataSet:Clean;ORMBr_VariosNiveisDeDados:Clean;ORMBr_ZeosSemDataSet:Clean;ORMBr_Zeos:Clean;ORMBr_ADO:Clean;ORMBr_ADOSemDataSet:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ORMBr_Firedac:Make;ORMBr_FiredacCrudSimples:Make;ORMBr_FiredacSemDataSet:Make;ORMBr_FiredacUsandoICriteria:Make;ORMBr_FiredacManagerDataSet:Make;ORMBr_FiredacManagerObjectSet:Make;ORMBr_Blob:Make;ORMBr_BlobSemDataSet:Make;ORMBr_DBExpress:Make;ORMBr_DBExpressSemDataSet:Make;ORMBr_IBExpress:Make;ORMBr_ObjectLazy:Make;ORMBr_QuatroNiveisDeDados:Make;ORMBr_SQLite:Make;ORMBr_SQLiteSemDataSet:Make;ORMBr_VariosNiveisDeDados:Make;ORMBr_ZeosSemDataSet:Make;ORMBr_Zeos:Make;ORMBr_ADO:Make;ORMBr_ADOSemDataSet:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

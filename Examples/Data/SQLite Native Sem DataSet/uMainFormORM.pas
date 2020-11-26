@@ -22,8 +22,8 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.sqlite3,
+  dbebr.factory.interfaces,
+  dbebr.factory.sqlite3,
   /// orm injection dependency
   ormbr.criteria,
   ormbr.container.objectset,
@@ -33,6 +33,7 @@ uses
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
+  ormbr.dml.generator.sqlite,
   SQLiteTable3;
 
 type

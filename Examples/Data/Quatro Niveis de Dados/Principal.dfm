@@ -218,9 +218,7 @@ object Form1: TForm1
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      
-        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Quatro Niveis de' +
-        ' Dados\NIVEL4.FDB'
+      'Database=.\NIVEL4.FDB'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'CharacterSet=WIN1252'

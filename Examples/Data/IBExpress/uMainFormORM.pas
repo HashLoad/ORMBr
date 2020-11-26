@@ -26,11 +26,11 @@ uses
   DbxSqlite,
   SqlExpr,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.container.clientdataset,
   ormbr.container.dataset.interfaces,
-  ormbr.factory.ibexpress,
+  dbebr.factory.ibexpress,
   ormbr.dml.generator.firebird,
   /// orm model
   ormbr.model.master,
@@ -96,7 +96,7 @@ uses
 
 procedure TForm3.Button1Click(Sender: TObject);
 begin
-  TCommandMonitor.GetInstance.Show;
+//  TCommandMonitor.GetInstance.Show;
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
