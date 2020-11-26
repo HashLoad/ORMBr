@@ -40,6 +40,7 @@ uses
   Classes,
   SysUtils,
   StrUtils,
+  Variants,
   Generics.Collections,
   /// orm
   ormbr.dataset.events,
@@ -56,13 +57,13 @@ type
     FOrmDataSetEvents: TDataSet;
     // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
-    ///
+    //
     procedure ExecuteOneToOne(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>);
     procedure ExecuteOneToMany(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>; ARttiType: TRttiType);
     procedure GetMasterValues;
-    ///
+    //
     function FindEvents(AEventName: string): Boolean;
     function GetAutoNextPacket: Boolean;
     procedure SetAutoNextPacket(const Value: Boolean);
@@ -374,6 +375,7 @@ var
   LObjectType: TObject;
   LObjectList: TObject;
   LDataSetChild: TDataSetBaseAdapter<M>;
+  LDataSet: TDataSet;
 begin
   LPropertyType := AProperty.PropertyType;
   LPropertyType := AProperty.GetTypeValue(LPropertyType);
@@ -385,16 +387,17 @@ begin
   if ADatasetBase.FCurrentInternal.ClassType <>
      LPropertyType.AsInstance.MetaclassType then
     Exit;
-  LBookMark := ADatasetBase.FOrmDataSet.Bookmark;
-  ADatasetBase.FOrmDataSet.First;
-  ADatasetBase.FOrmDataSet.BlockReadSize := MaxInt;
+  LDataSet := ADatasetBase.FOrmDataSet;
+  LBookMark := LDataSet.Bookmark;
+  LDataSet.First;
+  LDataSet.BlockReadSize := MaxInt;
   try
-    while not ADatasetBase.FOrmDataSet.Eof do
+    while not LDataSet.Eof do
     begin
       LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectType.MethodCall('Create', []);
       // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObjectType);
+      TBind.Instance.SetFieldToProperty(LDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);
@@ -403,12 +406,12 @@ begin
         LDataSetChild.FillMastersClass(LDataSetChild, LObjectType);
 
       // Próximo registro
-      ADatasetBase.FOrmDataSet.Next;
+      LDataSet.Next;
     end;
   finally
-    ADatasetBase.FOrmDataSet.BlockReadSize := 0;
-    ADatasetBase.FOrmDataSet.GotoBookmark(LBookMark);
-    ADatasetBase.FOrmDataSet.FreeBookmark(LBookMark);
+    LDataSet.BlockReadSize := 0;
+    LDataSet.GotoBookmark(LBookMark);
+    LDataSet.FreeBookmark(LBookMark);
   end;
 end;
 

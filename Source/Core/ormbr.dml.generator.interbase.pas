@@ -39,9 +39,7 @@ uses
   ormbr.criteria;
 
 type
-  /// <summary>
-  /// Classe de banco de dados Interbase
-  /// </summary>
+  // Classe de banco de dados Interbase
   TDMLGeneratorInterbase = class(TDMLGeneratorFirebird)
   protected
   public

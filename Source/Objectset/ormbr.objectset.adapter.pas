@@ -260,10 +260,6 @@ begin
         begin
           FSession.ModifyFieldsCompare(LKey, LObjectKey, AObject);
           FSession.Update(AObject, LKey);
-          {$IFDEF USEBINDSOURCE}
-          if Assigned(FSession.OnUpdateEvent) then
-            FSession.OnUpdateEvent(AObject);
-          {$ENDIF}
           FObjectState.Remove(LKey);
           FObjectState.TrimExcess;
         end;

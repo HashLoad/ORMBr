@@ -103,10 +103,9 @@ var
   LBooleanValue: Integer;
 begin
   Result := '';
-  FCommand := '';
+  FResultCommand := '';
   if AModifiedFields.Count = 0 then
     Exit;
-
   // Variavel local é usado como parâmetro para montar o script só com os
   // campos PrimaryKey.
   LParams := TParams.Create(nil);
@@ -126,9 +125,8 @@ begin
         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
       end;
     end;
-    FCommand := FGeneratorCommand
-                  .GeneratorUpdate(AObject, LParams, AModifiedFields);
-    Result := FCommand;
+    FResultCommand := FGeneratorCommand.GeneratorUpdate(AObject, LParams, AModifiedFields);
+    Result := FResultCommand;
     // Gera todos os parâmetros, sendo os campos alterados primeiro e o do
     // PrimaryKey por último, usando LParams criado local.
     AObject.GetType(LObjectType);

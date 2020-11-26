@@ -42,7 +42,7 @@ type
     FConnection: IDBConnection;
     FGeneratorCommand: IDMLGeneratorCommand;
     FParams: TParams;
-    FCommand: string;
+    FResultCommand: string;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); virtual;
@@ -75,7 +75,7 @@ end;
 
 function TDMLCommandAbstract.GetDMLCommand: string;
 begin
-  Result := FCommand;
+  Result := FResultCommand;
 end;
 
 function TDMLCommandAbstract.Params: TParams;

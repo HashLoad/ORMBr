@@ -86,10 +86,6 @@ type
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
-    {$IFDEF USEBINDSOURCE}
-    procedure SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
-    procedure SetOnUpdateEvent(AProc: TProc<TObject>);
-    {$ENDIF}
   end;
 
 implementation
@@ -368,18 +364,6 @@ begin
   /// <summary> Executa comando em cascade de cada objeto da lista </summary>
   CascadeActionsExecute(LObject, ACascadeAction);
 end;
-
-{$IFDEF USEBINDSOURCE}
-procedure TObjectSetBaseAdapter<M>.SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
-begin
-  FSession.OnPropertyEvent := Aproc;
-end;
-
-procedure TObjectSetBaseAdapter<M>.SetOnUpdateEvent(AProc: TProc<TObject>);
-begin
-  FSession.OnUpdateEvent := AProc;
-end;
-{$ENDIF}
 
 procedure TObjectSetBaseAdapter<M>.SetAutoIncValueChilds(const AObject: TObject;
   const AColumn: TColumnMapping);

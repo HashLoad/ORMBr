@@ -43,9 +43,7 @@ uses
   dbebr.factory.interfaces;
 
 type
-  /// <summary>
-  /// Classe de conexão concreta com dbExpress
-  /// </summary>
+  // Classe de conexão concreta com dbExpress
   TDMLGeneratorMySQL = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
@@ -82,31 +80,64 @@ end;
 function TDMLGeneratorMySQL.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
-  LTable: TTableMapping;
   LCriteria: ICriteria;
+  LTable: TTableMapping;
+  LPrimaryKey: TPrimaryKeyMapping;
   LOrderBy: TOrderByMapping;
   LOrderByList: TStringList;
+  LColumnName: String;
   LFor: Integer;
 begin
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, AID);
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, AID);
-  /// OrderBy
+  // Where
+  if VarToStr(AID) <> '-1' then
+  begin
+    LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+    if LPrimaryKey <> nil then
+    begin
+      Result := Result + ' WHERE %s ';
+      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+      begin
+        if LFor > 0 then
+         Continue;
+        LColumnName := LTable.Name + '.' + LPrimaryKey.Columns[LFor];
+        if TVarData(AID).VType = varInteger then
+          Result := Result + LColumnName + ' = ' + IntToStr(AID)
+        else
+          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+      end;
+    end;
+  end;
+  // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
+    Result := Result + ' ORDER BY ';
     LOrderByList := TStringList.Create;
     try
       LOrderByList.Duplicates := dupError;
       ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
       for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
+      begin
+        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
+        if LFor < LOrderByList.Count -1 then
+          Result := Result + ', ';
+      end;
     finally
       LOrderByList.Free;
     end;
   end;
-  Result := LCriteria.AsString;
+  // Monta SQL para paginação
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+    Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorMySQL.GeneratorSelectWhere(AClass: TClass; AWhere: string;
@@ -114,20 +145,24 @@ function TDMLGeneratorMySQL.GeneratorSelectWhere(AClass: TClass; AWhere: string;
 var
   LCriteria: ICriteria;
 begin
-  LCriteria := GetCriteriaSelect(AClass, -1);
-  LCriteria.Where(AWhere);
-  LCriteria.OrderBy(AOrderBy);
-  Result := LCriteria.AsString;
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, -1);
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
+  Result := Result + ' WHERE ' + AWhere;
+  Result := Result + 'ORDER BY ' + AOrderBy;
+  // Monta SQL para paginação
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+    Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorMySQL.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
-  Result := ACriteria.AsString;
-  if FDMLCriteriaFound then
-    Exit;
-  Result := ACriteria.AsString + ' LIMIT %s OFFSET %s';
+  Result := ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorMySQL.GeneratorAutoIncCurrentValue(AObject: TObject;

@@ -48,10 +48,6 @@ type
   // M - Sessão Abstract
   TSessionAbstract<M: class, constructor> = class abstract
   protected
-    {$IFDEF USEBINDSOURCE}
-    FOnPropertyEvent: TProc<TRttiProperty, String>;
-    FOnUpdateEvent: TProc<TObject>;
-    {$ENDIF}
     FPageSize: Integer;
     FPageNext: Integer;
     FModifiedFields: TDictionary<string, TDictionary<string, string>>;
@@ -72,9 +68,7 @@ type
     destructor Destroy; override;
     function ExistSequence: Boolean; virtual;
     function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual;
-    /// <summary>
-    ///   ObjectSet
-    /// </summary>
+    // ObjectSet
     procedure Insert(const AObject: M); overload; virtual;
     procedure Insert(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     procedure Update(const AObject: M; const AKey: string); overload; virtual;
@@ -88,9 +82,7 @@ type
       APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
-    /// <summary>
-    ///   DataSet
-    /// </summary>
+    // DataSet
     procedure Open; virtual;
     procedure OpenID(const AID: Variant); virtual;
     procedure OpenSQL(const ASQL: string); virtual;
@@ -99,9 +91,7 @@ type
     procedure RefreshRecord(const AColumns: TParams); virtual;
     function SelectAssociation(const AObject: TObject): String; virtual;
     function ResultParams: TParams;
-    /// <summary>
-    ///   DataSet e ObjectSet
-    /// </summary>
+    // DataSet e ObjectSet
     procedure ModifyFieldsCompare(const AKey: string; const AObjectSource,
       AObjectUpdate: TObject); virtual;
     function Find: TObjectList<M>; overload; virtual;
@@ -110,14 +100,8 @@ type
     function FindWhere(const AWhere: string;
       const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
-
+    //
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
-    {$IFDEF USEBINDSOURCE}
-    property OnPropertyEvent: TProc<TRttiProperty, String> read FOnPropertyEvent
-                                                          write FOnPropertyEvent;
-    property OnUpdateEvent: TProc<TObject> read FOnUpdateEvent
-                                          write FOnUpdateEvent;
-    {$ENDIF}
   end;
 
 implementation
@@ -136,9 +120,7 @@ begin
   FDeleteList := TObjectList<M>.Create;
   FResultParams := TParams.Create;
   FFetchingRecords := False;
-  /// <summary>
-  ///   Inicia uma lista interna para gerenciar campos alterados
-  /// </summary>
+  // Inicia uma lista interna para gerenciar campos alterados
   FModifiedFields.Clear;
   FModifiedFields.TrimExcess;
   FModifiedFields.Add(M.ClassName, TDictionary<string, string>.Create);
@@ -245,11 +227,6 @@ begin
            LProperty.GetValue(AObjectUpdate).AsType<TBlob>.ToSize then
         begin
           FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-          // Bind object property in control
-          {$IFDEF USEBINDSOURCE}
-//            if Assigned(FOnPropertyEvent) then
-//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
-          {$ENDIF}
         end;
       end
       else
@@ -258,11 +235,6 @@ begin
            LProperty.GetNullableValue(AObjectUpdate).AsType<Variant> then
         begin
           FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-          // Bind object property in control
-          {$IFDEF USEBINDSOURCE}
-//            if Assigned(FOnPropertyEvent) then
-//              OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
-          {$ENDIF}
         end;
       end;
     end
@@ -272,11 +244,6 @@ begin
          LProperty.GetValue(AObjectUpdate).AsType<Variant> then
       begin
         FModifiedFields.Items[AKey].Add(LProperty.Name, LColumn.ColumnName);
-        // Bind object property in control
-        {$IFDEF USEBINDSOURCE}
-//          if Assigned(FOnPropertyEvent) then
-//            OnPropertyEvent(LProperty, AObjectUpdate.ClassName);
-        {$ENDIF}
       end;
     end;
   end;

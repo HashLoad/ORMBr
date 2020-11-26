@@ -54,23 +54,18 @@ uses
   dbcbr.types.mapping;
 
 type
-  /// <summary>
-  ///   Classe de conexões abstract
-  /// </summary>
+  // Classe de conexões abstract
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
-    {$IFDEF CACHEGENERATORSQL}
-    FDMLCriteria: TDictionary<String, ICriteria>;
-    {$ENDIF}
     function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
     procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
   protected
+    FDMLCriteria: TDictionary<String, String>;
     FConnection: IDBConnection;
     FDateFormat: string;
     FTimeFormat: string;
-    FDMLCriteriaFound: Boolean;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria): string; virtual;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
@@ -105,17 +100,12 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-  {$IFDEF CACHEGENERATORSQL}
-  FDMLCriteria := TDictionary<String, ICriteria>.Create;
-  {$ENDIF}
-  FDMLCriteriaFound := False;
+  FDMLCriteria := TDictionary<String, String>.Create;
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-  {$IFDEF CACHEGENERATORSQL}
   FDMLCriteria.Free;
-  {$ENDIF}
   inherited;
 end;
 
@@ -149,26 +139,47 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
   end;
 
 var
+  LCriteria: ICriteria;
   LTable: TTableMapping;
   LOrderBy: TOrderByMapping;
-  LCriteria: ICriteria;
+  LOrderByList: TStringList;
   LFor: Integer;
 begin
-  /// Table
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, '-1');
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, '-1');
-
-  /// Association Multi-Columns
+  // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
-    LCriteria.Where(LTable.Name + '.'   + AAssociation.ColumnsNameRef[LFor]
-                                + ' = ' + GetValue(LFor));
-  /// OrderBy
+  begin
+    Result := Result + ' WHERE '
+                     + LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor]
+                     + ' = ' + GetValue(LFor);
+  end;
+  // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
-    LCriteria.OrderBy(LOrderBy.ColumnsName);
-
-  /// Result
-  Result := LCriteria.AsString;
+  begin
+    Result := Result + ' ORDER BY ';
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+      begin
+        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
+        if LFor < LOrderByList.Count -1 then
+          Result := Result + ', ';
+      end;
+    finally
+      LOrderByList.Free;
+    end;
+  end;
 end;
 
 function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
@@ -187,27 +198,47 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
   end;
 
 var
+  LCriteria: ICriteria;
   LTable: TTableMapping;
   LOrderBy: TOrderByMapping;
-  LCriteria: ICriteria;
+  LOrderByList: TStringList;
   LFor: Integer;
 begin
-  /// Table
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, '-1');
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, '-1');
-
-  /// Association Multi-Columns
+  // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
-    LCriteria.Where(LTable.Name + '.'   + AAssociation.ColumnsNameRef[LFor]
-                                + ' = ' + GetValue(LFor));
-
-  /// OrderBy
+  begin
+    Result := Result + ' WHERE '
+                     + LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor]
+                     + ' = ' + GetValue(LFor);
+  end;
+  // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
-    LCriteria.OrderBy(LOrderBy.ColumnsName);
-
-  /// Result
-  Result := LCriteria.AsString;
+  begin
+    Result := Result + ' ORDER BY ';
+    LOrderByList := TStringList.Create;
+    try
+      LOrderByList.Duplicates := dupError;
+      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+      for LFor := 0 to LOrderByList.Count -1 do
+      begin
+        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
+        if LFor < LOrderByList.Count -1 then
+          Result := Result + ', ';
+      end;
+    finally
+      LOrderByList.Free;
+    end;
+  end;
 end;
 
 function TDMLGeneratorAbstract.GeneratorDelete(AObject: TObject;
@@ -234,8 +265,13 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
   LCriteria: ICriteria;
+  LKey: String;
 begin
   Result := '';
+  LKey := AObject.ClassType.ClassName + '-INSERT';
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if FDMLCriteria.TryGetValue(LKey, Result) then
+    Exit;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   LCriteria := CreateCriteria.Insert.Into(LTable.Name);
@@ -243,21 +279,23 @@ begin
   begin
     if LColumn.ColumnProperty.IsNullValue(AObject) then
       Continue;
-    /// Restrictions
+    // Restrictions
     if LColumn.IsNoInsert then
       Continue;
-    /// <summary>
-    ///   Set(Campo=Value)
-    /// </summary>
-    /// <exception cref="LTable.Name + '.'"></exception>
+    // Set(Campo=Value)
+    // <exception cref="LTable.Name + '.'"></exception>
     LCriteria.&Set(LColumn.ColumnName, ':' +
                    LColumn.ColumnName);
   end;
   Result := LCriteria.AsString;
+  // Adiciona o comando a lista fazendo cache para não ter que gerar novamente
+  FDMLCriteria.AddOrSetValue(LKey, Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
   APageSize, APageNext: Integer): string;
+var
+  LCommandSelect: String;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
@@ -265,8 +303,7 @@ begin
     Result := ACommandSelect;
 end;
 
-function TDMLGeneratorAbstract.GetGeneratorSelect(
-  const ACriteria: ICriteria): string;
+function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   Result := '';
 end;
@@ -277,21 +314,10 @@ var
   LTable: TTableMapping;
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
-  LPrimaryKey: TPrimaryKeyMapping;
-  LFor: Integer;
-  LColumnName: String;
 begin
   // Table
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   try
-    FDMLCriteriaFound := False;
-    {$IFDEF CACHEGENERATORSQL}
-    if FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
-    begin
-      FDMLCriteriaFound := True;
-      Exit;
-    end;
-    {$ENDIF}
     Result := CreateCriteria.Select.From(LTable.Name);
     // Columns
     LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
@@ -305,39 +331,9 @@ begin
     end;
     // Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
     GenerateJoinColumn(AClass, LTable, Result);
-    // Guarda o ICriteria na lista para não remontar a toda chamada
-    {$IFDEF CACHEGENERATORSQL}
-    FDMLCriteria.Add(AClass.ClassName, Result);
-    {$ENDIF}
   finally
     Result.Where.Clear;
     Result.OrderBy.Clear;
-    // PrimaryKey
-    if VarToStr(AID) <> '-1' then
-    begin
-      LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
-      if LPrimaryKey <> nil then
-      begin
-        for LFor := 0 to LPrimaryKey.Columns.Count -1 do
-        begin
-          LColumnName := LTable.Name + '.' + LPrimaryKey.Columns[LFor];
-          if LFor = 0 then
-          begin
-            if TVarData(AID).VType = varInteger then
-              Result.Where(LColumnName + ' = ' + IntToStr(AID))
-            else
-              Result.Where(LColumnName + ' = ' + QuotedStr(AID));
-          end
-          else
-          begin
-            if TVarData(AID).VType = varInteger then
-              Result.&And(LColumnName + ' = ' + IntToStr(AID))
-            else
-              Result.&And(LColumnName + ' = ' + QuotedStr(AID));
-          end;
-        end;
-      end;
-    end;
   end;
 end;
 
