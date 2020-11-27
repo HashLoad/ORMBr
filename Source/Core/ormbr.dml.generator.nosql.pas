@@ -11,7 +11,7 @@ uses
   StrUtils,
   Generics.Collections,
   ormbr.dml.generator,
-  ormbr.rest.json,
+  ormbr.json,
   ormbr.dml.commands,
   ormbr.objects.helper,
   dbcbr.rtti.helper,
@@ -278,8 +278,7 @@ begin
   end;
 end;
 
-function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(
-  const ACriteria: string): string;
+function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(const ACriteria: string): string;
 begin
   Result := ACriteria + '& limit=%s& skip=%s';
 end;
