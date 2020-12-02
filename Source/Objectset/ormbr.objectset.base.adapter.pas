@@ -50,9 +50,7 @@ uses
   dbcbr.mapping.explorer;
 
 type
-  /// <summary>
-  ///   M - Object M
-  /// </summary>
+  // M - Object M
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
   private
     procedure AddObjectState(const ASourceObject: TObject);
@@ -115,17 +113,11 @@ var
 begin
   if not ASourceObject.GetType(LRttiType) then
     Exit;
-  /// <summary>
-  ///   Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
-  /// </summary>
+  // Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
   LStateObject := ASourceObject.ClassType.Create;
-  /// <summary>
-  ///   Gera uma chave de identificação unica para cada item da lista
-  /// </summary>
+  // Gera uma chave de identificação unica para cada item da lista
   LKey := GenerateKey(ASourceObject);
-  /// <summary>
-  ///   Guarda o novo objeto na lista, identificado pela chave
-  /// </summary>
+  // Guarda o novo objeto na lista, identificado pela chave
   FObjectState.Add(LKey, LStateObject);
   try
     for LProperty in LRttiType.GetProperties do
@@ -310,7 +302,7 @@ begin
       else
         FSession.Insert(LObject);
     end;
-    /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+    // Executa comando em cascade de cada objeto da lista
     CascadeActionsExecute(LObject, ACascadeAction);
   end;
 end;
@@ -361,7 +353,7 @@ begin
     else
       FSession.Insert(LObject);
   end;
-  /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+  // Executa comando em cascade de cada objeto da lista
   CascadeActionsExecute(LObject, ACascadeAction);
 end;
 

@@ -34,7 +34,7 @@ interface
 uses
   Rtti,
   Generics.Collections,
-  /// ormbr
+  // ORMBr
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorerstrategy;
@@ -42,9 +42,7 @@ uses
 type
   TObjectManagerAbstract<M: class, constructor> = class abstract
   protected
-    /// <summary>
-    ///   Instancia a class que mapea todas as class do tipo Entity
-    /// </summary>
+    // Instancia a class que mapea todas as class do tipo Entity
     FExplorer: IMappingExplorerStrategy;
     function FindSQLInternal(const ASQL: String): TObjectList<M>; virtual; abstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;

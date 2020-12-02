@@ -12,11 +12,11 @@ uses
   /// orm
   ormbr.types.blob,
   ormbr.types.lazy,
-  ormbr.types.mapping,
+  dbcbr.types.mapping,
   ormbr.types.nullable,
-  ormbr.mapping.classes,
-  ormbr.mapping.register,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
@@ -29,8 +29,8 @@ type
     FAtendimento: Integer;
     FCorrel: Integer;
     FMNEMONICO: string;
-    FProcedimento: TProcedimento;
-
+    FProcedimento: Lazy<TProcedimento>;
+    function GetProcedimento: TProcedimento;
   public
     { Public declarations }
     constructor Create;
@@ -57,21 +57,26 @@ type
     [Dictionary('MNEMONICO', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property MNEMONICO: String read FMNEMONICO write FMNEMONICO;
 
-    [Association(OneToOne,'MNEMONICO','PROCEDIMENTOS','MNEMONICO')]
-    property Procedimento: TProcedimento read FProcedimento write FProcedimento;
+    [Association(OneToOne,'MNEMONICO','PROCEDIMENTOS','MNEMONICO',True)]
+    property Procedimento: TProcedimento read GetProcedimento;
   end;
 
 implementation
 
 constructor TExame.Create;
 begin
-  FProcedimento := TProcedimento.Create;
+
 end;
 
 destructor TExame.Destroy;
 begin
-  FProcedimento.Free;
+
   inherited;
+end;
+
+function TExame.GetProcedimento: TProcedimento;
+begin
+  Result := FProcedimento.Value;
 end;
 
 initialization

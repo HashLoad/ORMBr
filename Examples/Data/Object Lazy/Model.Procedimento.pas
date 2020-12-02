@@ -12,11 +12,11 @@ uses
   /// orm              
   ormbr.types.blob,
   ormbr.types.lazy,
-  ormbr.types.mapping,
+  dbcbr.types.mapping,
   ormbr.types.nullable,
-  ormbr.mapping.classes,
-  ormbr.mapping.register,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
@@ -29,9 +29,7 @@ type
     FNOME: String;
     FMNEMONICO: String;
     FSETOR: Nullable<Integer>;
-    FSetores: Lazy<TSetor>;
     FSetoresList: Lazy<TObjectList<TSetor>>;
-    function GetSetores: TSetor;
     function GetSetoresList: TObjectList<TSetor>;
   public
     { Public declarations }
@@ -57,10 +55,6 @@ type
     [Dictionary('SETOR', 'Mensagem de validação', '', '', '', taCenter)]
     property SETOR: Nullable<Integer> read FSETOR write FSETOR;
 
-    /// Lazy objeto único
-    [Association(OneToOne,'SETOR','SETORES','SETOR',True)]
-    property Setores: TSetor read GetSetores;
-
     /// Lazy lista de objeto
     [Association(OneToMany,'SETOR','SETORES','SETOR',True)]
     property SetoresList: TObjectList<TSetor> read GetSetoresList;
@@ -81,11 +75,6 @@ end;
 function TProcedimento.GetSetoresList: TObjectList<TSetor>;
 begin
   Result := FSetoresList.Value;
-end;
-
-function TProcedimento.GetSetores: TSetor;
-begin
-  Result := FSetores.Value;
 end;
 
 initialization

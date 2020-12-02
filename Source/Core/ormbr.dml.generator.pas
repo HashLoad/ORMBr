@@ -47,7 +47,8 @@ uses
   ormbr.dml.interfaces,
   ormbr.dml.commands,
   ormbr.types.blob,
-  ormbr.rtti.helper,
+  dbcbr.rtti.helper,
+//  ormbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
@@ -220,9 +221,14 @@ begin
   // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
   begin
-    Result := Result + ' WHERE '
-                     + LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor]
-                     + ' = ' + GetValue(LFor);
+    if LFor = 0 then
+      Result := Result + ' WHERE '
+    else
+      Result := Result + ' AND ';
+    //
+    Result := Result + LTable.Name
+                     + '.' + AAssociation.ColumnsNameRef[LFor]
+                     + ' = ' + GetValue(LFor)
   end;
   // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
