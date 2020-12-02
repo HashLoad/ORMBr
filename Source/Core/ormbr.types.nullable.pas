@@ -50,6 +50,9 @@ type
     function GetValueOrDefault: T; overload;
     function GetValueOrDefault(const defaultValue: T): T; overload;
     function Equals(const other: Nullable<T>): Boolean;
+    function ToString: String;
+    function ToVariant: Variant;
+
     property HasValue: Boolean read GetHasValue;
     property Value: T read GetValue;
 
@@ -206,6 +209,35 @@ end;
 class operator Nullable<T>.NotEqual(const a, b: Nullable<T>): Boolean;
 begin
   Result := not a.Equals(b);
+end;
+
+function Nullable<T>.ToString: String;
+var
+  LValue: TValue;
+begin
+  if HasValue then
+  begin
+    LValue := TValue.From<T>(FValue);
+    Result := LValue.ToString;
+  end
+  else
+    Result := 'Null';
+end;
+
+function Nullable<T>.ToVariant: Variant;
+var
+  LValue: TValue;
+begin
+  if HasValue then
+  begin
+    LValue := TValue.From<T>(FValue);
+    if LValue.IsType<Boolean> then
+      Result := LValue.AsBoolean
+    else
+      Result := LValue.AsVariant;
+  end
+  else
+    Result := Null;
 end;
 
 end.

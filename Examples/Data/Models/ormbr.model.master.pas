@@ -9,13 +9,13 @@ uses
   SysUtils, 
   Generics.Collections, 
   /// orm 
-  ormbr.mapping.attributes,
-  ormbr.types.mapping,
+  dbcbr.mapping.attributes,
+  dbcbr.types.mapping,
   ormbr.types.lazy,
   ormbr.types.nullable,
   ormbr.model.detail,
   ormbr.model.client,
-  ormbr.mapping.register;
+  dbcbr.mapping.register;
 
 type
   TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);

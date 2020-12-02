@@ -10,11 +10,11 @@ uses
   /// orm
   ormbr.types.blob,
   ormbr.types.lazy,
-  ormbr.types.mapping,
+  dbcbr.types.mapping,
   ormbr.types.nullable,
-  ormbr.mapping.classes,
-  ormbr.mapping.register,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
@@ -25,7 +25,6 @@ type
     { Private declarations }
     FSETOR: Double;
     FNOME: String;
-
   public
     { Public declarations }
     constructor Create;

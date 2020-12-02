@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 242
+  ClientHeight = 376
   ClientWidth = 527
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,15 +15,15 @@ object Form1: TForm1
   OnDestroy = FormDestroy
   DesignSize = (
     527
-    242)
+    376)
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
-    Left = 374
+    Left = 104
     Top = 8
     Width = 145
     Height = 25
-    Caption = 'Executar Teste Lazy<>'
+    Caption = 'Executar FindWhere()'
     TabOrder = 0
     OnClick = Button1Click
   end
@@ -31,7 +31,7 @@ object Form1: TForm1
     Left = 0
     Top = 47
     Width = 527
-    Height = 195
+    Height = 329
     Anchors = [akLeft, akTop, akRight, akBottom]
     Lines.Strings = (
       'Memo1')
@@ -42,8 +42,30 @@ object Form1: TForm1
     Top = 8
     Width = 75
     Height = 25
-    Caption = 'Cria Tabelas'
+    Caption = 'Monitor'
     TabOrder = 2
     OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 269
+    Top = 8
+    Width = 145
+    Height = 25
+    Caption = 'Executar Lazy()'
+    TabOrder = 3
+    OnClick = Button3Click
+  end
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      
+        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Data\Object Lazy\TEST' +
+        'E.FDB'
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Server=localhost'
+      'DriverID=FB')
+    LoginPrompt = False
+    Left = 237
+    Top = 122
   end
 end

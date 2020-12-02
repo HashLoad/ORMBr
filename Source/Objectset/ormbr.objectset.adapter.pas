@@ -36,7 +36,7 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
-  /// ORMBr
+  // ORMBr
   ormbr.objectset.base.adapter,
   ormbr.objects.helper,
   dbebr.factory.interfaces,
@@ -44,9 +44,7 @@ uses
   dbcbr.types.mapping;
 
 type
-  /// <summary>
-  ///   M - Object M
-  /// </summary>
+  // M - Object M
   TObjectSetAdapter<M: class, constructor> = class(TObjectSetBaseAdapter<M>)
   private
     FConnection: IDBConnection;
@@ -93,9 +91,7 @@ var
   LIsConnected: Boolean;
 begin
   inherited;
-  /// <summary>
-  ///   Controle de transação externa, controlada pelo desenvolvedor
-  /// </summary>
+  // Controle de transação externa, controlada pelo desenvolvedor
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
   if not LIsConnected then
@@ -104,13 +100,9 @@ begin
     if not LInTransaction then
       FConnection.StartTransaction;
     try
-      /// <summary>
-      ///   Executa comando delete em cascade
-      /// </summary>
+      // Executa comando delete em cascade
       CascadeActionsExecute(AObject, CascadeDelete);
-      /// <summary>
-      ///   Executa comando delete master
-      /// </summary>
+      // Executa comando delete master
       FSession.Delete(AObject);
       ///
       if not LInTransaction then
@@ -235,9 +227,7 @@ var
   LIsConnected: Boolean;
 begin
   inherited;
-  /// <summary>
-  ///   Controle de transação externa, controlada pelo desenvolvedor
-  /// </summary>
+  // Controle de transação externa, controlada pelo desenvolvedor
   LInTransaction := FConnection.InTransaction;
   LIsConnected := FConnection.IsConnected;
   if not LIsConnected then
@@ -246,13 +236,9 @@ begin
     if not LInTransaction then
       FConnection.StartTransaction;
     try
-      /// <summary>
-      ///   Executa comando update em cascade
-      /// </summary>
+      // Executa comando update em cascade
       CascadeActionsExecute(AObject, CascadeUpdate);
-      /// <summary>
-      ///   Gera a lista com as propriedades que foram alteradas
-      /// </summary>
+      // Gera a lista com as propriedades que foram alteradas
       if TObject(AObject).GetType(LRttiType) then
       begin
         LKey := GenerateKey(AObject);
@@ -263,9 +249,7 @@ begin
           FObjectState.Remove(LKey);
           FObjectState.TrimExcess;
         end;
-        /// <summary>
-        ///   Remove o item excluído em Update Mestre-Detalhe
-        /// </summary>
+        // Remove o item excluído em Update Mestre-Detalhe
         for LObjectKey in FObjectState.Values do
           FSession.Delete(LObjectKey);
       end;
@@ -283,9 +267,7 @@ begin
     if not LIsConnected then
       FConnection.Disconnect;
     FObjectState.Clear;
-    /// <summary>
-    ///   Após executar o comando SQL Update, limpa a lista de campos alterados.
-    /// </summary>
+    // Após executar o comando SQL Update, limpa a lista de campos alterados.
     FSession.ModifiedFields.Clear;
     FSession.ModifiedFields.TrimExcess;
     FSession.DeleteList.Clear;

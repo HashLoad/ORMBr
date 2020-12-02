@@ -12,11 +12,11 @@ uses
   /// orm
   ormbr.types.blob,
   ormbr.types.lazy,
-  ormbr.types.mapping,
+  dbcbr.types.mapping,
   ormbr.types.nullable,
-  ormbr.mapping.classes,
-  ormbr.mapping.register,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 type
   [Entity]
   [Table('ATENDIMENTOS', '')]
@@ -28,7 +28,6 @@ type
     FAtendimento: Integer;
 //    FDataAtd: TDateTime;
     FExames: TObjectList<TExame>;
-
   public
     { Public declarations }
     constructor Create;
@@ -54,13 +53,13 @@ implementation
 
 constructor TAtendimento.Create;
 begin
-    FExames := TObjectList<TExame>.Create;
+  FExames := TObjectList<TExame>.Create;
 end;
 
 destructor TAtendimento.Destroy;
 begin
-    FExames.Free;
-    inherited;
+  FExames.Free;
+  inherited;
 end;
 
 initialization

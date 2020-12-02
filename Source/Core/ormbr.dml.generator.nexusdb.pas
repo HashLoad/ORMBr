@@ -106,11 +106,6 @@ function TDMLGeneratorNexusDB.GeneratorSelectAll(AClass: TClass;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
-  LPrimaryKey: TPrimaryKeyMapping;
-  LOrderBy: TOrderByMapping;
-  LOrderByList: TStringList;
-  LColumnName: String;
-  LFor: Integer;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
   if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
@@ -125,43 +120,9 @@ begin
   end;
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   // Where
-  if VarToStr(AID) <> '-1' then
-  begin
-    LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
-    if LPrimaryKey <> nil then
-    begin
-      Result := Result + ' WHERE %s ';
-      for LFor := 0 to LPrimaryKey.Columns.Count -1 do
-      begin
-        if LFor > 0 then
-         Continue;
-        LColumnName := LTable.Name + '.' + LPrimaryKey.Columns[LFor];
-        if TVarData(AID).VType = varInteger then
-          Result := Result + LColumnName + ' = ' + IntToStr(AID)
-        else
-          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
-      end;
-    end;
-  end;
+  Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
   // OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
-  if LOrderBy <> nil then
-  begin
-    Result := Result + ' ORDER BY ';
-    LOrderByList := TStringList.Create;
-    try
-      LOrderByList.Duplicates := dupError;
-      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
-      for LFor := 0 to LOrderByList.Count -1 do
-      begin
-        Result := Result + LTable.Name + '.' + LOrderByList[LFor];
-        if LFor < LOrderByList.Count -1 then
-          Result := Result + ', ';
-      end;
-    finally
-      LOrderByList.Free;
-    end;
-  end;
+  Result := Result + GetGeneratorOrderBy(AClass, LTable.Name, AID);
 end;
 
 function TDMLGeneratorNexusDB.GeneratorSelectWhere(AClass: TClass; AWhere,

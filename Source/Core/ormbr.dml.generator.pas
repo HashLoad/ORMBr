@@ -47,7 +47,8 @@ uses
   ormbr.dml.interfaces,
   ormbr.dml.commands,
   ormbr.types.blob,
-  ormbr.rtti.helper,
+  dbcbr.rtti.helper,
+//  ormbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
@@ -68,6 +69,10 @@ type
     FTimeFormat: string;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria): string; virtual;
+    function GetGeneratorWhere(const AClass: TClass; const ATableName: String;
+      const AID: Variant): String;
+    function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
+      const AID: Variant): String;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
     constructor Create; virtual;
@@ -216,9 +221,14 @@ begin
   // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
   begin
-    Result := Result + ' WHERE '
-                     + LTable.Name + '.' + AAssociation.ColumnsNameRef[LFor]
-                     + ' = ' + GetValue(LFor);
+    if LFor = 0 then
+      Result := Result + ' WHERE '
+    else
+      Result := Result + ' AND ';
+    //
+    Result := Result + LTable.Name
+                     + '.' + AAssociation.ColumnsNameRef[LFor]
+                     + ' = ' + GetValue(LFor)
   end;
   // OrderBy
   LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
@@ -303,9 +313,63 @@ begin
     Result := ACommandSelect;
 end;
 
+function TDMLGeneratorAbstract.GetGeneratorOrderBy(const AClass: TClass;
+  const ATableName: String; const AID: Variant): String;
+var
+  LOrderBy: TOrderByMapping;
+  LOrderByList: TStringList;
+  LFor: Integer;
+begin
+  Result := '';
+  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+  if LOrderBy = nil then
+    Exit;
+  Result := Result + ' ORDER BY ';
+  LOrderByList := TStringList.Create;
+  try
+    LOrderByList.Duplicates := dupError;
+    ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
+    for LFor := 0 to LOrderByList.Count -1 do
+    begin
+      Result := Result + ATableName + '.' + LOrderByList[LFor];
+      if LFor < LOrderByList.Count -1 then
+        Result := Result + ', ';
+    end;
+  finally
+    LOrderByList.Free;
+  end;
+end;
+
 function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   Result := '';
+end;
+
+function TDMLGeneratorAbstract.GetGeneratorWhere(const AClass: TClass;
+  const ATableName: String; const AID: Variant): String;
+var
+  LPrimaryKey: TPrimaryKeyMapping;
+  LColumnName: String;
+  LFor: Integer;
+begin
+  Result := '';
+  if VarToStr(AID) = '-1' then
+    Exit;
+  LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+  if LPrimaryKey <> nil then
+  begin
+    Result := Result + ' WHERE ';
+    for LFor := 0 to LPrimaryKey.Columns.Count -1 do
+    begin
+      if LFor > 0 then
+       Continue;
+      LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
+      if TVarData(AID).VType = varInteger then
+        Result := Result + LColumnName + ' = ' + IntToStr(AID)
+      else
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+    end;
+  end;
 end;
 
 function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass;

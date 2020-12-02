@@ -8,9 +8,9 @@ uses
   SysUtils, 
   Generics.Collections, 
   /// orm 
-  ormbr.mapping.attributes, 
-  ormbr.mapping.register,
-  ormbr.types.mapping;
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.register,
+  dbcbr.types.mapping;
 
 type
   [Entity]

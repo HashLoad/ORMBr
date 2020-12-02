@@ -129,6 +129,9 @@ begin
   FConnection := AConnection;
   FExplorer := TMappingExplorer.GetInstance;
   FObjectInternal := M.Create;
+  // ROTINA NÃO FINALIZADA DEU MUITO PROBLEMA, QUEM SABE UM DIA VOLTO A OLHAR
+  // Mapeamento dos campos Lazy Load
+  FExplorer.GetMappingLazy(TObject(FObjectInternal).ClassType);
   // Fabrica de comandos SQL
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
@@ -227,8 +230,8 @@ var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  // Se o driver selecionado for do tipo de banco NoSQL,
-  // o atributo Association deve ser ignorado.
+  // Se o driver selecionado for do tipo de banco NoSQL, o atributo
+  // Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
   LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);

@@ -6,8 +6,9 @@ uses
   Model.Atendimento in 'Model.Atendimento.pas',
   Model.Exame in 'Model.Exame.pas',
   Model.Procedimento in 'Model.Procedimento.pas',
-  UDM_Conexao in 'UDM_Conexao.pas' {DataModule1: TDataModule},
-  Model.Setor in 'Model.Setor.pas';
+  Model.Setor in 'Model.Setor.pas',
+  ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
+  ormbr.form.monitor in '..\..\..\Source\Monitor\ormbr.form.monitor.pas' {CommandMonitor};
 
 {$R *.res}
 
