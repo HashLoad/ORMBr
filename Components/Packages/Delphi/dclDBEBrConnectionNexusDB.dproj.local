@@ -18,8 +18,8 @@
     <Transaction>2019/08/01 17:55:07.000.027,D:\Projetos-Brasil\DBEnginesBr\Components\Packages\DBEnginesBrConnectionNexusDB.dproj=D:\Projetos-Brasil\DBEnginesBr\Components\Packages\Delphi\DBEnginesBrConnectionNexusDB.dproj</Transaction>
     <Transaction>2019/08/01 18:00:02.000.646,=D:\Projetos-Brasil\DBEnginesBr\Components\Source\ormbr.connection.nexusdb.pas</Transaction>
     <Transaction>2019/08/01 18:00:02.000.677,=D:\Projetos-Brasil\DBEnginesBr\Components\Source\ormbr.connection.nexusdb.reg.pas</Transaction>
-    <Transaction>2019/08/01 18:08:00.000.540,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.nexusdb.pas</Transaction>
     <Transaction>2019/08/01 18:08:00.000.588,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.nexusdb.transaction.pas</Transaction>
+    <Transaction>2019/08/01 18:08:00.000.540,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.driver.nexusdb.pas</Transaction>
     <Transaction>2019/08/01 18:08:00.000.642,=D:\Projetos-Brasil\DBEnginesBr\Source\Drivers\ormbr.factory.nexusdb.pas</Transaction>
     <Transaction>2019/08/03 11:36:47.000.901,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEBrConnectionNexusDB.dproj=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\DBEnginesBrConnectionNexusDB.dproj</Transaction>
     <Transaction>2019/08/03 12:23:52.000.391,D:\PROJETOS-Brasil\ORMBr\Components\Source\dbebr.connection.nexusdb.pas=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.connection.nexusdb.pas</Transaction>
@@ -32,11 +32,11 @@
     <Transaction>2020/08/31 11:06:17.000.439,D:\PROJETOS-Brasil\ORMBr\Components\Source\dbebr.connection.nexusdb.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="..\..\..\Components"/>
-    <File Path="..\..\Source"/>
-    <File Path="..\..\Source\dbebr.connection.nexusdb.reg.pas"/>
     <File Path="DBEBrConnectionNexusDB.dcp"/>
     <File Path="designide.dcp"/>
     <File Path="rtl.dcp"/>
+    <File Path="..\..\..\Components"/>
+    <File Path="..\..\Source"/>
+    <File Path="..\..\Source\dbebr.connection.nexusdb.reg.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

@@ -34,24 +34,15 @@ requires
   vcl,
   vclimg,
   dbrtl,
-  DBEBrCore;
+  DBEBrCore,
+  DBCBrCore;
 
 contains
   ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
-  ormbr.mapping.attributes in '..\..\..\Source\Core\ormbr.mapping.attributes.pas',
-  ormbr.mapping.classes in '..\..\..\Source\Core\ormbr.mapping.classes.pas',
-  ormbr.mapping.exceptions in '..\..\..\Source\Core\ormbr.mapping.exceptions.pas',
-  ormbr.mapping.explorer in '..\..\..\Source\Core\ormbr.mapping.explorer.pas',
-  ormbr.mapping.explorerstrategy in '..\..\..\Source\Core\ormbr.mapping.explorerstrategy.pas',
-  ormbr.mapping.popular in '..\..\..\Source\Core\ormbr.mapping.popular.pas',
-  ormbr.mapping.register in '..\..\..\Source\Core\ormbr.mapping.register.pas',
-  ormbr.mapping.repository in '..\..\..\Source\Core\ormbr.mapping.repository.pas',
-  ormbr.mapping.rttiutils in '..\..\..\Source\Core\ormbr.mapping.rttiutils.pas',
   ormbr.objects.helper in '..\..\..\Source\Core\ormbr.objects.helper.pas',
   ormbr.objects.manager.abstract in '..\..\..\Source\Core\ormbr.objects.manager.abstract.pas',
   ormbr.objects.manager in '..\..\..\Source\Core\ormbr.objects.manager.pas',
-  ormbr.rest.json in '..\..\..\Source\Core\ormbr.rest.json.pas',
   ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
   ormbr.session.abstract in '..\..\..\Source\Core\ormbr.session.abstract.pas',
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
@@ -75,7 +66,6 @@ contains
   ormbr.criteria in '..\..\..\Source\Criteria\ormbr.criteria.pas',
   ormbr.criteria.serialize in '..\..\..\Source\Criteria\ormbr.criteria.serialize.pas',
   ormbr.dataset.consts in '..\..\..\Source\Dataset\ormbr.dataset.consts.pas',
-  ormbr.types.mapping in '..\..\..\Source\DBCBr\Core\ormbr.types.mapping.pas',
   ormbr.bind in '..\..\..\Source\Core\ormbr.bind.pas',
   ormbr.objectset.adapter in '..\..\..\Source\Objectset\ormbr.objectset.adapter.pas',
   ormbr.objectset.base.adapter in '..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas',
@@ -83,7 +73,8 @@ contains
   ormbr.session.objectset in '..\..\..\Source\Objectset\ormbr.session.objectset.pas',
   ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas',
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
-  ormbr.encddecd in '..\..\..\Source\Core\ormbr.encddecd.pas',
-  ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas';
+  ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
+  jsonbr.builders in '..\..\..\Source\JSONBr\Core\jsonbr.builders.pas',
+  jsonbr in '..\..\..\Source\JSONBr\Core\jsonbr.pas';
 
 end.

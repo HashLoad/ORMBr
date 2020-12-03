@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = framePacotes1.ORMBrDriversLinks_dpk
+  ActiveControl = wizPgInicio
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsNone
   BorderWidth = 1
@@ -25,7 +25,7 @@ object frmPrincipal: TfrmPrincipal
     Top = 0
     Width = 722
     Height = 639
-    ActivePage = wizPgPacotes
+    ActivePage = wizPgInicio
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -1005,6 +1005,10 @@ object frmPrincipal: TfrmPrincipal
       Color = 3417897
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 65
@@ -1122,7 +1126,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 17
         Top = 27
         Width = 487
-        Height = 24
+        Height = 19
         Color = 4865343
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
@@ -1233,6 +1237,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1271,198 +1279,130 @@ object frmPrincipal: TfrmPrincipal
           ExplicitWidth = 550
           ExplicitHeight = 479
           inherited Label6: TLabel
-            Top = 9
+            ExplicitTop = 9
           end
           inherited Bevel2: TBevel
-            Top = 14
+            ExplicitTop = 14
           end
           inherited Label13: TLabel
-            Top = 446
+            ExplicitTop = 446
           end
           inherited Label1: TLabel
-            Top = 446
+            ExplicitTop = 446
           end
           inherited Label2: TLabel
-            Top = 29
+            ExplicitTop = 29
           end
           inherited Label3: TLabel
-            Top = 31
+            ExplicitTop = 31
           end
           inherited Label7: TLabel
-            Top = 94
+            ExplicitTop = 94
           end
           inherited Bevel1: TBevel
-            Top = 101
+            ExplicitTop = 101
           end
           inherited Label8: TLabel
-            Top = 113
+            ExplicitTop = 113
           end
           inherited Label9: TLabel
-            Top = 112
-          end
-          inherited Label10: TLabel
-            Top = 226
-          end
-          inherited Label11: TLabel
-            Top = 248
-          end
-          inherited Label12: TLabel
-            Top = 248
-          end
-          inherited Label15: TLabel
-            Top = 271
-          end
-          inherited Label16: TLabel
-            Top = 271
-          end
-          inherited Label17: TLabel
-            Top = 294
-          end
-          inherited Label18: TLabel
-            Top = 294
-          end
-          inherited Label14: TLabel
-            Top = 316
-          end
-          inherited Label19: TLabel
-            Top = 316
-          end
-          inherited Label20: TLabel
-            Top = 338
-          end
-          inherited Label21: TLabel
-            Top = 338
-          end
-          inherited Label22: TLabel
-            Top = 360
-          end
-          inherited Label23: TLabel
-            Top = 360
-          end
-          inherited Label24: TLabel
-            Top = 382
-          end
-          inherited Label25: TLabel
-            Top = 382
-          end
-          inherited Label26: TLabel
-            Top = 404
-          end
-          inherited Label27: TLabel
-            Top = 404
-          end
-          inherited Label28: TLabel
-            Top = 426
-          end
-          inherited Label29: TLabel
-            Top = 426
-          end
-          inherited Label4: TLabel
-            Top = 72
-          end
-          inherited Label5: TLabel
-            Top = 74
-          end
-          inherited Label30: TLabel
-            Top = 51
-          end
-          inherited Label31: TLabel
-            Top = 53
-          end
-          inherited Bevel3: TBevel
-            Top = 232
-          end
-          inherited Label33: TLabel
-            Top = 161
-          end
-          inherited Label34: TLabel
-            Top = 161
-          end
-          inherited Label35: TLabel
-            Top = 141
-          end
-          inherited Bevel5: TBevel
-            Top = 147
-          end
-          inherited Label36: TLabel
-            Top = 182
-          end
-          inherited Label37: TLabel
-            Top = 182
-          end
-          inherited Label38: TLabel
-            Top = 203
-          end
-          inherited Label39: TLabel
-            Top = 203
-          end
-          inherited DBEBrConnectionMongoWire_dpk: TCheckBox
-            Top = 445
-            ExplicitTop = 445
-          end
-          inherited ORMBrLibrary_dpk: TCheckBox
-            Top = 28
-            ExplicitTop = 28
-          end
-          inherited ORMBrDriversLinks_dpk: TCheckBox
-            Top = 112
             ExplicitTop = 112
           end
-          inherited DBEBrConnectionFireDAC_dpk: TCheckBox
-            Top = 247
-            ExplicitTop = 247
+          inherited Label10: TLabel
+            ExplicitTop = 226
           end
-          inherited DBEBrConnectionDBExpress_dpk: TCheckBox
-            Top = 270
-            ExplicitTop = 270
+          inherited Label11: TLabel
+            ExplicitTop = 248
           end
-          inherited DBEBrConnectionZeos_dpk: TCheckBox
-            Top = 293
-            ExplicitTop = 293
+          inherited Label12: TLabel
+            ExplicitTop = 248
           end
-          inherited DBEBrConnectionUniDAC_dpk: TCheckBox
-            Top = 315
-            ExplicitTop = 315
+          inherited Label15: TLabel
+            ExplicitTop = 271
           end
-          inherited DBEBrConnectionFIBPlus_dpk: TCheckBox
-            Top = 337
-            ExplicitTop = 337
+          inherited Label16: TLabel
+            ExplicitTop = 271
           end
-          inherited DBEBrConnectionSQLDirect_dpk: TCheckBox
-            Top = 359
-            ExplicitTop = 359
+          inherited Label17: TLabel
+            ExplicitTop = 294
           end
-          inherited DBEBrConnectionIBObjects_dpk: TCheckBox
-            Top = 381
-            ExplicitTop = 381
+          inherited Label18: TLabel
+            ExplicitTop = 294
           end
-          inherited DBEBrConnectionNexusDB_dpk: TCheckBox
-            Top = 403
-            ExplicitTop = 403
+          inherited Label14: TLabel
+            ExplicitTop = 316
           end
-          inherited DBEBrConnectionADO_dpk: TCheckBox
-            Top = 425
-            ExplicitTop = 425
+          inherited Label19: TLabel
+            ExplicitTop = 316
           end
-          inherited ORMBrCore_dpk: TCheckBox
-            Top = 71
-            ExplicitTop = 71
+          inherited Label20: TLabel
+            ExplicitTop = 338
           end
-          inherited DBEBrCore_dpk: TCheckBox
-            Top = 50
+          inherited Label21: TLabel
+            ExplicitTop = 338
+          end
+          inherited Label22: TLabel
+            ExplicitTop = 360
+          end
+          inherited Label23: TLabel
+            ExplicitTop = 360
+          end
+          inherited Label24: TLabel
+            ExplicitTop = 382
+          end
+          inherited Label25: TLabel
+            ExplicitTop = 382
+          end
+          inherited Label26: TLabel
+            ExplicitTop = 404
+          end
+          inherited Label27: TLabel
+            ExplicitTop = 404
+          end
+          inherited Label28: TLabel
+            ExplicitTop = 426
+          end
+          inherited Label29: TLabel
+            ExplicitTop = 426
+          end
+          inherited Label4: TLabel
+            ExplicitTop = 72
+          end
+          inherited Label5: TLabel
+            ExplicitTop = 74
+          end
+          inherited Label30: TLabel
             ExplicitTop = 50
           end
-          inherited ORMBrManagerClientDataSet_dpk: TCheckBox
-            Top = 159
-            ExplicitTop = 159
+          inherited Label31: TLabel
+            ExplicitTop = 53
           end
-          inherited ORMBrManagerFDMemTable_dpk: TCheckBox
-            Top = 180
-            ExplicitTop = 180
+          inherited Bevel3: TBevel
+            ExplicitTop = 232
           end
-          inherited ORMBrManagerObjectSet_dpk: TCheckBox
-            Top = 201
-            ExplicitTop = 201
+          inherited Label33: TLabel
+            ExplicitTop = 161
+          end
+          inherited Label34: TLabel
+            ExplicitTop = 161
+          end
+          inherited Label35: TLabel
+            ExplicitTop = 141
+          end
+          inherited Bevel5: TBevel
+            ExplicitTop = 147
+          end
+          inherited Label36: TLabel
+            ExplicitTop = 182
+          end
+          inherited Label37: TLabel
+            ExplicitTop = 182
+          end
+          inherited Label38: TLabel
+            ExplicitTop = 203
+          end
+          inherited Label39: TLabel
+            ExplicitTop = 203
           end
         end
       end

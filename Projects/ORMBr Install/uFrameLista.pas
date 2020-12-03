@@ -87,6 +87,9 @@ type
     Label38: TLabel;
     Label39: TLabel;
     ORMBrManagerObjectSet_dpk: TCheckBox;
+    Label32: TLabel;
+    Label40: TLabel;
+    DBCBrCore_dpk: TCheckBox;
     procedure btnPacotesMarcarTodosClick(Sender: TObject);
     procedure btnPacotesDesmarcarTodosClick(Sender: TObject);
     procedure VerificarCheckboxes(Sender: TObject);

@@ -56,11 +56,11 @@
     <Transaction>2020/08/31 11:34:43.000.445,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.manager.fdmemtable.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="..\..\..\Components"/>
-    <File Path="..\..\Source"/>
-    <File Path="..\..\Source\ormbr.manager.fdmemtable.reg.pas"/>
     <File Path="designide.dcp"/>
     <File Path="ORMBrManagerFDMemTable.dcp"/>
     <File Path="rtl.dcp"/>
+    <File Path="..\..\..\Components"/>
+    <File Path="..\..\Source"/>
+    <File Path="..\..\Source\ormbr.manager.fdmemtable.reg.pas"/>
   </ProjectSortOrder>
 </BorlandProject>

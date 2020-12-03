@@ -28,17 +28,17 @@
     <Transaction>2020/08/31 11:07:19.000.570,D:\PROJETOS-Brasil\ORMBr\Components\Source\dbebr.connection.nexusdb.reg.pas=</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="DBEBrCore.dcp"/>
+    <File Path="rtl.dcp"/>
     <File Path="..\..\..\Components"/>
     <File Path="..\..\Source"/>
     <File Path="..\..\Source\dbebr.connection.nexusdb.pas"/>
-    <File Path="..\..\..\..\ORMBr"/>
+    <File Path="D:\ORMBr Dev"/>
     <File Path="..\..\..\Source"/>
     <File Path="..\..\..\Source\DBEBr"/>
     <File Path="..\..\..\Source\DBEBr\Drivers"/>
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.pas"/>
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.driver.nexusdb.transaction.pas"/>
     <File Path="..\..\..\Source\DBEBr\Drivers\ormbr.factory.nexusdb.pas"/>
-    <File Path="DBEBrCore.dcp"/>
-    <File Path="rtl.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>
