@@ -22,13 +22,13 @@ uses
   ExtCtrls,
   Rtti,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.container.dataset.interfaces,
   ormbr.container.clientdataset,
   ormbr.container.objectset.interfaces,
   ormbr.container.objectset,
-  ormbr.factory.wire.mongodb,
+  dbebr.factory.wire.mongodb,
   ormbr.json,
   ormbr.rest.json,
   /// orm model

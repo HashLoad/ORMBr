@@ -17,8 +17,8 @@ uses
   DB,
   /// ORMBr
   ormbr.manager.dataset,
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   ormbr.dml.generator.firebird,
   /// modelos usados
   orion.model.empresa,
@@ -121,6 +121,8 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  FDConnection1.Params.Database :=
+    ExtractFilePath(GetModuleName(HInstance)) + 'ORMBRTESTE.FDB';
   FConn := TFactoryFireDAC.Create(FDConnection1, dnFirebird);
   FConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 

@@ -37,16 +37,16 @@ uses
   SysUtils,
   TypInfo,
   Variants,
-  ormbr.core.consts,
   ormbr.command.abstract,
-  ormbr.mapping.classes,
-  dbebr.factory.interfaces,
   ormbr.dml.commands,
-  ormbr.rtti.helper,
+  ormbr.core.consts,
+  ormbr.types.blob,
   ormbr.objects.helper,
-  ormbr.mapping.rttiutils,
-  ormbr.mapping.explorer,
-  ormbr.types.blob;
+  ormbr.objects.utils,
+  dbebr.factory.interfaces,
+  dbcbr.mapping.classes,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.explorer;
 
 type
   TCommandInserter = class(TDMLCommandAbstract)
@@ -86,14 +86,13 @@ var
   LPrimaryKey: TPrimaryKeyMapping;
   LBooleanValue: Integer;
 begin
-  FCommand := FGeneratorCommand.GeneratorInsert(AObject);
-  Result := FCommand;
+  FResultCommand := FGeneratorCommand.GeneratorInsert(AObject);
+  Result := FResultCommand;
   FParams.Clear;
   // Alimenta a lista de parâmetros do comando Insert com os valores do Objeto.
   LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
-
   LPrimaryKey := TMappingExplorer.GetInstance
                                  .GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do

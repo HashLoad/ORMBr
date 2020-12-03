@@ -35,7 +35,7 @@ uses
   SysUtils,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
-  ormbr.rtti.helper;
+  dbcbr.rtti.helper;
 
 type
   TCommandDeleter = class(TDMLCommandAbstract)
@@ -50,8 +50,8 @@ implementation
 uses
   ormbr.objects.helper,
   ormbr.core.consts,
-  ormbr.mapping.classes,
-  ormbr.mapping.explorer;
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer;
 
 { TCommandDeleter }
 
@@ -83,8 +83,8 @@ begin
       Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
   end;
-  FCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);
-  Result := FCommand;
+  FResultCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);
+  Result := FResultCommand;
 end;
 
 end.

@@ -33,19 +33,18 @@ uses
   Classes,
   SysUtils,
   StrUtils,
+  Variants,
   Rtti,
   ormbr.dml.generator,
-  ormbr.mapping.classes,
-  ormbr.mapping.explorer,
-  dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
-  ormbr.criteria;
+  ormbr.criteria,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer,
+  dbebr.factory.interfaces;
 
 type
-  /// <summary>
-  ///   Classe de banco de dados Firebird
-  /// </summary>
+  // Classe de banco de dados Firebird
   TDMLGeneratorFirebird = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
@@ -82,42 +81,36 @@ end;
 function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   inherited;
-  Result := ACriteria.AsString;
-  if FDMLCriteriaFound then
-    Exit;
-  ACriteria.AST.Select.Columns.Columns[0].Name := 'FIRST %s SKIP %s '
-                                                  + ACriteria.AST.Select.Columns.Columns[0].Name;
+  ACriteria.AST.Select
+           .Columns
+           .Columns[0].Name := 'FIRST %s SKIP %s ' + ACriteria.AST.Select
+                                                              .Columns
+                                                              .Columns[0].Name;
   Result := ACriteria.AsString;
 end;
 
 function TDMLGeneratorFirebird.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
-  LTable: TTableMapping;
   LCriteria: ICriteria;
-  LOrderBy: TOrderByMapping;
-  LOrderByList: TStringList;
-  LFor: Integer;
+  LTable: TTableMapping;
 begin
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, AID);
-  /// OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
-  if LOrderBy <> nil then
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
   begin
-    LOrderByList := TStringList.Create;
-    try
-      LOrderByList.Duplicates := dupError;
-      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
-      for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
-    finally
-      LOrderByList.Free;
-    end;
+    LCriteria := GetCriteriaSelect(AClass, AID);
+    Result := LCriteria.AsString;
+    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
+    if APageSize > -1 then
+      Result := GetGeneratorSelect(LCriteria);
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
   end;
-  Result := LCriteria.AsString;
-  if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  // Where
+  Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
+  // OrderBy
+  Result := Result + GetGeneratorOrderBy(AClass, LTable.Name, AID);
 end;
 
 function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
@@ -125,12 +118,20 @@ function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
 var
   LCriteria: ICriteria;
 begin
-  LCriteria := GetCriteriaSelect(AClass, -1);
-  LCriteria.Where(AWhere);
-  LCriteria.OrderBy(AOrderBy);
-  Result := LCriteria.AsString;
-  if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, -1);
+    Result := LCriteria.AsString;
+    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
+    if APageSize > -1 then
+      Result := GetGeneratorSelect(LCriteria);
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
+  Result := Result + ' WHERE ' + AWhere;
+  if Length(AOrderBy) > 0 then
+    Result := Result + ' ORDER BY ' + AOrderBy;
 end;
 
 function TDMLGeneratorFirebird.GeneratorAutoIncCurrentValue(AObject: TObject;

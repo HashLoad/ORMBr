@@ -40,14 +40,14 @@ uses
   Variants,
   Generics.Collections,
   /// orm
-  ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils,
-  ormbr.mapping.exceptions,
-  dbebr.factory.interfaces,
-  ormbr.mapping.classes,
-  ormbr.rtti.helper,
+  ormbr.objects.utils,
   ormbr.objects.helper,
-  ormbr.types.nullable;
+  ormbr.types.nullable,
+  dbcbr.rtti.helper,
+  dbebr.factory.interfaces,
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.exceptions,
+  dbcbr.mapping.classes;
 
 type
   IBind = interface
@@ -133,10 +133,11 @@ implementation
 uses
   ormbr.dataset.fields,
   ormbr.dataset.consts,
+  ormbr.rtti.helper,
   ormbr.core.consts,
-  ormbr.types.mapping,
-  ormbr.mapping.explorer,
-  ormbr.types.blob;
+  ormbr.types.blob,
+  dbcbr.types.mapping,
+  dbcbr.mapping.explorer;
 
 { TBind }
 
@@ -669,9 +670,9 @@ begin
     while not ASource.Eof do
     begin
       ATarget.Append;
-      // Usando Mongo com FireDAC o TField[0] é do tipo TDataSet
-      // (TDataSetField) e esse DataSet, vem com 1 TField do tipo TADTField,
-      // nesse caso o tratamento especial.
+      // Usando Mongo com FireDAC o TField[0] é do tipo TDataSet (TDataSetField)
+      // e esse DataSet, vem com 1 TField do tipo TADTField, nesse caso o
+      // tratamento especial.
       if ASource.Fields[0] is TADTField then
       begin
         for LFor := 0 to TADTField(ASource.Fields[0]).FieldCount -1 do
@@ -889,12 +890,10 @@ begin
       Continue;
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
-    /// <summary>
-    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-    ///   coleção para a outra, dessa forma antes de popular a propriedade da
-    ///   classe, é verificado se o nome dessa propriedade existe na coleção
-    ///   de dados selecionada.
-    /// </summary>
+    // Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    // coleção para a outra, dessa forma antes de popular a propriedade da
+    // classe, é verificado se o nome dessa propriedade existe na coleção
+    // de dados selecionada.
     LField := ADataSet.FieldList.Find(LColumn.ColumnName);
     if LField = nil then
       LField := ADataSet.FieldList.Find('Elem.' + LColumn.ColumnName);
@@ -916,12 +915,10 @@ begin
   begin
     if not LColumn.ColumnProperty.IsWritable then
       Continue;
-    /// <summary>
-    ///   Em Banco NoSQL a estrutura de campos pode ser diferente de uma
-    ///   coleção para a outra, dessa forma antes de popular a propriedade da
-    ///   classe, é verificado se o nome dessa propriedade existe na coleção
-    ///   de dados selecionada.
-    /// </summary>
+    // Em Banco NoSQL a estrutura de campos pode ser diferente de uma
+    // coleção para a outra, dessa forma antes de popular a propriedade da
+    // classe, é verificado se o nome dessa propriedade existe na coleção
+    // de dados selecionada.
     if AADTField.Fields.FindField(LColumn.ColumnName) <> nil then
       SetFieldToProperty(AADTField.Fields.FieldByName(LColumn.ColumnName),
                          LColumn, AObject);

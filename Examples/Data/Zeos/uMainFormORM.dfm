@@ -243,12 +243,14 @@ object Form3: TForm3
     ControlsCodePage = cCP_UTF16
     AutoEncodeStrings = True
     Catalog = ''
+    Properties.Strings = (
+      'AutoEncodeStrings=True')
     HostName = ''
     Port = 0
     Database = '..\Database\database.db3'
     User = ''
     Password = ''
-    Protocol = 'sqlite-3'
+    Protocol = 'sqlite'
     Left = 56
     Top = 62
   end

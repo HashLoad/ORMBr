@@ -39,20 +39,18 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
-  ormbr.core.consts,
   ormbr.session.abstract,
-  ormbr.mapping.classes,
-  ormbr.types.mapping,
+  ormbr.objectset.abstract,
+  ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.types.blob,
   ormbr.objects.helper,
-  ormbr.mapping.explorer,
-  ormbr.objectset.abstract;
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping,
+  dbcbr.mapping.explorer;
 
 type
-  /// <summary>
-  ///   M - Object M
-  /// </summary>
+  // M - Object M
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
   private
     procedure AddObjectState(const ASourceObject: TObject);
@@ -86,10 +84,6 @@ type
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
-    {$IFDEF USEBINDSOURCE}
-    procedure SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
-    procedure SetOnUpdateEvent(AProc: TProc<TObject>);
-    {$ENDIF}
   end;
 
 implementation
@@ -119,17 +113,11 @@ var
 begin
   if not ASourceObject.GetType(LRttiType) then
     Exit;
-  /// <summary>
-  ///   Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
-  /// </summary>
+  // Cria novo objeto para guarda-lo na lista com o estado atual do ASourceObject.
   LStateObject := ASourceObject.ClassType.Create;
-  /// <summary>
-  ///   Gera uma chave de identificação unica para cada item da lista
-  /// </summary>
+  // Gera uma chave de identificação unica para cada item da lista
   LKey := GenerateKey(ASourceObject);
-  /// <summary>
-  ///   Guarda o novo objeto na lista, identificado pela chave
-  /// </summary>
+  // Guarda o novo objeto na lista, identificado pela chave
   FObjectState.Add(LKey, LStateObject);
   try
     for LProperty in LRttiType.GetProperties do
@@ -314,7 +302,7 @@ begin
       else
         FSession.Insert(LObject);
     end;
-    /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+    // Executa comando em cascade de cada objeto da lista
     CascadeActionsExecute(LObject, ACascadeAction);
   end;
 end;
@@ -365,21 +353,9 @@ begin
     else
       FSession.Insert(LObject);
   end;
-  /// <summary> Executa comando em cascade de cada objeto da lista </summary>
+  // Executa comando em cascade de cada objeto da lista
   CascadeActionsExecute(LObject, ACascadeAction);
 end;
-
-{$IFDEF USEBINDSOURCE}
-procedure TObjectSetBaseAdapter<M>.SetOnPropertyEvent(AProc: TProc<TRttiProperty, String>);
-begin
-  FSession.OnPropertyEvent := Aproc;
-end;
-
-procedure TObjectSetBaseAdapter<M>.SetOnUpdateEvent(AProc: TProc<TObject>);
-begin
-  FSession.OnUpdateEvent := AProc;
-end;
-{$ENDIF}
 
 procedure TObjectSetBaseAdapter<M>.SetAutoIncValueChilds(const AObject: TObject;
   const AColumn: TColumnMapping);

@@ -47,10 +47,10 @@ uses
   {$ENDIF}
   ormbr.bind,
   ormbr.dataset.fields,
-  ormbr.mapping.classes,
-  ormbr.types.mapping,
-  ormbr.mapping.exceptions,
-  ormbr.dataset.base.adapter;
+  ormbr.dataset.base.adapter,
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping,
+  dbcbr.mapping.exceptions;
 
 type
   // M - Object M
@@ -96,9 +96,8 @@ uses
   {$ENDIF}
   ormbr.objects.helper,
   ormbr.rtti.helper,
-  ormbr.mapping.explorer,
-  ormbr.mapping.attributes,
-  ormbr.mapping.rttiutils;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.attributes;
 
 { TRESTDataSetAdapter<M> }
 

@@ -37,8 +37,8 @@ uses
   Generics.Collections,
   ormbr.dataset.fields,
   ormbr.session.abstract,
-  ormbr.mapping.classes,
-  ormbr.rtti.helper;
+  dbcbr.mapping.classes,
+  dbcbr.rtti.helper;
 
 type
   // M - Object M
@@ -60,7 +60,7 @@ type
 implementation
 
 uses
-  ormbr.mapping.explorer;
+  dbcbr.mapping.explorer;
 
 { TDataSetAbstract<M> }
 

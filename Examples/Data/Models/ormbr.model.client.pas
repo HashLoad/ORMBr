@@ -8,10 +8,10 @@ uses
   SysUtils, 
   Generics.Collections, 
   /// orm 
-  ormbr.mapping.attributes,
+  dbcbr.mapping.attributes,
   ormbr.types.nullable,
-  ormbr.types.mapping,
-  ormbr.mapping.register,
+  dbcbr.types.mapping,
+  dbcbr.mapping.register,
   ormbr.types.blob;
 
 type

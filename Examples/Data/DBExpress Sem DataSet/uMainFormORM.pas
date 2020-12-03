@@ -22,8 +22,8 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
-  ormbr.factory.dbexpress,
+  dbebr.factory.interfaces,
+  dbebr.factory.dbexpress,
   /// orm injection dependency
   ormbr.criteria,
   ormbr.container.objectset,

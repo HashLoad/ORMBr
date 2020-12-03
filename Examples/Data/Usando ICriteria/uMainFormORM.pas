@@ -22,10 +22,10 @@ uses
   ExtCtrls,
   Generics.Collections,
   /// orm factory
-  ormbr.factory.interfaces,
+  dbebr.factory.interfaces,
   /// orm injection dependency
   ormbr.criteria,
-  ormbr.factory.firedac,
+  dbebr.factory.firedac,
   /// orm model
   ormbr.model.master,
   ormbr.model.detail,
@@ -91,7 +91,7 @@ begin
                   .SetConnection(oConn)
                     .SQL(LSQL)
                       .AsResultSet;
-  if LResultSet.DataSet.RecordCount > 0 then
+  if LResultSet.RecordCount > 0 then
     ShowMessage('Teste');
 
   try
@@ -125,7 +125,7 @@ begin
                   .SetConnection(oConn)
                     .SQL(LSQL)
                       .AsResultSet;
-  if LResultSet.DataSet.RecordCount > 0 then
+  if LResultSet.RecordCount > 0 then
     ShowMessage('Teste');
 
   try

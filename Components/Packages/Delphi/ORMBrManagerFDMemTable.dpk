@@ -32,10 +32,10 @@ package ORMBrManagerFDMemTable;
 requires
   rtl,
   dsnap,
-  DBEBrCore,
   FireDAC,
   FireDACCommonDriver,
   FireDACCommon,
+  DBEBrCore,
   ORMBrCore;
 
 contains

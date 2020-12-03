@@ -78,7 +78,7 @@ type
 implementation
 
 uses
-  ormbr.rtti.helper;
+  dbcbr.rtti.helper;
 
 { TLazy<T> }
 
@@ -134,13 +134,13 @@ end;
 { Lazy<T> }
 
 class constructor Lazy<T>.Create;
-var
-  Context: TRttiContext;
 begin
-  Context.GetType(TypeInfo(T));
+
 end;
 
 function Lazy<T>.GetValue: T;
+var
+  LTypeInfo: PTypeInfo;
 begin
   if not Assigned(FLazy) then
     FLazy := TLazy<T>.Create(function: T
@@ -154,15 +154,11 @@ begin
                                LRttiType := LContext.GetType(TypeInfo(T));
                                if LRttiType = nil then
                                  Exit;
-
                                LMethod := LRttiType.GetMethod('Create');
                                if Assigned(LMethod) then
                                begin
                                   LObject := LRttiType.AsInstance.MetaclassType.Create;
-                                  if LRttiType.IsList then
-                                    LValue := LMethod.Invoke(LObject, [True])
-                                  else
-                                    LValue := LMethod.Invoke(LObject, []);
+                                  LValue := LMethod.Invoke(LObject, []);
                                end;
                                Result := LValue.AsType<T>;
                              end);

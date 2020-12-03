@@ -43,11 +43,11 @@ uses
   /// orm
   ormbr.criteria,
   ormbr.bind,
-  ormbr.mapping.classes,
-  ormbr.types.mapping,
   ormbr.session.dataset,
-  dbebr.factory.interfaces,
-  ormbr.dataset.base.adapter;
+  ormbr.dataset.base.adapter,
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping,
+  dbebr.factory.interfaces;
 
 type
   TDataSetHack = class(TDataSet)
@@ -75,11 +75,11 @@ type
 implementation
 
 uses
-  ormbr.mapping.explorer,
+  ormbr.dataset.fields,
   ormbr.objects.helper,
   ormbr.rtti.helper,
-  ormbr.dataset.fields,
-  ormbr.mapping.exceptions;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.exceptions;
 
 { TDataSetAdapter<M> }
 

@@ -38,7 +38,7 @@ uses
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
-  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef;
+  FireDAC.Phys.MySQL, FireDAC.Phys.MySQLDef, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TStringGridHack = class(TStringGrid)
@@ -106,10 +106,9 @@ implementation
 uses
   StrUtils,
   ormbr.form.monitor,
-  ormbr.mapping.explorer,
+  dbcbr.mapping.explorer,
   ormbr.objects.helper,
   ormbr.json,
-  ormbr.rest.json,
   ormbr.rtti.helper;
 
 {$R *.dfm}

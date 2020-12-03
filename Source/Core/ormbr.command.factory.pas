@@ -33,13 +33,13 @@ uses
   DB,
   Rtti,
   Generics.Collections,
-  dbebr.factory.interfaces,
-  ormbr.mapping.classes,
   ormbr.command.selecter,
   ormbr.command.inserter,
   ormbr.command.deleter,
   ormbr.command.updater,
-  ormbr.types.mapping;
+  dbebr.factory.interfaces,
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping;
 
 type
   TDMLCommandFactoryAbstract = class abstract
@@ -156,87 +156,63 @@ begin
 end;
 
 procedure TDMLCommandFactory.GeneratorDelete(const AObject: TObject);
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandDeleter.GenerateDelete(AObject);
-  FDMLCommand := FCommandDeleter.GetDMLCommand;
+  FDMLCommand := FCommandDeleter.GenerateDelete(AObject);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandDeleter.Params);
-
-  FConnection.ExecuteDirect(LSQLText, FCommandDeleter.Params);
+  FConnection.ExecuteDirect(FDMLCommand, FCommandDeleter.Params);
 end;
 
 procedure TDMLCommandFactory.GeneratorInsert(const AObject: TObject);
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandInserter.GenerateInsert(AObject);
-  FDMLCommand := FCommandInserter.GetDMLCommand;
+  FDMLCommand := FCommandInserter.GenerateInsert(AObject);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandInserter.Params);
-
-  FConnection.ExecuteDirect(LSQLText, FCommandInserter.Params);
+  FConnection.ExecuteDirect(FDMLCommand, FCommandInserter.Params);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter
-                .GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const APageSize, APageNext: Integer): IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelect(ASQL: String;
   APageSize: Integer): IDBResultSet;
 begin
   FCommandSelecter.SetPageSize(APageSize);
-
   FDMLCommand := ASQL;
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
   Result := FConnection.ExecuteSQL(ASQL);
 end;
 
 function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer): IDBResultSet;
-var
-  LSQLText: String;
 begin
   FCommandSelecter.SetPageSize(APageSize);
-
-  LSQLText := FCommandSelecter.GenerateSelectAll(AClass);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateSelectAll(AClass);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectAssociation(const AOwner: TObject;
@@ -247,30 +223,22 @@ end;
 
 function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectWhere(const AClass: TClass;
@@ -282,45 +250,33 @@ end;
 
 function TDMLCommandFactory.GeneratorSelectID(AClass: TClass;
   AID: Variant): IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateSelectID(AClass, AID);
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateSelectID(AClass, AID);
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket: IDBResultSet;
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandSelecter.GenerateNextPacket;
-  FDMLCommand := FCommandSelecter.GetDMLCommand;
+  FDMLCommand := FCommandSelecter.GenerateNextPacket;
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-
-  Result := FConnection.ExecuteSQL(LSQLText);
+  Result := FConnection.ExecuteSQL(FDMLCommand);
 end;
 
 procedure TDMLCommandFactory.GeneratorUpdate(const AObject: TObject;
   const AModifiedFields: TDictionary<string, string>);
-var
-  LSQLText: String;
 begin
-  LSQLText := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
-  FDMLCommand := FCommandUpdater.GetDMLCommand;
+  FDMLCommand := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
   if FDMLCommand = '' then
     Exit;
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandUpdater.Params);
-
-  FConnection.ExecuteDirect(LSQLtext, FCommandUpdater.Params);
+  FConnection.ExecuteDirect(FDMLCommand, FCommandUpdater.Params);
 end;
 
 end.

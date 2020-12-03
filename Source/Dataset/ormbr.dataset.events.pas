@@ -32,8 +32,7 @@ interface
 uses
   DB,
   Rtti,
-  TypInfo,
-  ormbr.mapping.rttiutils;
+  TypInfo;
 
 type
   TDataSetEvents = class abstract

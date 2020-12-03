@@ -40,9 +40,9 @@ uses
   Generics.Collections,
   ormbr.core.consts,
   ormbr.rtti.helper,
-  ormbr.mapping.explorer,
-  ormbr.mapping.classes,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.attributes;
 
 type
   TORMBrObject = class
@@ -64,9 +64,6 @@ type
   end;
 
 implementation
-
-var
-  Context: TRttiContext;
 
 { TObjectHelper }
 
@@ -157,27 +154,40 @@ begin
 end;
 
 function TObjectHelper.&GetType(out AType: TRttiType): Boolean;
+var
+  LContext: TRttiContext;
 begin
   Result := False;
   if Assigned(Self) then
   begin
-    AType  := Context.GetType(Self.ClassType);
-    Result := Assigned(AType);
+    LContext := TRttiContext.Create;
+    try
+      AType  := LContext.GetType(Self.ClassType);
+      Result := Assigned(AType);
+    finally
+      LContext.Free;
+    end;
   end;
 end;
 
 function TObjectHelper.MethodCall(const AMethodName: string;
   const AParameters: array of TValue): TValue;
 var
+  LContext: TRttiContext;
   LRttiType: TRttiType;
   LMethod: TRttiMethod;
 begin
-  LRttiType := Context.GetType(Self.ClassType);
-  LMethod   := LRttiType.GetMethod(AMethodName);
-  if Assigned(LMethod) then
-     Result := LMethod.Invoke(Self, AParameters)
-  else
-     raise Exception.CreateFmt('Cannot find method "%s" in the object', [AMethodName]);
+  LContext := TRttiContext.Create;
+  try
+    LRttiType := LContext.GetType(Self.ClassType);
+    LMethod   := LRttiType.GetMethod(AMethodName);
+    if Assigned(LMethod) then
+       Result := LMethod.Invoke(Self, AParameters)
+    else
+       raise Exception.CreateFmt('Cannot find method "%s" in the object', [AMethodName]);
+  finally
+    LContext.Free;
+  end;
 end;
 
 procedure TObjectHelper.SetDefaultValue;

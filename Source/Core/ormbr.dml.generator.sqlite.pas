@@ -32,19 +32,18 @@ interface
 uses
   Classes,
   SysUtils,
+  Variants,
   Rtti,
   ormbr.dml.generator,
   ormbr.driver.register,
-  dbebr.factory.interfaces,
-  ormbr.mapping.classes,
-  ormbr.mapping.explorer,
   ormbr.dml.commands,
-  ormbr.criteria;
+  ormbr.criteria,
+  dbebr.factory.interfaces,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer;
 
 type
-  /// <summary>
-  /// Classe de conexão concreta com dbExpress
-  /// </summary>
+  // Classe de conexão concreta com dbExpress
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
@@ -81,31 +80,25 @@ end;
 function TDMLGeneratorSQLite.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
-  LTable: TTableMapping;
   LCriteria: ICriteria;
-  LOrderBy: TOrderByMapping;
-  LOrderByList: TStringList;
-  LFor: Integer;
+  LTable: TTableMapping;
 begin
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
-  LCriteria := GetCriteriaSelect(AClass, AID);
-  /// OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
-  if LOrderBy <> nil then
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
   begin
-    LOrderByList := TStringList.Create;
-    try
-      LOrderByList.Duplicates := dupError;
-      ExtractStrings([',', ';'], [' '], PChar(LOrderBy.ColumnsName), LOrderByList);
-      for LFor := 0 to LOrderByList.Count -1 do
-        LCriteria.OrderBy(LTable.Name + '.' + LOrderByList[LFor]);
-    finally
-      LOrderByList.Free;
-    end;
+    LCriteria := GetCriteriaSelect(AClass, AID);
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
   end;
-  Result := LCriteria.AsString;
+  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  // Where
+  Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
+  // OrderBy
+  Result := Result + GetGeneratorOrderBy(AClass, LTable.Name, AID);
+  // Monta SQL para paginação
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+    Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
@@ -113,20 +106,24 @@ function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
 var
   LCriteria: ICriteria;
 begin
-  LCriteria := GetCriteriaSelect(AClass, -1);
-  LCriteria.Where(AWhere);
-  LCriteria.OrderBy(AOrderBy);
-  Result := LCriteria.AsString;
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  begin
+    LCriteria := GetCriteriaSelect(AClass, -1);
+    Result := LCriteria.AsString;
+    // Faz cache do comando padrão
+    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+  end;
+  Result := Result + ' WHERE ' + AWhere;
+  Result := Result + 'ORDER BY ' + AOrderBy;
+  // Monta SQL para paginação
   if APageSize > -1 then
-    Result := GetGeneratorSelect(LCriteria);
+    Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
 function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
-  Result := ACriteria.AsString;
-  if FDMLCriteriaFound then
-    Exit;
-  Result := Result + ' LIMIT %s OFFSET %s';
+  Result := ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;

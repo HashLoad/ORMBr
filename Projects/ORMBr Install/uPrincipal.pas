@@ -229,7 +229,7 @@ begin
                'Plataforma: ' + GetEnumName(TypeInfo(TJclBDSPlatform), Integer(APlatform)) + '(' + IntToStr(Integer(tPlatform)) + ')' + sLineBreak +
                StringOfChar('=', 80);
 
-  WriteToTXT(PathArquivoLog, Cabecalho, False);
+  WriteToTXT(PathArquivoLog, Cabecalho, True);
 
   // Cria diretório de biblioteca da versão do delphi selecionada,
   // só será criado se não existir
@@ -289,7 +289,10 @@ begin
     begin
       NomePacote := framePacotes1.Pacotes[iDpk].Hint;
       // Esse pacote não tem versão runtime e designer, por isso não deve ter as iniciais DCL
-      if MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+      if MatchText(NomePacote, ['ORMBrLibrary.dpk',
+                                'ORMBrCore.dpk',
+                                'DBEBrCore.dpk',
+                                'DBCBrCore.dpk']) then
         Continue
       else
         NomePacote := 'dcl' + NomePacote;
@@ -326,7 +329,10 @@ begin
         NomePacote := framePacotes1.Pacotes[iDpk].Hint;
 
         // Esse pacote não tem versão runtime e designer, por isso não deve ter as iniciais DCL
-        if not MatchText(NomePacote, ['ORMBrLibrary.dpk', 'ORMBrCore.dpk', 'DBEBrCore.dpk']) then
+        if not MatchText(NomePacote, ['ORMBrLibrary.dpk',
+                                      'ORMBrCore.dpk',
+                                      'DBEBrCore.dpk',
+                                      'DBCBrCore.dpk']) then
           NomePacote := 'dcl' + NomePacote;
 
         // Busca diretório do pacote
@@ -1038,6 +1044,10 @@ begin
       begin
         iVersion := LForListaVer;
         sPathBin := IncludeTrailingPathDelimiter(oORMBr.Installations[iVersion].BinFolderName);
+
+        if FileExists(PathArquivoLog) then
+          DeleteFile(PathArquivoLog);
+
         // Inicia barra de progresso
         pgbInstalacao.Position := 0;
         pgbInstalacao.Max := 0;

@@ -7,9 +7,9 @@ uses
   DB,
   Generics.Collections,
   /// orm
-  ormbr.mapping.attributes,
-  ormbr.types.mapping,
-  ormbr.mapping.register,
+  dbcbr.mapping.attributes,
+  dbcbr.types.mapping,
+  dbcbr.mapping.register,
   ormbr.types.nullable,
   ormbr.types.blob;
 

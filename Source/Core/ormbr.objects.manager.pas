@@ -40,13 +40,13 @@ uses
   Variants,
   Generics.Collections,
   /// ormbr
-  ormbr.types.mapping,
-  ormbr.mapping.classes,
   ormbr.command.factory,
-  dbebr.factory.interfaces,
-  ormbr.mapping.explorer,
   ormbr.objects.manager.abstract,
-  ormbr.mapping.explorerstrategy;
+  dbcbr.types.mapping,
+  dbcbr.mapping.classes,
+  dbebr.factory.interfaces,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.explorerstrategy;
 
 type
   TObjectManager<M: class, constructor> = class sealed(TObjectManagerAbstract<M>)
@@ -57,13 +57,9 @@ type
     procedure FillAssociationLazy(const AOwner, AObject: TObject);
   protected
     FConnection: IDBConnection;
-    /// <summary>
-    ///   Fábrica de comandos a serem executados
-    /// </summary>
+    // Fábrica de comandos a serem executados
     FDMLCommandFactory: TDMLCommandFactoryAbstract;
-    /// <summary>
-    ///   Controle de paginação vindo do banco de dados
-    /// </summary>
+    // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
@@ -74,9 +70,7 @@ type
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const APageSize: Integer); override;
     destructor Destroy; override;
-    /// <summary>
-    ///   Procedures
-    /// </summary>
+    // Procedures
     procedure InsertInternal(const AObject: M); override;
     procedure UpdateInternal(const AObject: TObject;
       const AModifiedFields: TDictionary<string, string>); override;
@@ -92,14 +86,10 @@ type
       APageNext: Integer): TObjectList<M>; overload; override;
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
-    /// <summary>
-    ///   Functions
-    /// </summary>
+    // Functions
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
-    /// <summary>
-    ///   DataSet
-    /// </summary>
+    // DataSet
     function SelectInternalWhere(const AWhere: string;
       const AOrderBy: string): string; override;
     function SelectInternalAll: IDBResultSet; override;
@@ -111,9 +101,7 @@ type
       APageNext: Integer): IDBResultSet; overload; override;
     function NextPacket(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
-    /// <summary>
-    ///   ObjectSet
-    /// </summary>
+    // ObjectSet
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Variant): M; overload; override;
     function FindWhere(const AWhere: string;
@@ -124,8 +112,8 @@ implementation
 
 uses
   ormbr.bind,
-  ormbr.objects.helper,
   ormbr.session.abstract,
+  ormbr.objects.helper,
   ormbr.rtti.helper;
 
 { TObjectManager<M> }
@@ -141,9 +129,10 @@ begin
   FConnection := AConnection;
   FExplorer := TMappingExplorer.GetInstance;
   FObjectInternal := M.Create;
-  /// <summary>
-  ///   Fabrica de comandos SQL
-  /// </summary>
+  // ROTINA NÃO FINALIZADA DEU MUITO PROBLEMA, QUEM SABE UM DIA VOLTO A OLHAR
+  // Mapeamento dos campos Lazy Load
+  FExplorer.GetMappingLazy(TObject(FObjectInternal).ClassType);
+  // Fabrica de comandos SQL
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
                                                   AConnection.GetDriverName);
@@ -173,9 +162,7 @@ var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  /// <summary>
-  ///   Result deve sempre iniciar vazio
-  /// </summary>
+  // Result deve sempre iniciar vazio
   Result := '';
   LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
   if LAssociationList = nil then
@@ -216,10 +203,8 @@ var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  /// <summary>
-  ///   Se o driver selecionado for do tipo de banco NoSQL,
-  ///   o atributo Association deve ser ignorado.
-  /// </summary>
+  // Se o driver selecionado for do tipo de banco NoSQL,
+  // o atributo Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
   if Assigned(AObject) then
@@ -245,10 +230,8 @@ var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  /// <summary>
-  ///   Se o driver selecionado for do tipo de banco NoSQL,
-  ///   o atributo Association deve ser ignorado.
-  /// </summary>
+  // Se o driver selecionado for do tipo de banco NoSQL, o atributo
+  // Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
   LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);
@@ -287,13 +270,9 @@ begin
         LObjectValue := AProperty.PropertyType.AsInstance.MetaclassType.Create;
         AProperty.SetValue(AObject, TValue.from<TObject>(LObjectValue));
       end;
-      /// <summary>
-      ///   Preenche o objeto com os dados do ResultSet
-      /// </summary>
+      // Preenche o objeto com os dados do ResultSet
       TBind.Instance.SetFieldToProperty(LResultSet, LObjectValue);
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectValue);
     end;
   finally
@@ -318,23 +297,14 @@ begin
   try
     while LResultSet.NotEof do
     begin
-      /// <summary>
-      ///   Instancia o objeto do tipo definido na lista
-      /// </summary>
+      // Instancia o objeto do tipo definido na lista
       LObjectCreate := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectCreate.MethodCall('Create', []);
-      /// <summary>
-      ///   Popula o objeto com os dados do ResultSet
-      /// </summary>
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, LObjectCreate);
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Popula o objeto com os dados do ResultSet
+      TBind.Instance.SetFieldToProperty(LResultSet, LObjectCreate);
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectCreate);
-      /// <summary>
-      ///   Adiciona o objeto a lista
-      /// </summary>
+      // Adiciona o objeto a lista
       LObjectList := AProperty.GetNullableValue(AObject).AsObject;
       if LObjectList <> nil then
         LObjectList.MethodCall('Add', [LObjectCreate]);
@@ -378,9 +348,7 @@ begin
       LObjectList.Add(M.Create);
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectList.Last);
     end;
     Result := LObjectList;
@@ -414,9 +382,7 @@ begin
       LObjectList.Add(M.Create);
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectList.Last);
     end;
     Result := LObjectList;
@@ -437,16 +403,12 @@ begin
       AObjectList.Add(M.Create);
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(AObjectList.Last);
     end;
   finally
-    /// <summary>
-    ///   Essa tag é controlada pela session, mas como esse método fornece
-    ///   dados para a session, tiver que muda-la aqui.
-    /// </summary>
+    // Essa tag é controlada pela session, mas como esse método fornece
+    // dados para a session, tiver que muda-la aqui.
     if LResultSet.RecordCount = 0 then
       TSessionAbstract<M>(FOwner).FetchingRecords := True;
 
@@ -466,16 +428,12 @@ begin
       AObjectList.Add(M.Create);
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(AObjectList.Last);
     end;
   finally
-    /// <summary>
-    ///   Essa tag é controlada pela session, mas como esse método fornece
-    ///   dados para a session, tiver que muda-la aqui.
-    /// </summary>
+    // Essa tag é controlada pela session, mas como esse método fornece
+    // dados para a session, tiver que muda-la aqui.
     if LResultSet.RecordCount = 0 then
       TSessionAbstract<M>(FOwner).FetchingRecords := True;
 
@@ -497,9 +455,7 @@ begin
       LObjectList.Add(M.Create);
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectList.Last);
     end;
     Result := LObjectList;
@@ -543,17 +499,11 @@ begin
     while LResultSet.NotEof do
     begin
       LObject := M.Create;
-      /// <summary>
-      ///   TObject(LObject) = Para D2010
-      /// </summary>
+      // TObject(LObject) = Para D2010
       TBind.Instance.SetFieldToProperty(LResultSet, TObject(LObject));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObject);
-      /// <summary>
-      ///   Adiciona o Object a lista de retorno
-      /// </summary>
+      // Adiciona o Object a lista de retorno
       Result.Add(LObject);
     end;
   finally
@@ -577,9 +527,7 @@ begin
       Result := M.Create;
       TBind.Instance
            .SetFieldToProperty(LResultSet, TObject(Result));
-      /// <summary>
-      ///   Alimenta registros das associações existentes 1:1 ou 1:N
-      /// </summary>
+      // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(Result);
     end
     else

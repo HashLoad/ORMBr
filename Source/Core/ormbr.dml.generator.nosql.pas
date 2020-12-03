@@ -10,17 +10,15 @@ uses
   Variants,
   StrUtils,
   Generics.Collections,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
   ormbr.dml.generator,
-  ormbr.mapping.classes,
-  ormbr.rest.json,
-  ormbr.dml.commands;
+  ormbr.json,
+  ormbr.dml.commands,
+  ormbr.objects.helper,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.classes;
 
 type
-  /// <summary>
-  ///   Classe de conexão concreta com NoSQL
-  /// </summary>
+  // Classe de conexão concreta com NoSQL
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
     function GetCriteriaSelectNoSQL(const AClass: TClass;
@@ -51,8 +49,8 @@ type
 implementation
 
 uses
-  ormbr.mapping.explorer,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.attributes;
 
 { TDMLGeneratorNoSQL }
 
@@ -224,16 +222,14 @@ var
   LFor: Integer;
   LOrder: Integer;
 begin
-  /// Collection
+  // Collection
   LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
       .Append('command=find& ')
         .Append('collection=' + LTable.Name);
-    /// <summary>
-    ///   PrimaryKey
-    /// </summary>
+    // PrimaryKey
     if VarToStr(AID) <> '-1' then
     begin
       LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
@@ -247,9 +243,7 @@ begin
         LCriteria.Append('}');
       end;
     end;
-    /// <summary>
-    ///   Order By
-    /// </summary>
+    // Order By
     LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
     if LOrderBy <> nil then
     begin
@@ -284,8 +278,7 @@ begin
   end;
 end;
 
-function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(
-  const ACriteria: string): string;
+function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(const ACriteria: string): string;
 begin
   Result := ACriteria + '& limit=%s& skip=%s';
 end;

@@ -31,8 +31,8 @@ package DBEBrConnectionZeos;
 
 requires
   rtl,
-  ZComponent,
-  DBEBrCore;
+  DBEBrCore,
+  ZComponent;
 
 contains
   dbebr.connection.zeos in '..\..\Source\dbebr.connection.zeos.pas',
