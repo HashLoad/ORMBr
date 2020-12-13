@@ -37,6 +37,7 @@ uses
   ormbr.dml.generator,
   ormbr.driver.register,
   ormbr.dml.commands,
+  ormbr.dml.cache,
   ormbr.criteria,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
@@ -84,14 +85,14 @@ var
   LTable: TTableMapping;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
   // OrderBy
@@ -107,15 +108,17 @@ var
   LCriteria: ICriteria;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
-  Result := Result + ' WHERE ' + AWhere;
-  Result := Result + 'ORDER BY ' + AOrderBy;
+  if Length(AWhere) > 0 then
+    Result := Result + ' WHERE ' + AWhere;
+  if Length(AOrderBy) > 0 then
+    Result := Result + ' ORDER BY ' + AOrderBy;
   // Monta SQL para paginação
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);

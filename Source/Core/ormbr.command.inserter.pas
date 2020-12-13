@@ -90,11 +90,10 @@ begin
   Result := FResultCommand;
   FParams.Clear;
   // Alimenta a lista de parâmetros do comando Insert com os valores do Objeto.
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
-  LPrimaryKey := TMappingExplorer.GetInstance
-                                 .GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.ColumnProperty.IsNullValue(AObject) then
@@ -111,7 +110,6 @@ begin
         if LPrimaryKey.AutoIncrement then
         begin
           FDMLAutoInc.Sequence := TMappingExplorer
-                                  .GetInstance
                                   .GetMappingSequence(AObject.ClassType);
           FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
           FDMLAutoInc.PrimaryKey := LPrimaryKey;

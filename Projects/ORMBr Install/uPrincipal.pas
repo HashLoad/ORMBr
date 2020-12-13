@@ -912,7 +912,7 @@ begin
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd26' then
       clbDelphiVersion.Items.Add('Delphi 10.3 Rio')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd27' then
-      clbDelphiVersion.Items.Add('Delphi 10.3 Sydney');
+      clbDelphiVersion.Items.Add('Delphi 10.4 Sydney');
 
     // -- Evento para saidas de mensagens.
     oORMBr.Installations[iFor].OutputCallback := OutputCallLine;

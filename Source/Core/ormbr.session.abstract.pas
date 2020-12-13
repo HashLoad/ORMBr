@@ -205,7 +205,7 @@ var
   LColumns: TColumnMappingList;
   LProperty: TRttiProperty;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObjectSource.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObjectSource.ClassType);
   for LColumn in LColumns do
   begin
     LProperty := LColumn.ColumnProperty;

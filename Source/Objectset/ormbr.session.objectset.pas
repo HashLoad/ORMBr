@@ -41,13 +41,10 @@ uses
   ormbr.bind,
   ormbr.objects.manager,
   ormbr.session.abstract,
-  dbcbr.mapping.explorerstrategy,
   dbebr.factory.interfaces;
 
 type
-  /// <summary>
-  ///   M - Sessão Abstract
-  /// </summary>
+  // M - Sessão Abstract
   TSessionObjectSet<M: class, constructor> = class(TSessionAbstract<M>)
   protected
     FConnection: IDBConnection;

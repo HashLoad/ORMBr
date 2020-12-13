@@ -141,7 +141,8 @@ begin
     // Faz cache do comando padrão
     FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
   end;
-  Result := Result + ' WHERE ' + AWhere;
+  if Length(AWhere) > 0 then
+    Result := Result + ' WHERE ' + AWhere;
   if Length(AOrderBy) > 0 then
     Result := Result + ' ORDER BY ' + AOrderBy;
 end;

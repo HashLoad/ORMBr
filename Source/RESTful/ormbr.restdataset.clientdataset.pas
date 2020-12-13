@@ -69,10 +69,8 @@ type
     property AfterApplyUpdates: TRemoteEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  /// <summary>
-  /// Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  /// M - Object Model
-  /// </summary>
+  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
+  // M - Object Model
   TRESTClientDataSetAdapter<M: class, constructor> = class(TRESTDataSetAdapter<M>)
   private
     FOrmDataSet: TClientDataSet;
@@ -369,7 +367,7 @@ begin
     end;
     LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
     LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
-    /// <summary> Evitar duplicidade de registro em memória </summary>
+    // Evitar duplicidade de registro em memória
     if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
     begin
       LChild.FOrmDataSet.Append;

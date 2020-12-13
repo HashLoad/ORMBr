@@ -45,8 +45,7 @@ uses
   dbcbr.types.mapping,
   dbcbr.mapping.classes,
   dbebr.factory.interfaces,
-  dbcbr.mapping.explorer,
-  dbcbr.mapping.explorerstrategy;
+  dbcbr.mapping.explorer;
 
 type
   TObjectManager<M: class, constructor> = class sealed(TObjectManagerAbstract<M>)
@@ -121,17 +120,18 @@ uses
 constructor TObjectManager<M>.Create(const AOwner: TObject;
   const AConnection: IDBConnection; const APageSize: Integer);
 begin
+  inherited;
   FOwner := AOwner;
   FPageSize := APageSize;
   if not (AOwner is TSessionAbstract<M>) then
     raise Exception
             .Create('O Object Manager não deve ser instânciada diretamente, use as classes TSessionObject<M> ou TSessionDataSet<M>');
   FConnection := AConnection;
-  FExplorer := TMappingExplorer.GetInstance;
+
   FObjectInternal := M.Create;
   // ROTINA NÃO FINALIZADA DEU MUITO PROBLEMA, QUEM SABE UM DIA VOLTO A OLHAR
   // Mapeamento dos campos Lazy Load
-  FExplorer.GetMappingLazy(TObject(FObjectInternal).ClassType);
+//  TMappingExplorer.GetMappingLazy(TObject(FObjectInternal).ClassType);
   // Fabrica de comandos SQL
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
@@ -140,7 +140,7 @@ end;
 
 destructor TObjectManager<M>.Destroy;
 begin
-  FExplorer := nil;
+//  FExplorer := nil;
   FDMLCommandFactory.Free;
   FObjectInternal.Free;
   inherited;
@@ -164,7 +164,7 @@ var
 begin
   // Result deve sempre iniciar vazio
   Result := '';
-  LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
+  LAssociationList := TMappingExplorer.GetMappingAssociation(AObject.ClassType);
   if LAssociationList = nil then
     Exit;
   for LAssociation in LAssociationList do
@@ -209,7 +209,7 @@ begin
     Exit;
   if Assigned(AObject) then
   begin
-    LAssociationList := FExplorer.GetMappingAssociation(AObject.ClassType);
+    LAssociationList := TMappingExplorer.GetMappingAssociation(AObject.ClassType);
     if LAssociationList = nil then
       Exit;
     for LAssociation in LAssociationList do
@@ -234,7 +234,7 @@ begin
   // Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
-  LAssociationList := FExplorer.GetMappingAssociation(AOwner.ClassType);
+  LAssociationList := TMappingExplorer.GetMappingAssociation(AOwner.ClassType);
   if LAssociationList = nil then
     Exit;
   for LAssociation in LAssociationList do

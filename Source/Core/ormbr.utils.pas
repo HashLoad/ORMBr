@@ -39,6 +39,7 @@ uses
 
 type
   TStrArray = array of String;
+  PIInterface = ^IInterface;
 
   IUtilSingleton = interface
     ['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']
@@ -63,12 +64,18 @@ type
     function Iso8601ToDateTime(const AValue: string): TDateTime;
     function ParseCommandNoSQL(const ASubStr, ASQL: string;
       const ADefault: String): string;
-    class function IfThen<T>(ACondition: Boolean; ATrue: T; AFalse: T): T;
+    function IfThen<T>(ACondition: Boolean; ATrue: T; AFalse: T): T;
+    procedure SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
   end;
 
 implementation
 
 { TUtilSingleton }
+
+procedure TUtilSingleton.SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
+begin
+  PPointer(AInterfaceField)^ := Pointer(AValue);
+end;
 
 constructor TUtilSingleton.Create;
 begin
@@ -104,7 +111,7 @@ begin
    Result := FInstance;
 end;
 
-class function TUtilSingleton.IfThen<T>(ACondition: Boolean; ATrue, AFalse: T): T;
+function TUtilSingleton.IfThen<T>(ACondition: Boolean; ATrue, AFalse: T): T;
 begin
   Result := AFalse;
   if ACondition then

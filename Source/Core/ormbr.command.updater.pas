@@ -77,7 +77,6 @@ var
 begin
   inherited Create(AConnection, ADriverName, AObject);
   LColumns := TMappingExplorer
-                .GetInstance
                   .GetMappingPrimaryKeyColumns(AObject.ClassType);
   for LColumn in LColumns.Columns do
   begin
@@ -110,7 +109,7 @@ begin
   // campos PrimaryKey.
   LParams := TParams.Create(nil);
   try
-    LPrimaryKey := TMappingExplorer.GetInstance
+    LPrimaryKey := TMappingExplorer
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
     if LPrimaryKey = nil then
       raise Exception.Create(cMESSAGEPKNOTFOUND);

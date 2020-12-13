@@ -39,17 +39,18 @@ uses
   SysUtils,
   Variants,
   StdCtrls,
-  {$IFDEF DRIVERRESTFUL}
+  {$IFDEF MONITORRESTFULCLIENT}
   ormbr.client.interfaces,
   {$ELSE}
   dbebr.factory.interfaces,
   {$ENDIF}
-  TypInfo;
+  TypInfo,
+  ComCtrls;
 
 type
   TCommandMonitor = class(TForm, ICommandMonitor)
-    MemoSQL: TMemo;
     Button1: TButton;
+    MemoSQL: TRichEdit;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
