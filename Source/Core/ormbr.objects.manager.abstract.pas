@@ -36,14 +36,13 @@ uses
   Generics.Collections,
   // ORMBr
   dbebr.factory.interfaces,
-  dbcbr.mapping.classes,
-  dbcbr.mapping.explorerstrategy;
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.classes;
 
 type
   TObjectManagerAbstract<M: class, constructor> = class abstract
   protected
     // Instancia a class que mapea todas as class do tipo Entity
-    FExplorer: IMappingExplorerStrategy;
     function FindSQLInternal(const ASQL: String): TObjectList<M>; virtual; abstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); virtual; abstract;
@@ -51,7 +50,7 @@ type
       AAssociation: TAssociationMapping); virtual; abstract;
   public
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
-      const APageSize: Integer); virtual; abstract;
+      const APageSize: Integer); virtual;
     procedure InsertInternal(const AObject: M); virtual; abstract;
     procedure UpdateInternal(const AObject: TObject;
       const AModifiedFields: TDictionary<string, string>); virtual; abstract;
@@ -84,9 +83,17 @@ type
       const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
-    property Explorer: IMappingExplorerStrategy read FExplorer;
   end;
 
 implementation
+
+{ TObjectManagerAbstract<M> }
+
+constructor TObjectManagerAbstract<M>.Create(const AOwner: TObject;
+  const AConnection: IDBConnection; const APageSize: Integer);
+begin
+  // Popula todas classes modelos na lista
+  TMappingExplorer.GetRepositoryMapping;
+end;
 
 end.

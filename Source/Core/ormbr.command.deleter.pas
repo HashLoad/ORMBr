@@ -68,7 +68,6 @@ var
 begin
   FParams.Clear;
   LPrimaryKey := TMappingExplorer
-                   .GetInstance
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
   if LPrimaryKey = nil then
     raise Exception.Create(cMESSAGEPKNOTFOUND);

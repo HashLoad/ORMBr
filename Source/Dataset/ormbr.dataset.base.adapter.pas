@@ -46,8 +46,7 @@ uses
   ormbr.dataset.events,
   ormbr.dataset.abstract,
   ormbr.session.abstract,
-  dbcbr.mapping.classes,
-  dbcbr.mapping.explorerstrategy;
+  dbcbr.mapping.classes;
 
 type
   // M - Object M
@@ -80,7 +79,6 @@ type
     FInternalIndex: Integer;
     FAutoNextPacket: Boolean;
     FCheckedFieldEvents: Boolean;
-    FExplorer: IMappingExplorerStrategy;
     procedure DoBeforeApplyUpdates(DataSet: TDataSet); overload; virtual; abstract;
     procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); overload; virtual; abstract;
     procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
@@ -183,7 +181,6 @@ begin
   TBind.Instance.SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
-  FExplorer := TMappingExplorer.GetInstance;
   // Variável que identifica o campo que guarda o estado do registro.
   FInternalIndex := 0;
   FCheckedFieldEvents := False;
@@ -196,7 +193,6 @@ destructor TDataSetBaseAdapter<M>.Destroy;
 begin
   FOrmDataSet := nil;
   FOwnerMasterObject := nil;
-  FExplorer := nil;
   FDataSetEvents.Free;
   FOrmDataSetEvents.Free;
   FCurrentInternal.Free;
@@ -242,8 +238,7 @@ var
 begin
   // Guarda o datasetlookup em uma lista para controle interno
   FLookupsField.Add(TDataSetBaseAdapter<M>(ALookupDataSet));
-  LColumns := FExplorer
-                .GetMappingColumn(FLookupsField.Last.FCurrentInternal.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(FLookupsField.Last.FCurrentInternal.ClassType);
   if LColumns = nil then
     Exit;
 
@@ -595,7 +590,7 @@ begin
     Exit;
 
   // ForeingnKey da Child
-  LFieldEvents := FExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
+  LFieldEvents := TMappingExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
   if LFieldEvents = nil then
     Exit;
 
@@ -609,16 +604,13 @@ var
 begin
   if Assigned(FDataSetEvents.BeforeInsert) then
     FDataSetEvents.BeforeInsert(DataSet);
-
   // Checa o Attributo "FieldEvents()" nos TFields somente uma vez
   if FCheckedFieldEvents then
     Exit;
-
   // ForeingnKey da Child
-  LFieldEvents := FExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
+  LFieldEvents := TMappingExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
   if LFieldEvents = nil then
     Exit;
-
   ValideFieldEvents(LFieldEvents);
   FCheckedFieldEvents := True;
 end;
@@ -681,7 +673,8 @@ begin
   if Assigned(FDataSetEvents.OnNewRecord) then
     FDataSetEvents.OnNewRecord(DataSet);
   // Busca valor da tabela master, caso aqui seja uma tabela detalhe.
-  GetMasterValues;
+  if FMasterObject.Count > 0 then
+    GetMasterValues;
 end;
 
 procedure TDataSetBaseAdapter<M>.Delete;
@@ -749,7 +742,7 @@ var
 begin
   Result := False;
   // ForeingnKey da Child
-  LForeignKeys := FExplorer.GetMappingForeignKey(ADataSetChild.FCurrentInternal.ClassType);
+  LForeignKeys := TMappingExplorer.GetMappingForeignKey(ADataSetChild.FCurrentInternal.ClassType);
   if LForeignKeys = nil then
     Exit;
   for LForeignKey in LForeignKeys do
@@ -800,8 +793,7 @@ begin
   inherited;
   if FOrmDataSet.RecordCount = 0 then
     Exit;
-  LPrimaryKey := TMappingExplorer.GetInstance
-                                 .GetMappingPrimaryKey(FCurrentInternal.ClassType);
+  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
   if LPrimaryKey = nil then
     Exit;
   FOrmDataSet.DisableControls;
@@ -841,7 +833,7 @@ var
   LFor: Integer;
 begin
   // Association
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -915,8 +907,7 @@ begin
   if not Assigned(FOwnerMasterObject) then
     Exit;
   LDataSetMaster := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-  LAssociations := FExplorer
-                     .GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do

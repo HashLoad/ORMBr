@@ -40,16 +40,14 @@ uses
   SysUtils,
   Generics.Collections,
   REST.Client,
-  /// orm
-  ormbr.mapping.explorerstrategy,
+  /// ORMBr
   ormbr.dataset.base.adapter,
-  ormbr.session.abstract, 
-  ormbr.session.baseurl, ormbr.mapping.classes;
+  ormbr.session.abstract,
+  ormbr.session.baseurl,
+  dbcbr.mapping.classes;
 
 type
-  /// <summary>
-  /// M - Sessão RESTFull
-  /// </summary>
+  // M - Sessão RESTFull
   TSessionDataSnap<M: class, constructor> = class(TSessionAbstract<M>)
   private
     FRESTResponse: TRESTResponse;
@@ -78,11 +76,11 @@ uses
   IPPeerClient,
   DBXJSONReflect,
   JSON,
-  ormbr.rest.json,
+  ormbr.json,
   ormbr.objects.helper,
-  ormbr.mapping.attributes,
   ormbr.restdataset.adapter,
-  ormbr.json.utils, ormbr.mapping.explorer;
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.explorer;
 
 { TSessionDataSnap<M> }
 
@@ -94,9 +92,7 @@ var
   LResource: TCustomAttribute;
 begin
   inherited Create(APageSize);
-  /// <summary>
-  ///  Verifica se foi informado a URL no Singleton
-  /// </summary>
+  // Verifica se foi informado a URL no Singleton
   ABaseURL := TSessionRESTBaseURL.GetInstance.BaseURL;
   if Length(ABaseURL) = 0 then
     raise Exception.Create('Defina a URL base na classe sington [TSessionRESTBaseURL.GetInstance.BaseURL := "http://127.0.0.1:211/datasnap/rest/tormbr"]');
@@ -107,10 +103,8 @@ begin
   FRESTRequest.Client := FRESTClient;
   FRESTRequest.Response := FRESTResponse;
   FRESTResponse.RootElement := 'result';
-  /// <summary>
-  /// Pega o nome do recurso, caso não encontre o atributo Resource(),
-  /// internamente busca pelo atributo Table()
-  /// </summary>
+  // Pega o nome do recurso, caso não encontre o atributo Resource(),
+  // internamente busca pelo atributo Table()
   LObject := TObject(M.Create);
   try
     LResource := LObject.GetResource;
@@ -170,17 +164,13 @@ begin
   FRESTRequest.Execute;
 
   LJSON := TJSONArray(FRESTRequest.Response.JSONValue).Items[0].ToJSON;
-  /// <summary>
-  /// Transforma o JSON recebido populando o objeto
-  /// </summary>
+  // Transforma o JSON recebido populando o objeto
   Result := TORMBrJson.JsonToObjectList<M>(LJSON);
 end;
 
 function TSessionDataSnap<M>.Find(const AID: Integer): M;
 begin
-  /// <summary>
-  /// Transforma o JSON recebido populando o objeto
-  /// </summary>
+  // Transforma o JSON recebido populando o objeto
   Result := Find(IntToStr(AID));
 end;
 
@@ -195,9 +185,7 @@ begin
   FRESTRequest.Execute;
 
   LJSON := TJSONArray(TJSONArray(FRESTRequest.Response.JSONValue).Items[0]).Items[0].ToJSON;
-  /// <summary>
-  /// Transforma o JSON recebido populando o objeto
-  /// </summary>
+  // Transforma o JSON recebido populando o objeto
   Result := TORMBrJson.JsonToObject<M>(LJSON);
 end;
 
@@ -212,9 +200,7 @@ begin
   FRESTRequest.Execute;
 
   LJSON := TJSONArray(FRESTRequest.Response.JSONValue).Items[0].ToJSON;
-  /// <summary>
-  /// Transforma o JSON recebido populando o objeto
-  /// </summary>
+  // Transforma o JSON recebido populando o objeto
   Result := TORMBrJson.JsonToObjectList<M>(LJSON);
 end;
 
@@ -239,7 +225,7 @@ procedure TSessionDataSnap<M>.Update(const AObjectList: TObjectList<M>);
 var
   FJSON: TJSONArray;
 begin
-  FJSON := TORMBrJSONUtil.JSONObjectListToJSONArray<M>(AObjectList);
+  FJSON := TORMBrJson.JSONObjectListToJSONArray<M>(AObjectList);
   try
     FRESTRequest.ResetToDefaults;
     FRESTRequest.Resource := '/' + FResource;
@@ -264,11 +250,11 @@ var
 begin
   LPkList := TList<TColumnMapping>.Create;
   try
-    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+    LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
     for LColumn in LColumns do
       if LColumn.IsPrimaryKey then
         LPkList.Add(LColumn);
-    ///
+    //
     if LPkList.Count > 0 then
     begin
       SetLength(Result, LPkList.Count);

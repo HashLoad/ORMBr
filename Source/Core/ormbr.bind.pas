@@ -157,7 +157,6 @@ var
 begin
   // Busca lista de columnas do mapeamento
   LColumns := TMappingExplorer
-                .GetInstance
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
@@ -384,7 +383,6 @@ var
   LFieldName: string;
 begin
   LCalcFields := TMappingExplorer
-                   .GetInstance
                      .GetMappingCalcField(AObject.ClassType);
   if LCalcFields = nil then
     Exit;
@@ -432,7 +430,6 @@ var
   LField: TField;
 begin
   LColumns := TMappingExplorer
-                .GetInstance
                   .GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
     Exit;
@@ -586,7 +583,6 @@ begin
   ADataSet.Close;
   ADataSet.FieldDefs.Clear;
   LColumns := TMappingExplorer
-                .GetInstance
                   .GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
@@ -628,8 +624,7 @@ begin
       CreateFieldsNestedDataSet(ADataSet, AObject, LColumn);
   end;
   // Trata AutoInc
-  LPrimaryKey := TMappingExplorer.GetInstance
-                                 .GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
   if LPrimaryKey <> nil then
   begin
     if LPrimaryKey.AutoIncrement then
@@ -697,7 +692,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsVirtualData then
@@ -778,7 +773,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsVirtualData then
@@ -883,7 +878,7 @@ var
   LColumns: TColumnMappingList;
   LField: TField;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsVirtualData then
@@ -910,7 +905,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if not LColumn.ColumnProperty.IsWritable then

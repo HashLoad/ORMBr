@@ -68,13 +68,7 @@
     <Transaction>2020/12/02 19:51:31.000.504,=D:\ORMBr Dev\Source\JSONBr\Core\jsonbr.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="DBCBrCore.dcp"/>
-    <File Path="DBEBrCore.dcp"/>
-    <File Path="dbrtl.dcp"/>
-    <File Path="rtl.dcp"/>
-    <File Path="vcl.dcp"/>
-    <File Path="vclimg.dcp"/>
-    <File Path="D:\ORMBr Dev"/>
+    <File Path="..\..\..\..\ORMBr"/>
     <File Path="..\..\..\Source"/>
     <File Path="..\..\..\Source\Core"/>
     <File Path="..\..\..\Source\Core\ormbr.bind.pas"/>
@@ -120,5 +114,11 @@
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.objectset.base.adapter.pas"/>
     <File Path="..\..\..\Source\Objectset\ormbr.session.objectset.pas"/>
+    <File Path="DBCBrCore.dcp"/>
+    <File Path="DBEBrCore.dcp"/>
+    <File Path="dbrtl.dcp"/>
+    <File Path="rtl.dcp"/>
+    <File Path="vcl.dcp"/>
+    <File Path="vclimg.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>

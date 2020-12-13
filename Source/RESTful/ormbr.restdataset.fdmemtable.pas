@@ -59,11 +59,11 @@ uses
   ormbr.restdataset.adapter,
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
-  ormbr.types.mapping,
-  ormbr.mapping.classes,
-  ormbr.rtti.helper,
-  ormbr.objects.helper,
-  ormbr.mapping.attributes;
+  dbcbr.types.mapping,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.explorer,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.attributes;
 
 type
   /// <summary>
@@ -78,10 +78,8 @@ type
     property AfterApplyUpdates: TFDAfterApplyUpdatesEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  /// <summary>
-  /// Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  /// M - Object Model
-  /// </summary>
+  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
+  // M - Object Model
   TRESTFDMemTableAdapter<M: class, constructor> = class(TRESTDataSetAdapter<M>)
   private
     FOrmDataSet: TFDMemTable;
@@ -116,6 +114,7 @@ implementation
 
 uses
   ormbr.bind,
+  ormbr.objects.helper,
   ormbr.dataset.fields;
 
 { TRESTFDMemTableAdapter<M> }
@@ -217,7 +216,7 @@ begin
   if not FOrmDataSet.Active then
     Exit;
 
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
 
@@ -307,7 +306,7 @@ begin
   FOrmDataSet.DisableControls;
   DisableDataSetEvents;
   try
-    /// <summary> Limpa registro do dataset antes de buscar os novos </summary>
+    // Limpa registro do dataset antes de buscar os novos
     EmptyDataSet;
     inherited;
     LObjectList := FSession.Find;
@@ -315,7 +314,7 @@ begin
     begin
       try
         PopularDataSetList(LObjectList);
-        /// <summary> Filtra os registros nas sub-tabelas </summary>
+        // Filtra os registros nas sub-tabelas
         if FOwnerMasterObject = nil then
           FilterDataSetChilds;
       finally
@@ -393,7 +392,7 @@ begin
     end;
     LKeyFields := Copy(LKeyFields, 1, Length(LKeyFields) -2);
     LKeyValues := Copy(LKeyValues, 1, Length(LKeyValues) -2);
-    /// <summary> Evitar duplicidade de registro em memória </summary>
+    // Evitar duplicidade de registro em memória
     if not LChild.FOrmDataSet.Locate(LKeyFields, LKeyValues, [loCaseInsensitive]) then
     begin
       LChild.FOrmDataSet.Append;

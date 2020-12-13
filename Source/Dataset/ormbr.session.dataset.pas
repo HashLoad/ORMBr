@@ -43,7 +43,6 @@ uses
   ormbr.session.abstract,
   ormbr.dataset.base.adapter,
   dbcbr.mapping.classes,
-  dbcbr.mapping.explorerstrategy,
   dbebr.factory.interfaces;
 
 type
@@ -143,7 +142,7 @@ begin
       LWhere := LWhere + ' AND ';
   end;
   LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(LWhere, ''));
-  /// Atualiza dados no DataSet
+  // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;

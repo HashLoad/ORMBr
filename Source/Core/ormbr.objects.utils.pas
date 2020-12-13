@@ -309,7 +309,7 @@ var
   LAttribute: TCustomAttribute;
 begin
   Result := False;
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
      // Valida se o valor é NULO

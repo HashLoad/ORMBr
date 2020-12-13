@@ -133,7 +133,7 @@ begin
   inherited;
   if FMasterObject.Count = 0 then
     Exit;
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LChild in FMasterObject do
@@ -162,9 +162,7 @@ var
   LObject: TObject;
 begin
   inherited;
-  /// <summary>
-  /// Varre a lista de objetos excluídos e passa para a sessão REST
-  /// </summary>
+  // Varre a lista de objetos excluídos e passa para a sessão REST
   for LObject in FSession.DeleteList do
     FSession.Delete(LObject);
 end;
@@ -179,14 +177,14 @@ var
   LParam: TParam;
 begin
   inherited;
-  /// <summary> Filtar somente os registros inseridos </summary>
+  // Filtar somente os registros inseridos
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsInsert));
   FOrmDataSet.Filtered := True;
   FOrmDataSet.First;
   try
     while not FOrmDataSet.Eof do
     begin
-      /// Append/Insert
+      // Append/Insert
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsInsert] then
       begin
         LObject := M.Create;
@@ -208,9 +206,7 @@ begin
                 if LField <> nil then
                   LField.Value := LParam.Value;
               end;
-              /// <summary>
-              ///   Atualiza o valor do AutoInc nas sub tabelas
-              /// </summary>
+              // Atualiza o valor do AutoInc nas sub tabelas
               SetAutoIncValueChilds;
             end;
           end;
@@ -234,7 +230,7 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
 begin
   inherited;
-  /// Filtar somente os registros modificados
+  // Filtar somente os registros modificados
   FOrmDataSet.Filter := cInternalField + '=' + IntToStr(Integer(dsEdit));
   FOrmDataSet.Filtered := True;
   FOrmDataSet.First;
@@ -242,7 +238,7 @@ begin
   try
     while FOrmDataSet.RecordCount > 0 do
     begin
-      /// Edit
+      // Edit
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
       begin
         LObject := M.Create;
@@ -274,10 +270,8 @@ end;
 procedure TRESTDataSetAdapter<M>.DoAfterDelete(DataSet: TDataSet);
 begin
   inherited DoAfterDelete(DataSet);
-  /// <summary>
-  ///   Seta o registro mestre com stado de edição, considerando esse o
-  ///   registro filho sendo incluído ou alterado
-  /// </summary>
+  // Seta o registro mestre com stado de edição, considerando esse o
+  // registro filho sendo incluído ou alterado
   SetMasterDataSetStateEdit;
 end;
 
@@ -286,20 +280,16 @@ var
   LObject: TObject;
 begin
   inherited DoBeforeDelete(DataSet);
-  /// <summary>
-  ///   1o - Instância um novo objeto do tipo
-  ///   2o - Popula ele e suas sub-classes com os dados do dataset
-  ///   3o - Adiciona o objeto na lista de registros excluídos
-  /// </summary>
+  // 1o - Instância um novo objeto do tipo
+  // 2o - Popula ele e suas sub-classes com os dados do dataset
+  // 3o - Adiciona o objeto na lista de registros excluídos
   if FOwnerMasterObject = nil then
   begin
     LObject := M.Create;
     TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
     FSession.DeleteList.Add(LObject);
   end;
-  /// <summary>
-  ///   Deleta registros de todos os DataSet filhos
-  /// </summary>
+  // Deleta registros de todos os DataSet filhos
   DeleteDataSetChilds;
 end;
 
@@ -318,9 +308,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(FCurrentInternal.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(FCurrentInternal.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsNoInsert then
@@ -374,9 +362,7 @@ begin
   TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
   FOrmDataSet.First;
-  /// <summary>
-  ///   Popula Associations
-  /// </summary>
+  // Popula Associations
   if FMasterObject.Count > 0 then
     PopularDataSetChilds(AObject);
 end;
@@ -400,7 +386,7 @@ begin
     Exit;
   if FOrmDataSet.RecordCount = 0 then
     Exit;
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -449,11 +435,14 @@ var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
   LDataSetChild: TDataSetBaseAdapter<M>;
+  LObjectFind: TObjectList<M>;
+  LKeyFieldName: String;
+  LKeyValue: String;
 begin
   inherited;
   if not FOrmDataSet.Active then
     Exit;
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -464,7 +453,29 @@ begin
       Continue;
     if not (FMasterObject.TryGetValue(LAssociation.ClassNameRef, LDataSetChild)) then
       Continue;
-    LDataSetChild.FOrmDataSet.Refresh;
+    LKeyFieldName := LAssociation.ColumnsNameRef.Items[0];
+    LKeyValue := FOrmDataSet.FieldByName(LKeyFieldName).AsString;
+    if LDataSetChild.FOrmDataSet.Locate(LKeyFieldName, LKeyValue, [loCaseInsensitive]) then
+      Exit;
+    // Se o registro não existir no dataset,será feito uma requisição para
+    // busca-lo e adiciona-lo ao dataset em memória
+    LObjectFind := LDataSetChild.FindWhere(LKeyFieldName + '=' + LKeyValue);
+    LObjectFind.OwnsObjects := True;
+    try
+      if LObjectFind.Count = 0 then
+        raise Exception.Create('Não foi possível encontrar a informação ' + LKeyFieldName + '=' + LKeyValue);
+      LDataSetChild.FOrmDataSet.DisableControls;
+      LDataSetChild.DisableDataSetEvents;
+      LDataSetChild.FOrmDataSet.Append;
+      TBind.Instance.SetPropertyToField(LObjectFind.Items[0], LDataSetChild.FOrmDataSet);
+      LDataSetChild.FOrmDataSet.Post;
+    finally
+      LObjectFind.Free;
+      LDataSetChild.FOrmDataSet.First;
+      LDataSetChild.FOrmDataSet.EnableControls;
+      LDataSetChild.EnableDataSetEvents;
+    end;
+//    LDataSetChild.FOrmDataSet.Refresh;
   end;
 end;
 
@@ -479,7 +490,7 @@ begin
     FOrmDataSet.Edit;
     TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
     FOrmDataSet.Post;
-    /// <summary> Limpa todos os registros filhos para serem atualizados </summary>
+    // Limpa todos os registros filhos para serem atualizados
     for LChildDataSet in FMasterObject.Values do
     begin
       LChildDataSet.FOrmDataSet.DisableControls;
@@ -491,7 +502,7 @@ begin
         LChildDataSet.FOrmDataSet.EnableControls;
       end;
     end;
-    /// <summary> Popula Associations </summary>
+    // Popula Associations
     if FMasterObject.Count > 0 then
       PopularDataSetChilds(AObject);
   finally
@@ -508,7 +519,7 @@ var
   LFor: Integer;
 begin
   // Association
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do

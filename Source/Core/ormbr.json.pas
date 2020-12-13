@@ -113,7 +113,8 @@ class procedure TORMBrJson.DoGetValue(const Sender: TJSONBrObject;
 var
   LColumn: Column;
 begin
-  // Ao voltar para o método GetValue do JSONBr, executa o comando Exit e sai;
+  // Ao voltar para o método GetValue do JSONBr, executa o comando Exit e sai,
+  // se ABreak = True;
   ABreak := False;
   VarClear(AResult);
   try
@@ -157,7 +158,8 @@ var
   LBlob: TBlob;
   LColumn: Column;
 begin
-  // Ao voltar para o método GetValue do JSONBr, executa o comando Exit e sai;
+  // Ao voltar para o método SetValue do JSONBr, executa o comando Exit e sai,
+  // se ABreak = True;
   ABreak := False;
   if (AProperty <> nil) and (AInstance <> nil) then
   begin

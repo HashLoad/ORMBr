@@ -190,7 +190,6 @@ begin
       if FSession.ExistSequence then
       begin
         LPrimaryKey := TMappingExplorer
-                         .GetInstance
                            .GetMappingPrimaryKeyColumns(AObject.ClassType);
         if LPrimaryKey = nil then
           raise Exception.Create(cMESSAGEPKNOTFOUND);

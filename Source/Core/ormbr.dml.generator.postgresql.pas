@@ -114,8 +114,10 @@ begin
     // Faz cache do comando padrão
     FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
   end;
-  Result := Result + ' WHERE ' + AWhere;
-  Result := Result + 'ORDER BY ' + AOrderBy;
+  if Length(AWhere) > 0 then
+    Result := Result + ' WHERE ' + AWhere;
+  if Length(AOrderBy) > 0 then
+    Result := Result + 'ORDER BY ' + AOrderBy;
   // Monta SQL para paginação
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);

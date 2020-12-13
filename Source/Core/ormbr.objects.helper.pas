@@ -197,7 +197,7 @@ var
   LProperty: TRttiProperty;
   LValue: Variant;
 begin
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(Self.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(Self.ClassType);
   if LColumns = nil then
     Exit;
 

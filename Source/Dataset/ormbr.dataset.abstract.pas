@@ -102,7 +102,7 @@ begin
     begin
       if not LValue.ContainsValue(Field.FieldName) then
       begin
-        LColumns := TMappingExplorer.GetInstance.GetMappingColumn(M);
+        LColumns := TMappingExplorer.GetMappingColumn(M);
         for LColumn in LColumns do
         begin
           if LColumn.ColumnProperty = nil then

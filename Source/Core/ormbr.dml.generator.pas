@@ -46,9 +46,9 @@ uses
   ormbr.criteria,
   ormbr.dml.interfaces,
   ormbr.dml.commands,
+  ormbr.dml.cache,
   ormbr.types.blob,
   dbcbr.rtti.helper,
-//  ormbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
@@ -63,7 +63,7 @@ type
     procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
   protected
-    FDMLCriteria: TDictionary<String, String>;
+//    FDMLCriteria: TDictionary<String, String>;
     FConnection: IDBConnection;
     FDateFormat: string;
     FTimeFormat: string;
@@ -105,12 +105,12 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-  FDMLCriteria := TDictionary<String, String>.Create;
+//  FDMLCriteria := TDictionary<String, String>.Create;
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-  FDMLCriteria.Free;
+//  FDMLCriteria.Free;
   inherited;
 end;
 
@@ -137,7 +137,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
     LColumns: TColumnMappingList;
   begin
     Result := Null;
-    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
+    LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[AIndex] then
         Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
@@ -151,14 +151,14 @@ var
   LFor: Integer;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
   begin
@@ -167,7 +167,7 @@ begin
                      + ' = ' + GetValue(LFor);
   end;
   // OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     Result := Result + ' ORDER BY ';
@@ -196,7 +196,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
     LColumns: TColumnMappingList;
   begin
     Result := Null;
-    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AOwner.ClassType);
+    LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[Aindex] then
         Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
@@ -210,14 +210,14 @@ var
   LFor: Integer;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
   begin
@@ -231,7 +231,7 @@ begin
                      + ' = ' + GetValue(LFor)
   end;
   // OrderBy
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
   if LOrderBy <> nil then
   begin
     Result := Result + ' ORDER BY ';
@@ -259,7 +259,7 @@ var
   LCriteria: ICriteria;
 begin
   Result := '';
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Delete;
   LCriteria.From(LTable.Name);
   /// <exception cref="LTable.Name + '.'"></exception>
@@ -280,10 +280,10 @@ begin
   Result := '';
   LKey := AObject.ClassType.ClassName + '-INSERT';
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if FDMLCriteria.TryGetValue(LKey, Result) then
+  if TDMLCache.DMLCache.TryGetValue(LKey, Result) then
     Exit;
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
-  LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   LCriteria := CreateCriteria.Insert.Into(LTable.Name);
   for LColumn in LColumns do
   begin
@@ -299,7 +299,7 @@ begin
   end;
   Result := LCriteria.AsString;
   // Adiciona o comando a lista fazendo cache para não ter que gerar novamente
-  FDMLCriteria.AddOrSetValue(LKey, Result);
+  TDMLCache.DMLCache.AddOrSetValue(LKey, Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
@@ -321,7 +321,7 @@ var
   LFor: Integer;
 begin
   Result := '';
-  LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+  LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
   if LOrderBy = nil then
     Exit;
   Result := Result + ' ORDER BY ';
@@ -355,7 +355,7 @@ begin
   Result := '';
   if VarToStr(AID) = '-1' then
     Exit;
-  LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
   if LPrimaryKey <> nil then
   begin
     Result := Result + ' WHERE ';
@@ -380,11 +380,11 @@ var
   LColumn: TColumnMapping;
 begin
   // Table
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   try
     Result := CreateCriteria.Select.From(LTable.Name);
     // Columns
-    LColumns := TMappingExplorer.GetInstance.GetMappingColumn(AClass);
+    LColumns := TMappingExplorer.GetMappingColumn(AClass);
     for LColumn in LColumns do
     begin
       if LColumn.IsVirtualData then
@@ -451,7 +451,7 @@ begin
   LJoinExist := TList<string>.Create;
   try
     // JoinColumn
-    LJoinList := TMappingExplorer.GetInstance.GetMappingJoinColumn(AClass);
+    LJoinList := TMappingExplorer.GetMappingJoinColumn(AClass);
     if LJoinList = nil then
       Exit;
 
@@ -517,7 +517,7 @@ begin
     Exit;
 
   // Varre a lista de campos alterados para montar o UPDATE
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Update(LTable.Name);
   for LColumnName in AModifiedFields.Values do
   begin
