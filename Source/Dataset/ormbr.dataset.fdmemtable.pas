@@ -210,7 +210,7 @@ begin
   LOrderBy := AOrderBy;
   if LOrderBy = '' then
   begin
-    LFields := TMappingExplorer.GetInstance.GetMappingOrderBy(TClass(M));
+    LFields := TMappingExplorer.GetMappingOrderBy(TClass(M));
     if LFields <> nil then
       LOrderBy := LFields.ColumnsName;
   end;
@@ -293,8 +293,7 @@ begin
          FOrmDataSet.Edit;
          if FSession.ExistSequence then
          begin
-           LPrimaryKey := TMappingExplorer.GetInstance
-                            .GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
+           LPrimaryKey := TMappingExplorer.GetMappingPrimaryKeyColumns(FCurrentInternal.ClassType);
            if LPrimaryKey = nil then
              raise Exception.Create(cMESSAGEPKNOTFOUND);
 

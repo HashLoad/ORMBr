@@ -13,8 +13,8 @@ uses
   ormbr.model.client,
   dbcbr.mapping.attributes,
   dbcbr.types.mapping,
-  dbcbr.types.lazy,
-  dbcbr.types.nullable,
+  ormbr.types.lazy,
+  ormbr.types.nullable,
   dbcbr.mapping.register;
 
 type
