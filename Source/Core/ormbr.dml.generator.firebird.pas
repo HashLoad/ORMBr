@@ -38,6 +38,7 @@ uses
   ormbr.dml.generator,
   ormbr.driver.register,
   ormbr.dml.commands,
+  ormbr.dml.cache,
   ormbr.criteria,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
@@ -96,7 +97,7 @@ var
   LTable: TTableMapping;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
@@ -104,7 +105,7 @@ begin
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria);
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
@@ -119,7 +120,7 @@ var
   LCriteria: ICriteria;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not FDMLCriteria.TryGetValue(AClass.ClassName, Result) then
+  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
@@ -127,7 +128,7 @@ begin
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria);
     // Faz cache do comando padrão
-    FDMLCriteria.AddOrSetValue(AClass.ClassName, Result);
+    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
   if Length(AWhere) > 0 then
     Result := Result + ' WHERE ' + AWhere;

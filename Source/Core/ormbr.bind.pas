@@ -835,7 +835,7 @@ begin
   /// Nullable
   if LProperty.IsNullable then
   begin
-    LProperty.SetNullableValue(AObject, LRttiType.Handle, AField.Value);
+    LProperty.SetValueNullable(AObject, LRttiType.Handle, AField.Value);
   end
   else if LProperty.IsBlob then
   begin
@@ -852,7 +852,7 @@ begin
       raise Exception.CreateFmt('Column [%s] must have blob value', [AColumn.ColumnName]);
   end
   else
-    LProperty.SetNullableValue(AObject, LProperty.PropertyType.Handle, AField.Value);
+    LProperty.SetValueNullable(AObject, LProperty.PropertyType.Handle, AField.Value);
 end;
 
 procedure TBind.SetFieldToPropertyEnumeration(

@@ -23,8 +23,6 @@
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dataset.adapter;
@@ -148,9 +146,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin
-  LColumns := TMappingExplorer
-                .GetInstance
-                  .GetMappingColumn(FCurrentInternal.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(FCurrentInternal.ClassType);
   for LColumn in LColumns do
   begin
     if LColumn.IsNoInsert then
@@ -275,11 +271,9 @@ begin
   inherited;
   if not FOrmDataSet.Active then
     Exit;
-
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
-
   for LAssociation in LAssociations do
   begin
     if not (LAssociation.Multiplicity in [OneToOne, ManyToOne]) then
