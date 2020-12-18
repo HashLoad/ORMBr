@@ -132,12 +132,12 @@ begin
         tkRecord:
           begin
             if LProperty.IsNullable then
-              LProperty.SetNullableValue(LStateObject,
+              LProperty.SetValueNullable(LStateObject,
                                          LProperty.PropertyType.Handle,
                                          LProperty.GetNullableValue(ASourceObject).AsType<Variant>)
             else
             if LProperty.IsBlob then
-              LProperty.SetNullableValue(LStateObject,
+              LProperty.SetValueNullable(LStateObject,
                                          LProperty.PropertyType.Handle,
                                          LProperty.GetNullableValue(ASourceObject).AsType<TBlob>.ToBytes)
           end;

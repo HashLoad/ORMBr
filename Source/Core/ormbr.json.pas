@@ -49,7 +49,6 @@ uses
   dbcbr.mapping.attributes,
   ormbr.core.consts,
   ormbr.types.blob,
-  ormbr.rtti.helper,
   //
   jsonbr.builders;
 
@@ -92,6 +91,9 @@ type
 
 implementation
 
+uses
+  ormbr.rtti.helper;
+
 { TJson }
 
 class constructor TORMBrJson.Create;
@@ -124,6 +126,21 @@ begin
           ABreak := True;
           if AProperty.IsBlob then
             AResult := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytesString
+          else
+          if AProperty.IsNullable then
+          begin
+            AResult := AProperty.GetValueNullable(AInstance, AProperty.PropertyType.Handle).AsVariant;
+            if AResult = Null then
+              Exit;
+            if AProperty.IsDateTime then
+              AResult := DateTimeToStr(AResult, FSettingsUS)
+            else
+            if AProperty.IsDate then
+              AResult := DateToStr(AResult, FSettingsUS)
+            else
+            if AProperty.IsTime then
+              AResult := DateTimeToStr(AResult, FSettingsUS)
+          end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;
         end;
@@ -174,7 +191,7 @@ begin
               AProperty.SetValue(AInstance, TValue.From<TBlob>(LBlob));
             end
             else
-              AProperty.SetNullableValue(AInstance,
+              AProperty.SetValueNullable(AInstance,
                                          AProperty.PropertyType.Handle,
                                          AValue);
           end;

@@ -228,7 +228,7 @@ begin
             LProperty.SetValue(Self, StrToFloatDef(LValue, 0));
         end;
       tkRecord:
-        LProperty.SetNullableValue(Self, LProperty.PropertyType.Handle, LValue);
+        LProperty.SetValueNullable(Self, LProperty.PropertyType.Handle, LValue);
       tkEnumeration:
         begin
           case LColumn.FieldType of

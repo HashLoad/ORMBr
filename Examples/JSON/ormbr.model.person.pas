@@ -44,7 +44,7 @@ type
     FLastName: string;
     FAge: Integer;
     FSalary: Double;
-    FDate: TDateTime;
+    FDate: Nullable<TDate>;
     FPessoa: TPersonSub;
     FPessoas: TObjectList<TPersonSub>;
     FBlob: TBlob;
@@ -80,7 +80,7 @@ type
     [Restrictions([NotNull])]
     [Column('Date', ftDateTime)]
     [Dictionary('Nivel','Data de aniversário','Date','','',taRightJustify)]
-    property Date: TDateTime read FDate write FDate;
+    property Date: Nullable<TDate> read FDate write FDate;
 
     [Column('Imagem', ftBlob)]
     property Imagem: TBlob read FBlob write FBlob;

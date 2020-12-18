@@ -65,7 +65,7 @@ begin
     Person.LastName := 'Pinheiro';
     Person.Age := 10;
     Person.Salary := 100.10;
-    Person.Date := Now;
+    Person.Date := null;
 
     Person.Pessoa.Id := 2;
     Person.Pessoa.FirstName := 'Isaque 2';
