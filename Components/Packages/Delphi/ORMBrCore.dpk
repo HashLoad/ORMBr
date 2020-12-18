@@ -43,7 +43,6 @@ contains
   ormbr.objects.helper in '..\..\..\Source\Core\ormbr.objects.helper.pas',
   ormbr.objects.manager.abstract in '..\..\..\Source\Core\ormbr.objects.manager.abstract.pas',
   ormbr.objects.manager in '..\..\..\Source\Core\ormbr.objects.manager.pas',
-  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
   ormbr.session.abstract in '..\..\..\Source\Core\ormbr.session.abstract.pas',
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
@@ -75,6 +74,8 @@ contains
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
   jsonbr.builders in '..\..\..\Source\JSONBr\Core\jsonbr.builders.pas',
-  jsonbr in '..\..\..\Source\JSONBr\Core\jsonbr.pas';
+  jsonbr in '..\..\..\Source\JSONBr\Core\jsonbr.pas',
+  ormbr.dml.cache in '..\..\..\Source\Core\ormbr.dml.cache.pas',
+  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas';
 
 end.
