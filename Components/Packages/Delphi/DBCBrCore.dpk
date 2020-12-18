@@ -49,7 +49,6 @@ contains
   dbcbr.mapping.classes in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.classes.pas',
   dbcbr.mapping.exceptions in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.exceptions.pas',
   dbcbr.mapping.explorer in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.explorer.pas',
-  dbcbr.mapping.explorerstrategy in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.explorerstrategy.pas',
   dbcbr.mapping.popular in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.popular.pas',
   dbcbr.mapping.register in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.register.pas',
   dbcbr.mapping.repository in '..\..\..\Source\DBCBr\Core\dbcbr.mapping.repository.pas',
