@@ -40,7 +40,7 @@ uses
   ormbr.dml.generator.mysql,
   ormbr.manager.dataset,
   dbebr.factory.interfaces,
-  dbebr.factory.firedac;
+  dbebr.factory.firedac, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TForm3 = class(TForm)

@@ -9,10 +9,10 @@ uses
   Generics.Collections, 
   /// orm 
   ormbr.model.lookup,
+  ormbr.types.lazy,
+  ormbr.types.nullable,
   dbcbr.mapping.attributes,
   dbcbr.types.mapping,
-  dbcbr.types.lazy,
-  dbcbr.types.nullable,
   dbcbr.mapping.register;
 
 type

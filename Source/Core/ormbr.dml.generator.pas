@@ -63,7 +63,6 @@ type
     procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
   protected
-//    FDMLCriteria: TDictionary<String, String>;
     FConnection: IDBConnection;
     FDateFormat: string;
     FTimeFormat: string;
@@ -105,12 +104,12 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-//  FDMLCriteria := TDictionary<String, String>.Create;
+
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-//  FDMLCriteria.Free;
+
   inherited;
 end;
 

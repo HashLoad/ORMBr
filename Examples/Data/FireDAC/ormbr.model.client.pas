@@ -9,10 +9,10 @@ uses
   Generics.Collections, 
   /// orm 
   dbcbr.mapping.attributes,
-  dbcbr.types.nullable,
+  ormbr.types.nullable,
   dbcbr.types.mapping,
   dbcbr.mapping.register,
-  dbcbr.types.blob;
+  ormbr.types.blob;
 
 type
   [Entity]

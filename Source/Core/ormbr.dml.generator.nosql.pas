@@ -87,7 +87,7 @@ var
   LCriteria: TStringBuilder;
 begin
   Result := '';
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
@@ -109,7 +109,7 @@ var
   LFor: Integer;
 begin
   Result := '';
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
@@ -147,7 +147,7 @@ var
   LFor: Integer;
 begin
   Result := '';
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AObject.ClassType);
+  LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
@@ -185,7 +185,7 @@ var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
 begin
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
@@ -223,7 +223,7 @@ var
   LOrder: Integer;
 begin
   // Collection
-  LTable := TMappingExplorer.GetInstance.GetMappingTable(AClass);
+  LTable := TMappingExplorer.GetMappingTable(AClass);
   LCriteria := TStringBuilder.Create;
   try
     LCriteria
@@ -232,7 +232,7 @@ begin
     // PrimaryKey
     if VarToStr(AID) <> '-1' then
     begin
-      LPrimaryKey := TMappingExplorer.GetInstance.GetMappingPrimaryKey(AClass);
+      LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
       if LPrimaryKey <> nil then
       begin
         LCriteria.Append('& filter={');
@@ -244,7 +244,7 @@ begin
       end;
     end;
     // Order By
-    LOrderBy := TMappingExplorer.GetInstance.GetMappingOrderBy(AClass);
+    LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
     if LOrderBy <> nil then
     begin
       LOrderByList := TStringList.Create;
