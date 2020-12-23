@@ -7,7 +7,7 @@
 *.local
 __history/
 __recovery/
-Examples/
+# Examples/
 Examples/Data/
 Examples/JSON/
 Win32/
