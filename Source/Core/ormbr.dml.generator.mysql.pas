@@ -118,7 +118,7 @@ begin
   if Length(AWhere) > 0 then
     Result := Result + ' WHERE ' + AWhere;
   if Length(AOrderBy) > 0 then
-    Result := Result + 'ORDER BY ' + AOrderBy;
+    Result := Result + ' ORDER BY ' + AOrderBy;
   // Monta SQL para paginação
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);

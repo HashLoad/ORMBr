@@ -1,0 +1,54 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2020-12-06T16:47:37.1180564-03:00",
+	"installedModules": {
+		"bitbucket.org/isaquepinheiro/cqlbr": {
+			"name": "cqlbr",
+			"version": "1.0.1",
+			"hash": "bdf5ac552706c32ca1c03b4cc296e665",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/dbcbr": {
+			"name": "dbcbr",
+			"version": "1.0.2",
+			"hash": "310b80b2eb4a893df6927b71cc137eac",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/dbebr": {
+			"name": "dbebr",
+			"version": "1.0.2",
+			"hash": "55c55bc37219c2059bb9758a8859389b",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/jsonbr": {
+			"name": "jsonbr",
+			"version": "1.0.0",
+			"hash": "94ce55fd759a4d33502df6b5695596c0",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/ormbr": {
+			"name": "ormbr",
+			"version": "master",
+			"hash": "b35cd2183a0b6df40185fb3a6ec14e0f",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"github.com/hashload/horse": {
+			"name": "horse",
+			"version": "v2.0.6",
+			"hash": "cca1769dfab681cfd26ae8499f9045e1",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}
