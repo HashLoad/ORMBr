@@ -45,7 +45,7 @@ uses
 
 type
   /// <summary>
-  ///   TEdit Component
+  ///   Interposer Classes TEdit
   /// </summary>
   TEdit = class(Vcl.StdCtrls.TEdit)
   protected
@@ -54,7 +54,7 @@ type
   end;
 
   /// <summary>
-  ///   TMaskEdit Component
+  ///   Interposer Classes TMaskEdit
   /// </summary>
   TMaskEdit = class(Vcl.Mask.TMaskEdit)
   protected
@@ -63,7 +63,7 @@ type
   end;
 
   /// <summary>
-  ///   TLabel Component
+  ///   Interposer Classes TLabel
   /// </summary>
   TLabel = class(Vcl.StdCtrls.TLabel)
   protected
@@ -71,7 +71,7 @@ type
   end;
 
   /// <summary>
-  ///   TComboBox Component
+  ///   Interposer Classes TComboBox
   /// </summary>
   TComboBox = class(Vcl.StdCtrls.TComboBox)
   protected
@@ -80,7 +80,7 @@ type
   end;
 
   /// <summary>
-  ///   TMemo Component
+  ///   Interposer Classes TMemo
   /// </summary>
   TMemo = class(Vcl.StdCtrls.TMemo)
   protected
@@ -89,7 +89,7 @@ type
   end;
 
   /// <summary>
-  ///   TProgressBar Component
+  ///   Interposer Classes TProgressBar
   /// </summary>
   TProgressBar = class(Vcl.ComCtrls.TProgressBar)
   protected
@@ -97,7 +97,7 @@ type
   end;
 
   /// <summary>
-  ///   TButtonedEdit Component
+  ///   Interposer Classes TButtonedEdit
   /// </summary>
   TButtonedEdit = class(Vcl.ExtCtrls.TButtonedEdit)
   protected

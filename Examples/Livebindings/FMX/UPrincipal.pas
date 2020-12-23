@@ -78,7 +78,8 @@ end;
 procedure TFormPrincipal.FormCreate(Sender: TObject);
 begin
   LProduto_1 := TProduto.Create;
-  // Valor padrão, já será mostrado nos componentes
+  // Valor padrão, já será mostrado nos componentes, para isso existe na classe
+  // o método SET()
   LProduto_1.ID := 1;
   LProduto_1.Preco := 10;
 end;
@@ -90,7 +91,6 @@ end;
 
 procedure TFormPrincipal.SpinBoxIDChange(Sender: TObject);
 begin
-
   // Se realmente precisar usar o evento OnChange, por último dispare o
   // método DoChangeInternal(), para que o ORMBr consiga notificar ao LiveBindings
   TSpinBox(Sender).DoChangeInternal(Sender);

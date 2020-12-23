@@ -46,7 +46,7 @@ uses
 
 type
   /// <summary>
-  ///   TEdit Component
+  ///   Interposer Classes TEdit
   /// </summary>
   TEdit = class(FMX.Edit.TEdit)
   protected
@@ -56,7 +56,7 @@ type
   end;
 
   /// <summary>
-  ///   TLabel Component
+  ///   Interposer Classes TLabel
   /// </summary>
   TLabel = class(FMX.StdCtrls.TLabel)
   protected
@@ -64,7 +64,7 @@ type
   end;
 
   /// <summary>
-  ///   TComboEdit Component
+  ///   Interposer Classes TComboEdit
   /// </summary>
   TComboEdit = class(FMX.ComboEdit.TComboEdit)
   protected
@@ -74,7 +74,7 @@ type
   end;
 
   /// <summary>
-  ///   TProgressBar Component
+  ///   Interposer Classes TProgressBar
   /// </summary>
   TProgressBar = class(FMX.StdCtrls.TProgressBar)
   protected
@@ -82,7 +82,7 @@ type
   end;
 
   /// <summary>
-  ///   TSpinBox Component
+  ///   Interposer Classes TSpinBox
   /// </summary>
   TSpinBox = class(FMX.SpinBox.TSpinBox)
   protected
@@ -92,7 +92,7 @@ type
   end;
 
   /// <summary>
-  ///   TNumberBox Component
+  ///   Interposer Classes TNumberBox
   /// </summary>
   TNumberBox = class(FMX.NumberBox.TNumberBox)
   protected
@@ -102,7 +102,7 @@ type
   end;
 
   /// <summary>
-  ///   TDateEdit Component
+  ///   Interposer Classes TDateEdit
   /// </summary>
   TDateEdit = class(FMX.DateTimeCtrls.TDateEdit)
   protected
@@ -112,7 +112,7 @@ type
   end;
 
   /// <summary>
-  ///   TTimeEdit Component
+  ///   Interposer Classes TTimeEdit
   /// </summary>
   TTimeEdit = class(FMX.DateTimeCtrls.TTimeEdit)
   protected
