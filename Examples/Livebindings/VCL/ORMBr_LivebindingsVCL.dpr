@@ -4,9 +4,9 @@ uses
   Vcl.Forms,
   UPrincipal in 'UPrincipal.pas' {FormPrincipal},
   produto in 'produto.pas',
-  ormbr.controls.helpers in '..\..\Source\ormbr.controls.helpers.pas',
-  ormbr.livebindings in '..\..\Source\ormbr.livebindings.pas',
-  ormbr.vcl.controls in '..\..\Source\ormbr.vcl.controls.pas';
+  ormbr.controls.helpers in '..\..\..\Source\Livebindings\ormbr.controls.helpers.pas',
+  ormbr.livebindings in '..\..\..\Source\Livebindings\ormbr.livebindings.pas',
+  ormbr.vcl.controls in '..\..\..\Source\Livebindings\ormbr.vcl.controls.pas';
 
 {$R *.res}
 

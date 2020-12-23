@@ -5,9 +5,9 @@ uses
   FMX.Forms,
   UPrincipal in 'UPrincipal.pas' {FormPrincipal},
   produto in 'produto.pas',
-  ormbr.controls.helpers in '..\..\Source\ormbr.controls.helpers.pas',
-  ormbr.fmx.controls in '..\..\Source\ormbr.fmx.controls.pas',
-  ormbr.livebindings in '..\..\Source\ormbr.livebindings.pas';
+  ormbr.controls.helpers in '..\..\..\Source\Livebindings\ormbr.controls.helpers.pas',
+  ormbr.fmx.controls in '..\..\..\Source\Livebindings\ormbr.fmx.controls.pas',
+  ormbr.livebindings in '..\..\..\Source\Livebindings\ormbr.livebindings.pas';
 
 {$R *.res}
 
