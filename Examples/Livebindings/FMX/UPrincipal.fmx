@@ -1,0 +1,155 @@
+object FormPrincipal: TFormPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Button1: TButton
+    Position.X = 273.000000000000000000
+    Position.Y = 138.000000000000000000
+    Size.Width = 238.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Alterar (Produto.ID e Produto.Preco)'
+    OnClick = Button1Click
+  end
+  object EditPreco: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    StyleLookup = 'EditPrecoStyle1'
+    TabOrder = 2
+    Position.X = 273.000000000000000000
+    Position.Y = 102.000000000000000000
+    Size.Width = 157.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Button2: TButton
+    Position.X = 435.000000000000000000
+    Position.Y = 102.000000000000000000
+    Size.Width = 166.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Mostra (Produto.Preco)'
+    OnClick = Button2Click
+  end
+  object EditID: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    Position.X = 273.000000000000000000
+    Position.Y = 51.000000000000000000
+    Size.Width = 91.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Button3: TButton
+    Position.X = 369.000000000000000000
+    Position.Y = 51.000000000000000000
+    Size.Width = 154.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Mostrar (Produto.ID)'
+    OnClick = Button3Click
+  end
+  object LabelID: TLabel
+    Position.X = 273.000000000000000000
+    Position.Y = 30.000000000000000000
+    Text = 'LabelID'
+  end
+  object LabelPreco: TLabel
+    Position.X = 273.000000000000000000
+    Position.Y = 81.000000000000000000
+    Text = 'LabelPreco'
+  end
+  object ComboEditID: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    ItemHeight = 19.000000000000000000
+    Items.Strings = (
+      '0 - Zero'
+      '1 - Um'
+      '2 - Dois'
+      '3 - Tr'#234's'
+      '4 - Quatro'
+      '5 - Cinco'
+      '6 - Seis'
+      '7 - Sete'
+      '8 - Oito'
+      '9 - Nove'
+      '10 - Dez')
+    ItemIndex = -1
+    Position.X = 129.000000000000000000
+    Position.Y = 51.000000000000000000
+    Size.Width = 124.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object EditSoma: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    StyleLookup = 'EditPrecoStyle1'
+    TabOrder = 1
+    Position.X = 273.000000000000000000
+    Position.Y = 195.000000000000000000
+    Size.Width = 157.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Label1: TLabel
+    Position.X = 273.000000000000000000
+    Position.Y = 174.000000000000000000
+    Text = 'Soma (ID * Preco)'
+  end
+  object ProgressBarID: TProgressBar
+    Max = 10.000000000000000000
+    Orientation = Horizontal
+    Position.X = 129.000000000000000000
+    Position.Y = 90.000000000000000000
+    Size.Width = 124.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object SpinBoxID: TSpinBox
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Cursor = crIBeam
+    Max = 10.000000000000000000
+    Position.X = 129.000000000000000000
+    Position.Y = 129.000000000000000000
+    Size.Width = 124.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChange = SpinBoxIDChange
+  end
+  object NumberBoxID: TNumberBox
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Cursor = crIBeam
+    Max = 10.000000000000000000
+    Position.X = 129.000000000000000000
+    Position.Y = 171.000000000000000000
+    Size.Width = 124.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Label2: TLabel
+    Position.X = 123.000000000000000000
+    Position.Y = 31.000000000000000000
+    Size.Width = 145.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Todos Abaixo Link com ID'
+  end
+  object Button4: TButton
+    Position.X = 435.000000000000000000
+    Position.Y = 195.000000000000000000
+    Size.Width = 154.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Mostrar (Produto.Soma)'
+    OnClick = Button4Click
+  end
+end
