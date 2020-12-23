@@ -76,6 +76,7 @@ contains
   jsonbr.builders in '..\..\..\Source\JSONBr\Core\jsonbr.builders.pas',
   jsonbr in '..\..\..\Source\JSONBr\Core\jsonbr.pas',
   ormbr.dml.cache in '..\..\..\Source\Core\ormbr.dml.cache.pas',
-  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas';
+  ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
+  ormbr.objects.utils in '..\..\..\Source\Core\ormbr.objects.utils.pas';
 
 end.

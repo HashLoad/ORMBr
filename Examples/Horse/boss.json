@@ -1,0 +1,16 @@
+{
+	"name": "HorseORMBr",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./",
+	"projects": [],
+	"dependencies": {
+		"bitbucket.org/isaquepinheiro/cqlbr": "1.0.1",
+		"bitbucket.org/isaquepinheiro/dbcbr": "1.0.2",
+		"bitbucket.org/isaquepinheiro/dbebr": "1.0.2",
+		"bitbucket.org/isaquepinheiro/jsonbr": "^1.0.0",
+		"bitbucket.org/isaquepinheiro/ormbr": "1.0.4",
+		"github.com/hashload/horse": "^v2.0.6"
+	}
+}
