@@ -57,8 +57,7 @@ type
 
   TRttiSingleton = class(TInterfacedObject, IRttiSingleton)
   private
-  class var
-    FInstance: IRttiSingleton;
+    class var FInstance: IRttiSingleton;
   private
     FContext: TRttiContext;
     constructor CreatePrivate;
@@ -86,8 +85,7 @@ uses
 
 constructor TRttiSingleton.Create;
 begin
-  raise Exception
-          .Create('Para usar o IRttiSingleton use o método TRttiSingleton.GetInstance()');
+  raise Exception.Create('Para usar o IRttiSingleton use o método TRttiSingleton.GetInstance()');
 end;
 
 constructor TRttiSingleton.CreatePrivate;

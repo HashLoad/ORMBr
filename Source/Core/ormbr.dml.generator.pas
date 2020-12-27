@@ -20,11 +20,8 @@
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -48,7 +45,7 @@ uses
   ormbr.dml.commands,
   ormbr.dml.cache,
   ormbr.types.blob,
-  ormbr.scope,
+  ormbr.query.scope,
   dbcbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
@@ -73,8 +70,8 @@ type
       const AID: Variant): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
       const AID: Variant): String;
-    function GetGeneratorScopeWhere(const AClass: TClass): String;
-    function GetGeneratorScopeOrderBy(const AClass: TClass): String;
+    function GetGeneratorQueryScopeWhere(const AClass: TClass): String;
+    function GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
     constructor Create; virtual;
@@ -211,7 +208,7 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamnete
   if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
@@ -223,11 +220,7 @@ begin
   // Association Multi-Columns
   for LFor := 0 to AAssociation.ColumnsNameRef.Count -1 do
   begin
-    if LFor = 0 then
-      Result := Result + ' WHERE '
-    else
-      Result := Result + ' AND ';
-    //
+    Result := Result + ifThen(LFor = 0, ' WHERE ', ' AND ');
     Result := Result + LTable.Name
                      + '.' + AAssociation.ColumnsNameRef[LFor]
                      + ' = ' + GetValue(LFor)
@@ -281,7 +274,7 @@ var
 begin
   Result := '';
   LKey := AObject.ClassType.ClassName + '-INSERT';
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
+  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamente
   if TDMLCache.DMLCache.TryGetValue(LKey, Result) then
     Exit;
   LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
@@ -324,7 +317,7 @@ var
   LScopeOrderBy: String;
 begin
   Result := '';
-  LScopeOrderBy := GetGeneratorScopeOrderBy(AClass);
+  LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
   if LScopeOrderBy <> '' then
     Result := ' ORDER BY ' + LScopeOrderBy;
   LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
@@ -346,14 +339,14 @@ begin
   end;
 end;
 
-function TDMLGeneratorAbstract.GetGeneratorScopeOrderBy(const AClass: TClass): String;
+function TDMLGeneratorAbstract.GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
 var
   LFor: Integer;
   LFuncs: TFuncList;
   LFunc: TFunc<String>;
 begin
   Result := '';
-  LFuncs := TORMBrScope.GetOrderBy(AClass.ClassName);
+  LFuncs := TQueryScope.GetInstance.GetOrderBy(UpperCase(AClass.ClassName));
   if LFuncs = nil then
     Exit;
   for LFunc in LFuncs.Values do
@@ -364,14 +357,14 @@ begin
   end;
 end;
 
-function TDMLGeneratorAbstract.GetGeneratorScopeWhere(const AClass: TClass): String;
+function TDMLGeneratorAbstract.GetGeneratorQueryScopeWhere(const AClass: TClass): String;
 var
   LFor: Integer;
   LFuncs: TFuncList;
   LFunc: TFunc<String>;
 begin
   Result := '';
-  LFuncs := TORMBrScope.GetWhere(AClass.ClassName);
+  LFuncs := TQueryScope.GetInstance.GetWhere(UpperCase(AClass.ClassName));
   if LFuncs = nil then
     Exit;
   for LFunc in LFuncs.Values do
@@ -396,7 +389,7 @@ var
   LScopeWhere: String;
 begin
   Result := '';
-  LScopeWhere := GetGeneratorScopeWhere(AClass);
+  LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
   if VarToStr(AID) = '-1' then
@@ -561,7 +554,6 @@ begin
   Result := '';
   if AModifiedFields.Count = 0 then
     Exit;
-
   // Varre a lista de campos alterados para montar o UPDATE
   LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LCriteria := CreateCriteria.Update(LTable.Name);
@@ -573,7 +565,6 @@ begin
   end;
   for LFor := 0 to AParams.Count -1 do
     LCriteria.Where(AParams.Items[LFor].Name + ' = :' + AParams.Items[LFor].Name);
-
   Result := LCriteria.AsString;
 end;
 

@@ -11,12 +11,12 @@ uses
   /// orm 
   dbcbr.mapping.attributes,
   dbcbr.types.mapping,
+  dbcbr.mapping.register,
   ormbr.types.lazy,
   ormbr.types.nullable,
   ormbr.model.detail,
   ormbr.model.client,
-  ormbr.scope,
-  dbcbr.mapping.register;
+  ormbr.query.scope;
 
 type
   TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);
@@ -104,19 +104,19 @@ begin
    Fdetail := TObjectList<Tdetail>.Create;
    Fclient := Tclient.Create;
    // Scope
-   TORMBrScope.AddWhere('Tmaster',
-                       'ScopeWhereID',
-                        function: string
-                        begin
-                          Result := 'master.master_id > 5';
-                        end);
+   TQueryScope.GetInstance.AddWhere(Self.ClassName,
+                                    'ScopeWhereID',
+                                     function: string
+                                     begin
+                                       Result := 'master.master_id > 5';
+                                     end);
    // Scope
-   TORMBrScope.AddOrderBy('Tmaster',
-                          'ScopeOrderByID',
-                          function: string
-                          begin
-                            Result := 'master.master_id';
-                          end);
+   TQueryScope.GetInstance.AddOrderBy(Self.ClassName,
+                                      'ScopeOrderByID',
+                                      function: string
+                                      begin
+                                        Result := 'master.master_id';
+                                      end);
 end;
 
 destructor Tmaster.Destroy;

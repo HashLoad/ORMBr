@@ -41,6 +41,7 @@ uses
   dbebr.factory.interfaces,
   ormbr.driver.register,
   ormbr.dml.commands,
+  ormbr.dml.cache,
   ormbr.criteria;
 
 type
@@ -137,10 +138,10 @@ begin
     TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
   end;
   // Scope
-  LScopeWhere := GetGeneratorScopeWhere(AClass);
+  LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
-  LScopeOrderBy := GetGeneratorScopeOrderBy(AClass);
+  LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
   if LScopeOrderBy <> '' then
     Result := ' ORDER BY ' + LScopeOrderBy;
   // Params Where and OrderBy
