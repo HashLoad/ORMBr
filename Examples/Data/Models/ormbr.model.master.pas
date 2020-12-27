@@ -15,6 +15,7 @@ uses
   ormbr.types.nullable,
   ormbr.model.detail,
   ormbr.model.client,
+  ormbr.scope,
   dbcbr.mapping.register;
 
 type
@@ -102,6 +103,20 @@ constructor Tmaster.Create;
 begin
    Fdetail := TObjectList<Tdetail>.Create;
    Fclient := Tclient.Create;
+   // Scope
+   TORMBrScope.AddWhere('Tmaster',
+                       'ScopeWhereID',
+                        function: string
+                        begin
+                          Result := 'master.master_id > 5';
+                        end);
+   // Scope
+   TORMBrScope.AddOrderBy('Tmaster',
+                          'ScopeOrderByID',
+                          function: string
+                          begin
+                            Result := 'master.master_id';
+                          end);
 end;
 
 destructor Tmaster.Destroy;

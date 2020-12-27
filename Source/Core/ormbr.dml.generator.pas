@@ -48,6 +48,7 @@ uses
   ormbr.dml.commands,
   ormbr.dml.cache,
   ormbr.types.blob,
+  ormbr.scope,
   dbcbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
@@ -72,6 +73,8 @@ type
       const AID: Variant): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
       const AID: Variant): String;
+    function GetGeneratorScopeWhere(const AClass: TClass): String;
+    function GetGeneratorScopeOrderBy(const AClass: TClass): String;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
   public
     constructor Create; virtual;
@@ -318,12 +321,16 @@ var
   LOrderBy: TOrderByMapping;
   LOrderByList: TStringList;
   LFor: Integer;
+  LScopeOrderBy: String;
 begin
   Result := '';
+  LScopeOrderBy := GetGeneratorScopeOrderBy(AClass);
+  if LScopeOrderBy <> '' then
+    Result := ' ORDER BY ' + LScopeOrderBy;
   LOrderBy := TMappingExplorer.GetMappingOrderBy(AClass);
   if LOrderBy = nil then
     Exit;
-  Result := Result + ' ORDER BY ';
+  Result := Result + IfThen(LScopeOrderBy = '', ' ORDER BY ', ', ');
   LOrderByList := TStringList.Create;
   try
     LOrderByList.Duplicates := dupError;
@@ -339,6 +346,42 @@ begin
   end;
 end;
 
+function TDMLGeneratorAbstract.GetGeneratorScopeOrderBy(const AClass: TClass): String;
+var
+  LFor: Integer;
+  LFuncs: TFuncList;
+  LFunc: TFunc<String>;
+begin
+  Result := '';
+  LFuncs := TORMBrScope.GetOrderBy(AClass.ClassName);
+  if LFuncs = nil then
+    Exit;
+  for LFunc in LFuncs.Values do
+  begin
+    Result := Result + LFunc();
+    if LFor < LFuncs.Count -1 then
+      Result := Result + ', ';
+  end;
+end;
+
+function TDMLGeneratorAbstract.GetGeneratorScopeWhere(const AClass: TClass): String;
+var
+  LFor: Integer;
+  LFuncs: TFuncList;
+  LFunc: TFunc<String>;
+begin
+  Result := '';
+  LFuncs := TORMBrScope.GetWhere(AClass.ClassName);
+  if LFuncs = nil then
+    Exit;
+  for LFunc in LFuncs.Values do
+  begin
+    Result := Result + LFunc();
+    if LFor < LFuncs.Count -1 then
+      Result := Result + ' AND ';
+  end;
+end;
+
 function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria): string;
 begin
   Result := '';
@@ -350,14 +393,18 @@ var
   LPrimaryKey: TPrimaryKeyMapping;
   LColumnName: String;
   LFor: Integer;
+  LScopeWhere: String;
 begin
   Result := '';
+  LScopeWhere := GetGeneratorScopeWhere(AClass);
+  if LScopeWhere <> '' then
+    Result := ' WHERE ' + LScopeWhere;
   if VarToStr(AID) = '-1' then
     Exit;
   LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
   if LPrimaryKey <> nil then
   begin
-    Result := Result + ' WHERE ';
+    Result := Result + IfThen(LScopeWhere = '', ' WHERE ', ' AND ');
     for LFor := 0 to LPrimaryKey.Columns.Count -1 do
     begin
       if LFor > 0 then
