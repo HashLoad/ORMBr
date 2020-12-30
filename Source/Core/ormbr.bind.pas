@@ -156,8 +156,7 @@ var
   LReadOnly: Boolean;
 begin
   // Busca lista de columnas do mapeamento
-  LColumns := TMappingExplorer
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     LProperty := LColumn.ColumnProperty;
@@ -179,7 +178,6 @@ begin
             begin
               if not (LColumn.FieldType in [ftDataSet]) then
                 Exit;
-
               case LField.DataType of
                 ftDataSet:
                   begin
@@ -191,10 +189,8 @@ begin
                         LObjectList := TObjectList<TObject>(LProperty.GetValue(AObject).AsObject);
                         if LObjectList = nil then
                           Exit;
-
                         while not LDataSet.Eof do
                           LDataSet.Delete;
-
                         for LObject in LObjectList do
                         begin
                           LDataSet.Append;
@@ -223,9 +219,8 @@ begin
           if LProperty.IsBlob then
           begin
             if ADataSet.FieldByName(LColumn.ColumnName).IsBlob then
-              TBlobField(ADataSet
-                           .FieldByName(LColumn.ColumnName))
-                             .AsBytes := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
+              TBlobField(ADataSet.FieldByName(LColumn.ColumnName)).AsBytes
+                := LProperty.GetValue(AObject).AsType<TBlob>.ToBytes
             else
               raise Exception.CreateFmt(cNOTFIELDTYPEBLOB,
                                        [ADataSet.FieldByName(LColumn.ColumnName).FieldName]);

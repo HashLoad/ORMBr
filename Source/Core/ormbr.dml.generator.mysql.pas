@@ -86,12 +86,12 @@ var
   LTable: TTableMapping;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
@@ -111,12 +111,12 @@ var
   LScopeOrderBy: String;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);

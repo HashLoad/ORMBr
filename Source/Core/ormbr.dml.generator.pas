@@ -39,13 +39,13 @@ uses
   Variants,
   TypInfo,
   Generics.Collections,
-  /// ORMBr
+  // ORMBr
   ormbr.criteria,
   ormbr.dml.interfaces,
   ormbr.dml.commands,
   ormbr.dml.cache,
   ormbr.types.blob,
-  ormbr.query.scope,
+  ormbr.register.middleware,
   dbcbr.rtti.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
@@ -150,12 +150,12 @@ var
   LFor: Integer;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
@@ -209,12 +209,12 @@ var
   LFor: Integer;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamnete
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
@@ -275,7 +275,7 @@ begin
   Result := '';
   LKey := AObject.ClassType.ClassName + '-INSERT';
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamente
-  if TDMLCache.DMLCache.TryGetValue(LKey, Result) then
+  if TQueryCache.Get.TryGetValue(LKey, Result) then
     Exit;
   LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
@@ -294,13 +294,11 @@ begin
   end;
   Result := LCriteria.AsString;
   // Adiciona o comando a lista fazendo cache para não ter que gerar novamente
-  TDMLCache.DMLCache.AddOrSetValue(LKey, Result);
+  TQueryCache.Get.AddOrSetValue(LKey, Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
   APageSize, APageNext: Integer): string;
-var
-  LCommandSelect: String;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
@@ -342,11 +340,11 @@ end;
 function TDMLGeneratorAbstract.GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
 var
   LFor: Integer;
-  LFuncs: TFuncList;
+  LFuncs: TQueryScopeList;
   LFunc: TFunc<String>;
 begin
   Result := '';
-  LFuncs := TQueryScope.GetInstance.GetOrderBy(UpperCase(AClass.ClassName));
+  LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetOrderBy');
   if LFuncs = nil then
     Exit;
   for LFunc in LFuncs.Values do
@@ -360,11 +358,11 @@ end;
 function TDMLGeneratorAbstract.GetGeneratorQueryScopeWhere(const AClass: TClass): String;
 var
   LFor: Integer;
-  LFuncs: TFuncList;
+  LFuncs: TQueryScopeList;
   LFunc: TFunc<String>;
 begin
   Result := '';
-  LFuncs := TQueryScope.GetInstance.GetWhere(UpperCase(AClass.ClassName));
+  LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetWhere');
   if LFuncs = nil then
     Exit;
   for LFunc in LFuncs.Values do

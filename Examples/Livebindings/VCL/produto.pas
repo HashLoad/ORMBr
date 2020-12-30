@@ -3,6 +3,7 @@ unit produto;
 interface
 
 uses
+  Classes,
   ormbr.livebindings;
 
 type
@@ -33,6 +34,7 @@ type
 implementation
 
 uses
+  Data.Bind.Components,
   Bindings.Helper;
 
 { TProduto }
@@ -44,14 +46,20 @@ end;
 
 procedure TProduto.SetID(const Value: Integer);
 begin
-  FID := Value;
-  TBindings.Notify(Self, 'ID');
+  if FPreco <> Value then
+  begin
+    FID := Value;
+    TBindings.Notify(Self, 'ID');
+  end;
 end;
 
 procedure TProduto.SetPreco(const Value: Double);
 begin
-  FPreco := Value;
-  TBindings.Notify(Self, 'Preco');
+  if FPreco <> Value then
+  begin
+    FPreco := Value;
+    TBindings.Notify(Self, 'Preco');
+  end;
 end;
 
 end.
