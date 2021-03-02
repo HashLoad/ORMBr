@@ -23,8 +23,6 @@
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -242,11 +240,6 @@ begin
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
       begin
         LObject := M.Create;
-        { TODO -oISAQUE -cMemory Leak :
-            Linha a cima, já entra no constructor do objeto, se chamar
-            a linha comentada MethodCall() a baixo, gera vazamento de memória.
-            Tenho que validar isso em outras versões do Delphi. }
-//        LObject.MethodCall('Create', []);
         TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
         for LDataSetChild in FMasterObject.Values do
           LDataSetChild.FillMastersClass(LDataSetChild, LObject);
@@ -539,10 +532,8 @@ begin
         while not LDataSetChild.FOrmDataSet.Eof do
         begin
           LDataSetChild.FOrmDataSet.Edit;
-          LDataSetChild
-            .FOrmDataSet
-              .FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
-                FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
+          LDataSetChild.FOrmDataSet.FieldByName(LAssociation.ColumnsNameRef[LFor]).Value :=
+                        FOrmDataSet.FieldByName(LAssociation.ColumnsName[LFor]).Value;
           LDataSetChild.FOrmDataSet.Post;
           // Não deve executar o NEXT aqui, o dataset está com filtro
           // que faz a navegação ao mudar o valor do campo.

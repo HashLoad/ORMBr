@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.types.lazy;
@@ -158,7 +156,10 @@ begin
                                if Assigned(LMethod) then
                                begin
                                   LObject := LRttiType.AsInstance.MetaclassType.Create;
-                                  LValue := LMethod.Invoke(LObject, []);
+                                  if LRttiType.IsList then
+                                    LValue := LMethod.Invoke(LObject, [True])
+                                  else
+                                    LValue := LMethod.Invoke(LObject, []);
                                end;
                                Result := LValue.AsType<T>;
                              end);

@@ -32,9 +32,13 @@ uses
   Controls,
   TypInfo,
   Bindings.Expression,
-  Bindings.Helper;
+  Bindings.Helper,
+  Data.Bind.Components,
+  Data.Bind.ObjectScope;
 
 type
+//  TBindingsListHack = class(TBindingsList);
+
   LiveBindingsControl = class(TCustomAttribute)
   private
     FLinkControl: String;
@@ -49,8 +53,13 @@ type
   end;
 
   TORMBrLivebindings = class(TObject)
+  private
+//    FAdapterBindSource: TAdapterBindSource;
+//    FBindingsList: TBindingsList;
+//    procedure DoCreateAdapter(Sender: TObject; var ABindSourceAdapter: TBindSourceAdapter);
   public
     constructor Create; virtual;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -68,6 +77,12 @@ var
   LControl: TControl;
   LExpression: String;
 begin
+//  // AdapterBindSource
+//  FAdapterBindSource := TAdapterBindSource.Create(nil);
+//  // BindingsList
+//  FBindingsList := TBindingsList.Create(nil);
+//  TBindingsListHack(FBindingsList).AddBindComp(nil);
+
   LContext := TRttiContext.Create;
   try
     LType := LContext.GetType(Self.ClassType);
@@ -80,7 +95,6 @@ begin
       begin
         if not (LCustomAttribute is LiveBindingsControl) then
           Continue;
-
         LLiveBindingsControl := LiveBindingsControl(LCustomAttribute);
         // Get Component
         LControl := TListControls.ListComponents.Items[LLiveBindingsControl.LinkControl] as TControl;
@@ -138,5 +152,17 @@ constructor LiveBindingsControl.Create(const ALinkControl, AFieldName: String);
 begin
   Create(ALinkControl, AFieldName, '');
 end;
+
+destructor TORMBrLivebindings.Destroy;
+begin
+//  FAdapterBindSource.Free;
+  inherited;
+end;
+
+//procedure TORMBrLivebindings.DoCreateAdapter(Sender: TObject;
+//  var ABindSourceAdapter: TBindSourceAdapter);
+//begin
+////  ABindSourceAdapter := TListBindSourceAdapter<TORMBrLivebindings>.Create(;
+//end;
 
 end.

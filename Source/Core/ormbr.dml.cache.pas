@@ -20,7 +20,6 @@
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
 }
@@ -33,10 +32,9 @@ uses
   Generics.Collections;
 
 type
-  TDMLCache = class
+  TQueryCache = class
   private
-    class var
-    FDMLCache: TDictionary<String, String>;
+    class var FQueryCache: TDictionary<String, String>;
   public
     class constructor Create;
     class destructor Destroy;
@@ -50,26 +48,26 @@ type
     /// <param name="String">
     ///   Comando SQL pronto para SELECT e INSERT
     /// </param>
-    class function DMLCache: TDictionary<String, String>;
+    class function Get: TDictionary<String, String>;
   end;
 
 implementation
 
-{ TDMLCache }
+{ TQueryCache }
 
-class constructor TDMLCache.Create;
+class constructor TQueryCache.Create;
 begin
-  FDMLCache := TDictionary<String, String>.Create;
+  FQueryCache := TDictionary<String, String>.Create;
 end;
 
-class destructor TDMLCache.Destroy;
+class destructor TQueryCache.Destroy;
 begin
-  FDMLCache.Free;
+  FQueryCache.Free;
 end;
 
-class function TDMLCache.DMLCache: TDictionary<String, String>;
+class function TQueryCache.Get: TDictionary<String, String>;
 begin
-  Result := FDMLCache;
+  Result := FQueryCache;
 end;
 
 end.

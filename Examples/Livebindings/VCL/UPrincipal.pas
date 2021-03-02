@@ -35,6 +35,7 @@ type
     EditSoma: TEdit;
     ProgressBarID: TProgressBar;
     Button4: TButton;
+    Label1: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -52,6 +53,9 @@ var
   FormPrincipal: TFormPrincipal;
 
 implementation
+
+uses
+  Data.Bind.Components;
 
 {$R *.dfm}
 
@@ -77,11 +81,20 @@ begin
 end;
 
 procedure TFormPrincipal.FormCreate(Sender: TObject);
+var
+  LFormat: TLinkPropertyToField;
 begin
   FProduto_1 := TProduto.Create;
   // Valor padrão, já será mostrado nos componentes
   FProduto_1.ID := 1;
   FProduto_1.Preco := 10;
+
+//  LFormat := TLinkPropertyToField.Create(nil);
+//  LFormat.Component := Label1;
+//  LFormat.ComponentProperty := 'Text';
+//  LFormat.FieldName := 'Preco';
+//  LFormat.CustomFormat := 'IfThen(%s>0, True, False)';
+//  LFormat.DataSource
 end;
 
 procedure TFormPrincipal.FormDestroy(Sender: TObject);

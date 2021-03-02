@@ -5,9 +5,15 @@
     <Transaction>2020/11/24 10:09:49.000.732,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.rest.json.pas=</Transaction>
     <Transaction>2020/11/24 10:38:35.000.829,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.json.utils.pas=</Transaction>
     <Transaction>2020/11/24 11:33:52.000.081,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.rtti.helper.pas=</Transaction>
-    <Transaction>2020/11/24 11:34:24.000.100,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.pas</Transaction>
     <Transaction>2020/11/24 11:34:24.000.043,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.builders.pas</Transaction>
+    <Transaction>2020/11/24 11:34:24.000.100,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.pas</Transaction>
     <Transaction>2020/11/24 11:34:29.000.792,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.types.blob.pas=</Transaction>
     <Transaction>2020/11/24 11:34:32.000.241,D:\PROJETOS-Brasil\ORMBr\Source\Core\ormbr.types.nullable.pas=</Transaction>
-  </Transactions>
+    <Transaction>2020/12/27 11:02:16.148,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.builders.pas=</Transaction>
+    <Transaction>2020/12/27 11:02:19.837,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.pas=</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="ormbr.model.person.pas"/>
+    <File Path="uJSON.pas"/>
+    <File Path="uJSON.dfm"/>
+  </ProjectSortOrder>
 </BorlandProject>

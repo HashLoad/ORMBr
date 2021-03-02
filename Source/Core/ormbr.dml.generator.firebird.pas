@@ -20,9 +20,8 @@
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
+  @abstract(Website : http://www.ormbr.com.br)
+  @abstract(Telagram : https://t.me/ormbr)
 }
 
 unit ormbr.dml.generator.firebird;
@@ -97,7 +96,7 @@ var
   LTable: TTableMapping;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
@@ -105,7 +104,7 @@ begin
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria);
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
@@ -118,9 +117,11 @@ function TDMLGeneratorFirebird.GeneratorSelectWhere(AClass: TClass;
   AWhere: string; AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
+  LScopeWhere: String;
+  LScopeOrderBy: String;
 begin
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TDMLCache.DMLCache.TryGetValue(AClass.ClassName, Result) then
+  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
@@ -128,12 +129,26 @@ begin
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria);
     // Faz cache do comando padrão
-    TDMLCache.DMLCache.AddOrSetValue(AClass.ClassName, Result);
+    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
+  // Scope
+  LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
+  if LScopeWhere <> '' then
+    Result := ' WHERE ' + LScopeWhere;
+  LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
+  if LScopeOrderBy <> '' then
+    Result := ' ORDER BY ' + LScopeOrderBy;
+  // Params Where and OrderBy
   if Length(AWhere) > 0 then
-    Result := Result + ' WHERE ' + AWhere;
+  begin
+    Result := Result + IfThen(LScopeWhere = '', ' WHERE ', ' AND ');
+    Result := Result + AWhere;
+  end;
   if Length(AOrderBy) > 0 then
-    Result := Result + ' ORDER BY ' + AOrderBy;
+  begin
+    Result := Result + IfThen(LScopeOrderBy = '', ' ORDER BY ', ', ');
+    Result := Result + AOrderBy;
+  end;
 end;
 
 function TDMLGeneratorFirebird.GeneratorAutoIncCurrentValue(AObject: TObject;

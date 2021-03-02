@@ -4,18 +4,20 @@ unit ormbr.model.master;
 interface
 
 uses
-  Classes, 
-  DB, 
-  SysUtils, 
-  Generics.Collections, 
-  /// orm 
+  Classes,
+  DB,
+  SysUtils,
+  Generics.Collections,
+  // orm
   dbcbr.mapping.attributes,
   dbcbr.types.mapping,
+  dbcbr.mapping.register,
   ormbr.types.lazy,
   ormbr.types.nullable,
   ormbr.model.detail,
   ormbr.model.client,
-  dbcbr.mapping.register;
+  // Middleware Adicionar recurso Query Scope na requisição SQL
+  ormbr.query.scope.middleware;
 
 type
   TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);
@@ -102,6 +104,20 @@ constructor Tmaster.Create;
 begin
    Fdetail := TObjectList<Tdetail>.Create;
    Fclient := Tclient.Create;
+   // Query Scope
+   TQueryScopeMiddleware.Get.AddWhere(Self.ClassName,
+                            'ScopeWhereID',
+                             function: string
+                             begin
+                               Result := 'master.master_id > 6';
+                             end);
+   // Query Scope
+   TQueryScopeMiddleware.Get.AddOrderBy(Self.ClassName,
+                              'ScopeOrderByID',
+                              function: string
+                              begin
+                                Result := 'master.master_id';
+                              end);
 end;
 
 destructor Tmaster.Destroy;
