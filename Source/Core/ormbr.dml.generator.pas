@@ -275,8 +275,8 @@ begin
   Result := '';
   LKey := AObject.ClassType.ClassName + '-INSERT';
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamente
-  if TQueryCache.Get.TryGetValue(LKey, Result) then
-    Exit;
+//  if TQueryCache.Get.TryGetValue(LKey, Result) then
+//    Exit;
   LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   LCriteria := CreateCriteria.Insert.Into(LTable.Name);
@@ -294,7 +294,7 @@ begin
   end;
   Result := LCriteria.AsString;
   // Adiciona o comando a lista fazendo cache para não ter que gerar novamente
-  TQueryCache.Get.AddOrSetValue(LKey, Result);
+//  TQueryCache.Get.AddOrSetValue(LKey, Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
