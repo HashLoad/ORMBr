@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -133,13 +131,13 @@ begin
             if AResult = Null then
               Exit;
             if AProperty.IsDateTime then
-              AResult := DateTimeToStr(AResult, FSettingsUS)
+              AResult := DateTimeToStr(AResult, TJSONBrObject.FSettingsUS)
             else
             if AProperty.IsDate then
-              AResult := DateToStr(AResult, FSettingsUS)
+              AResult := DateToStr(AResult, TJSONBrObject.FSettingsUS)
             else
             if AProperty.IsTime then
-              AResult := DateTimeToStr(AResult, FSettingsUS)
+              AResult := DateTimeToStr(AResult, TJSONBrObject.FSettingsUS)
           end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;

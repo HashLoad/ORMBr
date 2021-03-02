@@ -108,6 +108,7 @@
         <DCCReference Include="..\..\..\Source\JSONBr\Core\jsonbr.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.dml.cache.pas"/>
         <DCCReference Include="..\..\..\Source\Core\ormbr.rtti.helper.pas"/>
+        <DCCReference Include="..\..\..\Source\Core\ormbr.objects.utils.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
@@ -129,7 +130,10 @@
                 <Source>
                     <Source Name="MainSource">ORMBrCore.dpk</Source>
                 </Source>
-                <Excluded_Packages/>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclDataSnapNativeServer270.bpl">Embarcadero DBExpress DataSnap Native Server Components</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Program Files (x86)\Embarcadero\Studio\20.0\bin\designide260.bpl">Embarcadero Designer IDE Package</Excluded_Packages>
+                </Excluded_Packages>
                 <Parameters>
                     <Parameters Name="UseLauncher">False</Parameters>
                     <Parameters Name="LoadAllSymbols">True</Parameters>
@@ -189,7 +193,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\21.0\Bpl\ORMBrCore.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\ORMBrCore.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>ORMBrCore.bpl</RemoteName>
                         <Overwrite>true</Overwrite>

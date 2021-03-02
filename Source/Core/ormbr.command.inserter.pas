@@ -129,7 +129,7 @@ begin
       Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
 
       if FConnection.GetDriverName = dnPostgreSQL then
-	      Exit;
+	    Continue;
 
       // Tratamento para o tipo ftBoolean nativo, indo como Integer
       // para gravar no banco.
