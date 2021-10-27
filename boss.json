@@ -6,8 +6,8 @@
 	"mainsrc": "Source",
 	"projects": [],
 	"dependencies": {
-		"bitbucket.org/isaquepinheiro/cqlbr": "1.0.1",
-		"bitbucket.org/isaquepinheiro/dbcbr": "1.0.2",
-		"bitbucket.org/isaquepinheiro/dbebr": "1.0.2"		
+		"bitbucket.org/isaquepinheiro/cqlbr": "^1.0.1",
+		"bitbucket.org/isaquepinheiro/dbcbr": "^1.0.2",
+		"bitbucket.org/isaquepinheiro/dbebr": "^1.0.2"		
 	}
 }
