@@ -118,6 +118,10 @@ begin
                                           FGeneratorCommand
                                             .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
         end;
+        if LPrimaryKey.GuidIncrement then
+        begin
+          LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
+        end;
       end;
     end;
     // Alimenta cada parâmetro com o valor de cada propriedade do objeto.
