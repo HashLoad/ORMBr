@@ -49,7 +49,7 @@ type
     function ExistSequence: Boolean; virtual; abstract;
     function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
-    function Find(const AID: Integer): M; overload; virtual; abstract;
+    function Find(const AID: Int64): M; overload; virtual; abstract;
     function Find(const AID: string): M; overload; virtual; abstract;
     function FindWhere(const AWhere: string;
       const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;

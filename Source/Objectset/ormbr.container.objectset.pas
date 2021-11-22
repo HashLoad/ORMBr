@@ -20,7 +20,7 @@ uses
     function ExistSequence: Boolean;
     function ModifiedFields: TDictionary<string, TDictionary<string, string>>;
     function Find: TObjectList<M>; overload;
-    function Find(const AID: Integer): M; overload;
+    function Find(const AID: Int64): M; overload;
     function Find(const AID: String): M; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
     procedure Insert(const AObject: M);
@@ -73,7 +73,7 @@ begin
   Result := FObjectSetAdapter.FindWhere(AWhere, AOrderBy);
 end;
 
-function TContainerObjectSet<M>.Find(const AID: Integer): M;
+function TContainerObjectSet<M>.Find(const AID: Int64): M;
 begin
   inherited;
   Result := FObjectSetAdapter.Find(AID);

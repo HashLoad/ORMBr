@@ -385,6 +385,7 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
+  LID: string;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
@@ -404,7 +405,16 @@ begin
       if TVarData(AID).VType = varInteger then
         Result := Result + LColumnName + ' = ' + IntToStr(AID)
       else
-        Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+      begin
+        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
+        begin
+          LID := AID;
+          LID := LID.Trim(['{', '}']);
+          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
+        end
+        else
+          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+      end;
     end;
   end;
 end;

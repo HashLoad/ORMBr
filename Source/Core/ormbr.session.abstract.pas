@@ -95,7 +95,7 @@ type
     procedure ModifyFieldsCompare(const AKey: string; const AObjectSource,
       AObjectUpdate: TObject); virtual;
     function Find: TObjectList<M>; overload; virtual;
-    function Find(const AID: Integer): M; overload; virtual;
+    function Find(const AID: Int64): M; overload; virtual;
     function Find(const AID: string): M; overload; virtual;
     function FindWhere(const AWhere: string;
       const AOrderBy: string): TObjectList<M>; virtual;
@@ -179,7 +179,7 @@ begin
   Result := FManager.FindWhere(FWhere, FOrderBy);
 end;
 
-function TSessionAbstract<M>.Find(const AID: Integer): M;
+function TSessionAbstract<M>.Find(const AID: Int64): M;
 begin
   FFindWhereUsed := False;
   FFetchingRecords := False;
