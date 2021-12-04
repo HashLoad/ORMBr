@@ -31,7 +31,6 @@ uses
   ormbr.container.objectset,
   dbebr.factory.firedac.mongodb,
   ormbr.json,
-  ormbr.rest.json,
   /// orm model
   ormbr.dml.generator.mongodb,
   ormbr.model.client,
@@ -82,7 +81,7 @@ implementation
 
 uses
   StrUtils,
-  Generics.Collections, ormbr.mapping.register, ormbr.mapping.explorer;
+  Generics.Collections, dbcbr.mapping.register, dbcbr.mapping.explorer;
 
 {$R *.dfm}
 
