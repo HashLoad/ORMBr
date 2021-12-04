@@ -37,7 +37,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <DCC_UnitSearchPath>..\..\..\Source\Core;..\..\..\Source\Criteria;..\..\..\Source\Dataset;..\..\..\Source\Objectset;..\..\..\Source\DBEBr\Core;..\..\..\Source\DBEBr\Drivers;..\..\..\Source\DBCBr\Core;..\..\..\Source\DBCBr\Drivers;..\..\..\Source\Monitor;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\..\Source\Core;..\..\..\Source\Criteria;..\..\..\Source\Dataset;..\..\..\Source\Objectset;..\..\..\Source\DBEBr\Core;..\..\..\Source\DBEBr\Drivers;..\..\..\Source\DBCBr\Core;..\..\..\Source\DBCBr\Drivers;..\..\..\Source\Monitor;..\..\..\Source\Middleware;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <SanitizedProjectName>ORMBr_Zeos</SanitizedProjectName>
         <VerInfo_Locale>1046</VerInfo_Locale>

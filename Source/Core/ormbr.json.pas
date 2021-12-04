@@ -131,13 +131,13 @@ begin
             if AResult = Null then
               Exit;
             if AProperty.IsDateTime then
-              AResult := DateTimeToStr(AResult, TJSONBrObject.FSettingsUS)
+              AResult := DateTimeToStr(AResult, FSettingsUS)
             else
             if AProperty.IsDate then
-              AResult := DateToStr(AResult, TJSONBrObject.FSettingsUS)
+              AResult := DateToStr(AResult, FSettingsUS)
             else
             if AProperty.IsTime then
-              AResult := DateTimeToStr(AResult, TJSONBrObject.FSettingsUS)
+              AResult := DateTimeToStr(AResult, FSettingsUS)
           end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;

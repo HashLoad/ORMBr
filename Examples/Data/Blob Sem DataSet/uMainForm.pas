@@ -20,9 +20,11 @@ uses
   FireDAC.Phys.FBDef, FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteDef,
   FireDAC.FMXUI.Wait, FireDAC.Comp.UI, FireDAC.Phys.SQLite, Data.DB,
   FireDAC.Comp.Client,
-  ormbr.rest.json,
-  ormbr.json.utils,
-  ormbr.json, FMX.ScrollBox, FMX.Memo, REST.JSON;
+//  ormbr.rest.json,
+//  ormbr.json.utils,
+  ormbr.json,
+  FMX.ScrollBox, FMX.Memo, REST.JSON, FMX.Memo.Types,
+  FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TForm2 = class(TForm)
@@ -53,8 +55,8 @@ var
 
 implementation
 
-uses
-  ormbr.encddecd;
+//uses
+//  ormbr.encddecd;
 
 {$R *.fmx}
 
@@ -79,7 +81,7 @@ var
   cJson: String;
 begin
   cPessoa := FContainer.Find(0);
-  cJson := TORMBrJSONUtil.JSONObjectToJSONValue(cPessoa).ToJSON;
+  cJson := TORMBrJson.JSONObjectToJSONValue(cPessoa).ToJSON;
   cPessoa.Free;
 
   cPessoaJson := TORMBrJson.JsonToObject<TPERSON>(cJson);

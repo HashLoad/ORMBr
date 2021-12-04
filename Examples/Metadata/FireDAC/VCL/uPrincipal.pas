@@ -18,13 +18,13 @@ uses
   dbebr.factory.interfaces, // TORMBrConnectionFireDAC
   dbebr.factory.firedac,
 
-  ormbr.database.compare,  // TORMBrDatabaseCompareLink
-  ormbr.database.interfaces, // TORMBrDatabaseCompareLink
+  dbcbr.database.compare,  // TORMBrDatabaseCompareLink
+  dbcbr.database.interfaces, // TORMBrDatabaseCompareLink
 
-  ormbr.ddl.commands,
+  dbcbr.ddl.commands,
 
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet;
+  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TForm1 = class(TForm)
@@ -59,7 +59,7 @@ var
 implementation
 
 uses
-  ormbr.database.mapping;
+  dbcbr.database.mapping;
 
 {$R *.dfm}
 
