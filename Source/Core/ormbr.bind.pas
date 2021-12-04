@@ -791,7 +791,12 @@ begin
   if TVarData(AField.Value).VType <= varNull then
     LProperty.SetValue(AObject, '')
   else
-    LProperty.SetValue(AObject, AField.AsString);
+  begin
+    if (AField.DataType = ftBytes) and (AField.Size = 16) then
+      LProperty.SetValue(AObject,  GUIDToString(TGUID.Create(AField.AsBytes)))
+    else
+      LProperty.SetValue(AObject, AField.AsString);
+  end;
 end;
 
 procedure TBind.SetFieldToPropertyInteger(const LProperty: TRttiProperty;

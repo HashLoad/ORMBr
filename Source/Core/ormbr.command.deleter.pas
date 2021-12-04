@@ -64,22 +64,27 @@ end;
 function TCommandDeleter.GenerateDelete(AObject: TObject): string;
 var
   LColumn: TColumnMapping;
-  LPrimaryKey: TPrimaryKeyColumnsMapping;
+  LPrimaryKeyCols: TPrimaryKeyColumnsMapping;
+  LPrimaryKey: TPrimaryKeyMapping;
 begin
   FParams.Clear;
-  LPrimaryKey := TMappingExplorer
+  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
+  LPrimaryKeyCols := TMappingExplorer
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
   if LPrimaryKey = nil then
     raise Exception.Create(cMESSAGEPKNOTFOUND);
 
-  for LColumn in LPrimaryKey.Columns do
+  for LColumn in LPrimaryKeyCols.Columns do
   begin
     with FParams.Add as TParam do
     begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptUnknown;
-      Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
+      if LPrimaryKey.GuidIncrement then
+        AsBytes := StringToGUID( Format('{%s}', [LColumn.ColumnProperty.GetNullableValue(AObject).AsType<string>.Trim(['{', '}'])])).ToByteArray
+      else
+        Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
   end;
   FResultCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);
