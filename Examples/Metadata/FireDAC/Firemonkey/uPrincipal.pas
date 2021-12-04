@@ -16,11 +16,11 @@ uses
   dbebr.factory.interfaces,
   dbebr.factory.firedac,
 
-  ormbr.ddl.commands,
+  dbcbr.ddl.commands,
 
   ormbr.modeldb.compare,
-  ormbr.database.compare,
-  ormbr.database.interfaces,
+  dbcbr.database.compare,
+  dbcbr.database.interfaces,
 
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
@@ -29,7 +29,7 @@ uses
   FireDAC.Phys.IBDef, FireDAC.Phys.IB, FireDAC.Phys.SQLite, FireDAC.Phys.IBBase,
   Data.DBXMSSQL, Data.FMTBcd, Data.SqlExpr, FireDAC.Comp.ScriptCommands,
   FireDAC.Stan.Util, FireDAC.Comp.Script, FireDAC.Phys.Oracle,
-  FireDAC.Phys.OracleDef;
+  FireDAC.Phys.OracleDef, FMX.Memo.Types, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TForm4 = class(TForm)
