@@ -38,6 +38,7 @@ uses
   SysUtils,
   TypInfo,
   Variants,
+  Types,
   Generics.Collections,
   /// orm
   ormbr.objects.utils,
@@ -793,7 +794,7 @@ begin
   else
   begin
     if (AField.DataType = ftBytes) and (AField.Size = 16) then
-      LProperty.SetValue(AObject,  GUIDToString(TGUID.Create(AField.AsBytes)))
+      LProperty.SetValue(AObject,  GUIDToString(TGUID.Create(AField.AsBytes, TEndian.Big)))
     else
       LProperty.SetValue(AObject, AField.AsString);
   end;
