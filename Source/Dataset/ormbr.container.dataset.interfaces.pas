@@ -56,6 +56,7 @@ type
     procedure Close;
     procedure Cancel;
     procedure RefreshRecord;
+    procedure RefreshRecordWhere(const AWhere: string);
     procedure EmptyDataSet;
     procedure CancelUpdates;
     procedure Save(AObject: M);
