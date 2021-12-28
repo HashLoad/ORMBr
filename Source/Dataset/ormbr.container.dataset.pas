@@ -64,6 +64,7 @@ type
     procedure Close;
     procedure Cancel;
     procedure RefreshRecord;
+    procedure RefreshRecordWhere(const AWhere: string);
     procedure EmptyDataSet;
     procedure CancelUpdates;
     procedure Save(AObject: M);
@@ -238,6 +239,11 @@ end;
 procedure TContainerDataSet<M>.RefreshRecord;
 begin
   FDataSetAdapter.RefreshRecord;
+end;
+
+procedure TContainerDataSet<M>.RefreshRecordWhere(const AWhere: string);
+begin
+  FDataSetAdapter.RefreshRecordWhere(AWhere);
 end;
 
 procedure TContainerDataSet<M>.Save(AObject: M);

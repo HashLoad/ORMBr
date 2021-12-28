@@ -89,6 +89,7 @@ type
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual;
     procedure NextPacket; overload; virtual;
     procedure RefreshRecord(const AColumns: TParams); virtual;
+    procedure RefreshRecordWhere(const AWhere: String); virtual;
     function SelectAssociation(const AObject: TObject): String; virtual;
     function ResultParams: TParams;
     // DataSet e ObjectSet
@@ -275,6 +276,11 @@ begin
 end;
 
 procedure TSessionAbstract<M>.RefreshRecord(const AColumns: TParams);
+begin
+
+end;
+
+procedure TSessionAbstract<M>.RefreshRecordWhere(const AWhere: String);
 begin
 
 end;
