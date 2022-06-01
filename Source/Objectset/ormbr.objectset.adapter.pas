@@ -53,7 +53,7 @@ type
       const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     function Find: TObjectList<M>; overload; override;
-    function Find(const AID: Int64): M; overload; override;
+    function Find(const AID: Integer): M; overload; override;
     function Find(const AID: string): M; overload; override;
     function FindWhere(const AWhere: string;
       const AOrderBy: string = ''): TObjectList<M>; overload; override;
@@ -137,7 +137,7 @@ begin
   end;
 end;
 
-function TObjectSetAdapter<M>.Find(const AID: Int64): M;
+function TObjectSetAdapter<M>.Find(const AID: Integer): M;
 var
   LIsConnected: Boolean;
 begin

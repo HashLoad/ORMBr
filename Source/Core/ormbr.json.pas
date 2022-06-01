@@ -55,7 +55,7 @@ type
   private
     class var
     FJSONObject: TJSONBrObject;
-    class procedure DoGetValue(const Sender: TJSONBrObject;
+    class procedure DoGetValue({const Sender: TJSONBrObject;}
                                const AInstance: TObject;
                                const AProperty: TRttiProperty;
                                var AResult: Variant;
@@ -107,7 +107,7 @@ begin
   inherited;
 end;
 
-class procedure TORMBrJson.DoGetValue(const Sender: TJSONBrObject;
+class procedure TORMBrJson.DoGetValue({const Sender: TJSONBrObject;}
   const AInstance: TObject; const AProperty: TRttiProperty;
   var AResult: Variant; var ABreak: Boolean);
 var
@@ -131,13 +131,13 @@ begin
             if AResult = Null then
               Exit;
             if AProperty.IsDateTime then
-              AResult := DateTimeToStr(AResult, FSettingsUS)
+              AResult := DateTimeToStr(AResult, FJSONObject.FSettingsUS)
             else
             if AProperty.IsDate then
-              AResult := DateToStr(AResult, FSettingsUS)
+              AResult := DateToStr(AResult, FJSONObject.FSettingsUS)
             else
             if AProperty.IsTime then
-              AResult := DateTimeToStr(AResult, FSettingsUS)
+              AResult := DateTimeToStr(AResult, FJSONObject.FSettingsUS)
           end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;

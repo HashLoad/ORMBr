@@ -33,7 +33,6 @@ uses
   DB,
   Rtti,
   SysUtils,
-  Types,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
   dbcbr.rtti.helper;
@@ -65,27 +64,22 @@ end;
 function TCommandDeleter.GenerateDelete(AObject: TObject): string;
 var
   LColumn: TColumnMapping;
-  LPrimaryKeyCols: TPrimaryKeyColumnsMapping;
-  LPrimaryKey: TPrimaryKeyMapping;
+  LPrimaryKey: TPrimaryKeyColumnsMapping;
 begin
   FParams.Clear;
-  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
-  LPrimaryKeyCols := TMappingExplorer
+  LPrimaryKey := TMappingExplorer
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
   if LPrimaryKey = nil then
     raise Exception.Create(cMESSAGEPKNOTFOUND);
 
-  for LColumn in LPrimaryKeyCols.Columns do
+  for LColumn in LPrimaryKey.Columns do
   begin
     with FParams.Add as TParam do
     begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptUnknown;
-      if LPrimaryKey.GuidIncrement then
-        AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty.GetNullableValue(AObject).AsType<string>.Trim(['{', '}'])])).ToByteArray(TEndian.Big)
-      else
-        Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
+      Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
   end;
   FResultCommand := FGeneratorCommand.GeneratorDelete(AObject, FParams);

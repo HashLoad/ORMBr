@@ -842,7 +842,7 @@ begin
      if VersionNumberStr = 'd16' then
         Sender.Options.Add('-NSData.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win');
 
-     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27']) then
+     if MatchText(VersionNumberStr, ['d17','d18','d19','d20','d21','d22','d23','d24','d25','d26','d27','d28']) then
         Sender.Options.Add('-NSWinapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell,Ibx');
   end;
   if (ckbUsarArquivoConfig.Checked) then
@@ -912,7 +912,9 @@ begin
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd26' then
       clbDelphiVersion.Items.Add('Delphi 10.3 Rio')
     else if oORMBr.Installations[iFor].VersionNumberStr = 'd27' then
-      clbDelphiVersion.Items.Add('Delphi 10.4 Sydney');
+      clbDelphiVersion.Items.Add('Delphi 10.4 Sydney')
+    else if oORMBr.Installations[iFor].VersionNumberStr = 'd28' then
+      clbDelphiVersion.Items.Add('Delphi 11.1 Alexandria');
 
     // -- Evento para saidas de mensagens.
     oORMBr.Installations[iFor].OutputCallback := OutputCallLine;

@@ -131,7 +131,6 @@ type
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure RefreshRecordInternal(const AObject: TObject); virtual;
     procedure RefreshRecord; virtual;
-    procedure RefreshRecordWhere(const AWhere: String); virtual;
     procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;
     procedure LoadLazy(const AOwner: M); virtual; abstract;
@@ -823,19 +822,6 @@ end;
 
 procedure TDataSetBaseAdapter<M>.RefreshRecordInternal(const AObject: TObject);
 begin
-
-end;
-
-procedure TDataSetBaseAdapter<M>.RefreshRecordWhere(const AWhere: String);
-begin
-  FOrmDataSet.DisableControls;
-  DisableDataSetEvents;
-  try
-    FSession.RefreshRecordWhere(AWhere);
-  finally
-    FOrmDataSet.EnableControls;
-    EnableDataSetEvents;
-  end;
 
 end;
 
