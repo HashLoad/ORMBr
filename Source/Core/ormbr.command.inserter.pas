@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.command.inserter;
@@ -37,7 +35,6 @@ uses
   SysUtils,
   TypInfo,
   Variants,
-  Types,
   ormbr.command.abstract,
   ormbr.dml.commands,
   ormbr.core.consts,
@@ -119,10 +116,6 @@ begin
                                           FGeneratorCommand
                                             .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
         end;
-        if LPrimaryKey.GuidIncrement then
-        begin
-          LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
-        end;
       end;
     end;
     // Alimenta cada parâmetro com o valor de cada propriedade do objeto.
@@ -131,10 +124,7 @@ begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptInput;
-      if LColumn.FieldType = ftGuid then
-        AsBytes := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType)
-      else
-        Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+      Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
 
       if FConnection.GetDriverName = dnPostgreSQL then
 	    Continue;
@@ -153,8 +143,6 @@ end;
 
 function TCommandInserter.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
-var
-  LTeste: string;
 begin
   Result := Null;
   case AProperty.PropertyType.TypeKind of
@@ -163,11 +151,6 @@ begin
   else
     if AFieldType = ftBlob then
       Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
-    else if AFieldType = ftGuid then
-    begin
-      LTeste := AProperty.GetValue(AInstance).AsString;
-      Result := StringToGUID(Format('{%s}', [AProperty.GetNullableValue(AInstance).AsType<string>.Trim(['{', '}'])])).ToByteArray(TEndian.Big)
-    end
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
   end;
