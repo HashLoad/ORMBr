@@ -48,7 +48,7 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorMSSql = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -81,19 +81,47 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): string;
+//function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): string;
+//const
+//  cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
+//  cCOLUMN = 'ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER';
+//var
+//  LTable: String;
+//  LWhere: String;
+//begin
+//  inherited;
+//  LTable := ACriteria.AST.Select.TableNames.Columns[0].Name;
+//  LWhere := '(ROWNUMBER <= %s) AND (ROWNUMBER > %s)';
+//  ACriteria.SelectSection(secSelect);
+//  ACriteria.Column(cCOLUMN);
+//  Result := Format(cSQL, [ACriteria.AsString, LTable, LWhere]);
+//end;
+
+function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 const
   cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
-  cCOLUMN = 'ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER';
+  cCOLUMN = 'ROW_NUMBER() OVER(%s) AS ROWNUMBER';
 var
   LTable: String;
   LWhere: String;
+  LColumn: String;
 begin
   inherited;
   LTable := ACriteria.AST.Select.TableNames.Columns[0].Name;
   LWhere := '(ROWNUMBER <= %s) AND (ROWNUMBER > %s)';
-//  ACriteria.SelectSection(secSelect);
-  ACriteria.Column(cCOLUMN);
+  ACriteria.SelectSection(secSelect);
+  if AOrderBy <> '' then
+  begin
+    if not AOrderBy.Contains('ORDER BY') then
+      LColumn :=  Format(cCOLUMN, ['ORDER BY ' + AOrderBy])
+    else
+      LColumn :=  Format(cCOLUMN, [AOrderBy])
+  end
+  else
+    LColumn :=  Format(cCOLUMN, ['ORDER BY CURRENT_TIMESTAMP']);
+
+  ACriteria.Column(LColumn);
   Result := Format(cSQL, [ACriteria.AsString, LTable, LWhere]);
 end;
 
@@ -111,7 +139,11 @@ function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
+  LOrderBy: string;
 begin
+  LTable := TMappingExplorer.GetMappingTable(AClass);
+  LOrderBy := GetGeneratorOrderBy(AClass, LTable.Name, AID);
+
   // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
   if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
   begin
@@ -119,15 +151,15 @@ begin
     Result := LCriteria.AsString;
     // Atualiza o comando SQL com paginação e atualiza a lista de cache.
     if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
+      Result := GetGeneratorSelect(LCriteria, LOrderBy);
     // Faz cache do comando padrão
     TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
-  LTable := TMappingExplorer.GetMappingTable(AClass);
+
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
   // OrderBy
-  Result := Result + GetGeneratorOrderBy(AClass, LTable.Name, AID);
+  Result := Result + LOrderBy;
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: string;
@@ -144,7 +176,7 @@ begin
     Result := LCriteria.AsString;
     // Atualiza o comando SQL com paginação e atualiza a lista de cache.
     if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
+      Result := GetGeneratorSelect(LCriteria, AOrderBy);
     // Faz cache do comando padrão
     TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
   end;
@@ -184,5 +216,4 @@ end;
 
 initialization
   TDriverRegister.RegisterDriver(dnMSSQL, TDMLGeneratorMSSql.Create);
-
 end.

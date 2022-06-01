@@ -40,6 +40,7 @@ type
     function ModifiedFields: TDictionary<string, TDictionary<string, string>>;
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
+    function Find(const AID: string): M; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
     procedure Insert(const AObject: M);
     procedure Update(const AObject: M);

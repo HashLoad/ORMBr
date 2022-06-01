@@ -121,7 +121,10 @@ begin
         Name := LColumn.ColumnName;
         DataType := LColumn.FieldType;
         ParamType := ptUnknown;
-        Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
+        if DataType = ftGuid then  //new add 09/04/2022
+         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString  //new add 09/04/2022
+        else
+         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
       end;
     end;
     FResultCommand := FGeneratorCommand.GeneratorUpdate(AObject, LParams, AModifiedFields);
