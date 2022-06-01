@@ -37,6 +37,7 @@ uses
   SysUtils,
   TypInfo,
   Variants,
+  Types,
   ormbr.command.abstract,
   ormbr.dml.commands,
   ormbr.core.consts,
@@ -130,7 +131,10 @@ begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptInput;
-      Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+      if LColumn.FieldType = ftGuid then
+        AsBytes := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType)
+      else
+        Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
 
       if FConnection.GetDriverName = dnPostgreSQL then
 	    Continue;
@@ -149,6 +153,8 @@ end;
 
 function TCommandInserter.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
+var
+  LTeste: string;
 begin
   Result := Null;
   case AProperty.PropertyType.TypeKind of
@@ -157,6 +163,11 @@ begin
   else
     if AFieldType = ftBlob then
       Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
+    else if AFieldType = ftGuid then
+    begin
+      LTeste := AProperty.GetValue(AInstance).AsString;
+      Result := StringToGUID(Format('{%s}', [AProperty.GetNullableValue(AInstance).AsType<string>.Trim(['{', '}'])])).ToByteArray(TEndian.Big)
+    end
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
   end;

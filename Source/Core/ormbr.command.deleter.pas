@@ -33,6 +33,7 @@ uses
   DB,
   Rtti,
   SysUtils,
+  Types,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
   dbcbr.rtti.helper;
@@ -82,7 +83,7 @@ begin
       DataType := LColumn.FieldType;
       ParamType := ptUnknown;
       if LPrimaryKey.GuidIncrement then
-        AsBytes := StringToGUID( Format('{%s}', [LColumn.ColumnProperty.GetNullableValue(AObject).AsType<string>.Trim(['{', '}'])])).ToByteArray
+        AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty.GetNullableValue(AObject).AsType<string>.Trim(['{', '}'])])).ToByteArray(TEndian.Big)
       else
         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;
