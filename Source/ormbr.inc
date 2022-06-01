@@ -84,7 +84,7 @@
   {$DEFINE DELPHI29_UP}
 {$ENDIF}
 
-// Delphi ???
+// Delphi Alexandria
 {$IFDEF VER350}
   {$DEFINE DELPHI14_UP}
   {$DEFINE DELPHI15_UP}

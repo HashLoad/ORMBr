@@ -35,6 +35,7 @@ uses
   SysUtils,
   TypInfo,
   Variants,
+  Types,
   ormbr.command.abstract,
   ormbr.dml.commands,
   ormbr.core.consts,
@@ -83,6 +84,7 @@ var
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
   LBooleanValue: Integer;
+  LGuid: String;
 begin
   FResultCommand := FGeneratorCommand.GeneratorInsert(AObject);
   Result := FResultCommand;
@@ -116,6 +118,10 @@ begin
                                           FGeneratorCommand
                                             .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
         end;
+        if LPrimaryKey.GuidIncrement then
+        begin
+          LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
+        end;
       end;
     end;
     // Alimenta cada parâmetro com o valor de cada propriedade do objeto.
@@ -124,7 +130,13 @@ begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptInput;
-      Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+      if LColumn.FieldType = ftGuid then
+       begin
+        LGuid := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+        AsGuid  := StringToGUID(LGuid);
+       end
+      else
+        Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
 
       if FConnection.GetDriverName = dnPostgreSQL then
 	    Continue;
@@ -143,6 +155,8 @@ end;
 
 function TCommandInserter.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
+var
+  AValueGuid : TGuid;
 begin
   Result := Null;
   case AProperty.PropertyType.TypeKind of
@@ -151,6 +165,11 @@ begin
   else
     if AFieldType = ftBlob then
       Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
+    else if AFieldType = ftGuid then
+    begin
+     AValueGuid  := AProperty.GetValue(AInstance).AsType<TGuid>;
+     Result := AValueGuid.ToString;
+    end
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;
   end;
