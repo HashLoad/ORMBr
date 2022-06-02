@@ -8,7 +8,7 @@
 	"dependencies": {
 		"bitbucket.org/isaquepinheiro/cqlbr": "1.0.1",
 		"bitbucket.org/isaquepinheiro/dbcbr": "1.0.4",
-		"bitbucket.org/isaquepinheiro/dbebr": "1.0.3"		
+		"bitbucket.org/isaquepinheiro/dbebr": "1.0.3",		
         "bitbucket.org/isaquepinheiro/jsonbr": "1.0.0"
 	}
 }

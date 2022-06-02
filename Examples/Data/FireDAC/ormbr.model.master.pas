@@ -23,7 +23,7 @@ type
 
   [Entity]
   [Table('master','')]
-  [PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]
+  [PrimaryKey('master_id', AutoInc, SequenceInc, NoSort, True, 'Chave primária')]
   [Sequence('seq_master')]
   [OrderBy('master_id')]
   Tmaster = class
@@ -57,14 +57,14 @@ type
     property description: Nullable<String> read Fdescription write Fdescription;
 
     [Restrictions([NotNull])]
-    [Column('registerdate', ftDate)]
-    [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
-    property registerdate: TDateTime read Fregisterdate write Fregisterdate;
-
-    [Restrictions([NotNull])]
     [Column('updatedate', ftDate)]
     [Dictionary('updatedate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
     property updatedate: TDate read Fupdatedate write Fupdatedate;
+
+    [Restrictions([NotNull])]
+    [Column('registerdate', ftDate)]
+    [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
+    property registerdate: TDateTime read Fregisterdate write Fregisterdate;
 
     [Restrictions([NotNull])]
     [Column('client_id', ftInteger)]

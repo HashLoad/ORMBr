@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dml.generator.mssql;
@@ -48,7 +46,8 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorMSSql = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string = ''): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -113,10 +112,10 @@ begin
   ACriteria.SelectSection(secSelect);
   if AOrderBy <> '' then
   begin
-    if not AOrderBy.Contains('ORDER BY') then
-      LColumn :=  Format(cCOLUMN, ['ORDER BY ' + AOrderBy])
-    else
+    if AOrderBy.Contains('ORDER BY') then
       LColumn :=  Format(cCOLUMN, [AOrderBy])
+    else
+      LColumn :=  Format(cCOLUMN, ['ORDER BY ' + AOrderBy])
   end
   else
     LColumn :=  Format(cCOLUMN, ['ORDER BY CURRENT_TIMESTAMP']);

@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.command.updater;
@@ -121,10 +119,10 @@ begin
         Name := LColumn.ColumnName;
         DataType := LColumn.FieldType;
         ParamType := ptUnknown;
-        if DataType = ftGuid then  //new add 09/04/2022
-         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString  //new add 09/04/2022
+        if DataType = ftGuid then
+          Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString
         else
-         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
+          Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
       end;
     end;
     FResultCommand := FGeneratorCommand.GeneratorUpdate(AObject, LParams, AModifiedFields);
@@ -153,7 +151,7 @@ begin
         if FConnection.GetDriverName = dnPostgreSQL then
 	      Continue;
 
-    	// Tratamento para o tipo ftBoolean nativo, indo como Integer
+    	  // Tratamento para o tipo ftBoolean nativo, indo como Integer
         // para gravar no banco.
         if DataType in [ftBoolean] then
         begin

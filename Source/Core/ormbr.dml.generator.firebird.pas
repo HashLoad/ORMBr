@@ -47,7 +47,8 @@ type
   // Classe de banco de dados Firebird
   TDMLGeneratorFirebird = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -78,7 +79,8 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria): string;
+function TDMLGeneratorFirebird.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   inherited;
   ACriteria.AST.Select

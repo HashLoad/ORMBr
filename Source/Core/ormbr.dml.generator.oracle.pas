@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquesp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dml.generator.oracle;
@@ -48,7 +46,8 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorOracle = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -159,7 +158,8 @@ begin
      Result := Result + sLineBreak + GetGeneratorSelect(LCriteria);
 end;
 
-function TDMLGeneratorOracle.GetGeneratorSelect(const ACriteria: ICriteria): string;
+function TDMLGeneratorOracle.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   Result := '   WHERE ROWNUM <= %s) ' + sLineBreak +
             'WHERE ROWINI > %s';

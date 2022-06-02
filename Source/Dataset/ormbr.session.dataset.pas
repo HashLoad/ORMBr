@@ -62,6 +62,7 @@ type
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
+    procedure RefreshRecordWhere(const AWhere: String); override;
     procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
     function NextPacketList: TObjectList<M>; overload; override;
     function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
@@ -142,6 +143,22 @@ begin
       LWhere := LWhere + ' AND ';
   end;
   LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(LWhere, ''));
+  // Atualiza dados no DataSet
+  while LDBResultSet.NotEof do
+  begin
+    FOwner.FOrmDataSet.Edit;
+    TBind.Instance
+         .SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
+    FOwner.FOrmDataSet.Post;
+  end;
+end;
+
+procedure TSessionDataSet<M>.RefreshRecordWhere(const AWhere: String);
+var
+  LDBResultSet: IDBResultSet;
+begin
+  inherited;
+  LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(AWhere, ''));
   // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
