@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.container.dataset.interfaces;
@@ -56,6 +54,7 @@ type
     procedure Close;
     procedure Cancel;
     procedure RefreshRecord;
+    procedure RefreshRecordWhere(const AWhere: string);
     procedure EmptyDataSet;
     procedure CancelUpdates;
     procedure Save(AObject: M);

@@ -45,7 +45,7 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -138,7 +138,8 @@ begin
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
-function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria): string;
+function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   Result := ' LIMIT %s OFFSET %s';
 end;

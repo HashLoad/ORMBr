@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dml.generator.elevatedb;
@@ -48,7 +46,8 @@ type
   // Classe de banco de dados AbsoluteDB
   TDMLGeneratorElevateDB = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -82,7 +81,7 @@ begin
 end;
 
 function TDMLGeneratorElevateDB.GetGeneratorSelect(
-  const ACriteria: ICriteria): string;
+  const ACriteria: ICriteria; AOrderBy: string): string;
 begin
   inherited;
   ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s '

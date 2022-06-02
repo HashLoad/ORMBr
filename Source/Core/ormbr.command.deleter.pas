@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.command.deleter;
@@ -69,11 +67,10 @@ var
   LPrimaryKey: TPrimaryKeyMapping;
 begin
   FParams.Clear;
-  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
   LPrimaryKeyCols := TMappingExplorer
                      .GetMappingPrimaryKeyColumns(AObject.ClassType);
-  if LPrimaryKey = nil then
-    raise Exception.Create(cMESSAGEPKNOTFOUND);
+  if LPrimaryKeyCols = nil then
+    raise Exception.Create(cMESSAGECOLUMNNOTFOUND);
 
   for LColumn in LPrimaryKeyCols.Columns do
   begin
@@ -82,10 +79,23 @@ begin
       Name := LColumn.ColumnName;
       DataType := LColumn.FieldType;
       ParamType := ptUnknown;
-      if LPrimaryKey.GuidIncrement then
-        AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty.GetNullableValue(AObject).AsType<string>.Trim(['{', '}'])])).ToByteArray(TEndian.Big)
-      else if DataType = ftGuid then //new add 09/04/2022
-       Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString //new add 09/04/2022
+      if LColumn.IsPrimaryKey then
+      begin
+        LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
+        if LPrimaryKey = nil then
+          raise Exception.Create(cMESSAGEPKNOTFOUND);
+
+        if LPrimaryKey.GuidIncrement then
+        begin
+          AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty
+                                                         .GetNullableValue(AObject)
+                                                         .AsType<string>.Trim(['{', '}'])]))
+                                                         .ToByteArray(TEndian.Big);
+          Continue;
+        end;
+      end;
+      if DataType = ftGuid then
+        Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString
       else
         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsVariant;
     end;

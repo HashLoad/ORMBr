@@ -45,7 +45,8 @@ type
   // Classe de banco de dados PostgreSQL
   TDMLGeneratorPostgreSQL = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -138,7 +139,8 @@ begin
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
-function TDMLGeneratorPostgreSQL.GetGeneratorSelect(const ACriteria: ICriteria): string;
+function TDMLGeneratorPostgreSQL.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   Result := ' LIMIT %s OFFSET %s';
 end;

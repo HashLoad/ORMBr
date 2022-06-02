@@ -109,18 +109,20 @@ begin
       begin
         if LPrimaryKey.AutoIncrement then
         begin
-          FDMLAutoInc.Sequence := TMappingExplorer
-                                  .GetMappingSequence(AObject.ClassType);
-          FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
-          FDMLAutoInc.PrimaryKey := LPrimaryKey;
-          // Popula o campo como o valor gerado pelo AutoInc
-          LColumn.ColumnProperty.SetValue(AObject,
-                                          FGeneratorCommand
-                                            .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
-        end;
-        if LPrimaryKey.GuidIncrement then
-        begin
-          LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
+          if LPrimaryKey.SequenceIncrement then
+          begin
+            FDMLAutoInc.Sequence := TMappingExplorer
+                                    .GetMappingSequence(AObject.ClassType);
+            FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
+            FDMLAutoInc.PrimaryKey := LPrimaryKey;
+            // Popula o campo como o valor gerado pelo AutoInc
+            LColumn.ColumnProperty.SetValue(AObject,
+                                            FGeneratorCommand
+                                              .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
+          end
+          else
+          if LPrimaryKey.GuidIncrement then
+            LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
         end;
       end;
     end;
@@ -131,10 +133,10 @@ begin
       DataType := LColumn.FieldType;
       ParamType := ptInput;
       if LColumn.FieldType = ftGuid then
-       begin
+      begin
         LGuid := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
         AsGuid  := StringToGUID(LGuid);
-       end
+      end
       else
         Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
 

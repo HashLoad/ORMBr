@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.objectset.adapter;
@@ -53,7 +51,7 @@ type
       const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     function Find: TObjectList<M>; overload; override;
-    function Find(const AID: Integer): M; overload; override;
+    function Find(const AID: Int64): M; overload; override;
     function Find(const AID: string): M; overload; override;
     function FindWhere(const AWhere: string;
       const AOrderBy: string = ''): TObjectList<M>; overload; override;
@@ -137,7 +135,7 @@ begin
   end;
 end;
 
-function TObjectSetAdapter<M>.Find(const AID: Integer): M;
+function TObjectSetAdapter<M>.Find(const AID: Int64): M;
 var
   LIsConnected: Boolean;
 begin

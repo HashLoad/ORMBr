@@ -23,8 +23,6 @@
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.bind;
@@ -794,7 +792,7 @@ begin
   else
   begin
     if (AField.DataType = ftBytes) and (AField.Size = 16) then
-      LProperty.SetValue(AObject,  GUIDToString(TGUID.Create(AField.AsBytes, TEndian.Big)))
+      LProperty.SetValue(AObject, GUIDToString(TGUID.Create(AField.AsBytes, TEndian.Big)))
     else
       LProperty.SetValue(AObject, AField.AsString);
   end;

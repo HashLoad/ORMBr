@@ -65,7 +65,8 @@ type
     FDateFormat: string;
     FTimeFormat: string;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
-    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string = ''): string; virtual;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; virtual;
     function GetGeneratorWhere(const AClass: TClass; const ATableName: String;
       const AID: Variant): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
@@ -373,7 +374,8 @@ begin
   end;
 end;
 
-function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string): string;
+function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   Result := '';
 end;

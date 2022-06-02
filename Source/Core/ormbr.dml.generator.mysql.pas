@@ -21,8 +21,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dml.generator.mysql;
@@ -48,7 +46,8 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorMySQL = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria;
+      AOrderBy: string = ''): string; override;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -141,7 +140,8 @@ begin
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
 
-function TDMLGeneratorMySQL.GetGeneratorSelect(const ACriteria: ICriteria): string;
+function TDMLGeneratorMySQL.GetGeneratorSelect(const ACriteria: ICriteria;
+  AOrderBy: string): string;
 begin
   Result := ' LIMIT %s OFFSET %s';
 end;
