@@ -66,3 +66,4 @@ Examples/NoSQL/MongoDB/FireDAC MongoDB Crud/ORMBrFireDAC.exe
 Examples/Metadata/FireDAC/Firemonkey/ORMBrMetadata.otares
 Examples/Data/IBExpress/ORMBr_IBExpress.exe
 Source/DBCBr/
+/modules
