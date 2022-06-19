@@ -6,9 +6,9 @@
 	"mainsrc": "Source",
 	"projects": [],
 	"dependencies": {
-		"bitbucket.org/isaquepinheiro/cqlbr": "1.0.1",
-		"bitbucket.org/isaquepinheiro/dbcbr": "1.0.4",
-		"bitbucket.org/isaquepinheiro/dbebr": "1.0.3",		
-        "bitbucket.org/isaquepinheiro/jsonbr": "1.0.0"
+		"github.com/hashload/cqlbr": "^1.1.1",
+		"github.com/hashload/dbcbr": "^1.1.3",
+		"github.com/hashload/dbebr": "^1.1.1",
+		"github.com/hashload/jsonbr": "^1.0.1"
 	}
 }
