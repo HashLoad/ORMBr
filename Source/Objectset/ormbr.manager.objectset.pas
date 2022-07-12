@@ -77,7 +77,8 @@ type
   public
     constructor Create(const AConnection: IMOConnection);
     destructor Destroy; override;
-    function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
+    function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet; deprecated 'Use AddRepository()';
+    function AddRepository<T: class, constructor>(const APageSize: Integer = -1): TManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
     // ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
@@ -119,6 +120,29 @@ type
 implementation
 
 { TManagerObjectSet }
+
+function TManagerObjectSet.AddRepository<T>(
+  const APageSize: Integer): TManagerObjectSet;
+var
+  LObjectetAdapter: TObjectSetBaseAdapter<T>;
+  LClassName: String;
+  LRepository: TRepository;
+begin
+  Result := Self;
+  LClassName := TClass(T).ClassName;
+  if FRepository.ContainsKey(LClassName) then
+    Exit;
+
+  {$IFDEF DRIVERRESTFUL}
+    LObjectetAdapter := TRESTObjectSetAdapter<T>.Create(FConnection, APageSize);
+  {$ELSE}
+    LObjectetAdapter := TObjectSetAdapter<T>.Create(FConnection, APageSize);
+  {$ENDIF}
+  // Adiciona o container ao repositório de containers
+  LRepository := TRepository.Create;
+  LRepository.ObjectSet := LObjectetAdapter;
+  FRepository.Add(LClassName, LRepository);
+end;
 
 function TManagerObjectSet.Bof<T>: Boolean;
 begin
@@ -236,25 +260,8 @@ begin
 end;
 
 function TManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
-var
-  LObjectetAdapter: TObjectSetBaseAdapter<T>;
-  LClassName: String;
-  LRepository: TRepository;
 begin
-  Result := Self;
-  LClassName := TClass(T).ClassName;
-  if FRepository.ContainsKey(LClassName) then
-    Exit;
-
-  {$IFDEF DRIVERRESTFUL}
-    LObjectetAdapter := TRESTObjectSetAdapter<T>.Create(FConnection, APageSize);
-  {$ELSE}
-    LObjectetAdapter := TObjectSetAdapter<T>.Create(FConnection, APageSize);
-  {$ENDIF}
-  // Adiciona o container ao repositório de containers
-  LRepository := TRepository.Create;
-  LRepository.ObjectSet := LObjectetAdapter;
-  FRepository.Add(LClassName, LRepository);
+  result = AddRepository(APageSize);
 end;
 
 function TManagerObjectSet.Find<T>: TObjectList<T>;
