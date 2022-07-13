@@ -261,7 +261,7 @@ end;
 
 function TManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TManagerObjectSet;
 begin
-  result = AddRepository(APageSize);
+  Result := AddRepository<T>(APageSize);
 end;
 
 function TManagerObjectSet.Find<T>: TObjectList<T>;

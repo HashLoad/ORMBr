@@ -1,0 +1,46 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2022-06-10T13:54:06.5017021-03:00",
+	"installedModules": {
+		"bitbucket.org/isaquepinheiro/cqlbr": {
+			"name": "cqlbr",
+			"version": "1.0.1",
+			"hash": "bdf5ac552706c32ca1c03b4cc296e665",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/dbcbr": {
+			"name": "dbcbr",
+			"version": "1.0.4",
+			"hash": "3fdef5ef7f8ab15de732e6655ce99bd4",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/dbebr": {
+			"name": "dbebr",
+			"version": "1.0.3",
+			"hash": "58b3ccf936e32824f4b87c4c447c8048",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"bitbucket.org/isaquepinheiro/jsonbr": {
+			"name": "jsonbr",
+			"version": "1.0.0",
+			"hash": "94ce55fd759a4d33502df6b5695596c0",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"github.com/hashload/ormbr": {
+			"name": "ormbr",
+			"version": "1.1.2",
+			"hash": "8c102651bcae541c945d72b34817453f",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}

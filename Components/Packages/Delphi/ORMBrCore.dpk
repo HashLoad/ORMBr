@@ -73,10 +73,11 @@ contains
   ormbr.session.dataset in '..\..\..\Source\Dataset\ormbr.session.dataset.pas',
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
   ormbr.types.blob in '..\..\..\Source\Core\ormbr.types.blob.pas',
-  jsonbr.builders in '..\..\..\Source\JSONBr\Core\jsonbr.builders.pas',
-  jsonbr in '..\..\..\Source\JSONBr\Core\jsonbr.pas',
   ormbr.dml.cache in '..\..\..\Source\Core\ormbr.dml.cache.pas',
   ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
-  ormbr.objects.utils in '..\..\..\Source\Core\ormbr.objects.utils.pas';
+  ormbr.objects.utils in '..\..\..\Source\Core\ormbr.objects.utils.pas',
+  jsonbr.builders in '..\..\..\Source\JSONBr\Source\Core\jsonbr.builders.pas',
+  jsonbr in '..\..\..\Source\JSONBr\Source\Core\jsonbr.pas',
+  jsonbr.writer in '..\..\..\Source\JSONBr\Source\Core\jsonbr.writer.pas';
 
 end.

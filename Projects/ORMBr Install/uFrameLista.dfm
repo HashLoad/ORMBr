@@ -139,7 +139,7 @@ object framePacotes: TframePacotes
         'Conex'#227'o ao MongoDB via MongoWire (https://github.com/torodb/mong' +
         'owp)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -180,7 +180,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Registrar o ORMBr Framework for Delphi na IDE do Delphi'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -229,7 +229,7 @@ object framePacotes: TframePacotes
         'Componentes para adicionarar as units do banco selecionado autom' +
         'aticamente ao seu projeto.'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -270,7 +270,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com FireDAC'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -297,7 +297,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com DBExpress'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -324,7 +324,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com Zeos'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -351,7 +351,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com UniDAC'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -378,7 +378,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com FIBPlus'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -405,7 +405,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com SQLDirect'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -432,7 +432,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com IBObject'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -459,7 +459,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com NexusDB'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -486,7 +486,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes para conex'#227'o com ADO'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -513,7 +513,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Core do ORMBr Framework for Delphi'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -540,7 +540,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Core do DBEBr Framework for Delphi (Depend'#234'ncia)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -574,7 +574,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes do TManagerDataSet'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -621,7 +621,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes do TManagerDataSet'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -648,7 +648,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Componentes do TManagerObjectSet'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -675,7 +675,7 @@ object framePacotes: TframePacotes
       Margins.Left = 5
       Caption = 'Core do DBCBr Framework for Delphi (Depend'#234'ncia)'
       Font.Charset = DEFAULT_CHARSET
-      Font.Color = 33023
+      Font.Color = clAqua
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []

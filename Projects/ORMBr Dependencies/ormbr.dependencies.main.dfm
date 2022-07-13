@@ -117,7 +117,8 @@ object frmORMBrDependencies: TfrmORMBrDependencies
         'cqlbr=master'
         'dbcbr=master'
         'dbebr=master'
-        'jsonbr=master')
+        'jsonbr=master'
+        'restful=master')
       TabOrder = 0
       TitleCaptions.Strings = (
         'Reposit'#243'rio'

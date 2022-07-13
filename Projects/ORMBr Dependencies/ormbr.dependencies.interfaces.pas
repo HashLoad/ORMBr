@@ -25,6 +25,7 @@ function CommandCQLBr(ATag: String = ''): IORMBrDependenciesCommand;
 function CommandDBCBr(ATag: String = ''): IORMBrDependenciesCommand;
 function CommandDBEBr(ATag: String = ''): IORMBrDependenciesCommand;
 function CommandJSONBr(ATag: String = ''): IORMBrDependenciesCommand;
+function CommandRESTFul(ATag: String = ''): IORMBrDependenciesCommand;
 
 implementation
 
@@ -33,7 +34,8 @@ uses
   ormbr.dependencies.command.cqlbr,
   ormbr.dependencies.command.dbcbr,
   ormbr.dependencies.command.dbebr,
-  ormbr.dependencies.command.jsonbr;
+  ormbr.dependencies.command.jsonbr,
+  ormbr.dependencies.command.restful;
 
 function NewExecutor: IORMBrDependenciesExecutor;
 begin
@@ -58,6 +60,11 @@ end;
 function CommandJSONBr(ATag: String = ''): IORMBrDependenciesCommand;
 begin
   result := TORMBrDependenciesCommandJSONBr.New(ATag, ALog);
+end;
+
+function CommandRESTFul(ATag: String = ''): IORMBrDependenciesCommand;
+begin
+  result := TORMBrDependenciesCommandRESTFul.New(ATag, ALog);
 end;
 
 end.

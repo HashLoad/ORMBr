@@ -1,0 +1,48 @@
+package RestClientWiRL;
+
+{$R *.res}
+{$R *.dres}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$DEFINE DRIVERRESTFUL}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ORMBr - RESTful Client (WiRL)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  WiRLRunTime,
+  RestCoreClient;
+
+contains
+  ormbr.client.wirl in '..\..\Source\ormbr.client.wirl.pas',
+  ormbr.client.wirl.reg in '..\..\Source\ormbr.client.wirl.reg.pas',
+  ormbr.driver.rest.wirl in '..\..\Source\ormbr.driver.rest.wirl.pas',
+  ormbr.factory.rest.wirl in '..\..\Source\ormbr.factory.rest.wirl.pas';
+
+end.

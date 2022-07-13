@@ -1,2 +1,2 @@
 Link da dependência
-https://bitbucket.org/isaquepinheiro/jsonbr/get/master.zip
+https://github.com/HashLoad/JSONBr/archive/refs/heads/master.zip

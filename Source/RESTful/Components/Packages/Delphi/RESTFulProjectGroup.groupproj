@@ -1,0 +1,144 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{EF5FBB86-CB12-4922-89EF-51A45A51E3F4}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\..\..\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\..\..\Components\Packages\Delphi\ORMBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestCoreClient.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientWiRL.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientDatasnap.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientMARS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientDelphiMVC.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientWS.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RestClientHorse.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DBEBrCore">
+        <MSBuild Projects="..\..\..\..\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj"/>
+    </Target>
+    <Target Name="DBEBrCore:Clean">
+        <MSBuild Projects="..\..\..\..\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrCore:Make">
+        <MSBuild Projects="..\..\..\..\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBCBrCore">
+        <MSBuild Projects="..\..\..\..\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj"/>
+    </Target>
+    <Target Name="DBCBrCore:Clean">
+        <MSBuild Projects="..\..\..\..\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBCBrCore:Make">
+        <MSBuild Projects="..\..\..\..\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrCore">
+        <MSBuild Projects="..\..\..\..\..\Components\Packages\Delphi\ORMBrCore.dproj"/>
+    </Target>
+    <Target Name="ORMBrCore:Clean">
+        <MSBuild Projects="..\..\..\..\..\Components\Packages\Delphi\ORMBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrCore:Make">
+        <MSBuild Projects="..\..\..\..\..\Components\Packages\Delphi\ORMBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestCoreClient">
+        <MSBuild Projects="RestCoreClient.dproj"/>
+    </Target>
+    <Target Name="RestCoreClient:Clean">
+        <MSBuild Projects="RestCoreClient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestCoreClient:Make">
+        <MSBuild Projects="RestCoreClient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientWiRL">
+        <MSBuild Projects="RestClientWiRL.dproj"/>
+    </Target>
+    <Target Name="RestClientWiRL:Clean">
+        <MSBuild Projects="RestClientWiRL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientWiRL:Make">
+        <MSBuild Projects="RestClientWiRL.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientDatasnap">
+        <MSBuild Projects="RestClientDatasnap.dproj"/>
+    </Target>
+    <Target Name="RestClientDatasnap:Clean">
+        <MSBuild Projects="RestClientDatasnap.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientDatasnap:Make">
+        <MSBuild Projects="RestClientDatasnap.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientMARS">
+        <MSBuild Projects="RestClientMARS.dproj"/>
+    </Target>
+    <Target Name="RestClientMARS:Clean">
+        <MSBuild Projects="RestClientMARS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientMARS:Make">
+        <MSBuild Projects="RestClientMARS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientDelphiMVC">
+        <MSBuild Projects="RestClientDelphiMVC.dproj"/>
+    </Target>
+    <Target Name="RestClientDelphiMVC:Clean">
+        <MSBuild Projects="RestClientDelphiMVC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientDelphiMVC:Make">
+        <MSBuild Projects="RestClientDelphiMVC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientWS">
+        <MSBuild Projects="RestClientWS.dproj"/>
+    </Target>
+    <Target Name="RestClientWS:Clean">
+        <MSBuild Projects="RestClientWS.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientWS:Make">
+        <MSBuild Projects="RestClientWS.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RestClientHorse">
+        <MSBuild Projects="RestClientHorse.dproj"/>
+    </Target>
+    <Target Name="RestClientHorse:Clean">
+        <MSBuild Projects="RestClientHorse.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RestClientHorse:Make">
+        <MSBuild Projects="RestClientHorse.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DBEBrCore;DBCBrCore;ORMBrCore;RestCoreClient;RestClientWiRL;RestClientDatasnap;RestClientMARS;RestClientDelphiMVC;RestClientWS;RestClientHorse"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DBEBrCore:Clean;DBCBrCore:Clean;ORMBrCore:Clean;RestCoreClient:Clean;RestClientWiRL:Clean;RestClientDatasnap:Clean;RestClientMARS:Clean;RestClientDelphiMVC:Clean;RestClientWS:Clean;RestClientHorse:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DBEBrCore:Make;DBCBrCore:Make;ORMBrCore:Make;RestCoreClient:Make;RestClientWiRL:Make;RestClientDatasnap:Make;RestClientMARS:Make;RestClientDelphiMVC:Make;RestClientWS:Make;RestClientHorse:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

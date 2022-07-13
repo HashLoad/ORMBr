@@ -1,0 +1,53 @@
+package RestClientWS;
+
+{$R *.res}
+{$R *.dres}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$DEFINE DRIVERRESTFUL}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ORMBr - RESTful Client (WebServices)'}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  CustomIPTransport,
+  bindengine,
+  bindcomp,
+  RestCoreClient,
+  IndyIPCommon,
+  IndySystem,
+  IndyProtocols,
+  IndyCore,
+  IndyIPClient,
+  RESTComponents;
+
+contains
+  ormbr.client.ws in '..\..\Source\ormbr.client.ws.pas',
+  ormbr.client.ws.reg in '..\..\Source\ormbr.client.ws.reg.pas',
+  ormbr.driver.rest.ws in '..\..\Source\ormbr.driver.rest.ws.pas',
+  ormbr.factory.rest.ws in '..\..\Source\ormbr.factory.rest.ws.pas';
+
+end.

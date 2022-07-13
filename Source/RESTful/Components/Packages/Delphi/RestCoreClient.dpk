@@ -1,0 +1,56 @@
+package RestCoreClient;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'ORMBr - RESTful Core'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  dbrtl,
+  fmx,
+  designide,
+  DBEBrCore,
+  ORMBrCore,
+  DBCBrCore;
+
+contains
+  ormbr.rest.classes in '..\..\..\Source\Common\ormbr.rest.classes.pas',
+  ormbr.restdataset.adapter in '..\..\..\Source\Common\ormbr.restdataset.adapter.pas',
+  ormbr.client.about in '..\..\..\Source\Client\ormbr.client.about.pas' {FormAboutClient},
+  ormbr.client.base in '..\..\..\Source\Client\ormbr.client.base.pas',
+  ormbr.client.consts in '..\..\..\Source\Client\ormbr.client.consts.pas',
+  ormbr.client.interfaces in '..\..\..\Source\Client\ormbr.client.interfaces.pas',
+  ormbr.client.methods in '..\..\..\Source\Client\ormbr.client.methods.pas',
+  ormbr.client in '..\..\..\Source\Client\ormbr.client.pas',
+  ormbr.client.reg in '..\..\..\Source\Client\ormbr.client.reg.pas',
+  ormbr.driver.rest in '..\..\..\Source\Client\ormbr.driver.rest.pas',
+  ormbr.factory.rest in '..\..\..\Source\Client\ormbr.factory.rest.pas',
+  ormbr.session.rest in '..\..\..\Source\Client\ormbr.session.rest.pas',
+  ormbr.restobjectset.adapter in '..\..\..\Source\Common\ormbr.restobjectset.adapter.pas';
+
+end.

@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{4A88C7F1-790D-49E4-9FD0-EF1653FC8EAF}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Server\ORMBrServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Client\ORMBrClient.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="ORMBrServer">
+        <MSBuild Projects="Server\ORMBrServer.dproj"/>
+    </Target>
+    <Target Name="ORMBrServer:Clean">
+        <MSBuild Projects="Server\ORMBrServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrServer:Make">
+        <MSBuild Projects="Server\ORMBrServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrClient">
+        <MSBuild Projects="Client\ORMBrClient.dproj"/>
+    </Target>
+    <Target Name="ORMBrClient:Clean">
+        <MSBuild Projects="Client\ORMBrClient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrClient:Make">
+        <MSBuild Projects="Client\ORMBrClient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="ORMBrServer;ORMBrClient"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="ORMBrServer:Clean;ORMBrClient:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="ORMBrServer:Make;ORMBrClient:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

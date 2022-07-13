@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 359
   Top = 202
-  ActiveControl = wizPgInicio
+  ActiveControl = edtDirDestino
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsNone
   BorderWidth = 1
@@ -14,16 +14,18 @@ object frmPrincipal: TfrmPrincipal
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 96
   TextHeight = 13
   object wizPrincipal: TJvWizard
     Left = 0
     Top = 0
     Width = 722
     Height = 639
-    ActivePage = wizPgInicio
+    ActivePage = wizPgConfiguracao
     ButtonBarHeight = 42
     ButtonStart.Caption = 'Para o in'#237'cio'
     ButtonStart.NumGlyphs = 1
@@ -887,7 +889,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'http://www.ormbr.com.br'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -902,7 +904,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'http://ormbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -953,12 +955,12 @@ object frmPrincipal: TfrmPrincipal
       object Label11: TLabel
         Left = 93
         Top = 374
-        Width = 301
+        Width = 194
         Height = 13
         Cursor = crHandPoint
-        Caption = 'https://isaquepinheiro@bitbucket.org/isaquepinheiro/ormbr.git'
+        Caption = 'https://github.com/HashLoad/ORMBr.git'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clAqua
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -1003,10 +1005,6 @@ object frmPrincipal: TfrmPrincipal
       Color = 3417897
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 65
@@ -1120,11 +1118,52 @@ object frmPrincipal: TfrmPrincipal
         Transparent = True
         OnClick = LabelWin64Click
       end
+      object Label22: TLabel
+        Left = 195
+        Top = 171
+        Width = 244
+        Height = 13
+        Caption = 'Habilitar um dos Componentes Dataset  dispon'#237'veis'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clSilver
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object FDMemTableLabel: TLabel
+        Left = 217
+        Top = 193
+        Width = 67
+        Height = 13
+        Caption = 'TFDMemTable'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        OnClick = FDMemTableLabelClick
+      end
+      object ClientDataSetLabel: TLabel
+        Left = 217
+        Top = 214
+        Width = 72
+        Height = 13
+        Caption = 'TClientDataSet'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        OnClick = ClientDataSetLabelClick
+      end
       object edtDirDestino: TEdit
         Left = 17
         Top = 27
         Width = 487
-        Height = 19
+        Height = 24
         Color = 4865343
         Ctl3D = False
         Font.Charset = DEFAULT_CHARSET
@@ -1214,6 +1253,36 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         TabOrder = 3
       end
+      object FDMemTable: TRadioButton
+        Left = 195
+        Top = 190
+        Width = 16
+        Height = 17
+        Checked = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 6
+        TabStop = True
+        OnClick = FDMemTableClick
+      end
+      object ClientDataSet: TRadioButton
+        Left = 195
+        Top = 213
+        Width = 16
+        Height = 17
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 7
+        OnClick = ClientDataSetClick
+      end
     end
     object wizPgPacotes: TJvWizardInteriorPage
       Header.Visible = False
@@ -1235,10 +1304,6 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1430,10 +1495,6 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object btnInstalar: TSpeedButton
         Left = 430
         Top = 463
@@ -1526,10 +1587,6 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = 3417897
       Caption = 'Fim'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58
@@ -1553,7 +1610,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'http://www.ormbr.com.br'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -1568,7 +1625,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'http://ormbr.com.br/forum/'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -1583,7 +1640,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'http://www.ormbr.com.br/'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
@@ -1640,7 +1697,7 @@ object frmPrincipal: TfrmPrincipal
         Cursor = crHandPoint
         Caption = 'Telegram: https://t.me/ormbr'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 33023
+        Font.Color = clWhite
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]

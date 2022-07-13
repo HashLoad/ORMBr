@@ -1,0 +1,11 @@
+{
+	"name": "ORMBr-Restful-Components",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "Source",
+	"projects": [],
+	"dependencies": {
+		"github.com/hashload/ormbr": "^1.1.2"
+	}
+}

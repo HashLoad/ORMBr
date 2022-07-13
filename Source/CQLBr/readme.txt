@@ -1,2 +1,2 @@
 Link da dependência
-https://isaquepinheiro@bitbucket.org/isaquepinheiro/cqlbr.git
+https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip

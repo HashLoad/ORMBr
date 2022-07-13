@@ -35,8 +35,11 @@ var
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
-  result := Format('https://bitbucket.org/isaquepinheiro/jsonbr/get/%s.zip',
-    [version])
+  if version = 'master' then
+    result := 'https://github.com/HashLoad/JSONBr/archive/refs/heads/master.zip'
+  else
+    result := Format('https://github.com/HashLoad/JSONBr/archive/refs/tags/%s.zip',
+      [version])
 end;
 
 function TORMBrDependenciesCommandJSONBr.ZipFileName: string;
