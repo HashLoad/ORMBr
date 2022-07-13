@@ -38,6 +38,9 @@ begin
   if version = 'master' then
     result := 'https://github.com/HashLoad/ORMBr-Restful-Components/archive/refs/heads/master.zip'
   else
+  if version = 'develop' then
+    result := 'https://github.com/HashLoad/ORMBr-Restful-Components/archive/refs/heads/develop.zip'
+  else
     result := Format('https://github.com/HashLoad/ORMBr-Restful-Components/archive/refs/tags/%s.zip',
       [version])
 end;
