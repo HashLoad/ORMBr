@@ -16,6 +16,7 @@ Source/CQLBr/
 Source/DBEBr/
 Source/DBCBr/
 Source/JSONBr/
+Source/RESTful/
 *.identcache
 *.stat
 Examples/Data/Blob/Exemplo_ORMBr.exe
@@ -60,5 +61,4 @@ Examples/JSON/PJson.rsm
 Examples/NoSQL/MongoDB/FireDAC MongoDB Crud/ORMBrFireDAC.exe
 Examples/Metadata/FireDAC/Firemonkey/ORMBrMetadata.otares
 Examples/Data/IBExpress/ORMBr_IBExpress.exe
-Source/DBCBr/
 /modules
