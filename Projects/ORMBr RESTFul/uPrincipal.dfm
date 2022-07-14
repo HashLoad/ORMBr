@@ -1069,6 +1069,10 @@ object frmPrincipal: TfrmPrincipal
       Color = 15724527
       Caption = 'Configura'#231#245'es'
       OnNextButtonClick = wizPgConfiguracaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 17
         Top = 68
@@ -1319,6 +1323,10 @@ object frmPrincipal: TfrmPrincipal
       Header.Subtitle.Font.Name = 'Tahoma'
       Header.Subtitle.Font.Style = []
       Caption = 'Pacotes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inline framePacotes1: TframePacotes
         Left = 0
         Top = 0
@@ -1431,6 +1439,10 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Instala'#231#227'o'
       OnEnterPage = wizPgInstalacaoEnterPage
       OnNextButtonClick = wizPgInstalacaoNextButtonClick
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object btnInstalar: TSpeedButton
         Left = 430
         Top = 463
@@ -1529,6 +1541,10 @@ object frmPrincipal: TfrmPrincipal
       VisibleButtons = [bkFinish]
       Color = 15724527
       Caption = 'Fim'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 39
         Top = 58

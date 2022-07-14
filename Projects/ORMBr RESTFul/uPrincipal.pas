@@ -1,12 +1,5 @@
 unit uPrincipal;
 
-//{$DEFINE RESTFULDISABLE}
-//{$DEFINE RESTFULDATASNAP}
-//{$DEFINE RESTFULWIRL}
-//{$DEFINE RESTFULMARS}
-//{$DEFINE RESTFULDELPHIMVC}
-//{$DEFINE RESTFULHORSE}
-
 interface
 
 uses
@@ -201,7 +194,8 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
              (oDirList.Name = '..') or
              (oDirList.Name = '__history') or
              (oDirList.Name = '__recovery') or
-             (oDirList.Name = '__recovery') then
+             (oDirList.Name = 'Win32') or
+             (oDirList.Name = 'Win64') then
             Continue;
 
           //if oDirList.Attr = faDirectory then
@@ -222,9 +216,10 @@ procedure TfrmPrincipal.ExtrairDiretorioPacote(NomePacote: string);
 
 begin
    sDirPackage := '';
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\RESTful\Components\Source', NomePacote);
-   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\RESTful\Components\Packages\Delphi', NomePacote);
    FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Packages\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\DBEBr\Components\Packages\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\DBCBr\Components\Packages\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\RESTful\Components\Packages\Delphi', NomePacote);
 end;
 
 // retornar o path do aplicativo
@@ -491,8 +486,22 @@ var
 
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..5] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery'
+    LISTA_PROIBIDOS: ARRAY[0..14] OF STRING = (
+      'quick',
+      'rave',
+      'laz',
+      'VerificarNecessidade',
+      '__history',
+      '__recovery',
+      'Examples',
+      'Packages',
+      'Images',
+      'Test Delphi',
+      'Test Lazarus',
+      'Projects',
+      'Test Performance',
+      'Win32',
+      'Win64'
     );
   var
     Str: String;
@@ -541,7 +550,7 @@ end;
 // adicionar o paths ao library path do delphi
 procedure TfrmPrincipal.AddLibrarySearchPath;
 begin
-  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\RESTful\Source');
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source');
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source');
 
   // --
@@ -735,57 +744,6 @@ begin
   end;
 
   LerConfiguracoes;
-
-  {$IFDEF RESTFULDISABLE}
-  framePacotes1.RestClientDatasnap_dpk.Visible := False;
-  framePacotes1.RestClientDatasnap_Label.Visible := False;
-  framePacotes1.RestClientWiRL_dpk.Visible := False;
-  framePacotes1.RestClientWiRL_Label.Visible := False;
-  framePacotes1.RestClientMARS_dpk.Visible := False;
-  framePacotes1.RestClientMARS_Label.Visible := False;
-  framePacotes1.RestClientDelphiMVC_dpk.Visible := False;
-  framePacotes1.RestClientDelphiMVC_Label.Visible := False;
-  framePacotes1.RestClientDWCore_dpk.Visible := False;
-  framePacotes1.RestClientDWCore_Label.Visible := False;
-  framePacotes1.RestClientHorse_dpk.Visible := False;
-  framePacotes1.RestClientHorse_Label.Visible := False;
-  {$ENDIF}
-
-  {$IFDEF RESTFULDATASNAP}
-  framePacotes1.RestClientDatasnap_dpk.Visible := True;
-  framePacotes1.RestClientDatasnap_Label.Visible := True;
-  framePacotes1.RestClientDatasnap_Label.Top := cTOP;
-  framePacotes1.RestClientDatasnap_dpk.Checked := True;
-  framePacotes1.RestClientDatasnap_dpk.Top := cTOP - 1;
-  {$ENDIF}
-  {$IFDEF RESTFULWIRL}
-  framePacotes1.RestClientWiRL_dpk.Visible := True;
-  framePacotes1.RestClientWiRL_Label.Visible := True;
-  framePacotes1.RestClientWiRL_Label.Top := cTOP;
-  framePacotes1.RestClientWiRL_dpk.Checked := True;
-  framePacotes1.RestClientWiRL_dpk.Top := cTOP - 1;
-  {$ENDIF}
-  {$IFDEF RESTFULMARS}
-  framePacotes1.RestClientMARS_dpk.Visible := True;
-  framePacotes1.RestClientMARS_Label.Visible := True;
-  framePacotes1.RestClientMARS_Label.Top := cTOP;
-  framePacotes1.RestClientMARS_dpk.Checked := True;
-  framePacotes1.RestClientMARS_dpk.Top := cTOP - 1;
-  {$ENDIF}
-  {$IFDEF RESTFULDELPHIMVC}
-  framePacotes1.RestClientDelphiMVC_dpk.Visible := True;
-  framePacotes1.RestClientDelphiMVC_Label.Visible := True;
-  framePacotes1.RestClientDelphiMVC_Label.Top := cTOP;
-  framePacotes1.RestClientDelphiMVC_dpk.Checked := True;
-  framePacotes1.RestClientDelphiMVC_dpk.Top := cTOP - 1;
-  {$ENDIF}
-  {$IFDEF RESTFULHORSE}
-  framePacotes1.RestClientHorse_dpk.Visible := True;
-  framePacotes1.RestClientHorse_Label.Visible := True;
-  framePacotes1.RestClientHorse_Label.Top := cTOP;
-  framePacotes1.RestClientHorse_dpk.Checked := True;
-  framePacotes1.RestClientHorse_dpk.Top := cTOP - 1;
-  {$ENDIF}
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
