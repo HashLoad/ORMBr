@@ -6,8 +6,8 @@
 	"mainsrc": "Source",
 	"projects": [],
 	"dependencies": {
-		"github.com/hashload/cqlbr": "^1.1.1",
-		"github.com/hashload/dbcbr": "^1.1.3",
+		"github.com/hashload/cqlbr": "^1.1.21",
+		"github.com/hashload/dbcbr": "^1.1.31",
 		"github.com/hashload/dbebr": "^1.1.1",
 		"github.com/hashload/jsonbr": "^1.0.1"
 	}
