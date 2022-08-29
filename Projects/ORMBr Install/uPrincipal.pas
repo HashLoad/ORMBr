@@ -64,6 +64,11 @@ type
     LabelWin32: TLabel;
     LabelWin64: TLabel;
     chkWin64: TCheckBox;
+    Label22: TLabel;
+    FDMemTable: TRadioButton;
+    ClientDataSet: TRadioButton;
+    FDMemTableLabel: TLabel;
+    ClientDataSetLabel: TLabel;
     procedure imgPropaganda1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -89,6 +94,10 @@ type
     procedure Label7Click(Sender: TObject);
     procedure LabelWin64Click(Sender: TObject);
     procedure LabelWin32Click(Sender: TObject);
+    procedure ClientDataSetClick(Sender: TObject);
+    procedure FDMemTableClick(Sender: TObject);
+    procedure ClientDataSetLabelClick(Sender: TObject);
+    procedure FDMemTableLabelClick(Sender: TObject);
   private
     FCountErros: Integer;
     oORMBr: TJclBorRADToolInstallations;
@@ -214,7 +223,9 @@ var
   end;
 
 begin
-//  LigarDefineORMBrInc('DRIVERRESTFUL', True);
+  LigarDefineORMBrInc('DRIVERRESTFUL', False);
+  LigarDefineORMBrInc('USEFDMEMTABLE', FDMemTable.Checked);
+  LigarDefineORMBrInc('USECLIENTDATASET', ClientDataSet.Checked);
 
   FCountErros := 0;
 
@@ -430,6 +441,8 @@ begin
    sDirPackage := '';
    FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Projects\Wizard', NomePacote);
    FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Packages\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\DBCBr\Components\Packages\Delphi', NomePacote);
+   FindDirPackage(IncludeTrailingPathDelimiter(sDirRoot) + 'Source\DBEBr\Components\Packages\Delphi', NomePacote);
 end;
 
 // retornar o path do aplicativo
@@ -480,6 +493,17 @@ begin
   end
   else
     raise EFileNotFoundException.Create('Ocorreu um erro ao tentar obter o diretório do windows.');
+end;
+
+procedure TfrmPrincipal.ClientDataSetClick(Sender: TObject);
+begin
+  FDMemTable.Checked := not ClientDataSet.Checked;
+end;
+
+procedure TfrmPrincipal.ClientDataSetLabelClick(Sender: TObject);
+begin
+  ClientDataSet.Checked := True;
+  FDMemTable.Checked := False;
 end;
 
 procedure TfrmPrincipal.CopiarArquivoTo(ADestino : TDestino; const ANomeArquivo: String);
@@ -624,7 +648,7 @@ procedure TfrmPrincipal.DeixarSomenteLib;
 begin
   // Remover os path com o segundo parametro
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source', False);
-  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components', False);
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source', False);
 
   Copiar('*.dcr');
   Copiar('*.res');
@@ -688,14 +712,39 @@ begin
   end;
 end;
 
+procedure TfrmPrincipal.FDMemTableClick(Sender: TObject);
+begin
+  ClientDataSet.Checked := not FDMemTable.Checked;
+end;
+
+procedure TfrmPrincipal.FDMemTableLabelClick(Sender: TObject);
+begin
+  ClientDataSet.Checked := False;
+  FDMemTable.Checked := True;
+end;
+
 procedure TfrmPrincipal.FindDirs(ADirRoot: String; bAdicionar: Boolean = True);
 var
   oDirList: TSearchRec;
 
   function EProibido(const ADir: String): Boolean;
   const
-    LISTA_PROIBIDOS: ARRAY[0..7] OF STRING = (
-      'quick', 'rave', 'laz', 'VerificarNecessidade', '__history', '__recovery', 'Win32', 'Packages'
+    LISTA_PROIBIDOS: ARRAY[0..14] OF STRING = (
+      'quick',
+      'rave',
+      'laz',
+      'VerificarNecessidade',
+      '__history',
+      '__recovery',
+      'Examples',
+      'Packages',
+      'Images',
+      'Test Delphi',
+      'Test Lazarus',
+      'Projects',
+      'Test Performance',
+      'Win32',
+      'Win64',
     );
   var
     Str: String;
@@ -745,7 +794,7 @@ end;
 procedure TfrmPrincipal.AddLibrarySearchPath(const APlatform: TJclBDSPlatform);
 begin
   FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Source');
-  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components');
+  FindDirs(IncludeTrailingPathDelimiter(sDirRoot) + 'Components\Source');
 
   with oORMBr.Installations[iVersion] do
   begin

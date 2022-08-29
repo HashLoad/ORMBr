@@ -1,0 +1,156 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C403A32F-5943-4559-978D-74063C7B385C}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\..\Source\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\..\Source\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrCore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrDriversLinks.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerClientDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerFDMemTable.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ORMBrManagerObjectSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dclORMBrDriversLinks.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dclORMBrManagerClientDataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dclORMBrManagerFDMemTable.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="dclORMBrManagerObjectSet.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="DBEBrCore">
+        <MSBuild Projects="..\..\..\Source\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj"/>
+    </Target>
+    <Target Name="DBEBrCore:Clean">
+        <MSBuild Projects="..\..\..\Source\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBEBrCore:Make">
+        <MSBuild Projects="..\..\..\Source\DBEBr\Components\Packages\Delphi\DBEBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DBCBrCore">
+        <MSBuild Projects="..\..\..\Source\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj"/>
+    </Target>
+    <Target Name="DBCBrCore:Clean">
+        <MSBuild Projects="..\..\..\Source\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DBCBrCore:Make">
+        <MSBuild Projects="..\..\..\Source\DBCBr\Components\Packages\Delphi\DBCBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrCore">
+        <MSBuild Projects="ORMBrCore.dproj"/>
+    </Target>
+    <Target Name="ORMBrCore:Clean">
+        <MSBuild Projects="ORMBrCore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrCore:Make">
+        <MSBuild Projects="ORMBrCore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks">
+        <MSBuild Projects="ORMBrDriversLinks.dproj"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks:Clean">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrDriversLinks:Make">
+        <MSBuild Projects="ORMBrDriversLinks.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Clean">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerClientDataSet:Make">
+        <MSBuild Projects="ORMBrManagerClientDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Clean">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerFDMemTable:Make">
+        <MSBuild Projects="ORMBrManagerFDMemTable.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Clean">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORMBrManagerObjectSet:Make">
+        <MSBuild Projects="ORMBrManagerObjectSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dclORMBrDriversLinks">
+        <MSBuild Projects="dclORMBrDriversLinks.dproj"/>
+    </Target>
+    <Target Name="dclORMBrDriversLinks:Clean">
+        <MSBuild Projects="dclORMBrDriversLinks.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dclORMBrDriversLinks:Make">
+        <MSBuild Projects="dclORMBrDriversLinks.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dclORMBrManagerClientDataSet">
+        <MSBuild Projects="dclORMBrManagerClientDataSet.dproj"/>
+    </Target>
+    <Target Name="dclORMBrManagerClientDataSet:Clean">
+        <MSBuild Projects="dclORMBrManagerClientDataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dclORMBrManagerClientDataSet:Make">
+        <MSBuild Projects="dclORMBrManagerClientDataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dclORMBrManagerFDMemTable">
+        <MSBuild Projects="dclORMBrManagerFDMemTable.dproj"/>
+    </Target>
+    <Target Name="dclORMBrManagerFDMemTable:Clean">
+        <MSBuild Projects="dclORMBrManagerFDMemTable.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dclORMBrManagerFDMemTable:Make">
+        <MSBuild Projects="dclORMBrManagerFDMemTable.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="dclORMBrManagerObjectSet">
+        <MSBuild Projects="dclORMBrManagerObjectSet.dproj"/>
+    </Target>
+    <Target Name="dclORMBrManagerObjectSet:Clean">
+        <MSBuild Projects="dclORMBrManagerObjectSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="dclORMBrManagerObjectSet:Make">
+        <MSBuild Projects="dclORMBrManagerObjectSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="DBEBrCore;DBCBrCore;ORMBrCore;ORMBrDriversLinks;ORMBrManagerClientDataSet;ORMBrManagerFDMemTable;ORMBrManagerObjectSet;dclORMBrDriversLinks;dclORMBrManagerClientDataSet;dclORMBrManagerFDMemTable;dclORMBrManagerObjectSet"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="DBEBrCore:Clean;DBCBrCore:Clean;ORMBrCore:Clean;ORMBrDriversLinks:Clean;ORMBrManagerClientDataSet:Clean;ORMBrManagerFDMemTable:Clean;ORMBrManagerObjectSet:Clean;dclORMBrDriversLinks:Clean;dclORMBrManagerClientDataSet:Clean;dclORMBrManagerFDMemTable:Clean;dclORMBrManagerObjectSet:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="DBEBrCore:Make;DBCBrCore:Make;ORMBrCore:Make;ORMBrDriversLinks:Make;ORMBrManagerClientDataSet:Make;ORMBrManagerFDMemTable:Make;ORMBrManagerObjectSet:Make;dclORMBrDriversLinks:Make;dclORMBrManagerClientDataSet:Make;dclORMBrManagerFDMemTable:Make;dclORMBrManagerObjectSet:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

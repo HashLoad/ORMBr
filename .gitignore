@@ -7,21 +7,17 @@
 *.local
 __history/
 __recovery/
+Lib/
 # Examples/
 Examples/Data/
 Examples/JSON/
 Win32/
-Source/CQLBr/cqlbr.inc
-Source/CQLBr/Core/
-Source/CQLBr/Drivers/
-Source/DBEBr/dbcbr.inc
-Source/DBCBr/Core/
-Source/DBCBr/Drivers/
-Source/DBEBr/dbebr.inc
-Source/DBEBr/Core/
-Source/DBEBr/Drivers/
-*.identcache
+Source/CQLBr/
+Source/DBEBr/
+Source/DBCBr/
 Source/JSONBr/
+Source/RESTful/
+*.identcache
 *.stat
 Examples/Data/Blob/Exemplo_ORMBr.exe
 Examples/Data/ORMBrDataExamples.groupproj.local
@@ -65,5 +61,4 @@ Examples/JSON/PJson.rsm
 Examples/NoSQL/MongoDB/FireDAC MongoDB Crud/ORMBrFireDAC.exe
 Examples/Metadata/FireDAC/Firemonkey/ORMBrMetadata.otares
 Examples/Data/IBExpress/ORMBr_IBExpress.exe
-Source/DBCBr/
 /modules

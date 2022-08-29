@@ -35,8 +35,14 @@ var
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
-  result := Format('https://bitbucket.org/isaquepinheiro/dbebr/get/%s.zip',
-    [version])
+  if version = 'master' then
+    result := 'https://github.com/HashLoad/DBEBr/archive/refs/heads/master.zip'
+  else
+  if version = 'develop' then
+    result := 'https://github.com/HashLoad/DBEBr/archive/refs/heads/develop.zip'
+  else
+    result := Format('https://github.com/HashLoad/DBEBr/archive/refs/tags/%s.zip',
+      [version])
 end;
 
 function TORMBrDependenciesCommandDBEBr.ZipFileName: string;

@@ -9,7 +9,8 @@ uses
   ormbr.dependencies.command.dbebr in 'ormbr.dependencies.command.dbebr.pas',
   ormbr.dependencies.command.cqlbr in 'ormbr.dependencies.command.cqlbr.pas',
   ormbr.dependencies.command.dbcbr in 'ormbr.dependencies.command.dbcbr.pas',
-  ormbr.dependencies.command.jsonbr in 'ormbr.dependencies.command.jsonbr.pas';
+  ormbr.dependencies.command.jsonbr in 'ormbr.dependencies.command.jsonbr.pas',
+  ormbr.dependencies.command.restful in 'ormbr.dependencies.command.restful.pas';
 
 {$R *.res}
 

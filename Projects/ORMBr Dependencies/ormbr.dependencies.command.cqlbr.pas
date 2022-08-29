@@ -35,8 +35,14 @@ var
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
-  result := Format('https://bitbucket.org/isaquepinheiro/cqlbr/get/%s.zip',
-    [version])
+  if version = 'master' then
+    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
+  else
+  if version = 'develop' then
+    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
+  else
+    result := Format('https://github.com/HashLoad/CQLBr/archive/refs/tags/%s.zip',
+      [version])
 end;
 
 function TORMBrDependenciesCommandCQLBr.ZipFileName: string;
