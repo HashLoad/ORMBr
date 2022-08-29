@@ -254,7 +254,6 @@ begin
   if TVarData(AID).VType = varInteger then
     Result := Resolver<T>.Find(Integer(AID))
   else
-  if TVarData(AID).VType = varString then
     Result := Resolver<T>.Find(VarToStr(AID));
   FCurrentIndex := 0;
 end;
