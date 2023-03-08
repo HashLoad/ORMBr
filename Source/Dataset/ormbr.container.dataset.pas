@@ -81,7 +81,7 @@ type
     function This: TDataSetBaseAdapter<M>;
     function Current: M;
     property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
-    /// ObjectSet
+    // ObjectSet
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;

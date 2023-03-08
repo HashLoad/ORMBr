@@ -64,6 +64,8 @@ type
                                const AProperty: TRttiProperty;
                                const AValue: Variant;
                                var ABreak: Boolean);
+    class function GetFormatSettings: TFormatSettings; static;
+    class procedure SetFormatSettings(const Value: TFormatSettings); static;
   public
     class constructor Create;
     class destructor Destroy;
@@ -85,6 +87,7 @@ type
     class function JSONStringToJSONArray(const AJson: string): TJSONArray;
     class function JSONObjectListToJSONArray<T: class>(const AObjectList: TObjectList<T>): TJSONArray;
     class function JSONStringToJSONObject(const AJson: string): TJSONObject;
+    class property FormatSettings: TFormatSettings read GetFormatSettings write SetFormatSettings;
   end;
 
 implementation
@@ -99,6 +102,7 @@ begin
   FJSONObject := TJSONBrObject.Create;
   FJSONObject.OnGetValue := DoGetValue;
   FJSONObject.OnSetValue := DoSetValue;
+  FormatSettings := TJSONBrObject.FormatSettings;
 end;
 
 class destructor TORMBrJson.Destroy;
@@ -130,14 +134,14 @@ begin
             AResult := AProperty.GetValueNullable(AInstance, AProperty.PropertyType.Handle).AsVariant;
             if AResult = Null then
               Exit;
-            if AProperty.IsDateTime then
-              AResult := DateTimeToStr(AResult, FJSONObject.FSettingsUS)
+            if (AProperty.IsDateTime) then
+              AResult := DateTimeToStr(AResult, FJSONObject.FormatSettings)
             else
             if AProperty.IsDate then
-              AResult := DateToStr(AResult, FJSONObject.FSettingsUS)
+              AResult := DateToStr(AResult, FJSONObject.FormatSettings)
             else
             if AProperty.IsTime then
-              AResult := DateTimeToStr(AResult, FJSONObject.FSettingsUS)
+              AResult := DateTimeToStr(AResult, FJSONObject.FormatSettings)
           end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;
@@ -299,6 +303,16 @@ class function TORMBrJson.ObjectToJsonString(AObject: TObject;
   AStoreClassName: Boolean): string;
 begin
   Result := FJSONObject.ObjectToJSON(AObject, AStoreClassName);
+end;
+
+class procedure TORMBrJson.SetFormatSettings(const Value: TFormatSettings);
+begin
+  FJSONObject.FormatSettings := Value;
+end;
+
+class function TORMBrJson.GetFormatSettings: TFormatSettings;
+begin
+  Result := FJSONObject.FormatSettings;
 end;
 
 class function TORMBrJson.JsonToObjectList<T>(const AJson: string): TObjectList<T>;
