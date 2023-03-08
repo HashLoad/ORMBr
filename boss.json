@@ -1,14 +1,14 @@
 {
 	"name": "ORMBr",
 	"description": "ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.",
-	"version": "1.1.3",
+	"version": "1.2023.3.8",
 	"homepage": "https://www.ormbr.com.br/",
 	"mainsrc": "Source",
 	"projects": [],
 	"dependencies": {
-		"github.com/hashload/cqlbr": "^1.1.22",
-		"github.com/hashload/dbcbr": "^1.1.4",
-		"github.com/hashload/dbebr": "^1.1.2",
-		"github.com/hashload/jsonbr": "^1.0.2"
+		"github.com/hashload/dbcbr": "^1.2023.3.8",
+		"github.com/hashload/dbebr": "^1.2023.3.8",
+		"github.com/hashload/cqlbr": "^1.2023.3.8",
+		"github.com/hashload/jsonbr": "^1.2023.3.8"
 	}
 }
