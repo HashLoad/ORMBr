@@ -1,13 +1,4 @@
-![ORMBr Framework](https://www.isaquepinheiro.com.br/imagens/ormbrbitucket.png)  
-![![pageseguro.png](http://www.ormbr.com.br/imagens/pagseguro.png)](https://pag.ae/bglQrWD)
-
-
-# ORMBr Framework for Delphi   [![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
-ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
-
-Durante o desenvolvimento de software, é evidente a preocupação em que se tem em aumentar a produtividade sem abrir mão da qualidade. No que se refere a banco de dados, é possível a utilização de um framework ORM que nos permita focar mais nas regras de negócios da aplicação do que na persistência de dados em si, permitindo um desenvolvimento mais rápido e consistente.
-
-### O que é um ORM, afinal? ###
+# ORMBr Framework for Delphi
 
 Da visão de aproveitar ao máximo o conceito de Orientação a Objetos, o Mapeamento Objeto-Relacional (ORM) consiste em um framework que tem por objetivo encurtar as distância entre a orientado a objetos e o modelo entidade-relacional, criando uma ponte (mapeamento) entre eles. Com a abordagem, é possível a construção de sistemas aplicando a orientado a objetos, cujo os objetos são persistidos em um banco de dados relacional.
 
@@ -18,22 +9,29 @@ O ORM reduz ao mínimo a necessidade de escrever códigos de conexão e queries 
 É importante deixar claro que a utilização de um framework ORM não substitui totalmente a necessidade da utilização de SQL na sua aplicação. Embora o ORM satisfaça a maior parte das necessidades de interação com o banco de dados, em alguns casos, haverá a necessidade, por exemplo, de consultas mais customizadas, que terão que ser realizadas por meio de SQL. 
 por: Bárbara Ranieri
 
-Junte-se a nós se cadastre em nosso fórum : [ORM Brasil](https://www.ormbr.com.br/)
+<p align="center">
+  <a href="https://www.isaquepinheiro.com.br">
+    <img src="https://github.com/HashLoad/ORMBr/blob/master/Images/ormbrbitucket.png">
+  </a>
+</p>
 
-### Instalação ###
-O ORMBr não precisa ser instalado, basta adicionar as units no seu projeto e começar a usa-lo.
-
-### Requisitos ###
+## 🏛 Delphi Versions
 Embarcadero Delphi XE e superior.
 
-### Versão Atual ###
-3.7.0 (20 Jul 2016)
+## ⚠ Dependências
 
-Copyright (c) 2016 ORMBr Framework Team
+:heavy_check_mark: [DBCBr Framework for Delphi](https://github.com/hashload/dbcbr)
 
+:heavy_check_mark: [DBEBr Framework for Delphi/Lazarus](https://github.com/hashload/dbebr)
 
-### Como usar? Crie sua classe modelo, decorando-a como os atributos
+:heavy_check_mark: [CQLBr Framework for Delphi/Lazarus](https://github.com/hashload/cqlbr)
 
+:heavy_check_mark: [JSONBr Framework for Delphi](https://github.com/hashload/jsonbr)
+
+## ⚙️ Instalação
+O ORMBr não precisa ser instalado, basta adicionar as units no path libriry do seu delphi e começar a usa-lo.
+
+## ⚡️ Como usar
 ```Delphi
 unit ormbr.model.client;
 
@@ -87,11 +85,6 @@ initialization
 end.
 ```
 
-### Em seguida inicie um novo projeto
-
-## Adicione e configure a ele os componentes de conexão do seu banco de dados, deixe tudo funcionando
-## Segue um exemplo simples e funcional abaixo, na pasta exemples existem diversos outros exemplos, demostrando o uso
-
 ```Delphi
 unit uMainFormORM;
 
@@ -134,9 +127,9 @@ type
   private
     { Private declarations }
     // Interface de conexão do ORMBr
-    oConn: IDBConnection;
+    FConn: IDBConnection;
     // Interface para acontrolar o DataSet
-    oContainerClient: IContainerDataSet<Tclient>;
+    FContainerClient: IContainerDataSet<Tclient>;
 public
     { Public declarations }
   end;
@@ -153,7 +146,7 @@ uses
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  oContainerClient.ApplyUpdates(0);
+  FContainerClient.ApplyUpdates(0);
 end;
 
 procedure TForm3.FDClientAfterInsert(DataSet: TDataSet);
@@ -166,12 +159,58 @@ end;
 procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
-  oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
+  FConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
   // Client
-  oContainerClient := TContainerFDMemTable<Tclient>.Create(oConn, FDClient);
+  FContainerClient := TContainerFDMemTable<Tclient>.Create(oConn, FDClient);
 
-  oContainerClient.Open;
+  FContainerClient.Open;
 end;
 
 end.
 ```
+
+```Delphi
+...
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+  // Instância da class de conexão via FireDAC
+  FConn := TFactoryFireDAC.Create(FDConnection1, dnMySQL);
+
+  FManager := TManagerDataSet.Create(oConn);
+  FConn.SetCommandMonitor(TCommandMonitor.GetInstance);
+  FManager.AddAdapter<Tmaster>(FDMaster, 3)
+          .AddAdapter<Tdetail, Tmaster>(FDDetail)
+          .AddAdapter<Tclient, Tmaster>(FDClient)
+          .AddAdapter<Tlookup>(FDLookup)
+          .AddLookupField<Tdetail, Tlookup>('fieldname',
+                                            'lookup_id',
+                                            'lookup_id',
+                                            'lookup_description',
+                                            'Descrição Lookup');
+  FManager.Open<Tmaster>;
+end;
+```
+
+## ✍️ License
+[![License](https://img.shields.io/badge/Licence-LGPL--3.0-blue.svg)](https://opensource.org/licenses/LGPL-3.0)
+
+## ⛏️ Contribuição
+
+Nossa equipe adoraria receber contribuições para este projeto open source. Se você tiver alguma ideia ou correção de bug, sinta-se à vontade para abrir uma issue ou enviar uma pull request.
+
+[![Issues](https://img.shields.io/badge/Issues-channel-orange)](https://github.com/HashLoad/ormbr/issues)
+
+Para enviar uma pull request, siga estas etapas:
+
+1. Faça um fork do projeto
+2. Crie uma nova branch (`git checkout -b minha-nova-funcionalidade`)
+3. Faça suas alterações e commit (`git commit -am 'Adicionando nova funcionalidade'`)
+4. Faça push da branch (`git push origin minha-nova-funcionalidade`)
+5. Abra uma pull request
+
+## 📬 Contato
+[![Telegram](https://img.shields.io/badge/Telegram-channel-blue)](https://t.me/hashload)
+
+## 💲 Doação
+[![Doação](https://img.shields.io/badge/PagSeguro-contribua-green)](https://pag.ae/bglQrWD)
