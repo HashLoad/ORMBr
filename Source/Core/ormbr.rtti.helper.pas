@@ -124,7 +124,7 @@ begin
     if TVarData(AValue).VType <= varNull then
       Self.SetValue(AInstance, TValue.From(Nullable<Double>.Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<Double>.Create(Currency(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<Double>.Create(Double(AValue))))
   else
   if ATypeInfo = TypeInfo(Nullable<Boolean>) then
     Self.SetValue(AInstance, TValue.From(Nullable<Boolean>.Create(AValue)))
