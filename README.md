@@ -18,6 +18,12 @@ por: Bárbara Ranieri
 ## 🏛 Delphi Versions
 Embarcadero Delphi XE e superior.
 
+## ⚙️ Instalação
+Instalação usando o [`boss install`]
+```sh
+boss install boss install "https://github.com/HashLoad/ormbr"
+```
+
 ## ⚠ Dependências
 
 :heavy_check_mark: [DBCBr Framework for Delphi](https://github.com/hashload/dbcbr)
@@ -27,9 +33,6 @@ Embarcadero Delphi XE e superior.
 :heavy_check_mark: [CQLBr Framework for Delphi/Lazarus](https://github.com/hashload/cqlbr)
 
 :heavy_check_mark: [JSONBr Framework for Delphi](https://github.com/hashload/jsonbr)
-
-## ⚙️ Instalação
-O ORMBr não precisa ser instalado, basta adicionar as units no path libriry do seu delphi e começar a usa-lo.
 
 ## ⚡️ Como usar
 ```Delphi
