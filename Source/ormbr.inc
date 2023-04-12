@@ -52,7 +52,8 @@
 
 {$IFDEF FMX}
   {$DEFINE HAS_FMX}
-{$ELSE}
+{$ENDIF}
+{$IFDEF VCL}
   {$DEFINE HAS_VCL}
 {$ENDIF}
 
