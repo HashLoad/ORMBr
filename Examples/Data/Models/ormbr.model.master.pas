@@ -24,7 +24,7 @@ type
 
   [Entity]
   [Table('master','')]
-  [PrimaryKey('master_id', AutoInc, NoSort, True, 'Chave primária')]
+  [PrimaryKey('master_id', AutoInc, SequenceInc, NoSort, True, 'Chave primária')]
   [Sequence('master')]
   [OrderBy('master_id')]
   Tmaster = class
@@ -116,7 +116,7 @@ begin
                               'ScopeOrderByID',
                               function: string
                               begin
-                                Result := 'master.master_id';
+                                Result := 'master.description';
                               end);
 end;
 

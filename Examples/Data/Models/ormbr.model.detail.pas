@@ -18,7 +18,7 @@ uses
 type
   [Entity]
   [Table('detail','')]
-  [PrimaryKey('detail_id', AutoInc, NoSort, True, 'Chave primária')]
+  [PrimaryKey('detail_id', AutoInc, SequenceInc, NoSort, True, 'Chave primária')]
   [Sequence('detail')]
   [AggregateField('AGGPRICE', 'SUM(PRICE)', taRightJustify, '#,###,##0.00')]
   Tdetail = class
