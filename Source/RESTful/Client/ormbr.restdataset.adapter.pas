@@ -25,7 +25,7 @@
   @abstract(Telagram : https://t.me/ormbr)
 }
 
-{$INCLUDE ..\ormbr.inc}
+{$INCLUDE ..\..\ormbr.inc}
 
 unit ormbr.restdataset.adapter;
 

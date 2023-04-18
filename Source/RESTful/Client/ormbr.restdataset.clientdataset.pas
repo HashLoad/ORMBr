@@ -27,7 +27,7 @@
   ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
-{$INCLUDE ..\ormbr.inc}
+{$INCLUDE ..\..\ormbr.inc}
 
 unit ormbr.restdataset.clientdataset;
 

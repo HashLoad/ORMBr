@@ -27,7 +27,7 @@
   ormbr Brasil é um ormbr simples e descomplicado para quem utiliza Delphi.
 }
 
-{$INCLUDE ..\ormbr.inc}
+{$INCLUDE ..\..\ormbr.inc}
 
 unit ormbr.restdataset.fdmemtable;
 

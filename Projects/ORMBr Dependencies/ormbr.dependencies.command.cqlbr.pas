@@ -30,19 +30,20 @@ begin
 end;
 
 function TORMBrDependenciesCommandCQLBr.UrlDownloadFile: string;
-var
-  version: string;
+//var
+//  version: string;
 begin
-  version := IfThen(FTag.IsEmpty, 'master', FTag);
-
-  if version = 'master' then
-    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
-  else
-  if version = 'develop' then
-    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
-  else
-    result := Format('https://github.com/HashLoad/CQLBr/archive/refs/tags/%s.zip',
-      [version])
+  result := FTag;
+//  version := IfThen(FTag.IsEmpty, 'master', FTag);
+//
+//  if version = 'master' then
+//    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
+//  else
+//  if version = 'develop' then
+//    result := 'https://github.com/HashLoad/CQLBr/archive/refs/heads/master.zip'
+//  else
+//    result := Format('https://github.com/HashLoad/CQLBr/archive/refs/tags/%s.zip',
+//      [version])
 end;
 
 function TORMBrDependenciesCommandCQLBr.ZipFileName: string;
