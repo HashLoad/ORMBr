@@ -24,7 +24,7 @@ implementation
 function TORMBrDependenciesCommandDBCBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\DBCBr\';
+    'Source\Dependencies\DBCBr\';
 
   ForceDirectories(result);
 end;

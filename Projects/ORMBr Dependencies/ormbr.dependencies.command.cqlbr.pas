@@ -24,7 +24,7 @@ implementation
 function TORMBrDependenciesCommandCQLBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\CQLBr\';
+    'Source\Dependencies\CQLBr\';
 
   ForceDirectories(result);
 end;

@@ -30,7 +30,6 @@ type
     function GetDBCVersion: string;
     function GetDBEVersion: string;
     function GetJSONVersion: string;
-    function GetRESTVersion: string;
 
     procedure log(AText: String);
     { Private declarations }
@@ -86,11 +85,6 @@ begin
   result := vlDependencies.Values['jsonbr'];
 end;
 
-function TfrmORMBrDependencies.GetRESTVersion: string;
-begin
-  result := vlDependencies.Values['restful'];
-end;
-
 procedure TfrmORMBrDependencies.InstallDependencies;
 var
   executor : IORMBrDependenciesExecutor;
@@ -102,7 +96,6 @@ begin
     .AddCommand(CommandDBCBr(GetDBCVersion))
     .AddCommand(CommandDBEBr(GetDBEVersion))
     .AddCommand(CommandJSONBr(GetJSONVersion))
-    .AddCommand(CommandRESTFul(GetRESTVersion))
     .Execute;
 end;
 

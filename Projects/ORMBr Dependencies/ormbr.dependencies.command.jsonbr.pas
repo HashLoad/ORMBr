@@ -24,7 +24,7 @@ implementation
 function TORMBrDependenciesCommandJSONBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\JSONBr\';
+    'Source\Dependencies\JSONBr\';
 
   ForceDirectories(result);
 end;
