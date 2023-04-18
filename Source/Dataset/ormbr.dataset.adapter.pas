@@ -276,7 +276,7 @@ begin
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (LAssociation.Multiplicity in [OneToOne, ManyToOne]) then
+    if not (LAssociation.Multiplicity in [TMultiplicity.OneToOne, TMultiplicity.ManyToOne]) then
       Continue;
     // Checa se o campo que recebeu a alteração, é um campo de associação
     // Se for é feito um novo select para atualizar a propriedade associada.

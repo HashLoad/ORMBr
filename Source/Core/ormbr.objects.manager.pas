@@ -125,10 +125,7 @@ begin
   FConnection := AConnection;
 
   FObjectInternal := M.Create;
-  // ROTINA NÃO FINALIZADA DEU MUITO PROBLEMA, QUEM SABE UM DIA VOLTO A OLHAR
-  // Mapeamento dos campos Lazy Load
-//  TMappingExplorer.GetMappingLazy(TObject(FObjectInternal).ClassType);
-  // Fabrica de comandos SQL
+   // Fabrica de comandos SQL
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
                                                   AConnection.GetDriverName);
@@ -136,7 +133,6 @@ end;
 
 destructor TObjectManager<M>.Destroy;
 begin
-//  FExplorer := nil;
   FDMLCommandFactory.Free;
   FObjectInternal.Free;
   inherited;
@@ -169,13 +165,15 @@ begin
        Continue;
      if LAssociation.Lazy then
        Continue;
-     if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+     if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
+                                      TMultiplicity.ManyToOne] then
         Result := FDMLCommandFactory
                     .GeneratorSelectAssociation(AObject,
                                                 FObjectInternal.ClassType,
                                                 LAssociation)
      else
-     if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+     if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
+                                      TMultiplicity.ManyToMany] then
         Result := FDMLCommandFactory
                     .GeneratorSelectAssociation(AObject,
                                                 FObjectInternal.ClassType,
@@ -191,7 +189,10 @@ end;
 function TObjectManager<M>.SelectInternalWhere(const AWhere: string;
   const AOrderBy: string): string;
 begin
-  Result := FDMLCommandFactory.GeneratorSelectWhere(M, AWhere, AOrderBy, FPageSize);
+  Result := FDMLCommandFactory.GeneratorSelectWhere(M,
+                                                    AWhere,
+                                                    AOrderBy,
+                                                    FPageSize);
 end;
 
 procedure TObjectManager<M>.FillAssociation(const AObject: M);
@@ -212,10 +213,12 @@ begin
     begin
        if LAssociation.Lazy then
          Continue;
-       if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+       if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
+                                        TMultiplicity.ManyToOne] then
           ExecuteOneToOne(AObject, LAssociation.PropertyRtti, LAssociation)
        else
-       if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+       if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
+                                        TMultiplicity.ManyToMany] then
           ExecuteOneToMany(AObject, LAssociation.PropertyRtti, LAssociation);
     end;
   end;
@@ -239,10 +242,12 @@ begin
       Continue;
     if Pos(LAssociation.ClassNameRef, AObject.ClassName) = 0 then
       Continue;
-    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
+                                     TMultiplicity.ManyToOne] then
       ExecuteOneToOne(AOwner, LAssociation.PropertyRtti, LAssociation)
     else
-    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
+                                     TMultiplicity.ManyToMany] then
       ExecuteOneToMany(AOwner, LAssociation.PropertyRtti, LAssociation);
   end;
 end;
@@ -255,7 +260,8 @@ var
 begin
   LResultSet := FDMLCommandFactory
                   .GeneratorSelectOneToOne(AObject,
-                                           AProperty.PropertyType.AsInstance.MetaclassType,
+                                           AProperty.PropertyType
+                                                    .AsInstance.MetaclassType,
                                            AAssociation);
   try
     while LResultSet.NotEof do
@@ -263,7 +269,9 @@ begin
       LObjectValue := AProperty.GetNullableValue(AObject).AsObject;
       if LObjectValue = nil then
       begin
-        LObjectValue := AProperty.PropertyType.AsInstance.MetaclassType.Create;
+        LObjectValue := AProperty.PropertyType
+                                 .AsInstance
+                                 .MetaclassType.Create;
         AProperty.SetValue(AObject, TValue.from<TObject>(LObjectValue));
       end;
       // Preenche o objeto com os dados do ResultSet
@@ -288,7 +296,8 @@ begin
   LPropertyType := AProperty.GetTypeValue(LPropertyType);
   LResultSet := FDMLCommandFactory
                   .GeneratorSelectOneToMany(AObject,
-                                            LPropertyType.AsInstance.MetaclassType,
+                                            LPropertyType.AsInstance
+                                                         .MetaclassType,
                                             AAssociation);
   try
     while LResultSet.NotEof do
@@ -328,7 +337,9 @@ end;
 function TObjectManager<M>.NextPacket(const APageSize,
   APageNext: Integer): IDBResultSet;
 begin
-  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M), APageSize, APageNext);
+  Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M),
+                                                   APageSize,
+                                                   APageNext);
 end;
 
 function TObjectManager<M>.NextPacketList: TObjectList<M>;

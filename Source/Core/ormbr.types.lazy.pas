@@ -93,9 +93,7 @@ begin
   begin
     LTypeInfo := TypeInfo(T);
     if LTypeInfo.Kind = tkClass then
-    begin
       PObject(@FValue)^.Free();
-    end;
   end;
   inherited;
 end;

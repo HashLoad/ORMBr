@@ -11,16 +11,19 @@ uses
   /// orm 
   ormbr.types.blob,
   ormbr.types.lazy, 
-  ormbr.types.mapping, 
-  ormbr.types.nullable, 
-  ormbr.mapping.classes, 
-  ormbr.mapping.register, 
-  ormbr.mapping.attributes; 
+  dbcbr.types.mapping,
+  ormbr.types.nullable,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
   [Table('emailcontato', '')]
-  [PrimaryKey('id', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('id', TAutoIncType.NotInc,
+                    TGeneratorType.NoneInc,
+                    TSortingOrder.NoSort,
+                    False, 'Chave primária')]
   Temailcontato = class
   private
     { Private declarations } 
@@ -46,7 +49,7 @@ type
     property endereco: Nullable<String> read Fendereco write Fendereco;
 
     [Column('contato_id', ftInteger)]
-    [ForeignKey('fk_emailcontato_contato', 'contato_id', 'contato', 'id', Cascade, Cascade)]
+    [ForeignKey('fk_emailcontato_contato', 'contato_id', 'contato', 'id', TRuleAction.Cascade, TRuleAction.Cascade)]
     [Dictionary('contato_id', 'Mensagem de validação', '', '', '', taCenter)]
     property contato_id: Nullable<Integer> read Fcontato_id write Fcontato_id;
   end;

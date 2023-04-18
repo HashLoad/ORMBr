@@ -84,15 +84,19 @@ begin
         LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
         if LPrimaryKey = nil then
           raise Exception.Create(cMESSAGEPKNOTFOUND);
+          { TODO -oISAQUE -cREVISÃO :
+            Se você sentiu falta desse trecho de código, entre em contato,
+            precisamos discutir sobre ele, pois ele quebra regras de SOLID
+            e está em um lugar genérico o qual não atende a todos os bancos. }
 
-        if LPrimaryKey.GuidIncrement then
-        begin
-          AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty
-                                                         .GetNullableValue(AObject)
-                                                         .AsType<string>.Trim(['{', '}'])]))
-                                                         .ToByteArray(TEndian.Big);
-          Continue;
-        end;
+//        if LPrimaryKey.GuidIncrement then
+//        begin
+//          AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty
+//                                                         .GetNullableValue(AObject)
+//                                                         .AsType<string>.Trim(['{', '}'])]))
+//                                                         .ToByteArray(TEndian.Big);
+//          Continue;
+//        end;
       end;
       if DataType = ftGuid then
         Value := LColumn.ColumnProperty.GetNullableValue(AObject).AsType<TGuid>.ToString

@@ -29,7 +29,7 @@ uses
   FireDAC.Phys.IBDef, FireDAC.Phys.IB, FireDAC.Phys.SQLite, FireDAC.Phys.IBBase,
   Data.DBXMSSQL, Data.FMTBcd, Data.SqlExpr, FireDAC.Comp.ScriptCommands,
   FireDAC.Stan.Util, FireDAC.Comp.Script, FireDAC.Phys.Oracle,
-  FireDAC.Phys.OracleDef, FMX.Memo.Types, FireDAC.Phys.SQLiteWrapper.Stat;
+  FireDAC.Phys.OracleDef, FMX.Memo.Types;
 
 type
   TForm4 = class(TForm)

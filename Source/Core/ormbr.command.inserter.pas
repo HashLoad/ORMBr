@@ -45,7 +45,8 @@ uses
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
   dbcbr.rtti.helper,
-  dbcbr.mapping.explorer;
+  dbcbr.mapping.explorer,
+  dbcbr.types.mapping;
 
 type
   TCommandInserter = class(TDMLCommandAbstract)
@@ -84,7 +85,8 @@ var
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyMapping;
   LBooleanValue: Integer;
-  LGuid: String;
+  LGuid: TGUID;
+  LGuidString: String;
 begin
   FResultCommand := FGeneratorCommand.GeneratorInsert(AObject);
   Result := FResultCommand;
@@ -109,7 +111,7 @@ begin
       begin
         if LPrimaryKey.AutoIncrement then
         begin
-          if LPrimaryKey.SequenceIncrement then
+          if LPrimaryKey.GeneratorType = TGeneratorType.SequenceInc then
           begin
             FDMLAutoInc.Sequence := TMappingExplorer
                                     .GetMappingSequence(AObject.ClassType);
@@ -121,8 +123,30 @@ begin
                                               .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
           end
           else
-          if LPrimaryKey.GuidIncrement then
-            LColumn.ColumnProperty.SetValue(AObject, TGuid.NewGuid.ToString);
+          if LPrimaryKey.GeneratorType = TGeneratorType.Guid32Inc then
+          begin
+            CreateGUID(LGuid);
+            LGuidString := GUIDToString(LGuid);
+            LGuidString := ReplaceStr(LGuidString, '-', '');
+            LGuidString := ReplaceStr(LGuidString, '{', '');
+            LGuidString := ReplaceStr(LGuidString, '}', '');
+            LColumn.ColumnProperty.SetValue(AObject, LGuidString);
+          end
+          else
+          if LPrimaryKey.GeneratorType = TGeneratorType.Guid36Inc then
+          begin
+            CreateGUID(LGuid);
+            LGuidString := GUIDToString(LGuid);
+            LGuidString := ReplaceStr(LGuidString, '-', '');
+            LColumn.ColumnProperty.SetValue(AObject, LGuidString);
+          end
+          else
+          if LPrimaryKey.GeneratorType = TGeneratorType.Guid38Inc then
+          begin
+            CreateGUID(LGuid);
+            LGuidString := GUIDToString(LGuid);
+            LColumn.ColumnProperty.SetValue(AObject, LGuidString);
+          end
         end;
       end;
     end;
@@ -134,14 +158,19 @@ begin
       ParamType := ptInput;
       if LColumn.FieldType = ftGuid then
       begin
-        LGuid := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
-        AsGuid  := StringToGUID(LGuid);
-      end
-      else
-        Value := GetParamValue(AObject, LColumn.ColumnProperty, LColumn.FieldType);
+        LGuidString := GetParamValue(AObject,
+                                     LColumn.ColumnProperty,
+                                     LColumn.FieldType);
+        AsGuid := StringToGUID(LGuidString);
+        Continue;
+      end;
+      Value := GetParamValue(AObject,
+                             LColumn.ColumnProperty,
+                             LColumn.FieldType);
 
+      // Type ftBoolean não é verificado para o(s) banco(s) abaixo
       if FConnection.GetDriverName = dnPostgreSQL then
-	    Continue;
+	      Continue;
 
       // Tratamento para o tipo ftBoolean nativo, indo como Integer
       // para gravar no banco.

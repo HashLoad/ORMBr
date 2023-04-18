@@ -38,11 +38,11 @@ uses
   Generics.Collections,
   // ORMBr
   {$IFDEF DRIVERRESTFUL}
+    ormbr.restfactory.interfaces,
     ormbr.restobjectset.adapter,
-    ormbr.client.interfaces,
   {$ELSE}
-    ormbr.objectset.adapter,
     dbebr.factory.interfaces,
+    ormbr.objectset.adapter,
   {$ENDIF}
   ormbr.objectset.base.adapter;
 
@@ -59,7 +59,11 @@ type
   end;
   // Lista de Container
   TRepositoryList = TObjectDictionary<string, TRepository>;
-  IMOConnection = {$IFDEF DRIVERRESTFUL}IRESTConnection{$ELSE}IDBConnection{$ENDIF};
+  {$IFDEF DRIVERRESTFUL}
+    IMOConnection = IRESTConnection
+  {$ELSE}
+    IMOConnection = IDBConnection
+  {$ENDIF};
 
   // TManagerObjectSet
   TManagerObjectSet = class

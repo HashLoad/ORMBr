@@ -406,17 +406,22 @@ begin
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
       if TVarData(AID).VType = varInteger then
         Result := Result + LColumnName + ' = ' + IntToStr(AID)
-      else
-      begin
-        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
-        begin
-          LID := AID;
-          LID := LID.Trim(['{', '}']);
-          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
-        end
-        else
-          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
-      end;
+        { TODO -oISAQUE -cREVISÃO :
+          Se você sentiu falta desse trecho de código, entre em contato,
+          precisamos discutir sobre ele, pois ele quebra regras de SOLID
+          e está em um lugar genérico o qual não atende a todos os bancos. }
+
+//      else
+//      begin
+//        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
+//        begin
+//          LID := AID;
+//          LID := LID.Trim(['{', '}']);
+//          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
+//        end
+//        else
+//          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+//      end;
     end;
   end;
 end;
@@ -519,28 +524,28 @@ begin
       begin
         LJoinExist.Add(LJoin.RefTableName);
         // Join Inner, Left, Right, Full
-        if LJoin.Join = InnerJoin then
+        if LJoin.Join = TJoin.InnerJoin then
           ACriteria.InnerJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = LeftJoin then
+        if LJoin.Join = TJoin.LeftJoin then
           ACriteria.LeftJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = RightJoin then
+        if LJoin.Join = TJoin.RightJoin then
           ACriteria.RightJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = FullJoin then
+        if LJoin.Join = TJoin.FullJoin then
           ACriteria.FullJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +

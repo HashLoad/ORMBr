@@ -23,7 +23,10 @@ type
 
   [Entity]
   [Table('master','')]
-  [PrimaryKey('master_id', AutoInc, SequenceInc, NoSort, True, 'Chave primária')]
+  [PrimaryKey('master_id', TAutoIncType.AutoInc,
+                           TGeneratorType.SequenceInc,
+                           TSortingOrder.NoSort,
+                           True, 'Chave primária')]
   [Sequence('seq_master')]
   [OrderBy('master_id')]
   Tmaster = class
@@ -47,7 +50,7 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('master_id', ftInteger)]
     [Dictionary('master_id','Mensagem de validação','1','','',taCenter)]
     property master_id: Integer read Fmaster_id write Fmaster_id;
@@ -56,25 +59,25 @@ type
     [Dictionary('description','Mensagem de validação','','','',taLeftJustify)]
     property description: Nullable<String> read Fdescription write Fdescription;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('updatedate', ftDate)]
     [Dictionary('updatedate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
     property updatedate: TDate read Fupdatedate write Fupdatedate;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('registerdate', ftDate)]
     [Dictionary('registerdate','Mensagem de validação','Date','','!##/##/####;1;_',taCenter)]
     property registerdate: TDateTime read Fregisterdate write Fregisterdate;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('client_id', ftInteger)]
     [ForeignKey('FK_IDCLIENT', 'client_id', 'client', 'client_id')]
     [Dictionary('client_id','Mensagem de validação','1','','',taCenter)]
     property client_id: Integer read Fclient_id write Fclient_id;
 
-    [Restrictions([NoInsert, NoUpdate])]
+    [Restrictions([TRestriction.NoInsert, TRestriction.NoUpdate])]
     [Column('aliascollumn', ftString, 60)]
-    [JoinColumn('client_id', 'client', 'client_id', 'client_name', InnerJoin, 'aliascollumn', 'aliastable')]
+    [JoinColumn('client_id', 'client', 'client_id', 'client_name', TJoin.InnerJoin, 'aliascollumn', 'aliastable')]
     [Dictionary('Nome do Cliente', '')]
     property client_name: string read fclient_name write fclient_name;
 
@@ -93,14 +96,17 @@ type
 //    [Enumeration(TEnumType.etBoolean, '0, 1')]
 //    property Inativo: Boolean read FInativo write FInativo;
 
-    [Association(OneToOne, 'client_id', 'client', 'client_id')]
+    [Association(TMultiplicity.OneToOne, 'client_id', 'client', 'client_id')]
     property client: Tclient read Fclient write Fclient;
 
-    [Association(OneToMany, 'master_id', 'detail', 'master_id')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+    [Association(TMultiplicity.OneToMany, 'master_id', 'detail', 'master_id')]
+    [CascadeActions([TCascadeAction.CascadeAutoInc,
+                     TCascadeAction.CascadeInsert,
+                     TCascadeAction.CascadeUpdate,
+                     TCascadeAction.CascadeDelete])]
     property detail: TObjectList<Tdetail> read Fdetail write Fdetail;
 
-    [Restrictions([NoInsert, NoUpdate])]
+    [Restrictions([TRestriction.NoInsert, TRestriction.NoUpdate])]
     property total: Double read GetTotal;
   end;
 

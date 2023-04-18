@@ -315,10 +315,12 @@ begin
     begin
       if LAssociation = nil then
         Continue;
-      if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+      if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
+                                       TMultiplicity.ManyToOne] then
         ExecuteOneToOne(AObject, LProperty, ADatasetBase)
       else
-      if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+      if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
+                                       TMultiplicity.ManyToMany] then
         ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
     end;
   end;
@@ -749,7 +751,7 @@ begin
     if not LForeignKey.FromColumns.Contains(AColumnsNameRef) then
       Continue;
 
-    if LForeignKey.RuleUpdate = Cascade then
+    if LForeignKey.RuleUpdate = TRuleAction.Cascade then
       Exit(True);
   end;
 end;
@@ -849,7 +851,7 @@ begin
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+    if not (TCascadeAction.CascadeAutoInc in LAssociation.CascadeActions) then
       Continue;
     LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
     if LDataSetChild <> nil then
@@ -923,7 +925,7 @@ begin
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+    if not (TCascadeAction.CascadeAutoInc in LAssociation.CascadeActions) then
       Continue;
     for LFor := 0 to LAssociation.ColumnsName.Count -1 do
     begin
@@ -969,19 +971,19 @@ begin
     if LField = nil then
       Continue;
 
-    if onSetText in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onSetText in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnSetText) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnSetText()', LField.FieldName]);
 
-    if onGetText in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onGetText in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnGetText) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnGetText()', LField.FieldName]);
 
-    if onChange in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onChange in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnChange) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnChange()', LField.FieldName]);
 
-    if onValidate in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onValidate in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnValidate) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnValidate()', LField.FieldName]);
   end;
