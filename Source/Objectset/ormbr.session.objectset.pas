@@ -39,7 +39,7 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.bind,
-  ormbr.objects.manager,
+  ormbr.command.executor,
   ormbr.session.abstract,
   dbebr.factory.interfaces;
 
@@ -68,47 +68,43 @@ constructor TSessionObjectSet<M>.Create(const AConnection: IDBConnection; const 
 begin
   inherited Create(APageSize);
   FConnection := AConnection;
-  FManager := TObjectManager<M>.Create(Self, AConnection, APageSize);
+  FCommandExecutor := TSQLCommandExecutor<M>.Create(Self, AConnection, APageSize);
 end;
 
 procedure TSessionObjectSet<M>.LoadLazy(const AOwner, AObject: TObject);
 begin
   inherited;
-  FManager.LoadLazy(AOwner, AObject);
+  FCommandExecutor.LoadLazy(AOwner, AObject);
 end;
 
 function TSessionObjectSet<M>.NextPacketList(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): TObjectList<M>;
+var
+ LDBResultSet: IDBResultSet;
 begin
   inherited;
   Result := nil;
   if FFetchingRecords then
     Exit;
-  Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-  FFetchingRecords := True;
+  LDBResultSet := FCommandExecutor.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+  Result := PopularObjectSet(LDBResultSet);
 end;
 
 function TSessionObjectSet<M>.NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
 begin
   inherited;
   Result := nil;
   if FFetchingRecords then
     Exit;
-  Result := FManager.NextPacketList(APageSize, APageNext);
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-  FFetchingRecords := True;
+  LDBResultSet := FCommandExecutor.NextPacketList(APageSize, APageNext);
+  Result := PopularObjectSet(LDBResultSet);
 end;
 
 destructor TSessionObjectSet<M>.Destroy;
 begin
-  FManager.Free;
+  FCommandExecutor.Free;
   inherited;
 end;
 
@@ -119,9 +115,9 @@ begin
     Exit;
   FPageNext := FPageNext + FPageSize;
   if FFindWhereUsed then
-    FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+    FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
   else
-    FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
+    FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
 
   /// <summary>
   ///    if AObjectList = nil then
@@ -130,11 +126,13 @@ begin
   ///      Exit;
   ///    FFetchingRecords := True;
   ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-  ///  método NextPacketList() dentro do FManager.
+  ///  método NextPacketList() dentro do FCommandExecutor.
   /// </summary>
 end;
 
 function TSessionObjectSet<M>.NextPacketList: TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
 begin
   inherited;
   Result := nil;
@@ -142,15 +140,10 @@ begin
     Exit;
   FPageNext := FPageNext + FPageSize;
   if FFindWhereUsed then
-    Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+    LDBResultSet := FCommandExecutor.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
   else
-    Result := FManager.NextPacketList(FPageSize, FPageNext);
-
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-  FFetchingRecords := True;
+    LDBResultSet := FCommandExecutor.NextPacketList(FPageSize, FPageNext);
+  Result := PopularObjectSet(LDBResultSet);
 end;
 
 end.

@@ -24,7 +24,7 @@
   @abstract(Telagram : https://t.me/ormbr)
 }
 
-unit ormbr.objects.manager.abstract;
+unit ormbr.command.executor.abstract;
 
 interface
 
@@ -37,10 +37,10 @@ uses
   dbcbr.mapping.classes;
 
 type
-  TObjectManagerAbstract<M: class, constructor> = class abstract
+  TSQLCommandExecutorAbstract<M: class, constructor> = class abstract
   protected
     // Instancia a class que mapea todas as class do tipo Entity
-    function FindSQLInternal(const ASQL: String): TObjectList<M>; virtual; abstract;
+    function FindSQLInternal(const ASQL: String): IDBResultSet; virtual; abstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); virtual; abstract;
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
@@ -59,34 +59,36 @@ type
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
     function SelectInternalAssociation(const AObject: TObject): String; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
-    function Find: TObjectList<M>; overload; virtual; abstract;
+    function Find: IDBResultSet; overload; virtual; abstract;
     function Find(const AID: Variant): M; overload; virtual; abstract;
     function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; virtual; abstract;
+      const AOrderBy: string = ''): IDBResultSet; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function NextPacket: IDBResultSet; overload; virtual; abstract;
     function NextPacket(const APageSize,
       APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function NextPacket(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
-    function NextPacketList: TObjectList<M>; overload; virtual; abstract;
+    function NextPacketList: IDBResultSet; overload; virtual; abstract;
     function NextPacketList(const APageSize,
-      APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+      APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function NextPacketList(const AWhere, AOrderBy: String;
-      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     procedure NextPacketList(const AObjectList: TObjectList<M>;
       const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure NextPacketList(const AObjectList: TObjectList<M>;
       const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual; abstract;
+    procedure FillAssociation(const AObject: M); virtual; abstract;
+    procedure FillAssociationLazy(const AOwner, AObject: TObject); virtual; abstract;
   end;
 
 implementation
 
 { TObjectManagerAbstract<M> }
 
-constructor TObjectManagerAbstract<M>.Create(const AOwner: TObject;
+constructor TSQLCommandExecutorAbstract<M>.Create(const AOwner: TObject;
   const AConnection: IDBConnection; const APageSize: Integer);
 begin
   // Popula todas classes modelos na lista

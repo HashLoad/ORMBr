@@ -120,9 +120,9 @@ begin
   MasterStringGridDefinitions;
   DetailStringGridDefinitions;
 
-  FConn := TFactoryFireDAC.Create(FDConnection1, dnMySQL);
-  FConn.SetCommandMonitor(TCommandMonitor.GetInstance);
-
+  FConn := TFactoryFireDAC.Create(FDConnection1,
+                                  dnMySQL,
+                                  TCommandMonitor.GetInstance);
   FManager := TManagerObjectSet.Create(FConn);
   FManager.OwnerNestedList := True;
   FManager

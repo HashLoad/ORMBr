@@ -119,7 +119,7 @@ var
   LDBResultSet: IDBResultSet;
 begin
   Result := 0;
-  LDBResultSet := FConnection.ExecuteSQL(ASQL);
+  LDBResultSet := FConnection.CreateResultSet(ASQL);
   try
     if LDBResultSet.RecordCount > 0 then
       Result := VarAsType(LDBResultSet.GetFieldValue(0), varInt64);

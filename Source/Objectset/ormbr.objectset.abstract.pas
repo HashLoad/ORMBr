@@ -36,9 +36,6 @@ uses
   ormbr.session.abstract;
 
 type
-  /// <summary>
-  /// M - Object M
-  /// </summary>
   TObjectSetAbstract<M: class, constructor> = class abstract
   public
     function ExistSequence: Boolean; virtual; abstract;

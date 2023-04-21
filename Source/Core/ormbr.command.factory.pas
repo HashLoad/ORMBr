@@ -180,7 +180,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
@@ -190,7 +190,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelect(ASQL: String;
@@ -201,7 +201,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(ASQL);
+  Result := FConnection.CreateResultSet(ASQL);
 end;
 
 function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass;
@@ -212,7 +212,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectAssociation(const AOwner: TObject;
@@ -228,7 +228,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
@@ -238,7 +238,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorSelectWhere(const AClass: TClass;
@@ -255,7 +255,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket: IDBResultSet;
@@ -264,7 +264,7 @@ begin
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
     FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
-  Result := FConnection.ExecuteSQL(FDMLCommand);
+  Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 procedure TDMLCommandFactory.GeneratorUpdate(const AObject: TObject;

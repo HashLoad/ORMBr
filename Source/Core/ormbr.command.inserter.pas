@@ -107,9 +107,11 @@ begin
     // Verifica se existe PK, pois autoinc só é usado se existir.
     if LPrimaryKey <> nil then
     begin
-      if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
+      // Verifica se o AutoInc deve ser gerado
+      if LPrimaryKey.AutoIncrement then
       begin
-        if LPrimaryKey.AutoIncrement then
+        // Pesquisa se a LColumn foi definida como PK
+        if LPrimaryKey.Columns.IndexOf(LColumn.ColumnName) > -1 then
         begin
           if LPrimaryKey.GeneratorType = TGeneratorType.SequenceInc then
           begin

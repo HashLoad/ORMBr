@@ -24,7 +24,7 @@
   @abstract(Telagram : https://t.me/ormbr)
 }
 
-unit ormbr.objects.manager;
+unit ormbr.command.executor;
 
 interface
 
@@ -37,19 +37,17 @@ uses
   Generics.Collections,
   /// ormbr
   ormbr.command.factory,
-  ormbr.objects.manager.abstract,
+  ormbr.command.executor.abstract,
   dbcbr.types.mapping,
   dbcbr.mapping.classes,
   dbebr.factory.interfaces,
   dbcbr.mapping.explorer;
 
 type
-  TObjectManager<M: class, constructor> = class sealed(TObjectManagerAbstract<M>)
+  TSQLCommandExecutor<M: class, constructor> = class sealed(TSQLCommandExecutorAbstract<M>)
   private
     FOwner: TObject;
     FObjectInternal: M;
-    procedure FillAssociation(const AObject: M);
-    procedure FillAssociationLazy(const AOwner, AObject: TObject);
   protected
     FConnection: IDBConnection;
     // Fábrica de comandos a serem executados
@@ -60,7 +58,7 @@ type
       AAssociation: TAssociationMapping); override;
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
-    function FindSQLInternal(const ASQL: String): TObjectList<M>; override;
+    function FindSQLInternal(const ASQL: String): IDBResultSet; override;
   public
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const APageSize: Integer); override;
@@ -76,11 +74,13 @@ type
     procedure NextPacketList(const AObjectList: TObjectList<M>;
       const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer); overload; override;
-    function NextPacketList: TObjectList<M>; overload; override;
+    procedure FillAssociation(const AObject: M); override;
+    procedure FillAssociationLazy(const AOwner, AObject: TObject); override;
+    function NextPacketList: IDBResultSet; overload; override;
     function NextPacketList(const APageSize,
-      APageNext: Integer): TObjectList<M>; overload; override;
+      APageNext: Integer): IDBResultSet; overload; override;
     function NextPacketList(const AWhere, AOrderBy: String;
-      const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+      const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     // Functions
     function GetDMLCommand: string; override;
     function ExistSequence: Boolean; override;
@@ -97,10 +97,10 @@ type
     function NextPacket(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     // ObjectSet
-    function Find: TObjectList<M>; overload; override;
+    function Find: IDBResultSet; overload; override;
     function Find(const AID: Variant): M; overload; override;
     function FindWhere(const AWhere: string;
-      const AOrderBy: string): TObjectList<M>; override;
+      const AOrderBy: string): IDBResultSet; override;
   end;
 
 implementation
@@ -113,7 +113,7 @@ uses
 
 { TObjectManager<M> }
 
-constructor TObjectManager<M>.Create(const AOwner: TObject;
+constructor TSQLCommandExecutor<M>.Create(const AOwner: TObject;
   const AConnection: IDBConnection; const APageSize: Integer);
 begin
   inherited;
@@ -131,24 +131,24 @@ begin
                                                   AConnection.GetDriverName);
 end;
 
-destructor TObjectManager<M>.Destroy;
+destructor TSQLCommandExecutor<M>.Destroy;
 begin
   FDMLCommandFactory.Free;
   FObjectInternal.Free;
   inherited;
 end;
 
-procedure TObjectManager<M>.DeleteInternal(const AObject: M);
+procedure TSQLCommandExecutor<M>.DeleteInternal(const AObject: M);
 begin
   FDMLCommandFactory.GeneratorDelete(AObject);
 end;
 
-function TObjectManager<M>.SelectInternalAll: IDBResultSet;
+function TSQLCommandExecutor<M>.SelectInternalAll: IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorSelectAll(M, FPageSize);
 end;
 
-function TObjectManager<M>.SelectInternalAssociation(
+function TSQLCommandExecutor<M>.SelectInternalAssociation(
   const AObject: TObject): String;
 var
   LAssociationList: TAssociationMappingList;
@@ -181,12 +181,12 @@ begin
   end;
 end;
 
-function TObjectManager<M>.SelectInternalID(const AID: Variant): IDBResultSet;
+function TSQLCommandExecutor<M>.SelectInternalID(const AID: Variant): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorSelectID(M, AID);
 end;
 
-function TObjectManager<M>.SelectInternalWhere(const AWhere: string;
+function TSQLCommandExecutor<M>.SelectInternalWhere(const AWhere: string;
   const AOrderBy: string): string;
 begin
   Result := FDMLCommandFactory.GeneratorSelectWhere(M,
@@ -195,15 +195,15 @@ begin
                                                     FPageSize);
 end;
 
-procedure TObjectManager<M>.FillAssociation(const AObject: M);
+procedure TSQLCommandExecutor<M>.FillAssociation(const AObject: M);
 var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  // Se o driver selecionado for do tipo de banco NoSQL,
-  // o atributo Association deve ser ignorado.
+  // Em bancos NoSQL o atributo Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
+
   if Assigned(AObject) then
   begin
     LAssociationList := TMappingExplorer.GetMappingAssociation(AObject.ClassType);
@@ -224,15 +224,15 @@ begin
   end;
 end;
 
-procedure TObjectManager<M>.FillAssociationLazy(const AOwner, AObject: TObject);
+procedure TSQLCommandExecutor<M>.FillAssociationLazy(const AOwner, AObject: TObject);
 var
   LAssociationList: TAssociationMappingList;
   LAssociation: TAssociationMapping;
 begin
-  // Se o driver selecionado for do tipo de banco NoSQL, o atributo
-  // Association deve ser ignorado.
+  // Em bancos NoSQL o atributo Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
+
   LAssociationList := TMappingExplorer.GetMappingAssociation(AOwner.ClassType);
   if LAssociationList = nil then
     Exit;
@@ -252,7 +252,7 @@ begin
   end;
 end;
 
-procedure TObjectManager<M>.ExecuteOneToOne(AObject: TObject;
+procedure TSQLCommandExecutor<M>.ExecuteOneToOne(AObject: TObject;
   AProperty: TRttiProperty; AAssociation: TAssociationMapping);
 var
   LResultSet: IDBResultSet;
@@ -275,7 +275,7 @@ begin
         AProperty.SetValue(AObject, TValue.from<TObject>(LObjectValue));
       end;
       // Preenche o objeto com os dados do ResultSet
-      TBind.Instance.SetFieldToProperty(LResultSet, LObjectValue);
+      Bind.SetFieldToProperty(LResultSet, LObjectValue);
       // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectValue);
     end;
@@ -284,7 +284,7 @@ begin
   end;
 end;
 
-procedure TObjectManager<M>.ExecuteOneToMany(AObject: TObject;
+procedure TSQLCommandExecutor<M>.ExecuteOneToMany(AObject: TObject;
   AProperty: TRttiProperty; AAssociation: TAssociationMapping);
 var
   LPropertyType: TRttiType;
@@ -306,7 +306,7 @@ begin
       LObjectCreate := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectCreate.MethodCall('Create', []);
       // Popula o objeto com os dados do ResultSet
-      TBind.Instance.SetFieldToProperty(LResultSet, LObjectCreate);
+      Bind.SetFieldToProperty(LResultSet, LObjectCreate);
       // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(LObjectCreate);
       // Adiciona o objeto a lista
@@ -319,22 +319,22 @@ begin
   end;
 end;
 
-function TObjectManager<M>.ExistSequence: Boolean;
+function TSQLCommandExecutor<M>.ExistSequence: Boolean;
 begin
   Result := FDMLCommandFactory.ExistSequence;
 end;
 
-function TObjectManager<M>.GetDMLCommand: string;
+function TSQLCommandExecutor<M>.GetDMLCommand: string;
 begin
   Result := FDMLCommandFactory.GetDMLCommand;
 end;
 
-function TObjectManager<M>.NextPacket: IDBResultSet;
+function TSQLCommandExecutor<M>.NextPacket: IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorNextPacket;
 end;
 
-function TObjectManager<M>.NextPacket(const APageSize,
+function TSQLCommandExecutor<M>.NextPacket(const APageSize,
   APageNext: Integer): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorNextPacket(TClass(M),
@@ -342,29 +342,12 @@ begin
                                                    APageNext);
 end;
 
-function TObjectManager<M>.NextPacketList: TObjectList<M>;
-var
- LResultSet: IDBResultSet;
- LObjectList: TObjectList<M>;
+function TSQLCommandExecutor<M>.NextPacketList: IDBResultSet;
 begin
-  LObjectList := TObjectList<M>.Create;
-  LResultSet := NextPacket;
-  try
-    while LResultSet.NotEof do
-    begin
-      LObjectList.Add(M.Create);
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      // Alimenta registros das associações existentes 1:1 ou 1:N
-      FillAssociation(LObjectList.Last);
-    end;
-    Result := LObjectList;
-  finally
-    LResultSet.Close;
-  end;
+  Result := NextPacket;
 end;
 
-function TObjectManager<M>.NextPacket(const AWhere, AOrderBy: String;
+function TSQLCommandExecutor<M>.NextPacket(const AWhere, AOrderBy: String;
   const APageSize, APageNext: Integer): IDBResultSet;
 begin
   Result := FDMLCommandFactory
@@ -375,30 +358,13 @@ begin
                                    APageNext);
 end;
 
-function TObjectManager<M>.NextPacketList(const AWhere, AOrderBy: String;
-  const APageSize, APageNext: Integer): TObjectList<M>;
-var
- LResultSet: IDBResultSet;
- LObjectList: TObjectList<M>;
+function TSQLCommandExecutor<M>.NextPacketList(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): IDBResultSet;
 begin
-  LObjectList := TObjectList<M>.Create;
-  LResultSet := NextPacket(AWhere, AOrderBy, APageSize, APageNext);
-  try
-    while LResultSet.NotEof do
-    begin
-      LObjectList.Add(M.Create);
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      // Alimenta registros das associações existentes 1:1 ou 1:N
-      FillAssociation(LObjectList.Last);
-    end;
-    Result := LObjectList;
-  finally
-    LResultSet.Close;
-  end;
+  Result := NextPacket(AWhere, AOrderBy, APageSize, APageNext);
 end;
 
-procedure TObjectManager<M>.NextPacketList(const AObjectList: TObjectList<M>;
+procedure TSQLCommandExecutor<M>.NextPacketList(const AObjectList: TObjectList<M>;
   const AWhere, AOrderBy: String; const APageSize, APageNext: Integer);
 var
  LResultSet: IDBResultSet;
@@ -408,8 +374,7 @@ begin
     while LResultSet.NotEof do
     begin
       AObjectList.Add(M.Create);
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      Bind.SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(AObjectList.Last);
     end;
@@ -423,7 +388,7 @@ begin
   end;
 end;
 
-procedure TObjectManager<M>.NextPacketList(const AObjectList: TObjectList<M>;
+procedure TSQLCommandExecutor<M>.NextPacketList(const AObjectList: TObjectList<M>;
   const APageSize, APageNext: Integer);
 var
  LResultSet: IDBResultSet;
@@ -433,8 +398,7 @@ begin
     while LResultSet.NotEof do
     begin
       AObjectList.Add(M.Create);
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
+      Bind.SetFieldToProperty(LResultSet, TObject(AObjectList.Last));
       // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(AObjectList.Last);
     end;
@@ -448,82 +412,47 @@ begin
   end;
 end;
 
-function TObjectManager<M>.NextPacketList(const APageSize,
-  APageNext: Integer): TObjectList<M>;
-var
-  LResultSet: IDBResultSet;
-  LObjectList: TObjectList<M>;
+function TSQLCommandExecutor<M>.NextPacketList(const APageSize,
+  APageNext: Integer): IDBResultSet;
 begin
-  LObjectList := TObjectList<M>.Create;
-  LResultSet := NextPacket(APageSize, APageNext);
-  try
-    while LResultSet.NotEof do
-    begin
-      LObjectList.Add(M.Create);
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(LObjectList.Last));
-      // Alimenta registros das associações existentes 1:1 ou 1:N
-      FillAssociation(LObjectList.Last);
-    end;
-    Result := LObjectList;
-  finally
-    LResultSet.Close;
-  end;
+  Result := NextPacket(APageSize, APageNext);
 end;
 
-function TObjectManager<M>.SelectInternal(const ASQL: String): IDBResultSet;
+function TSQLCommandExecutor<M>.SelectInternal(const ASQL: String): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorSelect(ASQL, FPageSize);
 end;
 
-procedure TObjectManager<M>.UpdateInternal(const AObject: TObject;
+procedure TSQLCommandExecutor<M>.UpdateInternal(const AObject: TObject;
   const AModifiedFields: TDictionary<string, string>);
 begin
   FDMLCommandFactory.GeneratorUpdate(AObject, AModifiedFields);
 end;
 
-procedure TObjectManager<M>.InsertInternal(const AObject: M);
+procedure TSQLCommandExecutor<M>.InsertInternal(const AObject: M);
 begin
   FDMLCommandFactory.GeneratorInsert(AObject);
 end;
 
-procedure TObjectManager<M>.LoadLazy(const AOwner, AObject: TObject);
+procedure TSQLCommandExecutor<M>.LoadLazy(const AOwner, AObject: TObject);
 begin
   FillAssociationLazy(AOwner, AObject);
 end;
 
-function TObjectManager<M>.FindSQLInternal(const ASQL: String): TObjectList<M>;
-var
- LResultSet: IDBResultSet;
- LObject: M;
+function TSQLCommandExecutor<M>.FindSQLInternal(const ASQL: String): IDBResultSet;
 begin
-  Result := TObjectList<M>.Create;
   if ASQL = '' then
-    LResultSet := SelectInternalAll
+    Result := SelectInternalAll
   else
-    LResultSet := SelectInternal(ASQL);
-  try
-    while LResultSet.NotEof do
-    begin
-      LObject := M.Create;
-      // TObject(LObject) = Para D2010
-      TBind.Instance.SetFieldToProperty(LResultSet, TObject(LObject));
-      // Alimenta registros das associações existentes 1:1 ou 1:N
-      FillAssociation(LObject);
-      // Adiciona o Object a lista de retorno
-      Result.Add(LObject);
-    end;
-  finally
-    LResultSet.Close;
-  end;
+    Result := SelectInternal(ASQL);
 end;
 
-function TObjectManager<M>.Find: TObjectList<M>;
+function TSQLCommandExecutor<M>.Find: IDBResultSet;
 begin
   Result := FindSQLInternal('');
 end;
 
-function TObjectManager<M>.Find(const AID: Variant): M;
+function TSQLCommandExecutor<M>.Find(const AID: Variant): M;
 var
  LResultSet: IDBResultSet;
 begin
@@ -532,8 +461,7 @@ begin
     if LResultSet.RecordCount = 1 then
     begin
       Result := M.Create;
-      TBind.Instance
-           .SetFieldToProperty(LResultSet, TObject(Result));
+      Bind.SetFieldToProperty(LResultSet, TObject(Result));
       // Alimenta registros das associações existentes 1:1 ou 1:N
       FillAssociation(Result);
     end
@@ -544,8 +472,8 @@ begin
   end;
 end;
 
-function TObjectManager<M>.FindWhere(const AWhere: string;
-  const AOrderBy: string): TObjectList<M>;
+function TSQLCommandExecutor<M>.FindWhere(const AWhere: string;
+  const AOrderBy: string): IDBResultSet;
 begin
   Result := FindSQLInternal(SelectInternalWhere(AWhere, AOrderBy));
 end;

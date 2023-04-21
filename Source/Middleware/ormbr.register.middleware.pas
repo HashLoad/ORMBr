@@ -38,7 +38,7 @@ type
   TQueryScopeList = TDictionary<String, TFunc<String>>;
   TQueryScopeCallback = reference to function(const AResource: String): TQueryScopeList;
 
-  TMiddleware = class
+  TMiddlewareQueryScope = class
   private
     FQueryScopeCallback: TQueryScopeCallback;
   public
@@ -48,7 +48,7 @@ type
 
   TORMBrMiddlewares = class
   private
-    class var FQueryScopeCallbacks: TDictionary<String, TMiddleware>;
+    class var FQueryScopeCallbacks: TDictionary<String, TMiddlewareQueryScope>;
   public
     class constructor Create;
     class destructor Destroy;
@@ -65,7 +65,7 @@ implementation
 
 class constructor TORMBrMiddlewares.Create;
 begin
-  FQueryScopeCallbacks := TObjectDictionary<String, TMiddleware>.Create([doOwnsValues]);
+  FQueryScopeCallbacks := TObjectDictionary<String, TMiddlewareQueryScope>.Create([doOwnsValues]);
 end;
 
 class destructor TORMBrMiddlewares.Destroy;
@@ -76,7 +76,7 @@ end;
 class procedure TORMBrMiddlewares.RegisterQueryScopeCallback(const ANameCallback: String;
   const ACallback: TQueryScopeCallback);
 begin
-  FQueryScopeCallbacks.AddOrSetValue(ANameCallback, TMiddleware.Create(ACallback));
+  FQueryScopeCallbacks.AddOrSetValue(ANameCallback, TMiddlewareQueryScope.Create(ACallback));
 end;
 
 class function TORMBrMiddlewares.ExecuteQueryScopeCallback(const AClass: TClass;
@@ -90,12 +90,12 @@ end;
 
 { TQueryScopeMiddleware }
 
-constructor TMiddleware.Create(const ACallback: TQueryScopeCallback);
+constructor TMiddlewareQueryScope.Create(const ACallback: TQueryScopeCallback);
 begin
   FQueryScopeCallback := ACallback;
 end;
 
-function TMiddleware.ExecuteQueryScopeCallback(const AResource: String): TQueryScopeList;
+function TMiddlewareQueryScope.ExecuteQueryScopeCallback(const AResource: String): TQueryScopeList;
 begin
   Result := FQueryScopeCallback(AResource);
 end;

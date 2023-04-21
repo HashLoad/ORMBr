@@ -36,11 +36,13 @@ uses
   SysUtils,
   Generics.Collections,
   /// ORMBr
-  ormbr.objects.manager.abstract,
+  ormbr.bind,
+  ormbr.command.executor.abstract,
   ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.types.blob,
-  dbcbr.mapping.attributes;
+  dbcbr.mapping.attributes,
+  dbebr.factory.interfaces;
 
 type
   // M - Sessão Abstract
@@ -50,7 +52,7 @@ type
     FPageNext: Integer;
     FModifiedFields: TDictionary<string, TDictionary<string, string>>;
     FDeleteList: TObjectList<M>;
-    FManager: TObjectManagerAbstract<M>;
+    FCommandExecutor: TSQLCommandExecutorAbstract<M>;
     FResultParams: TParams;
     FFindWhereUsed: Boolean;
     FFindWhereRefreshUsed: Boolean;
@@ -61,6 +63,7 @@ type
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
+    function PopularObjectSet(const ADBResultSet: IDBResultSet): TObjectList<M>;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
@@ -143,7 +146,7 @@ end;
 
 procedure TSessionAbstract<M>.Delete(const AObject: M);
 begin
-  FManager.DeleteInternal(AObject);
+  FCommandExecutor.DeleteInternal(AObject);
 end;
 
 function TSessionAbstract<M>.DeleteList: TObjectList<M>;
@@ -153,18 +156,20 @@ end;
 
 function TSessionAbstract<M>.ExistSequence: Boolean;
 begin
-  Result := FManager.ExistSequence;
+  Result := FCommandExecutor.ExistSequence;
 end;
 
 function TSessionAbstract<M>.Find(const AID: string): M;
 begin
   FFindWhereUsed := False;
   FFetchingRecords := False;
-  Result := FManager.Find(AID);
+  Result := FCommandExecutor.Find(AID);
 end;
 
 function TSessionAbstract<M>.FindWhere(const AWhere,
   AOrderBy: string): TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
 begin
   FFindWhereUsed := True;
   FFetchingRecords := False;
@@ -172,29 +177,35 @@ begin
   FOrderBy := AOrderBy;
   if FPageSize > -1 then
   begin
-    Result := NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext);
+    LDBResultSet := FCommandExecutor.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext);
+    Result := PopularObjectSet(LDBResultSet);
     Exit;
   end;
-  Result := FManager.FindWhere(FWhere, FOrderBy);
+  LDBResultSet := FCommandExecutor.FindWhere(FWhere, FOrderBy);
+  Result := PopularObjectSet(LDBResultSet);
 end;
 
 function TSessionAbstract<M>.Find(const AID: Int64): M;
 begin
   FFindWhereUsed := False;
   FFetchingRecords := False;
-  Result := FManager.Find(AID);
+  Result := FCommandExecutor.Find(AID);
 end;
 
 function TSessionAbstract<M>.Find: TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
+  LObject: M;
 begin
   FFindWhereUsed := False;
   FFetchingRecords := False;
-  Result := FManager.Find;
+  LDBResultSet := FCommandExecutor.Find;
+  Result := PopularObjectSet(LDBResultSet)
 end;
 
 procedure TSessionAbstract<M>.Insert(const AObject: M);
 begin
-  FManager.InsertInternal(AObject);
+  FCommandExecutor.InsertInternal(AObject);
 end;
 
 procedure TSessionAbstract<M>.ModifyFieldsCompare(const AKey: string;
@@ -273,6 +284,29 @@ begin
   FFetchingRecords := False;
 end;
 
+function TSessionAbstract<M>.PopularObjectSet(
+  const ADBResultSet: IDBResultSet): TObjectList<M>;
+var
+  LObjectList: TObjectList<M>;
+begin
+  LObjectList := TObjectList<M>.Create;
+  Result := LObjectList;
+  try
+    while ADBResultSet.NotEof do
+    begin
+      Result.Add(M.Create);
+      Bind.SetFieldToProperty(ADBResultSet, TObject(Result.Last));
+      // Alimenta registros das associações existentes 1:1 ou 1:N
+      FCommandExecutor.FillAssociation(Result.Last);
+    end;
+    if Result.Count > 0 then
+      Exit;
+    FFetchingRecords := True;
+  finally
+    ADBResultSet.Close;
+  end;
+end;
+
 procedure TSessionAbstract<M>.RefreshRecord(const AColumns: TParams);
 begin
 
@@ -295,7 +329,7 @@ end;
 
 procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: string);
 begin
-  FManager.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
+  FCommandExecutor.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
 end;
 
 procedure TSessionAbstract<M>.LoadLazy(const AOwner, AObject: TObject);

@@ -127,6 +127,8 @@ type
       const AObject: TObject);
   end;
 
+function Bind: IBind;
+
 implementation
 
 uses
@@ -137,6 +139,12 @@ uses
   ormbr.types.blob,
   dbcbr.types.mapping,
   dbcbr.mapping.explorer;
+
+
+function Bind: IBind;
+begin
+  Result := TBind.Instance;
+end;
 
 { TBind }
 

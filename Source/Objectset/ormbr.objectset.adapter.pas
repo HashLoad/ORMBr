@@ -42,7 +42,6 @@ uses
   dbcbr.types.mapping;
 
 type
-  // M - Object M
   TObjectSetAdapter<M: class, constructor> = class(TObjectSetBaseAdapter<M>)
   private
     FConnection: IDBConnection;

@@ -124,9 +124,9 @@ begin
   MasterStringGridDefinitions;
   DetailStringGridDefinitions;
 
-  oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
-
+  oConn := TFactoryFireDAC.Create(FDConnection1,
+                                  dnSQLite,
+                                  TCommandMonitor.GetInstance);
   oMaster := TContainerObjectSet<Tmaster>.Create(oConn, 10);
   oMasterList := oMaster.Find;
   // LINHA ABAIXO SUBSTITUIDO PELO Middleware, OLHAR NA CLASSE TMaster (ormbr.model.master.pas)

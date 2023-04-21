@@ -34,7 +34,7 @@ interface
 uses
   DB,
   Rtti,
-  TypInfo, {Delphi 2010}
+  TypInfo,
   Classes,
   SysUtils,
   StrUtils,
@@ -176,8 +176,8 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
-  TBind.Instance.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
-  TBind.Instance.SetDataDictionary(ADataSet, FCurrentInternal);
+  Bind.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
+  Bind.SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
   // Variável que identifica o campo que guarda o estado do registro.
@@ -206,7 +206,7 @@ procedure TDataSetBaseAdapter<M>.Save(AObject: M);
 begin
   // Aualiza o DataSet com os dados a variável interna
   FOrmDataSet.Edit;
-  TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
+  Bind.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
 end;
 
@@ -282,7 +282,7 @@ var
   LMethod: TMethod;
   LMethodNil: TMethod;
 begin
-  LClassType := TRttiSingleton.GetInstance.GetRttiType(FOrmDataSet.ClassType);
+  LClassType := RttiSingleton.GetRttiType(FOrmDataSet.ClassType);
   for LProperty in LClassType.GetProperties do
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
@@ -308,7 +308,7 @@ var
   LProperty: TRttiProperty;
   LAssociation: Association;
 begin
-  LRttiType := TRttiSingleton.GetInstance.GetRttiType(AObject.ClassType);
+  LRttiType := RttiSingleton.GetRttiType(AObject.ClassType);
   for LProperty in LRttiType.GetProperties do
   begin
     for LAssociation in LProperty.GetAssociation do
@@ -348,7 +348,7 @@ begin
     while not ADatasetBase.FOrmDataSet.Eof do
     begin
       // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
+      Bind.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
       // Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
@@ -393,7 +393,7 @@ begin
       LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectType.MethodCall('Create', []);
       // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBind.Instance.SetFieldToProperty(LDataSet, LObjectType);
+      Bind.SetFieldToProperty(LDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);
@@ -419,7 +419,7 @@ var
   LMethod: TMethod;
   LMethodNil: TMethod;
 begin
-  LClassType := TRttiSingleton.GetInstance.GetRttiType(FOrmDataSet.ClassType);
+  LClassType := RttiSingleton.GetRttiType(FOrmDataSet.ClassType);
   for LProperty in LClassType.GetProperties do
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
@@ -771,8 +771,7 @@ begin
   if FOrmDataSet.RecordCount = 0 then
     Exit(FCurrentInternal);
 
-  TBind.Instance
-       .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
+  Bind.SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
 
   for LDataSetChild in FMasterObject.Values do
     LDataSetChild.FillMastersClass(LDataSetChild, FCurrentInternal);

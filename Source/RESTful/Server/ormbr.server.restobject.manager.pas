@@ -27,8 +27,8 @@ uses
   Variants,
   Generics.Collections,
   /// ormbr
+  ormbr.command.executor.abstract,
   ormbr.command.factory,
-  ormbr.objects.manager.abstract,
   dbebr.factory.interfaces,
   dbcbr.mapping.explorer,
   dbcbr.types.mapping,

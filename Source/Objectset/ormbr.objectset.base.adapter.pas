@@ -35,7 +35,7 @@ interface
 
 uses
   Rtti,
-  TypInfo, {Delphi 2010}
+  TypInfo,
   Variants,
   SysUtils,
   Generics.Collections,
@@ -50,7 +50,6 @@ uses
   dbcbr.mapping.explorer;
 
 type
-  // M - Object M
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
   protected
     FSession: TSessionAbstract<M>;

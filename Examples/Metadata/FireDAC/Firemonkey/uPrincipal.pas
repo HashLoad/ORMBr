@@ -15,12 +15,12 @@ uses
   /// orm factory
   dbebr.factory.interfaces,
   dbebr.factory.firedac,
-
+  dbcbr.ddl.generator.firebird,
+  dbcbr.metadata.firebird,
   dbcbr.ddl.commands,
-
-  ormbr.modeldb.compare,
   dbcbr.database.compare,
   dbcbr.database.interfaces,
+  ormbr.modeldb.compare,
 
   FireDAC.Phys.FB, FireDAC.Phys.FBDef, FireDAC.Phys.MySQL,
   FireDAC.Phys.MySQLDef, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
@@ -48,7 +48,7 @@ type
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    oManager: IDatabaseCompare;
+    oManager: TModelDbCompare;
     oConnection: IDBConnection;
   public
     { Public declarations }

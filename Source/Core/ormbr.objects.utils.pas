@@ -74,12 +74,19 @@ type
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
   end;
 
+function RttiSingleton: IRttiSingleton;
+
 implementation
 
 uses
   dbcbr.mapping.explorer,
   dbcbr.rtti.helper,
   ormbr.objects.helper;
+
+function RttiSingleton: IRttiSingleton;
+begin
+  TRttiSingleton.GetInstance;
+end;
 
 { TRttiSingleton }
 
