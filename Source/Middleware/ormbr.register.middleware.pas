@@ -35,8 +35,14 @@ uses
   Generics.Collections;
 
 type
+  TORMBrEventType = (onBeforeInsert, onAfeterInsert,
+                     onBeforeUpdate, onAfterUpdate,
+                     onBeforeDelete, onAfterDelete);
+
   TQueryScopeList = TDictionary<String, TFunc<String>>;
   TQueryScopeCallback = reference to function(const AResource: String): TQueryScopeList;
+  TEvent = TProc<TObject>;
+  TEventCallback = reference to function(const AResource: String): TEvent;
 
   TMiddlewareQueryScope = class
   private
@@ -46,9 +52,18 @@ type
     function ExecuteQueryScopeCallback(const AResource: String): TQueryScopeList;
   end;
 
+  TMiddlewareEvent = class
+  private
+    FEventCallback: TEventCallback;
+  public
+    constructor Create(const ACallback: TEventCallback); overload;
+    function ExecuteEventCallback(const AResource: String): TEvent;
+  end;
+
   TORMBrMiddlewares = class
   private
     class var FQueryScopeCallbacks: TDictionary<String, TMiddlewareQueryScope>;
+    class var FEventCallbacks: TDictionary<String, TMiddlewareEvent>;
   public
     class constructor Create;
     class destructor Destroy;
@@ -57,6 +72,11 @@ type
       const ACallback: TQueryScopeCallback);
     class function ExecuteQueryScopeCallback(const AClass: TClass;
       const ANameCallback: String): TQueryScopeList;
+    // Events
+    class procedure RegisterEventCallback(const ANameCallback: String;
+      const ACallback: TEventCallback);
+    class function ExecuteEventCallback(const AClass: TClass;
+      const ANameCallback: String): TEvent;
   end;
 
 implementation
@@ -66,17 +86,34 @@ implementation
 class constructor TORMBrMiddlewares.Create;
 begin
   FQueryScopeCallbacks := TObjectDictionary<String, TMiddlewareQueryScope>.Create([doOwnsValues]);
+  FEventCallbacks := TObjectDictionary<String, TMiddlewareEvent>.Create([doOwnsValues]);
 end;
 
 class destructor TORMBrMiddlewares.Destroy;
 begin
   FQueryScopeCallbacks.Free;
+  FEventCallbacks.Free;
+end;
+
+class procedure TORMBrMiddlewares.RegisterEventCallback(
+  const ANameCallback: String; const ACallback: TEventCallback);
+begin
+  FEventCallbacks.AddOrSetValue(ANameCallback, TMiddlewareEvent.Create(ACallback));
 end;
 
 class procedure TORMBrMiddlewares.RegisterQueryScopeCallback(const ANameCallback: String;
   const ACallback: TQueryScopeCallback);
 begin
   FQueryScopeCallbacks.AddOrSetValue(ANameCallback, TMiddlewareQueryScope.Create(ACallback));
+end;
+
+class function TORMBrMiddlewares.ExecuteEventCallback(const AClass: TClass;
+  const ANameCallback: String): TEvent;
+begin
+  Result := nil;
+  if not FEventCallbacks.ContainsKey(ANameCallback) then
+    Exit;
+  Result := FEventCallbacks[ANameCallback].ExecuteEventCallback(UpperCase(AClass.ClassName));
 end;
 
 class function TORMBrMiddlewares.ExecuteQueryScopeCallback(const AClass: TClass;
@@ -98,6 +135,18 @@ end;
 function TMiddlewareQueryScope.ExecuteQueryScopeCallback(const AResource: String): TQueryScopeList;
 begin
   Result := FQueryScopeCallback(AResource);
+end;
+
+{ TMiddlewareEvent }
+
+constructor TMiddlewareEvent.Create(const ACallback: TEventCallback);
+begin
+  FEventCallback := ACallback;
+end;
+
+function TMiddlewareEvent.ExecuteEventCallback(const AResource: String): TEvent;
+begin
+  Result := FEventCallback(AResource);
 end;
 
 end.

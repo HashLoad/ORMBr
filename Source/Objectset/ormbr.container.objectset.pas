@@ -8,7 +8,8 @@ uses
   /// ormbr
   ormbr.container.objectset.interfaces,
   dbebr.factory.interfaces,
-  ormbr.objectset.adapter;
+  ormbr.objectset.adapter,
+  ormbr.register.middleware;
 
 type
   TContainerObjectSet<M: class, constructor> = class(TInterfacedObject, IContainerObjectSet<M>)
@@ -51,9 +52,18 @@ begin
 end;
 
 procedure TContainerObjectSet<M>.Delete(const AObject: M);
+var
+  LBeforeDelete: TEvent;
+  LAfterDelete: TEvent;
 begin
   inherited;
+  LBeforeDelete := TORMBrMiddlewares.ExecuteEventCallback(M, 'BeforeDelete');
+  if Assigned(LBeforeDelete) then
+    LBeforeDelete(AObject);
   FObjectSetAdapter.Delete(AObject);
+  LAfterDelete := TORMBrMiddlewares.ExecuteEventCallback(M, 'AfterDelete');
+  if Assigned(LAfterDelete) then
+    LAfterDelete(AObject);
 end;
 
 function TContainerObjectSet<M>.ExistSequence: Boolean;
@@ -86,9 +96,18 @@ begin
 end;
 
 procedure TContainerObjectSet<M>.Insert(const AObject: M);
+var
+  LBeforeInsert: TEvent;
+  LAfterInsert: TEvent;
 begin
   inherited;
+  LBeforeInsert := TORMBrMiddlewares.ExecuteEventCallback(M, 'BeforeInsert');
+  if Assigned(LBeforeInsert) then
+    LBeforeInsert(AObject);
   FObjectSetAdapter.Insert(AObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(M, 'AfterInsert');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(AObject);
 end;
 
 procedure TContainerObjectSet<M>.LoadLazy(const AOwner, AObject: TObject);
@@ -125,9 +144,18 @@ begin
 end;
 
 procedure TContainerObjectSet<M>.Update(const AObject: M);
+var
+  LBeforeUpdate: TEvent;
+  LAfterUpdate: TEvent;
 begin
   inherited;
+  LBeforeUpdate := TORMBrMiddlewares.ExecuteEventCallback(M, 'BeforeUpdate');
+  if Assigned(LBeforeUpdate) then
+    LBeforeUpdate(AObject);
   FObjectSetAdapter.Update(AObject);
+  LAfterUpdate := TORMBrMiddlewares.ExecuteEventCallback(M, 'AfterUpdate');
+  if Assigned(LAfterUpdate) then
+    LAfterUpdate(AObject);
 end;
 
 function TContainerObjectSet<M>.NextPacket: TObjectList<M>;

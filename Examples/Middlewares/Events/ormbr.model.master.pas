@@ -17,7 +17,7 @@ uses
   ormbr.model.detail,
   ormbr.model.client,
   // Middleware Adicionar recurso Query Scope na requisição SQL
-  ormbr.query.scope.middleware;
+  ormbr.events.middleware;
 
 type
   TMyEnum = (fmsEmitente, fmsTerceiros, fmsDestinatario, fmsSemFrete);
@@ -110,19 +110,53 @@ constructor Tmaster.Create;
 begin
    Fdetail := TObjectList<Tdetail>.Create;
    Fclient := Tclient.Create;
-   // Query Scope
-   QueryScopeMiddleware.AddWhere(Self.ClassName,
-                            'ScopeWhereID',
-                             function: string
-                             begin
-                               Result := 'master.master_id > 6';
-                             end);
-   // Query Scope
-   QueryScopeMiddleware.AddOrderBy(Self.ClassName,
-                              'ScopeOrderByDescription',
-                              function: string
+   // Before Insert
+   BeforeInsertMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LID: String;
                               begin
-                                Result := 'master.description';
+                                LID := TMaster(AObject).master_id.ToString;
+                              end);
+   // After Insert
+   AfterInsertMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LID: String;
+                              begin
+                                LID := TMaster(AObject).master_id.ToString;
+                              end);
+   // Before Update
+   BeforeUpdateMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LDescription: String;
+                              begin
+                                LDescription := TMaster(AObject).description;
+                              end);
+   // After Update
+   AfterUpdateMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LDescription: String;
+                              begin
+                                LDescription := TMaster(AObject).description;
+                              end);
+   // Before Delete
+   BeforeUpdateMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LDescription: String;
+                              begin
+                                LDescription := TMaster(AObject).description;
+                              end);
+   // After Update
+   AfterUpdateMiddleware.AddEvent(Self.ClassName,
+                              procedure(AObject: TObject)
+                              var
+                                LDescription: String;
+                              begin
+                                LDescription := TMaster(AObject).description;
                               end);
 end;
 
