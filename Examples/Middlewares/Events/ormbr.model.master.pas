@@ -143,15 +143,15 @@ begin
                                 LDescription := TMaster(AObject).description;
                               end);
    // Before Delete
-   BeforeUpdateMiddleware.AddEvent(Self.ClassName,
+   BeforeDeleteMiddleware.AddEvent(Self.ClassName,
                               procedure(AObject: TObject)
                               var
                                 LDescription: String;
                               begin
                                 LDescription := TMaster(AObject).description;
                               end);
-   // After Update
-   AfterUpdateMiddleware.AddEvent(Self.ClassName,
+   // After Delete
+   AfterDeleteMiddleware.AddEvent(Self.ClassName,
                               procedure(AObject: TObject)
                               var
                                 LDescription: String;
