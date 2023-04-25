@@ -77,12 +77,12 @@ type
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
     procedure LoadLazy(const AOwner, AObject: TObject); virtual;
-    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual; abstract;
-    function NextPacketList: TObjectList<M>; overload; virtual; abstract;
+    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; virtual;
+    function NextPacketList: TObjectList<M>; overload; virtual;
     function NextPacketList(const APageSize,
-      APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+      APageNext: Integer): TObjectList<M>; overload; virtual;
     function NextPacketList(const AWhere, AOrderBy: String;
-      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual; abstract;
+      const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
     // DataSet
     procedure Open; virtual;
     procedure OpenID(const AID: Variant); virtual;
@@ -262,6 +262,69 @@ end;
 procedure TSessionAbstract<M>.NextPacket;
 begin
 
+end;
+
+procedure TSessionAbstract<M>.NextPacketList(const AObjectList: TObjectList<M>);
+begin
+  if FFetchingRecords then
+    Exit;
+  FPageNext := FPageNext + FPageSize;
+  if FFindWhereUsed then
+    FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+  else
+    FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
+
+  /// <summary>
+  ///    if AObjectList = nil then
+  ///      Exit;
+  ///    if AObjectList.RecordCount > 0 then
+  ///      Exit;
+  ///    FFetchingRecords := True;
+  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
+  ///  método NextPacketList() dentro do FCommandExecutor.
+  /// </summary>
+end;
+
+function TSessionAbstract<M>.NextPacketList: TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
+begin
+  inherited;
+  Result := nil;
+  if FFetchingRecords then
+    Exit;
+  FPageNext := FPageNext + FPageSize;
+  if FFindWhereUsed then
+    LDBResultSet := FCommandExecutor.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+  else
+    LDBResultSet := FCommandExecutor.NextPacketList(FPageSize, FPageNext);
+  Result := PopularObjectSet(LDBResultSet);
+end;
+
+function TSessionAbstract<M>.NextPacketList(const APageSize,
+  APageNext: Integer): TObjectList<M>;
+var
+  LDBResultSet: IDBResultSet;
+begin
+  inherited;
+  Result := nil;
+  if FFetchingRecords then
+    Exit;
+  LDBResultSet := FCommandExecutor.NextPacketList(APageSize, APageNext);
+  Result := PopularObjectSet(LDBResultSet);
+end;
+
+function TSessionAbstract<M>.NextPacketList(const AWhere, AOrderBy: String;
+  const APageSize, APageNext: Integer): TObjectList<M>;
+var
+ LDBResultSet: IDBResultSet;
+begin
+  inherited;
+  Result := nil;
+  if FFetchingRecords then
+    Exit;
+  LDBResultSet := FCommandExecutor.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+  Result := PopularObjectSet(LDBResultSet);
 end;
 
 procedure TSessionAbstract<M>.Open;

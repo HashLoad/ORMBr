@@ -32,6 +32,7 @@ interface
 uses
   DB,
   Rtti,
+  SysUtils,
   Generics.Collections,
   ormbr.command.selecter,
   ormbr.command.inserter,
@@ -77,6 +78,9 @@ type
   end;
 
   TDMLCommandFactory = class(TDMLCommandFactoryAbstract)
+  strict private
+    procedure SendCommandMonitor(const ACommand: String;
+      const AParams: TParams);
   protected
     FConnection: IDBConnection;
     FCommandSelecter: TCommandSelecter;
@@ -158,18 +162,14 @@ end;
 procedure TDMLCommandFactory.GeneratorDelete(const AObject: TObject);
 begin
   FDMLCommand := FCommandDeleter.GenerateDelete(AObject);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandDeleter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandDeleter.Params);
   FConnection.ExecuteDirect(FDMLCommand, FCommandDeleter.Params);
 end;
 
 procedure TDMLCommandFactory.GeneratorInsert(const AObject: TObject);
 begin
   FDMLCommand := FCommandInserter.GenerateInsert(AObject);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandInserter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandInserter.Params);
   FConnection.ExecuteDirect(FDMLCommand, FCommandInserter.Params);
 end;
 
@@ -177,9 +177,7 @@ function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -187,9 +185,7 @@ function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const APageSize, APageNext: Integer): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -198,9 +194,7 @@ function TDMLCommandFactory.GeneratorSelect(ASQL: String;
 begin
   FCommandSelecter.SetPageSize(APageSize);
   FDMLCommand := ASQL;
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(ASQL);
 end;
 
@@ -209,9 +203,7 @@ function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass;
 begin
   FCommandSelecter.SetPageSize(APageSize);
   FDMLCommand := FCommandSelecter.GenerateSelectAll(AClass);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -225,9 +217,7 @@ function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -235,9 +225,7 @@ function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -252,18 +240,14 @@ function TDMLCommandFactory.GeneratorSelectID(AClass: TClass;
   AID: Variant): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectID(AClass, AID);
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket: IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket;
-  // Envia comando para tela do monitor.
-  if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandSelecter.Params);
+  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -273,10 +257,26 @@ begin
   FDMLCommand := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
   if FDMLCommand = '' then
     Exit;
+  SendCommandMonitor(FDMLCommand, FCommandUpdater.Params);
+  FConnection.ExecuteDirect(FDMLCommand, FCommandUpdater.Params);
+end;
+
+procedure TDMLCommandFactory.SendCommandMonitor(const ACommand: String;
+  const AParams: TParams);
+var
+  LMonitorParam: TMonitorParam;
+  LProc: TProc<TMonitorParam>;
+begin
+  LMonitorParam.Command := ACommand;
+  LMonitorParam.Params := AParams;
+  if FConnection.MonitorCallback <> nil then
+  begin
+    LProc := FConnection.MonitorCallback;
+    LProc(LMonitorParam);
+  end;
   // Envia comando para tela do monitor.
   if FConnection.CommandMonitor <> nil then
-    FConnection.CommandMonitor.Command(FDMLCommand, FCommandUpdater.Params);
-  FConnection.ExecuteDirect(FDMLCommand, FCommandUpdater.Params);
+    FConnection.CommandMonitor.Command(ACommand, AParams);
 end;
 
 end.

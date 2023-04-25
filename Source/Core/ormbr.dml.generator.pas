@@ -406,6 +406,9 @@ begin
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
       if TVarData(AID).VType = varInteger then
         Result := Result + LColumnName + ' = ' + IntToStr(AID)
+      else
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+
         { TODO -oISAQUE -cREVISÃO :
           Se você sentiu falta desse trecho de código, entre em contato,
           precisamos discutir sobre ele, pois ele quebra regras de SOLID

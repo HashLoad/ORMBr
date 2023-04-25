@@ -85,7 +85,7 @@ uses
 
 function RttiSingleton: IRttiSingleton;
 begin
-  TRttiSingleton.GetInstance;
+  Result := TRttiSingleton.GetInstance;
 end;
 
 { TRttiSingleton }

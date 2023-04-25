@@ -44,61 +44,47 @@ uses
   ormbr.controls.helpers;
 
 type
-  /// <summary>
-  ///   TEdit Component
-  /// </summary>
+  // TEdit Component (Shadowing technique)
   TEdit = class(Vcl.StdCtrls.TEdit)
   protected
     procedure Change; override;
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TMaskEdit Component
-  /// </summary>
+  // TMaskEdit Component (Shadowing technique)
   TMaskEdit = class(Vcl.Mask.TMaskEdit)
   protected
     procedure Change; override;
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TLabel Component
-  /// </summary>
+  // TLabel Component (Shadowing technique)
   TLabel = class(Vcl.StdCtrls.TLabel)
   protected
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TComboBox Component
-  /// </summary>
+  // TComboBox Component (Shadowing technique)
   TComboBox = class(Vcl.StdCtrls.TComboBox)
   protected
     procedure Change; override;
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TMemo Component
-  /// </summary>
+  // TMemo Component (Shadowing technique)
   TMemo = class(Vcl.StdCtrls.TMemo)
   protected
     procedure Change; override;
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TProgressBar Component
-  /// </summary>
+  // TProgressBar Component (Shadowing technique)
   TProgressBar = class(Vcl.ComCtrls.TProgressBar)
   protected
     procedure SetName(const NewName: TComponentName); override;
   end;
 
-  /// <summary>
-  ///   TButtonedEdit Component
-  /// </summary>
+  // TButtonedEdit Component (Shadowing technique)
   TButtonedEdit = class(Vcl.ExtCtrls.TButtonedEdit)
   protected
     procedure Change; override;

@@ -793,7 +793,8 @@ begin
   inherited;
   if FOrmDataSet.RecordCount = 0 then
     Exit;
-  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+  LPrimaryKey := TMappingExplorer
+                   .GetMappingPrimaryKey(FCurrentInternal.ClassType);
   if LPrimaryKey = nil then
     Exit;
   FOrmDataSet.DisableControls;
@@ -806,8 +807,10 @@ begin
       begin
         Name := LPrimaryKey.Columns.Items[LFor];
         ParamType := ptInput;
-        DataType := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).DataType;
-        Value := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).Value;
+        DataType := FOrmDataSet.FieldByName(LPrimaryKey.Columns
+                                                       .Items[LFor]).DataType;
+        Value := FOrmDataSet.FieldByName(LPrimaryKey.Columns
+                                                    .Items[LFor]).Value;
       end;
     end;
     if LParams.Count > 0 then
@@ -845,7 +848,8 @@ var
   LFor: Integer;
 begin
   // Association
-  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer
+                     .GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -919,7 +923,8 @@ begin
   if not Assigned(FOwnerMasterObject) then
     Exit;
   LDataSetMaster := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-  LAssociations := TMappingExplorer.GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer
+                     .GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
@@ -933,7 +938,8 @@ begin
       if LField = nil then
         Continue;
       FOrmDataSet
-        .FieldByName(LAssociation.ColumnsNameRef.Items[LFor]).Value := LField.Value;
+        .FieldByName(LAssociation.ColumnsNameRef
+                                 .Items[LFor]).Value := LField.Value;
     end;
   end;
 end;
@@ -954,12 +960,14 @@ begin
     end;
   end;
   if AValue <> nil then
-    TDataSetBaseAdapter<M>(AValue).FMasterObject.Add(FCurrentInternal.ClassName, Self);
+    TDataSetBaseAdapter<M>(AValue).FMasterObject
+                                  .Add(FCurrentInternal.ClassName, Self);
 
   FOwnerMasterObject := AValue;
 end;
 
-procedure TDataSetBaseAdapter<M>.ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
+procedure TDataSetBaseAdapter<M>.ValideFieldEvents(
+  const AFieldEvents: TFieldEventsMappingList);
 var
   LFor: Integer;
   LField: TField;
