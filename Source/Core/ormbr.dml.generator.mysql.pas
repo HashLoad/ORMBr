@@ -120,10 +120,10 @@ begin
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
-    Result := ' WHERE ' + LScopeWhere;
+    Result := result + ' WHERE ' + LScopeWhere;
   LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
   if LScopeOrderBy <> '' then
-    Result := ' ORDER BY ' + LScopeOrderBy;
+    Result := result + ' ORDER BY ' + LScopeOrderBy;
   // Params Where and OrderBy
   if Length(AWhere) > 0 then
   begin
