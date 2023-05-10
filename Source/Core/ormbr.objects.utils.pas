@@ -41,6 +41,7 @@ uses
   Variants,
   Generics.Collections,
   /// orm
+  dbcbr.mapping.popular,
   dbcbr.mapping.attributes,
   dbcbr.mapping.classes,
   dbcbr.types.mapping;

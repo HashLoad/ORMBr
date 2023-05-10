@@ -46,8 +46,9 @@ uses
   ormbr.dml.cache,
   ormbr.types.blob,
   ormbr.register.middleware,
-  dbcbr.rtti.helper,
   dbebr.factory.interfaces,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
   dbcbr.types.mapping;
@@ -345,14 +346,17 @@ var
   LFunc: TFunc<String>;
 begin
   Result := '';
+  LFor := 0;
   LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetOrderBy');
   if LFuncs = nil then
     Exit;
+
   for LFunc in LFuncs.Values do
   begin
     Result := Result + LFunc();
     if LFor < LFuncs.Count -1 then
       Result := Result + ', ';
+    Inc(LFor);
   end;
 end;
 
@@ -363,6 +367,7 @@ var
   LFunc: TFunc<String>;
 begin
   Result := '';
+  LFor := 0;
   LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetWhere');
   if LFuncs = nil then
     Exit;
@@ -371,6 +376,7 @@ begin
     Result := Result + LFunc();
     if LFor < LFuncs.Count -1 then
       Result := Result + ' AND ';
+    Inc(LFor);
   end;
 end;
 
@@ -387,7 +393,7 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
-  LID: string;
+//  LID: string;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);

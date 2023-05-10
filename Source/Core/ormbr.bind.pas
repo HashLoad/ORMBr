@@ -42,8 +42,9 @@ uses
   ormbr.objects.utils,
   ormbr.objects.helper,
   ormbr.types.nullable,
-  dbcbr.rtti.helper,
   dbebr.factory.interfaces,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.attributes,
   dbcbr.mapping.exceptions,
   dbcbr.mapping.classes;

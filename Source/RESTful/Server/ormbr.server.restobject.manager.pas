@@ -30,6 +30,7 @@ uses
   ormbr.command.executor.abstract,
   ormbr.command.factory,
   dbebr.factory.interfaces,
+  dbcbr.mapping.popular,
   dbcbr.mapping.explorer,
   dbcbr.types.mapping,
   dbcbr.mapping.classes;

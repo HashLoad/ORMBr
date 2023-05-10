@@ -33,7 +33,10 @@ uses
   Generics.Collections,
   // ORMBr
   dbebr.factory.interfaces,
+  dbcbr.mapping.popular,
+  dbcbr.mapping.register,
   dbcbr.mapping.explorer,
+  dbcbr.mapping.repository,
   dbcbr.mapping.classes;
 
 type

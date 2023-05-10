@@ -29,6 +29,9 @@ uses
   Generics.Collections,
   // ORMBr
   dbcbr.mapping.repository,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.popular,
+  dbcbr.mapping.register,
   ormbr.json,
   ormbr.server.restquery.parse,
   ormbr.server.restobjectset,
@@ -56,24 +59,23 @@ type
       const AQuery: TRESTQueryParse): String;
   protected
     FResultCount: Integer;
-    function ParseInsert(AQuery: TRESTQueryParse; AValue: String): String;
-    function ParseUpdate(AQuery: TRESTQueryParse; AValue: String): String;
+    function ParseInsert(const AQuery: TRESTQueryParse; const AValue: String): String;
+    function ParseUpdate(const AQuery: TRESTQueryParse; const AValue: String): String;
   public
-    constructor Create(AConnection: IDBConnection); overload; virtual;
+    constructor Create(const AConnection: IDBConnection); overload; virtual;
     destructor Destroy; override;
-    function ParseFind(AQuery: TRESTQueryParse): String;
-    function ParseDelete(AQuery: TRESTQueryParse): String;
-    function select(AResource: String): String; overload; virtual;
-    function insert(AResource: String; AValue: String): String; overload; virtual;
-    function update(AResource: String; AValue: String): String; overload; virtual;
-    function delete(AResource: String): String; overload; virtual;
+    function ParseFind(const AQuery: TRESTQueryParse): String;
+    function ParseDelete(const AQuery: TRESTQueryParse): String;
+    function select(const AResource: String): String; overload; virtual;
+    function insert(const AResource: String; const AValue: String): String; overload; virtual;
+    function update(const AResource: String; const AValue: String): String; overload; virtual;
+    function delete(const AResource: String): String; overload; virtual;
     function ResultCount: Integer;
   end;
 
 implementation
 
 uses
-  dbcbr.mapping.explorer,
   dbcbr.mapping.classes,
   dbcbr.rtti.helper,
   ormbr.objects.helper,
@@ -81,13 +83,13 @@ uses
 
 { TAppResourceBase }
 
-constructor TAppResourceBase.Create(AConnection: IDBConnection);
+constructor TAppResourceBase.Create(const AConnection: IDBConnection);
 begin
   FResultCount := 0;
   FConnection := AConnection;
 end;
 
-function TAppResourceBase.delete(AResource: String): String;
+function TAppResourceBase.delete(const AResource: String): String;
 begin
   Result := AResource;
 end;
@@ -98,7 +100,7 @@ begin
   inherited;
 end;
 
-function TAppResourceBase.insert(AResource, AValue: String): String;
+function TAppResourceBase.insert(const AResource, AValue: String): String;
 var
   LQuery: TRESTQueryParse;
 begin
@@ -114,7 +116,7 @@ begin
   end;
 end;
 
-function TAppResourceBase.update(AResource, AValue: String): String;
+function TAppResourceBase.update(const AResource, AValue: String): String;
 var
   LQuery: TRESTQueryParse;
 begin
@@ -130,7 +132,7 @@ begin
   end;
 end;
 
-function TAppResourceBase.ParseDelete(AQuery: TRESTQueryParse): String;
+function TAppResourceBase.ParseDelete(const AQuery: TRESTQueryParse): String;
 var
   LObject: TObject;
   LClassType: TClass;
@@ -189,7 +191,7 @@ begin
   end;
 end;
 
-function TAppResourceBase.ParseFind(AQuery: TRESTQueryParse): String;
+function TAppResourceBase.ParseFind(const AQuery: TRESTQueryParse): String;
 var
   LClassType: TClass;
   LObjectSet: TRESTObjectSet;
@@ -222,7 +224,8 @@ begin
   end;
 end;
 
-function TAppResourceBase.ParseInsert(AQuery: TRESTQueryParse; AValue: String): String;
+function TAppResourceBase.ParseInsert(const AQuery: TRESTQueryParse;
+  const AValue: String): String;
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
@@ -272,7 +275,8 @@ begin
   end;
 end;
 
-function TAppResourceBase.ParseUpdate(AQuery: TRESTQueryParse; AValue: String): String;
+function TAppResourceBase.ParseUpdate(const AQuery: TRESTQueryParse;
+  const AValue: String): String;
 var
   LObjectOld: TObject;
   LObjectNew: TObject;
@@ -405,7 +409,7 @@ begin
   Result := FResultCount;
 end;
 
-function TAppResourceBase.select(AResource: String): String;
+function TAppResourceBase.select(const AResource: String): String;
 begin
   Result := AResource;
 end;

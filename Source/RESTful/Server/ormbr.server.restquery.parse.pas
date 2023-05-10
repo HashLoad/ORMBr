@@ -175,7 +175,6 @@ end;
 
 procedure TRESTQueryParse.ParseQuery(const AURI: String);
 var
-  LPos: Integer;
   LQueryingData: String;
 begin
   FPath := AURI;
@@ -242,41 +241,50 @@ begin
 end;
 
 function TRESTQueryParse.ParseOperator(const AParams: String): String;
+const
+  LOperatorMapping: array[0..9, 0..1] of string = (('eq', '='),
+                                                   ('ne', '<>'),
+                                                   ('gt', '>'),
+                                                   ('ge', '>='),
+                                                   ('lt', '<'),
+                                                   ('le', '<='),
+                                                   ('add', '+'),
+                                                   ('sub', '-'),
+                                                   ('mul', '*'),
+                                                   ('div', '/'));
+var
+  LFor: Integer;
 begin
   Result := AParams;
-  Result := StringReplace(Result, ' eq ' , ' = ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' ne ' , ' <> ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' gt ' , ' > ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' ge ' , ' >= ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' lt ' , ' < ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' le ' , ' <= ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' add ', ' + ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' sub ', ' - ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' mul ', ' * ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' div ', ' / ' , [rfReplaceAll]);
+  for LFor := 0 to High(LOperatorMapping) do
+    Result := StringReplace(Result, LOperatorMapping[LFor, 0],
+                                    LOperatorMapping[LFor, 1], [rfReplaceAll]);
 end;
 
 function TRESTQueryParse.ParseOperatorReverse(const AParams: String): String;
+const
+  LOperatorMapping: array[0..9, 0..1] of string = (('=','eq'),
+                                                   ('<>','ne'),
+                                                   ('>','gt'),
+                                                   ('>=','ge'),
+                                                   ('<','lt'),
+                                                   ('<=','le'),
+                                                   ('+','add'),
+                                                   ('-','sub'),
+                                                   ('*','mul'),
+                                                   ('/','div'));
+var
+  LFor: Integer;
 begin
   Result := AParams;
-  Result := StringReplace(Result, ' = ' , ' eq ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' <> ', ' ne ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' > ' , ' gt ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' >= ', ' ge ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' < ' , ' lt ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' <= ', ' le ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' + ' , ' add ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' - ' , ' sub ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' * ' , ' mul ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' / ' , ' div ', [rfReplaceAll]);
+  for LFor := 0 to High(LOperatorMapping) do
+    Result := StringReplace(Result, LOperatorMapping[LFor, 0],
+                                    LOperatorMapping[LFor, 1], [rfReplaceAll]);
 end;
 
 function TRESTQueryParse.ParsePathTokens(const APath: string): TArray<string>;
-var
-  LPath: string;
 begin
-  LPath := APath;
-  Result := TArray<string>(SplitString(LPath, cPATH_SEPARATOR));
+  Result := TArray<string>(SplitString(APath, cPATH_SEPARATOR));
 
   while (Length(Result) > 0) and (Result[0] = '') do
     Result := Copy(Result, 1);
@@ -287,8 +295,8 @@ end;
 procedure TRESTQueryParse.ParseQueryTokens;
 var
   LQuery: string;
-  LStrings: TStringList;
-  LIndex: Integer;
+  LQueryItems: TArray<string>;
+  LQueryItem: string;
 begin
   FQueryTokens.Clear;
   FQueryTokens.TrimExcess;
@@ -299,16 +307,10 @@ begin
   while StartsStr(LQuery, cQUERY_INITIAL) do
     LQuery := RightStr(LQuery, Length(LQuery) - 1);
 
-  LStrings := TStringList.Create;
-  try
-    LStrings.Delimiter := cQUERY_SEPARATOR;
-    LStrings.StrictDelimiter := True;
-    LStrings.DelimitedText := LQuery;
-    for LIndex := 0 to LStrings.Count - 1 do
-      FQueryTokens.Add(LStrings.Names[LIndex], LStrings.ValueFromIndex[LIndex]);
-  finally
-    LStrings.Free;
-  end;
+  LQueryItems := SplitString(LQuery, cQUERY_SEPARATOR);
+  for LQueryItem in LQueryItems do
+    FQueryTokens.Add(LQueryItem.Substring(0, LQueryItem.IndexOf('=')),
+                     LQueryItem.Substring(LQueryItem.IndexOf('=') + 1));
 end;
 
 procedure TRESTQueryParse.SetCount(const Value: Variant);
@@ -400,12 +402,13 @@ begin
   if AValue = '' then
     Exit;
 
-  LSplitPoints := 0;
-  for LFor := 1 to AValue.Length do
+  LSplitPoints := 1;
+  for LFor := 1 to Length(AValue) do
     if IsDelimiter(ADelimiters, AValue, LFor) then
       Inc(LSplitPoints);
 
-  SetLength(Result, LSplitPoints +1);
+  SetLength(Result, LSplitPoints);
+
   LStartIdx := 1;
   LCurrentSplit := 0;
   repeat
@@ -414,11 +417,11 @@ begin
     begin
       Result[LCurrentSplit] := Copy(AValue, LStartIdx, LFoundIdx - LStartIdx);
       Inc(LCurrentSplit);
-      LStartIdx := LFoundIdx +1;
+      LStartIdx := LFoundIdx + 1;
     end;
-  until LCurrentSplit = LSplitPoints;
+  until LCurrentSplit = LSplitPoints - 1;
 
-  Result[LSplitPoints] := Copy(AValue, LStartIdx, AValue.Length - LStartIdx +1);
+  Result[LSplitPoints - 1] := Copy(AValue, LStartIdx, Length(AValue) - LStartIdx + 1);
 end;
 
 end.

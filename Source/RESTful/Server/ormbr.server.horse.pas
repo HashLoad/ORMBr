@@ -39,10 +39,8 @@ type
     const cCONTENTTYPE = 'application/json; charset=UTF-8';
     procedure AddResources;
   public
-    constructor Create(AOwner: TComponent); overload; override;
-    constructor Create(AOwner: TComponent; const AConnection: IDBConnection;
-      const AAPIAddress: String = ''); overload;
-    constructor Create(const AConnection: IDBConnection;
+    constructor Create(AOwner: TComponent;
+      const AConnection: IDBConnection;
       const AAPIAddress: String = ''); overload;
     destructor Destroy; override;
     class function GetConnection: IDBConnection;
@@ -57,10 +55,11 @@ uses
 
 { TRESTServerHorse }
 
-constructor TRESTServerHorse.Create(AOwner: TComponent; const AConnection: IDBConnection;
-      const AAPIAddress: String = '');
+constructor TRESTServerHorse.Create(AOwner: TComponent;
+  const AConnection: IDBConnection;
+  const AAPIAddress: String = '');
 begin
-  inherited Create(AOwner);
+//  inherited Create(AOwner);
   FConnection := AConnection;
   if AAPIAddress = '' then
     FAPIAddress := 'api/ormbr/:resource'
@@ -74,17 +73,6 @@ begin
   end;
   // Define as rotas para no horse e verbos
   AddResources;
-end;
-
-constructor TRESTServerHorse.Create(const AConnection: IDBConnection;
-  const AAPIAddress: String);
-begin
-  Create(nil, AConnection, AAPIAddress);
-end;
-
-constructor TRESTServerHorse.Create(AOwner: TComponent);
-begin
-  raise Exception.Create('Use constructors with parameters [Connection] and [Api Address]!');
 end;
 
 destructor TRESTServerHorse.Destroy;

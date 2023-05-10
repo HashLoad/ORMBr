@@ -40,6 +40,7 @@ uses
   Generics.Collections,
   ormbr.core.consts,
   ormbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.explorer,
   dbcbr.mapping.classes,
   dbcbr.mapping.attributes;

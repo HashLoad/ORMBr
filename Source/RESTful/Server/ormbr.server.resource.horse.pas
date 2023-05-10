@@ -33,15 +33,15 @@ type
   public
     constructor Create; overload; virtual;
     destructor Destroy; override;
-    function select(AResource: String;
-                    AParams: THorseCoreParam;
-                    AQuery: THorseCoreParam): string; overload;
-    function insert(AResource: String;
-                    AValue: String): String; overload;
-    function update(AResource: String;
-                    AValue: String): String; overload;
-    function delete(AResource: String;
-                    AFilter: String = ''): String; overload;
+    function select(const AResource: String;
+                    const AParams: THorseCoreParam;
+                    const AQuery: THorseCoreParam): string; overload;
+    function insert(const AResource: String;
+                    const AValue: String): String; overload; override;
+    function update(const AResource: String;
+                    const AValue: String): String; overload; override;
+    function delete(const AResource: String;
+                    const AFilter: String = ''): String; overload;
   end;
 
 implementation
@@ -62,9 +62,9 @@ begin
   inherited;
 end;
 
-function TAppResource.select(AResource: String;
-                             AParams: THorseCoreParam;
-                             AQuery: THorseCoreParam): string;
+function TAppResource.select(const AResource: String;
+                             const AParams: THorseCoreParam;
+                             const AQuery: THorseCoreParam): string;
 var
   LQuery: TRESTQueryParse;
 begin
@@ -94,20 +94,20 @@ begin
   end;
 end;
 
-function TAppResource.insert(AResource: String;
-                             AValue: String): String;
+function TAppResource.insert(const AResource: String;
+                             const AValue: String): String;
 begin
   Result := inherited insert(AResource, AValue);
 end;
 
-function TAppResource.update(AResource: String;
-                             AValue: String): String;
+function TAppResource.update(const AResource: String;
+                             const AValue: String): String;
 begin
   Result := inherited update(AResource, AValue);
 end;
 
-function TAppResource.delete(AResource: String;
-                             AFilter: String): String;
+function TAppResource.delete(const AResource: String;
+                             const AFilter: String): String;
 var
   LQuery: TRESTQueryParse;
 begin

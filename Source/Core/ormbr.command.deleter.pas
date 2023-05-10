@@ -34,6 +34,7 @@ uses
   Types,
   ormbr.command.abstract,
   dbebr.factory.interfaces,
+  dbcbr.mapping.popular,
   dbcbr.rtti.helper;
 
 type

@@ -27,6 +27,8 @@ uses
   dbcbr.rtti.helper,
   dbcbr.mapping.classes,
   dbcbr.mapping.attributes,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.popular,
   dbebr.factory.interfaces,
   ormbr.core.consts,
   ormbr.types.blob,
@@ -78,7 +80,6 @@ type
 implementation
 
 uses
-  dbcbr.mapping.explorer,
   ormbr.objects.helper;
 
 { TRESTObjectSetSession<M> }

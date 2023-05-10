@@ -43,6 +43,7 @@ uses
   ormbr.objects.helper,
   ormbr.objects.utils,
   dbebr.factory.interfaces,
+  dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.rtti.helper,
   dbcbr.mapping.explorer,

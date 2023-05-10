@@ -29,6 +29,7 @@ uses
   dbcbr.types.mapping,
   dbcbr.rtti.helper,
   dbcbr.mapping.explorer,
+  dbcbr.mapping.popular,
   dbebr.factory.interfaces,
   ormbr.core.consts,
   ormbr.objects.helper,
