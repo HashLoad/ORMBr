@@ -3,6 +3,7 @@ unit ormbr.dependencies.executor;
 interface
 
 uses
+  Forms,
   ormbr.dependencies.interfaces,
   System.Generics.Collections;
 
@@ -48,7 +49,10 @@ var
 begin
   result := Self;
   for i := 0 to Pred(FCommands.Count) do
+  begin
     FCommands[i].Execute;
+    Application.ProcessMessages;
+  end;
 end;
 
 class function TORMBrDependenciesExecutor.New: IORMBrDependenciesExecutor;

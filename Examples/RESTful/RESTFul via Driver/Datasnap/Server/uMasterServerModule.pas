@@ -12,8 +12,8 @@ uses
   Datasnap.DSSession,
   System.Generics.Collections,
   /// ORMBr Conexão database
-  ormbr.factory.firedac,
-  ormbr.factory.interfaces,
+  dbebr.factory.firedac,
+  dbebr.factory.interfaces,
   /// ORMBr
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
@@ -49,8 +49,7 @@ implementation
 
 uses
   /// ORMBr JSON
-  ormbr.rest.json,
-  ormbr.json.utils,
+  ormbr.json,
   /// Datamodule
   uDataModuleServer;
 
@@ -68,7 +67,7 @@ begin
       if LMaster <> nil then
         FMaster.Insert(LMaster);
 
-      Result := TORMBrJSONUtil
+      Result := TORMBrJson
                   .JSONStringToJSONValue('{"message":"registro inserido com sucesso!", "params":[{"master_id":' + IntToStr(LMaster.master_id) +'}]}');
     finally
       LMaster.Free;
@@ -76,7 +75,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := TORMBrJSONUtil.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
+      Result := TORMBrJson.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
     end;
   end;
 end;
@@ -89,7 +88,7 @@ begin
     LMaster := FMaster.Find(AID);
     try
       FMaster.Delete(LMaster);
-      Result := TORMBrJSONUtil
+      Result := TORMBrJson
                   .JSONStringToJSONValue('{"message":"Dados excluídos do banco com sucesso!!!"}');
     finally
       if LMaster <> nil then
@@ -98,7 +97,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := TORMBrJSONUtil.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
+      Result := TORMBrJson.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
     end;
   end;
 end;
@@ -118,7 +117,7 @@ begin
     /// <summary>
     /// Retorna  JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;
@@ -133,7 +132,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     if LMasterList <> nil then
       LMasterList.Free;
@@ -151,7 +150,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     if LMasterList <> nil then
       LMasterList.Free;
@@ -167,7 +166,7 @@ begin
     /// <summary>
     /// Retorna  JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;
@@ -187,7 +186,7 @@ begin
         FMaster.Modify(LMasterOld);
         FMaster.Update(LMasterNew);
       end;
-      Result := TORMBrJSONUtil
+      Result := TORMBrJson
                   .JSONStringToJSONValue('{"message":"Dados alterado no banco com sucesso!!!"}');
     finally
       if LMasterOld <> nil then
@@ -198,7 +197,7 @@ begin
   except
     on E: Exception do
     begin
-      Result := TORMBrJSONUtil.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
+      Result := TORMBrJson.JSONStringToJSONValue('{"result":"' + E.Message + '"}');
     end;
   end;
 end;
@@ -212,7 +211,7 @@ begin
     /// <summary>
     /// Retorna  JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectToJSONValue(LMaster);
+    Result := TORMBrJson.JSONObjectToJSONValue(LMaster);
   finally
     LMaster.Free;
   end;

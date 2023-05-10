@@ -35,7 +35,7 @@ interface
 
 uses
   Rtti,
-  TypInfo, {Delphi 2010}
+  TypInfo,
   Variants,
   SysUtils,
   Generics.Collections,
@@ -50,7 +50,6 @@ uses
   dbcbr.mapping.explorer;
 
 type
-  // M - Object M
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
   protected
     FSession: TSessionAbstract<M>;
@@ -185,10 +184,10 @@ begin
     if not (ACascadeAction in LAssociation.CascadeActions) then
       Continue;
 
-    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToOne, TMultiplicity.ManyToOne] then
       OneToOneCascadeActionsExecute(AObject, LAssociation, ACascadeAction)
     else
-    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToMany, TMultiplicity.ManyToMany] then
       OneToManyCascadeActionsExecute(AObject, LAssociation, ACascadeAction);
   end;
 end;
@@ -276,7 +275,7 @@ begin
   for LFor := 0 to LObjectList.Count -1 do
   begin
     LObject := LObjectList.Items[LFor];
-    if ACascadeAction = CascadeInsert then // Insert
+    if ACascadeAction = TCascadeAction.CascadeInsert then // Insert
     begin
       FSession.Insert(LObject);
       // Popula as propriedades de relacionamento com os valores do master
@@ -289,13 +288,13 @@ begin
         SetAutoIncValueChilds(LObject, LColumn);
     end
     else
-    if ACascadeAction = CascadeDelete then // Delete
+    if ACascadeAction = TCascadeAction.CascadeDelete then // Delete
     begin
-      CascadeActionsExecute(LObject, CascadeDelete);
+      CascadeActionsExecute(LObject, TCascadeAction.CascadeDelete);
       FSession.Delete(LObject);
     end
     else
-    if ACascadeAction = CascadeUpdate then // Update
+    if ACascadeAction = TCascadeAction.CascadeUpdate then // Update
     begin
       LKey := GenerateKey(LObject);
       if FObjectState.TryGetValue(LKey, LObjectKey) then
@@ -309,7 +308,7 @@ begin
         FSession.Insert(LObject);
     end;
     // Executa comando em cascade de cada objeto da lista
-    if not (ACascadeAction = CascadeDelete) then
+    if not (ACascadeAction = TCascadeAction.CascadeDelete) then
       CascadeActionsExecute(LObject, ACascadeAction);
   end;
 end;
@@ -331,7 +330,7 @@ begin
   LObject := LValue.AsObject;
   if LObject = nil then
     Exit;
-  if ACascadeAction = CascadeInsert then // Insert
+  if ACascadeAction = TCascadeAction.CascadeInsert then // Insert
   begin
     FSession.Insert(LObject);
     // Popula as propriedades de relacionamento com os valores do master
@@ -344,13 +343,13 @@ begin
       SetAutoIncValueChilds(LObject, LColumn);
   end
   else
-  if ACascadeAction = CascadeDelete then // Delete
+  if ACascadeAction = TCascadeAction.CascadeDelete then // Delete
   begin
-    CascadeActionsExecute(LObject, CascadeDelete);
+    CascadeActionsExecute(LObject, TCascadeAction.CascadeDelete);
     FSession.Delete(LObject);
   end
   else
-  if ACascadeAction = CascadeUpdate then // Update
+  if ACascadeAction = TCascadeAction.CascadeUpdate then // Update
   begin
     LKey := GenerateKey(LObject);
     if FObjectState.TryGetValue(LKey, LObjectKey) then
@@ -374,7 +373,7 @@ begin
     end;
   end;
   // Executa comando em cascade de cada objeto da lista
-  if not (ACascadeAction = CascadeDelete) then
+  if not (ACascadeAction = TCascadeAction.CascadeDelete) then
     CascadeActionsExecute(LObject, ACascadeAction);
 end;
 
@@ -390,12 +389,12 @@ begin
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+    if not (TCascadeAction.CascadeAutoInc in LAssociation.CascadeActions) then
       Continue;
-    if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToOne, TMultiplicity.ManyToOne] then
       SetAutoIncValueOneToOne(AObject, LAssociation, AColumn.ColumnProperty)
     else
-    if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+    if LAssociation.Multiplicity in [TMultiplicity.OneToMany, TMultiplicity.ManyToMany] then
       SetAutoIncValueOneToMany(AObject, LAssociation, AColumn.ColumnProperty);
   end;
 end;

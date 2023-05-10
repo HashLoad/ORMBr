@@ -34,7 +34,7 @@ interface
 uses
   DB,
   Rtti,
-  TypInfo, {Delphi 2010}
+  TypInfo,
   Classes,
   SysUtils,
   StrUtils,
@@ -176,8 +176,8 @@ begin
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
-  TBind.Instance.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
-  TBind.Instance.SetDataDictionary(ADataSet, FCurrentInternal);
+  Bind.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
+  Bind.SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
   // Variável que identifica o campo que guarda o estado do registro.
@@ -206,7 +206,7 @@ procedure TDataSetBaseAdapter<M>.Save(AObject: M);
 begin
   // Aualiza o DataSet com os dados a variável interna
   FOrmDataSet.Edit;
-  TBind.Instance.SetPropertyToField(AObject, FOrmDataSet);
+  Bind.SetPropertyToField(AObject, FOrmDataSet);
   FOrmDataSet.Post;
 end;
 
@@ -282,7 +282,7 @@ var
   LMethod: TMethod;
   LMethodNil: TMethod;
 begin
-  LClassType := TRttiSingleton.GetInstance.GetRttiType(FOrmDataSet.ClassType);
+  LClassType := RttiSingleton.GetRttiType(FOrmDataSet.ClassType);
   for LProperty in LClassType.GetProperties do
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
@@ -308,17 +308,19 @@ var
   LProperty: TRttiProperty;
   LAssociation: Association;
 begin
-  LRttiType := TRttiSingleton.GetInstance.GetRttiType(AObject.ClassType);
+  LRttiType := RttiSingleton.GetRttiType(AObject.ClassType);
   for LProperty in LRttiType.GetProperties do
   begin
     for LAssociation in LProperty.GetAssociation do
     begin
       if LAssociation = nil then
         Continue;
-      if LAssociation.Multiplicity in [OneToOne, ManyToOne] then
+      if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
+                                       TMultiplicity.ManyToOne] then
         ExecuteOneToOne(AObject, LProperty, ADatasetBase)
       else
-      if LAssociation.Multiplicity in [OneToMany, ManyToMany] then
+      if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
+                                       TMultiplicity.ManyToMany] then
         ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
     end;
   end;
@@ -346,7 +348,7 @@ begin
     while not ADatasetBase.FOrmDataSet.Eof do
     begin
       // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBind.Instance.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
+      Bind.SetFieldToProperty(ADatasetBase.FOrmDataSet, LObject);
       // Próximo registro
       ADatasetBase.FOrmDataSet.Next;
     end;
@@ -391,7 +393,7 @@ begin
       LObjectType := LPropertyType.AsInstance.MetaclassType.Create;
       LObjectType.MethodCall('Create', []);
       // Popula o objeto M e o adiciona na lista e objetos com o registro do DataSet.
-      TBind.Instance.SetFieldToProperty(LDataSet, LObjectType);
+      Bind.SetFieldToProperty(LDataSet, LObjectType);
 
       LObjectList := AProperty.GetNullableValue(TObject(AObject)).AsObject;
       LObjectList.MethodCall('Add', [LObjectType]);
@@ -417,7 +419,7 @@ var
   LMethod: TMethod;
   LMethodNil: TMethod;
 begin
-  LClassType := TRttiSingleton.GetInstance.GetRttiType(FOrmDataSet.ClassType);
+  LClassType := RttiSingleton.GetRttiType(FOrmDataSet.ClassType);
   for LProperty in LClassType.GetProperties do
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
@@ -749,7 +751,7 @@ begin
     if not LForeignKey.FromColumns.Contains(AColumnsNameRef) then
       Continue;
 
-    if LForeignKey.RuleUpdate = Cascade then
+    if LForeignKey.RuleUpdate = TRuleAction.Cascade then
       Exit(True);
   end;
 end;
@@ -769,8 +771,7 @@ begin
   if FOrmDataSet.RecordCount = 0 then
     Exit(FCurrentInternal);
 
-  TBind.Instance
-       .SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
+  Bind.SetFieldToProperty(FOrmDataSet, TObject(FCurrentInternal));
 
   for LDataSetChild in FMasterObject.Values do
     LDataSetChild.FillMastersClass(LDataSetChild, FCurrentInternal);
@@ -792,7 +793,8 @@ begin
   inherited;
   if FOrmDataSet.RecordCount = 0 then
     Exit;
-  LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(FCurrentInternal.ClassType);
+  LPrimaryKey := TMappingExplorer
+                   .GetMappingPrimaryKey(FCurrentInternal.ClassType);
   if LPrimaryKey = nil then
     Exit;
   FOrmDataSet.DisableControls;
@@ -805,8 +807,10 @@ begin
       begin
         Name := LPrimaryKey.Columns.Items[LFor];
         ParamType := ptInput;
-        DataType := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).DataType;
-        Value := FOrmDataSet.FieldByName(LPrimaryKey.Columns.Items[LFor]).Value;
+        DataType := FOrmDataSet.FieldByName(LPrimaryKey.Columns
+                                                       .Items[LFor]).DataType;
+        Value := FOrmDataSet.FieldByName(LPrimaryKey.Columns
+                                                    .Items[LFor]).Value;
       end;
     end;
     if LParams.Count > 0 then
@@ -844,12 +848,13 @@ var
   LFor: Integer;
 begin
   // Association
-  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer
+                     .GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+    if not (TCascadeAction.CascadeAutoInc in LAssociation.CascadeActions) then
       Continue;
     LDataSetChild := FMasterObject.Items[LAssociation.ClassNameRef];
     if LDataSetChild <> nil then
@@ -918,12 +923,13 @@ begin
   if not Assigned(FOwnerMasterObject) then
     Exit;
   LDataSetMaster := TDataSetBaseAdapter<M>(FOwnerMasterObject);
-  LAssociations := TMappingExplorer.GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer
+                     .GetMappingAssociation(LDataSetMaster.FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (CascadeAutoInc in LAssociation.CascadeActions) then
+    if not (TCascadeAction.CascadeAutoInc in LAssociation.CascadeActions) then
       Continue;
     for LFor := 0 to LAssociation.ColumnsName.Count -1 do
     begin
@@ -932,7 +938,8 @@ begin
       if LField = nil then
         Continue;
       FOrmDataSet
-        .FieldByName(LAssociation.ColumnsNameRef.Items[LFor]).Value := LField.Value;
+        .FieldByName(LAssociation.ColumnsNameRef
+                                 .Items[LFor]).Value := LField.Value;
     end;
   end;
 end;
@@ -953,12 +960,14 @@ begin
     end;
   end;
   if AValue <> nil then
-    TDataSetBaseAdapter<M>(AValue).FMasterObject.Add(FCurrentInternal.ClassName, Self);
+    TDataSetBaseAdapter<M>(AValue).FMasterObject
+                                  .Add(FCurrentInternal.ClassName, Self);
 
   FOwnerMasterObject := AValue;
 end;
 
-procedure TDataSetBaseAdapter<M>.ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
+procedure TDataSetBaseAdapter<M>.ValideFieldEvents(
+  const AFieldEvents: TFieldEventsMappingList);
 var
   LFor: Integer;
   LField: TField;
@@ -969,19 +978,19 @@ begin
     if LField = nil then
       Continue;
 
-    if onSetText in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onSetText in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnSetText) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnSetText()', LField.FieldName]);
 
-    if onGetText in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onGetText in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnGetText) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnGetText()', LField.FieldName]);
 
-    if onChange in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onChange in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnChange) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnChange()', LField.FieldName]);
 
-    if onValidate in AFieldEvents.Items[LFor].Events then
+    if TFieldEvent.onValidate in AFieldEvents.Items[LFor].Events then
       if not Assigned(LField.OnValidate) then
         raise Exception.CreateFmt(cFIELDEVENTS, ['OnValidate()', LField.FieldName]);
   end;

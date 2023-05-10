@@ -23,8 +23,7 @@ uses
 //  ormbr.rest.json,
 //  ormbr.json.utils,
   ormbr.json,
-  FMX.ScrollBox, FMX.Memo, REST.JSON, FMX.Memo.Types,
-  FireDAC.Phys.SQLiteWrapper.Stat;
+  FMX.ScrollBox, FMX.Memo, REST.JSON, FMX.Memo.Types;
 
 type
   TForm2 = class(TForm)

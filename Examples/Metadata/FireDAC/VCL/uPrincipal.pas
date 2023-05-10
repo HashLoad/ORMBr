@@ -24,7 +24,7 @@ uses
   dbcbr.ddl.commands,
 
   FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
-  FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Phys.SQLiteWrapper.Stat;
+  FireDAC.DApt, FireDAC.Comp.DataSet;
 
 type
   TForm1 = class(TForm)

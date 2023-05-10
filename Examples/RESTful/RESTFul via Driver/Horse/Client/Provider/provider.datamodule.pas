@@ -6,7 +6,6 @@ uses
   DB,
   SysUtils,
   Classes,
-  ormbr.rest.classes,
   ormbr.client,
   ormbr.client.base,
   ormbr.client.methods,
@@ -24,7 +23,6 @@ uses
 
 type
   TProviderDM = class(TDataModule)
-    RESTClientHorse1: TRESTClientHorse;
     FDMaster: TFDMemTable;
     FDDetail: TFDMemTable;
     FDClient: TFDMemTable;
@@ -36,10 +34,13 @@ type
       ASubResource, ARequestMethod, AMessage: string;
       const AResponseCode: Integer);
     procedure RESTClientHorse1Authentication;
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    RESTClientHorse1: TRESTClientHorse;
   end;
 
 //var
@@ -50,6 +51,23 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TProviderDM.DataModuleCreate(Sender: TObject);
+begin
+  RESTClientHorse1 := TRESTClientHorse.Create(nil);
+  RESTClientHorse1.Host := 'localhost';
+  RESTClientHorse1.Port := 9000;
+  RESTClientHorse1.ORMBrServerUse := True;
+  RESTClientHorse1.OnAuthentication := RESTClientHorse1Authentication;
+  RESTClientHorse1.OnBeforeCommand := RESTClientHorse1BeforeCommand;
+  RESTClientHorse1.OnAfterCommand := RESTClientHorse1AfterCommand;
+//  RESTClientHorse1.OnErrorCommand := RESTClientHorse1ErrorCommand;
+end;
+
+procedure TProviderDM.DataModuleDestroy(Sender: TObject);
+begin
+  RESTClientHorse1.Free;
+end;
 
 procedure TProviderDM.RESTClientHorse1AfterCommand(AStatusCode: Integer;
   var AResponseString: string; ARequestMethod: string);
@@ -68,7 +86,7 @@ end;
 
 procedure TProviderDM.RESTClientHorse1BeforeCommand(ARequestMethod: string);
 begin
-  //
+  // Pega aqui os erros e criei seu proprio log.
 end;
 
 procedure TProviderDM.RESTClientHorse1ErrorCommand(const AURLBase, AResource,

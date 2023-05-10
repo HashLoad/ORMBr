@@ -16,16 +16,19 @@ uses
   orion.model.redesocialcontato,
   ormbr.types.blob, 
   ormbr.types.lazy, 
-  ormbr.types.mapping, 
-  ormbr.types.nullable, 
-  ormbr.mapping.classes, 
-  ormbr.mapping.register, 
-  ormbr.mapping.attributes; 
+  dbcbr.types.mapping,
+  ormbr.types.nullable,
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
   [Table('contato', '')]
-  [PrimaryKey('id', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('id', TAutoIncType.NotInc,
+                    TGeneratorType.NoneInc,
+                    TSortingOrder.NoSort,
+                    False, 'Chave primária')]
   Tcontato = class
   private
     { Private declarations } 
@@ -78,36 +81,45 @@ type
     property bairro: Nullable<String> read Fbairro write Fbairro;
 
     [Column('estado_id', ftString, 2)]
-    [ForeignKey('fk_contato_estado', 'estado_id', 'estado', 'id', SetNull, Cascade)]
+    [ForeignKey('fk_contato_estado', 'estado_id', 'estado', 'id', TRuleAction.SetNull, TRuleAction.Cascade)]
     [Dictionary('estado_id', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property estado_id: Nullable<String> read Festado_id write Festado_id;
 
     [Column('cidade_id', ftString, 7)]
-    [ForeignKey('fk_contato_cidade', 'cidade_id', 'cidade', 'id', SetNull, Cascade)]
+    [ForeignKey('fk_contato_cidade', 'cidade_id', 'cidade', 'id', TRuleAction.SetNull, TRuleAction.Cascade)]
     [Dictionary('cidade_id', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property cidade_id: Nullable<String> read Fcidade_id write Fcidade_id;
 
     [Column('empresa_id', ftInteger)]
-    [ForeignKey('fk_contato_empresa', 'empresa_id', 'empresa', 'id', Cascade, Cascade)]
+    [ForeignKey('fk_contato_empresa', 'empresa_id', 'empresa', 'id', TRuleAction.Cascade, TRuleAction.Cascade)]
     [Dictionary('empresa_id', 'Mensagem de validação', '', '', '', taCenter)]
     property empresa_id: Nullable<Integer> read Fempresa_id write Fempresa_id;
 
-    [Association(OneToOne,'cidade_id','cidade','id')]
+    [Association(TMultiplicity.OneToOne,'cidade_id','cidade','id')]
     property cidade: Tcidade read Fcidade write Fcidade;
 
-    [Association(OneToOne,'estado_id','estado','id')]
+    [Association(TMultiplicity.OneToOne,'estado_id','estado','id')]
     property estado: Testado read Festado write Festado;
 
-    [Association(OneToMany, 'id', 'emailcontato', 'contato_id')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+    [Association(TMultiplicity.OneToMany, 'id', 'emailcontato', 'contato_id')]
+    [CascadeActions([TCascadeAction.CascadeAutoInc,
+                     TCascadeAction.CascadeInsert,
+                     TCascadeAction.CascadeUpdate,
+                     TCascadeAction.CascadeDelete])]
     property EmailContato: TObjectList<Temailcontato> read FEmailContato write FEmailContato;
 
-    [Association(OneToMany, 'id', 'telefonecontato', 'contato_id')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+    [Association(TMultiplicity.OneToMany, 'id', 'telefonecontato', 'contato_id')]
+    [CascadeActions([TCascadeAction.CascadeAutoInc,
+                     TCascadeAction.CascadeInsert,
+                     TCascadeAction.CascadeUpdate,
+                     TCascadeAction.CascadeDelete])]
     property TelefoneContato: TObjectList<Ttelefonecontato> read FTelefoneContato write FTelefoneContato;
 
-    [Association(OneToMany, 'id', 'redesocialcontato', 'contato_id')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+    [Association(TMultiplicity.OneToMany, 'id', 'redesocialcontato', 'contato_id')]
+    [CascadeActions([TCascadeAction.CascadeAutoInc,
+                     TCascadeAction.CascadeInsert,
+                     TCascadeAction.CascadeUpdate,
+                     TCascadeAction.CascadeDelete])]
     property RedeSocialContato: TObjectList<Tredesocialcontato> read FRedeSocialContato write FRedeSocialContato;
 
   end;

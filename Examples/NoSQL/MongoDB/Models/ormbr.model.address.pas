@@ -27,7 +27,7 @@ type
     Fzipcode: String;
   public
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('building', ftString, 4)]
     [Dictionary('building','Mensagem de validação','','','',taCenter)]
     property building: String read Fbuilding write Fbuilding;

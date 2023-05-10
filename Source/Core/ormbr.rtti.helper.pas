@@ -38,6 +38,7 @@ uses
   SysUtils,
   StrUtils,
   TypInfo,
+  jsonbr.utils,
   dbcbr.rtti.helper,
   ormbr.types.nullable;
 
@@ -48,8 +49,9 @@ type
 //      PTypeInfo; AValue: Variant);
     function GetValueNullable(const AInstance: Pointer; const ATypeInfo:
       PTypeInfo): TValue;
-    procedure SetValueNullable(const AInstance: Pointer; const ATypeInfo:
-      PTypeInfo; const AValue: Variant);
+    procedure SetValueNullable(const AInstance: Pointer;
+      const ATypeInfo: PTypeInfo; const AValue: Variant;
+      const AUseISO8601DateFormat: Boolean = True); overload;
   end;
 
 implementation
@@ -97,7 +99,8 @@ end;
 //end;
 
 procedure TRttiPropertyHelper_.SetValueNullable(const AInstance: Pointer;
-  const ATypeInfo: PTypeInfo; const AValue: Variant);
+  const ATypeInfo: PTypeInfo; const AValue: Variant;
+  const AUseISO8601DateFormat: Boolean);
 begin
   if ATypeInfo = TypeInfo(Nullable<Integer>) then
     if TVarData(AValue).VType <= varNull then
@@ -112,40 +115,52 @@ begin
       Self.SetValue(AInstance, TValue.From(Nullable<Int64>.Create(Int64(AValue))))
   else
   if ATypeInfo = TypeInfo(Nullable<String>) then
-    Self.SetValue(AInstance, TValue.From(Nullable<String>.Create(AValue)))
+    Self.SetValue(AInstance, TValue.From(Nullable<String>
+                                   .Create(AValue)))
   else
   if ATypeInfo = TypeInfo(Nullable<Currency>) then
     if TVarData(AValue).VType <= varNull then
-      Self.SetValue(AInstance, TValue.From(Nullable<Currency>.Create(AValue)))
+      Self.SetValue(AInstance, TValue.From(Nullable<Currency>
+                                     .Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<Currency>.Create(Currency(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<Currency>
+                                     .Create(Currency(AValue))))
   else
   if ATypeInfo = TypeInfo(Nullable<Double>) then
     if TVarData(AValue).VType <= varNull then
-      Self.SetValue(AInstance, TValue.From(Nullable<Double>.Create(AValue)))
+      Self.SetValue(AInstance, TValue.From(Nullable<Double>
+                                     .Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<Double>.Create(Double(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<Double>
+                                     .Create(Double(AValue))))
   else
   if ATypeInfo = TypeInfo(Nullable<Boolean>) then
-    Self.SetValue(AInstance, TValue.From(Nullable<Boolean>.Create(AValue)))
+    Self.SetValue(AInstance, TValue.From(Nullable<Boolean>
+                                   .Create(AValue)))
   else
   if ATypeInfo = TypeInfo(Nullable<TDateTime>) then
     if TVarData(AValue).VType <= varNull then
-      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>.Create(AValue)))
+      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>
+                                     .Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>.Create(TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<TDateTime>
+                                     .Create(Iso8601ToDateTime(AValue, AUseISO8601DateFormat))))
   else
   if ATypeInfo = TypeInfo(Nullable<TDate>) then
     if TVarData(AValue).VType <= varNull then
-      Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(AValue)))
+      Self.SetValue(AInstance, TValue.From(Nullable<TDate>
+                                     .Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<TDate>.Create(TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))))
+      Self.SetValue(AInstance, TValue.From(Nullable<TDate>
+                                     .Create(Iso8601ToDateTime(AValue, AUseISO8601DateFormat))))
   else
   if ATypeInfo = TypeInfo(Nullable<TTime>) then
     if TVarData(AValue).VType <= varNull then
-      Self.SetValue(AInstance, TValue.From(Nullable<TTime>.Create(AValue)))
+      Self.SetValue(AInstance, TValue.From(Nullable<TTime>
+                                     .Create(AValue)))
     else
-      Self.SetValue(AInstance, TValue.From(Nullable<TTime>.Create(TUtilSingleton.GetInstance.Iso8601ToDateTime(AValue))));
+      Self.SetValue(AInstance, TValue.From(Nullable<TTime>
+                                     .Create(Iso8601ToDateTime(AValue, AUseISO8601DateFormat))));
 end;
 
 end.

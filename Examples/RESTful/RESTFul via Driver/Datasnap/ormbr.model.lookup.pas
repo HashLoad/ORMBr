@@ -8,9 +8,9 @@ uses
   SysUtils, 
   Generics.Collections, 
   /// orm 
-  ormbr.mapping.attributes, 
-  ormbr.mapping.register,
-  ormbr.types.mapping;
+  dbcbr.mapping.attributes,
+  dbcbr.mapping.register,
+  dbcbr.types.mapping;
 
 type
   [Entity]
@@ -26,7 +26,7 @@ type
     Flookup_description: String;
   public
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('lookup_id', ftInteger)]
     [Dictionary('lookup_id','Mensagem de validação','','','',taCenter)]
     property lookup_id: Integer read Flookup_id write Flookup_id;

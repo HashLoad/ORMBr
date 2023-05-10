@@ -8,8 +8,8 @@ uses
   IPPeerServer, Datasnap.DSCommonServer, Datasnap.DSServer,
   Datasnap.DSHTTP, Datasnap.DSHTTPWebBroker, Web.HTTPApp,
 
-  ormbr.factory.interfaces,
-  ormbr.factory.firedac,
+  dbebr.factory.interfaces,
+  dbebr.factory.firedac,
   ormbr.server.datasnap,
   uDataModuleServer;
 

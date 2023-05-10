@@ -31,8 +31,6 @@ uses
   /// ORMBr Manager
   ormbr.manager.dataset,
   /// ORMBr REST Client
-  ormbr.client.base,
-  ormbr.client,
   ormbr.client.datasnap,
 
   FireDAC.Stan.Intf, FireDAC.Stan.Option,
@@ -71,7 +69,6 @@ type
     DBImage1: TDBImage;
     Memo1: TMemo;
     Button3: TButton;
-    RESTClientDataSnap1: TRESTClientDataSnap;
     DBEdit8: TDBEdit;
     procedure FormCreate(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -79,7 +76,8 @@ type
     procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
-    oManager: TManagerDataSet;
+    FManager: TManagerDataSet;
+    FRESTClientDataSnap: TRESTClientDataSnap;
   public
     { Public declarations }
   end;
@@ -96,7 +94,7 @@ uses
 
 procedure TForm3.Button2Click(Sender: TObject);
 begin
-  oManager.ApplyUpdates<Tmaster>(0);
+  FManager.ApplyUpdates<Tmaster>(0);
 end;
 
 procedure TForm3.Button3Click(Sender: TObject);
@@ -105,13 +103,13 @@ begin
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
-var
-  LMaster: TMaster;
 begin
-  RESTClientDataSnap1.AsConnection.SetCommandMonitor(TCommandMonitor.GetInstance);
+  FRESTClientDataSnap := TRESTClientDataSnap.Create(Self);
+  FRESTClientDataSnap.ORMBrServerUse := True;
+  FRESTClientDataSnap.SetCommandMonitor(TCommandMonitor.GetInstance);
 
-  oManager := TManagerDataSet.Create(RESTClientDataSnap1.AsConnection);
-  oManager.AddAdapter<Tmaster>(FDMaster, 3)
+  FManager := TManagerDataSet.Create(FRESTClientDataSnap.AsConnection);
+  FManager.AddAdapter<Tmaster>(FDMaster, 3)
           .AddAdapter<Tdetail, Tmaster>(FDDetail)
           .AddAdapter<Tclient, Tmaster>(FDClient)
           .AddAdapter<Tlookup>(FDLookup)
@@ -121,7 +119,7 @@ end;
 
 procedure TForm3.FormDestroy(Sender: TObject);
 begin
-  oManager.Free;
+  FManager.Free;
 end;
 
 end.

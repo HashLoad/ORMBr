@@ -10,8 +10,7 @@ uses
   Datasnap.DSSession,
   System.Generics.Collections,
   /// ORMBr JSON e DataSnap
-  ormbr.rest.json,
-  ormbr.json.utils,
+  ormbr.json,
   /// ORMBr Conexão database
   dbebr.factory.firedac,
   dbebr.factory.interfaces,
@@ -110,7 +109,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tlookup>(LLookupList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tlookup>(LLookupList);
   finally
     LLookupList.Free;
   end;
@@ -131,7 +130,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;
@@ -175,7 +174,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tmaster>(LMasterList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tmaster>(LMasterList);
   finally
     LMasterList.Free;
   end;

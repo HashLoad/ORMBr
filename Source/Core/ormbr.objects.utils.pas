@@ -41,6 +41,7 @@ uses
   Variants,
   Generics.Collections,
   /// orm
+  dbcbr.mapping.popular,
   dbcbr.mapping.attributes,
   dbcbr.mapping.classes,
   dbcbr.types.mapping;
@@ -74,12 +75,19 @@ type
     procedure CopyObject(ASourceObject, ATargetObject: TObject);
   end;
 
+function RttiSingleton: IRttiSingleton;
+
 implementation
 
 uses
   dbcbr.mapping.explorer,
   dbcbr.rtti.helper,
   ormbr.objects.helper;
+
+function RttiSingleton: IRttiSingleton;
+begin
+  Result := TRttiSingleton.GetInstance;
+end;
 
 { TRttiSingleton }
 

@@ -295,21 +295,4 @@ object Form3: TForm3
     Left = 354
     Top = 256
   end
-  object RESTClientDataSnap1: TRESTClientDataSnap
-    ProxyParams.BasicAuthentication = False
-    ProxyParams.ProxyPort = 0
-    Authenticator.AuthenticatorType = atNoAuth
-    Protocol = Http
-    Host = 'localhost'
-    Port = 211
-    MethodGETId = 'selectid'
-    MethodGETWhere = 'selectwhere'
-    MethodGETNextPacket = 'nextpacket'
-    MethodGETNextPacketWhere = 'nextpacketwhere'
-    APIContext = 'datasnap'
-    RESTContext = 'rest/ormbr/app'
-    ORMBrServerUse = True
-    Left = 96
-    Top = 46
-  end
 end

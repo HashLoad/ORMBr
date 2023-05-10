@@ -57,7 +57,7 @@ implementation
 
 function TCriteria.AsResultSet: IDBResultSet;
 begin
-  Result := FConnection.ExecuteSQL(FSQL);
+  Result := FConnection.CreateResultSet(FSQL);
 end;
 
 class function TCriteria.New: ICriteriaSet;
@@ -88,7 +88,7 @@ var
   LResultSet: IDBResultSet;
   LObject: M;
 begin
-  LResultSet := FConnection.ExecuteSQL(FSQL);
+  LResultSet := FConnection.CreateResultSet(FSQL);
   try
     if LResultSet.RecordCount = 0 then
       Exit(nil);
@@ -109,7 +109,7 @@ function TCriteria<M>.AsValue: M;
 var
   LResultSet: IDBResultSet;
 begin
-  LResultSet := FConnection.ExecuteSQL(FSQL);
+  LResultSet := FConnection.CreateResultSet(FSQL);
   try
     if LResultSet.RecordCount = 0 then
       Exit(nil);

@@ -38,8 +38,7 @@ uses
   SysUtils,
   Generics.Collections,
   /// orm
-  ormbr.objects.manager,
-  ormbr.objects.manager.abstract,
+  ormbr.command.executor,
   ormbr.session.abstract,
   ormbr.dataset.base.adapter,
   dbcbr.mapping.classes,
@@ -63,10 +62,10 @@ type
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
     procedure RefreshRecordWhere(const AWhere: String); override;
-    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
-    function NextPacketList: TObjectList<M>; overload; override;
-    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
-    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+//    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
+//    function NextPacketList: TObjectList<M>; overload; override;
+//    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
+//    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function SelectAssociation(const AObject: TObject): String; override;
   end;
 
@@ -83,19 +82,19 @@ begin
   inherited Create(APageSize);
   FOwner := AOwner;
   FConnection := AConnection;
-  FManager := TObjectManager<M>.Create(Self, AConnection, APageSize);
+  FCommandExecutor := TSQLCommandExecutor<M>.Create(Self, AConnection, APageSize);
 end;
 
 destructor TSessionDataSet<M>.Destroy;
 begin
-  FManager.Free;
+  FCommandExecutor.Free;
   inherited;
 end;
 
 function TSessionDataSet<M>.SelectAssociation(const AObject: TObject): String;
 begin
   inherited;
-  Result := FManager.SelectInternalAssociation(AObject);
+  Result := FCommandExecutor.SelectInternalAssociation(AObject);
 end;
 
 procedure TSessionDataSet<M>.OpenID(const AID: Variant);
@@ -103,7 +102,7 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  LDBResultSet := FManager.SelectInternalID(AID);
+  LDBResultSet := FCommandExecutor.SelectInternalID(AID);
   // Popula o DataSet em memória com os registros retornardos no comando SQL
   PopularDataSet(LDBResultSet);
 end;
@@ -114,10 +113,9 @@ var
 begin
   inherited;
   if ASQL = '' then
-    LDBResultSet := FManager.SelectInternalAll
+    LDBResultSet := FCommandExecutor.SelectInternalAll
   else
-    LDBResultSet := FManager.SelectInternal(ASQL);
-  // Popula o DataSet em memória com os registros retornardos no comando SQL
+    LDBResultSet := FCommandExecutor.SelectInternal(ASQL);
   PopularDataSet(LDBResultSet);
 end;
 
@@ -125,7 +123,7 @@ procedure TSessionDataSet<M>.OpenWhere(const AWhere: string;
   const AOrderBy: string);
 begin
   inherited;
-  OpenSQL(FManager.SelectInternalWhere(AWhere, AOrderBy));
+  OpenSQL(FCommandExecutor.SelectInternalWhere(AWhere, AOrderBy));
 end;
 
 procedure TSessionDataSet<M>.RefreshRecord(const AColumns: TParams);
@@ -142,13 +140,12 @@ begin
     if LFor < AColumns.Count -1 then
       LWhere := LWhere + ' AND ';
   end;
-  LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(LWhere, ''));
+  LDBResultSet := FCommandExecutor.SelectInternal(FCommandExecutor.SelectInternalWhere(LWhere, ''));
   // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;
-    TBind.Instance
-         .SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
+    Bind.SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
     FOwner.FOrmDataSet.Post;
   end;
 end;
@@ -158,13 +155,12 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  LDBResultSet := FManager.SelectInternal(FManager.SelectInternalWhere(AWhere, ''));
+  LDBResultSet := FCommandExecutor.SelectInternal(FCommandExecutor.SelectInternalWhere(AWhere, ''));
   // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;
-    TBind.Instance
-         .SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
+    Bind.SetFieldToField(LDBResultSet, FOwner.FOrmDataSet);
     FOwner.FOrmDataSet.Post;
   end;
 end;
@@ -174,105 +170,108 @@ var
   LDBResultSet: IDBResultSet;
 begin
   inherited;
-  LDBResultSet := FManager.NextPacket;
+  LDBResultSet := FCommandExecutor.NextPacket;
   if LDBResultSet.RecordCount > 0 then
-    /// <summary>
-    ///   Popula o DataSet em memória com os registros retornardos no comando SQL
-    /// </summary>
+    // Popula o DataSet em memória com os registros retornardos no comando SQL
     PopularDataSet(LDBResultSet)
   else
     FFetchingRecords := True;
 end;
 
-procedure TSessionDataSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
-begin
-  inherited;
-  if FFetchingRecords then
-    Exit;
+//procedure TSessionDataSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
+//begin
+//  inherited;
+//  if FFetchingRecords then
+//    Exit;
+//
+//  FPageNext := FPageNext + FPageSize;
+//  if FFindWhereUsed then
+//    FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
+//  else
+//    FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
+//  /// <summary>
+//  ///    if AObjectList <> nil then
+//  ///      if AObjectList.RecordCount = 0 then
+//  ///        FFetchingRecords := True;
+//  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
+//  ///  método NextPacketList() dentro do FCommandExecutor.
+//  /// </summary>
+//end;
 
-  FPageNext := FPageNext + FPageSize;
-  if FFindWhereUsed then
-    FManager.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
-  else
-    FManager.NextPacketList(AObjectList, FPageSize, FPageNext);
-  /// <summary>
-  ///    if AObjectList <> nil then
-  ///      if AObjectList.RecordCount = 0 then
-  ///        FFetchingRecords := True;
-  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-  ///  método NextPacketList() dentro do FManager.
-  /// </summary>
-end;
+//function TSessionDataSet<M>.NextPacketList: TObjectList<M>;
+//begin
+//  inherited;
+//  Result := nil;
+//  if FFetchingRecords then
+//    Exit;
+//
+//  FPageNext := FPageNext + FPageSize;
+//  if FFindWhereUsed then
+//    Result := FCommandExecutor.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
+//  else
+//    Result := FCommandExecutor.NextPacketList(FPageSize, FPageNext);
+//
+//  if Result = nil then
+//    Exit;
+//  if Result.Count > 0 then
+//    Exit;
+//
+//  FFetchingRecords := True;
+//end;
 
-function TSessionDataSet<M>.NextPacketList: TObjectList<M>;
-begin
-  inherited;
-  Result := nil;
-  if FFetchingRecords then
-    Exit;
+//function TSessionDataSet<M>.NextPacketList(const APageSize,
+//  APageNext: Integer): TObjectList<M>;
+//begin
+//  inherited;
+//  Result := nil;
+//  if FFetchingRecords then
+//    Exit;
+//
+//  Result := FCommandExecutor.NextPacketList(APageSize, APageNext);
+//  if Result = nil then
+//    Exit;
+//  if Result.Count > 0 then
+//    Exit;
+//
+//  FFetchingRecords := True;
+//end;
 
-  FPageNext := FPageNext + FPageSize;
-  if FFindWhereUsed then
-    Result := FManager.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
-  else
-    Result := FManager.NextPacketList(FPageSize, FPageNext);
-
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-
-  FFetchingRecords := True;
-end;
-
-function TSessionDataSet<M>.NextPacketList(const APageSize,
-  APageNext: Integer): TObjectList<M>;
-begin
-  inherited;
-  Result := nil;
-  if FFetchingRecords then
-    Exit;
-
-  Result := FManager.NextPacketList(APageSize, APageNext);
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-
-  FFetchingRecords := True;
-end;
-
-function TSessionDataSet<M>.NextPacketList(const AWhere, AOrderBy: String;
-  const APageSize, APageNext: Integer): TObjectList<M>;
-begin
-  inherited;
-  Result := nil;
-  if FFetchingRecords then
-    Exit;
-
-  Result := FManager.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
-  if Result = nil then
-    Exit;
-  if Result.Count > 0 then
-    Exit;
-
-  FFetchingRecords := True;
-end;
+//function TSessionDataSet<M>.NextPacketList(const AWhere, AOrderBy: String;
+//  const APageSize, APageNext: Integer): TObjectList<M>;
+//begin
+//  inherited;
+//  Result := nil;
+//  if FFetchingRecords then
+//    Exit;
+//
+//  Result := FCommandExecutor.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
+//  if Result = nil then
+//    Exit;
+//  if Result.Count > 0 then
+//    Exit;
+//
+//  FFetchingRecords := True;
+//end;
 
 procedure TSessionDataSet<M>.PopularDataSet(const ADBResultSet: IDBResultSet);
 begin
 //  FOrmDataSet.Locate(KeyFiels, KeyValues, Options);
 //  { TODO -oISAQUE : Procurar forma de verificar se o registro não já está em memória
 //  pela chave primaria }
-  while ADBResultSet.NotEof do
-  begin
-     FOwner.FOrmDataSet.Append;
-     TBind.Instance
-          .SetFieldToField(ADBResultSet, FOwner.FOrmDataSet);
-     FOwner.FOrmDataSet.Fields[0].AsInteger := -1;
-     FOwner.FOrmDataSet.Post;
+  try
+    while ADBResultSet.NotEof do
+    begin
+       FOwner.FOrmDataSet.Append;
+       Bind.SetFieldToField(ADBResultSet, FOwner.FOrmDataSet);
+       FOwner.FOrmDataSet.Fields[0].AsInteger := -1;
+       FOwner.FOrmDataSet.Post;
+    end;
+  finally
+    // Aqui o DataSet(FOrmDataSet) dessa sessão recebe os dados do select executado,
+    // em seguinda o Dataset interno ao driver selecionado é fechado,
+    // limpando assim os dados dele da memória.
+    ADBResultSet.Close;
   end;
-  ADBResultSet.Close;
 end;
 
 end.
