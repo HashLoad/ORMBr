@@ -46,6 +46,7 @@ uses
   ormbr.types.blob,
   ormbr.objects.helper,
   dbcbr.mapping.classes,
+  dbcbr.mapping.popular,
   dbcbr.types.mapping,
   dbcbr.mapping.explorer;
 

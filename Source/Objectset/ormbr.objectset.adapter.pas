@@ -39,6 +39,7 @@ uses
   ormbr.objects.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
+  dbcbr.mapping.popular,
   dbcbr.types.mapping;
 
 type

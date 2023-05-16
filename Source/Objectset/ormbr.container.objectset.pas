@@ -9,9 +9,11 @@ uses
   ormbr.container.objectset.interfaces,
   dbebr.factory.interfaces,
   ormbr.objectset.adapter,
-  ormbr.register.middleware;
 
-type
+  ormbr.register.middleware;
+
+
+type
   TContainerObjectSet<M: class, constructor> = class(TInterfacedObject, IContainerObjectSet<M>)
   protected
     FObjectSetAdapter: TObjectSetAdapter<M>;

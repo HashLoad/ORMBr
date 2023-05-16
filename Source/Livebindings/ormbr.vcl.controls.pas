@@ -91,6 +91,12 @@ type
     procedure SetName(const NewName: TComponentName); override;
   end;
 
+  // TButtonedEdit Component (Shadowing technique)
+  TListView = class(Vcl.ComCtrls.TListView)
+  protected
+    procedure SetName(const NewName: TComponentName); override;
+  end;
+
 implementation
 
 { TEdit }
@@ -179,6 +185,14 @@ begin
 end;
 
 procedure TButtonedEdit.SetName(const NewName: TComponentName);
+begin
+  inherited SetName(NewName);
+  TListControls.ListComponents.AddOrSetValue(NewName, Self);
+end;
+
+{ TListView }
+
+procedure TListView.SetName(const NewName: TComponentName);
 begin
   inherited SetName(NewName);
   TListControls.ListComponents.AddOrSetValue(NewName, Self);

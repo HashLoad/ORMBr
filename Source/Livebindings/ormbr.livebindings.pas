@@ -32,7 +32,10 @@ uses
   Controls,
   TypInfo,
   Bindings.Expression,
-  Bindings.Helper;
+  Bindings.Helper,
+  Data.Bind.ObjectScope,
+  Generics.Collections,
+  ormbr.controls.helpers;
 
 type
   LiveBindingsControl = class(TCustomAttribute)
@@ -48,15 +51,18 @@ type
     property Expression: String read FExpression;
   end;
 
-  TORMBrLivebindings = class(TObject)
+  TORMBrLivebindings = class
+  private
+    FBindingExpressions: TObjectList<TBindingExpression>;
   public
     constructor Create; virtual;
+    destructor Destroy; override;
   end;
 
 implementation
 
 uses
-  ormbr.controls.helpers;
+  Vcl.ComCtrls;
 
 constructor TORMBrLiveBindings.Create;
 var
@@ -67,7 +73,10 @@ var
   LLiveBindingsControl: LiveBindingsControl;
   LControl: TControl;
   LExpression: String;
+  LBindingExpressionObject: TBindingExpression;
+  LBindingExpressionComponent: TBindingExpression;
 begin
+  FBindingExpressions := TObjectList<TBindingExpression>.Create(True);
   LContext := TRttiContext.Create;
   try
     LType := LContext.GetType(Self.ClassType);
@@ -92,8 +101,9 @@ begin
           LExpression := Self.ClassName + '.' + LProperty.Name;
         // Add Components List
         TListControls.ListFieldNames.AddOrSetValue(LLiveBindingsControl.LinkControl, LLiveBindingsControl.FieldName);
+
         // Registro no LiveBindings
-        TBindings.CreateManagedBinding(
+        LBindingExpressionObject := TBindings.CreateManagedBinding(
               [
                         TBindings.CreateAssociationScope(
                                   [Associate(Self, Self.ClassName)])
@@ -106,7 +116,7 @@ begin
                                   LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
                         nil);
         // Component
-        TBindings.CreateManagedBinding(
+        LBindingExpressionComponent := TBindings.CreateManagedBinding(
               [
                         TBindings.CreateAssociationScope(
                                   [Associate(LControl, LLiveBindingsControl.LinkControl)])
@@ -118,6 +128,8 @@ begin
               ],
                                   Self.ClassName + '.' + LProperty.Name,
                         nil);
+        FBindingExpressions.Add(LBindingExpressionObject);
+        FBindingExpressions.Add(LBindingExpressionComponent);
       end;
     end;
   finally
@@ -137,6 +149,12 @@ end;
 constructor LiveBindingsControl.Create(const ALinkControl, AFieldName: String);
 begin
   Create(ALinkControl, AFieldName, '');
+end;
+
+destructor TORMBrLivebindings.Destroy;
+begin
+  FBindingExpressions.Free;
+  inherited;
 end;
 
 end.

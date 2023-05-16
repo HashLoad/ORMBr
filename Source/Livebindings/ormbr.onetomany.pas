@@ -35,8 +35,8 @@ uses
 
 type
   // Methods used to get the latest version of the object.
-  TFuncChild<M, D: class> = reference to function(ACurrentMaster: M): D;
-  TFuncChildList<M, D: class> = reference to function(ACurrentMaster: M): TObjectList<D>;
+  TFuncChild<M, D: class> = reference to function(const ACurrentMaster: M): D;
+  TFuncChildList<M, D: class> = reference to function(const ACurrentMaster: M): TObjectList<D>;
 
   TSyncChildBase = class;
   TSyncChildLinkArray = array of TSyncChildBase;
@@ -46,8 +46,8 @@ type
   private
     FChildArray: TSyncChildLinkArray;
     function GetChildBindSource: TBindSourceAdapter; virtual; abstract;
-    procedure OnAfterScroll(AAdapter: TBindSourceAdapter); virtual; abstract;
-    procedure OnBeforeScroll(AAdapter: TBindSourceAdapter); virtual; abstract;
+    procedure OnAfterScroll(const AAdapter: TBindSourceAdapter); virtual; abstract;
+    procedure OnBeforeScroll(const AAdapter: TBindSourceAdapter); virtual; abstract;
     procedure SetChildArray(const AValue: TSyncChildLinkArray);
   public
     destructor Destroy; override;
@@ -66,10 +66,11 @@ type
     FGetChild: TFuncChild<M, D>;
     FChildAdapter: TObjectBindSourceAdapter<D>;
     function GetChildBindSource: TBindSourceAdapter; override;
-    procedure OnAfterScroll(AAdapter: TBindSourceAdapter);  override;
-    procedure OnBeforeScroll(AAdapter: TBindSourceAdapter); override;
+    procedure OnAfterScroll(const AAdapter: TBindSourceAdapter); override;
+    procedure OnBeforeScroll(const AAdapter: TBindSourceAdapter); override;
   public
-    constructor Create(AOwner: M; AGetChild: TFuncChild<M, D>; AChildArray : TSyncChildLinkArray);
+    constructor Create(const AOwner: M; const AGetChild: TFuncChild<M, D>;
+      const AChildArray : TSyncChildLinkArray);
     destructor Destroy; override;
   end;
 
@@ -79,14 +80,13 @@ type
     FGetChild: TFuncChildList<M,D>;
     FChildListAdapter: TListBindSourceAdapter<D>;
     function GetChildBindSource: TBindSourceAdapter; override;
-
     procedure OnUIAfterScroll(AAdapter: TBindSourceAdapter);
     procedure OnUIBeforeScroll(AAdapter: TBindSourceAdapter);
-
-    procedure OnAfterScroll(AAdapter: TBindSourceAdapter);  override;
-    procedure OnBeforeScroll(AAdapter: TBindSourceAdapter); override;
+    procedure OnAfterScroll(const AAdapter: TBindSourceAdapter); override;
+    procedure OnBeforeScroll(const AAdapter: TBindSourceAdapter); override;
   public
-    constructor Create(AOwner: M; AGetChild: TFuncChildList<M, D>; AChildArray : TSyncChildLinkArray);
+    constructor Create(const AOwner: M; const AGetChild: TFuncChildList<M, D>;
+      const AChildArray: TSyncChildLinkArray);
     destructor Destroy; override;
   end;
 
@@ -115,9 +115,7 @@ constructor TSyncOwnerList<M>.Create(AOwner: TList<M>;
   AChildArray: TSyncChildLinkArray);
 begin
   FChildArray := AChildArray;
-  FOwnerAdapter := TListBindSourceAdapter<M>.Create(nil,
-                                                    AOwner,
-                                                    False);
+  FOwnerAdapter := TListBindSourceAdapter<M>.Create(nil, AOwner, False);
   TListBindSourceAdapter<M>(FOwnerAdapter).AfterScroll := OnAfterScroll;
   TListBindSourceAdapter<M>(FOwnerAdapter).BeforeScroll := OnBeforeScroll;
 
@@ -172,7 +170,8 @@ end;
 
 { TSyncDetailLink<M, D> }
 
-constructor TSyncChildObjectLink<M, D>.Create(AOwner: M; AGetChild: TFuncChild<M, D>; AChildArray : TSyncChildLinkArray);
+constructor TSyncChildObjectLink<M, D>.Create(const AOwner: M;
+  const AGetChild: TFuncChild<M, D>; const AChildArray : TSyncChildLinkArray);
 var
   LChildNew: D;
 begin
@@ -181,7 +180,7 @@ begin
   ChildArray := AChildArray;
 
   LChildNew := FGetChild(AOwner);
-  FChildAdapter := TObjectBindSourceAdapter<D>.Create(nil,LChildNew,False);
+  FChildAdapter := TObjectBindSourceAdapter<D>.Create(nil, LChildNew, False);
 end;
 
 destructor TSyncChildObjectLink<M, D>.Destroy;
@@ -195,12 +194,12 @@ begin
   Result := FChildAdapter;
 end;
 
-procedure TSyncChildObjectLink<M, D>.OnAfterScroll(AAdapter: TBindSourceAdapter);
+procedure TSyncChildObjectLink<M, D>.OnAfterScroll(
+  const AAdapter: TBindSourceAdapter);
 var
   LChildNew: D;
   LChild: TSyncChildBase;
 begin
-
   if (FChildAdapter <> nil) and (AAdapter <> nil) and (AAdapter.Current <> nil) then
   begin
     if AAdapter.Current is M then
@@ -214,7 +213,6 @@ begin
       // Empty list
       FChildAdapter.SetDataObject(nil, False);
     end;
-
     // CODE REVIEW.... What is the best way to handle nil?
     if FChildAdapter.Current <> nil then
       FChildAdapter.Active := True;
@@ -226,9 +224,9 @@ begin
 end;
 
 procedure TSyncChildObjectLink<M, D>.OnBeforeScroll(
-  AAdapter: TBindSourceAdapter);
+  const AAdapter: TBindSourceAdapter);
 var
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   if (FChildAdapter <> nil) and (AAdapter <> nil) then
   begin
@@ -242,9 +240,9 @@ end;
 
 { TSyncDetailListLink<M, D> }
 
-constructor TSyncChildListLink<M, D>.Create(AOwner: M;
-  AGetChild: TFuncChildList<M, D>;
-  AChildArray: TSyncChildLinkArray);
+constructor TSyncChildListLink<M, D>.Create(const AOwner: M;
+  const AGetChild: TFuncChildList<M, D>;
+  const AChildArray: TSyncChildLinkArray);
 var
   LChildNew: TList<D>;
 begin
@@ -253,7 +251,7 @@ begin
   ChildArray := AChildArray;
 
   LChildNew := FGetChild(AOwner);
-  FChildListAdapter := TListBindSourceAdapter<D>.Create(nil,LChildNew,False);
+  FChildListAdapter := TListBindSourceAdapter<D>.Create(nil, LChildNew, False);
   FChildListAdapter.AfterScroll := OnUIAfterScroll;
   FChildListAdapter.BeforeScroll := OnUIBeforeScroll;
 end;
@@ -270,10 +268,10 @@ begin
 end;
 
 procedure TSyncChildListLink<M, D>.OnAfterScroll(
-  AAdapter: TBindSourceAdapter);
+  const AAdapter: TBindSourceAdapter);
 var
   LChildNew : TList<D>;
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   if (FChildListAdapter <> nil) and (AAdapter <> nil) then
   begin
@@ -298,9 +296,9 @@ begin
 end;
 
 procedure TSyncChildListLink<M, D>.OnBeforeScroll(
-  AAdapter: TBindSourceAdapter);
+  const AAdapter: TBindSourceAdapter);
 var
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   if (FChildListAdapter <> nil) and (AAdapter <> nil) then
   begin
@@ -315,7 +313,7 @@ end;
 procedure TSyncChildListLink<M, D>.OnUIAfterScroll(
   AAdapter: TBindSourceAdapter);
 var
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   for LChild in ChildArray do
     LChild.OnAfterScroll(FChildListAdapter);
@@ -324,7 +322,7 @@ end;
 procedure TSyncChildListLink<M, D>.OnUIBeforeScroll(
   AAdapter: TBindSourceAdapter);
 var
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   for LChild in ChildArray do
     LChild.OnBeforeScroll(FChildListAdapter);
@@ -334,7 +332,7 @@ end;
 
 destructor TSyncChildBase.Destroy;
 var
-  LChild : TSyncChildBase;
+  LChild: TSyncChildBase;
 begin
   for LChild in ChildArray do
   begin
@@ -344,8 +342,7 @@ begin
   inherited;
 end;
 
-procedure TSyncChildBase.SetChildArray(
-  const AValue: TSyncChildLinkArray);
+procedure TSyncChildBase.SetChildArray(const AValue: TSyncChildLinkArray);
 var
   LChild: TSyncChildBase;
 begin
