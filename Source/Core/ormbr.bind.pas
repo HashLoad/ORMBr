@@ -42,8 +42,9 @@ uses
   ormbr.objects.utils,
   ormbr.objects.helper,
   ormbr.types.nullable,
-  dbcbr.rtti.helper,
   dbebr.factory.interfaces,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.attributes,
   dbcbr.mapping.exceptions,
   dbcbr.mapping.classes;
@@ -127,6 +128,8 @@ type
       const AObject: TObject);
   end;
 
+function Bind: IBind;
+
 implementation
 
 uses
@@ -137,6 +140,12 @@ uses
   ormbr.types.blob,
   dbcbr.types.mapping,
   dbcbr.mapping.explorer;
+
+
+function Bind: IBind;
+begin
+  Result := TBind.Instance;
+end;
 
 { TBind }
 

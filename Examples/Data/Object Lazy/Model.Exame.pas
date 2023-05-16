@@ -21,7 +21,10 @@ uses
 type
   [Entity]
   [Table('EXAMES', '')]
-  [PrimaryKey('POSTO;ATENDIMENTO;CORREL', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('POSTO;ATENDIMENTO;CORREL', TAutoIncType.NotInc,
+                                          TGeneratorType.NoneInc,
+                                          TSortingOrder.NoSort,
+                                          False, 'Chave primária')]
   TExame = class
   private
     { Private declarations }
@@ -36,28 +39,28 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('POSTO', ftInteger)]
-    [ForeignKey('EXAMES_ATENDIMENTOS_FK', 'POSTO;ATENDIMENTO', 'ATENDIMENTOS', 'POSTO;ATENDIMENTO', Cascade, SetNull)]
+    [ForeignKey('EXAMES_ATENDIMENTOS_FK', 'POSTO;ATENDIMENTO', 'ATENDIMENTOS', 'POSTO;ATENDIMENTO', TRuleAction.Cascade, TRuleAction.SetNull)]
     [Dictionary('POSTO', 'Mensagem de validação', '', '', '', taCenter)]
     property Posto: Integer read FPosto write FPosto;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('ATENDIMENTO', ftInteger)]
     [Dictionary('ATENDIMENTO', 'Mensagem de validação', '', '', '', taCenter)]
     property Atendimento: Integer read FAtendimento write FAtendimento;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('CORREL', ftInteger)]
     [Dictionary('CORREL', 'Mensagem de validação', '', '', '', taCenter)]
     property Correl: Integer read FCorrel write FCorrel;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('MNEMONICO', ftString, 7)]
     [Dictionary('MNEMONICO', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property MNEMONICO: String read FMNEMONICO write FMNEMONICO;
 
-    [Association(OneToOne,'MNEMONICO','PROCEDIMENTOS','MNEMONICO',True)]
+    [Association(TMultiplicity.OneToOne,'MNEMONICO','PROCEDIMENTOS','MNEMONICO',True)]
     property Procedimento: TProcedimento read GetProcedimento;
   end;
 

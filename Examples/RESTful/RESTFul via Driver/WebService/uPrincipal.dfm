@@ -330,19 +330,4 @@ object Form2: TForm2
     Left = 310
     Top = 246
   end
-  object RESTClientWS1: TRESTClientWS
-    ProxyParams.BasicAuthentication = False
-    ProxyParams.ProxyPort = 0
-    Protocol = Https
-    Host = 'viacep.com.br/'
-    Port = 0
-    MethodGETId = 'selectid'
-    MethodGETWhere = 'selectwhere'
-    MethodGETNextPacket = 'nextpacket'
-    MethodGETNextPacketWhere = 'nextpacketwhere'
-    APIContext = 'ws'
-    RESTContext = 'json'
-    Left = 310
-    Top = 142
-  end
 end

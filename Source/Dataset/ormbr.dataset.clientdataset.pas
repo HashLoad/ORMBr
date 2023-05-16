@@ -402,7 +402,7 @@ begin
         begin
           LObject := M.Create;
           try
-            TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
+            Bind.SetFieldToProperty(FOrmDataSet, LObject);
             FSession.Update(LObject, M.ClassName);
           finally
             LObject.Free;

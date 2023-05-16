@@ -3,7 +3,7 @@
 	"description": "ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.",
 	"version": "1.1.4",
 	"homepage": "https://www.ormbr.com.br/",
-	"mainsrc": "Source/",
+	"mainsrc": "./Source",
 	"projects": [],
 	"dependencies": {
 		"github.com/hashload/dbcbr": "^1.1.4",

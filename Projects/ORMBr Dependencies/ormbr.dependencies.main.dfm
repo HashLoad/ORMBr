@@ -103,6 +103,7 @@ object frmORMBrDependencies: TfrmORMBrDependencies
       Height = 145
       Align = alTop
       Color = 3417897
+      Ctl3D = False
       DrawingStyle = gdsGradient
       FixedColor = 3417897
       Font.Charset = DEFAULT_CHARSET
@@ -112,20 +113,28 @@ object frmORMBrDependencies: TfrmORMBrDependencies
       Font.Style = []
       GradientEndColor = 3417897
       GradientStartColor = 3417897
+      ParentCtl3D = False
       ParentFont = False
       Strings.Strings = (
-        'cqlbr=master'
-        'dbcbr=master'
-        'dbebr=master'
-        'jsonbr=master'
-        'restful=master')
+        
+          'cqlbr=https://github.com/HashLoad/CQLBr/archive/refs/heads/maste' +
+          'r.zip'
+        
+          'dbcbr=https://github.com/HashLoad/DBCBr/archive/refs/heads/maste' +
+          'r.zip'
+        
+          'dbebr=https://github.com/HashLoad/DBEBr/archive/refs/heads/maste' +
+          'r.zip'
+        
+          'jsonbr=https://github.com/HashLoad/JSONBr/archive/refs/heads/mas' +
+          'ter.zip')
       TabOrder = 0
       TitleCaptions.Strings = (
         'Reposit'#243'rio'
         'Tag')
       ColWidths = (
         194
-        481)
+        483)
     end
     object mmoLog: TMemo
       Left = 0
@@ -143,6 +152,7 @@ object frmORMBrDependencies: TfrmORMBrDependencies
       ParentFont = False
       ScrollBars = ssVertical
       TabOrder = 1
+      ExplicitTop = 147
     end
   end
 end

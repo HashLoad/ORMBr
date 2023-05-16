@@ -7,11 +7,7 @@ uses
   ormbr.model.client in '..\ormbr.model.client.pas',
   ormbr.model.detail in '..\ormbr.model.detail.pas',
   ormbr.model.lookup in '..\ormbr.model.lookup.pas',
-  ormbr.model.master in '..\ormbr.model.master.pas',
-  ormbr.client.datasnap in '..\..\..\..\Source\RESTful Components\Client\ormbr.client.datasnap.pas',
-  ormbr.driver.rest.datasnap in '..\..\..\..\Source\RESTful Components\Client\ormbr.driver.rest.datasnap.pas',
-  ormbr.factory.rest.datasnap in '..\..\..\..\Source\RESTful Components\Client\ormbr.factory.rest.datasnap.pas',
-  ormbr.session.rest in '..\..\..\..\Source\RESTful Components\Client\ormbr.session.rest.pas';
+  ormbr.model.master in '..\ormbr.model.master.pas';
 
 {$R *.res}
 

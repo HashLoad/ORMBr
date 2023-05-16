@@ -87,7 +87,6 @@ implementation
 
 uses
   ormbr.form.monitor,
-  ormbr.rest.json,
   ormbr.json;
 
 {$R *.dfm}

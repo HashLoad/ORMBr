@@ -59,6 +59,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     FConn : IDBConnection;
@@ -76,6 +77,11 @@ uses
   ormbr.form.monitor;
 
 {$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  FManager.ApplyUpdates<TAtendimento>(0);
+end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin

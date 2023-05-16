@@ -15,16 +15,19 @@ uses
   orion.model.contato,
   ormbr.types.blob, 
   ormbr.types.lazy, 
-  ormbr.types.mapping, 
+  dbcbr.types.mapping,
   ormbr.types.nullable,
-  ormbr.mapping.classes, 
-  ormbr.mapping.register, 
-  ormbr.mapping.attributes; 
+  dbcbr.mapping.classes,
+  dbcbr.mapping.register,
+  dbcbr.mapping.attributes;
 
 type
   [Entity]
   [Table('empresa', '')]
-  [PrimaryKey('id', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('id', TAutoIncType.NotInc,
+                    TGeneratorType.NoneInc,
+                    TSortingOrder.NoSort,
+                    False, 'Chave primária')]
   Tempresa = class
   private
     { Private declarations } 
@@ -122,37 +125,40 @@ type
     property data_alteracao: Nullable<TDateTime> read Fdata_alteracao write Fdata_alteracao;
 
     [Column('usuario_id', ftInteger)]
-    [ForeignKey('fk_empresa_usuario', 'usuario_id', 'usuario', 'id', SetNull, Cascade)]
+    [ForeignKey('fk_empresa_usuario', 'usuario_id', 'usuario', 'id', TRuleAction.SetNull, TRuleAction.Cascade)]
     [Dictionary('usuario_id', 'Mensagem de validação', '', '', '', taCenter)]
     property usuario_id: Nullable<Integer> read Fusuario_id write Fusuario_id;
 
     [Column('cidade_id', ftString, 7)]
-    [ForeignKey('fk_empresa_cidade', 'cidade_id', 'cidade', 'id', SetNull, Cascade)]
+    [ForeignKey('fk_empresa_cidade', 'cidade_id', 'cidade', 'id', TRuleAction.SetNull, TRuleAction.Cascade)]
     [Dictionary('cidade_id', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property cidade_id: Nullable<String> read Fcidade_id write Fcidade_id;
 
     [Column('estado_id', ftString, 2)]
-    [ForeignKey('fk_empresa_estado', 'estado_id', 'estado', 'id', SetNull, Cascade)]
+    [ForeignKey('fk_empresa_estado', 'estado_id', 'estado', 'id', TRuleAction.SetNull, TRuleAction.Cascade)]
     [Dictionary('estado_id', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property estado_id: Nullable<String> read Festado_id write Festado_id;
 
-    [Restrictions([NoInsert, NoUpdate])]
+    [Restrictions([TRestriction.NoInsert, TRestriction.NoUpdate])]
     [Column('nome', ftString, 60)]
-    [JoinColumn('cidade_id', 'cidade', 'id', 'nome', InnerJoin)]
+    [JoinColumn('cidade_id', 'cidade', 'id', 'nome', TJoin.InnerJoin)]
     [Dictionary('Cidade')]
     property cidade_nome: string read Fcidade_nome write Fcidade_nome;
 
-    [Association(OneToOne,'cidade_id','cidade','id')]
+    [Association(TMultiplicity.OneToOne,'cidade_id','cidade','id')]
     property cidade: Tcidade read Fcidade write Fcidade;
 
-    [Association(OneToOne,'estado_id','estado','id')]
+    [Association(TMultiplicity.OneToOne,'estado_id','estado','id')]
     property estado: Testado read Festado write Festado;
 
-    [Association(OneToOne,'usuario_id','usuario','id')]
+    [Association(TMultiplicity.OneToOne,'usuario_id','usuario','id')]
     property usuario: Tusuario read Fusuario write Fusuario;
 
-    [Association(OneToMany, 'id', 'contato', 'empresa_id')]
-    [CascadeActions([CascadeAutoInc, CascadeInsert, CascadeUpdate, CascadeDelete])]
+    [Association(TMultiplicity.OneToMany, 'id', 'contato', 'empresa_id')]
+    [CascadeActions([TCascadeAction.CascadeAutoInc,
+                     TCascadeAction.CascadeInsert,
+                     TCascadeAction.CascadeUpdate,
+                     TCascadeAction.CascadeDelete])]
     property Contatos: TObjectList<TContato> read FContatos write FContatos;
 
   end;

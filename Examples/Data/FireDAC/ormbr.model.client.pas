@@ -29,7 +29,7 @@ type
 //    Fclient_foto: TBlob;
   public
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('client_id', ftInteger)]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
     property client_id: Integer read Fclient_id write Fclient_id;

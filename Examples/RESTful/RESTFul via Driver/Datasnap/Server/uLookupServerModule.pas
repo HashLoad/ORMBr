@@ -10,11 +10,10 @@ uses
   Datasnap.DSSession,
   System.Generics.Collections,
   /// ORMBr JSON e DataSnap
-  ormbr.rest.json,
-  ormbr.json.utils,
+  ormbr.json,
   /// ORMBr Conexão database
-  ormbr.factory.firedac,
-  ormbr.factory.interfaces,
+  dbebr.factory.firedac,
+  dbebr.factory.interfaces,
   /// ORMBr
   ormbr.container.objectset,
   ormbr.container.objectset.interfaces,
@@ -79,7 +78,7 @@ begin
     /// <summary>
     /// Retorna o JSON
     /// </summary>
-    Result := TORMBrJSONUtil.JSONObjectListToJSONArray<Tlookup>(LLookupList);
+    Result := TORMBrJson.JSONObjectListToJSONArray<Tlookup>(LLookupList);
   finally
     LLookupList.Free;
   end;

@@ -42,12 +42,12 @@ type
     constructor Create;
     destructor Destroy; override;
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('client_id', ftInteger)]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
     property client_id: Integer read Fclient_id write Fclient_id;
 
-    [Restrictions([Hidden])]
+    [Restrictions([TRestriction.Hidden])]
     [Column('address', ftDataSet)]
     property address: TObjectList<Taddress> read Faddress write Faddress;
 //    property address: Taddress read Faddress write Faddress;

@@ -69,8 +69,6 @@ type
     property AfterApplyUpdates: TFDAfterApplyUpdatesEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  // M - Object Model
   TFDMemTableAdapter<M: class, constructor> = class(TDataSetAdapter<M>)
   private
     FOrmDataSet: TFDMemTable;
@@ -338,7 +336,7 @@ begin
         begin
           LObject := M.Create;
           try
-            TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
+            Bind.SetFieldToProperty(FOrmDataSet, LObject);
             FSession.Update(LObject, M.ClassName);
           finally
             LObject.Free;
@@ -477,7 +475,7 @@ begin
     FConnection.Connect;
   try
     try
-      // Limpa os registro do dataset antes de garregar os novos dados
+      // Limpa os registro do dataset antes de garegar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);

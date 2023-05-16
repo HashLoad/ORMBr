@@ -3,7 +3,8 @@ unit ormbr.dependencies.main;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Winapi.UrlMon,
   System.JSON, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Grids, Vcl.ValEdit,
   System.Generics.Collections,
@@ -30,7 +31,6 @@ type
     function GetDBCVersion: string;
     function GetDBEVersion: string;
     function GetJSONVersion: string;
-    function GetRESTVersion: string;
 
     procedure log(AText: String);
     { Private declarations }
@@ -86,11 +86,6 @@ begin
   result := vlDependencies.Values['jsonbr'];
 end;
 
-function TfrmORMBrDependencies.GetRESTVersion: string;
-begin
-  result := vlDependencies.Values['restful'];
-end;
-
 procedure TfrmORMBrDependencies.InstallDependencies;
 var
   executor : IORMBrDependenciesExecutor;
@@ -102,7 +97,6 @@ begin
     .AddCommand(CommandDBCBr(GetDBCVersion))
     .AddCommand(CommandDBEBr(GetDBEVersion))
     .AddCommand(CommandJSONBr(GetJSONVersion))
-    .AddCommand(CommandRESTFul(GetRESTVersion))
     .Execute;
 end;
 

@@ -21,7 +21,10 @@ uses
 type
   [Entity]
   [Table('PROCEDIMENTOS', '')]
-  [PrimaryKey('MNEMONICO', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('MNEMONICO', TAutoIncType.NotInc,
+                           TGeneratorType.NoneInc,
+                           TSortingOrder.NoSort,
+                           False, 'Chave primária')]
   TProcedimento = class
   private
     { Private declarations }
@@ -35,28 +38,28 @@ type
     { Public declarations }
     constructor Create;
     destructor Destroy; override;
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('PROCEDIMENTO', ftBCD, 8, 0)]
     [Dictionary('PROCEDIMENTO', 'Mensagem de validação', '0', '', '', taRightJustify)]
     property PROCEDIMENTO: Double read FPROCEDIMENTO write FPROCEDIMENTO;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('NOME', ftString, 60)]
     [Dictionary('NOME', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property NOME: String read FNOME write FNOME;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('MNEMONICO', ftString, 7)]
     [Dictionary('MNEMONICO', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property MNEMONICO: String read FMNEMONICO write FMNEMONICO;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('SETOR', ftInteger)]
     [Dictionary('SETOR', 'Mensagem de validação', '', '', '', taCenter)]
     property SETOR: Nullable<Integer> read FSETOR write FSETOR;
 
     /// Lazy lista de objeto
-    [Association(OneToMany,'SETOR','SETORES','SETOR',True)]
+    [Association(TMultiplicity.OneToMany,'SETOR','SETORES','SETOR',True)]
     property SetoresList: TObjectList<TSetor> read GetSetoresList;
   end;
 

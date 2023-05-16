@@ -27,7 +27,6 @@ uses
   ormbr.model.detail,
   ormbr.model.lookup,
   ormbr.model.client,
-//  nivel3.model,
 
   FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
@@ -40,7 +39,7 @@ uses
   ormbr.dml.generator.mysql,
   ormbr.manager.dataset,
   dbebr.factory.interfaces,
-  dbebr.factory.firedac, FireDAC.Phys.SQLiteWrapper.Stat;
+  dbebr.factory.firedac;
 
 type
   TForm3 = class(TForm)
@@ -138,13 +137,18 @@ end;
 procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
-  oConn := TFactoryFireDAC.Create(FDConnection1, dnMySQL);
+  oConn := TFactoryFireDAC.Create(FDConnection1, dnMySQL,
+                                  procedure(AParam: TMonitorParam)
+                                  var
+                                    LCommand: String;
+                                  begin
+                                    LCommand := AParam.Command;
+                                  end);
+  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   oManager := TManagerDataSet.Create(oConn);
-  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
   oManager.AddAdapter<Tmaster>(FDMaster, 3)
           .AddAdapter<Tdetail, Tmaster>(FDDetail)
-//          .AddAdapter<TLevel_3, Tdetail>(FDLevel3)
           .AddAdapter<Tclient, Tmaster>(FDClient)
           .AddAdapter<Tlookup>(FDLookup)
           .AddLookupField<Tdetail, Tlookup>('fieldname',

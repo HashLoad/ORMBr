@@ -38,22 +38,36 @@ uses
   Generics.Collections,
   {$IFDEF USEFDMEMTABLE}
     FireDAC.Comp.Client,
-    {$IFDEF DRIVERRESTFUL}ormbr.restdataset.fdmemtable{$ELSE}ormbr.dataset.fdmemtable{$ENDIF},
+    {$IFDEF DRIVERRESTFUL}
+      ormbr.restdataset.fdmemtable
+    {$ELSE}
+      ormbr.dataset.fdmemtable
+    {$ENDIF},
   {$ENDIF}
+
   {$IFDEF USECLIENTDATASET}
     DBClient,
-    {$IFDEF DRIVERRESTFUL}ormbr.restdataset.clientdataset{$ELSE}ormbr.dataset.clientdataset{$ENDIF},
+    {$IFDEF DRIVERRESTFUL}
+      ormbr.restdataset.clientdataset
+    {$ELSE}
+      ormbr.dataset.clientdataset
+    {$ENDIF},
   {$ENDIF}
+
   // ORMBr Interface
   {$IFDEF DRIVERRESTFUL}
-    ormbr.client.interfaces
+    ormbr.restfactory.interfaces
   {$ELSE}
     dbebr.factory.interfaces
   {$ENDIF},
   ormbr.dataset.base.adapter;
 
 type
-  IMDConnection = {$IFDEF DRIVERRESTFUL}IRESTConnection{$ELSE}IDBConnection{$ENDIF};
+  {$IFDEF DRIVERRESTFUL}
+    IMDConnection = IRESTConnection
+  {$ELSE}
+    IMDConnection = IDBConnection
+  {$ENDIF};
 
   TManagerDataSet = class
   private
@@ -208,15 +222,19 @@ begin
   ResolverDataSetType(ADataSet);
   {$IFDEF DRIVERRESTFUL}
     {$IFDEF USEFDMEMTABLE}
-      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>
+                           .Create(FConnection, ADataSet, -1, LMaster);
     {$ELSE}
-      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>
+                           .Create(FConnection, ADataSet, -1, LMaster);
     {$ENDIF}
   {$ELSE}
     {$IFDEF USEFDMEMTABLE}
-      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+      LDataSetAdapter := TFDMemTableAdapter<T>
+                           .Create(FConnection, ADataSet, -1, LMaster);
     {$ELSE}
-      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, -1, LMaster);
+      LDataSetAdapter := TClientDataSetAdapter<T>
+                           .Create(FConnection, ADataSet, -1, LMaster);
     {$ENDIF}
   {$ENDIF}
   // Adiciona o container ao repositório
@@ -238,22 +256,27 @@ begin
   ResolverDataSetType(ADataSet);
   {$IFDEF DRIVERRESTFUL}
     {$IFDEF USEFDMEMTABLE}
-      LDataSetAdapter := TRESTFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+      LDataSetAdapter := TRESTFDMemTableAdapter<T>
+                           .Create(FConnection, ADataSet, APageSize, nil);
     {$ELSE}
-      LDataSetAdapter := TRESTClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+      LDataSetAdapter := TRESTClientDataSetAdapter<T>
+                           .Create(FConnection, ADataSet, APageSize, nil);
     {$ENDIF}
   {$ELSE}
     {$IFDEF USEFDMEMTABLE}
-      LDataSetAdapter := TFDMemTableAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+      LDataSetAdapter := TFDMemTableAdapter<T>
+                           .Create(FConnection, ADataSet, APageSize, nil);
     {$ELSE}
-      LDataSetAdapter := TClientDataSetAdapter<T>.Create(FConnection, ADataSet, APageSize, nil);
+      LDataSetAdapter := TClientDataSetAdapter<T>
+                           .Create(FConnection, ADataSet, APageSize, nil);
     {$ENDIF}
   {$ENDIF}
   // Adiciona o container ao repositório
   FRepository.Add(LClassName, LDataSetAdapter);
 end;
 
-function TManagerDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields: string;
+function TManagerDataSet.AddLookupField<T, M>(
+  const AFieldName, AKeyFields: string;
   const ALookupKeyFields, ALookupResultField, ADisplayLabel: string): TManagerDataSet;
 var
   LObject: TDataSetBaseAdapter<M>;

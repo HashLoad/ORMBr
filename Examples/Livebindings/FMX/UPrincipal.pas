@@ -13,7 +13,7 @@ uses
   // ESSA UNIT TEM QUE ESTAR AQUI POR ULTIMO EM TODOS OS FORMULARIOS,
   // SENÃO NÃO FUNCIONA.
   //
-  // NÃO COLOCAR NO IMPLEMENTATION, TEM QUE SER AQUI NA INTERFACE MESMO E POR ÚLTIMO.
+  // NÃO COLOCAR NO IMPLEMENTATION, TEM QUE SER AQU NA INTERFACE MESMO E POR ÚLTIMO.
   ormbr.fmx.controls;
 
 type
@@ -78,8 +78,7 @@ end;
 procedure TFormPrincipal.FormCreate(Sender: TObject);
 begin
   LProduto_1 := TProduto.Create;
-  // Valor padrão, já será mostrado nos componentes, para isso existe na classe
-  // o método SET()
+  // Valor padrão, já será mostrado nos componentes
   LProduto_1.ID := 1;
   LProduto_1.Preco := 10;
 end;
@@ -91,6 +90,7 @@ end;
 
 procedure TFormPrincipal.SpinBoxIDChange(Sender: TObject);
 begin
+
   // Se realmente precisar usar o evento OnChange, por último dispare o
   // método DoChangeInternal(), para que o ORMBr consiga notificar ao LiveBindings
   TSpinBox(Sender).DoChangeInternal(Sender);

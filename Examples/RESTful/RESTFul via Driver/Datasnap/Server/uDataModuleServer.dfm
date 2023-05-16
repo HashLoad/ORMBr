@@ -8,8 +8,8 @@ object DataModuleServer: TDataModuleServer
       'LockingMode=Normal'
       'DriverID=SQLite')
     LoginPrompt = False
-    Left = 92
-    Top = 46
+    Left = 94
+    Top = 48
   end
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
