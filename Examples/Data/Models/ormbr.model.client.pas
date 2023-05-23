@@ -23,19 +23,19 @@ type
   Tclient = class
   private
     { Private declarations }
-    Fclient_id: Integer;
-    Fclient_name: String;
+    Fclient_id: integer;
+    Fclient_name: string;
     Fclient_foto: TBlob;
   public
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
-    [Column('client_id', ftInteger)]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
+    [Column('client_id', ftinteger)]
     [Dictionary('client_id','Mensagem de validação','','','',taCenter)]
-    property client_id: Integer read Fclient_id write Fclient_id;
+    property client_id: integer read Fclient_id write Fclient_id;
 
-    [Column('client_name', ftString, 40)]
+    [Column('client_name', ftstring, 40)]
     [Dictionary('client_name','Mensagem de validação','','','',taLeftJustify)]
-    property client_name: String read Fclient_name write Fclient_name;
+    property client_name: string read Fclient_name write Fclient_name;
 
     [Column('client_foto', ftBlob)]
     [Dictionary('client_foto','Mensagem de validação')]

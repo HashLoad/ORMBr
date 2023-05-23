@@ -33,12 +33,11 @@ uses
   TypInfo,
   Bindings.Expression,
   Bindings.Helper,
-  Data.Bind.Components,
-  Data.Bind.ObjectScope;
+  Data.Bind.ObjectScope,
+  Generics.Collections,
+  ormbr.controls.helpers;
 
 type
-//  TBindingsListHack = class(TBindingsList);
-
   LiveBindingsControl = class(TCustomAttribute)
   private
     FLinkControl: String;
@@ -52,11 +51,9 @@ type
     property Expression: String read FExpression;
   end;
 
-  TORMBrLivebindings = class(TObject)
+  TORMBrLivebindings = class
   private
-//    FAdapterBindSource: TAdapterBindSource;
-//    FBindingsList: TBindingsList;
-//    procedure DoCreateAdapter(Sender: TObject; var ABindSourceAdapter: TBindSourceAdapter);
+    FBindingExpressions: TObjectList<TBindingExpression>;
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -65,7 +62,7 @@ type
 implementation
 
 uses
-  ormbr.controls.helpers;
+  Vcl.ComCtrls;
 
 constructor TORMBrLiveBindings.Create;
 var
@@ -76,13 +73,10 @@ var
   LLiveBindingsControl: LiveBindingsControl;
   LControl: TControl;
   LExpression: String;
+  LBindingExpressionObject: TBindingExpression;
+  LBindingExpressionComponent: TBindingExpression;
 begin
-//  // AdapterBindSource
-//  FAdapterBindSource := TAdapterBindSource.Create(nil);
-//  // BindingsList
-//  FBindingsList := TBindingsList.Create(nil);
-//  TBindingsListHack(FBindingsList).AddBindComp(nil);
-
+  FBindingExpressions := TObjectList<TBindingExpression>.Create(True);
   LContext := TRttiContext.Create;
   try
     LType := LContext.GetType(Self.ClassType);
@@ -95,6 +89,7 @@ begin
       begin
         if not (LCustomAttribute is LiveBindingsControl) then
           Continue;
+
         LLiveBindingsControl := LiveBindingsControl(LCustomAttribute);
         // Get Component
         LControl := TListControls.ListComponents.Items[LLiveBindingsControl.LinkControl] as TControl;
@@ -106,8 +101,9 @@ begin
           LExpression := Self.ClassName + '.' + LProperty.Name;
         // Add Components List
         TListControls.ListFieldNames.AddOrSetValue(LLiveBindingsControl.LinkControl, LLiveBindingsControl.FieldName);
+
         // Registro no LiveBindings
-        TBindings.CreateManagedBinding(
+        LBindingExpressionObject := TBindings.CreateManagedBinding(
               [
                         TBindings.CreateAssociationScope(
                                   [Associate(Self, Self.ClassName)])
@@ -120,7 +116,7 @@ begin
                                   LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
                         nil);
         // Component
-        TBindings.CreateManagedBinding(
+        LBindingExpressionComponent := TBindings.CreateManagedBinding(
               [
                         TBindings.CreateAssociationScope(
                                   [Associate(LControl, LLiveBindingsControl.LinkControl)])
@@ -132,6 +128,8 @@ begin
               ],
                                   Self.ClassName + '.' + LProperty.Name,
                         nil);
+        FBindingExpressions.Add(LBindingExpressionObject);
+        FBindingExpressions.Add(LBindingExpressionComponent);
       end;
     end;
   finally
@@ -155,14 +153,8 @@ end;
 
 destructor TORMBrLivebindings.Destroy;
 begin
-//  FAdapterBindSource.Free;
+  FBindingExpressions.Free;
   inherited;
 end;
-
-//procedure TORMBrLivebindings.DoCreateAdapter(Sender: TObject;
-//  var ABindSourceAdapter: TBindSourceAdapter);
-//begin
-////  ABindSourceAdapter := TListBindSourceAdapter<TORMBrLivebindings>.Create(;
-//end;
 
 end.

@@ -39,10 +39,10 @@ uses
   ormbr.objects.helper,
   dbebr.factory.interfaces,
   dbcbr.mapping.classes,
+  dbcbr.mapping.popular,
   dbcbr.types.mapping;
 
 type
-  // M - Object M
   TObjectSetAdapter<M: class, constructor> = class(TObjectSetBaseAdapter<M>)
   private
     FConnection: IDBConnection;
@@ -99,7 +99,7 @@ begin
       FConnection.StartTransaction;
     try
       // Executa comando delete em cascade
-      CascadeActionsExecute(AObject, CascadeDelete);
+      CascadeActionsExecute(AObject, TCascadeAction.CascadeDelete);
       // Executa comando delete master
       FSession.Delete(AObject);
       ///
@@ -196,7 +196,7 @@ begin
           SetAutoIncValueChilds(AObject, LColumn);
       end;
       // Executa comando insert em cascade
-      CascadeActionsExecute(AObject, CascadeInsert);
+      CascadeActionsExecute(AObject, TCascadeAction.CascadeInsert);
       //
       if not LInTransaction then
         FConnection.Commit;
@@ -234,7 +234,7 @@ begin
       FConnection.StartTransaction;
     try
       // Executa comando update em cascade
-      CascadeActionsExecute(AObject, CascadeUpdate);
+      CascadeActionsExecute(AObject, TCascadeAction.CascadeUpdate);
       // Gera a lista com as propriedades que foram alteradas
       if TObject(AObject).GetType(LRttiType) then
       begin

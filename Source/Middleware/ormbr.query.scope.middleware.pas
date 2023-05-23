@@ -41,7 +41,7 @@ type
   end;
 
   TQueryScopeMiddleware = class(TInterfacedObject, IQueryScopeMiddleware)
-  private
+  strict private
     class var FInstance: IQueryScopeMiddleware;
     class var FScopeWhereList: TDictionary<String, TQueryScopeList>;
     class var FScopeOrderByList: TDictionary<String, TQueryScopeList>;
@@ -57,7 +57,14 @@ type
     class function GetOrderBy(const AResource: String): TQueryScopeList;
   end;
 
+function QueryScopeMiddleware: IQueryScopeMiddleware;
+
 implementation
+
+function QueryScopeMiddleware: IQueryScopeMiddleware;
+begin
+  Result := TQueryScopeMiddleware.Get;
+end;
 
 { TQueryScope }
 
@@ -70,11 +77,9 @@ begin
   LResource := UpperCase(AResource);
   LScopeName := UpperCase(AScopeName);
   if not FScopeOrderByList.ContainsKey(LResource) then
-  begin
     FScopeOrderByList.Add(LResource, TQueryScopeList.Create);
-    if not FScopeOrderByList[LResource].ContainsKey(LScopeName) then
-      FScopeOrderByList[LResource].Add(LScopeName, AFunc);
-  end;
+  if not FScopeOrderByList[LResource].ContainsKey(LScopeName) then
+    FScopeOrderByList[LResource].Add(LScopeName, AFunc);
 end;
 
 procedure TQueryScopeMiddleware.AddWhere(const AResource, AScopeName: String;
@@ -86,16 +91,14 @@ begin
   LResource := UpperCase(AResource);
   LScopeName := UpperCase(AScopeName);
   if not FScopeWhereList.ContainsKey(LResource) then
-  begin
     FScopeWhereList.Add(LResource, TQueryScopeList.Create);
-    if not FScopeWhereList[LResource].ContainsKey(LScopeName) then
-      FScopeWhereList[LResource].Add(LScopeName, AFunc);
-  end;
+  if not FScopeWhereList[LResource].ContainsKey(LScopeName) then
+    FScopeWhereList[LResource].Add(LScopeName, AFunc);
 end;
 
 constructor TQueryScopeMiddleware.Create;
 begin
-  raise Exception.Create('Para usar o IScopeQuery use o método TScopeQuery.GetInstance()');
+  raise Exception.Create('Para usar o IQueryScopeMiddleware chame QueryScopeMiddleware.');
 end;
 
 constructor TQueryScopeMiddleware.CreatePrivate;

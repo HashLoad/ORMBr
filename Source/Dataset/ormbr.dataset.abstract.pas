@@ -80,7 +80,7 @@ end;
 
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 var
-  LValue: TDictionary<string, string>;
+  LValues: TDictionary<string, string>;
 //  LContext: TRttiContext;
 //  LObjectType: TRttiType;
   LColumn: TColumnMapping;
@@ -97,10 +97,10 @@ begin
   // Só adiciona a lista se for edição
   if FOrmDataSet.State in [dsEdit] then
   begin
-    LValue := FSession.ModifiedFields.Items[M.ClassName];
-    if LValue <> nil then
+    LValues := FSession.ModifiedFields.Items[M.ClassName];
+    if LValues <> nil then
     begin
-      if not LValue.ContainsValue(Field.FieldName) then
+      if not LValues.ContainsValue(Field.FieldName) then
       begin
         LColumns := TMappingExplorer.GetMappingColumn(M);
         for LColumn in LColumns do
@@ -115,7 +115,7 @@ begin
             Continue;
           if LColumn.ColumnName <> Field.FieldName then
             Continue;
-          LValue.Add(LColumn.ColumnProperty.Name, Field.FieldName);
+          LValues.Add(LColumn.ColumnProperty.Name, Field.FieldName);
           Break;
         end;
 //        LObjectType := LContext.GetType(TypeInfo(M));

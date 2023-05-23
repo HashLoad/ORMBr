@@ -37,7 +37,7 @@ uses
   FireDAC.VCLUI.Wait, FireDAC.Comp.Client, FireDAC.Stan.Intf,
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
   FireDAC.Comp.UI, FireDAC.DApt, FireDAC.Stan.Param, FireDAC.DatS,
-  FireDAC.DApt.Intf, FireDAC.Comp.DataSet, FireDAC.Phys.SQLiteWrapper.Stat;
+  FireDAC.DApt.Intf, FireDAC.Comp.DataSet;
 
 type
   TForm3 = class(TForm)
@@ -92,7 +92,7 @@ begin
                     .SQL(LSQL)
                       .AsResultSet;
   if LResultSet.RecordCount > 0 then
-    ShowMessage('Teste');
+    ShowMessage('LResultSet.RecordCount = ' + IntToStr(LResultSet.RecordCount));
 
   try
     if LResultSet.RecordCount > 0 then
@@ -126,7 +126,7 @@ begin
                     .SQL(LSQL)
                       .AsResultSet;
   if LResultSet.RecordCount > 0 then
-    ShowMessage('Teste');
+    ShowMessage('LResultSet.RecordCount = ' + IntToStr(LResultSet.RecordCount));
 
   try
     if LResultSet.RecordCount > 0 then

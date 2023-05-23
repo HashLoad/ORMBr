@@ -32,9 +32,10 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
-    FJON: String;
+    FJSON: String;
   public
     { Public declarations }
   end;
@@ -92,8 +93,8 @@ begin
     Person.Pessoas.Add(Person2);
 
     // Guarda para executar os outros comandos
-    FJON := TORMBrJson.ObjectToJsonString(Person);
-    Memo1.Lines.Text := FJON;
+    FJSON := TORMBrJson.ObjectToJsonString(Person);
+    Memo1.Lines.Text := FJSON;
 //    Memo1.Lines.Text := ObjectToJSON(Person);
   finally
     Person.Free;
@@ -104,23 +105,31 @@ end;
 procedure TForm4.Button2Click(Sender: TObject);
 var
   Person: TPerson;
+  JsonToPerson: TPerson;
 begin
-  Memo1.Lines.Text := FJON;
+  Memo1.Lines.Text := FJSON;
 
-  Person := TORMbrJson.JSONToObject<TPerson>(FJON);
+  Person := TORMBrJson.JSONToObject<TPerson>(FJSON);
   Memo1.Lines.Add(' ');
   Memo1.Lines.Add('RECRIADO O OBJECT ATRAVÉS DO JSON ACIMA, MUDADOS ALGUMAS INFORMAÇÕES A GERADO NOVO JSON PARA TESTAR.');
   Memo1.Lines.Add('Person.Salary := 200.20');
-  Memo1.Lines.Add('Person.Date := Now + 1');
+  Memo1.Lines.Add('Person.Date := Now');
   Memo1.Lines.Add('Person.Pessoas[1].Salary := 555.55');
   Memo1.Lines.Add(' ');
   try
     Person.Salary := 200.20;
-    Person.Date := Now + 1;
+    Person.Date := Date;
     Person.Pessoas[1].Salary := 555.55;
-    Memo1.Lines.Add(TORMbrJson.ObjectToJsonString(Person));
+
+    FJSON := TORMBrJson.ObjectToJsonString(Person);
+    JsonToPerson := TORMBrJson.JSONToObject<TPerson>(FJSON);
+
+    Memo1.Lines.Add(FJSON);
+    Memo1.Lines.Add('');
+    Memo1.Lines.Add(TORMBrJson.ObjectToJsonString(JsonToPerson));
   finally
     Person.Free;
+    JsonToPerson.Free;
   end;
 end;
 
@@ -130,7 +139,7 @@ var
 begin
   Memo1.Clear;
 
-  jObject := TORMBrJSON.JSONStringToJSONObject(FJON);
+  jObject := TORMBrJSON.JSONStringToJSONObject(FJSON);
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONObject **********');
@@ -146,7 +155,7 @@ var
 begin
   Memo1.Clear;
 
-  jArray := TORMBrJSON.JSONStringToJSONArray('[' + FJON + ']');
+  jArray := TORMBrJSON.JSONStringToJSONArray('[' + FJSON + ']');
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONArray **********');
@@ -154,6 +163,17 @@ begin
   finally
     jArray.Free;
   end;
+end;
+
+procedure TForm4.FormCreate(Sender: TObject);
+var
+  LFormatSettings: TFormatSettings;
+begin
+  LFormatSettings := TFormatSettings.Create('en_US');
+  LFormatSettings.ShortDateFormat := 'dd/MM/yyyy';
+  // Definições para o JSONBr
+  TORMBrJson.FormatSettings := LFormatSettings;
+  TORMBrJson.UseISO8601DateFormat := False;
 end;
 
 end.

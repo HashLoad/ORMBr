@@ -8,12 +8,12 @@ uses
   SysUtils, 
   Generics.Collections, 
   /// orm 
-  ormbr.mapping.attributes,
-  ormbr.types.mapping,
+  dbcbr.mapping.attributes,
+  dbcbr.types.mapping,
   ormbr.types.lazy,
   ormbr.types.nullable,
   ormbr.model.lookup,
-  ormbr.mapping.register;
+  dbcbr.mapping.register;
 
 type
   [Entity]
@@ -30,20 +30,20 @@ type
     Fprice: Double;
   public
     { Public declarations }
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('detail_id', ftInteger)]
     [Dictionary('ID Detalhe','Mensagem de validação','','','',taCenter)]
     property detail_id: Integer read Fdetail_id write Fdetail_id;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('master_id', ftInteger)]
-    [ForeignKey('FK_IDMASTER', 'master_id', 'master', 'master_id', Cascade, Cascade)]
+    [ForeignKey('FK_IDMASTER', 'master_id', 'master', 'master_id', TRuleAction.Cascade, TRuleAction.Cascade)]
     [Dictionary('ID Mestre','Mensagem de validação','','','',taCenter)]
     property master_id: Integer read Fmaster_id write Fmaster_id;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('lookup_id', ftInteger)]
-    [ForeignKey('FK_IDLOOKUP', 'lookup_id', 'lookup', 'lookup_id', None, None)]
+    [ForeignKey('FK_IDLOOKUP', 'lookup_id', 'lookup', 'lookup_id', TRuleAction.None, TRuleAction.None)]
     [Dictionary('ID Lookup','Mensagem de validação','0','','',taCenter)]
     property lookup_id: Integer read Flookup_id write Flookup_id;
 
@@ -51,7 +51,7 @@ type
     [Dictionary('Descrição Lookup','Mensagem de validação','','','',taLeftJustify)]
     property lookup_description: String read Flookup_description write Flookup_description;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('price', ftFloat, 18, 3)]
     [Dictionary('Preço Unitário','Mensagem de validação','','#,###,##0.00','',taRightJustify)]
     property price: Double read Fprice write Fprice;

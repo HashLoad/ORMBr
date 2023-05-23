@@ -48,6 +48,7 @@ uses
   ormbr.core.consts,
   ormbr.types.blob,
   //
+  jsonbr.utils,
   jsonbr.builders;
 
 type
@@ -66,6 +67,8 @@ type
                                var ABreak: Boolean);
     class function GetFormatSettings: TFormatSettings; static;
     class procedure SetFormatSettings(const Value: TFormatSettings); static;
+    class function GetUseISO8601DateFormat: Boolean; static;
+    class procedure SetUseISO8601DateFormat(const Value: Boolean); static;
   public
     class constructor Create;
     class destructor Destroy;
@@ -75,8 +78,7 @@ type
       AStoreClassName: Boolean = False): string; overload;
     class function ObjectListToJsonString<T: class, constructor>(AObjectList: TObjectList<T>;
       AStoreClassName: Boolean = False): string; overload;
-    class function JsonToObject<T: class, constructor>(const AJson: string{;
-      AOptions: TJSONBrOptions = [joDateIsUTC, joDateFormatISO8601]}): T; overload;
+    class function JsonToObject<T: class, constructor>(const AJson: string): T; overload;
     class function JsonToObject<T: class>(AObject: T;
       const AJson: string): Boolean; overload;
     class function JsonToObjectList<T: class, constructor>(const AJson: string): TObjectList<T>;
@@ -88,6 +90,7 @@ type
     class function JSONObjectListToJSONArray<T: class>(const AObjectList: TObjectList<T>): TJSONArray;
     class function JSONStringToJSONObject(const AJson: string): TJSONObject;
     class property FormatSettings: TFormatSettings read GetFormatSettings write SetFormatSettings;
+    class property UseISO8601DateFormat: Boolean read GetUseISO8601DateFormat write SetUseISO8601DateFormat;
   end;
 
 implementation
@@ -102,7 +105,8 @@ begin
   FJSONObject := TJSONBrObject.Create;
   FJSONObject.OnGetValue := DoGetValue;
   FJSONObject.OnSetValue := DoSetValue;
-  FormatSettings := TJSONBrObject.FormatSettings;
+  FJSONObject.UseISO8601DateFormat := True;
+  FormatSettings := JsonBrFormatSettings;
 end;
 
 class destructor TORMBrJson.Destroy;
@@ -135,13 +139,13 @@ begin
             if AResult = Null then
               Exit;
             if (AProperty.IsDateTime) then
-              AResult := DateTimeToStr(AResult, FJSONObject.FormatSettings)
+              AResult := DateTimeToIso8601(AResult, UseISO8601DateFormat)
             else
             if AProperty.IsDate then
-              AResult := DateToStr(AResult, FJSONObject.FormatSettings)
+              AResult := DateTimeToIso8601(AResult, UseISO8601DateFormat)
             else
             if AProperty.IsTime then
-              AResult := DateTimeToStr(AResult, FJSONObject.FormatSettings)
+              AResult := DateTimeToIso8601(AResult, UseISO8601DateFormat)
           end
           else
             AResult := AProperty.GetNullableValue(AInstance).AsVariant;
@@ -195,7 +199,8 @@ begin
             else
               AProperty.SetValueNullable(AInstance,
                                          AProperty.PropertyType.Handle,
-                                         AValue);
+                                         AValue,
+                                         UseISO8601DateFormat);
           end;
         tkEnumeration:
           begin
@@ -263,8 +268,7 @@ begin
   Result := FJSONObject.JSONToObject(TObject(AObject), AJson);
 end;
 
-class function TORMBrJson.JsonToObject<T>(const AJson: string{;
-  AOptions: TJSONBrJsonOptions}): T;
+class function TORMBrJson.JsonToObject<T>(const AJson: string): T;
 begin
   Result := FJSONObject.JSONToObject<T>(AJson);
 end;
@@ -307,12 +311,22 @@ end;
 
 class procedure TORMBrJson.SetFormatSettings(const Value: TFormatSettings);
 begin
-  FJSONObject.FormatSettings := Value;
+  JsonBrFormatSettings := Value;
+end;
+
+class procedure TORMBrJson.SetUseISO8601DateFormat(const Value: Boolean);
+begin
+  FJSONObject.UseISO8601DateFormat := Value;
 end;
 
 class function TORMBrJson.GetFormatSettings: TFormatSettings;
 begin
-  Result := FJSONObject.FormatSettings;
+  Result := JsonBrFormatSettings;
+end;
+
+class function TORMBrJson.GetUseISO8601DateFormat: Boolean;
+begin
+  Result := FJSONObject.UseISO8601DateFormat;
 end;
 
 class function TORMBrJson.JsonToObjectList<T>(const AJson: string): TObjectList<T>;

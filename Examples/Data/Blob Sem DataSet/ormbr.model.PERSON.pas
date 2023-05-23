@@ -19,7 +19,10 @@ uses
 type
   [Entity]
   [Table('PERSON', '')]
-  [PrimaryKey('ID', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('ID', TAutoIncType.NotInc,
+                    TGeneratorType.NoneInc,
+                    TSortingOrder.NoSort,
+                    False, 'Chave primária')]
   TPERSON = class
   private
     { Private declarations } 
@@ -42,12 +45,12 @@ type
     FPERSON_FLD13: TBlob;
   public
     { Public declarations }
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('ID', ftInteger)]
     [Dictionary('ID', 'Mensagem de validação', '', '', '', taCenter)]
     property ID: Integer read FID write FID;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('FIRSTNAME', ftString, 40)]
     [Dictionary('FIRSTNAME', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property FIRSTNAME: String read FFIRSTNAME write FFIRSTNAME;
@@ -56,12 +59,12 @@ type
     [Dictionary('LASTNAME', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property LASTNAME: Nullable<String> read FLASTNAME write FLASTNAME;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('AGE', ftInteger)]
     [Dictionary('AGE', 'Mensagem de validação', '', '', '', taCenter)]
     property AGE: Integer read FAGE write FAGE;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('SALARY', ftBCD, 18, 3)]
     [Dictionary('SALARY', 'Mensagem de validação', '0', '', '', taRightJustify)]
     property SALARY: Double read FSALARY write FSALARY;

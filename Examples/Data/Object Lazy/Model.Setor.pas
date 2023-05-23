@@ -19,7 +19,10 @@ uses
 type
   [Entity]
   [Table('SETORES', '')]
-  [PrimaryKey('SETOR', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('SETOR', TAutoIncType.NotInc,
+                       TGeneratorType.NoneInc,
+                       TSortingOrder.NoSort,
+                       False, 'Chave primária')]
   TSetor = class
   private
     { Private declarations }
@@ -29,12 +32,12 @@ type
     { Public declarations }
     constructor Create;
     destructor Destroy; override;
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('SETOR', ftBCD, 8, 0)]
     [Dictionary('SETOR', 'Mensagem de validação', '0', '', '', taRightJustify)]
     property SETOR: Double read FSETOR write FSETOR;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('NOME', ftString, 60)]
     [Dictionary('NOME', 'Mensagem de validação', '', '', '', taLeftJustify)]
     property NOME: String read FNOME write FNOME;

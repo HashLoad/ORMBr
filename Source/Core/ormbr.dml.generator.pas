@@ -46,8 +46,9 @@ uses
   ormbr.dml.cache,
   ormbr.types.blob,
   ormbr.register.middleware,
-  dbcbr.rtti.helper,
   dbebr.factory.interfaces,
+  dbcbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
   dbcbr.types.mapping;
@@ -119,7 +120,7 @@ var
   LDBResultSet: IDBResultSet;
 begin
   Result := 0;
-  LDBResultSet := FConnection.ExecuteSQL(ASQL);
+  LDBResultSet := FConnection.CreateResultSet(ASQL);
   try
     if LDBResultSet.RecordCount > 0 then
       Result := VarAsType(LDBResultSet.GetFieldValue(0), varInt64);
@@ -345,14 +346,17 @@ var
   LFunc: TFunc<String>;
 begin
   Result := '';
+  LFor := 0;
   LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetOrderBy');
   if LFuncs = nil then
     Exit;
+
   for LFunc in LFuncs.Values do
   begin
     Result := Result + LFunc();
     if LFor < LFuncs.Count -1 then
       Result := Result + ', ';
+    Inc(LFor);
   end;
 end;
 
@@ -363,6 +367,7 @@ var
   LFunc: TFunc<String>;
 begin
   Result := '';
+  LFor := 0;
   LFuncs := TORMBrMiddlewares.ExecuteQueryScopeCallback(AClass, 'GetWhere');
   if LFuncs = nil then
     Exit;
@@ -371,6 +376,7 @@ begin
     Result := Result + LFunc();
     if LFor < LFuncs.Count -1 then
       Result := Result + ' AND ';
+    Inc(LFor);
   end;
 end;
 
@@ -387,7 +393,7 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
-  LID: string;
+//  LID: string;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
@@ -407,16 +413,24 @@ begin
       if TVarData(AID).VType = varInteger then
         Result := Result + LColumnName + ' = ' + IntToStr(AID)
       else
-      begin
-        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
-        begin
-          LID := AID;
-          LID := LID.Trim(['{', '}']);
-          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
-        end
-        else
-          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
-      end;
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+
+        { TODO -oISAQUE -cREVISÃO :
+          Se você sentiu falta desse trecho de código, entre em contato,
+          precisamos discutir sobre ele, pois ele quebra regras de SOLID
+          e está em um lugar genérico o qual não atende a todos os bancos. }
+
+//      else
+//      begin
+//        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
+//        begin
+//          LID := AID;
+//          LID := LID.Trim(['{', '}']);
+//          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
+//        end
+//        else
+//          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+//      end;
     end;
   end;
 end;
@@ -519,28 +533,28 @@ begin
       begin
         LJoinExist.Add(LJoin.RefTableName);
         // Join Inner, Left, Right, Full
-        if LJoin.Join = InnerJoin then
+        if LJoin.Join = TJoin.InnerJoin then
           ACriteria.InnerJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = LeftJoin then
+        if LJoin.Join = TJoin.LeftJoin then
           ACriteria.LeftJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = RightJoin then
+        if LJoin.Join = TJoin.RightJoin then
           ACriteria.RightJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +
                            LJoin.RefColumnName,' = ',ATable.Name + '.' +
                            LJoin.ColumnName])
         else
-        if LJoin.Join = FullJoin then
+        if LJoin.Join = TJoin.FullJoin then
           ACriteria.FullJoin(LJoin.RefTableName)
                      .&As(LJoin.AliasRefTable)
                      .&On([LJoin.AliasRefTable + '.' +

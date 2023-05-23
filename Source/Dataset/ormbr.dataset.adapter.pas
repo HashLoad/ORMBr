@@ -112,8 +112,7 @@ begin
   inherited DoBeforeDelete(DataSet);
   // Alimenta a lista com registros deletados
   FSession.DeleteList.Add(M.Create);
-  TBind.Instance
-       .SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
+  Bind.SetFieldToProperty(FOrmDataSet, TObject(FSession.DeleteList.Last));
 
   // Deleta registros de todos os DataSet filhos
   EmptyDataSetChilds;
@@ -187,7 +186,7 @@ begin
   // os filhos com os valores das chaves.
   LObject := M.Create;
   try
-    TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
+    Bind.SetFieldToProperty(FOrmDataSet, LObject);
     for LDataSetChild in FMasterObject.Values do
     begin
       LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
@@ -219,8 +218,7 @@ begin
     begin
       // Popula o objeto com o registro atual do dataset Master para filtar
       // os filhos com os valores das chaves.
-      TBind.Instance
-           .SetFieldToProperty(LOwnerObject.FOrmDataSet,
+      Bind.SetFieldToProperty(LOwnerObject.FOrmDataSet,
                       TObject(LOwnerObject.FCurrentInternal));
       LSQL := FSession.SelectAssociation(LOwnerObject.FCurrentInternal);
       if Length(LSQL) > 0 then
@@ -276,7 +274,7 @@ begin
     Exit;
   for LAssociation in LAssociations do
   begin
-    if not (LAssociation.Multiplicity in [OneToOne, ManyToOne]) then
+    if not (LAssociation.Multiplicity in [TMultiplicity.OneToOne, TMultiplicity.ManyToOne]) then
       Continue;
     // Checa se o campo que recebeu a alteração, é um campo de associação
     // Se for é feito um novo select para atualizar a propriedade associada.
@@ -291,7 +289,7 @@ begin
     // os filhos com os valores das chaves.
     LObject := M.Create;
     try
-      TBind.Instance.SetFieldToProperty(FOrmDataSet, LObject);
+      Bind.SetFieldToProperty(FOrmDataSet, LObject);
       LSQL := LDataSetChild.FSession.SelectAssociation(LObject);
       if Length(LSQL) > 0 then
         LDataSetChild.OpenSQLInternal(LSQL);

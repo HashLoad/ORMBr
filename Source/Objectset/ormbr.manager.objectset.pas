@@ -38,13 +38,14 @@ uses
   Generics.Collections,
   // ORMBr
   {$IFDEF DRIVERRESTFUL}
+    ormbr.restfactory.interfaces,
     ormbr.restobjectset.adapter,
-    ormbr.client.interfaces,
   {$ELSE}
-    ormbr.objectset.adapter,
     dbebr.factory.interfaces,
+    ormbr.objectset.adapter,
   {$ENDIF}
-  ormbr.objectset.base.adapter;
+  ormbr.objectset.base.adapter,
+  ormbr.register.middleware;
 
 type
   TRepository = class
@@ -59,7 +60,11 @@ type
   end;
   // Lista de Container
   TRepositoryList = TObjectDictionary<string, TRepository>;
-  IMOConnection = {$IFDEF DRIVERRESTFUL}IRESTConnection{$ELSE}IDBConnection{$ENDIF};
+  {$IFDEF DRIVERRESTFUL}
+    IMOConnection = IRESTConnection
+  {$ELSE}
+    IMOConnection = IDBConnection
+  {$ENDIF};
 
   // TManagerObjectSet
   TManagerObjectSet = class
@@ -94,9 +99,9 @@ type
     procedure LoadLazy<T: class, constructor>(const AObject: TObject); overload;
     // Métodos para serem usados com a propriedade OwnerNestedList := False;
     function Insert<T: class, constructor>(const AObject: T): Integer; overload;
-    procedure Modify<T: class, constructor>(const AObject: T); overload;
     procedure Update<T: class, constructor>(const AObject: T); overload;
     procedure Delete<T: class, constructor>(const AObject: T); overload;
+    procedure Modify<T: class, constructor>(const AObject: T); overload;
     procedure NextPacket<T: class, constructor>(var AObjectList: TObjectList<T>); overload;
     procedure New<T: class, constructor>(var AObject: T); overload;
     // Métodos para serem usados com a propriedade OwnerNestedList := True;
@@ -104,9 +109,9 @@ type
     function Current<T: class, constructor>(const AIndex: Integer): T; overload;
     function New<T: class, constructor>: Integer; overload;
    	function Insert<T: class, constructor>: Integer; overload;
-    procedure Modify<T: class, constructor>; overload;
     procedure Update<T: class, constructor>; overload;
     procedure Delete<T: class, constructor>; overload;
+    procedure Modify<T: class, constructor>; overload;
     procedure NextPacket<T: class, constructor>; overload;
     function First<T: class, constructor>: Integer;
     function Next<T: class, constructor>: Integer;
@@ -179,8 +184,17 @@ begin
 end;
 
 procedure TManagerObjectSet.Delete<T>(const AObject: T);
+var
+  LBeforeDelete: TEvent;
+  LAfterInsert: TEvent;
 begin
+  LBeforeDelete := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'BeforeDelete');
+  if Assigned(LBeforeDelete) then
+    LBeforeDelete(AObject);
   Resolver<T>.Delete(AObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'AfterDelete');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(AObject);
 end;
 
 destructor TManagerObjectSet.Destroy;
@@ -228,11 +242,20 @@ begin
   Resolver<T>.New(AObject);
 end;
 procedure TManagerObjectSet.Delete<T>;
+var
+  LBeforeDelete: TEvent;
+  LAfterInsert: TEvent;
 begin
   if not FOwnerNestedList then
     Exit;
   SelectNestedListItem<T>;
+  LBeforeDelete := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'BeforeDelete');
+  if Assigned(LBeforeDelete) then
+    LBeforeDelete(FSelectedObject);
   Resolver<T>.Delete(FSelectedObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'AfterDelete');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(FSelectedObject);
   FRepository.Items[TClass(T).ClassName].NestedList.Delete(FCurrentIndex);
 end;
 
@@ -298,16 +321,34 @@ begin
 end;
 
 procedure TManagerObjectSet.Update<T>;
+var
+  LBeforeUpdate: TEvent;
+  LAfterInsert: TEvent;
 begin
   if not FOwnerNestedList then
     Exit;
   SelectNestedListItem<T>;
+  LBeforeUpdate := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'BeforeUpdate');
+  if Assigned(LBeforeUpdate) then
+    LBeforeUpdate(FSelectedObject);
   Resolver<T>.Update(FSelectedObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'AfterUpdate');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(FSelectedObject);
 end;
 
 procedure TManagerObjectSet.Update<T>(const AObject: T);
+var
+  LBeforeUpdate: TEvent;
+  LAfterInsert: TEvent;
 begin
+  LBeforeUpdate := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'BeforeUpdate');
+  if Assigned(LBeforeUpdate) then
+    LBeforeUpdate(AObject);
   Resolver<T>.Update(AObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'AfterUpdate');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(AObject);
 end;
 
 function TManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
@@ -338,18 +379,36 @@ begin
 end;
 
 function TManagerObjectSet.Insert<T>: Integer;
+var
+  LBeforeInsert: TEvent;
+  LAfterInsert: TEvent;
 begin
   Result := -1;
   if not FOwnerNestedList then
     Exit;
+  LBeforeInsert := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'BeforeInsert');
+  if Assigned(LBeforeInsert) then
+    LBeforeInsert(FSelectedObject);
   Resolver<T>.Insert(FSelectedObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(FSelectedObject.ClassType, 'AfterInsert');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(FSelectedObject);
   Result := FCurrentIndex;
 end;
 
 function TManagerObjectSet.Insert<T>(const AObject: T): Integer;
+var
+  LBeforeInsert: TEvent;
+  LAfterInsert: TEvent;
 begin
   Result := FCurrentIndex;
+  LBeforeInsert := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'BeforeInsert');
+  if Assigned(LBeforeInsert) then
+    LBeforeInsert(AObject);
   Resolver<T>.Insert(AObject);
+  LAfterInsert := TORMBrMiddlewares.ExecuteEventCallback(AObject, 'AfterInsert');
+  if Assigned(LAfterInsert) then
+    LAfterInsert(AObject);
   if not FOwnerNestedList then
     Exit;
   FRepository.Items[TClass(T).ClassName].NestedList.Add(AObject);

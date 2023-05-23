@@ -17,7 +17,7 @@ uses
   ormbr.client,
   ormbr.client.base,
   ormbr.client.methods,
-  ormbr.rest.classes,
+  ormbr.restcomponent,
   ormbr.client.ws,
 
   FireDAC.Stan.Intf,
@@ -35,7 +35,6 @@ type
     DBGrid1: TDBGrid;
     FDMemTable1: TFDMemTable;
     DataSource1: TDataSource;
-    RESTClientWS1: TRESTClientWS;
     Label1: TLabel;
     edtCidade: TEdit;
     Label2: TLabel;
@@ -71,7 +70,8 @@ type
     procedure btnBuscaCEPClick(Sender: TObject);
   private
     { Private declarations }
-    oDTSManager: TManagerDataSet;
+    FDTSManager: TManagerDataSet;
+    FRESTClientWS: TRESTClientWS;
     procedure SetBaseURL;
   public
     { Public declarations }
@@ -86,36 +86,38 @@ implementation
 
 procedure TForm2.btnBuscaCEPClick(Sender: TObject);
 begin
-  oDTSManager.Close<TEndereco>;
-  RESTClientWS1.APIContext := 'ws/' + edtCEPBusca.Text;
-  oDTSManager.Open<TEndereco>;
+  FDTSManager.Close<TEndereco>;
+  FRESTClientWS.APIContext := 'ws/' + edtCEPBusca.Text;
+  FDTSManager.Open<TEndereco>;
 end;
 
 procedure TForm2.btnBuscarClick(Sender: TObject);
 begin
-  oDTSManager.Close<TEndereco>;
+  FDTSManager.Close<TEndereco>;
   SetBaseURL;
-  oDTSManager.Open<TEndereco>;
+  FDTSManager.Open<TEndereco>;
 end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   SetBaseURL;
 
-  oDTSManager := TManagerDataSet.Create(RESTClientWS1.AsConnection);
-  oDTSManager
+  FRESTClientWS := TRESTClientWS.Create(Self);
+
+  FDTSManager := TManagerDataSet.Create(FRESTClientWS.AsConnection);
+  FDTSManager
     .AddAdapter<TEndereco>(FDMemTable1)
       .Open<TEndereco>;
 end;
 
 procedure TForm2.FormDestroy(Sender: TObject);
 begin
-  oDTSManager.Free;
+  FDTSManager.Free;
 end;
 
 procedure TForm2.SetBaseURL;
 begin
-  RESTClientWS1.APIContext := 'ws/'
+  FRESTClientWS.APIContext := 'ws/'
                            + edtUF.Text + '/'
                            + edtCidade.Text + '/'
                            + edtOcorrencia.Text;

@@ -67,7 +67,9 @@ object Form4: TForm4
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      'Database=D:\ORMBr\Demo\Data\Database\database.fdb'
+      
+        'Database=D:\PROJETOS-Brasil\ORMBr\Examples\Metadata\Database\met' +
+        'adata.fdb'
       'User_Name=SYSDBA'
       'Password=masterkey'
       'CharacterSet=WIN1252'

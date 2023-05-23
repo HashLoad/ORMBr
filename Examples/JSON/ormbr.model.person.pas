@@ -33,8 +33,12 @@ type
 
   [Entity]
   [Table('Person','Tabela de pessoas')]
-  [PrimaryKey('Id', NotInc, NoSort, False, 'Chave primária')]
-  [Indexe('IDX_FirstName','FirstName', NoSort, True, 'Indexe por nome')]
+  [PrimaryKey('Id', TAutoIncType.NotInc,
+                    TGeneratorType.NoneInc,
+                    TSortingOrder.NoSort,
+                    False, 'Chave primária')]
+  [Indexe('IDX_FirstName','FirstName', TSortingOrder.NoSort,
+                                       True, 'Indexe por nome')]
   [Check('CHK_Age', 'Age >= 0')]
   TPerson = class
   private
@@ -53,12 +57,12 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [Restrictions([NoUpdate, NotNull])]
+    [Restrictions([TRestriction.NoUpdate, TRestriction.NotNull])]
     [Column('Id', ftInteger)]
     [Dictionary('Código ID','Mensagem de validação','0','','',taCenter)]
     property Id: Integer read FId write FId;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('FirstName', ftString, 40)]
     [Dictionary('Primeiro nome','Mensagem de validação','','','',taLeftJustify)]
     property FirstName: Nullable<string> Index 1 read FFirstName write FFirstName;
@@ -67,17 +71,17 @@ type
     [Dictionary('Último nome','Mensagem de validação','','','',taLeftJustify)]
     property LastName: String read FLastName write FLastName;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('Age', ftInteger)]
     [Dictionary('Idade','Mensagem de validação','0','','',taCenter)]
     property Age: Integer read FAge write FAge;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('Salary', ftCurrency, 18, 3)]
     [Dictionary('Preço','Mensagem de validação','0','','',taRightJustify)]
     property Salary: Double read FSalary write FSalary;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('Date', ftDateTime)]
     [Dictionary('Nivel','Data de aniversário','Date','','',taRightJustify)]
     property Date: Nullable<TDate> read FDate write FDate;

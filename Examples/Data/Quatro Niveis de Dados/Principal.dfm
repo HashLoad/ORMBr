@@ -136,12 +136,13 @@ object Form1: TForm1
     TitleFont.Style = []
   end
   object Button1: TButton
-    Left = 8
+    Left = 10
     Top = 603
     Width = 107
     Height = 25
     Caption = 'ApplyUpdates'
     TabOrder = 4
+    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 586

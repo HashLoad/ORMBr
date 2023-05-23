@@ -20,7 +20,10 @@ uses
 type
   [Entity]
   [Table('ATENDIMENTOS', '')]
-  [PrimaryKey('POSTO; ATENDIMENTO', NotInc, NoSort, False, 'Chave primária')]
+  [PrimaryKey('POSTO; ATENDIMENTO', TAutoIncType.NotInc,
+                                    TGeneratorType.NoneInc,
+                                    TSortingOrder.NoSort,
+                                    False, 'Chave primária')]
   TAtendimento = class
   private
     { Private declarations }
@@ -33,17 +36,17 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('POSTO', ftInteger)]
     [Dictionary('POSTO', 'Mensagem de validação', '', '', '', taCenter)]
     property Posto: Integer read FPosto write FPosto;
 
-    [Restrictions([NotNull])]
+    [Restrictions([TRestriction.NotNull])]
     [Column('ATENDIMENTO', ftInteger)]
     [Dictionary('ATENDIMENTO', 'Mensagem de validação', '', '', '', taCenter)]
     property Atendimento: Integer read FAtendimento write FAtendimento;
 
-    [Association(OneToMany,'POSTO;ATENDIMENTO','EXAMES','POSTO;ATENDIMENTO')]
+    [Association(TMultiplicity.OneToMany,'POSTO;ATENDIMENTO','EXAMES','POSTO;ATENDIMENTO')]
     [Dictionary('Exame do Atendimento')]
     property Exames: TObjectList<TExame> read FExames write FExames;
 

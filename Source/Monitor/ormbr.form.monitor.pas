@@ -40,7 +40,7 @@ uses
   Variants,
   StdCtrls,
   {$IFDEF MONITORRESTFULCLIENT}
-  ormbr.client.interfaces,
+  ormbr.restfactory.interfaces,
   {$ELSE}
   dbebr.factory.interfaces,
   {$ENDIF}

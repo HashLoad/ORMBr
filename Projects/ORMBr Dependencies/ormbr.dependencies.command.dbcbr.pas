@@ -24,25 +24,26 @@ implementation
 function TORMBrDependenciesCommandDBCBr.GetPath: String;
 begin
   result := ExtractFilePath(GetModuleName(HInstance)) +
-    'Source\DBCBr\';
+    'Source\Dependencies\DBCBr\';
 
   ForceDirectories(result);
 end;
 
 function TORMBrDependenciesCommandDBCBr.UrlDownloadFile: string;
-var
-  version: string;
+//var
+//  version: string;
 begin
-  version := IfThen(FTag.IsEmpty, 'master', FTag);
-
-  if version = 'master' then
-    result := 'https://github.com/HashLoad/DBCBr/archive/refs/heads/master.zip'
-  else
-  if version = 'develop' then
-    result := 'https://github.com/HashLoad/DBCBr/archive/refs/heads/develop.zip'
-  else
-    result := Format('https://github.com/HashLoad/DBCBr/archive/refs/tags/%s.zip',
-      [version])
+  result := FTag;
+//  version := IfThen(FTag.IsEmpty, 'master', FTag);
+//
+//  if version = 'master' then
+//    result := 'https://github.com/HashLoad/DBCBr/archive/refs/heads/master.zip'
+//  else
+//  if version = 'develop' then
+//    result := 'https://github.com/HashLoad/DBCBr/archive/refs/heads/develop.zip'
+//  else
+//    result := Format('https://github.com/HashLoad/DBCBr/archive/refs/tags/%s.zip',
+//      [version])
 end;
 
 function TORMBrDependenciesCommandDBCBr.ZipFileName: string;

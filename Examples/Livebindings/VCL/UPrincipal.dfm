@@ -29,13 +29,6 @@ object FormPrincipal: TFormPrincipal
     Height = 13
     Caption = 'LabelID'
   end
-  object Label1: TLabel
-    Left = 351
-    Top = 288
-    Width = 31
-    Height = 13
-    Caption = 'Label1'
-  end
   object EditID: TEdit
     Left = 345
     Top = 84

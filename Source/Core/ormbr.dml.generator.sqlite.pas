@@ -3,7 +3,6 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
-
                     GNU Lesser General Public License
                       Versão 3, 29 de junho de 2007
 
@@ -16,16 +15,13 @@
        Licença, complementado pelas permissões adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
-
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
 }
 
 unit ormbr.dml.generator.sqlite;
-
 interface
-
 uses
   Classes,
   SysUtils,
@@ -38,9 +34,9 @@ uses
   ormbr.dml.cache,
   ormbr.criteria,
   dbebr.factory.interfaces,
+  dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer;
-
 type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
@@ -58,24 +54,18 @@ type
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
-
 implementation
-
 { TDMLGeneratorSQLite }
-
 constructor TDMLGeneratorSQLite.Create;
 begin
   inherited;
   FDateFormat := 'yyyy-MM-dd';
   FTimeFormat := 'HH:MM:SS';
 end;
-
 destructor TDMLGeneratorSQLite.Destroy;
 begin
-
   inherited;
 end;
-
 function TDMLGeneratorSQLite.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
@@ -99,9 +89,9 @@ begin
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
-
 function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
-  AWhere: string; AOrderBy: string; APageSize: Integer): string;
+
+  AWhere: string; AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;
@@ -137,16 +127,19 @@ begin
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
-
 function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
-begin
+
+  AOrderBy: string): string;
+
+begin
   Result := ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-var
+
+  AAutoInc: TDMLCommandAutoInc): Int64;
+
+var
   LSQL: String;
 begin
   Result := ExecuteSequence(Format('SELECT SEQ AS SEQUENCE FROM SQLITE_SEQUENCE ' +
@@ -160,8 +153,10 @@ begin
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncNextValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-var
+
+  AAutoInc: TDMLCommandAutoInc): Int64;
+
+var
   LSQL: String;
 begin
   Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc);
@@ -173,5 +168,4 @@ end;
 
 initialization
   TDriverRegister.RegisterDriver(dnSQLite, TDMLGeneratorSQLite.Create);
-
 end.

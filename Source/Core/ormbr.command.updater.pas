@@ -44,6 +44,7 @@ uses
   ormbr.types.blob,
   dbebr.factory.interfaces,
   dbcbr.rtti.helper,
+  dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.mapping.attributes,
   dbcbr.mapping.explorer;

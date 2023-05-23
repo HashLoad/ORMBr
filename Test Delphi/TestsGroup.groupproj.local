@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-	<Transactions>
-    <Transaction>2019/03/11 15:49:18.000.425,C:\Users\isaque.pinheiro\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=D:\ORMBr\Test\TestsGroup.groupproj</Transaction>
-  </Transactions>
-	<Default.Personality>
-		<Projects ActiveProject="D:\ORMBr\Test\TestsIBExpress.dproj"/>
-	</Default.Personality>
-</BorlandProject>
