@@ -17,30 +17,39 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{ 
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
 }
 
 {
-  Compiler				 CompilerVersion	Defined Symbol	Used BPL
-  Delphi 11.? ??         36 				VER360			29
-  Delphi 11.1 Alexandria 35 				VER350			28
-  Delphi 10.4 Sidney     34 				VER340			27
-  Delphi 10.3 Rio		 33 				VER330			26
-  Delphi 10.2 Tokyo		 32 				VER320			25
-  Delphi 10.1 Berlin	 31					VER310			24
-  Delphi 10 Seattle		 30					VER300          23
-  Delphi XE8			 29 				VER290          22
-  Delphi XE7			 28 				VER280          21
-  Delphi XE6			 27 				VER270          20
-  Delphi XE5			 26 				VER260          19
-  Delphi XE4			 25 				VER250          18 
-  Delphi XE3			 24 				VER240          17
-  Delphi XE2			 23 				VER230          16
-  Delphi XE	        	 22 				VER220          15
-  Delphi 2010 	         21 				VER210          14
+  Windows MSWINDOWS
+  macOS MACOS
+  iOS IOS
+  Android ANDROID
+  Linux LINUX
+}
+
+{
+  Compiler				CompilerVersion	Defined Symbol	Used BPL
+  Delphi 12.? ??         	36 			VER360		29
+  Delphi 11.1 Alexandria 	35 			VER350		28
+  Delphi 10.4 Sidney     	34 			VER340		27
+  Delphi 10.3 Rio		 	33 			VER330		26
+  Delphi 10.2 Tokyo	 	32 			VER320		25
+  Delphi 10.1 Berlin	 	31			VER310		24
+  Delphi 10 Seattle	 	30			VER300          	23
+  Delphi XE8		 	29 			VER290          	22
+  Delphi XE7		 	28 			VER280          	21
+  Delphi XE6		 	27 			VER270          	20
+  Delphi XE5		 	26 			VER260          	19
+  Delphi XE4		 	25 			VER250          	18 
+  Delphi XE3		 	24 			VER240          	17
+  Delphi XE2		 	23 			VER230          	16
+  Delphi XE	        	 	22 			VER220          	15
+  Delphi 2010 	       	21 			VER210          	14
 }
 
 {.$DEFINE FMX}
