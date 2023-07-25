@@ -46,7 +46,6 @@ uses
   dbebr.factory.interfaces;
 
 type
-  // M - Sessão Abstract
   TSessionAbstract<M: class, constructor> = class abstract
   protected
     FPageSize: Integer;
@@ -274,16 +273,6 @@ begin
     FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
   else
     FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
-
-  /// <summary>
-  ///    if AObjectList = nil then
-  ///      Exit;
-  ///    if AObjectList.RecordCount > 0 then
-  ///      Exit;
-  ///    FFetchingRecords := True;
-  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-  ///  método NextPacketList() dentro do FCommandExecutor.
-  /// </summary>
 end;
 
 function TSessionAbstract<M>.NextPacketList: TObjectList<M>;

@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -92,10 +93,10 @@ begin
   FResultCommand := FGeneratorCommand.GeneratorInsert(AObject);
   Result := FResultCommand;
   FParams.Clear;
-  // Alimenta a lista de parâmetros do comando Insert com os valores do Objeto.
   LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   if LColumns = nil then
     raise Exception.CreateFmt(cMESSAGECOLUMNNOTFOUND, [AObject.ClassName]);
+
   LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AObject.ClassType);
   for LColumn in LColumns do
   begin
@@ -105,7 +106,7 @@ begin
       Continue;
     if LColumn.IsJoinColumn then
       Continue;
-    // Verifica se existe PK, pois autoinc só é usado se existir.
+
     if LPrimaryKey <> nil then
     begin
       // Verifica se o AutoInc deve ser gerado
@@ -120,7 +121,6 @@ begin
                                     .GetMappingSequence(AObject.ClassType);
             FDMLAutoInc.ExistSequence := (FDMLAutoInc.Sequence <> nil);
             FDMLAutoInc.PrimaryKey := LPrimaryKey;
-            // Popula o campo como o valor gerado pelo AutoInc
             LColumn.ColumnProperty.SetValue(AObject,
                                             FGeneratorCommand
                                               .GeneratorAutoIncNextValue(AObject, FDMLAutoInc));
@@ -153,7 +153,6 @@ begin
         end;
       end;
     end;
-    // Alimenta cada parâmetro com o valor de cada propriedade do objeto.
     with FParams.Add as TParam do
     begin
       Name := LColumn.ColumnName;
@@ -170,11 +169,9 @@ begin
       Value := GetParamValue(AObject,
                              LColumn.ColumnProperty,
                              LColumn.FieldType);
-
       // Type ftBoolean não é verificado para o(s) banco(s) abaixo
       if FConnection.GetDriverName = dnPostgreSQL then
-	      Continue;
-
+        Continue;
       // Tratamento para o tipo ftBoolean nativo, indo como Integer
       // para gravar no banco.
       if DataType in [ftBoolean] then
@@ -190,7 +187,7 @@ end;
 function TCommandInserter.GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 var
-  AValueGuid : TGuid;
+  LValueGuid: TGUID;
 begin
   Result := Null;
   case AProperty.PropertyType.TypeKind of
@@ -201,8 +198,8 @@ begin
       Result := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytes
     else if AFieldType = ftGuid then
     begin
-     AValueGuid  := AProperty.GetValue(AInstance).AsType<TGuid>;
-     Result := AValueGuid.ToString;
+     LValueGuid := AProperty.GetValue(AInstance).AsType<TGUID>;
+     Result := LValueGuid.ToString;
     end
     else
       Result := AProperty.GetNullableValue(AInstance).AsVariant;

@@ -405,7 +405,6 @@ begin
     FConnection.Connect;
   try
     try
-      // Limpa os registro do dataset antes de garregar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenID(AID);
@@ -475,7 +474,6 @@ begin
     FConnection.Connect;
   try
     try
-      // Limpa os registro do dataset antes de garegar os novos dados
       EmptyDataSet;
       inherited;
       FSession.OpenWhere(AWhere, AOrderBy);

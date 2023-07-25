@@ -47,7 +47,7 @@ type
   TDMLGeneratorADS = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      AOrderBy: string = ''): string; override;
+      const APageIndex: integer; const AOrderBy: string = ''): string; reintroduce;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -79,12 +79,16 @@ begin
 end;
 
 function TDMLGeneratorADS.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
+  const APageIndex: integer; const AOrderBy: string): string;
+var
+  LFirstColumn: string;
 begin
-  inherited;
-  ACriteria.AST.Select
-           .Columns.Columns[0].Name := 'FIRST %s SKIP %s ' + ACriteria.AST.Select
-                                                                      .Columns.Columns[0].Name;
+  LFirstColumn := ACriteria.AST.Select.Columns.Columns[0].Name;
+  if APageIndex > -1 then
+    LFirstColumn := Format(LFirstColumn, ['FIRST %s SKIP %s '])
+  else
+    LFirstColumn := Format(LFirstColumn, ['']);
+  ACriteria.AST.Select.Columns.Columns[0].Name := LFirstColumn;
   Result := ACriteria.AsString;
 end;
 
@@ -94,17 +98,17 @@ var
   LCriteria: ICriteria;
   LTable: TTableMapping;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, AID);
-    Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
-    if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    LCriteria.AST.Select
+             .Columns
+             .Columns[0].Name := '%s' + LCriteria.AST.Select
+                                                     .Columns
+                                                     .Columns[0].Name;
+    Result := GetGeneratorSelect(LCriteria, APageSize);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
@@ -119,17 +123,17 @@ var
   LScopeWhere: String;
   LScopeOrderBy: String;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, -1);
-    Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
-    if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    LCriteria.AST.Select
+             .Columns
+             .Columns[0].Name := '%s' + LCriteria.AST.Select
+                                                     .Columns
+                                                     .Columns[0].Name;
+    Result := GetGeneratorSelect(LCriteria, APageSize);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
