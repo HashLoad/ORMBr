@@ -39,7 +39,7 @@ type
   Nullable<T> = record
   private
     FValue: T;
-    FHasValue: string;
+    FHasValue: Boolean;
     function GetValue: T;
     function GetHasValue: Boolean;
     procedure Clear;
@@ -85,7 +85,7 @@ const
 constructor Nullable<T>.Create(const Value: T);
 begin
   FValue := Value;
-  FHasValue := CHasValueFlag;
+  FHasValue := true;
 end;
 
 constructor Nullable<T>.Create(const Value: Variant);
@@ -96,7 +96,7 @@ begin
   begin
     LValue := TValue.FromVariant(Value);
     FValue := LValue.AsType<T>;
-    FHasValue := CHasValueFlag;
+    FHasValue := true;
   end
   else
     Clear;
@@ -104,7 +104,7 @@ end;
 
 procedure Nullable<T>.Clear;
 begin
-  FHasValue := '';
+  FHasValue := false;
   FValue := Default(T);
 end;
 
@@ -115,7 +115,7 @@ end;
 
 function Nullable<T>.GetHasValue: Boolean;
 begin
-  Result := FHasValue <> '';
+  Result := FHasValue;
 end;
 
 function Nullable<T>.GetValue: T;

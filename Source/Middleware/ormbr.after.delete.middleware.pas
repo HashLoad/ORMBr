@@ -93,6 +93,8 @@ end;
 class function TAfterDeleteMiddleware.GetEvent(const AResource: String): TEvent;
 begin
   Result := nil;
+  if FEventList = nil then
+    exit;
   if not FEventList.ContainsKey(AResource) then
     Exit;
   Result := FEventList[AResource];

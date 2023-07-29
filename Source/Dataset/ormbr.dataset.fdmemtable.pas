@@ -127,7 +127,6 @@ begin
     FOrmDataSet.ResourceOptions.SilentMode := True;
     FOrmDataSet.UpdateOptions.LockMode := lmNone;
     FOrmDataSet.UpdateOptions.LockPoint := lpDeferred;
-    FOrmDataSet.UpdateOptions.FetchGeneratorsPoint := gpImmediate;
     FOrmDataSet.CreateDataSet;
     FOrmDataSet.Open;
     FOrmDataSet.CachedUpdates := False;
