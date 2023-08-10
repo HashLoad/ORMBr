@@ -10,9 +10,7 @@ object Form4: TForm4
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
     Left = 4
@@ -33,6 +31,8 @@ object Form4: TForm4
     Lines.Strings = (
       'Memo1')
     TabOrder = 1
+    ExplicitWidth = 824
+    ExplicitHeight = 369
   end
   object Button2: TButton
     Left = 161

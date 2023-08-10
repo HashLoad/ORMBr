@@ -62,10 +62,6 @@ type
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
     procedure RefreshRecordWhere(const AWhere: String); override;
-//    procedure NextPacketList(const AObjectList: TObjectList<M>); overload; override;
-//    function NextPacketList: TObjectList<M>; overload; override;
-//    function NextPacketList(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
-//    function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function SelectAssociation(const AObject: TObject): String; override;
   end;
 
@@ -103,7 +99,6 @@ var
 begin
   inherited;
   LDBResultSet := FCommandExecutor.SelectInternalID(AID);
-  // Popula o DataSet em memória com os registros retornardos no comando SQL
   PopularDataSet(LDBResultSet);
 end;
 
@@ -141,7 +136,6 @@ begin
       LWhere := LWhere + ' AND ';
   end;
   LDBResultSet := FCommandExecutor.SelectInternal(FCommandExecutor.SelectInternalWhere(LWhere, ''));
-  // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;
@@ -156,7 +150,6 @@ var
 begin
   inherited;
   LDBResultSet := FCommandExecutor.SelectInternal(FCommandExecutor.SelectInternalWhere(AWhere, ''));
-  // Atualiza dados no DataSet
   while LDBResultSet.NotEof do
   begin
     FOwner.FOrmDataSet.Edit;
@@ -172,86 +165,10 @@ begin
   inherited;
   LDBResultSet := FCommandExecutor.NextPacket;
   if LDBResultSet.RecordCount > 0 then
-    // Popula o DataSet em memória com os registros retornardos no comando SQL
     PopularDataSet(LDBResultSet)
   else
     FFetchingRecords := True;
 end;
-
-//procedure TSessionDataSet<M>.NextPacketList(const AObjectList: TObjectList<M>);
-//begin
-//  inherited;
-//  if FFetchingRecords then
-//    Exit;
-//
-//  FPageNext := FPageNext + FPageSize;
-//  if FFindWhereUsed then
-//    FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
-//  else
-//    FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
-//  /// <summary>
-//  ///    if AObjectList <> nil then
-//  ///      if AObjectList.RecordCount = 0 then
-//  ///        FFetchingRecords := True;
-//  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-//  ///  método NextPacketList() dentro do FCommandExecutor.
-//  /// </summary>
-//end;
-
-//function TSessionDataSet<M>.NextPacketList: TObjectList<M>;
-//begin
-//  inherited;
-//  Result := nil;
-//  if FFetchingRecords then
-//    Exit;
-//
-//  FPageNext := FPageNext + FPageSize;
-//  if FFindWhereUsed then
-//    Result := FCommandExecutor.NextPacketList(FWhere, FOrderBy, FPageSize, FPageNext)
-//  else
-//    Result := FCommandExecutor.NextPacketList(FPageSize, FPageNext);
-//
-//  if Result = nil then
-//    Exit;
-//  if Result.Count > 0 then
-//    Exit;
-//
-//  FFetchingRecords := True;
-//end;
-
-//function TSessionDataSet<M>.NextPacketList(const APageSize,
-//  APageNext: Integer): TObjectList<M>;
-//begin
-//  inherited;
-//  Result := nil;
-//  if FFetchingRecords then
-//    Exit;
-//
-//  Result := FCommandExecutor.NextPacketList(APageSize, APageNext);
-//  if Result = nil then
-//    Exit;
-//  if Result.Count > 0 then
-//    Exit;
-//
-//  FFetchingRecords := True;
-//end;
-
-//function TSessionDataSet<M>.NextPacketList(const AWhere, AOrderBy: String;
-//  const APageSize, APageNext: Integer): TObjectList<M>;
-//begin
-//  inherited;
-//  Result := nil;
-//  if FFetchingRecords then
-//    Exit;
-//
-//  Result := FCommandExecutor.NextPacketList(AWhere, AOrderBy, APageSize, APageNext);
-//  if Result = nil then
-//    Exit;
-//  if Result.Count > 0 then
-//    Exit;
-//
-//  FFetchingRecords := True;
-//end;
 
 procedure TSessionDataSet<M>.PopularDataSet(const ADBResultSet: IDBResultSet);
 begin
@@ -267,9 +184,6 @@ begin
        FOwner.FOrmDataSet.Post;
     end;
   finally
-    // Aqui o DataSet(FOrmDataSet) dessa sessão recebe os dados do select executado,
-    // em seguinda o Dataset interno ao driver selecionado é fechado,
-    // limpando assim os dados dele da memória.
     ADBResultSet.Close;
   end;
 end;

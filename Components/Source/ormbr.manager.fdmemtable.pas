@@ -47,7 +47,7 @@ type
     function GetOwnerNestedList: Boolean;
     procedure SetOwnerNestedList(const Value: Boolean);
   public
-    constructor Create(const AOwner: TComponent);
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure RemoveAdapter<T: class>;
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
@@ -125,8 +125,9 @@ begin
   FManagerDataSet.Close<T>;
 end;
 
-constructor TORMBrManagerFDMemTable.Create(const AOwner: TComponent);
+constructor TORMBrManagerFDMemTable.Create(AOwner: TComponent);
 begin
+  inherited Create(AOwner);
   FOwner := AOwner;
 end;
 

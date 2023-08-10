@@ -36,7 +36,7 @@ begin
   // DBEBr Engine de Conexão a Banco de Dados
   FConnection := TFactoryFireDAC.Create(FProviderDM.FDConnection1, dnSQLite);
   // ORMBr - REST Server Horse
-  FRESTServerHorse := TRESTServerHorse.Create(FConnection, 'api/ormbr');
+  FRESTServerHorse := TRESTServerHorse.Create(nil, FConnection, 'api/ormbr');
 end;
 
 destructor TProviderORMBr.Destroy;

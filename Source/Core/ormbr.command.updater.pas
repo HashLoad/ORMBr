@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -148,10 +149,8 @@ begin
         DataType := LFieldType.FieldType;
         ParamType := ptInput;
         Value := GetParamValue(AObject, LProperty, DataType);
-
         if FConnection.GetDriverName = dnPostgreSQL then
-	      Continue;
-
+          Continue;
     	  // Tratamento para o tipo ftBoolean nativo, indo como Integer
         // para gravar no banco.
         if DataType in [ftBoolean] then

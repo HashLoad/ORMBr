@@ -3,7 +3,6 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
-
                     GNU Lesser General Public License
                       Versão 3, 29 de junho de 2007
 
@@ -16,8 +15,8 @@
        Licença, complementado pelas permissões adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
-
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -76,7 +75,6 @@ end;
 
 destructor TDMLGeneratorMSSql.Destroy;
 begin
-
   inherited;
 end;
 
@@ -142,19 +140,14 @@ var
 begin
   LTable := TMappingExplorer.GetMappingTable(AClass);
   LOrderBy := GetGeneratorOrderBy(AClass, LTable.Name, AID);
-
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria, LOrderBy);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
-
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
   // OrderBy
@@ -162,23 +155,20 @@ begin
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: string;
-  AOrderBy: string; APageSize: Integer): string;
+  AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria, AOrderBy);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
@@ -200,19 +190,20 @@ begin
 end;
 
 function TDMLGeneratorMSSql.GeneratorAutoIncCurrentValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-begin
+  AAutoInc: TDMLCommandAutoInc): Int64;
+begin
   Result := ExecuteSequence(Format('SELECT CURRENT_VALUE FROM SYS.SEQUENCES WHERE NAME = ''%s''',
                                    [AAutoInc.Sequence.Name]) );
 end;
 
 function TDMLGeneratorMSSql.GeneratorAutoIncNextValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-begin
+  AAutoInc: TDMLCommandAutoInc): Int64;
+begin
   Result := ExecuteSequence(Format('SELECT NEXT VALUE FOR %s ',
                                    [AAutoInc.Sequence.Name]));
 end;
 
 initialization
   TDriverRegister.RegisterDriver(dnMSSQL, TDMLGeneratorMSSql.Create);
+
 end.

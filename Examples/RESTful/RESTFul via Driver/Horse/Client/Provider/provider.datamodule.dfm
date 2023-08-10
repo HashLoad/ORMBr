@@ -1,9 +1,9 @@
 object ProviderDM: TProviderDM
-  OldCreateOrder = False
   OnCreate = DataModuleCreate
   OnDestroy = DataModuleDestroy
-  Height = 279
-  Width = 398
+  Height = 349
+  Width = 498
+  PixelsPerInch = 120
   object FDMaster: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
@@ -12,8 +12,8 @@ object ProviderDM: TProviderDM
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 234
-    Top = 22
+    Left = 293
+    Top = 28
   end
   object FDDetail: TFDMemTable
     AggregatesActive = True
@@ -24,8 +24,8 @@ object ProviderDM: TProviderDM
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 233
-    Top = 73
+    Left = 291
+    Top = 91
   end
   object FDClient: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -35,8 +35,8 @@ object ProviderDM: TProviderDM
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 231
-    Top = 127
+    Left = 289
+    Top = 159
   end
   object FDLookup: TFDMemTable
     FetchOptions.AssignedValues = [evMode]
@@ -46,7 +46,7 @@ object ProviderDM: TProviderDM
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 231
-    Top = 172
+    Left = 289
+    Top = 227
   end
 end

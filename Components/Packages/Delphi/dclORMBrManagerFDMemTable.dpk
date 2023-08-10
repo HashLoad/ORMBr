@@ -32,9 +32,16 @@ package dclORMBrManagerFDMemTable;
 requires
   rtl,
   designide,
-  ORMBrManagerFDMemTable;
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  DBEBrCore,
+  ORMBrCore;
 
 contains
-  ormbr.manager.fdmemtable.reg in '..\..\Source\ormbr.manager.fdmemtable.reg.pas';
+  ormbr.manager.fdmemtable.reg in '..\..\Source\ormbr.manager.fdmemtable.reg.pas',
+  ormbr.db.manager.fdmemtable in '..\..\Source\ormbr.db.manager.fdmemtable.pas',
+  ormbr.manager.fdmemtable in '..\..\Source\ormbr.manager.fdmemtable.pas',
+  ormbr.dataset.fdmemtable in '..\..\..\Source\Dataset\ormbr.dataset.fdmemtable.pas';
 
 end.

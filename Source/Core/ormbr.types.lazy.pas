@@ -37,7 +37,7 @@ const
 
 type
   ILazy<T> = interface(TFunc<T>)
-    ['{C303E426-F0C3-447B-9FCB-7B911B9E5CF5}']
+    ['{CBBB4093-AF0A-4367-AC34-018A379BDE57}']
     function IsValueCreated: Boolean;
     property Value: T read Invoke;
   end;
@@ -54,7 +54,6 @@ type
   public
     constructor Create(ValueFactory: TFunc<T>);
     destructor Destroy; override;
-
     function IsValueCreated: Boolean;
     property Value: T read Invoke;
   end;
@@ -65,19 +64,19 @@ type
     function GetValue: T;
   public
     class constructor Create;
-    property Value: T read GetValue;
     class operator Implicit(const Value: Lazy<T>): ILazy<T>; overload;
     class operator Implicit(const Value: Lazy<T>): T; overload;
     class operator Implicit(const Value: TFunc<T>): Lazy<T>; overload;
+    property Value: T read GetValue;
   end;
 
   PObject = ^TObject;
 
 implementation
 
-uses
-  dbcbr.rtti.helper;
-
+uses
+  dbcbr.rtti.helper;
+
 { TLazy<T> }
 
 constructor TLazy<T>.Create(ValueFactory: TFunc<T>);

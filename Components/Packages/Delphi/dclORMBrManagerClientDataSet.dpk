@@ -32,10 +32,15 @@ package dclORMBrManagerClientDataSet;
 requires
   rtl,
   designide,
-  ORMBrManagerClientDataSet;
+  dsnap,
+  DBEBrCore,
+  ORMBrCore;
 
 contains
-  ormbr.manager.clientdataset.reg in '..\..\Source\ormbr.manager.clientdataset.reg.pas';
+  ormbr.manager.clientdataset.reg in '..\..\Source\ormbr.manager.clientdataset.reg.pas',
+  ormbr.db.manager.clientdataset in '..\..\Source\ormbr.db.manager.clientdataset.pas',
+  ormbr.manager.clientdataset in '..\..\Source\ormbr.manager.clientdataset.pas',
+  ormbr.dataset.clientdataset in '..\..\..\Source\Dataset\ormbr.dataset.clientdataset.pas';
 
 end.
 

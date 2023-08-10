@@ -32,9 +32,12 @@ package dclORMBrManagerObjectSet;
 requires
   rtl,
   designide,
-  ORMBrManagerObjectSet;
+  DBEBrCore,
+  ORMBrCore;
 
 contains
-  ormbr.db.manager.objectset.reg in '..\..\Source\ormbr.db.manager.objectset.reg.pas';
+  ormbr.db.manager.objectset.reg in '..\..\Source\ormbr.db.manager.objectset.reg.pas',
+  ormbr.db.manager.objectset in '..\..\Source\ormbr.db.manager.objectset.pas',
+  ormbr.manager.objectset in '..\..\..\Source\Objectset\ormbr.manager.objectset.pas';
 
 end.

@@ -69,7 +69,6 @@ type
   class var
     FInstance: IFieldSingleton;
   private
-    constructor CreatePrivate;
     function GetFieldType(ADataSet: TDataSet; AFieldType: TFieldType): TField;
   protected
     constructor Create;
@@ -174,12 +173,7 @@ end;
 
 constructor TFieldSingleton.Create;
 begin
-   raise Exception.Create('Para usar o FieldFactory use o método TFieldSingleton.GetInstance()');
-end;
 
-constructor TFieldSingleton.CreatePrivate;
-begin
-   inherited;
 end;
 
 function TFieldSingleton.GetFieldType(ADataSet: TDataSet;
@@ -246,8 +240,7 @@ end;
 class function TFieldSingleton.GetInstance: IFieldSingleton;
 begin
    if not Assigned(FInstance) then
-      FInstance := TFieldSingleton.CreatePrivate;
-
+      FInstance := TFieldSingleton.Create;
    Result := FInstance;
 end;
 

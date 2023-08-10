@@ -50,9 +50,9 @@ type
     constructor Create;
   public
     destructor Destroy; override;
-    class function Get: IQueryScopeMiddleware;
     procedure AddWhere(const AResource, AScopeName: String; const AFunc: TFunc<String>);
     procedure AddOrderBy(const AResource, AScopeName: String; const AFunc: TFunc<String>);
+    class function Get: IQueryScopeMiddleware;
     class function GetWhere(const AResource: String): TQueryScopeList;
     class function GetOrderBy(const AResource: String): TQueryScopeList;
   end;

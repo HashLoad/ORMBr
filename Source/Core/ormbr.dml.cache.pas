@@ -33,13 +33,13 @@ uses
 
 type
   TQueryCache = class
-  private
-    class var FQueryCache: TDictionary<String, String>;
   public
-    class constructor Create;
-    class destructor Destroy;
+    FQueryCache: TDictionary<String, String>;
+  public
+    constructor Create;
+    destructor Destroy; override;
     /// <summary>
-    ///   Lista para cache de comandos SQL, evitando o ORMBr usar RTTi toda
+    ///   Lista para cache de comandos SQL, evitando loops toda
     ///   vez que for solicitado um SELECT e INSERT.
     /// </summary>
     /// <param name="String">
@@ -48,26 +48,35 @@ type
     /// <param name="String">
     ///   Comando SQL pronto para SELECT e INSERT
     /// </param>
-    class function Get: TDictionary<String, String>;
+    function TryGetValue(const AKey: string; var AValue: string): boolean;
+    procedure AddOrSetValue(const AKey: string; const AValue: string);
   end;
 
 implementation
 
 { TQueryCache }
 
-class constructor TQueryCache.Create;
+procedure TQueryCache.AddOrSetValue(const AKey: string;
+  const AValue: string);
+begin
+  FQueryCache.AddOrSetValue(AKey, AValue);
+end;
+
+constructor TQueryCache.Create;
 begin
   FQueryCache := TDictionary<String, String>.Create;
 end;
 
-class destructor TQueryCache.Destroy;
+destructor TQueryCache.Destroy;
 begin
   FQueryCache.Free;
+  inherited;
 end;
 
-class function TQueryCache.Get: TDictionary<String, String>;
+function TQueryCache.TryGetValue(const AKey: string;
+  var AValue: string): boolean;
 begin
-  Result := FQueryCache;
+  Result := FQueryCache.TryGetValue(AKey, AValue);
 end;
 
 end.

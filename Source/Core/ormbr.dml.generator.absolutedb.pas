@@ -3,7 +3,6 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
-
                     GNU Lesser General Public License
                       Versão 3, 29 de junho de 2007
 
@@ -16,7 +15,6 @@
        Licença, complementado pelas permissões adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
-
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
@@ -47,7 +45,7 @@ type
   TDMLGeneratorAbsoluteDB = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      AOrderBy: string = ''): string; override;
+      const APageIndex: integer; const AOrderBy: string = ''): string; reintroduce;
   public
     constructor Create; override;
     destructor Destroy; override;
@@ -74,16 +72,20 @@ end;
 
 destructor TDMLGeneratorAbsoluteDB.Destroy;
 begin
-
   inherited;
 end;
 
-function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(
-  const ACriteria: ICriteria; AOrderBy: string): string;
+function TDMLGeneratorAbsoluteDB.GetGeneratorSelect(const ACriteria: ICriteria;
+  const APageIndex: integer; const AOrderBy: string): string;
+var
+  LFirstColumn: string;
 begin
-  inherited;
-  ACriteria.AST.Select.Columns.Columns[0].Name := 'TOP %s, %s '
-                                                + ACriteria.AST.Select.Columns.Columns[0].Name;
+  LFirstColumn := ACriteria.AST.Select.Columns.Columns[0].Name;
+  if APageIndex > -1 then
+    LFirstColumn := Format(LFirstColumn, ['TOP %s, %s '])
+  else
+    LFirstColumn := Format(LFirstColumn, ['']);
+  ACriteria.AST.Select.Columns.Columns[0].Name := LFirstColumn;
   Result := ACriteria.AsString;
 end;
 
@@ -93,17 +95,17 @@ var
   LCriteria: ICriteria;
   LTable: TTableMapping;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, AID);
-    Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
-    if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    LCriteria.AST.Select
+             .Columns
+             .Columns[0].Name := '%s' + LCriteria.AST.Select
+                                                     .Columns
+                                                     .Columns[0].Name;
+    Result := GetGeneratorSelect(LCriteria, APageSize);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
@@ -112,23 +114,23 @@ begin
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorSelectWhere(AClass: TClass; AWhere,
-  AOrderBy: string; APageSize: Integer): string;
+  AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, -1);
-    Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
-    if APageSize > -1 then
-      Result := GetGeneratorSelect(LCriteria);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    LCriteria.AST.Select
+             .Columns
+             .Columns[0].Name := '%s' + LCriteria.AST.Select
+                                                     .Columns
+                                                     .Columns[0].Name;
+    Result := GetGeneratorSelect(LCriteria, APageSize);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
@@ -150,8 +152,8 @@ begin
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorAutoIncCurrentValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-begin
+  AAutoInc: TDMLCommandAutoInc): Int64;
+begin
   Result := ExecuteSequence(Format('SELECT LASTAUTOINC(%s, %s) FROM %s',
                                    [AAutoInc.Sequence.TableName,
                                     AAutoInc.PrimaryKey.Columns.Items[0],
@@ -159,8 +161,8 @@ function TDMLGeneratorAbsoluteDB.GeneratorAutoIncCurrentValue(AObject: TObject;
 end;
 
 function TDMLGeneratorAbsoluteDB.GeneratorAutoIncNextValue(AObject: TObject;
-  AAutoInc: TDMLCommandAutoInc): Int64;
-begin
+  AAutoInc: TDMLCommandAutoInc): Int64;
+begin
   Result := GeneratorAutoIncCurrentValue(AObject, AAutoInc)
           + AAutoInc.Sequence.Increment;
 end;

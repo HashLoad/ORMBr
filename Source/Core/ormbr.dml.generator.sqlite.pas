@@ -15,13 +15,16 @@
        Licença, complementado pelas permissões adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
 }
 
 unit ormbr.dml.generator.sqlite;
+
 interface
+
 uses
   Classes,
   SysUtils,
@@ -37,6 +40,7 @@ uses
   dbcbr.mapping.popular,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer;
+
 type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
@@ -54,32 +58,35 @@ type
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
   end;
+
 implementation
+
 { TDMLGeneratorSQLite }
+
 constructor TDMLGeneratorSQLite.Create;
 begin
   inherited;
   FDateFormat := 'yyyy-MM-dd';
   FTimeFormat := 'HH:MM:SS';
 end;
+
 destructor TDMLGeneratorSQLite.Destroy;
 begin
   inherited;
 end;
+
 function TDMLGeneratorSQLite.GeneratorSelectAll(AClass: TClass;
   APageSize: Integer; AID: Variant): string;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
@@ -89,22 +96,20 @@ begin
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
-function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
 
+function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
   AWhere: string; AOrderBy: string; APageSize: Integer): string;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
@@ -127,18 +132,15 @@ begin
   if APageSize > -1 then
     Result := Result + GetGeneratorSelect(LCriteria);
 end;
+
 function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria;
-
   AOrderBy: string): string;
-
 begin
   Result := ' LIMIT %s OFFSET %s';
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncCurrentValue(AObject: TObject;
-
   AAutoInc: TDMLCommandAutoInc): Int64;
-
 var
   LSQL: String;
 begin
@@ -153,9 +155,7 @@ begin
 end;
 
 function TDMLGeneratorSQLite.GeneratorAutoIncNextValue(AObject: TObject;
-
   AAutoInc: TDMLCommandAutoInc): Int64;
-
 var
   LSQL: String;
 begin
@@ -168,4 +168,5 @@ end;
 
 initialization
   TDriverRegister.RegisterDriver(dnSQLite, TDMLGeneratorSQLite.Create);
+
 end.

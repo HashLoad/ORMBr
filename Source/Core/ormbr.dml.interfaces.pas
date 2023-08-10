@@ -3,7 +3,6 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
-
                     GNU Lesser General Public License
                       Versão 3, 29 de junho de 2007
 
@@ -17,7 +16,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(12 Out 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -37,10 +37,6 @@ uses
   dbcbr.mapping.classes;
 
 type
-  /// <summary>
-  ///   Unit : ormbr.dml.generator.pas
-  ///   Classe : TDMLGeneratorAbstract
-  /// </summary>
   IDMLGeneratorCommand = interface
     ['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']
     procedure SetConnection(const AConnaction: IDBConnection);
@@ -57,12 +53,12 @@ type
     function GeneratorInsert(AObject: TObject): string;
     function GeneratorDelete(AObject: TObject; AParams: TParams): string;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
-      AAutoInc: TDMLCommandAutoInc): Int64;
-    function GeneratorAutoIncNextValue(AObject: TObject;
+      AAutoInc: TDMLCommandAutoInc): Int64;
+    function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64;
     function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string;
-  end;
+      APageSize, APageNext: Integer): string;
+  end;
 
 implementation
 

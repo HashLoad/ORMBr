@@ -70,6 +70,8 @@ type
     procedure PopularDataSetList(const AObjectList: TObjectList<M>);
     procedure DeleteDataSetChilds; virtual;
     procedure SetAutoIncValueChilds; override;
+    procedure OpenDataSetChilds; override;
+    procedure LoadLazy(const AOwner: M); override;
   public
     constructor Create(const AConnection: IRESTConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); overload; virtual;
@@ -303,6 +305,11 @@ begin
   end;
 end;
 
+procedure TRESTDataSetAdapter<M>.LoadLazy(const AOwner: M);
+begin
+
+end;
+
 procedure TRESTDataSetAdapter<M>.NextPacket;
 var
   LBookMark: TBookmark;
@@ -328,6 +335,11 @@ begin
     FOrmDataSet.EnableControls;
     EnableDataSetEvents;
   end;
+end;
+
+procedure TRESTDataSetAdapter<M>.OpenDataSetChilds;
+begin
+
 end;
 
 procedure TRESTDataSetAdapter<M>.PopularDataSet(const AObject: TObject);
