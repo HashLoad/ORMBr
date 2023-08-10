@@ -3,11 +3,22 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
+
+                    GNU Lesser General Public License
+                      Versão 3, 29 de junho de 2007
+
+       Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+       A todos é permitido copiar e distribuir cópias deste documento de
+       licença, mas mudá-lo não é permitido.
+
+       Esta versão da GNU Lesser General Public License incorpora
+       os termos e condições da versão 3 da GNU General Public License
+       Licença, complementado pelas permissões adicionais listadas no
+       arquivo LICENSE na pasta principal.
 }
 
-{
-  @abstract(REST Componentes)
-  @created(20 Jun 2018)
+{ @abstract(ORMBr Framework.)
+  @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
@@ -70,7 +81,7 @@ type
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; override;
     function ExistSequence: Boolean; override;
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; //override;
+      const AParams: array of string): TObjectList<M>; overload; override;
   end;
 
 implementation
@@ -151,6 +162,7 @@ end;
 
 destructor TRESTDataSetSession<M>.Destroy;
 begin
+
   inherited;
 end;
 
@@ -414,7 +426,6 @@ end;
 
 function TRESTDataSetSession<M>.NextPacketList: TObjectList<M>;
 begin
-  inherited;
   if FFindWhereUsed then
     Result := NextPacketMethod(FWhere, FOrderBy)
   else
@@ -574,7 +585,6 @@ var
   LOrderByOld: String;
   LFor: Integer;
 begin
-  inherited;
   FFindWhereRefreshUsed := True;
   LWhereOld := FWhere;
   LOrderByOld := FOrderBy;

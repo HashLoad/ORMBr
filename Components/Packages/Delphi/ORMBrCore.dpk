@@ -41,8 +41,6 @@ contains
   ormbr.core.consts in '..\..\..\Source\Core\ormbr.core.consts.pas',
   ormbr.json in '..\..\..\Source\Core\ormbr.json.pas',
   ormbr.objects.helper in '..\..\..\Source\Core\ormbr.objects.helper.pas',
-  ormbr.objects.manager.abstract in '..\..\..\Source\Core\ormbr.objects.manager.abstract.pas',
-  ormbr.objects.manager in '..\..\..\Source\Core\ormbr.objects.manager.pas',
   ormbr.session.abstract in '..\..\..\Source\Core\ormbr.session.abstract.pas',
   ormbr.types.lazy in '..\..\..\Source\Core\ormbr.types.lazy.pas',
   ormbr.types.nullable in '..\..\..\Source\Core\ormbr.types.nullable.pas',
@@ -76,8 +74,15 @@ contains
   ormbr.dml.cache in '..\..\..\Source\Core\ormbr.dml.cache.pas',
   ormbr.rtti.helper in '..\..\..\Source\Core\ormbr.rtti.helper.pas',
   ormbr.objects.utils in '..\..\..\Source\Core\ormbr.objects.utils.pas',
-  jsonbr.builders in '..\..\..\Source\JSONBr\Source\Core\jsonbr.builders.pas',
-  jsonbr in '..\..\..\Source\JSONBr\Source\Core\jsonbr.pas',
-  jsonbr.writer in '..\..\..\Source\JSONBr\Source\Core\jsonbr.writer.pas';
+  ormbr.command.executor.abstract in '..\..\..\Source\Core\ormbr.command.executor.abstract.pas',
+  ormbr.command.executor in '..\..\..\Source\Core\ormbr.command.executor.pas',
+  ormbr.register.middleware in '..\..\..\Source\Middleware\ormbr.register.middleware.pas',
+  jsonbr in '..\..\..\..\JSONBr\Source\jsonbr.pas',
+  jsonbr.builders in '..\..\..\..\JSONBr\Source\Core\jsonbr.builders.pas',
+  jsonbr.reader in '..\..\..\..\JSONBr\Source\Core\jsonbr.reader.pas',
+  jsonbr.utils in '..\..\..\..\JSONBr\Source\Core\jsonbr.utils.pas',
+  jsonbr.writer in '..\..\..\..\JSONBr\Source\Core\jsonbr.writer.pas';
 
 end.
+
+

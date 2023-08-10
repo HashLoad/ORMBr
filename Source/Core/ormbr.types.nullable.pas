@@ -62,7 +62,6 @@ type
     class operator Implicit(const Value: Nullable<T>): Variant;
     class operator Implicit(const Value: Variant): Nullable<T>;
     class operator Implicit(Value: Pointer): Nullable<T>;
-    class operator Explicit(const Value: Nullable<T>): T;
     class operator Equal(const a, b: Nullable<T>) : Boolean;
     class operator NotEqual(const a, b: Nullable<T>) : Boolean;
   end;
@@ -194,11 +193,6 @@ begin
     Result.Clear
   else
     raise Exception.Create('Cannot assigned non-null pointer to nullable type.');
-end;
-
-class operator Nullable<T>.Explicit(const Value: Nullable<T>): T;
-begin
-  Result := Value.Value;
 end;
 
 class operator Nullable<T>.Equal(const a, b: Nullable<T>): Boolean;

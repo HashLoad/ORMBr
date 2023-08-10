@@ -3,7 +3,6 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
-
                     GNU Lesser General Public License
                       Versão 3, 29 de junho de 2007
 
@@ -16,7 +15,6 @@
        Licença, complementado pelas permissões adicionais listadas no
        arquivo LICENSE na pasta principal.
 }
-
 { @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
@@ -42,14 +40,13 @@ type
     ['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']
     function ParseCommandNoSQL(const ASubStr, ACommandText: string;
       const ADefault: String = ''): string;
-  end;
+
+  end;
 
   TUtilSingleton = class sealed(TInterfacedObject, IUtilSingleton)
   private
   class var
     FInstance: IUtilSingleton;
-  private
-    constructor CreatePrivate;
   protected
     constructor Create;
   public
@@ -72,18 +69,13 @@ end;
 
 constructor TUtilSingleton.Create;
 begin
-  raise Exception.Create('Para usar o IUtilSingleton use o método TUtilSingleton.GetInstance()');
-end;
 
-constructor TUtilSingleton.CreatePrivate;
-begin
-  inherited;
 end;
 
 class function TUtilSingleton.GetInstance: IUtilSingleton;
 begin
   if not Assigned(FInstance) then
-    FInstance := TUtilSingleton.CreatePrivate;
+    FInstance := TUtilSingleton.Create;
    Result := FInstance;
 end;
 

@@ -1,13 +1,13 @@
 {
 	"name": "ORMBr",
 	"description": "ORMBr Framework for Delphi",
-	"version": "1.1.5",
+	"version": "1.1.6",
 	"homepage": "www.ormbr.com.br/",
 	"mainsrc": "Source/",
 	"projects": [],
 	"dependencies": {
-		"github.com/hashload/dbcbr": "^1.1.5",
-		"github.com/hashload/dbebr": "^1.1.5",
+		"github.com/hashload/dbcbr": "^1.1.6",
+		"github.com/hashload/dbebr": "^1.1.6",
 		"github.com/hashload/cqlbr": "^1.1.5",
 		"github.com/hashload/jsonbr": "^1.1.5"
 	}

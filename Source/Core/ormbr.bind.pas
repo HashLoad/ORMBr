@@ -75,8 +75,8 @@ type
   private
   class var
     FInstance: IBind;
+  private
     FContext: TRttiContext;
-    constructor CreatePrivate;
     procedure SetAggregateFieldDefsObjectClass(const ADataSet: TDataSet;
       const AObject: TObject);
     procedure SetCalcFieldDefsObjectClass(const ADataSet: TDataSet;
@@ -109,6 +109,7 @@ type
   public
     { Public declarations }
     class function Instance: IBind;
+    destructor Destroy; override;
     procedure SetDataDictionary(const ADataSet: TDataSet;
       const AObject: TObject);
     procedure SetInternalInitFieldDefsObjectClass(const ADataSet: TDataSet;
@@ -255,13 +256,7 @@ end;
 
 constructor TBind.Create;
 begin
-   raise Exception.CreateFmt(cCREATEBINDDATASET, ['TBind', 'TBind.GetInstance()']);
-end;
-
-constructor TBind.CreatePrivate;
-begin
-   inherited;
-   FContext := TRttiContext.Create;
+  FContext := TRttiContext.Create;
 end;
 
 function TBind.GetFieldValue(const ADataSet: TDataSet;
@@ -347,11 +342,16 @@ begin
   end;
 end;
 
+destructor TBind.Destroy;
+begin
+  FContext.Free;
+  inherited;
+end;
+
 class function TBind.Instance: IBind;
 begin
    if not Assigned(FInstance) then
-      FInstance := TBind.CreatePrivate;
-
+      FInstance := TBind.Create;
    Result := FInstance;
 end;
 
@@ -953,4 +953,3 @@ begin
 end;
 
 end.
-

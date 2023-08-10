@@ -19,7 +19,7 @@ uses
   FireDAC.Phys.Intf,
   FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, Datasnap.DBClient;
 
 type
   TProviderDM = class(TDataModule)
