@@ -111,13 +111,13 @@ begin
    Fdetail := TObjectList<Tdetail>.Create;
    Fclient := Tclient.Create;
    // Before Insert
-   BeforeInsertMiddleware.AddEvent(Self.ClassName,
-                              procedure(AObject: TObject)
-                              var
-                                LID: String;
-                              begin
-                                LID := TMaster(AObject).master_id.ToString;
-                              end);
+//   BeforeInsertMiddleware.AddEvent(Self.ClassName,
+//                              procedure(AObject: TObject)
+//                              var
+//                                LID: String;
+//                              begin
+//                                LID := TMaster(AObject).master_id.ToString;
+//                              end);
    // After Insert
    AfterInsertMiddleware.AddEvent(Self.ClassName,
                               procedure(AObject: TObject)
