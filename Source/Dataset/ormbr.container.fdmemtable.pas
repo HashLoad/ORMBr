@@ -21,8 +21,10 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
+  @abstract(Website : http://www.ormbr.com.br)
+  @abstract(Telagram : https://t.me/ormbr)
 
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
+  ormbr Brasil é um ormbr simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.container.fdmemtable;
@@ -42,10 +44,14 @@ uses
 type
   TContainerFDMemTable<M: class, constructor> = class(TContainerDataSet<M>)
   public
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; APageSize: Integer); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet; AMasterObject: TObject); overload;
-    constructor Create(AConnection: IDBConnection; ADataSet: TDataSet); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; APageSize: Integer); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet; AMasterObject: TObject); overload;
+    constructor Create(AConnection: IDBConnection;
+      ADataSet: TDataSet); overload;
     destructor Destroy; override;
   end;
 

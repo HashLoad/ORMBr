@@ -31,6 +31,7 @@ interface
 
 uses
   DB,
+  Rtti,
   Classes,
   SysUtils,
   Variants,
@@ -75,7 +76,7 @@ type
     function DataSet<T: class, constructor>: TDataSet;
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
-    function Find<T: class, constructor>(const AID: Variant): T; overload;
+    function Find<T: class, constructor>(const AID: TValue): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
@@ -127,13 +128,13 @@ begin
   Resolver<T>.EmptyDataSet;
 end;
 
-function TManagerFDMemTable.Find<T>(const AID: Variant): T;
+function TManagerFDMemTable.Find<T>(const AID: TValue): T;
 begin
-  if TVarData(AID).VType = varInteger then
-    Result := Resolver<T>.Find(Integer(AID))
+  if AID.IsType<integer> then
+    Result := Resolver<T>.Find(AID.AsType<integer>)
   else
-  if TVarData(AID).VType = varString then
-    Result := Resolver<T>.Find(VarToStr(AID))
+  if AID.IsType<string> then
+    Result := Resolver<T>.Find(AID.AsType<integer>)
 end;
 
 function TManagerFDMemTable.Find<T>: TObjectList<T>;

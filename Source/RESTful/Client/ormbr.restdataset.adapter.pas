@@ -49,13 +49,12 @@ uses
   ormbr.restfactory.interfaces;
 
 type
-  // M - Object M
   TRESTDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
-    procedure SetMasterDataSetStateEdit;
-    procedure ExecuteCheckNotNull;
-    procedure PopularDataSetChilds(const AObject: TObject);
-    procedure PopularDataSetOneToMany(const AObjectList: TObjectList<TObject>);
+    procedure _SetMasterDataSetStateEdit;
+    procedure _ExecuteCheckNotNull;
+    procedure _PopularDataSetChilds(const AObject: TObject);
+    procedure _PopularDataSetOneToMany(const AObjectList: TObjectList<TObject>);
   protected
     procedure PopularDataSetOneToOne(const AObject: TObject;
       const AAssociation: TAssociationMapping); virtual; abstract;
@@ -83,7 +82,7 @@ type
 implementation
 
 uses
-  ormbr.restdataset.session,
+  ormbr.session.restful,
   ormbr.objects.helper,
   ormbr.rtti.helper,
   dbcbr.mapping.explorer,
@@ -95,7 +94,7 @@ constructor TRESTDataSetAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
   inherited Create(ADataSet, APageSize, AMasterObject);
-  FSession := TRESTDataSetSession<M>.Create(AConnection, Self, APageSize);
+  FSession := TSessionRestFul<M>.Create(AConnection, Self, APageSize);
 end;
 
 destructor TRESTDataSetAdapter<M>.Destroy;
@@ -248,7 +247,7 @@ begin
   inherited DoAfterDelete(DataSet);
   // Seta o registro mestre com stado de edição, considerando esse o
   // registro filho sendo incluído ou alterado
-  SetMasterDataSetStateEdit;
+  _SetMasterDataSetStateEdit;
 end;
 
 procedure TRESTDataSetAdapter<M>.DoBeforeDelete(DataSet: TDataSet);
@@ -274,12 +273,12 @@ begin
   inherited DoBeforePost(DataSet);
   // Seta o registro mestre com stado de edição, considerando esse o
   // registro filho sendo incluído ou alterado
-  SetMasterDataSetStateEdit;
+  _SetMasterDataSetStateEdit;
   // Rotina de validação se o campo foi deixado null
-  ExecuteCheckNotNull;
+  _ExecuteCheckNotNull;
 end;
 
-procedure TRESTDataSetAdapter<M>.ExecuteCheckNotNull;
+procedure TRESTDataSetAdapter<M>._ExecuteCheckNotNull;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -350,7 +349,7 @@ begin
   FOrmDataSet.First;
   // Popula Associations
   if FMasterObject.Count > 0 then
-    PopularDataSetChilds(AObject);
+    _PopularDataSetChilds(AObject);
 end;
 
 procedure TRESTDataSetAdapter<M>.PopularDataSetList(const AObjectList: TObjectList<M>);
@@ -361,7 +360,7 @@ begin
     PopularDataSet(LObject);
 end;
 
-procedure TRESTDataSetAdapter<M>.PopularDataSetChilds(const AObject: TObject);
+procedure TRESTDataSetAdapter<M>._PopularDataSetChilds(const AObject: TObject);
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
@@ -387,12 +386,12 @@ begin
     begin
       LObjectList := TObjectList<TObject>(LAssociation.PropertyRtti.GetValue(AObject).AsObject);
       if LObjectList <> nil then
-        PopularDataSetOneToMany(LObjectList);
+        _PopularDataSetOneToMany(LObjectList);
     end;
   end;
 end;
 
-procedure TRESTDataSetAdapter<M>.PopularDataSetOneToMany(
+procedure TRESTDataSetAdapter<M>._PopularDataSetOneToMany(
   const AObjectList: TObjectList<TObject>);
 var
   LDataSetChild: TRESTDataSetAdapter<M>;
@@ -489,7 +488,7 @@ begin
     end;
     // Popula Associations
     if FMasterObject.Count > 0 then
-      PopularDataSetChilds(AObject);
+      _PopularDataSetChilds(AObject);
   finally
     FOrmDataSet.EnableControls;
   end;
@@ -537,7 +536,7 @@ begin
   end;
 end;
 
-procedure TRESTDataSetAdapter<M>.SetMasterDataSetStateEdit;
+procedure TRESTDataSetAdapter<M>._SetMasterDataSetStateEdit;
 var
   FOwner: TDataSetBaseAdapter<M>;
 begin

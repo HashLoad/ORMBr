@@ -40,54 +40,34 @@ uses
   StrUtils,
   Variants,
   Generics.Collections,
-  /// orm
   ormbr.dataset.events,
   ormbr.dataset.abstract,
   ormbr.session.abstract,
   dbcbr.mapping.classes;
 
 type
-  TDataSetLocal = class(TDataSet)
-  protected
-    procedure InternalClose; override;
-    procedure InternalHandleException; override;
-    procedure InternalInitFieldDefs; override;
-    procedure InternalOpen; override;
-    function IsCursorOpen: Boolean; override;
-  end;
-
-  // M - Object M
-  TDataSetBaseAdapter<M: class, constructor> = class(TDataSetAbstract<M>)
+ TDataSetBaseAdapter<M: class, constructor> = class(TDataSetAbstract<M>)
   private
-    // Objeto para captura dos eventos do dataset passado pela interface
     FOrmDataSetEvents: TDataSetLocal;
-    // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
-    procedure ExecuteOneToOne(AObject: M; AProperty: TRttiProperty;
+    procedure _ExecuteOneToOne(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>);
-    procedure ExecuteOneToMany(AObject: M; AProperty: TRttiProperty;
+    procedure _ExecuteOneToMany(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>; ARttiType: TRttiType);
-    procedure GetMasterValues;
-    function FindEvents(AEventName: string): Boolean;
-    function GetAutoNextPacket: Boolean;
-    procedure SetAutoNextPacket(const Value: Boolean);
-    procedure ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
+    procedure _GetMasterValues;
+    function _FindEvents(AEventName: string): Boolean;
+    function _GetAutoNextPacket: Boolean;
+    procedure _SetAutoNextPacket(const Value: Boolean);
+    procedure _ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
   protected
-    // Classe para controle de evento interno com os eventos da interface do dataset
     FDataSetEvents: TDataSetEvents;
-    // Usado em relacionamento mestre-detalhe, guarda qual objeto pai
     FOwnerMasterObject: TObject;
-    // Uso interno para fazer mapeamento do registro dataset
     FCurrentInternal: M;
     FMasterObject: TDictionary<string, TDataSetBaseAdapter<M>>;
     FLookupsField: TList<TDataSetBaseAdapter<M>>;
     FInternalIndex: Integer;
     FAutoNextPacket: Boolean;
     FCheckedFieldEvents: Boolean;
-    procedure DoBeforeApplyUpdates(DataSet: TDataSet); overload; virtual; abstract;
-    procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); overload; virtual; abstract;
-    procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
-    procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
     procedure DoBeforeScroll(DataSet: TDataSet); virtual;
     procedure DoAfterScroll(DataSet: TDataSet); virtual;
     procedure DoBeforeOpen(DataSet: TDataSet); virtual;
@@ -117,22 +97,10 @@ type
     procedure Close; virtual;
     procedure Cancel; virtual;
     procedure SetAutoIncValueChilds; virtual;
-    procedure SetMasterObject(const AValue: TObject);
-    procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>; AObject: M);
+    procedure SetMasterObject(const AValue: TObject); virtual;
+    procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>; AObject: M); virtual;
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
       AColumnsNameRef: string): Boolean; virtual;
-    procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
-    procedure ApplyInserter(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
-    procedure LoadLazy(const AOwner: M); virtual; abstract;
-    procedure OpenDataSetChilds; virtual; abstract;
-    procedure EmptyDataSetChilds; virtual; abstract;
-    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
-    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
-    procedure EmptyDataSet; virtual; abstract;
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; override;
@@ -156,7 +124,7 @@ type
     function Find(const AID: String): M; overload; virtual;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual;
     // Property
-    property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
+    property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;
 
 implementation
@@ -187,7 +155,7 @@ begin
   Bind.SetDataDictionary(ADataSet, FCurrentInternal);
   FDataSetEvents := TDataSetEvents.Create;
   FAutoNextPacket := True;
-  // Variável que identifica o campo que guarda o estado do registro.
+  // Variável que identifica o campo que armazena o estado do registro.
   FInternalIndex := 0;
   FCheckedFieldEvents := False;
   if AMasterObject <> nil then
@@ -294,7 +262,7 @@ begin
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
       Continue;
-    if not FindEvents(LProperty.Name) then
+    if not _FindEvents(LProperty.Name) then
       Continue;
     LPropInfo := GetPropInfo(FOrmDataSet, LProperty.Name);
     if LPropInfo = nil then
@@ -324,16 +292,16 @@ begin
         Continue;
       if LAssociation.Multiplicity in [TMultiplicity.OneToOne,
                                        TMultiplicity.ManyToOne] then
-        ExecuteOneToOne(AObject, LProperty, ADatasetBase)
+        _ExecuteOneToOne(AObject, LProperty, ADatasetBase)
       else
       if LAssociation.Multiplicity in [TMultiplicity.OneToMany,
                                        TMultiplicity.ManyToMany] then
-        ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
+        _ExecuteOneToMany(AObject, LProperty, ADatasetBase, LRttiType);
     end;
   end;
 end;
 
-procedure TDataSetBaseAdapter<M>.ExecuteOneToOne(AObject: M;
+procedure TDataSetBaseAdapter<M>._ExecuteOneToOne(AObject: M;
   AProperty: TRttiProperty; ADatasetBase: TDataSetBaseAdapter<M>);
 var
   LBookMark: TBookmark;
@@ -369,7 +337,7 @@ begin
     LDataSetChild.FillMastersClass(LDataSetChild, LObject);
 end;
 
-procedure TDataSetBaseAdapter<M>.ExecuteOneToMany(AObject: M;
+procedure TDataSetBaseAdapter<M>._ExecuteOneToMany(AObject: M;
   AProperty: TRttiProperty; ADatasetBase: TDataSetBaseAdapter<M>;
   ARttiType: TRttiType);
 var
@@ -431,7 +399,7 @@ begin
   begin
     if LProperty.PropertyType.TypeKind <> tkMethod then
       Continue;
-    if not FindEvents(LProperty.Name) then
+    if not _FindEvents(LProperty.Name) then
       Continue;
     LPropInfo := GetPropInfo(FOrmDataSet, LProperty.Name);
     if LPropInfo = nil then
@@ -455,7 +423,7 @@ begin
   Result := FSession.Find(AID);
 end;
 
-function TDataSetBaseAdapter<M>.FindEvents(AEventName: string): Boolean;
+function TDataSetBaseAdapter<M>._FindEvents(AEventName: string): Boolean;
 begin
   Result := MatchStr(AEventName, ['AfterCancel'   ,'AfterClose'   ,'AfterDelete' ,
                                   'AfterEdit'     ,'AfterInsert'  ,'AfterOpen'   ,
@@ -602,7 +570,7 @@ begin
   if LFieldEvents = nil then
     Exit;
 
-  ValideFieldEvents(LFieldEvents);
+  _ValideFieldEvents(LFieldEvents);
   FCheckedFieldEvents := True;
 end;
 
@@ -619,7 +587,7 @@ begin
   LFieldEvents := TMappingExplorer.GetMappingFieldEvents(FCurrentInternal.ClassType);
   if LFieldEvents = nil then
     Exit;
-  ValideFieldEvents(LFieldEvents);
+  _ValideFieldEvents(LFieldEvents);
   FCheckedFieldEvents := True;
 end;
 
@@ -652,8 +620,6 @@ begin
   if Assigned(FDataSetEvents.BeforePost) then
     FDataSetEvents.BeforePost(DataSet);
 
-  // Aplica o Post() em todas as sub-tabelas relacionadas caso estejam em
-  // modo Insert ou Edit.
   if not FOrmDataSet.Active then
     Exit;
 
@@ -682,7 +648,7 @@ begin
     FDataSetEvents.OnNewRecord(DataSet);
   // Busca valor da tabela master, caso aqui seja uma tabela detalhe.
   if FMasterObject.Count > 0 then
-    GetMasterValues;
+    _GetMasterValues;
 end;
 
 procedure TDataSetBaseAdapter<M>.Delete;
@@ -749,7 +715,6 @@ var
   LForeignKeys: TForeignKeyMappingList;
 begin
   Result := False;
-  // ForeingnKey da Child
   LForeignKeys := TMappingExplorer.GetMappingForeignKey(ADataSetChild.FCurrentInternal.ClassType);
   if LForeignKeys = nil then
     Exit;
@@ -763,7 +728,7 @@ begin
   end;
 end;
 
-function TDataSetBaseAdapter<M>.GetAutoNextPacket: Boolean;
+function TDataSetBaseAdapter<M>._GetAutoNextPacket: Boolean;
 begin
   Result := FAutoNextPacket;
 end;
@@ -854,7 +819,6 @@ var
   LDataSetChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
 begin
-  // Association
   LAssociations := TMappingExplorer
                      .GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
@@ -895,7 +859,7 @@ begin
   end;
 end;
 
-procedure TDataSetBaseAdapter<M>.SetAutoNextPacket(const Value: Boolean);
+procedure TDataSetBaseAdapter<M>._SetAutoNextPacket(const Value: Boolean);
 begin
   FAutoNextPacket := Value;
 end;
@@ -919,7 +883,7 @@ begin
   FOrmDataSet.OnNewRecord  := DoNewRecord;
 end;
 
-procedure TDataSetBaseAdapter<M>.GetMasterValues;
+procedure TDataSetBaseAdapter<M>._GetMasterValues;
 var
   LAssociation: TAssociationMapping;
   LAssociations: TAssociationMappingList;
@@ -973,7 +937,7 @@ begin
   FOwnerMasterObject := AValue;
 end;
 
-procedure TDataSetBaseAdapter<M>.ValideFieldEvents(
+procedure TDataSetBaseAdapter<M>._ValideFieldEvents(
   const AFieldEvents: TFieldEventsMappingList);
 var
   LFor: Integer;
@@ -1006,37 +970,6 @@ end;
 function TDataSetBaseAdapter<M>.Find(const AID: String): M;
 begin
   Result := FSession.Find(AID);
-end;
-
-{ TDataSetEvents }
-
-procedure TDataSetLocal.InternalClose;
-begin
-  inherited;
-
-end;
-
-procedure TDataSetLocal.InternalHandleException;
-begin
-  inherited;
-
-end;
-
-procedure TDataSetLocal.InternalInitFieldDefs;
-begin
-  inherited;
-
-end;
-
-procedure TDataSetLocal.InternalOpen;
-begin
-  inherited;
-
-end;
-
-function TDataSetLocal.IsCursorOpen: Boolean;
-begin
-  Result := false;
 end;
 
 end.

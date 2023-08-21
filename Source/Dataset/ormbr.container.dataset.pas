@@ -44,8 +44,8 @@ uses
 type
   TContainerDataSet<M: class, constructor> = class(TInterfacedObject, IContainerDataSet<M>)
   private
-    function GetAutoNextPacket: Boolean;
-    procedure SetAutoNextPacket(const Value: Boolean);
+    function _GetAutoNextPacket: Boolean;
+    procedure _SetAutoNextPacket(const Value: Boolean);
   protected
     FDataSetAdapter: TDataSetBaseAdapter<M>;
   public
@@ -80,12 +80,13 @@ type
     function MasterObject: TDataSetBaseAdapter<M>;
     function This: TDataSetBaseAdapter<M>;
     function Current: M;
-    property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
     // ObjectSet
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
+    //
+    property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;
 
 implementation
@@ -175,7 +176,7 @@ begin
   Result := FDataSetAdapter.FindWhere(AWhere, AOrderBy);
 end;
 
-function TContainerDataSet<M>.GetAutoNextPacket: Boolean;
+function TContainerDataSet<M>._GetAutoNextPacket: Boolean;
 begin
   Result := FDataSetAdapter.AutoNextPacket
 end;
@@ -251,7 +252,7 @@ begin
   FDataSetAdapter.Save(AObject);
 end;
 
-procedure TContainerDataSet<M>.SetAutoNextPacket(const Value: Boolean);
+procedure TContainerDataSet<M>._SetAutoNextPacket(const Value: Boolean);
 begin
   FDataSetAdapter.AutoNextPacket := Value;
 end;

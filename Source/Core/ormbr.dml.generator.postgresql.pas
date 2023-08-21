@@ -51,7 +51,7 @@ type
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass;
-      APageSize: Integer; AID: Variant): string; override;
+      APageSize: Integer; AID: TValue): string; override;
     function GeneratorSelectWhere(AClass: TClass;
       AWhere: string; AOrderBy: string; APageSize: Integer): string; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
@@ -78,7 +78,7 @@ begin
 end;
 
 function TDMLGeneratorPostgreSQL.GeneratorSelectAll(AClass: TClass;
-  APageSize: Integer; AID: Variant): string;
+  APageSize: Integer; AID: TValue): string;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;

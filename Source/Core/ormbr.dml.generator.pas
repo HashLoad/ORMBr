@@ -67,13 +67,13 @@ type
     FQueryCache: TQueryCache;
     FDateFormat: string;
     FTimeFormat: string;
-    function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
+    function GetCriteriaSelect(AClass: TClass; AID: TValue): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria;
       AOrderBy: string = ''): string; virtual;
     function GetGeneratorWhere(const AClass: TClass; const ATableName: String;
-      const AID: Variant): String;
+      const AID: TValue): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
-      const AID: Variant): String;
+      const AID: TValue): String;
     function GetGeneratorQueryScopeWhere(const AClass: TClass): String;
     function GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
     function ExecuteSequence(const ASQL: string): Int64; virtual;
@@ -82,7 +82,7 @@ type
     destructor Destroy; override;
     procedure SetConnection(const AConnaction: IDBConnection); virtual;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
-      AID: Variant): string; virtual; abstract;
+      AID: TValue): string; virtual; abstract;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string; virtual; abstract;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
@@ -305,7 +305,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorOrderBy(const AClass: TClass;
-  const ATableName: String; const AID: Variant): String;
+  const ATableName: String; const AID: TValue): String;
 var
   LOrderBy: TOrderByMapping;
   LOrderByList: TStringList;
@@ -383,7 +383,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorWhere(const AClass: TClass;
-  const ATableName: String; const AID: Variant): String;
+  const ATableName: String; const AID: TValue): String;
 var
   LPrimaryKey: TPrimaryKeyMapping;
   LColumnName: String;
@@ -395,8 +395,17 @@ begin
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
-  if VarToStr(AID) = '-1' then
-    Exit;
+  if AID.IsType<integer> then
+  begin
+    if AID.AsInteger = -1 then
+      Exit;
+  end
+  else
+  if AID.IsType<string> then
+  begin 
+    if AID.AsString = '-1' then
+      Exit;
+  end;
   LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
   if LPrimaryKey <> nil then
   begin
@@ -406,10 +415,10 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if TVarData(AID).VType = varInteger then
-        Result := Result + LColumnName + ' = ' + IntToStr(AID)
+      if AID.IsType<integer> then
+        Result := Result + LColumnName + ' = ' + AID.AsType<string>
       else
-        Result := Result + LColumnName + ' = ' + QuotedStr(AID);
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID.AsType<string>);
 
         { TODO -oISAQUE -cREVISÃO :
           Se você sentiu falta desse trecho de código, entre em contato,
@@ -432,7 +441,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass;
-  AID: Variant): ICriteria;
+  AID: TValue): ICriteria;
 var
   LTable: TTableMapping;
   LColumns: TColumnMappingList;
@@ -524,38 +533,37 @@ begin
     end;
     for LJoin in LJoinList do
     begin
-      if LJoinExist.IndexOf(LJoin.AliasRefTable) = -1 then
-      begin
-        LJoinExist.Add(LJoin.RefTableName);
-        // Join Inner, Left, Right, Full
-        if LJoin.Join = TJoin.InnerJoin then
-          ACriteria.InnerJoin(LJoin.RefTableName)
-                     .&As(LJoin.AliasRefTable)
-                     .&On([LJoin.AliasRefTable + '.' +
-                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                           LJoin.ColumnName])
-        else
-        if LJoin.Join = TJoin.LeftJoin then
-          ACriteria.LeftJoin(LJoin.RefTableName)
-                     .&As(LJoin.AliasRefTable)
-                     .&On([LJoin.AliasRefTable + '.' +
-                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                           LJoin.ColumnName])
-        else
-        if LJoin.Join = TJoin.RightJoin then
-          ACriteria.RightJoin(LJoin.RefTableName)
-                     .&As(LJoin.AliasRefTable)
-                     .&On([LJoin.AliasRefTable + '.' +
-                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                           LJoin.ColumnName])
-        else
-        if LJoin.Join = TJoin.FullJoin then
-          ACriteria.FullJoin(LJoin.RefTableName)
-                     .&As(LJoin.AliasRefTable)
-                     .&On([LJoin.AliasRefTable + '.' +
-                           LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                           LJoin.ColumnName]);
-      end;
+      if LJoinExist.IndexOf(LJoin.AliasRefTable) > -1 then
+        Continue;
+      LJoinExist.Add(LJoin.RefTableName);
+      // Join Inner, Left, Right, Full
+      if LJoin.Join = TJoin.InnerJoin then
+        ACriteria.InnerJoin(LJoin.RefTableName)
+                   .&As(LJoin.AliasRefTable)
+                   .&On([LJoin.AliasRefTable + '.' +
+                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                         LJoin.ColumnName])
+      else
+      if LJoin.Join = TJoin.LeftJoin then
+        ACriteria.LeftJoin(LJoin.RefTableName)
+                   .&As(LJoin.AliasRefTable)
+                   .&On([LJoin.AliasRefTable + '.' +
+                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                         LJoin.ColumnName])
+      else
+      if LJoin.Join = TJoin.RightJoin then
+        ACriteria.RightJoin(LJoin.RefTableName)
+                   .&As(LJoin.AliasRefTable)
+                   .&On([LJoin.AliasRefTable + '.' +
+                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                         LJoin.ColumnName])
+      else
+      if LJoin.Join = TJoin.FullJoin then
+        ACriteria.FullJoin(LJoin.RefTableName)
+                   .&As(LJoin.AliasRefTable)
+                   .&On([LJoin.AliasRefTable + '.' +
+                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                         LJoin.ColumnName]);
     end;
   finally
     LJoinExist.Free;

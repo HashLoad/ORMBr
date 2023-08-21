@@ -574,8 +574,8 @@ begin
   end;
 end;
 
-procedure TBind.SetInternalInitFieldDefsObjectClass(
-  const ADataSet: TDataSet; const AObject: TObject);
+procedure TBind.SetInternalInitFieldDefsObjectClass(const ADataSet: TDataSet;
+  const AObject: TObject);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -585,8 +585,7 @@ var
 begin
   ADataSet.Close;
   ADataSet.FieldDefs.Clear;
-  LColumns := TMappingExplorer
-                  .GetMappingColumn(AObject.ClassType);
+  LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   for LColumn in LColumns do
   begin
     if ADataSet.FindField(LColumn.ColumnName) = nil then
@@ -787,8 +786,8 @@ begin
       SetFieldToProperty(ADataSet.FieldByName(LColumn.ColumnName), LColumn, AObject);
     except
       on E: Exception do
-        raise Exception.Create('Problem when binding column "' +
-                               LColumn.ColumnName + '" - ' + E.Message);
+        raise Exception.CreateFmt('Problem when binding [%s->%s] (message: %s)',
+                                  [ADataSet.Name, LColumn.ColumnName, E.Message]);
     end;
   end;
 end;

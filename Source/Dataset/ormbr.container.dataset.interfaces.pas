@@ -38,8 +38,8 @@ type
   IContainerDataSet<M: class, constructor> = interface
     ['{67DC311E-06BF-4B41-93E1-FA66AB0D8537}']
   {$REGION 'Property Getters & Setters'}
-    function GetAutoNextPacket: Boolean;
-    procedure SetAutoNextPacket(const Value: Boolean);
+    function _GetAutoNextPacket: Boolean;
+    procedure _SetAutoNextPacket(const Value: Boolean);
   {$ENDREGION}
     procedure LoadLazy(AOwner: M);
     procedure Open; overload;
@@ -76,7 +76,7 @@ type
     function Find(const AID: String): M; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
     /// DataSet
-    property AutoNextPacket: Boolean read GetAutoNextPacket write SetAutoNextPacket;
+    property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;
 
 implementation

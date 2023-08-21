@@ -20,6 +20,7 @@ unit ormbr.server.restquery.parse;
 interface
 
 uses
+  Rtti,
   Classes,
   SysUtils,
   StrUtils,
@@ -36,7 +37,7 @@ type
     FPathTokens: TArray<String>;
     FQueryTokens: TDictionary<String, String>;
     FResourceName: String;
-    FID: Variant;
+    FID: TValue;
     function GetSelect: String;
     function GetFilter: String;
     function GetExpand: String;
@@ -66,13 +67,13 @@ type
     procedure SetFilter(const Value: String);
     procedure SetSearch(const Value: String);
     procedure SetOrderBy(const Value: String);
-    procedure SetSkip(const Value: Variant);
-    procedure SetTop(const Value: Variant);
-    procedure SetCount(const Value: Variant);
+    procedure SetSkip(const Value: TValue);
+    procedure SetTop(const Value: TValue);
+    procedure SetCount(const Value: TValue);
     property Path: String read FPath;
     property Query: String read FQuery;
     property ResourceName: String read GetResourceName;
-    property ID: Variant read FID;
+    property ID: TValue read FID;
     property Select: String read GetSelect;
     property Expand: String read GetExpand;
     property Filter: String read GetFilter;
@@ -313,15 +314,15 @@ begin
                      LQueryItem.Substring(LQueryItem.IndexOf('=') + 1));
 end;
 
-procedure TRESTQueryParse.SetCount(const Value: Variant);
+procedure TRESTQueryParse.SetCount(const Value: TValue);
 begin
-  if Value = '' then
+  if Value.AsType<string> = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$count') then
-    FQueryTokens.Items['$count'] := VarToStr(Value)
+    FQueryTokens.Items['$count'] := Value.AsType<string>
   else
-    FQueryTokens.Add('$count', VarToStr(Value));
+    FQueryTokens.Add('$count', Value.AsType<string>);
 end;
 
 procedure TRESTQueryParse.SetFilter(const Value: String);
@@ -335,15 +336,15 @@ begin
     FQueryTokens.Add('$filter', ParseOperator(Value));
 end;
 
-procedure TRESTQueryParse.SetTop(const Value: Variant);
+procedure TRESTQueryParse.SetTop(const Value: TValue);
 begin
-  if Value = '' then
+  if Value.AsType<string> = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$top') then
-    FQueryTokens.Items['$top'] := VarToStr(Value)
+    FQueryTokens.Items['$top'] := Value.AsType<string>
   else
-    FQueryTokens.Add('$top', VarToStr(Value));
+    FQueryTokens.Add('$top', Value.AsType<string>);
 end;
 
 procedure TRESTQueryParse.SetSearch(const Value: String);
@@ -368,15 +369,15 @@ begin
     FQueryTokens.Add('$select', Value);
 end;
 
-procedure TRESTQueryParse.SetSkip(const Value: Variant);
+procedure TRESTQueryParse.SetSkip(const Value: TValue);
 begin
-  if Value = '' then
+  if Value.AsType<string> = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$skip') then
-    FQueryTokens.Items['$skip'] := VarToStr(Value)
+    FQueryTokens.Items['$skip'] := Value.AsType<string>
   else
-    FQueryTokens.Add('$skip', VarToStr(Value));
+    FQueryTokens.Add('$skip', Value.AsType<string>);
 end;
 
 procedure TRESTQueryParse.SetOrderBy(const Value: String);

@@ -36,7 +36,6 @@ type
   TRESTObjectSetAdapter<M: class, constructor> = class(TObjectSetBaseAdapter<M>)
   private
     FConnection: IRESTConnection;
-  protected
   public
     constructor Create(const AConnection: IRESTConnection;
       const APageSize: Integer = -1); overload;
@@ -44,8 +43,10 @@ type
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Int64): M; overload; override;
     function Find(const AID: string): M; overload; override;
+    {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
       const AParams: array of string): TObjectList<M>; overload; override;
+    {$ENDIF}
     function FindWhere(const AWhere: string;
       const AOrderBy: string = ''): TObjectList<M>; overload; override;
     procedure Insert(const AObject: M); override;
@@ -56,7 +57,7 @@ type
 implementation
 
 uses
-  ormbr.restsession,
+  ormbr.session.restful,
   dbcbr.mapping.explorer,
   ormbr.core.consts;
 
@@ -67,7 +68,7 @@ constructor TRESTObjectSetAdapter<M>.Create(const AConnection: IRESTConnection;
 begin
   inherited Create;
   FConnection := AConnection;
-  FSession := TRESTSession<M>.Create(AConnection, nil, APageSize);
+  FSession := TSessionRestFul<M>.Create(AConnection, nil, APageSize);
 end;
 
 procedure TRESTObjectSetAdapter<M>.Delete(const AObject: M);
@@ -158,11 +159,13 @@ begin
   end;
 end;
 
+{$IFDEF DRIVERRESTFUL}
 function TRESTObjectSetAdapter<M>.Find(const AMethodName: String;
   const AParams: array of string): TObjectList<M>;
 begin
   inherited;
   Result := FSession.Find(AMethodName, AParams);
 end;
+{$ENDIF}
 
 end.

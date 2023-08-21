@@ -37,15 +37,15 @@ uses
   Variants,
   SysUtils,
   Generics.Collections,
-  /// orm
+  /// ORMBr
   ormbr.command.executor,
   ormbr.session.abstract,
   ormbr.dataset.base.adapter,
+  // DBCBr
   dbcbr.mapping.classes,
   dbebr.factory.interfaces;
 
 type
-  // M - Sessão DataSet
   TSessionDataSet<M: class, constructor> = class(TSessionAbstract<M>)
   private
     FOwner: TDataSetBaseAdapter<M>;
@@ -56,7 +56,7 @@ type
     constructor Create(const AOwner: TDataSetBaseAdapter<M>;
       const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
     destructor Destroy; override;
-    procedure OpenID(const AID: Variant); override;
+    procedure OpenID(const AID: TValue); override;
     procedure OpenSQL(const ASQL: string); override;
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
     procedure NextPacket; override;
@@ -93,7 +93,7 @@ begin
   Result := FCommandExecutor.SelectInternalAssociation(AObject);
 end;
 
-procedure TSessionDataSet<M>.OpenID(const AID: Variant);
+procedure TSessionDataSet<M>.OpenID(const AID: TValue);
 var
   LDBResultSet: IDBResultSet;
 begin

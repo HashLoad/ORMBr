@@ -37,6 +37,9 @@ uses
 
 type
   TObjectSetAbstract<M: class, constructor> = class abstract
+  protected
+    FSession: TSessionAbstract<M>;
+    FObjectState: TDictionary<string, TObject>;
   public
     function ExistSequence: Boolean; virtual; abstract;
     function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual; abstract;

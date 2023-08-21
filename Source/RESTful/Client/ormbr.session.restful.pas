@@ -3,11 +3,22 @@
 
                    Copyright (c) 2016, Isaque Pinheiro
                           All rights reserved.
+
+                    GNU Lesser General Public License
+                      Versão 3, 29 de junho de 2007
+
+       Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+       A todos é permitido copiar e distribuir cópias deste documento de
+       licença, mas mudá-lo não é permitido.
+
+       Esta versão da GNU Lesser General Public License incorpora
+       os termos e condições da versão 3 da GNU General Public License
+       Licença, complementado pelas permissões adicionais listadas no
+       arquivo LICENSE na pasta principal.
 }
 
-{
-  @abstract(REST Componentes)
-  @created(20 Jun 2018)
+{ @abstract(ORMBr Framework.)
+  @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
@@ -16,7 +27,7 @@
 
 {$INCLUDE ..\..\ormbr.inc}
 
-unit ormbr.client.restdataset.session;
+unit ormbr.session.restful;
 
 interface
 
@@ -42,17 +53,16 @@ uses
   ormbr.restdataset.adapter;
 
 type
-  // M - Sessão RESTFull
-  TRESTDataSetSession<M: class, constructor> = class(TSessionAbstract<M>)
+  TSessionRestFul<M: class, constructor> = class(TSessionAbstract<M>)
   private
     FOwner: TRESTDataSetAdapter<M>;
     FConnection: IRESTConnection;
     FResource: String;
     FSubResource: String;
     FServerUse: Boolean;
-    function NextPacketMethod: TObjectList<M>; overload;
-    function NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>; overload;
-    function ParseOperator(AParams: String): string;
+    function _NextPacketMethod: TObjectList<M>; overload;
+    function _NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>; overload;
+    function _ParseOperator(AParams: String): string;
   public
     constructor Create(const AConnection: IRESTConnection;
       const AOwner: TRESTDataSetAdapter<M>; const APageSize: Integer = -1); overload;
@@ -69,8 +79,10 @@ type
     function Find(const AID: String): M; overload; override;
     function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; override;
     function ExistSequence: Boolean; override;
+    {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; //override;
+      const AParams: array of string): TObjectList<M>; overload; override;
+    {$ENDIF}
   end;
 
 implementation
@@ -86,7 +98,7 @@ uses
 
 { TSessionRest<M> }
 
-constructor TRESTDataSetSession<M>.Create(const AConnection: IRESTConnection;
+constructor TSessionRestFul<M>.Create(const AConnection: IRESTConnection;
   const AOwner: TRESTDataSetAdapter<M>; const APageSize: Integer = -1);
 var
   LObject: TObject;
@@ -149,12 +161,13 @@ begin
   end;
 end;
 
-destructor TRESTDataSetSession<M>.Destroy;
+destructor TSessionRestFul<M>.Destroy;
 begin
+
   inherited;
 end;
 
-function TRESTDataSetSession<M>.ExistSequence: Boolean;
+function TSessionRestFul<M>.ExistSequence: Boolean;
 var
   LSequence: TSequenceMapping;
 begin
@@ -164,7 +177,7 @@ begin
     Result := True;
 end;
 
-procedure TRESTDataSetSession<M>.Delete(const AObject: M);
+procedure TSessionRestFul<M>.Delete(const AObject: M);
 var
   LColumn: TColumnMapping;
   LPrimaryKey: TPrimaryKeyColumnsMapping;
@@ -177,7 +190,7 @@ begin
   Delete(LColumn.ColumnProperty.GetValue(TObject(AObject)).AsInteger);
 end;
 
-procedure TRESTDataSetSession<M>.Delete(const AID: Integer);
+procedure TSessionRestFul<M>.Delete(const AID: Integer);
 var
   LSubResource: String;
   LURL: String;
@@ -212,7 +225,7 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TSessionRestFul<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
 var
   LSubResource: String;
   LJSON: string;
@@ -228,7 +241,7 @@ begin
     if FPageSize > -1 then
     begin
       FPageNext := 0 - FPageSize;
-      Result := NextPacketMethod(FWhere, FOrderBy);
+      Result := _NextPacketMethod(FWhere, FOrderBy);
       Exit;
     end;
   end;
@@ -242,7 +255,7 @@ begin
                                  TRESTRequestMethodType.rtGET,
                                  procedure
                                  begin
-                                   FConnection.AddQueryParam('$filter=' + ParseOperator(FWhere));
+                                   FConnection.AddQueryParam('$filter=' + _ParseOperator(FWhere));
                                    if Length(FOrderBy) > 0 then
                                      FConnection.AddQueryParam('$orderby=' + FOrderBy);
                                  end);
@@ -266,7 +279,7 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.Find(const AID: Int64): M;
+function TSessionRestFul<M>.Find(const AID: Int64): M;
 begin
   // Transforma o JSON recebido populando o objeto
   FFindWhereUsed := False;
@@ -274,7 +287,7 @@ begin
   Result := Find(IntToStr(AID));
 end;
 
-function TRESTDataSetSession<M>.Find(const AID: string): M;
+function TSessionRestFul<M>.Find(const AID: string): M;
 var
   LResource: String;
   LSubResource: String;
@@ -315,7 +328,7 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.Find: TObjectList<M>;
+function TSessionRestFul<M>.Find: TObjectList<M>;
 var
   LJSON: string;
   LSubResource: String;
@@ -326,7 +339,7 @@ begin
   if FPageSize > -1 then
   begin
     FPageNext := 0 - FPageSize;
-    Result := NextPacketMethod;
+    Result := _NextPacketMethod;
     Exit;
   end;
   LSubResource := '';
@@ -352,7 +365,7 @@ begin
   end;
 end;
 
-procedure TRESTDataSetSession<M>.Insert(const AObject: M);
+procedure TSessionRestFul<M>.Insert(const AObject: M);
 var
   LJSON: String;
   LSubResource: String;
@@ -412,13 +425,12 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.NextPacketList: TObjectList<M>;
+function TSessionRestFul<M>.NextPacketList: TObjectList<M>;
 begin
-  inherited;
   if FFindWhereUsed then
-    Result := NextPacketMethod(FWhere, FOrderBy)
+    Result := _NextPacketMethod(FWhere, FOrderBy)
   else
-    Result := NextPacketMethod;
+    Result := _NextPacketMethod;
   if Result = nil then
     Exit;
   if Result.Count > 0 then
@@ -426,16 +438,16 @@ begin
   FFetchingRecords := True;
 end;
 
-procedure TRESTDataSetSession<M>.NextPacketList(const AObjectList: TObjectList<M>);
+procedure TSessionRestFul<M>.NextPacketList(const AObjectList: TObjectList<M>);
 var
   LObjectList: TObjectList<M>;
   LFor: Integer;
   LObject: TObject;
 begin
   if FFindWhereUsed then
-    LObjectList := NextPacketMethod(FWhere, FOrderBy)
+    LObjectList := _NextPacketMethod(FWhere, FOrderBy)
   else
-    LObjectList := NextPacketMethod;
+    LObjectList := _NextPacketMethod;
   if LObjectList = nil then
     Exit;
   if LObjectList.Count = 0 then
@@ -452,7 +464,7 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>;
+function TSessionRestFul<M>._NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>;
 var
   LJSON: string;
   LSubResource: String;
@@ -470,7 +482,7 @@ begin
                                  TRESTRequestMethodType.rtGET,
                                  procedure
                                  begin
-                                   FConnection.AddQueryParam('$filter='  + ParseOperator(AWhere));
+                                   FConnection.AddQueryParam('$filter='  + _ParseOperator(AWhere));
                                    FConnection.AddQueryParam('$orderby=' + AOrderBy);
                                    FConnection.AddQueryParam('$top='     + IntToStr(FPageSize));
                                    FConnection.AddQueryParam('$skip='    + IntToStr(FPageNext));
@@ -492,7 +504,7 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.NextPacketMethod: TObjectList<M>;
+function TSessionRestFul<M>._NextPacketMethod: TObjectList<M>;
 var
   LJSON: string;
   LSubResource: String;
@@ -529,7 +541,7 @@ begin
   end;
 end;
 
-procedure TRESTDataSetSession<M>.Update(const AObjectList: TObjectList<M>);
+procedure TSessionRestFul<M>.Update(const AObjectList: TObjectList<M>);
 var
   LJSON: String;
   LSubResource: String;
@@ -566,7 +578,7 @@ begin
   end;
 end;
 
-procedure TRESTDataSetSession<M>.RefreshRecord(const AColumns: TParams);
+procedure TSessionRestFul<M>.RefreshRecord(const AColumns: TParams);
 var
   LObjectList: TObjectList<M>;
   LFindWhere: String;
@@ -574,7 +586,6 @@ var
   LOrderByOld: String;
   LFor: Integer;
 begin
-  inherited;
   FFindWhereRefreshUsed := True;
   LWhereOld := FWhere;
   LOrderByOld := FOrderBy;
@@ -602,7 +613,8 @@ begin
   end;
 end;
 
-function TRESTDataSetSession<M>.Find(const AMethodName: String;
+{$IFDEF DRIVERRESTFUL}
+function TSessionRestFul<M>.Find(const AMethodName: String;
   const AParams: array of string): TObjectList<M>;
 var
   LJSONArray: TJSONArray;
@@ -645,20 +657,26 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
-function TRESTDataSetSession<M>.ParseOperator(AParams: String): string;
+function TSessionRestFul<M>._ParseOperator(AParams: String): string;
+const
+  OPERATORMAP: array[0..9, 0..1] of string = ( (' = ', ' eq '),
+                                               (' <> ', ' ne '),
+                                               (' > ', ' gt '),
+                                               (' >= ', ' ge '),
+                                               (' < ', ' lt '),
+                                               (' <= ', ' le '),
+                                               (' + ', ' add '),
+                                               (' - ', ' sub '),
+                                               (' * ', ' mul '),
+                                               (' / ', ' div ') );
+var
+  iFor: Integer;
 begin
   Result := AParams;
-  Result := StringReplace(Result, ' = ' , ' eq ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' <> ', ' ne ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' > ' , ' gt ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' >= ', ' ge ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' < ' , ' lt ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' <= ', ' le ' , [rfReplaceAll]);
-  Result := StringReplace(Result, ' + ' , ' add ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' - ' , ' sub ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' * ' , ' mul ', [rfReplaceAll]);
-  Result := StringReplace(Result, ' / ' , ' div ', [rfReplaceAll]);
+  for iFor := Low(OPERATORMAP) to High(OPERATORMAP) do
+    Result := StringReplace(Result, OPERATORMAP[iFor, 0], OPERATORMAP[iFor, 1], [rfReplaceAll]);
 end;
 
 end.
