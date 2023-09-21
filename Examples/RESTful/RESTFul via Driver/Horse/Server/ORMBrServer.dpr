@@ -17,7 +17,7 @@ uses
 {$R *.res}
 
 begin
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
+  ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.CreateForm(TFormServer, FormServer);
   Application.Run;

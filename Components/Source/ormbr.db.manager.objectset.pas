@@ -48,7 +48,7 @@ type
     procedure SetOwnerNestedList(const Value: Boolean);
     function GetManagerObjectSet: TManagerObjectSet;
   public
-    constructor Create(const AOwner: TComponent);
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function AddAdapter<T: class, constructor>(const APageSize: Integer = -1): TORMBrManagerObjectSet;
     function NestedList<T: class>: TObjectList<T>;
@@ -96,7 +96,7 @@ implementation
 function TORMBrManagerObjectSet.AddAdapter<T>(const APageSize: Integer): TORMBrManagerObjectSet;
 begin
   Result := Self;
-  GetManagerObjectSet.AddAdapter<T>(APageSize);
+  GetManagerObjectSet.AddRepository<T>(APageSize);
 end;
 
 function TORMBrManagerObjectSet.Bof<T>: Boolean;
@@ -104,8 +104,9 @@ begin
   Result := GetManagerObjectSet.Bof<T>;
 end;
 
-constructor TORMBrManagerObjectSet.Create(const AOwner: TComponent);
+constructor TORMBrManagerObjectSet.Create(AOwner: TComponent);
 begin
+  inherited Create(AOwner);
   FOwner := AOwner;
   OwnerNestedList := True;
 end;

@@ -47,20 +47,27 @@ uses
   dbcbr.mapping.classes;
 
 type
+  TDataSetLocal = class(TDataSet)
+  protected
+    procedure InternalClose; override;
+    procedure InternalHandleException; override;
+    procedure InternalInitFieldDefs; override;
+    procedure InternalOpen; override;
+    function IsCursorOpen: Boolean; override;
+  end;
+
   // M - Object M
   TDataSetBaseAdapter<M: class, constructor> = class(TDataSetAbstract<M>)
   private
     // Objeto para captura dos eventos do dataset passado pela interface
-    FOrmDataSetEvents: TDataSet;
+    FOrmDataSetEvents: TDataSetLocal;
     // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
-    //
     procedure ExecuteOneToOne(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>);
     procedure ExecuteOneToMany(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>; ARttiType: TRttiType);
     procedure GetMasterValues;
-    //
     function FindEvents(AEventName: string): Boolean;
     function GetAutoNextPacket: Boolean;
     procedure SetAutoNextPacket(const Value: Boolean);
@@ -98,16 +105,10 @@ type
     procedure DoBeforeCancel(DataSet: TDataSet); virtual;
     procedure DoAfterCancel(DataSet: TDataSet); virtual;
     procedure DoNewRecord(DataSet: TDataSet); virtual;
-    procedure OpenDataSetChilds; virtual; abstract;
-    procedure EmptyDataSetChilds; virtual; abstract;
     procedure GetDataSetEvents; virtual;
     procedure SetDataSetEvents; virtual;
     procedure DisableDataSetEvents; virtual;
     procedure EnableDataSetEvents; virtual;
-    procedure ApplyInserter(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
-    procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
     procedure Insert; virtual;
     procedure Append; virtual;
     procedure Post; virtual;
@@ -121,21 +122,27 @@ type
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
       AColumnsNameRef: string): Boolean; virtual;
     procedure OpenIDInternal(const AID: Variant); overload; virtual; abstract;
+    procedure ApplyInserter(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
+    procedure LoadLazy(const AOwner: M); virtual; abstract;
+    procedure OpenDataSetChilds; virtual; abstract;
+    procedure EmptyDataSetChilds; virtual; abstract;
+    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
+    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
+    procedure EmptyDataSet; virtual; abstract;
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; override;
     destructor Destroy; override;
-    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
     procedure RefreshRecordInternal(const AObject: TObject); virtual;
     procedure RefreshRecord; virtual;
     procedure RefreshRecordWhere(const AWhere: String); virtual;
     procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;
-    procedure LoadLazy(const AOwner: M); virtual; abstract;
-    procedure EmptyDataSet; virtual; abstract;
     procedure CancelUpdates; virtual;
-    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
     procedure AddLookupField(const AFieldName: string;
                              const AKeyFields: string;
                              const ALookupDataSet: TObject;
@@ -172,7 +179,7 @@ constructor TDataSetBaseAdapter<M>.Create(ADataSet: TDataSet;
 begin
   FOrmDataSet := ADataSet;
   FPageSize := APageSize;
-  FOrmDataSetEvents := TDataSet.Create(nil);
+  FOrmDataSetEvents := TDataSetLocal.Create(nil);
   FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
@@ -999,6 +1006,37 @@ end;
 function TDataSetBaseAdapter<M>.Find(const AID: String): M;
 begin
   Result := FSession.Find(AID);
+end;
+
+{ TDataSetEvents }
+
+procedure TDataSetLocal.InternalClose;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalHandleException;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalInitFieldDefs;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalOpen;
+begin
+  inherited;
+
+end;
+
+function TDataSetLocal.IsCursorOpen: Boolean;
+begin
+  Result := false;
 end;
 
 end.

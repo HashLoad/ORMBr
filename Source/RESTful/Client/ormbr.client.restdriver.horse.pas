@@ -43,10 +43,13 @@ type
     function GetMethodDELETE: String; override;
     function GetMethodGETNextPacket: String; override;
     function GetMethodGETNextPacketWhere: String; override;
+    function GetMethodToken: String; override;
     function GetServerUse: Boolean; override;
     function Execute(const AResource, ASubResource: String;
       const ARequestMethod: TRESTRequestMethodType;
       const AParams: TProc = nil): String; overload; override;
+    function GetUsername: String; override;
+    function GetPassword: String; override;
     procedure SetClassNotServerUse(const Value: Boolean); override;
     procedure AddParam(const AValue: String); override;
     procedure AddQueryParam(const AValue: String); override;
@@ -144,9 +147,24 @@ begin
   Result := FConnection.MethodPUT;
 end;
 
+function TRESTDriverHorse.GetMethodToken: String;
+begin
+  Result := FConnection.Authenticator.Token;
+end;
+
+function TRESTDriverHorse.GetPassword: String;
+begin
+  Result := FConnection.Authenticator.Password;
+end;
+
 function TRESTDriverHorse.GetServerUse: Boolean;
 begin
   Result := FConnection.ORMBrServerUse;
+end;
+
+function TRESTDriverHorse.GetUsername: String;
+begin
+  Result := FConnection.Authenticator.Username;
 end;
 
 procedure TRESTDriverHorse.SetClassNotServerUse(const Value: Boolean);

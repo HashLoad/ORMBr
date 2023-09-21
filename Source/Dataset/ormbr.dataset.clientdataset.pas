@@ -113,6 +113,7 @@ begin
   begin
      FOrmDataSet.CreateDataSet;
      FOrmDataSet.LogChanges := False;
+     FOrmDataSet.DisableStringTrim := true;
   end;
 end;
 

@@ -48,19 +48,32 @@
     <Transaction>2019/08/12 14:02:27.000.692,=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
     <Transaction>2019/08/12 14:02:48.000.265,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.manager.fdmemtable.reg.pas=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\Unit1.pas</Transaction>
     <Transaction>2019/08/12 14:04:35.000.416,=FireDACCommonDriver.dcp</Transaction>
-    <Transaction>2019/08/12 14:04:35.000.438,=FireDACCommon.dcp</Transaction>
     <Transaction>2019/08/12 14:04:35.000.393,=FireDAC.dcp</Transaction>
+    <Transaction>2019/08/12 14:04:35.000.438,=FireDACCommon.dcp</Transaction>
     <Transaction>2019/08/12 14:42:12.000.997,=ORMBrCore.dcp</Transaction>
     <Transaction>2020/08/31 11:34:29.000.714,D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\ORMBrManagerFDMemTable.dproj=D:\PROJETOS-Brasil\ORMBr\Components\Packages\Delphi\dclORMBrManagerFDMemTable.dproj</Transaction>
     <Transaction>2020/08/31 11:34:41.000.425,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.db.manager.fdmemtable.pas=</Transaction>
     <Transaction>2020/08/31 11:34:43.000.445,D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.manager.fdmemtable.pas=</Transaction>
+    <Transaction>2023/08/10 09:46:25.000.081,=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.db.manager.fdmemtable.pas</Transaction>
+    <Transaction>2023/08/10 09:46:25.000.085,=D:\PROJETOS-Brasil\ORMBr\Components\Source\ormbr.manager.fdmemtable.pas</Transaction>
+    <Transaction>2023/08/10 10:31:46.000.465,=D:\PROJETOS-Brasil\ORMBr\Source\Dataset\ormbr.dataset.fdmemtable.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
-    <File Path="designide.dcp"/>
-    <File Path="ORMBrManagerFDMemTable.dcp"/>
-    <File Path="rtl.dcp"/>
     <File Path="..\..\..\Components"/>
     <File Path="..\..\Source"/>
+    <File Path="..\..\Source\ormbr.db.manager.fdmemtable.pas"/>
+    <File Path="..\..\Source\ormbr.manager.fdmemtable.pas"/>
     <File Path="..\..\Source\ormbr.manager.fdmemtable.reg.pas"/>
+    <File Path="..\..\..\..\ORMBr"/>
+    <File Path="..\..\..\Source"/>
+    <File Path="..\..\..\Source\Dataset"/>
+    <File Path="..\..\..\Source\Dataset\ormbr.dataset.fdmemtable.pas"/>
+    <File Path="DBEBrCore.dcp"/>
+    <File Path="designide.dcp"/>
+    <File Path="FireDAC.dcp"/>
+    <File Path="FireDACCommon.dcp"/>
+    <File Path="FireDACCommonDriver.dcp"/>
+    <File Path="ORMBrCore.dcp"/>
+    <File Path="rtl.dcp"/>
   </ProjectSortOrder>
 </BorlandProject>

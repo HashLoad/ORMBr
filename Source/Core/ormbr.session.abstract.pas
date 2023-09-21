@@ -37,16 +37,15 @@ uses
   Generics.Collections,
   /// ORMBr
   ormbr.bind,
-  ormbr.command.executor.abstract,
   ormbr.core.consts,
   ormbr.rtti.helper,
   ormbr.types.blob,
   dbcbr.mapping.popular,
   dbcbr.mapping.attributes,
-  dbebr.factory.interfaces;
+  dbebr.factory.interfaces,
+  ormbr.command.executor.abstract;
 
 type
-  // M - Sessão Abstract
   TSessionAbstract<M: class, constructor> = class abstract
   protected
     FPageSize: Integer;
@@ -60,10 +59,6 @@ type
     FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
-    {$IFDEF DRIVERRESTFUL}
-    function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
-    {$ENDIF}
     function PopularObjectSet(const ADBResultSet: IDBResultSet): TObjectList<M>;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
@@ -100,6 +95,10 @@ type
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Int64): M; overload; virtual;
     function Find(const AID: string): M; overload; virtual;
+    {$IFDEF DRIVERRESTFUL}
+    function Find(const AMethodName: String;
+      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+    {$ENDIF}
     function FindWhere(const AWhere: string;
       const AOrderBy: string): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
@@ -274,16 +273,6 @@ begin
     FCommandExecutor.NextPacketList(AObjectList, FWhere, FOrderBy, FPageSize, FPageNext)
   else
     FCommandExecutor.NextPacketList(AObjectList, FPageSize, FPageNext);
-
-  /// <summary>
-  ///    if AObjectList = nil then
-  ///      Exit;
-  ///    if AObjectList.RecordCount > 0 then
-  ///      Exit;
-  ///    FFetchingRecords := True;
-  ///  Esse código para definir a tag FFetchingRecords, está sendo feito no
-  ///  método NextPacketList() dentro do FCommandExecutor.
-  /// </summary>
 end;
 
 function TSessionAbstract<M>.NextPacketList: TObjectList<M>;

@@ -66,8 +66,8 @@ type
 implementation
 
 const
-  cSELECTROW = 'SELECT * FROM ( ' + sLineBreak +
-               '   SELECT T.*, ROWNUM AS ROWINI FROM (%s) T';
+  SELECTROW = 'SELECT * FROM ( ' + sLineBreak +
+              '   SELECT T.*, ROWNUM AS ROWINI FROM (%s) T';
 
 { TDMLGeneratorOracle }
 
@@ -98,17 +98,14 @@ var
   LCriteria: ICriteria;
   LTable: TTableMapping;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
-    // Atualiza o comando SQL com paginação e atualiza a lista de cache.
-    if APageSize > -1 then
-      Result := Format(cSELECTROW, [Result]);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
+  if APageSize > -1 then
+    Result := Format(SELECTROW, [Result]);
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
@@ -126,16 +123,14 @@ var
   LScopeWhere: String;
   LScopeOrderBy: String;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-//  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
-//  begin
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
     if APageSize > -1 then
-      Result := Format(cSELECTROW, [Result]);
-    // Faz cache do comando padrão
-//    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
-//  end;
+      Result := Format(SELECTROW, [Result]);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+  end;
   // Scope
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then

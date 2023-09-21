@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @abstract(Website : http://www.ormbr.com.br)
@@ -63,6 +64,7 @@ type
       var ACriteria: ICriteria);
   protected
     FConnection: IDBConnection;
+    FQueryCache: TQueryCache;
     FDateFormat: string;
     FTimeFormat: string;
     function GetCriteriaSelect(AClass: TClass; AID: Variant): ICriteria; virtual;
@@ -106,12 +108,12 @@ implementation
 
 constructor TDMLGeneratorAbstract.Create;
 begin
-
+  FQueryCache := TQueryCache.Create;
 end;
 
 destructor TDMLGeneratorAbstract.Destroy;
 begin
-
+  FQueryCache.Free;
   inherited;
 end;
 
@@ -151,13 +153,11 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar toda vez
-  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
-    // Faz cache do comando padrão
-    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
@@ -210,13 +210,11 @@ var
   LOrderByList: TStringList;
   LFor: Integer;
 begin
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamnete
-  if not TQueryCache.Get.TryGetValue(AClass.ClassName, Result) then
+  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, '-1');
     Result := LCriteria.AsString;
-    // Faz cache do comando padrão
-    TQueryCache.Get.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Association Multi-Columns
@@ -276,9 +274,8 @@ var
 begin
   Result := '';
   LKey := AObject.ClassType.ClassName + '-INSERT';
-  // Pesquisa se já existe o SQL padrão no cache, não tendo que montar novamente
-//  if TQueryCache.Get.TryGetValue(LKey, Result) then
-//    Exit;
+  if FQueryCache.TryGetValue(LKey, Result) then
+    Exit;
   LTable := TMappingExplorer.GetMappingTable(AObject.ClassType);
   LColumns := TMappingExplorer.GetMappingColumn(AObject.ClassType);
   LCriteria := CreateCriteria.Insert.Into(LTable.Name);
@@ -295,8 +292,7 @@ begin
                    LColumn.ColumnName);
   end;
   Result := LCriteria.AsString;
-  // Adiciona o comando a lista fazendo cache para não ter que gerar novamente
-//  TQueryCache.Get.AddOrSetValue(LKey, Result);
+  FQueryCache.AddOrSetValue(LKey, Result);
 end;
 
 function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
@@ -442,7 +438,6 @@ var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
 begin
-  // Table
   LTable := TMappingExplorer.GetMappingTable(AClass);
   try
     Result := CreateCriteria.Select.From(LTable.Name);

@@ -11,12 +11,13 @@ uses
   provider.ormbr in 'Provider\provider.ormbr.pas',
   repository.master in 'Repository\repository.master.pas',
   controller.master in 'Controller\controller.master.pas',
-  provider.datamodule in 'Provider\provider.datamodule.pas' {ProviderDM: TDataModule};
+  provider.datamodule in 'Provider\provider.datamodule.pas' {ProviderDM: TDataModule},
+  ormbr.manager.dataset in '..\..\..\..\..\Source\Dataset\ormbr.manager.dataset.pas';
 
 {$R *.res}
 
 begin
-  ReportMemoryLeaksOnShutdown := DebugHook <> 0;
+  ReportMemoryLeaksOnShutdown := True;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TFormClient, FormClient);

@@ -47,12 +47,13 @@ uses
   ormbr.dataset.base.adapter,
   ormbr.restdataset.adapter,
   ormbr.dataset.events,
-  ormbr.mapping.classes,
-  ormbr.types.mapping,
   ormbr.objects.helper,
   ormbr.rtti.helper,
-  ormbr.mapping.exceptions,
-  ormbr.mapping.attributes;
+  dbcbr.mapping.classes,
+  dbcbr.types.mapping,
+  dbcbr.mapping.explorer,
+  dbcbr.mapping.exceptions,
+  dbcbr.mapping.attributes;
 
 type
   /// <summary>
@@ -189,7 +190,7 @@ begin
   if not FOrmDataSet.Active then
     Exit;
 
-  LAssociations := FExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
+  LAssociations := TMappingExplorer.GetMappingAssociation(FCurrentInternal.ClassType);
   if LAssociations = nil then
     Exit;
 

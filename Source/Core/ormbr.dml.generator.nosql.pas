@@ -18,7 +18,6 @@ uses
   dbcbr.mapping.classes;
 
 type
-  // Classe de conexão concreta com NoSQL
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
     function GetCriteriaSelectNoSQL(const AClass: TClass;

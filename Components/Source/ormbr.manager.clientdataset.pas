@@ -47,7 +47,7 @@ type
     function GetOwnerNestedList: Boolean;
     procedure SetOwnerNestedList(const Value: Boolean);
   public
-    constructor Create(const AOwner: TComponent);
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerClientDataSet; overload;
@@ -87,8 +87,9 @@ implementation
 
 { TDBManagerDataSet }
 
-constructor TORMBrManagerClientDataSet.Create(const AOwner: TComponent);
+constructor TORMBrManagerClientDataSet.Create(AOwner: TComponent);
 begin
+  inherited Create(AOwner);
   FOwner := AOwner;
 end;
 
