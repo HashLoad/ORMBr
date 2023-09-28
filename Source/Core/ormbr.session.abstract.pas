@@ -50,15 +50,15 @@ type
   protected
     FPageSize: Integer;
     FPageNext: Integer;
-    FModifiedFields: TDictionary<string, TDictionary<string, string>>;
     FDeleteList: TObjectList<M>;
-    FCommandExecutor: TSQLCommandExecutorAbstract<M>;
     FResultParams: TParams;
     FFindWhereUsed: Boolean;
     FFindWhereRefreshUsed: Boolean;
     FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
+    FModifiedFields: TDictionary<string, TDictionary<string, string>>;
+    FCommandExecutor: TSQLCommandExecutorAbstract<M>;
     function PopularObjectSet(const ADBResultSet: IDBResultSet): TObjectList<M>;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
@@ -81,7 +81,7 @@ type
       const APageSize, APageNext: Integer): TObjectList<M>; overload; virtual;
     // DataSet
     procedure Open; virtual;
-    procedure OpenID(const AID: Variant); virtual;
+    procedure OpenID(const AID: TValue); virtual;
     procedure OpenSQL(const ASQL: string); virtual;
     procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual;
     procedure NextPacket; overload; virtual;
@@ -322,7 +322,7 @@ begin
   FFetchingRecords := False;
 end;
 
-procedure TSessionAbstract<M>.OpenID(const AID: Variant);
+procedure TSessionAbstract<M>.OpenID(const AID: TValue);
 begin
   FFetchingRecords := False;
 end;

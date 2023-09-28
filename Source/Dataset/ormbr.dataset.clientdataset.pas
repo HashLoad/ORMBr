@@ -47,7 +47,6 @@ uses
   dbebr.factory.interfaces;
 
 type
-  // Captura de eventos específicos do componente TClientDataSet
   TClientDataSetEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TRemoteEvent;
@@ -57,13 +56,11 @@ type
     property AfterApplyUpdates: TRemoteEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  // M - Object Model
   TClientDataSetAdapter<M: class, constructor> = class(TDataSetAdapter<M>)
   private
     FOrmDataSet: TClientDataSet;
     FClientDataSetEvents: TClientDataSetEvents;
-    function GetIndexFieldNames(AOrderBy: String): String;
+    function _GetIndexFieldNames(AOrderBy: String): String;
   protected
     procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
     procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); override;
@@ -78,7 +75,7 @@ type
     constructor Create(AConnection: IDBConnection; ADataSet:
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
-    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenIDInternal(const AID: TValue); override;
     procedure OpenSQLInternal(const ASQL: string); override;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
@@ -172,7 +169,7 @@ begin
     FClientDataSetEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
 end;
 
-function TClientDataSetAdapter<M>.GetIndexFieldNames(AOrderBy: String): String;
+function TClientDataSetAdapter<M>._GetIndexFieldNames(AOrderBy: String): String;
 var
   LFields: TOrderByMapping;
   LOrderBy: String;
@@ -194,7 +191,7 @@ begin
   end;
 end;
 
-procedure TClientDataSetAdapter<M>.OpenIDInternal(const AID: Variant);
+procedure TClientDataSetAdapter<M>.OpenIDInternal(const AID: TValue);
 var
   LIsConnected: Boolean;
 begin
@@ -216,7 +213,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames('');
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
@@ -248,7 +245,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames('');
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
@@ -280,7 +277,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames(AOrderBy);
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;

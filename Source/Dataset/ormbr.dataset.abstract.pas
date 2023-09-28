@@ -41,16 +41,39 @@ uses
   dbcbr.rtti.helper;
 
 type
-  // M - Object M
+  TDataSetLocal = class(TDataSet)
+  protected
+    procedure InternalClose; override;
+    procedure InternalHandleException; override;
+    procedure InternalInitFieldDefs; override;
+    procedure InternalOpen; override;
+    function IsCursorOpen: Boolean; override;
+  end;
+
   TDataSetAbstract<M: class, constructor> = class abstract
   protected
     FSession: TSessionAbstract<M>;
-    // Objeto para controle de estado do registro
     FOrmDataSource: TDataSource;
     procedure RefreshDataSetOneToOneChilds(AFieldName: string); virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
+    // Abstract
+    procedure DoBeforeApplyUpdates(DataSet: TDataSet); overload; virtual; abstract;
+    procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); overload; virtual; abstract;
+    procedure DoBeforeApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
+    procedure DoAfterApplyUpdates(Sender: TObject; var OwnerData: OleVariant); overload; virtual; abstract;
+    procedure OpenIDInternal(const AID: TValue); overload; virtual; abstract;
+    procedure ApplyInserter(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyUpdater(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyDeleter(const MaxErros: Integer); virtual; abstract;
+    procedure ApplyInternal(const MaxErros: Integer); virtual; abstract;
+    procedure LoadLazy(const AOwner: M); virtual; abstract;
+    procedure OpenDataSetChilds; virtual; abstract;
+    procedure EmptyDataSetChilds; virtual; abstract;
+    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
+    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
+    procedure EmptyDataSet; virtual; abstract;
   public
-    // Objeto interface com o DataSet passado pela interface.
     FOrmDataSet: TDataSet;
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; virtual;
@@ -138,6 +161,37 @@ end;
 procedure TDataSetAbstract<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
 begin
 
+end;
+
+{ TDataSetLocal }
+
+procedure TDataSetLocal.InternalClose;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalHandleException;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalInitFieldDefs;
+begin
+  inherited;
+
+end;
+
+procedure TDataSetLocal.InternalOpen;
+begin
+  inherited;
+
+end;
+
+function TDataSetLocal.IsCursorOpen: Boolean;
+begin
+  Result := false;
 end;
 
 end.

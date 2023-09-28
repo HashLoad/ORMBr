@@ -51,10 +51,8 @@ type
     FObjectInternal: M;
   protected
     FConnection: IDBConnection;
-    // Fábrica de comandos a serem executados
-    FDMLCommandFactory: TDMLCommandFactoryAbstract;
-    // Controle de paginação vindo do banco de dados
     FPageSize: Integer;
+    FDMLCommandFactory: TDMLCommandFactoryAbstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); override;
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
@@ -89,7 +87,7 @@ type
     function SelectInternalWhere(const AWhere: string;
       const AOrderBy: string): string; override;
     function SelectInternalAll: IDBResultSet; override;
-    function SelectInternalID(const AID: Variant): IDBResultSet; override;
+    function SelectInternalID(const AID: TValue): IDBResultSet; override;
     function SelectInternal(const ASQL: String): IDBResultSet; override;
     function SelectInternalAssociation(const AObject: TObject): String; override;
     function NextPacket: IDBResultSet; overload; override;
@@ -99,7 +97,7 @@ type
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     // ObjectSet
     function Find: IDBResultSet; overload; override;
-    function Find(const AID: Variant): M; overload; override;
+    function Find(const AID: TValue): M; overload; override;
     function FindWhere(const AWhere: string;
       const AOrderBy: string): IDBResultSet; override;
   end;
@@ -126,7 +124,6 @@ begin
   FConnection := AConnection;
 
   FObjectInternal := M.Create;
-   // Fabrica de comandos SQL
   FDMLCommandFactory := TDMLCommandFactory.Create(FObjectInternal,
                                                   AConnection,
                                                   AConnection.GetDriverName);
@@ -182,7 +179,7 @@ begin
   end;
 end;
 
-function TSQLCommandExecutor<M>.SelectInternalID(const AID: Variant): IDBResultSet;
+function TSQLCommandExecutor<M>.SelectInternalID(const AID: TValue): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorSelectID(M, AID);
 end;
@@ -204,7 +201,6 @@ begin
   // Em bancos NoSQL o atributo Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
-
   if Assigned(AObject) then
   begin
     LAssociationList := TMappingExplorer.GetMappingAssociation(AObject.ClassType);
@@ -233,7 +229,6 @@ begin
   // Em bancos NoSQL o atributo Association deve ser ignorado.
   if FConnection.GetDriverName = dnMongoDB then
     Exit;
-
   LAssociationList := TMappingExplorer.GetMappingAssociation(AOwner.ClassType);
   if LAssociationList = nil then
     Exit;
@@ -453,7 +448,7 @@ begin
   Result := FindSQLInternal('');
 end;
 
-function TSQLCommandExecutor<M>.Find(const AID: Variant): M;
+function TSQLCommandExecutor<M>.Find(const AID: TValue): M;
 var
  LResultSet: IDBResultSet;
 begin

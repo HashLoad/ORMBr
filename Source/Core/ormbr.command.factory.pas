@@ -52,7 +52,7 @@ type
     function GeneratorSelectAll(AClass: TClass;
       APageSize: Integer): IDBResultSet; virtual; abstract;
     function GeneratorSelectID(AClass: TClass;
-      AID: Variant): IDBResultSet; virtual; abstract;
+      AID: TValue): IDBResultSet; virtual; abstract;
     function GeneratorSelect(ASQL: String;
       APageSize: Integer): IDBResultSet; virtual; abstract;
     function GeneratorSelectOneToOne(const AOwner: TObject; const AClass: TClass;
@@ -79,8 +79,7 @@ type
 
   TDMLCommandFactory = class(TDMLCommandFactoryAbstract)
   strict private
-    procedure SendCommandMonitor(const ACommand: String;
-      const AParams: TParams);
+    procedure _SendCommandMonitor(const ACommand: String; const AParams: TParams);
   protected
     FConnection: IDBConnection;
     FCommandSelecter: TCommandSelecter;
@@ -94,7 +93,7 @@ type
     function GeneratorSelectAll(AClass: TClass;
       APageSize: Integer): IDBResultSet; override;
     function GeneratorSelectID(AClass: TClass;
-      AID: Variant): IDBResultSet; override;
+      AID: TValue): IDBResultSet; override;
     function GeneratorSelect(ASQL: String;
       APageSize: Integer): IDBResultSet; override;
     function GeneratorSelectOneToOne(const AOwner: TObject; const AClass: TClass;
@@ -162,14 +161,14 @@ end;
 procedure TDMLCommandFactory.GeneratorDelete(const AObject: TObject);
 begin
   FDMLCommand := FCommandDeleter.GenerateDelete(AObject);
-  SendCommandMonitor(FDMLCommand, FCommandDeleter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandDeleter.Params);
   FConnection.ExecuteDirect(FDMLCommand, FCommandDeleter.Params);
 end;
 
 procedure TDMLCommandFactory.GeneratorInsert(const AObject: TObject);
 begin
   FDMLCommand := FCommandInserter.GenerateInsert(AObject);
-  SendCommandMonitor(FDMLCommand, FCommandInserter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandInserter.Params);
   FConnection.ExecuteDirect(FDMLCommand, FCommandInserter.Params);
 end;
 
@@ -177,7 +176,7 @@ function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, AWhere, AOrderBy, APageSize, APageNext);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -185,7 +184,7 @@ function TDMLCommandFactory.GeneratorNextPacket(const AClass: TClass;
   const APageSize, APageNext: Integer): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket(AClass, APageSize, APageNext);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -194,7 +193,7 @@ function TDMLCommandFactory.GeneratorSelect(ASQL: String;
 begin
   FCommandSelecter.SetPageSize(APageSize);
   FDMLCommand := ASQL;
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(ASQL);
 end;
 
@@ -203,7 +202,7 @@ function TDMLCommandFactory.GeneratorSelectAll(AClass: TClass;
 begin
   FCommandSelecter.SetPageSize(APageSize);
   FDMLCommand := FCommandSelecter.GenerateSelectAll(AClass);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -217,7 +216,7 @@ function TDMLCommandFactory.GeneratorSelectOneToOne(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -225,7 +224,7 @@ function TDMLCommandFactory.GeneratorSelectOneToMany(const AOwner: TObject;
   const AClass: TClass; const AAssociation: TAssociationMapping): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectOneToMany(AOwner, AClass, AAssociation);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -237,17 +236,17 @@ begin
 end;
 
 function TDMLCommandFactory.GeneratorSelectID(AClass: TClass;
-  AID: Variant): IDBResultSet;
+  AID: TValue): IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateSelectID(AClass, AID);
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
 function TDMLCommandFactory.GeneratorNextPacket: IDBResultSet;
 begin
   FDMLCommand := FCommandSelecter.GenerateNextPacket;
-  SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandSelecter.Params);
   Result := FConnection.CreateResultSet(FDMLCommand);
 end;
 
@@ -257,11 +256,11 @@ begin
   FDMLCommand := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
   if FDMLCommand = '' then
     Exit;
-  SendCommandMonitor(FDMLCommand, FCommandUpdater.Params);
+  _SendCommandMonitor(FDMLCommand, FCommandUpdater.Params);
   FConnection.ExecuteDirect(FDMLCommand, FCommandUpdater.Params);
 end;
 
-procedure TDMLCommandFactory.SendCommandMonitor(const ACommand: String;
+procedure TDMLCommandFactory._SendCommandMonitor(const ACommand: String;
   const AParams: TParams);
 var
   LMonitorParam: TMonitorParam;

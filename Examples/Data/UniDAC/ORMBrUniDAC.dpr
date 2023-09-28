@@ -50,7 +50,6 @@ uses
   ormbr.container.clientdataset in '..\..\..\Source\Dataset\ormbr.container.clientdataset.pas',
   ormbr.container.dataset.interfaces in '..\..\..\Source\Dataset\ormbr.container.dataset.interfaces.pas',
   ormbr.container.dataset in '..\..\..\Source\Dataset\ormbr.container.dataset.pas',
-  ormbr.dataset.abstract in '..\..\..\Source\Dataset\ormbr.dataset.abstract.pas',
   ormbr.dataset.adapter in '..\..\..\Source\Dataset\ormbr.dataset.adapter.pas',
   ormbr.dataset.bind in '..\..\..\Source\Dataset\ormbr.dataset.bind.pas',
   ormbr.dataset.clientdataset in '..\..\..\Source\Dataset\ormbr.dataset.clientdataset.pas',

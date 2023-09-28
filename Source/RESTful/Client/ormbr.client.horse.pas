@@ -267,8 +267,7 @@ begin
 end;
 
 function TRESTClientHorse.Execute(const AURL: String;
-  const ARequestMethod: TRESTRequestMethodType;
-  const AParamsProc: TProc): String;
+  const ARequestMethod: TRESTRequestMethodType; const AParamsProc: TProc): String;
 var
   LFor: Integer;
 

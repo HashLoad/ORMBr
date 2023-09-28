@@ -42,7 +42,6 @@ uses
 type
   TSQLCommandExecutorAbstract<M: class, constructor> = class abstract
   protected
-    // Instancia a class que mapea todas as class do tipo Entity
     function FindSQLInternal(const ASQL: String): IDBResultSet; virtual; abstract;
     procedure ExecuteOneToOne(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping); virtual; abstract;
@@ -58,12 +57,12 @@ type
     function SelectInternalWhere(const AWhere: string;
       const AOrderBy: string): string; virtual; abstract;
     function SelectInternalAll: IDBResultSet; virtual; abstract;
-    function SelectInternalID(const AID: Variant): IDBResultSet; virtual; abstract;
+    function SelectInternalID(const AID: TValue): IDBResultSet; virtual; abstract;
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
     function SelectInternalAssociation(const AObject: TObject): String; virtual; abstract;
     function GetDMLCommand: string; virtual; abstract;
     function Find: IDBResultSet; overload; virtual; abstract;
-    function Find(const AID: Variant): M; overload; virtual; abstract;
+    function Find(const AID: TValue): M; overload; virtual; abstract;
     function FindWhere(const AWhere: string;
       const AOrderBy: string = ''): IDBResultSet; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
@@ -94,7 +93,6 @@ implementation
 constructor TSQLCommandExecutorAbstract<M>.Create(const AOwner: TObject;
   const AConnection: IDBConnection; const APageSize: Integer);
 begin
-  // Popula todas classes modelos na lista
   TMappingExplorer.GetRepositoryMapping;
 end;
 

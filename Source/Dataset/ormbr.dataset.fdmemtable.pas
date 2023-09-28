@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ormbr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -59,7 +60,6 @@ uses
   dbebr.factory.interfaces;
 
 type
-  // Captura de eventos específicos do componente TFDMemTable
   TFDMemTableEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TFDDataSetEvent;
@@ -73,9 +73,9 @@ type
   private
     FOrmDataSet: TFDMemTable;
     FMemTableEvents: TFDMemTableEvents;
-    function GetIndexFieldNames(AOrderBy: String): String;
-    procedure DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
-    procedure DoAfterApplyUpdatesInternal(DataSet: TFDDataSet; AErrors: Integer);
+    function _GetIndexFieldNames(AOrderBy: String): String;
+    procedure _DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
+    procedure _DoAfterApplyUpdatesInternal(DataSet: TFDDataSet; AErrors: Integer);
   protected
     procedure DoBeforeApplyUpdates(DataSet: TDataSet); override;
     procedure DoAfterApplyUpdates(DataSet: TDataSet; AErrors: Integer); override;
@@ -90,7 +90,7 @@ type
     constructor Create(AConnection: IDBConnection; ADataSet: TDataSet;
       APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
-    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenIDInternal(const AID: TValue); override;
     procedure OpenSQLInternal(const ASQL: string); override;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
@@ -141,12 +141,12 @@ begin
   inherited;
 end;
 
-procedure TFDMemTableAdapter<M>.DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
+procedure TFDMemTableAdapter<M>._DoBeforeApplyUpdatesInternal(DataSet: TFDDataSet);
 begin
   DoBeforeApplyUpdates(DataSet);
 end;
 
-procedure TFDMemTableAdapter<M>.DoAfterApplyUpdatesInternal(DataSet: TFDDataSet;
+procedure TFDMemTableAdapter<M>._DoAfterApplyUpdatesInternal(DataSet: TFDDataSet;
   AErrors: Integer);
 begin
   DoAfterApplyUpdates(DataSet, AErrors);
@@ -198,7 +198,7 @@ begin
     FMemTableEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
 end;
 
-function TFDMemTableAdapter<M>.GetIndexFieldNames(AOrderBy: String): String;
+function TFDMemTableAdapter<M>._GetIndexFieldNames(AOrderBy: String): String;
 var
   LFields: TOrderByMapping;
   LOrderBy: String;
@@ -392,7 +392,7 @@ begin
   end;
 end;
 
-procedure TFDMemTableAdapter<M>.OpenIDInternal(const AID: Variant);
+procedure TFDMemTableAdapter<M>.OpenIDInternal(const AID: TValue);
 var
   LIsConnected: Boolean;
 begin
@@ -414,7 +414,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames('');
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
@@ -448,7 +448,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames('');
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames('');
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
@@ -483,7 +483,7 @@ begin
   finally
     EnableDataSetEvents;
     // Define a order no dataset
-    FOrmDataSet.IndexFieldNames := GetIndexFieldNames(AOrderBy);
+    FOrmDataSet.IndexFieldNames := _GetIndexFieldNames(AOrderBy);
     // Erro interno do FireDAC se no método First se o dataset estiver vazio
     if not FOrmDataSet.IsEmpty then
       FOrmDataSet.First;
@@ -497,8 +497,8 @@ end;
 procedure TFDMemTableAdapter<M>.SetDataSetEvents;
 begin
   inherited;
-  FOrmDataSet.BeforeApplyUpdates := DoBeforeApplyUpdatesInternal;
-  FOrmDataSet.AfterApplyUpdates  := DoAfterApplyUpdatesInternal;
+  FOrmDataSet.BeforeApplyUpdates := _DoBeforeApplyUpdatesInternal;
+  FOrmDataSet.AfterApplyUpdates  := _DoAfterApplyUpdatesInternal;
 end;
 
 end.

@@ -17,14 +17,15 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ormbr Framework.)
+{
+  @abstract(ormbr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
 
-  ormbr Brasil é um ormbr simples e descomplicado para quem utiliza Delphi.
+  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\..\ormbr.inc}
@@ -57,6 +58,7 @@ uses
   ormbr.restdataset.adapter,
   ormbr.dataset.base.adapter,
   ormbr.dataset.events,
+  // DBCBr
   dbcbr.types.mapping,
   dbcbr.mapping.classes,
   dbcbr.mapping.explorer,
@@ -64,10 +66,7 @@ uses
   dbcbr.mapping.attributes;
 
 type
-  /// <summary>
-  /// Captura de eventos específicos do componente TFDMemTable
-  /// </summary>
-  TRESTFDMemTableEvents = class(TDataSetEvents)
+  TFDMemTableEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TFDDataSetEvent;
     FAfterApplyUpdates: TFDAfterApplyUpdatesEvent;
@@ -76,12 +75,10 @@ type
     property AfterApplyUpdates: TFDAfterApplyUpdatesEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  // M - Object Model
   TRESTFDMemTableAdapter<M: class, constructor> = class(TRESTDataSetAdapter<M>)
   private
     FOrmDataSet: TFDMemTable;
-    FMemTableEvents: TRESTFDMemTableEvents;
+    FMemTableEvents: TFDMemTableEvents;
     procedure DoBeforeApplyUpdates(DataSet: TFDDataSet);
     procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
     procedure FilterDataSetChilds;
@@ -91,7 +88,7 @@ type
     procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
-    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenIDInternal(const AID: TValue); override;
     procedure OpenSQLInternal(const ASQL: string); override;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
@@ -120,7 +117,7 @@ begin
   /// Captura o component TFDMemTable da IDE passado como parâmetro
   /// </summary>
   FOrmDataSet := ADataSet as TFDMemTable;
-  FMemTableEvents := TRESTFDMemTableEvents.Create;
+  FMemTableEvents := TFDMemTableEvents.Create;
   /// <summary>
   /// Captura e guarda os eventos do dataset
   /// </summary>
@@ -136,7 +133,6 @@ begin
     FOrmDataSet.ResourceOptions.SilentMode := True;
     FOrmDataSet.UpdateOptions.LockMode := lmNone;
     FOrmDataSet.UpdateOptions.LockPoint := lpDeferred;
-    FOrmDataSet.UpdateOptions.FetchGeneratorsPoint := gpImmediate;
     FOrmDataSet.CreateDataSet;
     FOrmDataSet.Open;
     FOrmDataSet.CachedUpdates := False;
@@ -250,7 +246,7 @@ begin
     FMemTableEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.OpenIDInternal(const AID: Variant);
+procedure TRESTFDMemTableAdapter<M>.OpenIDInternal(const AID: TValue);
 var
   LObject: M;
 begin
@@ -262,17 +258,16 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    LObject := FSession.Find(VarToStr(AID));
-    if LObject <> nil then
-    begin
-      try
-        PopularDataSet(LObject);
-        /// <summary> Filtra os registros nas sub-tabelas </summary>
-        if FOwnerMasterObject = nil then
-          FilterDataSetChilds;
-      finally
-        LObject.Free;
-      end;
+    LObject := FSession.Find(AID.AsType<string>);
+    if LObject = nil then
+      exit;
+    try
+      PopularDataSet(LObject);
+      /// <summary> Filtra os registros nas sub-tabelas </summary>
+      if FOwnerMasterObject = nil then
+        FilterDataSetChilds;
+    finally
+      LObject.Free;
     end;
   finally
     EnableDataSetEvents;

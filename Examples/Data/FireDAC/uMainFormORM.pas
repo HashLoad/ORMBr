@@ -142,7 +142,7 @@ procedure TForm3.FormCreate(Sender: TObject);
 begin
   // Instância da class de conexão via FireDAC
   oConn := TFactoryFireDAC.Create(FDConnection1, dnSQLite);
-  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
+//  oConn.SetCommandMonitor(TCommandMonitor.GetInstance);
 
   // Master
   oContainerMaster := TContainerFDMemTable<Tmaster>.Create(oConn, FDMaster, 3);

@@ -129,12 +129,15 @@ begin
     case AProperty.PropertyType.TypeKind of
       tkRecord:
         begin
-          ABreak := True;
           if AProperty.IsBlob then
-            AResult := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytesString
+          begin
+            ABreak := True;
+            AResult := AProperty.GetNullableValue(AInstance).AsType<TBlob>.ToBytesString;
+          end
           else
           if AProperty.IsNullable then
           begin
+            ABreak := True;
             AResult := AProperty.GetValueNullable(AInstance, AProperty.PropertyType.Handle).AsVariant;
             if AResult = Null then
               Exit;
@@ -152,10 +155,10 @@ begin
         end;
       tkEnumeration:
         begin
-          ABreak := True;
           LColumn := AProperty.GetColumn;
           if LColumn <> nil then
           begin
+            ABreak := True;
             if LColumn.FieldType in [ftBoolean] then
               AResult := AProperty.GetEnumToFieldValue(AInstance, LColumn.FieldType).AsBoolean
             else
@@ -190,24 +193,28 @@ begin
       case AProperty.PropertyType.TypeKind of
         tkRecord:
           begin
-            ABreak := True;
             if AProperty.IsBlob then
             begin
+              ABreak := True;
               LBlob.ToStringBytes(AValue);
               AProperty.SetValue(AInstance, TValue.From<TBlob>(LBlob));
             end
             else
-              AProperty.SetValueNullable(AInstance,
-                                         AProperty.PropertyType.Handle,
-                                         AValue,
-                                         UseISO8601DateFormat);
+            if AProperty.IsNullable then
+            begin
+              ABreak := True;
+               AProperty.SetValueNullable(AInstance,
+                                          AProperty.PropertyType.Handle,
+                                          AValue,
+                                          UseISO8601DateFormat);
+            end;
           end;
         tkEnumeration:
           begin
-            ABreak := True;
             LColumn := AProperty.GetColumn;
             if LColumn <> nil then
             begin
+              ABreak := True;
               if LColumn.FieldType in [ftBoolean] then
                 AProperty.SetValue(AInstance, Boolean(AValue))
               else

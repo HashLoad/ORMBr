@@ -52,7 +52,7 @@ type
     function GenerateSelectAll(const AClass: TClass): string;
     function GeneratorSelectWhere(const AClass: TClass;
       const AWhere, AOrderBy: string): string;
-    function GenerateSelectID(const AClass: TClass; const AID: Variant): string;
+    function GenerateSelectID(const AClass: TClass; const AID: TValue): string;
     function GenerateSelectOneToOne(const AOwner: TObject;
       const AClass: TClass; const AAssociation: TAssociationMapping): string;
     function GenerateSelectOneToMany(const AOwner: TObject;
@@ -127,7 +127,7 @@ begin
 end;
 
 function TCommandSelecter.GenerateSelectID(const AClass: TClass;
-  const AID: Variant): string;
+  const AID: TValue): string;
 begin
   FPageNext := 0;
   FSelectCommand := FGeneratorCommand.GeneratorSelectAll(AClass, -1, AID);

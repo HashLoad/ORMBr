@@ -31,6 +31,7 @@ interface
 
 uses
   DB,
+  Rtti,
   Classes,
   Generics.Collections,
   dbebr.connection.base,
@@ -54,7 +55,7 @@ type
     function NestedList<T: class>: TObjectList<T>;
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
-    function Find<T: class, constructor>(const AID: Variant): T; overload;
+    function Find<T: class, constructor>(const AID: TValue): T; overload;
     function FindWhere<T: class, constructor>(const AWhere: string;
                                               const AOrderBy: string = ''): TObjectList<T>;
     function ModifiedFields<T: class, constructor>: TDictionary<string, TDictionary<string, string>>;
@@ -153,7 +154,7 @@ begin
   Result := GetManagerObjectSet.Find<T>;
 end;
 
-function TORMBrManagerObjectSet.Find<T>(const AID: Variant): T;
+function TORMBrManagerObjectSet.Find<T>(const AID: TValue): T;
 begin
   Result := GetManagerObjectSet.Find<T>(AID);
 end;

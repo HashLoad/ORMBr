@@ -78,7 +78,7 @@ type
     function ExistSequence: Boolean;
     // DataSet
     function SelectInternalAll: IDBResultSet;
-    function SelectInternalID(const AID: Variant): IDBResultSet;
+    function SelectInternalID(const AID: TValue): IDBResultSet;
     function SelectInternal(const ASQL: String): IDBResultSet;
     function NextPacket: IDBResultSet; overload;
     function NextPacket(const APageSize, APageNext: Integer): IDBResultSet; overload;
@@ -86,7 +86,7 @@ type
       const APageSize, APageNext: Integer): IDBResultSet; overload;
     // ObjectSet
     function Find: TObjectList<TObject>; overload;
-    function Find(const AID: Variant): TObject; overload;
+    function Find(const AID: TValue): TObject; overload;
     function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<TObject>;
     function FindOne(const AWhere: string): TObject;
     //
@@ -136,7 +136,7 @@ begin
   Result := FDMLCommandFactory.GeneratorSelectAll(FObjectInternal.ClassType, FPageSize);
 end;
 
-function TRESTObjectManager.SelectInternalID(const AID: Variant): IDBResultSet;
+function TRESTObjectManager.SelectInternalID(const AID: TValue): IDBResultSet;
 begin
   Result := FDMLCommandFactory.GeneratorSelectID(FObjectInternal.ClassType, AID);
 end;
@@ -471,7 +471,7 @@ begin
   Result := FindSQLInternal('');
 end;
 
-function TRESTObjectManager.Find(const AID: Variant): TObject;
+function TRESTObjectManager.Find(const AID: TValue): TObject;
 var
   LResultSet: IDBResultSet;
 begin

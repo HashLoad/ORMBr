@@ -41,7 +41,7 @@ type
     ['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']
     procedure SetConnection(const AConnaction: IDBConnection);
     function GeneratorSelectAll(AClass: TClass;
-      APageSize: Integer; AID: Variant): string;
+      APageSize: Integer; AID: TValue): string;
     function GeneratorSelectWhere(AClass: TClass; AWhere: string;
       AOrderBy: string; APageSize: Integer): string;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;

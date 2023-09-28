@@ -49,6 +49,7 @@ uses
   ormbr.dataset.events,
   ormbr.objects.helper,
   ormbr.rtti.helper,
+  // DBCBr
   dbcbr.mapping.classes,
   dbcbr.types.mapping,
   dbcbr.mapping.explorer,
@@ -56,9 +57,6 @@ uses
   dbcbr.mapping.attributes;
 
 type
-  /// <summary>
-  /// Captura de eventos específicos do componente TClientDataSet
-  /// </summary>
   TRESTClientDataSetEvents = class(TDataSetEvents)
   private
     FBeforeApplyUpdates: TRemoteEvent;
@@ -68,8 +66,6 @@ type
     property AfterApplyUpdates: TRemoteEvent read FAfterApplyUpdates write FAfterApplyUpdates;
   end;
 
-  // Adapter TClientDataSet para controlar o Modelo e o Controle definido por:
-  // M - Object Model
   TRESTClientDataSetAdapter<M: class, constructor> = class(TRESTDataSetAdapter<M>)
   private
     FOrmDataSet: TClientDataSet;
@@ -83,7 +79,7 @@ type
     procedure EmptyDataSetChilds; override;
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
-    procedure OpenIDInternal(const AID: Variant); override;
+    procedure OpenIDInternal(const AID: TValue); override;
     procedure OpenSQLInternal(const ASQL: string); override;
     procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
@@ -268,7 +264,7 @@ begin
   end;
 end;
 
-procedure TRESTClientDataSetAdapter<M>.OpenIDInternal(const AID: Variant);
+procedure TRESTClientDataSetAdapter<M>.OpenIDInternal(const AID: TValue);
 var
   LObject: M;
 begin
@@ -278,7 +274,7 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.Find(VarToStr(AID));
+    FSession.Find(AID.AsType<string>);
     if LObject <> nil then
     begin
       try

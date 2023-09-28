@@ -47,7 +47,6 @@ contains
   ormbr.utils in '..\..\..\Source\Core\ormbr.utils.pas',
   ormbr.dataset.base.adapter in '..\..\..\Source\Dataset\ormbr.dataset.base.adapter.pas',
   ormbr.dataset.events in '..\..\..\Source\Dataset\ormbr.dataset.events.pas',
-  ormbr.dataset.abstract in '..\..\..\Source\Dataset\ormbr.dataset.abstract.pas',
   ormbr.dataset.fields in '..\..\..\Source\Dataset\ormbr.dataset.fields.pas',
   ormbr.command.abstract in '..\..\..\Source\Core\ormbr.command.abstract.pas',
   ormbr.command.deleter in '..\..\..\Source\Core\ormbr.command.deleter.pas',

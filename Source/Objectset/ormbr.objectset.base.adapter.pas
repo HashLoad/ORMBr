@@ -52,12 +52,9 @@ uses
 
 type
   TObjectSetBaseAdapter<M: class, constructor> = class(TObjectSetAbstract<M>)
-  protected
-    FSession: TSessionAbstract<M>;
-    FObjectState: TDictionary<string, TObject>;
   private
-    procedure AddObjectState(const ASourceObject: TObject);
-    procedure UpdateInternal(const AObject: TObject);
+    procedure _AddObjectState(const ASourceObject: TObject);
+    procedure _UpdateInternal(const AObject: TObject);
   protected
     function GenerateKey(const AObject: TObject): string;
     procedure CascadeActionsExecute(const AObject: TObject; const ACascadeAction: TCascadeAction);
@@ -105,7 +102,7 @@ begin
   inherited;
 end;
 
-procedure TObjectSetBaseAdapter<M>.AddObjectState(const ASourceObject: TObject);
+procedure TObjectSetBaseAdapter<M>._AddObjectState(const ASourceObject: TObject);
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
@@ -152,11 +149,11 @@ begin
               for LObjectItem in LObjectList do
               begin
                 if LObjectItem <> nil then
-                  AddObjectState(LObjectItem);
+                  _AddObjectState(LObjectItem);
               end;
             end
             else
-              AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
+              _AddObjectState(LProperty.GetValue(ASourceObject).AsObject);
           end;
       else
         begin
@@ -228,7 +225,7 @@ end;
 procedure TObjectSetBaseAdapter<M>.Modify(const AObject: M);
 begin
   FObjectState.Clear;
-  AddObjectState(AObject);
+  _AddObjectState(AObject);
 end;
 
 procedure TObjectSetBaseAdapter<M>.New(var AObject: M);
@@ -301,7 +298,7 @@ begin
       if FObjectState.TryGetValue(LKey, LObjectKey) then
       begin
         FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
-        UpdateInternal(LObject);
+        _UpdateInternal(LObject);
         FObjectState.Remove(LKey);
         FObjectState.TrimExcess;
       end
@@ -356,7 +353,7 @@ begin
     if FObjectState.TryGetValue(LKey, LObjectKey) then
     begin
       FSession.ModifyFieldsCompare(LKey, LObjectKey, LObject);
-      UpdateInternal(LObject);
+      _UpdateInternal(LObject);
       FObjectState.Remove(LKey);
       FObjectState.TrimExcess;
     end
@@ -452,7 +449,7 @@ begin
     LProperty.SetValue(LObject, AProperty.GetValue(AObject));
 end;
 
-procedure TObjectSetBaseAdapter<M>.UpdateInternal(const AObject: TObject);
+procedure TObjectSetBaseAdapter<M>._UpdateInternal(const AObject: TObject);
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
