@@ -110,19 +110,19 @@ begin
     Result := LCriteria.AsString;
     FQueryCache.AddOrSetValue(AClass.ClassName, Result);
   end;
-  // Scope
+  // Scope Where
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
-  LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
-  if LScopeOrderBy <> '' then
-    Result := ' ORDER BY ' + LScopeOrderBy;
-  // Params Where and OrderBy
   if Length(AWhere) > 0 then
   begin
     Result := Result + IfThen(LScopeWhere = '', ' WHERE ', ' AND ');
     Result := Result + AWhere;
   end;
+  // Scope Where OrderBy
+  LScopeOrderBy := GetGeneratorQueryScopeOrderBy(AClass);
+  if LScopeOrderBy <> '' then
+    Result := ' ORDER BY ' + LScopeOrderBy;
   if Length(AOrderBy) > 0 then
   begin
     Result := Result + IfThen(LScopeOrderBy = '', ' ORDER BY ', ', ');
