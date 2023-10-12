@@ -154,9 +154,9 @@ var
   begin
     if LObject <> nil then
       Exit;
-    if AQuery.ID = Null then
+    if AQuery.ID.IsEmpty then
       raise Exception.Create('{"exception":"The delete method needs the ID parameter!"}');
-    LObject := LObjectSet.Find(VarToStr(AQuery.ID));
+    LObject := LObjectSet.Find(AQuery.ID.ToString);
   end;
 
 begin
@@ -215,7 +215,7 @@ begin
     if Length(AQuery.Filter) > 0  then
       Result := ResolverFindFilter(LObjectSet, AQuery)
     else
-    if AQuery.ID <> Null then
+    if not AQuery.ID.IsEmpty then
       Result := ResolverFindID(LObjectSet, AQuery)
     else
       Result := ResolverFindAll(LObjectSet, AQuery);
@@ -374,7 +374,7 @@ var
   LObject: TObject;
 begin
   FResultCount := 0;
-  LObject := AObjectSet.Find(VarToStr(AQuery.ID));
+  LObject := AObjectSet.Find(AQuery.ID.ToString);
   try
     Result := TORMBrJson.ObjectToJsonString(LObject);
     if AQuery.Count then
