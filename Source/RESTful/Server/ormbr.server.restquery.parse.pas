@@ -92,7 +92,7 @@ constructor TRESTQueryParse.Create;
 begin
   FQueryTokens := TDictionary<String, String>.Create;
   FResourceName := '';
-  FID := Null;
+  FID := TValue.Empty;
 end;
 
 destructor TRESTQueryParse.Destroy;
