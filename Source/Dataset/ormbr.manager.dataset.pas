@@ -168,7 +168,7 @@ begin
     Result := Resolver<T>.Find(AID.AsType<integer>)
   else
   if AID.IsType<string> then
-    Result := Resolver<T>.Find(AID.AsType<string>)
+    Result := Resolver<T>.Find(AID.ToString)
   else
     raise Exception.Create('Invalid parameter type');
 end;

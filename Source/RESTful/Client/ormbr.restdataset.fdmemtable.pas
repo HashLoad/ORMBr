@@ -258,7 +258,7 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    LObject := FSession.Find(AID.AsType<string>);
+    LObject := FSession.Find(AID.ToString);
     if LObject = nil then
       exit;
     try

@@ -277,7 +277,7 @@ begin
   if AID.IsType<integer> then
     Result := Resolver<T>.Find(AID.AsType<integer>)
   else
-    Result := Resolver<T>.Find(AID.AsType<string>);
+    Result := Resolver<T>.Find(AID.ToString);
   FCurrentIndex := 0;
 end;
 

@@ -415,10 +415,10 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if AID.IsType<integer> then
-        Result := Result + LColumnName + ' = ' + AID.AsType<string>
+      if AID.IsType<Integer> then
+        Result := Result + LColumnName + ' = ' + AID.ToString
       else
-        Result := Result + LColumnName + ' = ' + QuotedStr(AID.AsType<string>);
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID.ToString);
 
         { TODO -oISAQUE -cREVISÃO :
           Se você sentiu falta desse trecho de código, entre em contato,

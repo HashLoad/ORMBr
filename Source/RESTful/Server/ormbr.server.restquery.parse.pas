@@ -316,13 +316,13 @@ end;
 
 procedure TRESTQueryParse.SetCount(const Value: TValue);
 begin
-  if Value.AsType<string> = '' then
+  if Value.ToString = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$count') then
-    FQueryTokens.Items['$count'] := Value.AsType<string>
+    FQueryTokens.Items['$count'] := Value.ToString
   else
-    FQueryTokens.Add('$count', Value.AsType<string>);
+    FQueryTokens.Add('$count', Value.ToString);
 end;
 
 procedure TRESTQueryParse.SetFilter(const Value: String);
@@ -338,13 +338,13 @@ end;
 
 procedure TRESTQueryParse.SetTop(const Value: TValue);
 begin
-  if Value.AsType<string> = '' then
+  if Value.ToString = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$top') then
-    FQueryTokens.Items['$top'] := Value.AsType<string>
+    FQueryTokens.Items['$top'] := Value.ToString
   else
-    FQueryTokens.Add('$top', Value.AsType<string>);
+    FQueryTokens.Add('$top', Value.ToString);
 end;
 
 procedure TRESTQueryParse.SetSearch(const Value: String);
@@ -371,13 +371,13 @@ end;
 
 procedure TRESTQueryParse.SetSkip(const Value: TValue);
 begin
-  if Value.AsType<string> = '' then
+  if Value.ToString = '' then
     Exit;
 
   if FQueryTokens.ContainsKey('$skip') then
-    FQueryTokens.Items['$skip'] := Value.AsType<string>
+    FQueryTokens.Items['$skip'] := Value.ToString
   else
-    FQueryTokens.Add('$skip', Value.AsType<string>);
+    FQueryTokens.Add('$skip', Value.ToString);
 end;
 
 procedure TRESTQueryParse.SetOrderBy(const Value: String);
