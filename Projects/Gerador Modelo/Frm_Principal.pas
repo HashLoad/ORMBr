@@ -18,7 +18,7 @@ uses
   Generics.Collections, Vcl.Grids, Vcl.DBGrids, Vcl.WinXCtrls, Vcl.Imaging.pngimage,
   Vcl.DBCGrids,StrUtils, FireDAC.Phys.OracleDef, FireDAC.Phys.DB2Def,
   FireDAC.Phys.IBDef, FireDAC.Phys.IB, FireDAC.Phys.DB2, FireDAC.Phys.Oracle,
-  FireDAC.Phys.PGDef, FireDAC.Phys.PG;
+  FireDAC.Phys.PGDef, FireDAC.Phys.PG, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TFrmPrincipal = class(TForm)
@@ -768,11 +768,11 @@ begin
     memModel.Lines.Add(_UsesRelations[iKey] + ',');
   memModel.Lines.Add('  ormbr.types.blob, ');
   memModel.Lines.Add('  ormbr.types.lazy, ');
-  memModel.Lines.Add('  ormbr.types.mapping, ');
+  memModel.Lines.Add('  dbcbr.types.mapping, ');
   memModel.Lines.Add('  ormbr.types.nullable, ');
-  memModel.Lines.Add('  ormbr.mapping.classes, ');
-  memModel.Lines.Add('  ormbr.mapping.register, ');
-  memModel.Lines.Add('  ormbr.mapping.attributes; ');
+  memModel.Lines.Add('  dbcbr.mapping.classes, ');
+  memModel.Lines.Add('  dbcbr.mapping.register, ');
+  memModel.Lines.Add('  dbcbr.mapping.attributes; ');
   memModel.Lines.Add('');
   memModel.Lines.Add('type');
   memModel.Lines.Add('  [Entity]');
