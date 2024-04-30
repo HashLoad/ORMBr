@@ -30,7 +30,7 @@ type
     Fid: Nullable<String>;
     Fnome: Nullable<String>;
     Festado_id: Nullable<String>;
-    Festado_sigla: string;
+    Festado_sigla: String;
   public
     { Public declarations }
     constructor Create;
@@ -53,7 +53,7 @@ type
     [Column('sigla',ftString, 2)]
     [JoinColumn('estado_id','estado', 'id','sigla', TJoin.LeftJoin)]
     [Dictionary('UF')]
-    property estado_sigla: string read Festado_sigla write Festado_sigla;
+    property estado_sigla: String read Festado_sigla write Festado_sigla;
   end;
 
 implementation

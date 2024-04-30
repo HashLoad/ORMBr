@@ -57,7 +57,7 @@ type
   protected
     FConnection: IDBConnection;
     procedure OpenDataSetChilds; override;
-    procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
+    procedure RefreshDataSetOneToOneChilds(AFieldName: String); override;
     procedure DoAfterScroll(DataSet: TDataSet); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
@@ -257,7 +257,7 @@ begin
   end;
 end;
 
-procedure TDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
+procedure TDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: String);
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;

@@ -58,7 +58,7 @@ type
   protected
     procedure PopularDataSetOneToOne(const AObject: TObject;
       const AAssociation: TAssociationMapping); virtual; abstract;
-    procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
+    procedure RefreshDataSetOneToOneChilds(AFieldName: String); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
     procedure DoAfterDelete(DataSet: TDataSet); override;
@@ -107,7 +107,7 @@ procedure TRESTDataSetAdapter<M>.DeleteDataSetChilds;
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TDataSet;
 begin
   inherited;
@@ -415,7 +415,7 @@ begin
   end;
 end;
 
-procedure TRESTDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
+procedure TRESTDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: String);
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;

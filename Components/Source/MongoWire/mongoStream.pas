@@ -38,7 +38,7 @@ type
     procedure SetSize(NewSize: Longint); override;
     function Write(const Buffer; Count: Longint): Longint; override;
     procedure SaveToStream(Stream: TStream);
-    procedure SaveToFile(const FileName: string);
+    procedure SaveToFile(const FileName: String);
   end;
 
 const
@@ -150,7 +150,7 @@ begin
    end;
 end;
 
-procedure TMongoStream.SaveToFile(const FileName: string);
+procedure TMongoStream.SaveToFile(const FileName: String);
 var
   f:TFileStream;
 begin

@@ -217,7 +217,7 @@ var
   sqlite3_mprintf: function (format: PAnsiChar): PAnsiChar varargs; cdecl; // 'sqlite3_mprintf'
   SQLite3_GetTable: function(db: TSQLiteDB; SQLStatement: PAnsiChar; var ResultPtr: TSQLiteResult; var RowCount: Cardinal; var ColCount: Cardinal; var ErrMsg: PAnsiChar): integer; cdecl; // 'sqlite3_get_table';
   SQLite3_FreeTable: procedure(Table: TSQLiteResult); cdecl; // 'sqlite3_free_table';
-  SQLite3_Complete: function(P: PAnsiChar): boolean; cdecl; // 'sqlite3_complete';
+  SQLite3_Complete: function(P: PAnsiChar): Boolean; cdecl; // 'sqlite3_complete';
   SQLite3_LastInsertRowID: function(db: TSQLiteDB): int64; cdecl; // 'sqlite3_last_insert_rowid';
   SQLite3_Interrupt: procedure(db: TSQLiteDB); cdecl; // 'sqlite3_interrupt';
   SQLite3_BusyHandler: procedure(db: TSQLiteDB; CallbackPtr: TSQLiteBusyHandlerCallback; UserData: Pointer); cdecl; // 'sqlite3_busy_handler';
@@ -265,7 +265,7 @@ var
   SQLite3_Backup_Pagecount: function(hBackup: TSQLiteBackup): integer; cdecl; // 'sqlite3_backup_pagecount';
 
 //
-// In the SQL strings input to sqlite3_prepare() and sqlite3_prepare16(),
+// In the SQL Strings input to sqlite3_prepare() and sqlite3_prepare16(),
 // one or more literals can be replace by a wildcard "?" or ":N:" where
 // N is an integer.  These value of these wildcard literals can be set
 // using the routines listed below.
@@ -375,20 +375,20 @@ cdecl; // 'sqlite3_bind_text';
   {
     //Sample of usage:
     PROCEDURE fn(ctx:pointer;n:integer;args:ppansichar);cdecl;
-    VAR     p : ppansichar; theString : string; res:integer;
+    VAR     p : ppansichar; theString : String; res:integer;
     BEGIN
     p         := args;
     theString := trim(sqlite3_value_text(p^));
 
     ...do something with theString...
 
-    sqlite3_result_int(ctx,res);  // < return a number based on string
+    sqlite3_result_int(ctx,res);  // < return a number based on String
     END;
     ...
     var i:integer;
     begin
     i := sqlite3_create_function(db3,'myfn',1,SQLITE_UTF8,nil,@fn,nil,nil);
-    s := 'select myfn(thestring) from theTable;'
+    s := 'select myfn(theString) from theTable;'
     ...execute statement...
     end;
     }
@@ -447,7 +447,7 @@ type
     aConstraintUsage: Psqlite3_index_constraint_usage;
     idxNum: Integer;                // Number used to identify the index
     idxStr: PAnsiChar;              // String, possibly obtained from sqlite3_malloc
-    needToFreeIdxStr: LongBool;      // Free idxStr using sqlite3_free() if true
+    needToFreeIdxStr: LongBool;      // Free idxStr using sqlite3_free() if True
     orderByConsumed: LongBool;       // True if output is already ordered
     estimatedCost: Double;      // Estimated cost of using this index
   end;
@@ -521,7 +521,7 @@ var
 function SQLiteFieldType(SQLiteFieldTypeCode: Integer): String;
 function SQLiteErrorStr(SQLiteErrorCode: Integer): String;
 
-function LoadSQLite(const AFilename: string): Boolean;
+function LoadSQLite(const AFilename: String): Boolean;
 procedure UnloadSQLite;
 
 procedure SQLiteCheck(SQLiteResult: Integer; ErrorMessage: PAnsiChar); overload;
@@ -596,7 +596,7 @@ begin
   end;
 end;
 
-function LoadProc(const ProcName: string): Pointer;
+function LoadProc(const ProcName: String): Pointer;
 begin
   Result := GetProcAddress(SQLite_Handle, PChar(ProcName));
   if Result = nil then
@@ -605,7 +605,7 @@ begin
   end;
 end;
 
-function LoadProcSilent(const ProcName: string): Pointer;
+function LoadProcSilent(const ProcName: String): Pointer;
 begin
   Result := GetProcAddress(SQLite_Handle, PChar(ProcName));
 end;
@@ -620,13 +620,13 @@ end;
 
 procedure SQLiteCheck(SQLiteResult: Integer; ErrorMessage: PAnsiChar);
 var
-  Tmp: string;
+  Tmp: String;
 begin
   if (SQLiteResult <> SQLITE_OK) and (SQLiteResult <> SQLITE_DONE) then
   begin
     if ErrorMessage <> nil then
     begin
-      Tmp := string(AnsiString(ErrorMessage));
+      Tmp := String(AnsiString(ErrorMessage));
       SQlite3_Free(ErrorMessage);
     end
     else
@@ -643,7 +643,7 @@ begin
   SQLiteCheck(SQLiteResult, nil);
 end;
 
-function LoadSQLite(const AFilename: string): Boolean;
+function LoadSQLite(const AFilename: String): Boolean;
 begin
   Result := (SQLite_Handle <> 0);
   if not Result then

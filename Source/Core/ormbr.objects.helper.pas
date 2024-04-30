@@ -59,7 +59,7 @@ type
     function GetSubResource: SubResource;
     function &GetType(out AType: TRttiType): Boolean;
     function GetSequence: Sequence;
-    function MethodCall(const AMethodName: string;
+    function MethodCall(const AMethodName: String;
       const AParameters: array of TValue): TValue;
     procedure SetDefaultValue;
   end;
@@ -171,7 +171,7 @@ begin
   end;
 end;
 
-function TObjectHelper.MethodCall(const AMethodName: string;
+function TObjectHelper.MethodCall(const AMethodName: String;
   const AParameters: array of TValue): TValue;
 var
   LContext: TRttiContext;

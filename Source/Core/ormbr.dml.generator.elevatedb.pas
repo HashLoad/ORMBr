@@ -45,20 +45,20 @@ type
   TDMLGeneratorElevateDB = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      const APageIndex: integer; const AOrderBy: string = ''): string; reintroduce;
+      const APageIndex: integer; const AOrderBy: String = ''): String; reintroduce;
   public
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass;
-      APageSize: Integer; AID: TValue): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; override;
+      APageSize: Integer; AID: TValue): String; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
-    function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string; override;
+    function GeneratorPageNext(const ACommandSelect: String;
+      APageSize, APageNext: Integer): String; override;
   end;
 
 implementation
@@ -78,9 +78,9 @@ begin
 end;
 
 function TDMLGeneratorElevateDB.GetGeneratorSelect(const ACriteria: ICriteria;
-  const APageIndex: integer; const AOrderBy: string): string;
+  const APageIndex: integer; const AOrderBy: String): String;
 var
-  LFirstColumn: string;
+  LFirstColumn: String;
 begin
   LFirstColumn := ACriteria.AST.Select.Columns.Columns[0].Name;
   if APageIndex > -1 then
@@ -91,8 +91,8 @@ begin
   Result := ACriteria.AsString;
 end;
 
-function TDMLGeneratorElevateDB.GeneratorPageNext(const ACommandSelect: string;
-  APageSize, APageNext: Integer): string;
+function TDMLGeneratorElevateDB.GeneratorPageNext(const ACommandSelect: String;
+  APageSize, APageNext: Integer): String;
 begin
   if APageNext = 0 then
     APageNext := 1;
@@ -104,7 +104,7 @@ begin
 end;
 
 function TDMLGeneratorElevateDB.GeneratorSelectAll(AClass: TClass;
-  APageSize: Integer; AID: TValue): string;
+  APageSize: Integer; AID: TValue): String;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
@@ -128,7 +128,7 @@ begin
 end;
 
 function TDMLGeneratorElevateDB.GeneratorSelectWhere(AClass: TClass; AWhere,
-  AOrderBy: string; APageSize: Integer): string;
+  AOrderBy: String; APageSize: Integer): String;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;

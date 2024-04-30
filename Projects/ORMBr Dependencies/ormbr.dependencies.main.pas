@@ -27,10 +27,10 @@ type
   private
     procedure InstallDependencies;
 
-    function GetCQLVersion: string;
-    function GetDBCVersion: string;
-    function GetDBEVersion: string;
-    function GetJSONVersion: string;
+    function GetCQLVersion: String;
+    function GetDBCVersion: String;
+    function GetDBEVersion: String;
+    function GetJSONVersion: String;
 
     procedure log(AText: String);
     { Private declarations }
@@ -66,22 +66,22 @@ begin
   inherited;
 end;
 
-function TfrmORMBrDependencies.GetCQLVersion: string;
+function TfrmORMBrDependencies.GetCQLVersion: String;
 begin
   result := vlDependencies.Values['cqlbr'];
 end;
 
-function TfrmORMBrDependencies.GetDBCVersion: string;
+function TfrmORMBrDependencies.GetDBCVersion: String;
 begin
   result := vlDependencies.Values['dbcbr'];
 end;
 
-function TfrmORMBrDependencies.GetDBEVersion: string;
+function TfrmORMBrDependencies.GetDBEVersion: String;
 begin
   result := vlDependencies.Values['dbebr'];
 end;
 
-function TfrmORMBrDependencies.GetJSONVersion: string;
+function TfrmORMBrDependencies.GetJSONVersion: String;
 begin
   result := vlDependencies.Values['jsonbr'];
 end;

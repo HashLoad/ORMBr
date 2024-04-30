@@ -35,11 +35,11 @@ type
   IContainerObjectSet<M: class, constructor> = interface
     ['{427CBF16-5FD5-4144-9699-09B08335D545}']
     function ExistSequence: Boolean;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>;
     function Find: TObjectList<M>; overload;
     function Find(const AID: Int64): M; overload;
-    function Find(const AID: string): M; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
+    function Find(const AID: String): M; overload;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>;
     procedure Insert(const AObject: M);
     procedure Update(const AObject: M);
     procedure Delete(const AObject: M);

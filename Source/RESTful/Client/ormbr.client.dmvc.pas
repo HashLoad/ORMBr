@@ -41,14 +41,14 @@ type
     procedure SetParamsBodyValue;
     procedure SetParamValues(AParams: PClientParam);
     function DoGET(const AURL, AResource, ASubResource: String;
-      const AParams: array of string): String;
+      const AParams: array of String): String;
     function DoPOST(const AURL, AResource, ASubResource: String;
-      const AParams: array of string): String;
+      const AParams: array of String): String;
     function DoPUT(const AURL, AResource, ASubResource: String;
-      const AParams: array of string): String;
+      const AParams: array of String): String;
     function DoDELETE(const AURL, AResource, ASubResource: String;
-      const AParams: array of string): String;
-    function RemoveContextServerUse(const Value: String): string;
+      const AParams: array of String): String;
+    function RemoveContextServerUse(const Value: String): String;
   protected
     procedure DoAfterCommand; override;
   public
@@ -94,7 +94,7 @@ begin
 end;
 
 function TRESTClientDelphiMVC.DoDELETE(const AURL, AResource,
-  ASubResource: String; const AParams: array of string): String;
+  ASubResource: String; const AParams: array of String): String;
 begin
   FRequestMethod := 'DELETE';
   try
@@ -124,7 +124,7 @@ begin
 end;
 
 function TRESTClientDelphiMVC.DoGET(const AURL, AResource, ASubResource: String;
-      const AParams: array of string): String;
+      const AParams: array of String): String;
 begin
   FRequestMethod := 'GET';
   try
@@ -155,7 +155,7 @@ begin
 end;
 
 function TRESTClientDelphiMVC.DoPOST(const AURL, AResource,
-  ASubResource: String; const AParams: array of string): String;
+  ASubResource: String; const AParams: array of String): String;
 begin
   FRequestMethod := 'POST';
   // Define valores dos parâmetros
@@ -189,7 +189,7 @@ begin
 end;
 
 function TRESTClientDelphiMVC.DoPUT(const AURL, AResource, ASubResource: String;
-  const AParams: array of string): String;
+  const AParams: array of String): String;
 begin
   FRequestMethod := 'PUT';
   // Define valores dos parâmetros
@@ -399,7 +399,7 @@ begin
 //  FRESTClient.Header('password', FAuthenticator.Password);
 end;
 
-function TRESTClientDelphiMVC.RemoveContextServerUse(const Value: String): string;
+function TRESTClientDelphiMVC.RemoveContextServerUse(const Value: String): String;
 begin
   Result := '';
 end;
@@ -408,7 +408,7 @@ procedure TRESTClientDelphiMVC.SetParamsBodyValue;
 var
   LFor: Integer;
 begin
-  // Passa os valores do BodyParams externo para o string
+  // Passa os valores do BodyParams externo para o String
   for LFor := 0 to FBodyParams.Count -1 do
     FRESTClient.BodyParams.Add(FBodyParams.Items[LFor].AsString);
 end;

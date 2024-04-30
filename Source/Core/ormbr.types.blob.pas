@@ -81,15 +81,15 @@ type
   public
     procedure SetBlobField(const Value: TBlobField; const ACompression: Boolean = False);
     procedure SetBytes(const Value: TBytes);
-    procedure LoadFromFile(const AFileName: string; const ACompression: Boolean = False);
-    procedure SaveToFile(const FileName: string);
+    procedure LoadFromFile(const AFileName: String; const ACompression: Boolean = False);
+    procedure SaveToFile(const FileName: String);
     {$IFDEF HAS_VCL}
     procedure ToPicture(APicture: TPicture; const ACompression: Boolean = False);
     procedure ToBitmap(ABitmap: TBitmap; const ACompression: Boolean = False);
     {$ENDIF}
     function ToBytes: TBytes;
-    function ToBytesString: string; overload;
-    function ToStringBytes(const AString: string): Boolean; overload;
+    function ToBytesString: String; overload;
+    function ToStringBytes(const AString: String): Boolean; overload;
     function ToString: String;
     function ToSize: Integer;
   end;
@@ -116,11 +116,11 @@ end;
 procedure TBlob.SetBytes(const Value: TBytes);
 begin
   FBase64Bytes := Value;
-  // Codifica os Bytes em string
+  // Codifica os Bytes em String
   FBase64String := ToBytesString;
 end;
 
-function TBlob.ToBytesString: string;
+function TBlob.ToBytesString: String;
 begin
   Result := GetEncodeBase64;
 end;
@@ -130,7 +130,7 @@ begin
   Result := FBase64String;
 end;
 
-function TBlob.ToStringBytes(const AString: string): Boolean;
+function TBlob.ToStringBytes(const AString: String): Boolean;
 begin
   Result := GetDecodeBase64(AString);
 end;
@@ -327,7 +327,7 @@ begin
 end;
 {$ENDIF}
 
-procedure TBlob.LoadFromFile(const AFileName: string;
+procedure TBlob.LoadFromFile(const AFileName: String;
   const ACompression: Boolean = False);
 var
   LSourceStream: TMemoryStream;
@@ -360,7 +360,7 @@ begin
   Result := FBase64Bytes;
 end;
 
-procedure TBlob.SaveToFile(const FileName: string);
+procedure TBlob.SaveToFile(const FileName: String);
 var
   LStream: TBytesStream;
 begin

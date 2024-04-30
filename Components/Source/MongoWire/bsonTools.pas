@@ -45,7 +45,7 @@ type
     FRef:array of integer;//int64?
     FRefIndex,FRefLength:integer;
     FCurrent:Variant;
-    function AddRef(FromSize: boolean): integer;
+    function AddRef(FromSize: Boolean): integer;
   protected
     //IJSONArray
     function Get_Item(Index: integer): Variant; stdcall;
@@ -89,7 +89,7 @@ uses
 
 const
   BSONArrayBaseIndex=0;//1?
-  BSONDetectVarArrayType=true;
+  BSONDetectVarArrayType=True;
 
   //bsonElement
   bsonDouble = $00000001;
@@ -179,23 +179,23 @@ var //outside of stmReadCString to recycle memory
     l:=0;
     dRead(@l,1);
     if l<>0 then
-      raise EBSONException.Create('BSON string incorrectly terminated at offset '+IntToHex(lstart,8));
+      raise EBSONException.Create('BSON String incorrectly terminated at offset '+IntToHex(lstart,8));
     Result:=UTF8ToWideString(s);
   end;
   {$IFDEF BSON_SUPPORT_REGEX}
   function dReadRegEx: IRegExp2;
   var
     i:integer;
-    s:string;
+    s:String;
   begin
     Result:=CoRegExp.Create;
     Result.Pattern:=stmReadCString;
     s:=dReadCString;
     for i:=1 to Length(s)-1 do
       case s[i] of
-        'i','I':Result.IgnoreCase:=true;
-        'm','M':Result.Multiline:=true;
-        'g','G':Result.Global:=true;
+        'i','I':Result.IgnoreCase:=True;
+        'm','M':Result.Multiline:=True;
+        'g','G':Result.Global:=True;
         //'x','X':;//verbose
         //'l','L':;//locale
         //'s','S':;//dotall
@@ -209,7 +209,7 @@ const
   stackGrowStep=$20;//not too much, not too little (?)
   arrGrowStep=$20;
 var
-  IsArray:boolean;
+  IsArray:Boolean;
   a1,ai,al:integer;
   key:WideString;
   d:IJSONDocument;
@@ -317,7 +317,7 @@ begin
   da:=nil;
   dz:=nil;
   d0:=0;
-  IsArray:=false;
+  IsArray:=False;
   d:=Doc;
   sl:=0;
   ss:='';
@@ -370,7 +370,7 @@ begin
            end;
          end;
         Push;
-        IsArray:=false;
+        IsArray:=False;
         d:=IUnknown(v) as IJSONDocument;
         dRead(@i,4);//document length
         //TODO: keep value and check if correct?
@@ -401,7 +401,7 @@ begin
         if i=bsonArray then
          begin
           Push;
-          IsArray:=true;
+          IsArray:=True;
           a1:=ai;
           at:=varEmpty;//used to detect same type elements array
           dRead(@i,4);//array document length
@@ -471,7 +471,7 @@ begin
        begin
         i:=0;
         dRead(@i,1);
-        SetValue(boolean(i<>0));
+        SetValue(Boolean(i<>0));
        end;
       bsonUTCDateTime:
        begin
@@ -573,7 +573,7 @@ begin
            begin
             a1:=stack[stackIndex].k1;
             at:=stack[stackIndex].k2;
-            IsArray:=true;
+            IsArray:=True;
             if (da<>nil) and (d0=stackIndex) then
              begin
               da.AddJSON(dz.ToString);
@@ -585,7 +585,7 @@ begin
             d:=stack[stackIndex].d;
             key:=stack[stackIndex].key;
             stack[stackIndex].d:=nil;
-            IsArray:=false;
+            IsArray:=False;
             if (da<>nil) and (d0-1=stackIndex) then
               da:=nil;//done
            end;
@@ -650,16 +650,16 @@ const
   stackGrowStep=$20;//not too much, not too little (?)
 var
   e:IJSONEnumerator;
-  IsArray:boolean;
+  IsArray:Boolean;
   stack:array of record
     e:IJSONEnumerator;
     p:integer;//int64?
-    IsArray:boolean;
+    IsArray:Boolean;
   end;
 
   stackIndex,stackLength:integer;
 
-  procedure Push(const NewEnum:IJSONEnumerator; NewIsArray:boolean);
+  procedure Push(const NewEnum:IJSONEnumerator; NewIsArray:Boolean);
   var
     i:integer;
   begin
@@ -683,14 +683,14 @@ var
   end;
 var
   uu:IUnknown;
-  function TryWriteJSONDocument:boolean;
+  function TryWriteJSONDocument:Boolean;
   var
     d:IJSONDocument;
   begin
     Result:=uu.QueryInterface(IID_IJSONDocument,d)=S_OK;
-    if Result then Push(JSONEnum(d),false);
+    if Result then Push(JSONEnum(d),False);
   end;
-  function TryWriteBSONDocArray:boolean;
+  function TryWriteBSONDocArray:Boolean;
   var
     a:IBSONDocArray;
     p1,p2:int64;
@@ -704,15 +704,15 @@ var
       inc(ltotal,p2-p1);
      end;
   end;
-  function TryWriteJSONArray:boolean;
+  function TryWriteJSONArray:Boolean;
   var
     a:IJSONArray;
   begin
     Result:=uu.QueryInterface(IID_IJSONArray,a)=S_OK;
-    if Result then Push(TJSONArrayEnumerator.Create(a),true);
+    if Result then Push(TJSONArrayEnumerator.Create(a),True);
   end;
   {$IFDEF BSON_SUPPORT_REGEX}
-  function TryWriteRegExp:boolean;
+  function TryWriteRegExp:Boolean;
   var
     i:integer;
     w:WideString;
@@ -734,7 +734,7 @@ var
      end;
   end;
   {$ENDIF}
-  function TryWriteStream:boolean;
+  function TryWriteStream:Boolean;
   const
     dSize=$10000;
     IID_IStream:TGUID='{0000000C-0000-0000-C000-000000000046}';
@@ -769,7 +769,7 @@ var
        end;
      end;
   end;
-  function TryWritePersistStream:boolean;
+  function TryWritePersistStream:Boolean;
   const
     IID_IPersistStream:TGUID='{00000109-0000-0000-C000-000000000046}';
   var
@@ -788,7 +788,7 @@ var
       dWrite(@i,4);
       i:=bsonBinaryGeneric;
       dWrite(@i,1);
-      ps.Save(TStreamAdapter.Create(Data,soReference),false);
+      ps.Save(TStreamAdapter.Create(Data,soReference),False);
       //fill in length
       p2:=Data.Position;
       i:=p2-p1-5;
@@ -798,7 +798,7 @@ var
       Data.Position:=p2;
      end;
   end;
-  function StartsWith(const a,b:WideString):boolean;
+  function StartsWith(const a,b:WideString):Boolean;
   var
     i,l1,l2:integer;
   begin
@@ -828,7 +828,7 @@ begin
   dWrite(@i,4);
 
   e:=JsonEnum(Doc);
-  IsArray:=false;
+  IsArray:=False;
   while e<>nil do
     if e.Next then
      begin
@@ -989,7 +989,7 @@ begin
         end;
        end
       else
-        Push(TVarArrayEnumerator.Create(v),true);
+        Push(TVarArrayEnumerator.Create(v),True);
      end
     else
      begin
@@ -1039,7 +1039,7 @@ begin
   inherited;
 end;
 
-function TBSONDocArray.AddRef(FromSize: boolean): integer;
+function TBSONDocArray.AddRef(FromSize: Boolean): integer;
 var
   p:integer;
 begin
@@ -1062,13 +1062,13 @@ end;
 
 function TBSONDocArray.Add(const Doc: IJSONDocument): integer;
 begin
-  Result:=AddRef(true);
+  Result:=AddRef(True);
   SaveBSON(Doc,FData);
 end;
 
 function TBSONDocArray.AddJson(const Data: WideString): integer;
 begin
-  Result:=AddRef(true);
+  Result:=AddRef(True);
   SaveBSON(JSON(Data),FData);
 end;
 
@@ -1203,7 +1203,7 @@ begin
         raise EBSONException.Create('Unexpected array index "'+IntToStr(i)+
           '"<>"'+IntToStr(FRefIndex)+'" at offset '+IntToHex(lstart+ltotal,8));
       //list item
-      FRef[AddRef(false)]:=FData.Position;
+      FRef[AddRef(False)]:=FData.Position;
       lRead(@i,4);
       FData.Seek(i-4,soCurrent);
       inc(ltotal,i-4);

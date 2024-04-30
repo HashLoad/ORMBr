@@ -67,12 +67,12 @@ type
   private
     FSocket:THandle;
     FAddr:TSocketAddress;
-    FConnected:boolean;
+    FConnected:Boolean;
   protected
     constructor Create(family: word; ASocket:THandle); overload;
     function GetPort:word;
-    function GetAddress:string;
-    function GetHostName:string;
+    function GetAddress:String;
+    function GetHostName:String;
   public
     constructor Create(family: word= AF_INET); overload;
     destructor Destroy; override;
@@ -81,10 +81,10 @@ type
     function ReceiveBuf(var Buf; Count: Integer): Integer; virtual;
     function SendBuf(const Buf; Count: LongInt): LongInt; virtual;
     property Handle:THandle read FSocket;
-    property Connected:boolean read FConnected;
+    property Connected:Boolean read FConnected;
     property Port:word read GetPort;
-    property Address:string read GetAddress;
-    property HostName:string read GetHostName;
+    property Address:String read GetAddress;
+    property HostName:String read GetHostName;
   end;
 
   TTcpServer=class(TObject)
@@ -324,13 +324,13 @@ begin
   if simpleSock.connect(FSocket,FAddr,SizeOf(TSocketAddress))=SOCKET_ERROR then
     RaiseLastWSAError
   else
-    FConnected:=true;
+    FConnected:=True;
 end;
 
 constructor TTcpSocket.Create(family: word);
 begin
   inherited Create;
-  FConnected:=false;
+  FConnected:=False;
   FillChar(FAddr,SizeOf(TSocketAddress),#0);
   FAddr.family:=family;//AF_INET
   FSocket:=socket(family,SOCK_STREAM,IPPROTO_IP);
@@ -348,7 +348,7 @@ begin
   i:=1;
   if setsockopt(FSocket,IPPROTO_TCP,TCP_NODELAY,@i,4)<>0 then
     RaiseLastWSAError;
-  FConnected:=true;//?
+  FConnected:=True;//?
 end;
 
 destructor TTcpSocket.Destroy;
@@ -362,7 +362,7 @@ procedure TTcpSocket.Disconnect;
 begin
   if FConnected then
    begin
-    FConnected:=false;
+    FConnected:=False;
     shutdown(FSocket,SD_BOTH);
    end;
 end;
@@ -372,12 +372,12 @@ begin
   Result:=FAddr.port;
 end;
 
-function TTcpSocket.GetAddress: string;
+function TTcpSocket.GetAddress: String;
 begin
-  Result:=string(inet_ntoa(PCardinal(@FAddr.data[0])^));
+  Result:=String(inet_ntoa(PCardinal(@FAddr.data[0])^));
 end;
 
-function TTcpSocket.GetHostName: string;
+function TTcpSocket.GetHostName: String;
 var
   e:PHostEntry;
   i:integer;
@@ -399,9 +399,9 @@ begin
        end;
      end
     else
-      Result:=string(inet_ntoa(PCardinal(@FAddr.data[0])^))
+      Result:=String(inet_ntoa(PCardinal(@FAddr.data[0])^))
   else
-    Result:=string(e.h_name);
+    Result:=String(e.h_name);
 end;
 
 function TTcpSocket.ReceiveBuf(var Buf; Count: Integer): Integer;

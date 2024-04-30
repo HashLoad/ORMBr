@@ -44,25 +44,25 @@ type
   private
     FPageSize: Integer;
     FPageNext: Integer;
-    FSelectCommand: string;
+    FSelectCommand: String;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     procedure SetPageSize(const APageSize: Integer);
-    function GenerateSelectAll(const AClass: TClass): string;
+    function GenerateSelectAll(const AClass: TClass): String;
     function GeneratorSelectWhere(const AClass: TClass;
-      const AWhere, AOrderBy: string): string;
-    function GenerateSelectID(const AClass: TClass; const AID: TValue): string;
+      const AWhere, AOrderBy: String): String;
+    function GenerateSelectID(const AClass: TClass; const AID: TValue): String;
     function GenerateSelectOneToOne(const AOwner: TObject;
-      const AClass: TClass; const AAssociation: TAssociationMapping): string;
+      const AClass: TClass; const AAssociation: TAssociationMapping): String;
     function GenerateSelectOneToMany(const AOwner: TObject;
-      const AClass: TClass; const AAssociation: TAssociationMapping): string;
-    function GenerateNextPacket: string; overload;
+      const AClass: TClass; const AAssociation: TAssociationMapping): String;
+    function GenerateNextPacket: String; overload;
     function GenerateNextPacket(const AClass: TClass;
-      const APageSize, APageNext: Integer): string; overload;
+      const APageSize, APageNext: Integer): String; overload;
     function GenerateNextPacket(const AClass: TClass;
       const AWhere, AOrderBy: String;
-      const APageSize, APageNext: Integer): string; overload;
+      const APageSize, APageNext: Integer): String; overload;
   end;
 
 implementation
@@ -79,7 +79,7 @@ begin
   FPageNext := 0;
 end;
 
-function TCommandSelecter.GenerateNextPacket: string;
+function TCommandSelecter.GenerateNextPacket: String;
 begin
   FPageNext := FPageNext + FPageSize;
   FResultCommand := FGeneratorCommand.GeneratorPageNext(FSelectCommand, FPageSize, FPageNext);
@@ -91,7 +91,7 @@ begin
   FPageSize := APageSize;
 end;
 
-function TCommandSelecter.GenerateSelectAll(const AClass: TClass): string;
+function TCommandSelecter.GenerateSelectAll(const AClass: TClass): String;
 begin
   FPageNext := 0;
   FSelectCommand := FGeneratorCommand.GeneratorSelectAll(AClass, FPageSize, -1);
@@ -100,21 +100,21 @@ begin
 end;
 
 function TCommandSelecter.GenerateSelectOneToMany(const AOwner: TObject;
-  const AClass: TClass; const AAssociation: TAssociationMapping): string;
+  const AClass: TClass; const AAssociation: TAssociationMapping): String;
 begin
   FResultCommand := FGeneratorCommand.GenerateSelectOneToOneMany(AOwner, AClass, AAssociation);
   Result := FResultCommand;
 end;
 
 function TCommandSelecter.GenerateSelectOneToOne(const AOwner: TObject;
-  const AClass: TClass; const AAssociation: TAssociationMapping): string;
+  const AClass: TClass; const AAssociation: TAssociationMapping): String;
 begin
   FResultCommand := FGeneratorCommand.GenerateSelectOneToOne(AOwner, AClass, AAssociation);
   Result := FResultCommand;
 end;
 
 function TCommandSelecter.GeneratorSelectWhere(const AClass: TClass;
-  const AWhere, AOrderBy: string): string;
+  const AWhere, AOrderBy: String): String;
 var
   LWhere: String;
 begin
@@ -127,7 +127,7 @@ begin
 end;
 
 function TCommandSelecter.GenerateSelectID(const AClass: TClass;
-  const AID: TValue): string;
+  const AID: TValue): String;
 begin
   FPageNext := 0;
   FSelectCommand := FGeneratorCommand.GeneratorSelectAll(AClass, -1, AID);
@@ -136,7 +136,7 @@ begin
 end;
 
 function TCommandSelecter.GenerateNextPacket(const AClass: TClass;
-  const APageSize, APageNext: Integer): string;
+  const APageSize, APageNext: Integer): String;
 begin
   FSelectCommand := FGeneratorCommand.GeneratorSelectAll(AClass, APageSize, -1);
   FResultCommand := FGeneratorCommand.GeneratorPageNext(FSelectCommand, APageSize, APageNext);
@@ -144,7 +144,7 @@ begin
 end;
 
 function TCommandSelecter.GenerateNextPacket(const AClass: TClass; const AWhere,
-  AOrderBy: String; const APageSize, APageNext: Integer): string;
+  AOrderBy: String; const APageSize, APageNext: Integer): String;
 var
   LWhere: String;
   LCommandSelect: String;

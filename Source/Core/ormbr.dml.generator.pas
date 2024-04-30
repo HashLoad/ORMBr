@@ -65,41 +65,41 @@ type
   protected
     FConnection: IDBConnection;
     FQueryCache: TQueryCache;
-    FDateFormat: string;
-    FTimeFormat: string;
+    FDateFormat: String;
+    FTimeFormat: String;
     function GetCriteriaSelect(AClass: TClass; AID: TValue): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      AOrderBy: string = ''): string; virtual;
+      AOrderBy: String = ''): String; virtual;
     function GetGeneratorWhere(const AClass: TClass; const ATableName: String;
       const AID: TValue): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
       const AID: TValue): String;
     function GetGeneratorQueryScopeWhere(const AClass: TClass): String;
     function GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
-    function ExecuteSequence(const ASQL: string): Int64; virtual;
+    function ExecuteSequence(const ASQL: String): Int64; virtual;
   public
     constructor Create; virtual;
     destructor Destroy; override;
     procedure SetConnection(const AConnaction: IDBConnection); virtual;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
-      AID: TValue): string; virtual; abstract;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; virtual; abstract;
+      AID: TValue): String; virtual; abstract;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; virtual; abstract;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; virtual;
+      AAssociation: TAssociationMapping): String; virtual;
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; virtual;
+      AAssociation: TAssociationMapping): String; virtual;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TDictionary<string, string>): string; virtual;
-    function GeneratorInsert(AObject: TObject): string; virtual;
+      AModifiedFields: TDictionary<String, String>): String; virtual;
+    function GeneratorInsert(AObject: TObject): String; virtual;
     function GeneratorDelete(AObject: TObject;
-      AParams: TParams): string; virtual;
+      AParams: TParams): String; virtual;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
-    function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string; virtual;
+    function GeneratorPageNext(const ACommandSelect: String;
+      APageSize, APageNext: Integer): String; virtual;
   end;
 
 implementation
@@ -117,7 +117,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: string): Int64;
+function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: String): Int64;
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -132,7 +132,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 
   function GetValue(AIndex: Integer): Variant;
   var
@@ -189,7 +189,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 
   function GetValue(Aindex: Integer): Variant;
   var
@@ -247,7 +247,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GeneratorDelete(AObject: TObject;
-  AParams: TParams): string;
+  AParams: TParams): String;
 var
   LFor: Integer;
   LTable: TTableMapping;
@@ -264,7 +264,7 @@ begin
   Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): string;
+function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): String;
 var
   LTable: TTableMapping;
   LColumn: TColumnMapping;
@@ -295,8 +295,8 @@ begin
   FQueryCache.AddOrSetValue(LKey, Result);
 end;
 
-function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
-  APageSize, APageNext: Integer): string;
+function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: String;
+  APageSize, APageNext: Integer): String;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
@@ -377,7 +377,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
+  AOrderBy: String): String;
 begin
   Result := '';
 end;
@@ -389,7 +389,7 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
-//  LID: string;
+//  LID: String;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
@@ -401,7 +401,7 @@ begin
       Exit;
   end
   else
-  if AID.IsType<string> then
+  if AID.IsType<String> then
   begin 
     if AID.AsString = '-1' then
       Exit;
@@ -513,9 +513,9 @@ procedure TDMLGeneratorAbstract.GenerateJoinColumn(AClass: TClass;
 var
   LJoinList: TJoinColumnMappingList;
   LJoin: TJoinColumnMapping;
-  LJoinExist: TList<string>;
+  LJoinExist: TList<String>;
 begin
-  LJoinExist := TList<string>.Create;
+  LJoinExist := TList<String>.Create;
   try
     // JoinColumn
     LJoinList := TMappingExplorer.GetMappingJoinColumn(AClass);
@@ -571,12 +571,12 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject;
-  AParams: TParams; AModifiedFields: TDictionary<string, string>): string;
+  AParams: TParams; AModifiedFields: TDictionary<String, String>): String;
 var
   LFor: Integer;
   LTable: TTableMapping;
   LCriteria: ICriteria;
-  LColumnName: string;
+  LColumnName: String;
 begin
   Result := '';
   if AModifiedFields.Count = 0 then

@@ -43,7 +43,7 @@ type
                     [QueryParam('$orderby')] orderby: String;
                     [QueryParam('$top')] top: String;
                     [QueryParam('$skip')] skip: String;
-                    [QueryParam('$count')] count: String): string; overload;
+                    [QueryParam('$count')] count: String): String; overload;
 
     [POST, Path('/{resource}')]
     [Produces(TMediaType.TEXT_PLAIN)]
@@ -87,7 +87,7 @@ function TAppResource.select(resource: String;
                              orderby: String;
                              top: String;
                              skip: String;
-                             count: String): string;
+                             count: String): String;
 var
   LQuery: TRESTQueryParse;
 begin

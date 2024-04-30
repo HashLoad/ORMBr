@@ -64,19 +64,19 @@ type
 
   TRestProxyInfo = class(TPersistent)
   private
-    FBasicByDefault: boolean;
+    FBasicByDefault: Boolean;
     FProxyPort: Integer;
-    FPassword: string;
-    FUsername: string;
-    FProxyServer: string;
+    FPassword: String;
+    FUsername: String;
+    FProxyServer: String;
   protected
     procedure AssignTo(ADestination: TPersistent); override;
   published
-    property BasicAuthentication: boolean read FBasicByDefault write FBasicByDefault;
-    property ProxyPassword: string read FPassword write FPassword;
+    property BasicAuthentication: Boolean read FBasicByDefault write FBasicByDefault;
+    property ProxyPassword: String read FPassword write FPassword;
     property ProxyPort: Integer read FProxyPort write FProxyPort;
-    property ProxyServer: string read FProxyServer write FProxyServer;
-    property ProxyUsername: string read FUsername write FUserName;
+    property ProxyServer: String read FProxyServer write FProxyServer;
+    property ProxyUsername: String read FUsername write FUserName;
   end;
 
   TORMBrClientBase = class(TORMBrComponent)

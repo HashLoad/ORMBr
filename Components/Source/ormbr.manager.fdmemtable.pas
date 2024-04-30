@@ -54,15 +54,15 @@ type
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerFDMemTable; overload;
     function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerFDMemTable; overload;
-    function AddLookupField<T, M: class, constructor>(const AFieldName: string;
-                                                      const AKeyFields: string;
-                                                      const ALookupKeyFields: string;
-                                                      const ALookupResultField: string;
-                                                      const ADisplayLabel: string = ''): TManagerFDMemTable;
+    function AddLookupField<T, M: class, constructor>(const AFieldName: String;
+                                                      const AKeyFields: String;
+                                                      const ALookupKeyFields: String;
+                                                      const ALookupResultField: String;
+                                                      const ADisplayLabel: String = ''): TManagerFDMemTable;
     procedure Open<T: class, constructor>; overload;
     procedure Open<T: class, constructor>(const AID: Integer); overload;
     procedure Open<T: class, constructor>(const AID: String); overload;
-    procedure OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere<T: class, constructor>(const AWhere: String; const AOrderBy: String = '');
     procedure Close<T: class, constructor>;
     procedure LoadLazy<T: class, constructor>(const AOwner: T);
     procedure RefreshRecord<T: class, constructor>;
@@ -75,8 +75,8 @@ type
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerFDMemTable;
     property OwnerNestedList: Boolean read GetOwnerNestedList write SetOwnerNestedList;
@@ -100,7 +100,7 @@ begin
 end;
 
 function TORMBrManagerFDMemTable.AddLookupField<T, M>(const AFieldName, AKeyFields,
-  ALookupKeyFields, ALookupResultField, ADisplayLabel: string): TManagerFDMemTable;
+  ALookupKeyFields, ALookupResultField, ADisplayLabel: String): TManagerFDMemTable;
 begin
   Result := FManagerDataSet.AddLookupField<T, M>(AFieldName, AKeyFields,
                                                  ALookupKeyFields, ALookupResultField, ADisplayLabel);
@@ -164,7 +164,7 @@ begin
   Result := FManagerDataSet.Find<T>;
 end;
 
-function TORMBrManagerFDMemTable.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TORMBrManagerFDMemTable.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 begin
   Result := FManagerDataSet.FindWhere<T>(AWhere, AOrderBy);
 end;
@@ -204,7 +204,7 @@ begin
   FManagerDataSet.Open<T>(AID);
 end;
 
-procedure TORMBrManagerFDMemTable.OpenWhere<T>(const AWhere, AOrderBy: string);
+procedure TORMBrManagerFDMemTable.OpenWhere<T>(const AWhere, AOrderBy: String);
 begin
   FManagerDataSet.OpenWhere<T>(AWhere, AOrderBy);
 end;

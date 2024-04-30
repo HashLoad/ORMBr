@@ -46,20 +46,20 @@ type
   TDMLGeneratorMSSql = class(TDMLGeneratorAbstract)
   protected
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      AOrderBy: string = ''): string; override;
+      AOrderBy: String = ''): String; override;
   public
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
-      AID: TValue): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; override;
+      AID: TValue): String; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
-    function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string; override;
+    function GeneratorPageNext(const ACommandSelect: String;
+      APageSize, APageNext: Integer): String; override;
   end;
 
 implementation
@@ -78,7 +78,7 @@ begin
   inherited;
 end;
 
-//function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): string;
+//function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria): String;
 //const
 //  cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
 //  cCOLUMN = 'ROW_NUMBER() OVER(ORDER BY CURRENT_TIMESTAMP) AS ROWNUMBER';
@@ -95,7 +95,7 @@ end;
 //end;
 
 function TDMLGeneratorMSSql.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
+  AOrderBy: String): String;
 const
   cSQL = 'SELECT * FROM (%s) AS %s WHERE %s';
   cCOLUMN = 'ROW_NUMBER() OVER(%s) AS ROWNUMBER';
@@ -122,8 +122,8 @@ begin
   Result := Format(cSQL, [ACriteria.AsString, LTable, LWhere]);
 end;
 
-function TDMLGeneratorMSSql.GeneratorPageNext(const ACommandSelect: string;
-  APageSize, APageNext: Integer): string;
+function TDMLGeneratorMSSql.GeneratorPageNext(const ACommandSelect: String;
+  APageSize, APageNext: Integer): String;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageNext + APageSize), IntToStr(APageNext)])
@@ -132,11 +132,11 @@ begin
 end;
 
 function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass;
-  APageSize: Integer; AID: TValue): string;
+  APageSize: Integer; AID: TValue): String;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
-  LOrderBy: string;
+  LOrderBy: String;
 begin
   LTable := TMappingExplorer.GetMappingTable(AClass);
   LOrderBy := GetGeneratorOrderBy(AClass, LTable.Name, AID);
@@ -154,8 +154,8 @@ begin
   Result := Result + LOrderBy;
 end;
 
-function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: string;
-  AOrderBy: string; APageSize: Integer): string;
+function TDMLGeneratorMSSql.GeneratorSelectWhere(AClass: TClass; AWhere: String;
+  AOrderBy: String; APageSize: Integer): String;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;

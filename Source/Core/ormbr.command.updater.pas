@@ -59,7 +59,7 @@ type
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     function GenerateUpdate(AObject: TObject;
-      AModifiedFields: TDictionary<string, string>): string;
+      AModifiedFields: TDictionary<String, String>): String;
   end;
 
 implementation
@@ -89,7 +89,7 @@ begin
 end;
 
 function TCommandUpdater.GenerateUpdate(AObject: TObject;
-  AModifiedFields: TDictionary<string, string>): string;
+  AModifiedFields: TDictionary<String, String>): String;
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LFor: Integer;

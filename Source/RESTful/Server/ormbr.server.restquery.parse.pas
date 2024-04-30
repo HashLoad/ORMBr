@@ -117,7 +117,7 @@ function TRESTQueryParse.GetCount: Boolean;
 begin
   Result := False;
   if FQueryTokens.ContainsKey('$count') then
-    Result := LowerCase(FQueryTokens.Items['$count']) = 'true';
+    Result := LowerCase(FQueryTokens.Items['$count']) = 'True';
 end;
 
 function TRESTQueryParse.GetExpand: String;
@@ -243,7 +243,7 @@ end;
 
 function TRESTQueryParse.ParseOperator(const AParams: String): String;
 const
-  LOperatorMapping: array[0..9, 0..1] of string = (('eq', '='),
+  LOperatorMapping: array[0..9, 0..1] of String = (('eq', '='),
                                                    ('ne', '<>'),
                                                    ('gt', '>'),
                                                    ('ge', '>='),
@@ -264,7 +264,7 @@ end;
 
 function TRESTQueryParse.ParseOperatorReverse(const AParams: String): String;
 const
-  LOperatorMapping: array[0..9, 0..1] of string = (('=','eq'),
+  LOperatorMapping: array[0..9, 0..1] of String = (('=','eq'),
                                                    ('<>','ne'),
                                                    ('>','gt'),
                                                    ('>=','ge'),
@@ -283,9 +283,9 @@ begin
                                     LOperatorMapping[LFor, 1], [rfReplaceAll]);
 end;
 
-function TRESTQueryParse.ParsePathTokens(const APath: string): TArray<string>;
+function TRESTQueryParse.ParsePathTokens(const APath: String): TArray<String>;
 begin
-  Result := TArray<string>(SplitString(APath, cPATH_SEPARATOR));
+  Result := TArray<String>(SplitString(APath, cPATH_SEPARATOR));
 
   while (Length(Result) > 0) and (Result[0] = '') do
     Result := Copy(Result, 1);
@@ -295,9 +295,9 @@ end;
 
 procedure TRESTQueryParse.ParseQueryTokens;
 var
-  LQuery: string;
-  LQueryItems: TArray<string>;
-  LQueryItem: string;
+  LQuery: String;
+  LQueryItems: TArray<String>;
+  LQueryItem: String;
 begin
   FQueryTokens.Clear;
   FQueryTokens.TrimExcess;
@@ -310,8 +310,8 @@ begin
 
   LQueryItems := SplitString(LQuery, cQUERY_SEPARATOR);
   for LQueryItem in LQueryItems do
-    FQueryTokens.Add(LQueryItem.Substring(0, LQueryItem.IndexOf('=')),
-                     LQueryItem.Substring(LQueryItem.IndexOf('=') + 1));
+    FQueryTokens.Add(LQueryItem.SubString(0, LQueryItem.IndexOf('=')),
+                     LQueryItem.SubString(LQueryItem.IndexOf('=') + 1));
 end;
 
 procedure TRESTQueryParse.SetCount(const Value: TValue);
@@ -391,7 +391,7 @@ begin
     FQueryTokens.Add('$orderby', Value);
 end;
 
-function TRESTQueryParse.SplitString(const AValue, ADelimiters: string): TStringDynArray;
+function TRESTQueryParse.SplitString(const AValue, ADelimiters: String): TStringDynArray;
 var
   LStartIdx: Integer;
   LFoundIdx: Integer;

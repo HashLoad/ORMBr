@@ -13,19 +13,19 @@ type
     ['{0285A016-824C-41C7-9680-44127BB62AD0}']
     function SetConnection(const AConnection: IDBConnection): ICriteriaSet;
 //    function SQL(const ACriteria: ICriteria): ICriteriaSet; overload;
-    function SQL(const ASQL: string): ICriteriaSet; overload;
+    function SQL(const ASQL: String): ICriteriaSet; overload;
     function AsResultSet: IDBResultSet;
   end;
 
   TCriteria = class(TInterfacedObject, ICriteriaSet)
   private
-    FSQL: string;
+    FSQL: String;
     FConnection: IDBConnection;
   public
     class function New: ICriteriaSet;
     function SetConnection(const AConnection: IDBConnection): ICriteriaSet;
 //    function SQL(const ACriteria: ICriteria): ICriteriaSet; overload;
-    function SQL(const ASQL: string): ICriteriaSet; overload;
+    function SQL(const ASQL: String): ICriteriaSet; overload;
     function AsResultSet: IDBResultSet;
   end;
 
@@ -33,20 +33,20 @@ type
     ['{E1AA571D-E8BC-4A79-8B67-D7E77680F29C}']
     function SetConnection(AConnection: IDBConnection): ICriteriaObject<M>;
 //    function SQL(ACriteria: ICriteria): ICriteriaObject<M>; overload;
-    function SQL(ASQL: string): ICriteriaObject<M>; overload;
+    function SQL(ASQL: String): ICriteriaObject<M>; overload;
     function AsList: TObjectList<M>;
     function AsValue: M;
   end;
 
   TCriteria<M: class, constructor> = class(TInterfacedObject, ICriteriaObject<M>)
   private
-    FSQL: string;
+    FSQL: String;
     FConnection: IDBConnection;
   public
     class function New: ICriteriaObject<M>;
     function SetConnection(AConnection: IDBConnection): ICriteriaObject<M>;
 //    function SQL(ACriteria: ICriteria): ICriteriaObject<M>; overload;
-    function SQL(ASQL: string): ICriteriaObject<M>; overload;
+    function SQL(ASQL: String): ICriteriaObject<M>; overload;
     function AsList: TObjectList<M>;
     function AsValue: M;
   end;
@@ -71,7 +71,7 @@ begin
   Result := Self;
 end;
 
-function TCriteria.SQL(const ASQL: string): ICriteriaSet;
+function TCriteria.SQL(const ASQL: String): ICriteriaSet;
 begin
   FSQL := ASQL;
   Result := Self;
@@ -138,7 +138,7 @@ begin
   Result := Self;
 end;
 
-function TCriteria<M>.SQL(ASQL: string): ICriteriaObject<M>;
+function TCriteria<M>.SQL(ASQL: String): ICriteriaObject<M>;
 begin
   FSQL := ASQL;
   Result := Self;

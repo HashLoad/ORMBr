@@ -38,8 +38,8 @@ type
 
   IUtilSingleton = interface
     ['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']
-    function ParseCommandNoSQL(const ASubStr, ACommandText: string;
-      const ADefault: String = ''): string;
+    function ParseCommandNoSQL(const ASubStr, ACommandText: String;
+      const ADefault: String = ''): String;
 
   end;
 
@@ -52,8 +52,8 @@ type
   public
     { Public declarations }
     class function GetInstance: IUtilSingleton;
-    function ParseCommandNoSQL(const ASubStr, ASQL: string;
-      const ADefault: String): string;
+    function ParseCommandNoSQL(const ASubStr, ASQL: String;
+      const ADefault: String): String;
     function IfThen<T>(ACondition: Boolean; ATrue: T; AFalse: T): T;
     procedure SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
   end;
@@ -86,8 +86,8 @@ begin
     Result := ATrue;
 end;
 
-function TUtilSingleton.ParseCommandNoSQL(const ASubStr, ASQL: string;
-  const ADefault: String): string;
+function TUtilSingleton.ParseCommandNoSQL(const ASubStr, ASQL: String;
+  const ADefault: String): String;
 var
   LFor: Integer;
   LPosI: Integer;

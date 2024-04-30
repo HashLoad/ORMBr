@@ -43,8 +43,8 @@ type
     procedure UpdateInternal(const AObject: TObject);
   protected
     FSession: TRESTObjectSetSession;
-    FObjectState: TDictionary<string, TObject>;
-    function GenerateKey(const AObject: TObject): string;
+    FObjectState: TDictionary<String, TObject>;
+    function GenerateKey(const AObject: TObject): String;
     procedure CascadeActionsExecute(const AObject: TObject; const ACascadeAction: TCascadeAction);
     procedure OneToOneCascadeActionsExecute(const AObject: TObject;
       const AAssociation: TAssociationMapping; const ACascadeAction: TCascadeAction);
@@ -60,12 +60,12 @@ type
       const APageSize: Integer = -1);
     destructor Destroy; override;
     function ExistSequence: Boolean;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>; virtual;
     function Find: TObjectList<TObject>; overload; virtual;
     function Find(const AID: Integer): TObject; overload; virtual;
-    function Find(const AID: string): TObject; overload; virtual;
-    function FindOne(const AWhere: string): TObject; virtual;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<TObject>; overload; virtual;
+    function Find(const AID: String): TObject; overload; virtual;
+    function FindOne(const AWhere: String): TObject; virtual;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<TObject>; overload; virtual;
     procedure Insert(const AObject: TObject); virtual;
     procedure Update(const AObject: TObject); virtual;
     procedure Delete(const AObject: TObject); virtual;
@@ -85,7 +85,7 @@ constructor TRESTObjectSet.Create(const AConnection: IDBConnection;
   const AClassType: TClass; const APageSize: Integer);
 begin
   FConnection := AConnection;
-  FObjectState := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
+  FObjectState := TObjectDictionary<String, TObject>.Create([doOwnsValues]);
   FSession := TRESTObjectSetSession.Create(AConnection, AClassType, APageSize);
 end;
 
@@ -140,7 +140,7 @@ var
   LObjectList: TObjectList<TObject>;
   LStateObject: TObject;
   LObjectItem: TObject;
-  LKey: string;
+  LKey: String;
 begin
   if ASourceObject.GetType(LRttiType) then
   begin
@@ -208,7 +208,7 @@ begin
   Result := FSession.ExistSequence;
 end;
 
-function TRESTObjectSet.Find(const AID: string): TObject;
+function TRESTObjectSet.Find(const AID: String): TObject;
 var
   LIsConnected: Boolean;
 begin
@@ -224,7 +224,7 @@ begin
   end;
 end;
 
-function TRESTObjectSet.FindOne(const AWhere: string): TObject;
+function TRESTObjectSet.FindOne(const AWhere: String): TObject;
 var
   LIsConnected: Boolean;
 begin
@@ -241,7 +241,7 @@ begin
 end;
 
 function TRESTObjectSet.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<TObject>;
+  AOrderBy: String): TObjectList<TObject>;
 var
   LIsConnected: Boolean;
 begin
@@ -289,11 +289,11 @@ begin
   end;
 end;
 
-function TRESTObjectSet.GenerateKey(const AObject: TObject): string;
+function TRESTObjectSet.GenerateKey(const AObject: TObject): String;
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
-  LKey: string;
+  LKey: String;
 begin
   LKey := AObject.ClassName;
   LPrimaryKey := TMappingExplorer
@@ -357,7 +357,7 @@ begin
   FSession.LoadLazy(AOwner, AObject);
 end;
 
-function TRESTObjectSet.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+function TRESTObjectSet.ModifiedFields: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := FSession.ModifiedFields;
 end;
@@ -394,7 +394,7 @@ var
   LObject: TObject;
   LObjectKey: TObject;
   LFor: Integer;
-  LKey: string;
+  LKey: String;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
   if not LValue.IsObject then
@@ -451,7 +451,7 @@ var
   LValue: TValue;
   LObject: TObject;
   LObjectKey: TObject;
-  LKey: string;
+  LKey: String;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
   if not LValue.IsObject then
@@ -580,7 +580,7 @@ procedure TRESTObjectSet.Update(const AObject: TObject);
 var
   LRttiType: TRttiType;
   LObject: TObject;
-  LKey: string;
+  LKey: String;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
 begin
@@ -638,7 +638,7 @@ procedure TRESTObjectSet.UpdateInternal(const AObject: TObject);
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
-  LKey: string;
+  LKey: String;
 begin
   LKey := AObject.ClassName;
   LPrimaryKey := TMappingExplorer

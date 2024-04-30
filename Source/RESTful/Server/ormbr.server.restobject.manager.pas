@@ -54,15 +54,15 @@ type
     procedure ExecuteOneToMany(AObject: TObject; AProperty: TRttiProperty;
       AAssociation: TAssociationMapping);
     function FindSQLInternal(const ASQL: String): TObjectList<TObject>;
-    function SelectInternalWhere(const AWhere: string;
-      const AOrderBy: string): string;
+    function SelectInternalWhere(const AWhere: String;
+      const AOrderBy: String): String;
   public
     constructor Create(const AOwner: TObject; const AConnection: IDBConnection;
       const AClassType: TClass; const APageSize: Integer);
     destructor Destroy; override;
     // Procedures
     procedure InsertInternal(const AObject: TObject);
-    procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TDictionary<string, string>);
+    procedure UpdateInternal(const AObject: TObject; const AModifiedFields: TDictionary<String, String>);
     procedure DeleteInternal(const AObject: TObject);
     procedure LoadLazy(const AOwner, AObject: TObject);
     procedure NextPacketList(const AObjectList: TObjectList<TObject>;
@@ -74,7 +74,7 @@ type
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<TObject>; overload;
     // Functions
-    function GetDMLCommand: string;
+    function GetDMLCommand: String;
     function ExistSequence: Boolean;
     // DataSet
     function SelectInternalAll: IDBResultSet;
@@ -87,8 +87,8 @@ type
     // ObjectSet
     function Find: TObjectList<TObject>; overload;
     function Find(const AID: TValue): TObject; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<TObject>;
-    function FindOne(const AWhere: string): TObject;
+    function FindWhere(const AWhere: String; const AOrderBy: String): TObjectList<TObject>;
+    function FindOne(const AWhere: String): TObject;
     //
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
   end;
@@ -141,8 +141,8 @@ begin
   Result := FDMLCommandFactory.GeneratorSelectID(FObjectInternal.ClassType, AID);
 end;
 
-function TRESTObjectManager.SelectInternalWhere(const AWhere: string;
-  const AOrderBy: string): string;
+function TRESTObjectManager.SelectInternalWhere(const AWhere: String;
+  const AOrderBy: String): String;
 begin
   Result := FDMLCommandFactory
               .GeneratorSelectWhere(FObjectInternal.ClassType, AWhere, AOrderBy, FPageSize);
@@ -267,7 +267,7 @@ begin
   Result := FDMLCommandFactory.ExistSequence;
 end;
 
-function TRESTObjectManager.GetDMLCommand: string;
+function TRESTObjectManager.GetDMLCommand: String;
 begin
   Result := FDMLCommandFactory.GetDMLCommand;
 end;
@@ -426,7 +426,7 @@ begin
 end;
 
 procedure TRESTObjectManager.UpdateInternal(const AObject: TObject;
-  const AModifiedFields: TDictionary<string, string>);
+  const AModifiedFields: TDictionary<String, String>);
 begin
   FDMLCommandFactory.GeneratorUpdate(AObject, AModifiedFields);
 end;
@@ -492,7 +492,7 @@ begin
   end;
 end;
 
-function TRESTObjectManager.FindOne(const AWhere: string): TObject;
+function TRESTObjectManager.FindOne(const AWhere: String): TObject;
 var
  LResultSet: IDBResultSet;
  LObject: TObject;
@@ -515,8 +515,8 @@ begin
   end;
 end;
 
-function TRESTObjectManager.FindWhere(const AWhere: string;
-  const AOrderBy: string): TObjectList<TObject>;
+function TRESTObjectManager.FindWhere(const AWhere: String;
+  const AOrderBy: String): TObjectList<TObject>;
 begin
   Result := FindSQLInternal(SelectInternalWhere(AWhere, AOrderBy));
 end;

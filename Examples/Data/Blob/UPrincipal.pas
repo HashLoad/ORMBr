@@ -76,7 +76,7 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 var
-  dataBaseFile: string;
+  dataBaseFile: String;
 begin
   dataBaseFile := ExtractFilePath(GetModuleName(HInstance)) + 'blob.fdb';
   FDConnection1.Params.Database := dataBaseFile;

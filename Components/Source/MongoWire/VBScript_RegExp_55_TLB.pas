@@ -310,7 +310,7 @@ type
 // *********************************************************************//
   CoRegExp = class
     class function Create: IRegExp2;
-    class function CreateRemote(const MachineName: string): IRegExp2;
+    class function CreateRemote(const MachineName: String): IRegExp2;
   end;
 
 // *********************************************************************//
@@ -322,7 +322,7 @@ type
 // *********************************************************************//
   CoMatch = class
     class function Create: IMatch2;
-    class function CreateRemote(const MachineName: string): IMatch2;
+    class function CreateRemote(const MachineName: String): IMatch2;
   end;
 
 // *********************************************************************//
@@ -334,7 +334,7 @@ type
 // *********************************************************************//
   CoMatchCollection = class
     class function Create: IMatchCollection2;
-    class function CreateRemote(const MachineName: string): IMatchCollection2;
+    class function CreateRemote(const MachineName: String): IMatchCollection2;
   end;
 
 // *********************************************************************//
@@ -346,7 +346,7 @@ type
 // *********************************************************************//
   CoSubMatches = class
     class function Create: ISubMatches;
-    class function CreateRemote(const MachineName: string): ISubMatches;
+    class function CreateRemote(const MachineName: String): ISubMatches;
   end;
 
 implementation
@@ -358,7 +358,7 @@ begin
   Result := CreateComObject(CLASS_RegExp) as IRegExp2;
 end;
 
-class function CoRegExp.CreateRemote(const MachineName: string): IRegExp2;
+class function CoRegExp.CreateRemote(const MachineName: String): IRegExp2;
 begin
   Result := CreateRemoteComObject(MachineName, CLASS_RegExp) as IRegExp2;
 end;
@@ -368,7 +368,7 @@ begin
   Result := CreateComObject(CLASS_Match) as IMatch2;
 end;
 
-class function CoMatch.CreateRemote(const MachineName: string): IMatch2;
+class function CoMatch.CreateRemote(const MachineName: String): IMatch2;
 begin
   Result := CreateRemoteComObject(MachineName, CLASS_Match) as IMatch2;
 end;
@@ -378,7 +378,7 @@ begin
   Result := CreateComObject(CLASS_MatchCollection) as IMatchCollection2;
 end;
 
-class function CoMatchCollection.CreateRemote(const MachineName: string): IMatchCollection2;
+class function CoMatchCollection.CreateRemote(const MachineName: String): IMatchCollection2;
 begin
   Result := CreateRemoteComObject(MachineName, CLASS_MatchCollection) as IMatchCollection2;
 end;
@@ -388,7 +388,7 @@ begin
   Result := CreateComObject(CLASS_SubMatches) as ISubMatches;
 end;
 
-class function CoSubMatches.CreateRemote(const MachineName: string): ISubMatches;
+class function CoSubMatches.CreateRemote(const MachineName: String): ISubMatches;
 begin
   Result := CreateRemoteComObject(MachineName, CLASS_SubMatches) as ISubMatches;
 end;

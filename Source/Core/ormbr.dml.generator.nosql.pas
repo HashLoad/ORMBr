@@ -21,24 +21,24 @@ type
   TDMLGeneratorNoSQL = class(TDMLGeneratorAbstract)
   protected
     function GetCriteriaSelectNoSQL(const AClass: TClass;
-      const AID: TValue): string;
-    function GetGeneratorSelectNoSQL(const ACriteria: string): string;
-    function ExecuteSequence(const ASQL: string): Int64; override;
+      const AID: TValue): String;
+    function GetGeneratorSelectNoSQL(const ACriteria: String): String;
+    function ExecuteSequence(const ASQL: String): Int64; override;
   public
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
-      AID: TVAlue): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; override;
+      AID: TVAlue): String; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; override;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; override;
+      AAssociation: TAssociationMapping): String; override;
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; override;
+      AAssociation: TAssociationMapping): String; override;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TDictionary<string, string>): string; override;
-    function GeneratorInsert(AObject: TObject): string; override;
-    function GeneratorDelete(AObject: TObject; AParams: TParams): string; override;
+      AModifiedFields: TDictionary<String, String>): String; override;
+    function GeneratorInsert(AObject: TObject): String; override;
+    function GeneratorDelete(AObject: TObject; AParams: TParams): String; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorAutoIncNextValue(AObject: TObject;
@@ -63,24 +63,24 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorNoSQL.ExecuteSequence(const ASQL: string): Int64;
+function TDMLGeneratorNoSQL.ExecuteSequence(const ASQL: String): Int64;
 begin
   Result := 0;
 end;
 
 function TDMLGeneratorNoSQL.GenerateSelectOneToOne(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 begin
   Result := '';
 end;
 
 function TDMLGeneratorNoSQL.GenerateSelectOneToOneMany(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 begin
   Result := '';
 end;
 
-function TDMLGeneratorNoSQL.GeneratorInsert(AObject: TObject): string;
+function TDMLGeneratorNoSQL.GeneratorInsert(AObject: TObject): String;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
@@ -101,7 +101,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GeneratorUpdate(AObject: TObject; AParams: TParams;
-  AModifiedFields: TDictionary<string, string>): string;
+  AModifiedFields: TDictionary<String, String>): String;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
@@ -139,7 +139,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GeneratorDelete(AObject: TObject;
-  AParams: TParams): string;
+  AParams: TParams): String;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
@@ -171,7 +171,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GeneratorSelectAll(AClass: TClass;
-  APageSize: Integer; AID: TValue): string;
+  APageSize: Integer; AID: TValue): String;
 begin
   Result := GetCriteriaSelectNoSQL(AClass, AID);
   if APageSize > -1 then
@@ -179,7 +179,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GeneratorSelectWhere(AClass: TClass; AWhere,
-  AOrderBy: string; APageSize: Integer): string;
+  AOrderBy: String; APageSize: Integer): String;
 var
   LTable: TTableMapping;
   LCriteria: TStringBuilder;
@@ -211,7 +211,7 @@ begin
 end;
 
 function TDMLGeneratorNoSQL.GetCriteriaSelectNoSQL(const AClass: TClass;
-  const AID: TValue): string;
+  const AID: TValue): String;
 var
   LTable: TTableMapping;
   LPrimaryKey: TPrimaryKeyMapping;
@@ -277,7 +277,7 @@ begin
   end;
 end;
 
-function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(const ACriteria: string): string;
+function TDMLGeneratorNoSQL.GetGeneratorSelectNoSQL(const ACriteria: String): String;
 begin
   Result := ACriteria + '& limit=%s& skip=%s';
 end;

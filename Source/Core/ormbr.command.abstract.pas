@@ -40,12 +40,12 @@ type
     FConnection: IDBConnection;
     FGeneratorCommand: IDMLGeneratorCommand;
     FParams: TParams;
-    FResultCommand: string;
+    FResultCommand: String;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); virtual;
     destructor Destroy; override;
-    function GetDMLCommand: string;
+    function GetDMLCommand: String;
     function Params: TParams;
   end;
 
@@ -71,7 +71,7 @@ begin
   inherited;
 end;
 
-function TDMLCommandAbstract.GetDMLCommand: string;
+function TDMLCommandAbstract.GetDMLCommand: String;
 begin
   Result := FResultCommand;
 end;

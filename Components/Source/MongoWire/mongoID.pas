@@ -14,7 +14,7 @@ unit mongoID;
 
 interface
 
-function mongoObjectId:string;
+function mongoObjectId:String;
 
 implementation
 
@@ -23,7 +23,7 @@ uses Windows, SysUtils, bsonTools, Registry;
 var
   mongoObjectID_MachineID,mongoObjectID_Counter:integer;
 
-function mongoObjectId:string;
+function mongoObjectId:String;
 var
   st:TSystemTime;
   a,b,c,d:integer;
@@ -62,14 +62,14 @@ const
   KEY_WOW64_64KEY = $0100;
 var
   r:TRegistry;
-  s:string;
+  s:String;
   i,l:integer;
 begin
   //render a number out of the host name
   r:=TRegistry.Create(KEY_READ or KEY_WOW64_64KEY);
   try
     r.RootKey:=HKEY_LOCAL_MACHINE;
-    if r.OpenKey('\Software\Microsoft\Cryptography',false) then
+    if r.OpenKey('\Software\Microsoft\Cryptography',False) then
       s:=r.ReadString('MachineGuid')
     else
       s:='';

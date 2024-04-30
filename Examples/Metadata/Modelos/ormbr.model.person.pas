@@ -21,8 +21,8 @@ type
   private
     { Private declarations }
     FId: Integer;
-    FFirstName: string;
-    FLastName: string;
+    FFirstName: String;
+    FLastName: String;
     FAge: Integer;
     FSalary: Double;
   public

@@ -89,8 +89,8 @@ type
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
     procedure OpenIDInternal(const AID: TValue); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQLInternal(const ASQL: String); override;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
@@ -169,7 +169,7 @@ end;
 
 procedure TRESTFDMemTableAdapter<M>.EmptyDataSetChilds;
 var
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TFDMemTable;
 begin
   inherited;
@@ -191,8 +191,8 @@ var
   LAssociation: TAssociationMapping;
   LChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
-  LIndexFields: string;
-  LFields: string;
+  LIndexFields: String;
+  LFields: String;
   LClassName: String;
 begin
   if not FOrmDataSet.Active then
@@ -278,7 +278,7 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
+procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -312,7 +312,7 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+procedure TRESTFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -351,9 +351,9 @@ procedure TRESTFDMemTableAdapter<M>.PopularDataSetOneToOne(
 var
   LRttiType: TRttiType;
   LChild: TDataSetBaseAdapter<M>;
-  LField: string;
-  LKeyFields: string;
-  LKeyValues: string;
+  LField: String;
+  LKeyFields: String;
+  LKeyValues: String;
 begin
   inherited;
   if not FMasterObject.TryGetValue(AObject.ClassName, LChild) then

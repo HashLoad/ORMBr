@@ -19,11 +19,11 @@ type
     constructor Create(const AConnection: IDBConnection; const APageSize: Integer = -1);
     destructor Destroy; override;
     function ExistSequence: Boolean;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>;
     function Find: TObjectList<M>; overload;
     function Find(const AID: Int64): M; overload;
     function Find(const AID: String): M; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>;
     procedure Insert(const AObject: M);
     procedure Update(const AObject: M);
     procedure Delete(const AObject: M);
@@ -77,7 +77,7 @@ begin
   Result := FObjectSetAdapter.Find(AID);
 end;
 
-function TContainerObjectSet<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TContainerObjectSet<M>.FindWhere(const AWhere, AOrderBy: String): TObjectList<M>;
 begin
   inherited;
   Result := FObjectSetAdapter.FindWhere(AWhere, AOrderBy);
@@ -115,7 +115,7 @@ begin
   FObjectSetAdapter.LoadLazy(AOwner, AObject);
 end;
 
-function TContainerObjectSet<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+function TContainerObjectSet<M>.ModifiedFields: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := FObjectSetAdapter.ModifiedFields;
 end;

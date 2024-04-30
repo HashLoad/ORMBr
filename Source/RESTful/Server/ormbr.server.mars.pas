@@ -58,7 +58,7 @@ uses
 
 procedure TRESTServerMARS.AddResource;
 var
-  LPair: TPair<string, TMARSApplication>;
+  LPair: TPair<String, TMARSApplication>;
 begin
   if FMARSEngine = nil then
     Exit;

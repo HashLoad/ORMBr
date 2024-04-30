@@ -56,7 +56,7 @@ type
     { Private declarations }
     class var
       FInstance: TCommandMonitor;
-    procedure Command(const ASQL: string; AParams: TParams);
+    procedure Command(const ASQL: String; AParams: TParams);
   public
     { Public declarations }
     class destructor Destroy;
@@ -74,10 +74,10 @@ begin
   MemoSQL.Lines.Clear;
 end;
 
-procedure TCommandMonitor.Command(const ASQL: string; AParams: TParams);
+procedure TCommandMonitor.Command(const ASQL: String; AParams: TParams);
 var
   LFor: Integer;
-  LAsValue: string;
+  LAsValue: String;
 begin
   MemoSQL.Lines.Add('');
   MemoSQL.Lines.Add(ASQL);

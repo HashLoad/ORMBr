@@ -61,15 +61,15 @@ uses
 
 type
   IGpSQLExpressionSerializer = interface ['{A0CCE046-081E-4B12-8A0A-B5D7B9D0308F}']
-    function AsString: string;
+    function AsString: String;
   end; { IGpSQLExpressionSerializer }
 
   IGpSQLCaseSerializer = interface ['{1A56402D-2BFA-4282-B8EC-5FF80FB42994}']
-    function AsString: string;
+    function AsString: String;
   end; { IGpSQLCaseSerializer }
 
   IGpSQLASTSerializer = interface ['{E6355E23-1D91-4536-A693-E1E33B0E2707}']
-    function AsString: string;
+    function AsString: String;
   end; { IGpSQLASTSerializer }
 
 function CreateSQLSerializer(const expr: IGpSQLExpression): IGpSQLExpressionSerializer; overload;
@@ -86,52 +86,52 @@ type
   strict private
     FExpr: IGpSQLExpression;
   strict protected
-    function  SerializeExpression(const expression: IGpSQLExpression; addParens: boolean = false): string;
+    function  SerializeExpression(const expression: IGpSQLExpression; addParens: Boolean = False): String;
   public
     constructor Create(const AExpr: IGpSQLExpression);
-    function  AsString: string;
+    function  AsString: String;
   end; { TGpSQLExpressionSerializer }
 
   TGpSQLCaseSerializer = class(TInterfacedObject, IGpSQLCaseSerializer)
   strict private
     FCase: IGpSQLCase;
   strict protected
-    function SerializeExpression(const expression: IGpSQLExpression): string;
+    function SerializeExpression(const expression: IGpSQLExpression): String;
   public
     constructor Create(const ACase: IGpSQLCase);
-    function  AsString: string;
+    function  AsString: String;
   end; { TGpSQLCaseSerializer }
 
   TGpSQLSerializer = class(TInterfacedObject, IGpSQLASTSerializer)
   strict private
     FAST : IGpSQLAST;
   strict protected
-    function  SerializeCase(const caseExpr: IGpSQLCase): string;
-    function  SerializeNames(const columns: IGpSQLNames): string;
-    function  SerializeDirection(direction: TGpSQLOrderByDirection): string;
-    function  SerializeExpression(const expression: IGpSQLExpression): string;
-    function  SerializeDelete: string;
-    function  SerializeGroupBy: string;
-    function  SerializeHaving: string;
-    function  SerializeJoins: string;
-    function  SerializeJoinType(const join: IGpSQLJoin): string;
-    function  SerializeName(const name: IGpSQLName): string;
-    function  SerializeNameValuePairsForInsert(const pairs: IGpSQLNameValuePairs): string;
-    function  SerializeNameValuePairsForUpdate(const pairs: IGpSQLNameValuePairs): string;
-    function  SerializeOrderBy: string;
-    function  SerializeSelect: string;
-    function  SerializeSelectQualifiers(const qualifiers: IGpSQLSelectQualifiers): string;
-    function  SerializeInsert: string;
-    function  SerializeUpdate: string;
-    function  SerializeWhere: string;
+    function  SerializeCase(const caseExpr: IGpSQLCase): String;
+    function  SerializeNames(const columns: IGpSQLNames): String;
+    function  SerializeDirection(direction: TGpSQLOrderByDirection): String;
+    function  SerializeExpression(const expression: IGpSQLExpression): String;
+    function  SerializeDelete: String;
+    function  SerializeGroupBy: String;
+    function  SerializeHaving: String;
+    function  SerializeJoins: String;
+    function  SerializeJoinType(const join: IGpSQLJoin): String;
+    function  SerializeName(const name: IGpSQLName): String;
+    function  SerializeNameValuePairsForInsert(const pairs: IGpSQLNameValuePairs): String;
+    function  SerializeNameValuePairsForUpdate(const pairs: IGpSQLNameValuePairs): String;
+    function  SerializeOrderBy: String;
+    function  SerializeSelect: String;
+    function  SerializeSelectQualifiers(const qualifiers: IGpSQLSelectQualifiers): String;
+    function  SerializeInsert: String;
+    function  SerializeUpdate: String;
+    function  SerializeWhere: String;
   public
     constructor Create(const AAST: IGpSQLAST);
-    function  AsString: string;
+    function  AsString: String;
   end; { TGpSQLSerializer }
 
 { globals }
 
-function AddToList(const aList, delim, newElement: string): string;
+function AddToList(const aList, delim, newElement: String): String;
 begin
   Result := aList;
   if Result <> '' then
@@ -139,10 +139,10 @@ begin
   Result := Result + newElement;
 end; { AddToList }
 
-function Concatenate(const elements: array of string;
-  const delimiter: string = ' '): string;
+function Concatenate(const elements: array of String;
+  const delimiter: String = ' '): String;
 var
-  s: string;
+  s: String;
 begin
   Result := '';
   for s in elements do
@@ -169,7 +169,7 @@ end; { CreateSQLSerializer }
 
 { TGpSQLExpressionSerializer }
 
-function TGpSQLExpressionSerializer.AsString: string;
+function TGpSQLExpressionSerializer.AsString: String;
 begin
   Result := SerializeExpression(FExpr);
 end; { TGpSQLExpressionSerializer.AsString }
@@ -181,7 +181,7 @@ begin
 end; { TGpSQLExpressionSerializer.Create }
 
 function TGpSQLExpressionSerializer.SerializeExpression(
-  const expression: IGpSQLExpression; addParens: boolean): string;
+  const expression: IGpSQLExpression; addParens: Boolean): String;
 begin
   if expression.IsEmpty then
     Result := ''
@@ -192,14 +192,14 @@ begin
               else
                 Result := expression.Term;
       opAnd:  Result := Concatenate([
-                          SerializeExpression(expression.Left, true),
+                          SerializeExpression(expression.Left, True),
                           'AND',
-                          SerializeExpression(expression.Right, true)
+                          SerializeExpression(expression.Right, True)
                         ]);
       opOr:   Result := '(' + Concatenate([
-                          SerializeExpression(expression.Left, true),
+                          SerializeExpression(expression.Left, True),
                           'OR',
-                          SerializeExpression(expression.Right, true)
+                          SerializeExpression(expression.Right, True)
                         ]) + ')';
       else raise Exception.Create('TGpSQLSerializer.SerializeExpression: Unknown operation');
     end;
@@ -213,7 +213,7 @@ begin
   FCase := ACase;
 end; { TGpSQLCaseSerializer.Create }
 
-function TGpSQLCaseSerializer.AsString: string;
+function TGpSQLCaseSerializer.AsString: String;
 var
   i : integer;
   wt: IGpSQLCaseWhenThen;
@@ -234,7 +234,7 @@ begin
 end; { TGpSQLCaseSerializer.AsString }
 
 function TGpSQLCaseSerializer.SerializeExpression(const expression: IGpSQLExpression):
-  string;
+  String;
 begin
   Result := CreateSQLSerializer(expression).AsString;
 end; { TGpSQLCaseSerializer.SerializeExpression }
@@ -247,7 +247,7 @@ begin
   FAST := AAST;
 end; { TGpSQLSerializer.Create }
 
-function TGpSQLSerializer.AsString: string;
+function TGpSQLSerializer.AsString: String;
 begin
   Result := Concatenate([
     SerializeSelect,
@@ -261,12 +261,12 @@ begin
     SerializeOrderBy]);
 end; { TGpSQLSerializer.AsString }
 
-function TGpSQLSerializer.SerializeCase(const caseExpr: IGpSQLCase): string;
+function TGpSQLSerializer.SerializeCase(const caseExpr: IGpSQLCase): String;
 begin
   Result := CreateSQLSerializer(caseExpr).AsString;
 end; { TGpSQLSerializer.SerializeCase }
 
-function TGpSQLSerializer.SerializeDelete: string;
+function TGpSQLSerializer.SerializeDelete: String;
 begin
   if FAST.Delete.IsEmpty then
     Result := ''
@@ -274,7 +274,7 @@ begin
     Result := Concatenate(['DELETE', 'FROM', SerializeNames(FAST.Delete.TableNames)]);
 end; { TGpSQLSerializer.SerializeDelete }
 
-function TGpSQLSerializer.SerializeDirection(direction: TGpSQLOrderByDirection): string;
+function TGpSQLSerializer.SerializeDirection(direction: TGpSQLOrderByDirection): String;
 begin
   case direction of
     dirAscending:  Result := '';
@@ -283,12 +283,12 @@ begin
   end;
 end; { TGpSQLSerializer.SerializeDirection }
 
-function TGpSQLSerializer.SerializeExpression(const expression: IGpSQLExpression): string;
+function TGpSQLSerializer.SerializeExpression(const expression: IGpSQLExpression): String;
 begin
   Result := CreateSQLSerializer(expression).AsString;
 end; { TGpSQLSerializer.SerializeExpression }
 
-function TGpSQLSerializer.SerializeGroupBy: string;
+function TGpSQLSerializer.SerializeGroupBy: String;
 begin
   if FAST.GroupBy.IsEmpty then
     Result := ''
@@ -296,7 +296,7 @@ begin
     Result := Concatenate(['GROUP BY', SerializeNames(FAST.GroupBy.Columns)]);
 end; { TGpSQLSerializer.SerializeGroupBy }
 
-function TGpSQLSerializer.SerializeHaving: string;
+function TGpSQLSerializer.SerializeHaving: String;
 begin
   if FAST.Having.IsEmpty then
     Result := ''
@@ -304,7 +304,7 @@ begin
     Result := Concatenate(['HAVING', SerializeExpression(FAST.Having.Expression)]);
 end; { TGpSQLSerializer.SerializeHaving }
 
-function TGpSQLSerializer.SerializeJoins: string;
+function TGpSQLSerializer.SerializeJoins: String;
 var
   iJoin: integer;
   join : IGpSQLJoin;
@@ -318,7 +318,7 @@ begin
   end;
 end; { TGpSQLSerializer.SerializeJoins }
 
-function TGpSQLSerializer.SerializeJoinType(const join: IGpSQLJoin): string;
+function TGpSQLSerializer.SerializeJoinType(const join: IGpSQLJoin): String;
 begin
   case join.JoinType of
     jtInner: Result := 'INNER';
@@ -329,7 +329,7 @@ begin
   end;
 end; { TGpSQLSerializer.SerializeJoinType }
 
-function TGpSQLSerializer.SerializeName(const name: IGpSQLName): string;
+function TGpSQLSerializer.SerializeName(const name: IGpSQLName): String;
 begin
   if assigned(name.&Case) then
     Result := '(' + SerializeCase(name.&Case) + ')'
@@ -339,7 +339,7 @@ begin
     Result := Result + ' AS ' + name.Alias;
 end; { TGpSQLSerializer.SerializeName }
 
-function TGpSQLSerializer.SerializeNames(const columns: IGpSQLNames): string;
+function TGpSQLSerializer.SerializeNames(const columns: IGpSQLNames): String;
 var
   i         : integer;
   orderByCol: IGpSQLOrderByColumn;
@@ -352,7 +352,7 @@ begin
   end;
 end; { TGpSQLSerializer.SerializeNames }
 
-function TGpSQLSerializer.SerializeNameValuePairsForInsert(const pairs: IGpSQLNameValuePairs): string;
+function TGpSQLSerializer.SerializeNameValuePairsForInsert(const pairs: IGpSQLNameValuePairs): String;
 var
   i: integer;
   Columns,Values: String;
@@ -370,7 +370,7 @@ begin
   Result := Concatenate(['(', Columns, ') VALUES (', Values, ')'],'');
 end; { TGpSQLSerializer.SerializeNameValuePairsForInsert }
 
-function TGpSQLSerializer.SerializeNameValuePairsForUpdate(const pairs: IGpSQLNameValuePairs): string;
+function TGpSQLSerializer.SerializeNameValuePairsForUpdate(const pairs: IGpSQLNameValuePairs): String;
 var
   i: integer;
 begin
@@ -379,7 +379,7 @@ begin
     Result := Concatenate([Result, Concatenate([pairs[i].Name, '=', pairs[i].Value])], ', ');
 end; { TGpSQLSerializer.SerializeNameValuePairsForUpdate }
 
-function TGpSQLSerializer.SerializeOrderBy: string;
+function TGpSQLSerializer.SerializeOrderBy: String;
 begin
   if FAST.OrderBy.IsEmpty then
     Result := ''
@@ -387,7 +387,7 @@ begin
     Result := Concatenate(['ORDER BY', SerializeNames(FAST.OrderBy.Columns)]);
 end; { TGpSQLSerializer.SerializeOrderBy }
 
-function TGpSQLSerializer.SerializeSelect: string;
+function TGpSQLSerializer.SerializeSelect: String;
 begin
   if FAST.Select.IsEmpty then
     Result := ''
@@ -397,7 +397,7 @@ begin
 end; { TGpSQLSerializer.SerializeSelect }
 
 function TGpSQLSerializer.SerializeSelectQualifiers(
-  const qualifiers: IGpSQLSelectQualifiers): string;
+  const qualifiers: IGpSQLSelectQualifiers): String;
 var
   i: integer;
 begin
@@ -411,7 +411,7 @@ begin
     end;
 end; { TGpSQLSerializer.SerializeSelectQualifiers }
 
-function TGpSQLSerializer.SerializeInsert: string;
+function TGpSQLSerializer.SerializeInsert: String;
 begin
   if FAST.Insert.IsEmpty then
     Result := ''
@@ -424,7 +424,7 @@ begin
   end;
 end; { TGpSQLSerializer.SerializeInsert }
 
-function TGpSQLSerializer.SerializeUpdate: string;
+function TGpSQLSerializer.SerializeUpdate: String;
 begin
   if FAST.Update.IsEmpty then
     Result := ''
@@ -433,7 +433,7 @@ begin
       SerializeNameValuePairsForUpdate(FAST.Update.Values)]);
 end; { TGpSQLSerializer.SerializeUpdate }
 
-function TGpSQLSerializer.SerializeWhere: string;
+function TGpSQLSerializer.SerializeWhere: String;
 begin
   if FAST.Where.IsEmpty then
     Result := ''

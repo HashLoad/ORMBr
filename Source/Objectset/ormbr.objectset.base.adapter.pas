@@ -56,7 +56,7 @@ type
     procedure _AddObjectState(const ASourceObject: TObject);
     procedure _UpdateInternal(const AObject: TObject);
   protected
-    function GenerateKey(const AObject: TObject): string;
+    function GenerateKey(const AObject: TObject): String;
     procedure CascadeActionsExecute(const AObject: TObject; const ACascadeAction: TCascadeAction);
     procedure OneToOneCascadeActionsExecute(const AObject: TObject;
       const AAssociation: TAssociationMapping; const ACascadeAction: TCascadeAction);
@@ -75,14 +75,14 @@ type
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacket(const AObjectList: TObjectList<M>); overload; override;
     function ExistSequence: Boolean; override;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; override;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>; override;
     function NextPacket: TObjectList<M>; overload; override;
     function NextPacket(const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     function NextPacket(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): TObjectList<M>; overload; override;
     {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+      const AParams: array of String): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
   end;
 
@@ -92,7 +92,7 @@ implementation
 
 constructor TObjectSetBaseAdapter<M>.Create;
 begin
-  FObjectState := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
+  FObjectState := TObjectDictionary<String, TObject>.Create([doOwnsValues]);
 end;
 
 destructor TObjectSetBaseAdapter<M>.Destroy;
@@ -109,7 +109,7 @@ var
   LObjectList: TObjectList<TObject>;
   LStateObject: TObject;
   LObjectItem: TObject;
-  LKey: string;
+  LKey: String;
 begin
   if not ASourceObject.GetType(LRttiType) then
     Exit;
@@ -195,11 +195,11 @@ begin
   Result := FSession.ExistSequence;
 end;
 
-function TObjectSetBaseAdapter<M>.GenerateKey(const AObject: TObject): string;
+function TObjectSetBaseAdapter<M>.GenerateKey(const AObject: TObject): String;
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
-  LKey: string;
+  LKey: String;
 begin
   LKey := AObject.ClassName;
   LPrimaryKey := TMappingExplorer
@@ -217,7 +217,7 @@ begin
   FSession.LoadLazy(AOwner, AObject);
 end;
 
-function TObjectSetBaseAdapter<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+function TObjectSetBaseAdapter<M>.ModifiedFields: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := FSession.ModifiedFields;
 end;
@@ -264,7 +264,7 @@ var
   LObject: TObject;
   LObjectKey: TObject;
   LFor: Integer;
-  LKey: string;
+  LKey: String;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
   if not LValue.IsObject then
@@ -320,7 +320,7 @@ var
   LValue: TValue;
   LObject: TObject;
   LObjectKey: TObject;
-  LKey: string;
+  LKey: String;
 begin
   LValue := AAssociation.PropertyRtti.GetNullableValue(AObject);
   if not LValue.IsObject then
@@ -453,7 +453,7 @@ procedure TObjectSetBaseAdapter<M>._UpdateInternal(const AObject: TObject);
 var
   LPrimaryKey: TPrimaryKeyColumnsMapping;
   LColumn: TColumnMapping;
-  LKey: string;
+  LKey: String;
 begin
   LKey := AObject.ClassName;
   LPrimaryKey := TMappingExplorer

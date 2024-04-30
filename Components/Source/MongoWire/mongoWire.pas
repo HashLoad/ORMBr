@@ -36,7 +36,7 @@ type
     function CloseMsg(Data: TMemoryStream): integer;//RequestID
     procedure ReadMsg(RequestID: integer);
   public
-    constructor Create(const NameSpace: Widestring);
+    constructor Create(const NameSpace: WideString);
     destructor Destroy; override;
 
     procedure Open(const ServerName: AnsiString = 'localhost';
@@ -54,8 +54,8 @@ type
     function Update(
       const Collection: WideString;
       const Selector, Doc: IJSONDocument;
-      Upsert: boolean = false;
-      MultiUpdate: boolean = false
+      Upsert: Boolean = False;
+      MultiUpdate: Boolean = False
     ): IJSONDocument;
     function Insert(
       const Collection: WideString;
@@ -72,7 +72,7 @@ type
     function Delete(
       const Collection: WideString;
       const Selector: IJSONDocument;
-      SingleRemove: boolean = false
+      SingleRemove: Boolean = False
     ): IJSONDocument;
     function Ping: Boolean;
     function EnsureIndex(
@@ -90,7 +90,7 @@ type
       const Query: IJSONDocument=nil): Variant;
 
     function Eval(const Collection, JSFn: WideString;
-      const Args: array of Variant; NoLock: boolean=false):Variant;
+      const Args: array of Variant; NoLock: Boolean=False):Variant;
 
     property NameSpace: WideString read FNameSpace write FNameSpace;
     property WriteConcern: IJSONDocument read FWriteConcern write FWriteConcern;
@@ -113,7 +113,7 @@ type
       const QryObj:IJSONDocument;
       const ReturnFieldSelector:IJSONDocument=nil;
       Flags:integer=0);
-    function Next(const Doc:IJSONDocument):boolean;
+    function Next(const Doc:IJSONDocument):Boolean;
     property NumberToReturn:integer read FNumberToReturn write FNumberToReturn;
     property NumberToSkip:integer read FNumberToSkip write FNumberToSkip;//TODO: set?
   end;
@@ -203,7 +203,7 @@ begin
   FSocket.Connect(ServerName,Port);
   if not FSocket.Connected then
     raise EMongoConnectFailed.Create(
-      'MongoWire: failed to connect to "'+string(ServerName)+':'+IntToStr(Port)+'"');
+      'MongoWire: failed to connect to "'+String(ServerName)+':'+IntToStr(Port)+'"');
 end;
 
 procedure TMongoWire.OpenSecure(const ServerName: AnsiString; Port: integer);
@@ -217,7 +217,7 @@ begin
   FSocket.Connect(ServerName,Port);
   if not FSocket.Connected then
     raise EMongoConnectFailed.Create(
-      'MongoWire: failed to connect to "'+string(ServerName)+':'+IntToStr(Port)+'"');
+      'MongoWire: failed to connect to "'+String(ServerName)+':'+IntToStr(Port)+'"');
 end;
 
 procedure TMongoWire.Close;
@@ -429,7 +429,7 @@ begin
 end;
 
 function TMongoWire.Update(const Collection: WideString; const Selector,
-  Doc: IJSONDocument; Upsert, MultiUpdate: boolean): IJSONDocument;
+  Doc: IJSONDocument; Upsert, MultiUpdate: Boolean): IJSONDocument;
 var
   d:IJSONDocument;
 begin
@@ -439,8 +439,8 @@ begin
     ['q',Selector
     ,'u',Doc
     ]);
-  if Upsert then d['upsert']:=true;
-  if MultiUpdate then d['multi']:=true;
+  if Upsert then d['upsert']:=True;
+  if MultiUpdate then d['multi']:=True;
   Result:=RunCommand(JSON(
     ['update',Collection
     ,'updates',ja([d])
@@ -496,7 +496,7 @@ begin
 end;
 
 function TMongoWire.Delete(const Collection: WideString;
-  const Selector: IJSONDocument; SingleRemove: boolean): IJSONDocument;
+  const Selector: IJSONDocument; SingleRemove: Boolean): IJSONDocument;
 var
   l:integer;
 begin
@@ -603,7 +603,7 @@ begin
 end;
 
 function TMongoWire.Eval(const Collection, JSFn: WideString;
-  const Args: array of Variant; NoLock: boolean): Variant;
+  const Args: array of Variant; NoLock: Boolean): Variant;
 begin
   Result:=RunCommand(JSON(['eval',bsonJavaScriptCodePrefix+
     JSFn,'args',ja(Args)]))['retval'];
@@ -683,7 +683,7 @@ begin
   FCollection:=Collection;
 end;
 
-function TMongoWireQuery.Next(const Doc: IJSONDocument): boolean;
+function TMongoWireQuery.Next(const Doc: IJSONDocument): Boolean;
 var
   i:integer;
 begin
@@ -692,7 +692,7 @@ begin
   if FPageIndex=FNumberReturned then
    begin
     if FCursorID=0 then
-      Result:=false
+      Result:=False
     else
      begin
       //get more
@@ -710,7 +710,7 @@ begin
      end;
    end
   else
-    Result:=true;
+    Result:=True;
   if Result then
    begin
     //assert(FData.Position<PMongoWireMsgHeader((FData.Stream as TMemoryStream).Memory)^.MsgLength);

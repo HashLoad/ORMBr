@@ -56,9 +56,9 @@ type
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
-    function ModifiedFields<T: class, constructor>: TDictionary<string, TDictionary<string, string>>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
+    function ModifiedFields<T: class, constructor>: TDictionary<String, TDictionary<String, String>>;
     function ExistSequence<T: class, constructor>: Boolean;
     procedure LoadLazy<T: class, constructor>(const AObject: TObject); overload;
     /// <summary>
@@ -159,7 +159,7 @@ begin
   Result := GetManagerObjectSet.Find<T>(AID);
 end;
 
-function TORMBrManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TORMBrManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 begin
   Result := GetManagerObjectSet.FindWhere<T>(AWhere, AOrderBy);
 end;
@@ -206,7 +206,7 @@ begin
   GetManagerObjectSet.LoadLazy<T>(AObject);
 end;
 
-function TORMBrManagerObjectSet.ModifiedFields<T>: TDictionary<string, TDictionary<string, string>>;
+function TORMBrManagerObjectSet.ModifiedFields<T>: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := GetManagerObjectSet.ModifiedFields<T>;
 end;

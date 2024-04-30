@@ -12,8 +12,8 @@ type TORMBrDependenciesCommandJSONBr = class(TORMBrDependenciesCommandBase, IORM
 
   protected
     function GetPath: String; override;
-    function UrlDownloadFile: string; override;
-    function ZipFileName: string; override;
+    function UrlDownloadFile: String; override;
+    function ZipFileName: String; override;
 
 end;
 
@@ -29,9 +29,9 @@ begin
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandJSONBr.UrlDownloadFile: string;
+function TORMBrDependenciesCommandJSONBr.UrlDownloadFile: String;
 //var
-//  version: string;
+//  version: String;
 begin
   result := FTag;
 //  version := IfThen(FTag.IsEmpty, 'master', FTag);
@@ -46,7 +46,7 @@ begin
 //      [version])
 end;
 
-function TORMBrDependenciesCommandJSONBr.ZipFileName: string;
+function TORMBrDependenciesCommandJSONBr.ZipFileName: String;
 begin
   result := GetPath + 'jsonbr.zip';
 

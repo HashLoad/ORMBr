@@ -8,24 +8,24 @@ uses
   Comobj, ActiveX, Variants;
 
 var
-  TSVNTortoisePath: string;
-  TSVNCollabNetPath: string;
-  TTortoiseMergePath: string;
+  TSVNTortoisePath: String;
+  TSVNCollabNetPath: String;
+  TTortoiseMergePath: String;
 
 const
   SVN_OBJECT_NAME = 'SubWCRev.object';
 
 type
   TWCInfo = record
-    Revision: string;
-    Author: string;
-    Date: string;
+    Revision: String;
+    Author: String;
+    Date: String;
     HasModifications: Boolean;
   end;
 
   TSVN_Class = class
   private class var
-    FSVNInstalled: boolean;
+    FSVNInstalled: Boolean;
     FWCInfo: TWCInfo;
   private
     class procedure SVNCollabNetExec(Params: String); static;
@@ -48,10 +48,10 @@ type
     class procedure SVNCollabNet_Checkout(const AUrl, APath: String); static;
     class procedure SVNCollabNet_Update(const AUrl, APath: String); static;
 
-    class function IsOLEObjectInstalled(const Name: string): boolean;
-    class function IsSvnDir(const ADir: string): boolean;
-    class function GetRevision(const ADir: string): Boolean;
-    class property SVNInstalled: boolean read FSVNInstalled;
+    class function IsOLEObjectInstalled(const Name: String): Boolean;
+    class function IsSvnDir(const ADir: String): Boolean;
+    class function GetRevision(const ADir: String): Boolean;
+    class property SVNInstalled: Boolean read FSVNInstalled;
     class property WCInfo: TWCInfo read FWCInfo;
   end;
 
@@ -67,7 +67,7 @@ class function TSVN_Class.WinExecAndWait32(CmdLine: AnsiString; Visibility: Inte
 var
   zAppName: array[0..512] of Char;
   zCurDir: array[0..255] of Char;
-  WorkDir: string;
+  WorkDir: String;
   StartupInfo: TStartupInfo;
   ProcessInfo: TProcessInformation;
 begin
@@ -80,10 +80,10 @@ begin
   StartupInfo.dwFlags := STARTF_USESHOWWINDOW;
   StartupInfo.wShowWindow := Visibility;
   if not CreateProcess(nil,
-           zAppName,               // pointer to command line string }
+           zAppName,               // pointer to command line String }
            nil,                    // pointer to process security attributes }
            nil,                    // pointer to thread security attributes }
-           false,                  // handle inheritance flag }
+           False,                  // handle inheritance flag }
            CREATE_NEW_CONSOLE or   // creation flags }
            NORMAL_PRIORITY_CLASS,
            nil,                    // pointer to new environment block }
@@ -192,7 +192,7 @@ end;
 //
 //******************************************************************************
 
-class procedure TSVN_Class.SVNTortoiseExec( Params: string );
+class procedure TSVN_Class.SVNTortoiseExec( Params: String );
 var
   CmdLine: AnsiString;
 begin
@@ -246,7 +246,7 @@ end;
 //
 //******************************************************************************
 
-class procedure TSVN_Class.SVNCollabNetExec( Params: string );
+class procedure TSVN_Class.SVNCollabNetExec( Params: String );
 var
   CmdLine: AnsiString;
 begin
@@ -279,14 +279,14 @@ end;
 
 
 //-- Capturar informações da última revisão
-class function TSVN_Class.IsOLEObjectInstalled(const Name: string): boolean;
+class function TSVN_Class.IsOLEObjectInstalled(const Name: String): Boolean;
 var
   ClassID: TCLSID;
 begin
   Result := CLSIDFromProgID(PWideChar(WideString(Name)), ClassID) = S_OK;
 end;
 
-class function TSVN_Class.GetRevision(const ADir: string): Boolean;
+class function TSVN_Class.GetRevision(const ADir: String): Boolean;
 var
   Svn: OLEVariant;
 begin
@@ -317,7 +317,7 @@ begin
   Result := True;
 end;
 
-class function TSVN_Class.IsSvnDir(const ADir: string): boolean;
+class function TSVN_Class.IsSvnDir(const ADir: String): Boolean;
 var
   Svn: OLEVariant;
 begin

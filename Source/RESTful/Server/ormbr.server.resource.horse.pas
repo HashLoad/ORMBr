@@ -35,7 +35,7 @@ type
     destructor Destroy; override;
     function select(const AResource: String;
                     const AParams: THorseCoreParam;
-                    const AQuery: THorseCoreParam): string; overload;
+                    const AQuery: THorseCoreParam): String; overload;
     function insert(const AResource: String;
                     const AValue: String): String; overload; override;
     function update(const AResource: String;
@@ -64,7 +64,7 @@ end;
 
 function TAppResource.select(const AResource: String;
                              const AParams: THorseCoreParam;
-                             const AQuery: THorseCoreParam): string;
+                             const AQuery: THorseCoreParam): String;
 var
   LQuery: TRESTQueryParse;
 begin

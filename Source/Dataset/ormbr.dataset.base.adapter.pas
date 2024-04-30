@@ -55,7 +55,7 @@ type
     procedure _ExecuteOneToMany(AObject: M; AProperty: TRttiProperty;
       ADatasetBase: TDataSetBaseAdapter<M>; ARttiType: TRttiType);
     procedure _GetMasterValues;
-    function _FindEvents(AEventName: string): Boolean;
+    function _FindEvents(AEventName: String): Boolean;
     function _GetAutoNextPacket: Boolean;
     procedure _SetAutoNextPacket(const Value: Boolean);
     procedure _ValideFieldEvents(const AFieldEvents: TFieldEventsMappingList);
@@ -63,7 +63,7 @@ type
     FDataSetEvents: TDataSetEvents;
     FOwnerMasterObject: TObject;
     FCurrentInternal: M;
-    FMasterObject: TDictionary<string, TDataSetBaseAdapter<M>>;
+    FMasterObject: TDictionary<String, TDataSetBaseAdapter<M>>;
     FLookupsField: TList<TDataSetBaseAdapter<M>>;
     FInternalIndex: Integer;
     FAutoNextPacket: Boolean;
@@ -100,7 +100,7 @@ type
     procedure SetMasterObject(const AValue: TObject); virtual;
     procedure FillMastersClass(const ADatasetBase: TDataSetBaseAdapter<M>; AObject: M); virtual;
     function IsAssociationUpdateCascade(ADataSetChild: TDataSetBaseAdapter<M>;
-      AColumnsNameRef: string): Boolean; virtual;
+      AColumnsNameRef: String): Boolean; virtual;
   public
     constructor Create(ADataSet: TDataSet; APageSize: Integer;
       AMasterObject: TObject); overload; override;
@@ -111,18 +111,18 @@ type
     procedure NextPacket; overload; virtual; abstract;
     procedure Save(AObject: M); virtual;
     procedure CancelUpdates; virtual;
-    procedure AddLookupField(const AFieldName: string;
-                             const AKeyFields: string;
+    procedure AddLookupField(const AFieldName: String;
+                             const AKeyFields: String;
                              const ALookupDataSet: TObject;
-                             const ALookupKeyFields: string;
-                             const ALookupResultField: string;
-                             const ADisplayLabel: string = '');
+                             const ALookupKeyFields: String;
+                             const ALookupResultField: String;
+                             const ADisplayLabel: String = '');
     function Current: M;
     // ObjectSet
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Integer): M; overload; virtual;
     function Find(const AID: String): M; overload; virtual;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; virtual;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>; virtual;
     // Property
     property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;
@@ -148,7 +148,7 @@ begin
   FOrmDataSet := ADataSet;
   FPageSize := APageSize;
   FOrmDataSetEvents := TDataSetLocal.Create(nil);
-  FMasterObject := TDictionary<string, TDataSetBaseAdapter<M>>.Create;
+  FMasterObject := TDictionary<String, TDataSetBaseAdapter<M>>.Create;
   FLookupsField := TList<TDataSetBaseAdapter<M>>.Create;
   FCurrentInternal := M.Create;
   Bind.SetInternalInitFieldDefsObjectClass(ADataSet, FCurrentInternal);
@@ -200,12 +200,12 @@ begin
   FOrmDataSet.Close;
 end;
 
-procedure TDataSetBaseAdapter<M>.AddLookupField(const AFieldName: string;
-                                                const AKeyFields: string;
+procedure TDataSetBaseAdapter<M>.AddLookupField(const AFieldName: String;
+                                                const AKeyFields: String;
                                                 const ALookupDataSet: TObject;
-                                                const ALookupKeyFields: string;
-                                                const ALookupResultField: string;
-                                                const ADisplayLabel: string);
+                                                const ALookupKeyFields: String;
+                                                const ALookupResultField: String;
+                                                const ADisplayLabel: String);
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -423,7 +423,7 @@ begin
   Result := FSession.Find(AID);
 end;
 
-function TDataSetBaseAdapter<M>._FindEvents(AEventName: string): Boolean;
+function TDataSetBaseAdapter<M>._FindEvents(AEventName: String): Boolean;
 begin
   Result := MatchStr(AEventName, ['AfterCancel'   ,'AfterClose'   ,'AfterDelete' ,
                                   'AfterEdit'     ,'AfterInsert'  ,'AfterOpen'   ,
@@ -436,7 +436,7 @@ begin
 end;
 
 function TDataSetBaseAdapter<M>.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<M>;
+  AOrderBy: String): TObjectList<M>;
 begin
   Result := FSession.FindWhere(AWhere, AOrderBy);
 end;
@@ -709,7 +709,7 @@ begin
 end;
 
 function TDataSetBaseAdapter<M>.IsAssociationUpdateCascade(
-  ADataSetChild: TDataSetBaseAdapter<M>; AColumnsNameRef: string): Boolean;
+  ADataSetChild: TDataSetBaseAdapter<M>; AColumnsNameRef: String): Boolean;
 var
   LForeignKey: TForeignKeyMapping;
   LForeignKeys: TForeignKeyMappingList;

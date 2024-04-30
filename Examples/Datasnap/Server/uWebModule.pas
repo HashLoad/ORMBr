@@ -20,7 +20,7 @@ type
     procedure WebModule1DefaultHandlerAction(Sender: TObject;
       Request: TWebRequest; Response: TWebResponse; var Handled: Boolean);
     procedure WebFileDispatcher1BeforeDispatch(Sender: TObject;
-      const AFileName: string; Request: TWebRequest; Response: TWebResponse;
+      const AFileName: String; Request: TWebRequest; Response: TWebResponse;
       var Handled: Boolean);
     procedure WebModuleCreate(Sender: TObject);
   private
@@ -50,7 +50,7 @@ begin
 end;
 
 procedure TWebModule1.WebFileDispatcher1BeforeDispatch(Sender: TObject;
-  const AFileName: string; Request: TWebRequest; Response: TWebResponse;
+  const AFileName: String; Request: TWebRequest; Response: TWebResponse;
   var Handled: Boolean);
 var
   D1, D2: TDateTime;

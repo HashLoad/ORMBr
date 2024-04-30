@@ -74,7 +74,7 @@ var
 cDDL: TDDLCommand;
 begin
   oManager := TDatabaseCompare.Create(oConnMaster, oConnTarget);
-  // Se FALSE só mostra não executando os scripts gerados.
+  // Se False só mostra não executando os scripts gerados.
   oManager.CommandsAutoExecute := False;
   oManager.BuildDatabase;
   for cDDL in oManager.GetCommandList do

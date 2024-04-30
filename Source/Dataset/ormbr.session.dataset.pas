@@ -57,8 +57,8 @@ type
       const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     procedure OpenID(const AID: TValue); override;
-    procedure OpenSQL(const ASQL: string); override;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQL(const ASQL: String); override;
+    procedure OpenWhere(const AWhere: String; const AOrderBy: String = ''); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
     procedure RefreshRecordWhere(const AWhere: String); override;
@@ -102,7 +102,7 @@ begin
   PopularDataSet(LDBResultSet);
 end;
 
-procedure TSessionDataSet<M>.OpenSQL(const ASQL: string);
+procedure TSessionDataSet<M>.OpenSQL(const ASQL: String);
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -114,8 +114,8 @@ begin
   PopularDataSet(LDBResultSet);
 end;
 
-procedure TSessionDataSet<M>.OpenWhere(const AWhere: string;
-  const AOrderBy: string);
+procedure TSessionDataSet<M>.OpenWhere(const AWhere: String;
+  const AOrderBy: String);
 begin
   inherited;
   OpenSQL(FCommandExecutor.SelectInternalWhere(AWhere, AOrderBy));

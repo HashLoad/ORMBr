@@ -41,23 +41,23 @@ type
     ['{03BADA2C-2D5E-4F67-8F54-FDCCF16ACD56}']
     procedure SetConnection(const AConnaction: IDBConnection);
     function GeneratorSelectAll(AClass: TClass;
-      APageSize: Integer; AID: TValue): string;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string;
+      APageSize: Integer; AID: TValue): String;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string;
+      AAssociation: TAssociationMapping): String;
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string;
+      AAssociation: TAssociationMapping): String;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TDictionary<string, string>): string; overload;
-    function GeneratorInsert(AObject: TObject): string;
-    function GeneratorDelete(AObject: TObject; AParams: TParams): string;
+      AModifiedFields: TDictionary<String, String>): String; overload;
+    function GeneratorInsert(AObject: TObject): String;
+    function GeneratorDelete(AObject: TObject; AParams: TParams): String;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64;
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64;
-    function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string;
+    function GeneratorPageNext(const ACommandSelect: String;
+      APageSize, APageNext: Integer): String;
   end;
 
 implementation

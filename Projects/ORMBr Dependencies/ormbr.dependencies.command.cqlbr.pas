@@ -12,8 +12,8 @@ type TORMBrDependenciesCommandCQLBr = class(TORMBrDependenciesCommandBase, IORMB
 
   protected
     function GetPath: String; override;
-    function UrlDownloadFile: string; override;
-    function ZipFileName: string; override;
+    function UrlDownloadFile: String; override;
+    function ZipFileName: String; override;
 
 end;
 
@@ -29,9 +29,9 @@ begin
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandCQLBr.UrlDownloadFile: string;
+function TORMBrDependenciesCommandCQLBr.UrlDownloadFile: String;
 //var
-//  version: string;
+//  version: String;
 begin
   result := FTag;
 //  version := IfThen(FTag.IsEmpty, 'master', FTag);
@@ -46,7 +46,7 @@ begin
 //      [version])
 end;
 
-function TORMBrDependenciesCommandCQLBr.ZipFileName: string;
+function TORMBrDependenciesCommandCQLBr.ZipFileName: String;
 begin
   result := GetPath + 'cqlbr.zip';
 

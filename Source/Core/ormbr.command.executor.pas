@@ -65,7 +65,7 @@ type
     // Procedures
     procedure InsertInternal(const AObject: M); override;
     procedure UpdateInternal(const AObject: TObject;
-      const AModifiedFields: TDictionary<string, string>); override;
+      const AModifiedFields: TDictionary<String, String>); override;
     procedure DeleteInternal(const AObject: M); override;
     procedure LoadLazy(const AOwner, AObject: TObject); override;
     procedure NextPacketList(const AObjectList: TObjectList<M>;
@@ -81,11 +81,11 @@ type
     function NextPacketList(const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     // Functions
-    function GetDMLCommand: string; override;
+    function GetDMLCommand: String; override;
     function ExistSequence: Boolean; override;
     // DataSet
-    function SelectInternalWhere(const AWhere: string;
-      const AOrderBy: string): string; override;
+    function SelectInternalWhere(const AWhere: String;
+      const AOrderBy: String): String; override;
     function SelectInternalAll: IDBResultSet; override;
     function SelectInternalID(const AID: TValue): IDBResultSet; override;
     function SelectInternal(const ASQL: String): IDBResultSet; override;
@@ -98,8 +98,8 @@ type
     // ObjectSet
     function Find: IDBResultSet; overload; override;
     function Find(const AID: TValue): M; overload; override;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string): IDBResultSet; override;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String): IDBResultSet; override;
   end;
 
 implementation
@@ -184,8 +184,8 @@ begin
   Result := FDMLCommandFactory.GeneratorSelectID(M, AID);
 end;
 
-function TSQLCommandExecutor<M>.SelectInternalWhere(const AWhere: string;
-  const AOrderBy: string): string;
+function TSQLCommandExecutor<M>.SelectInternalWhere(const AWhere: String;
+  const AOrderBy: String): String;
 begin
   Result := FDMLCommandFactory.GeneratorSelectWhere(M,
                                                     AWhere,
@@ -320,7 +320,7 @@ begin
   Result := FDMLCommandFactory.ExistSequence;
 end;
 
-function TSQLCommandExecutor<M>.GetDMLCommand: string;
+function TSQLCommandExecutor<M>.GetDMLCommand: String;
 begin
   Result := FDMLCommandFactory.GetDMLCommand;
 end;
@@ -420,7 +420,7 @@ begin
 end;
 
 procedure TSQLCommandExecutor<M>.UpdateInternal(const AObject: TObject;
-  const AModifiedFields: TDictionary<string, string>);
+  const AModifiedFields: TDictionary<String, String>);
 begin
   FDMLCommandFactory.GeneratorUpdate(AObject, AModifiedFields);
 end;
@@ -468,8 +468,8 @@ begin
   end;
 end;
 
-function TSQLCommandExecutor<M>.FindWhere(const AWhere: string;
-  const AOrderBy: string): IDBResultSet;
+function TSQLCommandExecutor<M>.FindWhere(const AWhere: String;
+  const AOrderBy: String): IDBResultSet;
 begin
   Result := FindSQLInternal(SelectInternalWhere(AWhere, AOrderBy));
 end;

@@ -12,8 +12,8 @@ type TORMBrDependenciesCommandRESTFul = class(TORMBrDependenciesCommandBase, IOR
 
   protected
     function GetPath: String; override;
-    function UrlDownloadFile: string; override;
-    function ZipFileName: string; override;
+    function UrlDownloadFile: String; override;
+    function ZipFileName: String; override;
 
 end;
 
@@ -29,9 +29,9 @@ begin
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandRESTFul.UrlDownloadFile: string;
+function TORMBrDependenciesCommandRESTFul.UrlDownloadFile: String;
 var
-  version: string;
+  version: String;
 begin
   version := IfThen(FTag.IsEmpty, 'master', FTag);
 
@@ -45,7 +45,7 @@ begin
       [version])
 end;
 
-function TORMBrDependenciesCommandRESTFul.ZipFileName: string;
+function TORMBrDependenciesCommandRESTFul.ZipFileName: String;
 begin
   result := GetPath + 'restful.zip';
 

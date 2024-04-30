@@ -43,7 +43,7 @@ type
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
-    function GenerateDelete(AObject: TObject): string;
+    function GenerateDelete(AObject: TObject): String;
   end;
 
 implementation
@@ -62,7 +62,7 @@ begin
   inherited Create(AConnection, ADriverName, AObject);
 end;
 
-function TCommandDeleter.GenerateDelete(AObject: TObject): string;
+function TCommandDeleter.GenerateDelete(AObject: TObject): String;
 var
   LColumn: TColumnMapping;
   LPrimaryKeyCols: TPrimaryKeyColumnsMapping;
@@ -95,7 +95,7 @@ begin
 //        begin
 //          AsBytes := StringToGUID(Format('{%s}', [LColumn.ColumnProperty
 //                                                         .GetNullableValue(AObject)
-//                                                         .AsType<string>.Trim(['{', '}'])]))
+//                                                         .AsType<String>.Trim(['{', '}'])]))
 //                                                         .ToByteArray(TEndian.Big);
 //          Continue;
 //        end;

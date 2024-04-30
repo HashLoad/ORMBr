@@ -54,7 +54,7 @@ type
   protected
     FSession: TSessionAbstract<M>;
     FOrmDataSource: TDataSource;
-    procedure RefreshDataSetOneToOneChilds(AFieldName: string); virtual;
+    procedure RefreshDataSetOneToOneChilds(AFieldName: String); virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
     // Abstract
     procedure DoBeforeApplyUpdates(DataSet: TDataSet); overload; virtual; abstract;
@@ -69,8 +69,8 @@ type
     procedure LoadLazy(const AOwner: M); virtual; abstract;
     procedure OpenDataSetChilds; virtual; abstract;
     procedure EmptyDataSetChilds; virtual; abstract;
-    procedure OpenSQLInternal(const ASQL: string); virtual; abstract;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); virtual; abstract;
+    procedure OpenSQLInternal(const ASQL: String); virtual; abstract;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); virtual; abstract;
     procedure ApplyUpdates(const MaxErros: Integer); virtual; abstract;
     procedure EmptyDataSet; virtual; abstract;
   public
@@ -103,7 +103,7 @@ end;
 
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 var
-  LValues: TDictionary<string, string>;
+  LValues: TDictionary<String, String>;
 //  LContext: TRttiContext;
 //  LObjectType: TRttiType;
   LColumn: TColumnMapping;
@@ -158,7 +158,7 @@ begin
   RefreshDataSetOneToOneChilds(Field.FieldName);
 end;
 
-procedure TDataSetAbstract<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
+procedure TDataSetAbstract<M>.RefreshDataSetOneToOneChilds(AFieldName: String);
 begin
 
 end;
@@ -191,7 +191,7 @@ end;
 
 function TDataSetLocal.IsCursorOpen: Boolean;
 begin
-  Result := false;
+  Result := False;
 end;
 
 end.

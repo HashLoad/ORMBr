@@ -39,15 +39,15 @@ type
   TObjectSetAbstract<M: class, constructor> = class abstract
   protected
     FSession: TSessionAbstract<M>;
-    FObjectState: TDictionary<string, TObject>;
+    FObjectState: TDictionary<String, TObject>;
   public
     function ExistSequence: Boolean; virtual; abstract;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual; abstract;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>; virtual; abstract;
     function Find: TObjectList<M>; overload; virtual; abstract;
     function Find(const AID: Int64): M; overload; virtual; abstract;
-    function Find(const AID: string): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; overload; virtual; abstract;
+    function Find(const AID: String): M; overload; virtual; abstract;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String = ''): TObjectList<M>; overload; virtual; abstract;
     procedure Insert(const AObject: M); virtual; abstract;
     procedure Update(const AObject: M); virtual; abstract;
     procedure Delete(const AObject: M); virtual; abstract;

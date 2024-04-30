@@ -53,7 +53,7 @@ type
     function DoPOST(const AResource, ASubResource: String): String;
     function DoPUT(const AResource, ASubResource: String): String;
     function DoDELETE(const AResource, ASubResource: String): String;
-    function RemoveContextServerUse(const Value: String): string;
+    function RemoveContextServerUse(const Value: String): String;
   protected
     procedure DoAfterCommand; override;
     procedure SetBaseURL; override;
@@ -494,7 +494,7 @@ begin
 end;
 
 function TRESTClientHorse.RemoveContextServerUse(
-  const Value: String): string;
+  const Value: String): String;
 begin
   Result := ReplaceStr(Value, '/ormbr', '');
 end;

@@ -54,7 +54,7 @@ type
     FCidade:  Tcidade  ;
     FEstado:  Testado  ;
     FUsuario:  Tusuario  ;
-    Fcidade_nome: string;
+    Fcidade_nome: String;
     FContatos: TObjectList<TContato>;
   public
     { Public declarations } 
@@ -143,7 +143,7 @@ type
     [Column('nome', ftString, 60)]
     [JoinColumn('cidade_id', 'cidade', 'id', 'nome', TJoin.InnerJoin)]
     [Dictionary('Cidade')]
-    property cidade_nome: string read Fcidade_nome write Fcidade_nome;
+    property cidade_nome: String read Fcidade_nome write Fcidade_nome;
 
     [Association(TMultiplicity.OneToOne,'cidade_id','cidade','id')]
     property cidade: Tcidade read Fcidade write Fcidade;

@@ -60,7 +60,7 @@ type
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     destructor Destroy; override;
-    function GenerateInsert(AObject: TObject): string;
+    function GenerateInsert(AObject: TObject): String;
     function AutoInc: TDMLCommandAutoInc;
   end;
 
@@ -81,7 +81,7 @@ begin
   inherited;
 end;
 
-function TCommandInserter.GenerateInsert(AObject: TObject): string;
+function TCommandInserter.GenerateInsert(AObject: TObject): String;
 var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;

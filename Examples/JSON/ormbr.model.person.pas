@@ -18,14 +18,14 @@ type
   private
     { Private declarations }
     FId: Integer;
-    FFirstName: string;
-    FLastName: string;
+    FFirstName: String;
+    FLastName: String;
     FAge: Integer;
     FSalary: Double;
   public
     { Public declarations }
     property Id: Integer Index 0 read FId write FId;
-    property FirstName: string Index 1 read FFirstName write FFirstName;
+    property FirstName: String Index 1 read FFirstName write FFirstName;
     property LastName: String Index 2 read FLastName write FLastName;
     property Age: Integer Index 3 read FAge write FAge;
     property Salary: Double Index 4 read FSalary write FSalary;
@@ -44,8 +44,8 @@ type
   private
     { Private declarations }
     FId: Integer;
-    FFirstName: Nullable<string>;
-    FLastName: string;
+    FFirstName: Nullable<String>;
+    FLastName: String;
     FAge: Integer;
     FSalary: Double;
     FDate: Nullable<TDate>;
@@ -65,7 +65,7 @@ type
     [Restrictions([TRestriction.NotNull])]
     [Column('FirstName', ftString, 40)]
     [Dictionary('Primeiro nome','Mensagem de validação','','','',taLeftJustify)]
-    property FirstName: Nullable<string> Index 1 read FFirstName write FFirstName;
+    property FirstName: Nullable<String> Index 1 read FFirstName write FFirstName;
 
     [Column('LastName', ftString, 30)]
     [Dictionary('Último nome','Mensagem de validação','','','',taLeftJustify)]

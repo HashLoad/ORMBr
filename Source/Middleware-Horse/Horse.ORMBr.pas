@@ -17,7 +17,7 @@ type
   end;
 
 function HorseORMBr: THorseCallback; overload;
-function HorseORMBr(const ACharset: string): THorseCallback; overload;
+function HorseORMBr(const ACharset: String): THorseCallback; overload;
 
 procedure Middleware(Req: THorseRequest; Res: THorseResponse; Next: TNextProc);
 
@@ -27,7 +27,7 @@ uses
   ormbr.json;
 
 var
-  Charset: string;
+  Charset: String;
 
 function HorseORMBr: THorseCallback;
 var
@@ -40,7 +40,7 @@ begin
   TORMBrJson.FormatSettings := LFormatSettings;
 end;
 
-function HorseORMBr(const ACharset: string): THorseCallback;
+function HorseORMBr(const ACharset: String): THorseCallback;
 begin
   Charset := ACharset;
   Result := Middleware;
