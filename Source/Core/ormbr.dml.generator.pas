@@ -415,7 +415,9 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if AID.IsType<integer> then
+      if AID.IsType<Int64> then
+        Result := Result + LColumnName + ' = ' + IntToStr(AID.AsInt64)
+      else if AID.IsType<integer> then
         Result := Result + LColumnName + ' = ' + AID.AsType<string>
       else
         Result := Result + LColumnName + ' = ' + QuotedStr(AID.AsType<string>);
