@@ -10,11 +10,9 @@ object FrmPrincipal: TFrmPrincipal
   Font.Height = -13
   Font.Name = 'Arial'
   Font.Style = []
-  OldCreateOrder = False
   WindowState = wsMaximized
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 16
   object Splitter3: TSplitter
     Left = 265
@@ -37,6 +35,7 @@ object FrmPrincipal: TFrmPrincipal
     Height = 169
     Align = alTop
     TabOrder = 0
+    ExplicitWidth = 1086
     object pnCONN: TPanel
       Left = 624
       Top = 1
@@ -48,6 +47,7 @@ object FrmPrincipal: TFrmPrincipal
       Color = clWhite
       ParentBackground = False
       TabOrder = 1
+      ExplicitLeft = 620
       object Panel9: TPanel
         Left = 5
         Top = 5
@@ -170,7 +170,6 @@ object FrmPrincipal: TFrmPrincipal
           DataSource = DTS_CNN
           ParentFont = True
           TabOrder = 0
-          Zoom = 100
         end
       end
       object Combo_Connection: TComboBox
@@ -201,6 +200,7 @@ object FrmPrincipal: TFrmPrincipal
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
+      ExplicitWidth = 619
       object Label1: TLabel
         Left = 8
         Top = 30
@@ -249,6 +249,7 @@ object FrmPrincipal: TFrmPrincipal
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
+        ExplicitWidth = 609
       end
       object edtPath: TEdit
         Left = 8
@@ -293,6 +294,8 @@ object FrmPrincipal: TFrmPrincipal
     Width = 1090
     Height = 19
     Panels = <>
+    ExplicitTop = 620
+    ExplicitWidth = 1086
   end
   object pnDisplayCode: TPanel
     Left = 270
@@ -305,6 +308,8 @@ object FrmPrincipal: TFrmPrincipal
     BorderWidth = 5
     ParentBackground = False
     TabOrder = 2
+    ExplicitWidth = 816
+    ExplicitHeight = 451
     object Panel5: TPanel
       Left = 5
       Top = 5
@@ -314,6 +319,7 @@ object FrmPrincipal: TFrmPrincipal
       BevelOuter = bvNone
       Caption = 'Classes Modelos'
       TabOrder = 0
+      ExplicitWidth = 806
     end
     object PageControl1: TPageControl
       Left = 5
@@ -323,6 +329,8 @@ object FrmPrincipal: TFrmPrincipal
       ActivePage = tabModel
       Align = alClient
       TabOrder = 1
+      ExplicitWidth = 806
+      ExplicitHeight = 425
       object tabModel: TTabSheet
         Caption = 'Modelo Classe'
         TabVisible = False
@@ -340,8 +348,8 @@ object FrmPrincipal: TFrmPrincipal
           ParentFont = False
           ScrollBars = ssBoth
           TabOrder = 0
-          ExplicitLeft = -8
-          ExplicitTop = -183
+          ExplicitWidth = 798
+          ExplicitHeight = 415
         end
       end
     end
@@ -358,6 +366,7 @@ object FrmPrincipal: TFrmPrincipal
     Padding.Right = 5
     Padding.Bottom = 5
     TabOrder = 1
+    ExplicitHeight = 451
     object Splitter1: TSplitter
       Left = 5
       Top = 281
@@ -384,6 +393,7 @@ object FrmPrincipal: TFrmPrincipal
       ParentCtl3D = False
       TabOrder = 1
       OnClick = lstTabelasClick
+      ExplicitHeight = 259
     end
     object Panel4: TPanel
       Left = 5
@@ -393,6 +403,7 @@ object FrmPrincipal: TFrmPrincipal
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
+      ExplicitTop = 285
       object lstCampos: TListBox
         Left = 0
         Top = 16
@@ -456,10 +467,6 @@ object FrmPrincipal: TFrmPrincipal
   object FDPhysMySQLDriverLink1: TFDPhysMySQLDriverLink
     Left = 494
     Top = 314
-  end
-  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
-    Left = 494
-    Top = 256
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
     Left = 494
@@ -553,14 +560,6 @@ object FrmPrincipal: TFrmPrincipal
       'Password=masterkey')
     Left = 730
     Top = 198
-  end
-  object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
-    Left = 408
-    Top = 206
-  end
-  object FDPhysDB2DriverLink1: TFDPhysDB2DriverLink
-    Left = 408
-    Top = 260
   end
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
     Left = 396
