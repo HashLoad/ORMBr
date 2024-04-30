@@ -417,6 +417,8 @@ begin
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
       if AID.IsType<Integer> then
         Result := Result + LColumnName + ' = ' + AID.ToString
+      if AID.IsType<Int64> then
+        Result := Result + LColumnName + ' = ' + IntToStr(AID.AsInt64)
       else
         Result := Result + LColumnName + ' = ' + QuotedStr(AID.ToString);
 

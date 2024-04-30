@@ -468,10 +468,6 @@ object FrmPrincipal: TFrmPrincipal
     Left = 494
     Top = 314
   end
-  object FDPhysMSSQLDriverLink1: TFDPhysMSSQLDriverLink
-    Left = 494
-    Top = 256
-  end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
     Left = 494
     Top = 204
@@ -564,14 +560,6 @@ object FrmPrincipal: TFrmPrincipal
       'Password=masterkey')
     Left = 730
     Top = 198
-  end
-  object FDPhysOracleDriverLink1: TFDPhysOracleDriverLink
-    Left = 408
-    Top = 206
-  end
-  object FDPhysDB2DriverLink1: TFDPhysDB2DriverLink
-    Left = 408
-    Top = 260
   end
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
     Left = 396
