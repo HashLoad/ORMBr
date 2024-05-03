@@ -28,11 +28,9 @@ object Form4: TForm4
     Height = 378
     Align = alBottom
     Anchors = [akLeft, akTop, akRight, akBottom]
-    Lines.Strings = (
-      'Memo1')
     TabOrder = 1
-    ExplicitWidth = 824
-    ExplicitHeight = 369
+    ExplicitWidth = 828
+    ExplicitHeight = 370
   end
   object Button2: TButton
     Left = 161
@@ -60,5 +58,14 @@ object Form4: TForm4
     Caption = 'JSON Array'
     TabOrder = 4
     OnClick = Button4Click
+  end
+  object Button5: TButton
+    Left = 611
+    Top = 8
+    Width = 144
+    Height = 73
+    Caption = 'Load Json (Find)'
+    TabOrder = 5
+    OnClick = Button5Click
   end
 end
