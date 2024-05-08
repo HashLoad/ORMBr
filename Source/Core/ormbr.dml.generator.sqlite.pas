@@ -167,6 +167,6 @@ begin
 end;
 
 initialization
-  TDriverRegister.RegisterDriver(dnSQLite, TDMLGeneratorSQLite.Create);
+  TDriverRegister.RegisterDriver(TDriverName.dnSQLite, TDMLGeneratorSQLite.Create);
 
 end.

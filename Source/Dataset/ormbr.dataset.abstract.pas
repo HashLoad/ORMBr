@@ -17,14 +17,12 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dataset.abstract;
@@ -104,8 +102,6 @@ end;
 procedure TDataSetAbstract<M>.DoDataChange(Sender: TObject; Field: TField);
 var
   LValues: TDictionary<String, String>;
-//  LContext: TRttiContext;
-//  LObjectType: TRttiType;
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
 begin

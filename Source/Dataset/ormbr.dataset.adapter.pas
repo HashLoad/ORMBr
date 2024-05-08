@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
 }
@@ -53,7 +53,7 @@ type
 
   TDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
-    procedure ExecuteCheckNotNull;
+    procedure _ExecuteCheckNotNull;
   protected
     FConnection: IDBConnection;
     procedure OpenDataSetChilds; override;
@@ -136,10 +136,10 @@ procedure TDataSetAdapter<M>.DoBeforePost(DataSet: TDataSet);
 begin
   inherited DoBeforePost(DataSet);
   // Rotina de validação se o campo foi deixado null
-  ExecuteCheckNotNull;
+  _ExecuteCheckNotNull;
 end;
 
-procedure TDataSetAdapter<M>.ExecuteCheckNotNull;
+procedure TDataSetAdapter<M>._ExecuteCheckNotNull;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;

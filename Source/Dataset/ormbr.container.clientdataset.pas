@@ -60,10 +60,10 @@ implementation
 constructor TContainerClientDataSet<M>.Create(AConnection: IDBConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  if ADataSet is TClientDataSet then
-    FDataSetAdapter := TClientDataSetAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
-  else
+  if not (ADataSet is TClientDataSet) then
     raise Exception.Create('Is not TClientDataSet type');
+
+  FDataSetAdapter := TClientDataSetAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
 end;
 
 constructor TContainerClientDataSet<M>.Create(AConnection: IDBConnection;

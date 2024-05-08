@@ -45,10 +45,7 @@ type
 
   TUtilSingleton = class sealed(TInterfacedObject, IUtilSingleton)
   private
-  class var
-    FInstance: IUtilSingleton;
-  protected
-    constructor Create;
+    class var FInstance: IUtilSingleton;
   public
     { Public declarations }
     class function GetInstance: IUtilSingleton;
@@ -65,11 +62,6 @@ implementation
 procedure TUtilSingleton.SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
 begin
   PPointer(AInterfaceField)^ := Pointer(AValue);
-end;
-
-constructor TUtilSingleton.Create;
-begin
-
 end;
 
 class function TUtilSingleton.GetInstance: IUtilSingleton;

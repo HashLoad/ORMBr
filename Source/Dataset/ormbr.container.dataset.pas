@@ -85,8 +85,6 @@ type
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
     function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>;
-    //
-    property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;
 
 implementation

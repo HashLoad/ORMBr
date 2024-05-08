@@ -21,11 +21,8 @@
   @abstract(ormbr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dataset.fdmemtable;
@@ -331,7 +328,7 @@ begin
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
       begin
         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
-           (FConnection.GetDriverName in [dnMongoDB]) then
+           (FConnection.GetDriverName in [TDriverName.dnMongoDB]) then
         begin
           LObject := M.Create;
           try

@@ -79,9 +79,9 @@ type
   private
     FOrmDataSet: TFDMemTable;
     FMemTableEvents: TFDMemTableEvents;
-    procedure DoBeforeApplyUpdates(DataSet: TFDDataSet);
-    procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
-    procedure FilterDataSetChilds;
+    procedure _DoBeforeApplyUpdates(DataSet: TFDDataSet);
+    procedure _DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+    procedure _FilterDataSetChilds;
   protected
     procedure PopularDataSetOneToOne(const AObject: TObject;
       const AAssociation: TAssociationMapping); override;
@@ -113,18 +113,12 @@ constructor TRESTFDMemTableAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
   inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
-  /// <summary>
-  /// Captura o component TFDMemTable da IDE passado como parâmetro
-  /// </summary>
+  // Captura o component TFDMemTable da IDE passado como parâmetro
   FOrmDataSet := ADataSet as TFDMemTable;
   FMemTableEvents := TFDMemTableEvents.Create;
-  /// <summary>
-  /// Captura e guarda os eventos do dataset
-  /// </summary>
+  // Captura e guarda os eventos do dataset
   GetDataSetEvents;
-  /// <summary>
-  /// Seta os eventos do ormbr no dataset, para que ele sejam disparados
-  /// </summary>
+  // Seta os eventos do ormbr no dataset, para que ele sejam disparados
   SetDataSetEvents;
   ///
   if not FOrmDataSet.Active then
@@ -147,13 +141,13 @@ begin
   inherited;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+procedure TRESTFDMemTableAdapter<M>._DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
 begin
   if Assigned(FMemTableEvents.AfterApplyUpdates) then
     FMemTableEvents.AfterApplyUpdates(DataSet, AErrors);
 end;
 
-procedure TRESTFDMemTableAdapter<M>.DoBeforeApplyUpdates(DataSet: TFDDataSet);
+procedure TRESTFDMemTableAdapter<M>._DoBeforeApplyUpdates(DataSet: TFDDataSet);
 begin
   if Assigned(FMemTableEvents.BeforeApplyUpdates) then
     FMemTableEvents.BeforeApplyUpdates(DataSet);
@@ -184,7 +178,7 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.FilterDataSetChilds;
+procedure TRESTFDMemTableAdapter<M>._FilterDataSetChilds;
 var
   LRttiType: TRttiType;
   LAssociations: TAssociationMappingList;
@@ -233,7 +227,7 @@ begin
     /// master de outros objetos.
     /// </summary>
     if LChild.FMasterObject.Count > 0 then
-      TRESTFDMemTableAdapter<M>(LChild).FilterDataSetChilds;
+      TRESTFDMemTableAdapter<M>(LChild)._FilterDataSetChilds;
   end;
 end;
 
@@ -265,7 +259,7 @@ begin
       PopularDataSet(LObject);
       /// <summary> Filtra os registros nas sub-tabelas </summary>
       if FOwnerMasterObject = nil then
-        FilterDataSetChilds;
+        _FilterDataSetChilds;
     finally
       LObject.Free;
     end;
@@ -297,7 +291,7 @@ begin
         PopularDataSetList(LObjectList);
         // Filtra os registros nas sub-tabelas
         if FOwnerMasterObject = nil then
-          FilterDataSetChilds;
+          _FilterDataSetChilds;
       finally
         LObjectList.Clear;
         LObjectList.Free;
@@ -331,7 +325,7 @@ begin
         PopularDataSetList(LObjectList);
         /// <summary> Filtra os registros nas sub-tabelas </summary>
         if FOwnerMasterObject = nil then
-          FilterDataSetChilds;
+          _FilterDataSetChilds;
       finally
         LObjectList.Clear;
         LObjectList.Free;
@@ -413,9 +407,9 @@ procedure TRESTFDMemTableAdapter<M>.ApplyUpdates(const MaxErros: Integer);
 begin
   inherited;
   try
-    DoBeforeApplyUpdates(FOrmDataSet);
+    _DoBeforeApplyUpdates(FOrmDataSet);
     ApplyInternal(MaxErros);
-    DoAfterApplyUpdates(FOrmDataSet, MaxErros);
+    _DoAfterApplyUpdates(FOrmDataSet, MaxErros);
   finally
     if FSession.ModifiedFields.ContainsKey(M.ClassName) then
     begin
@@ -430,8 +424,8 @@ end;
 procedure TRESTFDMemTableAdapter<M>.SetDataSetEvents;
 begin
   inherited;
-  FOrmDataSet.BeforeApplyUpdates := DoBeforeApplyUpdates;
-  FOrmDataSet.AfterApplyUpdates  := DoAfterApplyUpdates;
+  FOrmDataSet.BeforeApplyUpdates := _DoBeforeApplyUpdates;
+  FOrmDataSet.AfterApplyUpdates  := _DoAfterApplyUpdates;
 end;
 
 end.

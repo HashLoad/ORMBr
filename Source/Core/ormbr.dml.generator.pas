@@ -58,9 +58,9 @@ type
   // Classe de conexões abstract
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
-    function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
+    function _GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
-    procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
+    procedure _GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
   protected
     FConnection: IDBConnection;
@@ -143,7 +143,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
     LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[AIndex] then
-        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
+        Exit(_GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -200,7 +200,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
     LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[Aindex] then
-        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
+        Exit(_GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -402,7 +402,7 @@ begin
   end
   else
   if AID.IsType<String> then
-  begin 
+  begin
     if AID.AsString = '-1' then
       Exit;
   end;
@@ -415,10 +415,8 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if AID.IsType<Integer> then
+      if (AID.IsType<Integer>) or (AID.IsType<Int64>) then
         Result := Result + LColumnName + ' = ' + AID.ToString
-      if AID.IsType<Int64> then
-        Result := Result + LColumnName + ' = ' + IntToStr(AID.AsInt64)
       else
         Result := Result + LColumnName + ' = ' + QuotedStr(AID.ToString);
 
@@ -463,14 +461,14 @@ begin
       Result.Column(LTable.Name + '.' + LColumn.ColumnName);
     end;
     // Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
-    GenerateJoinColumn(AClass, LTable, Result);
+    _GenerateJoinColumn(AClass, LTable, Result);
   finally
     Result.Where.Clear;
     Result.OrderBy.Clear;
   end;
 end;
 
-function TDMLGeneratorAbstract.GetPropertyValue(AObject: TObject;
+function TDMLGeneratorAbstract._GetPropertyValue(AObject: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
   case AFieldType of
@@ -510,7 +508,7 @@ begin
   FConnection := AConnaction;
 end;
 
-procedure TDMLGeneratorAbstract.GenerateJoinColumn(AClass: TClass;
+procedure TDMLGeneratorAbstract._GenerateJoinColumn(AClass: TClass;
   ATable: TTableMapping; var ACriteria: ICriteria);
 var
   LJoinList: TJoinColumnMappingList;

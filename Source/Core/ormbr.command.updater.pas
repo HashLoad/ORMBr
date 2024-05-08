@@ -53,7 +53,7 @@ uses
 type
   TCommandUpdater = class(TDMLCommandAbstract)
   private
-    function GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
+    function _GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
@@ -148,8 +148,8 @@ begin
         Name := LFieldType.ColumnName;
         DataType := LFieldType.FieldType;
         ParamType := ptInput;
-        Value := GetParamValue(AObject, LProperty, DataType);
-        if FConnection.GetDriverName = dnPostgreSQL then
+        Value := _GetParamValue(AObject, LProperty, DataType);
+        if FConnection.GetDriverName = TDriverName.dnPostgreSQL then
           Continue;
     	  // Tratamento para o tipo ftBoolean nativo, indo como Integer
         // para gravar no banco.
@@ -173,11 +173,12 @@ begin
       end;
     end;
   finally
+    LParams.Clear;
     LParams.Free;
   end;
 end;
 
-function TCommandUpdater.GetParamValue(AInstance: TObject;
+function TCommandUpdater._GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
   Result := Null;

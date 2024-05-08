@@ -58,8 +58,7 @@ type
 
   TRttiSingleton = class(TInterfacedObject, IRttiSingleton)
   private
-    class var
-    FInstance: IRttiSingleton;
+    class var FInstance: IRttiSingleton;
   private
     FContext: TRttiContext;
   protected
@@ -189,7 +188,7 @@ procedure TRttiSingleton.CopyObject(ASourceObject, ATargetObject: TObject);
 var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
-  LCloned: TObject;
+  LCopied: TObject;
   LValue: TObject;
   LSourceStream: TStream;
   LSavedPosition: Int64;
@@ -204,13 +203,13 @@ begin
     Exit;
 
   LRttiType := FContext.GetType(ASourceObject.ClassType);
-  LCloned := ATargetObject;
+  LCopied := ATargetObject;
   for LProperty in LRttiType.GetProperties do
   begin
     if not LProperty.PropertyType.IsInstance then
     begin
       if LProperty.IsWritable then
-        LProperty.SetValue(LCloned, LProperty.GetValue(ASourceObject));
+        LProperty.SetValue(LCopied, LProperty.GetValue(ASourceObject));
     end
     else
     begin
@@ -220,13 +219,13 @@ begin
         LSourceStream := TStream(LValue);
         LSavedPosition := LSourceStream.Position;
         LSourceStream.Position := 0;
-        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
+        if LProperty.GetValue(LCopied).AsType<Variant> = Null then
         begin
           LTargetStream := TMemoryStream.Create;
-          LProperty.SetValue(LCloned, LTargetStream);
+          LProperty.SetValue(LCopied, LTargetStream);
         end
         else
-          LTargetStream := LProperty.GetValue(LCloned).AsObject as TStream;
+          LTargetStream := LProperty.GetValue(LCopied).AsObject as TStream;
         LTargetStream.Position := 0;
         LTargetStream.CopyFrom(LSourceStream, LSourceStream.Size);
         LTargetStream.Position := LSavedPosition;
@@ -236,13 +235,13 @@ begin
       if LProperty.IsList then
       begin
         LSourceList := TObjectList<TObject>(LValue);
-        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
+        if LProperty.GetValue(LCopied).AsType<Variant> = Null then
         begin
           LTargetList := TObjectList<TObject>.Create;
-          LProperty.SetValue(LCloned, LTargetList);
+          LProperty.SetValue(LCopied, LTargetList);
         end
         else
-          LTargetList := TObjectList<TObject>(LProperty.GetValue(LCloned).AsObject);
+          LTargetList := TObjectList<TObject>(LProperty.GetValue(LCopied).AsObject);
 
         for LFor := 0 to LSourceList.Count - 1 do
           LTargetList.Add(Clone(LSourceList[LFor]));
@@ -250,14 +249,14 @@ begin
       else
       begin
         LSourceObject := LValue;
-        if LProperty.GetValue(LCloned).AsType<Variant> = Null then
+        if LProperty.GetValue(LCopied).AsType<Variant> = Null then
         begin
           LTargetObject := Clone(LSourceObject);
-          LProperty.SetValue(LCloned, LTargetObject);
+          LProperty.SetValue(LCopied, LTargetObject);
         end
         else
         begin
-          LTargetObject := LProperty.GetValue(LCloned).AsObject;
+          LTargetObject := LProperty.GetValue(LCopied).AsObject;
           CopyObject(LSourceObject, LTargetObject);
         end;
       end;

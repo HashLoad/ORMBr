@@ -17,14 +17,12 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ormbr Brasil é um ormbr simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.container.fdmemtable;
@@ -62,10 +60,10 @@ implementation
 constructor TContainerFDMemTable<M>.Create(AConnection: IDBConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  if ADataSet is TFDMemTable then
-    FDataSetAdapter := TFDMemTableAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
-  else
+  if not (ADataSet is TFDMemTable) then
     raise Exception.Create('Is not TFDMemTable type');
+
+  FDataSetAdapter := TFDMemTableAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
 end;
 
 constructor TContainerFDMemTable<M>.Create(AConnection: IDBConnection;

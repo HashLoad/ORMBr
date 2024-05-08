@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -53,9 +53,8 @@ uses
 
 type
   TORMBrJson = class
-  private
-    class var
-    FJsonBuilder: TJsonBuilder;
+  strict private
+    class var FJsonBuilder: TJsonBuilder;
     class procedure DoGetValue(const AInstance: TObject;
                                const AProperty: TRttiProperty;
                                var AResult: Variant;

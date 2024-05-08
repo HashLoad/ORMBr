@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @abstract(Website : http://www.ormbr.com.br)
@@ -199,7 +200,7 @@ var
   LAssociation: TAssociationMapping;
 begin
   // Em bancos NoSQL o atributo Association deve ser ignorado.
-  if FConnection.GetDriverName = dnMongoDB then
+  if FConnection.GetDriverName = TDriverName.dnMongoDB then
     Exit;
   if Assigned(AObject) then
   begin
@@ -227,7 +228,7 @@ var
   LAssociation: TAssociationMapping;
 begin
   // Em bancos NoSQL o atributo Association deve ser ignorado.
-  if FConnection.GetDriverName = dnMongoDB then
+  if FConnection.GetDriverName = TDriverName.dnMongoDB then
     Exit;
   LAssociationList := TMappingExplorer.GetMappingAssociation(AOwner.ClassType);
   if LAssociationList = nil then

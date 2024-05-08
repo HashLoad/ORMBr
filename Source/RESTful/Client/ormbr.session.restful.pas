@@ -661,22 +661,22 @@ end;
 
 function TSessionRestFul<M>._ParseOperator(AParams: String): String;
 const
-  OPERATORMAP: array[0..9, 0..1] of String = ( (' = ', ' eq '),
-                                               (' <> ', ' ne '),
-                                               (' > ', ' gt '),
-                                               (' >= ', ' ge '),
-                                               (' < ', ' lt '),
-                                               (' <= ', ' le '),
-                                               (' + ', ' add '),
-                                               (' - ', ' sub '),
-                                               (' * ', ' mul '),
-                                               (' / ', ' div ') );
+  C_OPERATORMAP: array[0..9, 0..1] of String = ( (' = ', ' eq '),
+                                                 (' <> ', ' ne '),
+                                                 (' > ', ' gt '),
+                                                 (' >= ', ' ge '),
+                                                 (' < ', ' lt '),
+                                                 (' <= ', ' le '),
+                                                 (' + ', ' add '),
+                                                 (' - ', ' sub '),
+                                                 (' * ', ' mul '),
+                                                 (' / ', ' div ') );
 var
-  iFor: Integer;
+  LFor: Integer;
 begin
   Result := AParams;
-  for iFor := Low(OPERATORMAP) to High(OPERATORMAP) do
-    Result := StringReplace(Result, OPERATORMAP[iFor, 0], OPERATORMAP[iFor, 1], [rfReplaceAll]);
+  for LFor := Low(C_OPERATORMAP) to High(C_OPERATORMAP) do
+    Result := StringReplace(Result, C_OPERATORMAP[LFor, 0], C_OPERATORMAP[LFor, 1], [rfReplaceAll]);
 end;
 
 end.

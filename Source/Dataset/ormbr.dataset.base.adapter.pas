@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
 }
@@ -224,17 +224,16 @@ begin
     DisableDataSetEvents;
     FOrmDataSet.Close;
     try
-      TFieldSingleton
-        .GetInstance
-          .AddLookupField(AFieldName,
-                          FOrmDataSet,
-                          AKeyFields,
-                          FLookupsField.Last.FOrmDataSet,
-                          ALookupKeyFields,
-                          ALookupResultField,
-                          LColumn.FieldType,
-                          LColumn.Size,
-                          ADisplayLabel);
+      TFieldSingleton.GetInstance
+                     .AddLookupField(AFieldName,
+                                     FOrmDataSet,
+                                     AKeyFields,
+                                     FLookupsField.Last.FOrmDataSet,
+                                     ALookupKeyFields,
+                                     ALookupResultField,
+                                     LColumn.FieldType,
+                                     LColumn.Size,
+                                     ADisplayLabel);
     finally
       FOrmDataSet.Open;
       EnableDataSetEvents;
@@ -760,7 +759,7 @@ procedure TDataSetBaseAdapter<M>.RefreshRecord;
 var
   LPrimaryKey: TPrimaryKeyMapping;
   LParams: TParams;
-  lFor: Integer;
+  LFor: Integer;
 begin
   inherited;
   if FOrmDataSet.RecordCount = 0 then

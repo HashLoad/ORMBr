@@ -17,12 +17,11 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -39,7 +38,7 @@ uses
     FMX.Graphics,
   {$ENDIF}
   {$IFDEF HAS_VCL}
-    // Delphi > 2010 adicionar em:
+    // Delphi > 2010+ adicionar em:
     // Option->Delphi Compiler->Unit scope names, "Vcl", "Vcl.Imaging"
     Graphics,
     GIFImg,
