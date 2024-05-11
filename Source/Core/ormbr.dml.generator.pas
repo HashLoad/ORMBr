@@ -537,33 +537,40 @@ begin
         Continue;
       LJoinExist.Add(LJoin.RefTableName);
       // Join Inner, Left, Right, Full
-      if LJoin.Join = TJoin.InnerJoin then
-        ACriteria.InnerJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.LeftJoin then
-        ACriteria.LeftJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.RightJoin then
-        ACriteria.RightJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.FullJoin then
-        ACriteria.FullJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName]);
+      case LJoin.Join of
+        TJoin.InnerJoin:
+          begin
+            ACriteria.InnerJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.LeftJoin:
+          begin
+            ACriteria.LeftJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.RightJoin:
+          begin
+            ACriteria.RightJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.FullJoin:
+          begin
+            ACriteria.FullJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName]);
+          end;
+      end;
     end;
   finally
     LJoinExist.Free;
