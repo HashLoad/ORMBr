@@ -166,33 +166,29 @@ end;
 
 procedure TForm4.Button5Click(Sender: TObject);
 var
-  LReader: TJsonReader;
-  LResult: TJsonNode;
+  LReader: IJsonReader;
+  LResult: IJsonNode;
 begin
   LReader := TJsonReader.Create;
-  try
-    LReader.ParseFromFile('data.json');
+  LReader.ParseFromFile('data.json');
 
-    LResult := LReader.GetValue('/Pessoas/1/LastName');
-    Memo1.Lines.Add( LResult.ToString );
-    Memo1.Lines.Add('');
+  LResult := LReader.GetValue('/Pessoas/1/LastName');
+  Memo1.Lines.Add( LResult.ToString );
+  Memo1.Lines.Add('');
 
-    LResult := LReader.GetValue('/Opcoes/1');
-    Memo1.Lines.Add( LResult.ToString );
-    Memo1.Lines.Add('');
+  LResult := LReader.GetValue('/Opcoes/1');
+  Memo1.Lines.Add( LResult.ToString );
+  Memo1.Lines.Add('');
 
-    LResult := LReader.GetValue('/Pessoa');
-    Memo1.Lines.Add( LResult.ToString );
+  LResult := LReader.GetValue('/Pessoa');
+  Memo1.Lines.Add( LResult.ToString );
 
-    Memo1.Lines.Add('');
-    LResult := LReader.GetValue('/Pessoas');
-    Memo1.Lines.Add( LResult.ToString );
+  Memo1.Lines.Add('');
+  LResult := LReader.GetValue('/Pessoas');
+  Memo1.Lines.Add( LResult.ToString );
 
-    Memo1.Lines.Add('');
-    Memo1.Lines.Add( LReader.ToJson );
-  finally
-    LReader.Free;
-  end;
+  Memo1.Lines.Add('');
+  Memo1.Lines.Add( LReader.ToJson );
 end;
 
 procedure TForm4.FormCreate(Sender: TObject);
