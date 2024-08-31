@@ -744,8 +744,7 @@ var
       'Projects',
       'Test Performance',
       'Win32',
-      'Win64',
-    );
+      'Win64');
   var
     Str: String;
   begin
