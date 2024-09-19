@@ -389,6 +389,7 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
+  LIdUInt64: UInt64;
 //  LID: string;
 begin
   Result := '';
@@ -397,7 +398,7 @@ begin
     Result := ' WHERE ' + LScopeWhere;
   if AID.IsType<UInt64> then
   begin
-    if AID.AsUInt64 = 0 then
+    if AID.TryAsType<UInt64>(LIdUInt64)  then
       Exit;
   end
   else
@@ -414,7 +415,7 @@ begin
   end
   else
   if AID.IsType<string> then
-  begin 
+  begin
     if AID.AsString = '-1' then
       Exit;
   end;
