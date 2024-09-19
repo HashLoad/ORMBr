@@ -395,6 +395,18 @@ begin
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
+  if AID.IsType<UInt64> then
+  begin
+    if AID.AsUInt64 = 0 then
+      Exit;
+  end
+  else
+  if AID.IsType<Int64> then
+  begin
+    if AID.AsInt64 = -1 then
+      Exit;
+  end
+  else
   if AID.IsType<integer> then
   begin
     if AID.AsInteger = -1 then
@@ -415,9 +427,11 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if AID.IsType<Int64> then
+      if AID.IsType<UInt64> then
+        Result := Result + LColumnName + ' = ' + UIntToStr(AID.AsUInt64)
+      else if AID.IsType<Int64> then
         Result := Result + LColumnName + ' = ' + IntToStr(AID.AsInt64)
-      else if AID.IsType<integer> then
+      else if AID.IsType<Integer> then
         Result := Result + LColumnName + ' = ' + AID.AsType<string>
       else
         Result := Result + LColumnName + ' = ' + QuotedStr(AID.AsType<string>);
