@@ -62,6 +62,7 @@ type
       AFieldType: TFieldType): Variant;
     procedure _GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
+    function _IsType(const AID: TValue): Boolean;
   protected
     FConnection: IDBConnection;
     FQueryCache: TQueryCache;
@@ -389,36 +390,13 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
-  LIntValue: Int64;
-//  LID: string;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
-  if AID.IsType<UInt64> then
-  begin
-    if AID.TryAsType<Int64>(LIntValue) and (LIntValue = -1)  then
-      Exit;
-  end
-  else
-  if AID.IsType<Int64> then
-  begin
-    if AID.AsInt64 = -1 then
-      Exit;
-  end
-  else
-  if AID.IsType<integer> then
-  begin
-    if AID.AsInteger = -1 then
-      Exit;
-  end
-  else
-  if AID.IsType<String> then
-  begin
-    if AID.AsString = '-1' then
-      Exit;
-  end;
+  if _IsType(AID) then
+    Exit;
   LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
   if LPrimaryKey <> nil then
   begin
@@ -451,6 +429,28 @@ begin
 //      end;
     end;
   end;
+end;
+
+function TDMLGeneratorAbstract._IsType(const AID: TValue): Boolean;
+var
+  LIntValue: Int64;
+begin
+  Result := False;
+  if AID.IsType<UInt64> then
+    if AID.TryAsType<Int64>(LIntValue) and (LIntValue = -1)  then
+      Result := True
+  else
+  if AID.IsType<Int64> then
+    if AID.AsInt64 = -1 then
+      Result := True
+  else
+  if AID.IsType<Integer> then
+    if AID.AsInteger = -1 then
+      Result := True
+  else
+  if AID.IsType<String> then
+    if AID.AsString = '-1' then
+      Result := True;
 end;
 
 function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass;
