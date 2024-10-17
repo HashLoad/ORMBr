@@ -54,13 +54,13 @@ type
   TCommandInserter = class(TDMLCommandAbstract)
   private
     FDMLAutoInc: TDMLCommandAutoInc;
-    function GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
+    function _GetParamValue(AInstance: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); override;
     destructor Destroy; override;
-    function GenerateInsert(AObject: TObject): string;
+    function GenerateInsert(AObject: TObject): String;
     function AutoInc: TDMLCommandAutoInc;
   end;
 
@@ -81,7 +81,7 @@ begin
   inherited;
 end;
 
-function TCommandInserter.GenerateInsert(AObject: TObject): string;
+function TCommandInserter.GenerateInsert(AObject: TObject): String;
 var
   LColumns: TColumnMappingList;
   LColumn: TColumnMapping;
@@ -160,17 +160,17 @@ begin
       ParamType := ptInput;
       if LColumn.FieldType = ftGuid then
       begin
-        LGuidString := GetParamValue(AObject,
+        LGuidString := _GetParamValue(AObject,
                                      LColumn.ColumnProperty,
                                      LColumn.FieldType);
         AsGuid := StringToGUID(LGuidString);
         Continue;
       end;
-      Value := GetParamValue(AObject,
+      Value := _GetParamValue(AObject,
                              LColumn.ColumnProperty,
                              LColumn.FieldType);
       // Type ftBoolean não é verificado para o(s) banco(s) abaixo
-      if FConnection.GetDriverName = dnPostgreSQL then
+      if FConnection.GetDriverName = TDriverName.dnPostgreSQL then
         Continue;
       // Tratamento para o tipo ftBoolean nativo, indo como Integer
       // para gravar no banco.
@@ -184,7 +184,7 @@ begin
   end;
 end;
 
-function TCommandInserter.GetParamValue(AInstance: TObject;
+function TCommandInserter._GetParamValue(AInstance: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 var
   LValueGuid: TGUID;

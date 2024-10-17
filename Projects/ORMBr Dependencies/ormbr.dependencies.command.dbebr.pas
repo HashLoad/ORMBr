@@ -12,8 +12,8 @@ type TORMBrDependenciesCommandDBEBr = class(TORMBrDependenciesCommandBase, IORMB
 
   protected
     function GetPath: String; override;
-    function UrlDownloadFile: string; override;
-    function ZipFileName: string; override;
+    function UrlDownloadFile: String; override;
+    function ZipFileName: String; override;
 
 end;
 
@@ -29,9 +29,9 @@ begin
   ForceDirectories(result);
 end;
 
-function TORMBrDependenciesCommandDBEBr.UrlDownloadFile: string;
+function TORMBrDependenciesCommandDBEBr.UrlDownloadFile: String;
 //var
-//  version: string;
+//  version: String;
 begin
   result := FTag;
 //  version := IfThen(FTag.IsEmpty, 'master', FTag);
@@ -46,7 +46,7 @@ begin
 //      [version])
 end;
 
-function TORMBrDependenciesCommandDBEBr.ZipFileName: string;
+function TORMBrDependenciesCommandDBEBr.ZipFileName: String;
 begin
   result := GetPath + 'dbebr.zip';
 

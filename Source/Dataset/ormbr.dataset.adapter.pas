@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
 }
@@ -53,11 +53,11 @@ type
 
   TDataSetAdapter<M: class, constructor> = class(TDataSetBaseAdapter<M>)
   private
-    procedure ExecuteCheckNotNull;
+    procedure _ExecuteCheckNotNull;
   protected
     FConnection: IDBConnection;
     procedure OpenDataSetChilds; override;
-    procedure RefreshDataSetOneToOneChilds(AFieldName: string); override;
+    procedure RefreshDataSetOneToOneChilds(AFieldName: String); override;
     procedure DoAfterScroll(DataSet: TDataSet); override;
     procedure DoBeforePost(DataSet: TDataSet); override;
     procedure DoBeforeDelete(DataSet: TDataSet); override;
@@ -136,10 +136,10 @@ procedure TDataSetAdapter<M>.DoBeforePost(DataSet: TDataSet);
 begin
   inherited DoBeforePost(DataSet);
   // Rotina de validação se o campo foi deixado null
-  ExecuteCheckNotNull;
+  _ExecuteCheckNotNull;
 end;
 
-procedure TDataSetAdapter<M>.ExecuteCheckNotNull;
+procedure TDataSetAdapter<M>._ExecuteCheckNotNull;
 var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
@@ -257,7 +257,7 @@ begin
   end;
 end;
 
-procedure TDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: string);
+procedure TDataSetAdapter<M>.RefreshDataSetOneToOneChilds(AFieldName: String);
 var
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;

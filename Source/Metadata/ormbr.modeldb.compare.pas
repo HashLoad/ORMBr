@@ -82,7 +82,7 @@ end;
 procedure TModelDbCompare.ExecuteDDLCommands;
 var
   oCommand: TDDLCommand;
-  sCommand: string;
+  sCommand: String;
 begin
   inherited;
   if FCommandsAutoExecute then

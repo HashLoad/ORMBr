@@ -45,14 +45,14 @@ type
   // Classe de conexão concreta com dbExpress
   TDMLGeneratorSQLite = class(TDMLGeneratorAbstract)
   protected
-    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: string = ''): string; override;
+    function GetGeneratorSelect(const ACriteria: ICriteria; AOrderBy: String = ''): String; override;
   public
     constructor Create; override;
     destructor Destroy; override;
     function GeneratorSelectAll(AClass: TClass;
-      APageSize: Integer; AID: TValue): string; override;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; override;
+      APageSize: Integer; AID: TValue): String; override;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; override;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; override;
     function GeneratorAutoIncNextValue(AObject: TObject;
@@ -76,7 +76,7 @@ begin
 end;
 
 function TDMLGeneratorSQLite.GeneratorSelectAll(AClass: TClass;
-  APageSize: Integer; AID: TValue): string;
+  APageSize: Integer; AID: TValue): String;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
@@ -102,7 +102,7 @@ begin
 end;
 
 function TDMLGeneratorSQLite.GeneratorSelectWhere(AClass: TClass;
-  AWhere: string; AOrderBy: string; APageSize: Integer): string;
+  AWhere: String; AOrderBy: String; APageSize: Integer): String;
 var
   LCriteria: ICriteria;
   LScopeWhere: String;
@@ -142,7 +142,7 @@ begin
 end;
 
 function TDMLGeneratorSQLite.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
+  AOrderBy: String): String;
 begin
   Result := ' LIMIT %s OFFSET %s';
 end;
@@ -175,6 +175,6 @@ begin
 end;
 
 initialization
-  TDriverRegister.RegisterDriver(dnSQLite, TDMLGeneratorSQLite.Create);
+  TDriverRegister.RegisterDriver(TDriverName.dnSQLite, TDMLGeneratorSQLite.Create);
 
 end.

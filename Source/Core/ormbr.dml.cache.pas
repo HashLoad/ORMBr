@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @abstract(Website : http://www.ormbr.com.br)
@@ -48,16 +49,16 @@ type
     /// <param name="String">
     ///   Comando SQL pronto para SELECT e INSERT
     /// </param>
-    function TryGetValue(const AKey: string; var AValue: string): boolean;
-    procedure AddOrSetValue(const AKey: string; const AValue: string);
+    function TryGetValue(const AKey: String; var AValue: String): Boolean;
+    procedure AddOrSetValue(const AKey: String; const AValue: String);
   end;
 
 implementation
 
 { TQueryCache }
 
-procedure TQueryCache.AddOrSetValue(const AKey: string;
-  const AValue: string);
+procedure TQueryCache.AddOrSetValue(const AKey: String;
+  const AValue: String);
 begin
   FQueryCache.AddOrSetValue(AKey, AValue);
 end;
@@ -73,8 +74,8 @@ begin
   inherited;
 end;
 
-function TQueryCache.TryGetValue(const AKey: string;
-  var AValue: string): boolean;
+function TQueryCache.TryGetValue(const AKey: String;
+  var AValue: String): Boolean;
 begin
   Result := FQueryCache.TryGetValue(AKey, AValue);
 end;

@@ -37,8 +37,8 @@ type
     Fregisterdate: TDateTime;
     Fupdatedate: TDate;
     Fclient_id: Integer;
-    Fclient_name: string;
-    Fclient_namenew: string;
+    Fclient_name: String;
+    Fclient_namenew: String;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
     FEnumInteger: TMyEnumInteger;
@@ -79,7 +79,7 @@ type
     [Column('aliascollumn', ftString, 60)]
     [JoinColumn('client_id', 'client', 'client_id', 'client_name', TJoin.InnerJoin, 'aliascollumn', 'aliastable')]
     [Dictionary('Nome do Cliente', '')]
-    property client_name: string read fclient_name write fclient_name;
+    property client_name: String read fclient_name write fclient_name;
 
     [Column('MyEnum', ftInteger)]
     [Dictionary('Enum Integer', '')]

@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -40,12 +41,12 @@ type
     FConnection: IDBConnection;
     FGeneratorCommand: IDMLGeneratorCommand;
     FParams: TParams;
-    FResultCommand: string;
+    FResultCommand: String;
   public
     constructor Create(AConnection: IDBConnection; ADriverName: TDriverName;
       AObject: TObject); virtual;
     destructor Destroy; override;
-    function GetDMLCommand: string;
+    function GetDMLCommand: String;
     function Params: TParams;
   end;
 
@@ -67,11 +68,12 @@ end;
 
 destructor TDMLCommandAbstract.Destroy;
 begin
+  FParams.Clear;
   FParams.Free;
   inherited;
 end;
 
-function TDMLCommandAbstract.GetDMLCommand: string;
+function TDMLCommandAbstract.GetDMLCommand: String;
 begin
   Result := FResultCommand;
 end;

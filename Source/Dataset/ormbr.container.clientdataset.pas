@@ -17,12 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.container.clientdataset;
@@ -60,10 +58,10 @@ implementation
 constructor TContainerClientDataSet<M>.Create(AConnection: IDBConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
-  if ADataSet is TClientDataSet then
-    FDataSetAdapter := TClientDataSetAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
-  else
+  if not (ADataSet is TClientDataSet) then
     raise Exception.Create('Is not TClientDataSet type');
+
+  FDataSetAdapter := TClientDataSetAdapter<M>.Create(AConnection, ADataSet, APageSize, AMasterObject)
 end;
 
 constructor TContainerClientDataSet<M>.Create(AConnection: IDBConnection;

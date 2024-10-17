@@ -40,7 +40,7 @@ type
     FConnection: IDBConnection;
     FPageSize: Integer;
     FPageNext: Integer;
-    FModifiedFields: TDictionary<string, TDictionary<string, string>>;
+    FModifiedFields: TDictionary<String, TDictionary<String, String>>;
     FDeleteList: TObjectList<TObject>;
     FManager: TRESTObjectManager;
     FResultParams: TParams;
@@ -52,11 +52,11 @@ type
       const APageSize: Integer = -1); virtual;
     destructor Destroy; override;
     function ExistSequence: Boolean; virtual;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>; virtual;
     // ObjectSet
     procedure Insert(const AObject: TObject); overload; virtual;
     procedure Insert(const AObjectList: TObjectList<TObject>); overload; virtual; abstract;
-    procedure Update(const AObject: TObject; const AKey: string); overload; virtual;
+    procedure Update(const AObject: TObject; const AKey: String); overload; virtual;
     procedure Update(const AObjectList: TObjectList<TObject>); overload; virtual; abstract;
     procedure Delete(const AObject: TObject); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
@@ -67,13 +67,13 @@ type
     function NextPacketList(const AWhere, AOrderBy: String; const APageSize, APageNext: Integer): TObjectList<TObject>; overload; virtual;
     function ResultParams: TParams;
     // DataSet e ObjectSet
-    procedure ModifyFieldsCompare(const AKey: string; const AObjectSource,
+    procedure ModifyFieldsCompare(const AKey: String; const AObjectSource,
       AObjectUpdate: TObject); virtual;
     function Find: TObjectList<TObject>; overload; virtual;
     function Find(const AID: Integer): TObject; overload; virtual;
-    function Find(const AID: string): TObject; overload; virtual;
-    function FindWhere(const AWhere: string; const AOrderBy: string): TObjectList<TObject>; virtual;
-    function FindOne(const AWhere: string): TObject;
+    function Find(const AID: String): TObject; overload; virtual;
+    function FindWhere(const AWhere: String; const AOrderBy: String): TObjectList<TObject>; virtual;
+    function FindOne(const AWhere: String): TObject;
     function DeleteList: TObjectList<TObject>; virtual;
   end;
 
@@ -88,14 +88,14 @@ constructor TRESTObjectSetSession.Create(const AConnection: IDBConnection;
   const AClassType: TClass; const APageSize: Integer = -1);
 begin
   FPageSize := APageSize;
-  FModifiedFields := TObjectDictionary<string, TDictionary<string, string>>.Create([doOwnsValues]);
+  FModifiedFields := TObjectDictionary<String, TDictionary<String, String>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<TObject>.Create;
   FResultParams := TParams.Create;
   FManager := TRESTObjectManager.Create(Self, AConnection, AClassType, APageSize);
   // Inicia uma lista interna para gerenciar campos alterados
   FModifiedFields.Clear;
   FModifiedFields.TrimExcess;
-  FModifiedFields.Add(AClassType.ClassName, TDictionary<string, string>.Create);
+  FModifiedFields.Add(AClassType.ClassName, TDictionary<String, String>.Create);
 end;
 
 destructor TRESTObjectSetSession.Destroy;
@@ -110,7 +110,7 @@ begin
   inherited;
 end;
 
-function TRESTObjectSetSession.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+function TRESTObjectSetSession.ModifiedFields: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := FModifiedFields;
 end;
@@ -130,18 +130,18 @@ begin
   Result := FManager.ExistSequence;
 end;
 
-function TRESTObjectSetSession.Find(const AID: string): TObject;
+function TRESTObjectSetSession.Find(const AID: String): TObject;
 begin
   FFindWhereUsed := False;
   Result := FManager.Find(AID);
 end;
 
-function TRESTObjectSetSession.FindOne(const AWhere: string): TObject;
+function TRESTObjectSetSession.FindOne(const AWhere: String): TObject;
 begin
   Result := FManager.FindOne(AWhere);
 end;
 
-function TRESTObjectSetSession.FindWhere(const AWhere, AOrderBy: string): TObjectList<TObject>;
+function TRESTObjectSetSession.FindWhere(const AWhere, AOrderBy: String): TObjectList<TObject>;
 begin
   FFindWhereUsed := True;
   FWhere := AWhere;
@@ -171,7 +171,7 @@ begin
   FManager.InsertInternal(AObject);
 end;
 
-procedure TRESTObjectSetSession.ModifyFieldsCompare(const AKey: string;
+procedure TRESTObjectSetSession.ModifyFieldsCompare(const AKey: String;
   const AObjectSource, AObjectUpdate: TObject);
 var
   LColumn: TColumnMapping;
@@ -188,7 +188,7 @@ begin
     if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
       Continue;
     if not FModifiedFields.ContainsKey(AKey) then
-      FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
+      FModifiedFields.Add(AKey, TDictionary<String, String>.Create);
     // Se o tipo da property for tkRecord provavelmente tem Nullable nela
     // Se não for tkRecord entra no ELSE e pega o valor de forma direta
     if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
@@ -259,7 +259,7 @@ begin
   Result := FResultParams;
 end;
 
-procedure TRESTObjectSetSession.Update(const AObject: TObject; const AKey: string);
+procedure TRESTObjectSetSession.Update(const AObject: TObject; const AKey: String);
 begin
   FManager.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
 end;

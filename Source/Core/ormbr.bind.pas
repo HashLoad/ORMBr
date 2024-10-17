@@ -61,7 +61,7 @@ type
     procedure SetFieldToField(const AResultSet: IDBResultSet;
       const ADataSet: TDataSet);
     function GetFieldValue(const ADataSet: TDataSet;
-      const AFieldName: string; const AFieldType: TFieldType): string;
+      const AFieldName: String; const AFieldType: TFieldType): String;
     procedure SetFieldToProperty(const ADataSet: TDataSet;
       const AObject: TObject); overload;
     procedure SetFieldToProperty(const ADataSet: IDBResultSet;
@@ -118,8 +118,8 @@ type
       const ADataSet: TDataSet);
     procedure SetFieldToField(const AResultSet: IDBResultSet;
       const ADataSet: TDataSet);
-    function GetFieldValue(const ADataSet: TDataSet; const AFieldName: string;
-      const AFieldType: TFieldType): string;
+    function GetFieldValue(const ADataSet: TDataSet; const AFieldName: String;
+      const AFieldType: TFieldType): String;
     procedure SetFieldToProperty(const ADataSet: TDataSet;
       const AObject: TObject); overload;
     procedure SetFieldToProperty(const ADataSet: IDBResultSet;
@@ -260,8 +260,8 @@ begin
 end;
 
 function TBind.GetFieldValue(const ADataSet: TDataSet;
-  const AFieldName: string;
-  const AFieldType: TFieldType): string;
+  const AFieldName: String;
+  const AFieldType: TFieldType): String;
 begin
   case AFieldType of
     ftString, ftDate, ftTime, ftDateTime, ftTimeStamp:
@@ -383,7 +383,7 @@ var
   LCalcField: TCalcFieldMapping;
   LCalcFields: TCalcFieldMappingList;
   LDictionary: Dictionary;
-  LFieldName: string;
+  LFieldName: String;
 begin
   LCalcFields := TMappingExplorer
                      .GetMappingCalcField(AObject.ClassType);
@@ -429,7 +429,7 @@ var
   LColumn: TColumnMapping;
   LColumns: TColumnMappingList;
   LDictionary: Dictionary;
-  LFieldName: string;
+  LFieldName: String;
   LField: TField;
 begin
   LColumns := TMappingExplorer
@@ -842,7 +842,7 @@ begin
   /// Nullable
   if LProperty.IsNullable then
   begin
-    LProperty.SetValueNullable(AObject, LRttiType.Handle, AField.Value);
+    LProperty.SetValueNullable(AObject, LRttiType.Handle, AField.Value, False);
   end
   else if LProperty.IsBlob then
   begin
@@ -859,7 +859,7 @@ begin
       raise Exception.CreateFmt('Column [%s] must have blob value', [AColumn.ColumnName]);
   end
   else
-    LProperty.SetValueNullable(AObject, LProperty.PropertyType.Handle, AField.Value);
+    LProperty.SetValueNullable(AObject, LProperty.PropertyType.Handle, AField.Value, False);
 end;
 
 procedure TBind.SetFieldToPropertyEnumeration(

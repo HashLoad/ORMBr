@@ -65,18 +65,18 @@ type
   IGpSQLCase = interface;
 
   IGpSQLName = interface ['{B219D388-7E5E-4F71-A1F1-9AE4DDE754BC}']
-    function  GetAlias: string;
+    function  GetAlias: String;
     function  GetCase: IGpSQLCase;
-    function  GetName: string;
-    procedure SetAlias(const value: string);
+    function  GetName: String;
+    procedure SetAlias(const value: String);
     procedure SetCase(const value: IGpSQLCase);
-    procedure SetName(const value: string);
+    procedure SetName(const value: String);
   //
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Name: string read GetName write SetName;
+    function  IsEmpty: Boolean;
+    property Name: String read GetName write SetName;
     property &Case: IGpSQLCase read GetCase write SetCase;
-    property Alias: string read GetAlias write SetAlias;
+    property Alias: String read GetAlias write SetAlias;
   end; { IGpSQLName }
 
   IGpSQLNames = interface ['{DA9157F6-3526-4DA4-8CD3-115DFE7719B3}']
@@ -86,20 +86,20 @@ type
     procedure Add(const name: IGpSQLName); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Columns[idx: integer]: IGpSQLName read GetColumns; default;
   end; { IGpSQLNames }
 
   IGpSQLNameValue = interface ['{64F2DDD0-3A26-4BBA-8AD2-3C791AC77747}']
-    function  GetName: string;
-    function  GetValue: string;
-    procedure SetName(const value: string);
-    procedure SetValue(const value: string);
+    function  GetName: String;
+    function  GetValue: String;
+    procedure SetName(const value: String);
+    procedure SetValue(const value: String);
   //
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Name: string read GetName write SetName;
-    property Value: string read GetValue write SetValue;
+    function  IsEmpty: Boolean;
+    property Name: String read GetName write SetName;
+    property Value: String read GetValue write SetValue;
   end; { IGpSQLNameValue }
 
   IGpSQLNameValuePairs = interface ['{2859B885-1E9A-4452-AE36-F31799E7E10D}']
@@ -109,7 +109,7 @@ type
     procedure Add(const nameValue: IGpSQLNameValue); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Item[idx: integer]: IGpSQLNameValue read GetItem; default;
   end; { IGpSQLNameValuePairs }
 
@@ -119,16 +119,16 @@ type
     function  GetLeft: IGpSQLExpression;
     function  GetOperation: TGpSQLExpressionOperation;
     function  GetRight: IGpSQLExpression;
-    function  GetTerm: string;
+    function  GetTerm: String;
     procedure SetLeft(const value: IGpSQLExpression);
     procedure SetOperation(const value: TGpSQLExpressionOperation);
     procedure SetRight(const value: IGpSQLExpression);
-    procedure SetTerm(const value: string);
+    procedure SetTerm(const value: String);
   //
     procedure Assign(const node: IGpSQLExpression);
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Term: string read GetTerm write SetTerm;
+    function  IsEmpty: Boolean;
+    property Term: String read GetTerm write SetTerm;
     property Operation: TGpSQLExpressionOperation read GetOperation write SetOperation;
     property Left: IGpSQLExpression read GetLeft write SetLeft;
     property Right: IGpSQLExpression read GetRight write SetRight;
@@ -168,11 +168,11 @@ type
   end; { IGpSQLCase }
 
   IGpSQLSection = interface ['{BE0A0FF9-AD70-40C5-A1C2-7FA2F7061153}']
-    function  GetName: string;
+    function  GetName: String;
   //
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Name: string read GetName;
+    function  IsEmpty: Boolean;
+    property Name: String read GetName;
   end; { IGpSQLSection }
 
   TGpSQLSelectQualifierType = (sqFirst, sqSkip, sqDistinct);
@@ -194,7 +194,7 @@ type
     procedure Add(qualifier: IGpSQLSelectQualifier); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Qualifier[idx: integer]: IGpSQLSelectQualifier read GetQualifier; default;
   end; { IGpSQLSelectQualifiers }
 
@@ -216,21 +216,21 @@ type
 
   IGpSQLInsert = interface(IGpSQLSection) ['{FD8380C4-C20A-4F02-B3D9-95B6F2CCDF40}']
     function  GetColumns: IGpSQLNames;
-    function  GetTableName: string;
+    function  GetTableName: String;
     function  GetValues: IGpSQLNameValuePairs;
-    procedure SetTableName(const value: string);
+    procedure SetTableName(const value: String);
   //
     property Columns: IGpSQLNames read GetColumns;
-    property TableName: string read GetTableName write SetTableName;
+    property TableName: String read GetTableName write SetTableName;
     property Values: IGpSQLNameValuePairs read GetValues;
   end; { IGpSQLInsert }
 
   IGpSQLUpdate = interface(IGpSQLSection) ['{61AA0D87-382C-4F83-AAA6-65B9416C09A8}']
-    function  GetTableName: string;
+    function  GetTableName: String;
     function  GetValues: IGpSQLNameValuePairs;
-    procedure SetTableName(const value: string);
+    procedure SetTableName(const value: String);
   //
-    property TableName: string read GetTableName write SetTableName;
+    property TableName: String read GetTableName write SetTableName;
     property Values: IGpSQLNameValuePairs read GetValues;
   end; { IGpSQLUpdate }
 
@@ -257,7 +257,7 @@ type
     procedure Add(const join: IGpSQLJoin); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Joins[idx: integer]: IGpSQLJoin read GetJoins write SetJoins; default;
   end; { IGpSQLJoins }
 
@@ -308,7 +308,7 @@ type
     function GetWhere: IGpSQLWhere;
   //
     procedure Clear;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Select: IGpSQLSelect read GetSelect;
     property Delete: IGpSQLDelete read GetDelete;
     property Insert: IGpSQLInsert read GetInsert;
@@ -332,22 +332,22 @@ uses
 type
   TGpSQLName = class(TInterfacedObject, IGpSQLName)
   strict private
-    FAlias: string;
+    FAlias: String;
     FCase : IGpSQLCase;
-    FName : string;
+    FName : String;
   strict protected
-    function  GetAlias: string;
+    function  GetAlias: String;
     function  GetCase: IGpSQLCase;
-    function  GetName: string;
-    procedure SetAlias(const value: string);
+    function  GetName: String;
+    procedure SetAlias(const value: String);
     procedure SetCase(const value: IGpSQLCase);
-    procedure SetName(const value: string);
+    procedure SetName(const value: String);
   public
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Name: string read GetName write SetName;
+    function  IsEmpty: Boolean;
+    property Name: String read GetName write SetName;
     property &Case: IGpSQLCase read GetCase write SetCase;
-    property Alias: string read GetAlias write SetAlias;
+    property Alias: String read GetAlias write SetAlias;
   end; { TGpSQLName }
 
   TGpSQLNames = class(TInterfacedObject, IGpSQLNames)
@@ -362,24 +362,24 @@ type
     procedure Add(const name: IGpSQLName); overload; virtual;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Columns[idx: integer]: IGpSQLName read GetColumns; default;
   end; { TGpSQLNames }
 
   TGpSQLNameValue  = class(TInterfacedObject, IGpSQLNameValue)
   strict private
-    FName : string;
-    FValue: string;
+    FName : String;
+    FValue: String;
   strict protected
-    function  GetName: string;
-    function  GetValue: string;
-    procedure SetName(const value: string);
-    procedure SetValue(const value: string);
+    function  GetName: String;
+    function  GetValue: String;
+    procedure SetName(const value: String);
+    procedure SetValue(const value: String);
   public
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Name: string read GetName write SetName;
-    property Value: string read GetValue write SetValue;
+    function  IsEmpty: Boolean;
+    property Name: String read GetName write SetName;
+    property Value: String read GetValue write SetValue;
   end; { TGpSQLNameValue }
 
   TGpSQLNameValuePairs = class(TInterfacedObject, IGpSQLNameValuePairs)
@@ -394,7 +394,7 @@ type
     procedure Add(const nameValue: IGpSQLNameValue); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Item[idx: integer]: IGpSQLNameValue read GetItem; default;
   end; { TGpSQLNameValuePairs }
 
@@ -403,21 +403,21 @@ type
     FLeft     : IGpSQLExpression;
     FOperation: TGpSQLExpressionOperation;
     FRight    : IGpSQLExpression;
-    FTerm     : string;
+    FTerm     : String;
   strict protected
     function  GetLeft: IGpSQLExpression;
     function  GetOperation: TGpSQLExpressionOperation;
     function  GetRight: IGpSQLExpression;
-    function  GetTerm: string;
+    function  GetTerm: String;
     procedure SetLeft(const value: IGpSQLExpression);
     procedure SetOperation(const value: TGpSQLExpressionOperation);
     procedure SetRight(const value: IGpSQLExpression);
-    procedure SetTerm(const value: string);
+    procedure SetTerm(const value: String);
   public
     procedure Assign(const node: IGpSQLExpression);
     procedure Clear;
-    function  IsEmpty: boolean;
-    property Term: string read GetTerm write SetTerm;
+    function  IsEmpty: Boolean;
+    property Term: String read GetTerm write SetTerm;
     property Operation: TGpSQLExpressionOperation read GetOperation write SetOperation;
     property Left: IGpSQLExpression read GetLeft write SetLeft;
     property Right: IGpSQLExpression read GetRight write SetRight;
@@ -474,14 +474,14 @@ type
 
   TGpSQLSection = class(TInterfacedObject, IGpSQLSection)
   strict private
-    FName: string;
+    FName: String;
   strict protected
-    function  GetName: string;
+    function  GetName: String;
   public
-    constructor Create(sectionName: string);
+    constructor Create(sectionName: String);
     procedure Clear; virtual; abstract;
-    function  IsEmpty: boolean; virtual; abstract;
-    property Name: string read GetName;
+    function  IsEmpty: Boolean; virtual; abstract;
+    property Name: String read GetName;
   end; { TGpSQLSection }
 
   TGpSQLSelectQualifier = class(TInterfacedObject, IGpSQLSelectQualifier)
@@ -510,7 +510,7 @@ type
     procedure Add(qualifier: IGpSQLSelectQualifier); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Qualifier[idx: integer]: IGpSQLSelectQualifier read GetQualifier; default;
   end; { TGpSQLSelectQualifiers }
 
@@ -526,7 +526,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Columns: IGpSQLNames read GetColumns;
     property Qualifiers: IGpSQLSelectQualifiers read GetQualifiers;
     property TableNames: IGpSQLNames read GetTableNames;
@@ -540,42 +540,42 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property TableNames: IGpSQLNames read GetTableNames;
   end; { TGpSQLDelete }
 
   TGpSQLInsert = class(TGpSQLSection, IGpSQLInsert)
   strict private
     FColumns  : IGpSQLNames;
-    FTableName: string;
+    FTableName: String;
     FValues   : IGpSQLNameValuePairs;
   strict protected
     function  GetColumns: IGpSQLNames;
-    function  GetTableName: string;
+    function  GetTableName: String;
     function  GetValues: IGpSQLNameValuePairs;
-    procedure SetTableName(const value: string);
+    procedure SetTableName(const value: String);
   public
     constructor Create;
     procedure Clear; override;
     property Columns: IGpSQLNames read GetColumns;
-    function  IsEmpty: boolean; override;
-    property TableName: string read GetTableName write SetTableName;
+    function  IsEmpty: Boolean; override;
+    property TableName: String read GetTableName write SetTableName;
     property Values: IGpSQLNameValuePairs read GetValues;
   end; { TGpSQLInsert }
 
   TGpSQLUpdate = class(TGpSQLSection, IGpSQLUpdate)
   strict private
-    FTableName: string;
+    FTableName: String;
     FValues: IGpSQLNameValuePairs;
   strict protected
-    function  GetTableName: string;
+    function  GetTableName: String;
     function  GetValues: IGpSQLNameValuePairs;
-    procedure SetTableName(const value: string);
+    procedure SetTableName(const value: String);
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
-    property TableName: string read GetTableName write SetTableName;
+    function  IsEmpty: Boolean; override;
+    property TableName: String read GetTableName write SetTableName;
     property Values: IGpSQLNameValuePairs read GetValues;
   end; { TGpSQLUpdate }
 
@@ -594,7 +594,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Condition: IGpSQLExpression read GetCondition write SetCondition;
     property JoinedTable: IGpSQLName read GetJoinedTable write SetJoinedTable;
     property JoinType: TGpSQLJoinType read GetJoinType write SetJoinType;
@@ -613,7 +613,7 @@ type
     procedure Add(const join: IGpSQLJoin); overload;
     procedure Clear;
     function  Count: integer;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Joins[idx: integer]: IGpSQLJoin read GetJoins write SetJoins; default;
   end; { TGpSQLJoins }
 
@@ -626,7 +626,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Expression: IGpSQLExpression read GetExpression write SetExpression;
   end; { TGpSQLWhere }
 
@@ -638,7 +638,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Columns: IGpSQLNames read GetColumns;
   end; { IGpSQLGroupBy }
 
@@ -651,7 +651,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Expression: IGpSQLExpression read GetExpression write SetExpression;
   end; { TGpSQLHaving }
 
@@ -678,7 +678,7 @@ type
   public
     constructor Create;
     procedure Clear; override;
-    function  IsEmpty: boolean; override;
+    function  IsEmpty: Boolean; override;
     property Columns: IGpSQLNames read GetColumns;
   end; { IGpSQLOrderBy }
 
@@ -706,7 +706,7 @@ type
   public
     constructor Create;
     procedure Clear;
-    function  IsEmpty: boolean;
+    function  IsEmpty: Boolean;
     property Select: IGpSQLSelect read GetSelect;
     property Delete: IGpSQLDelete read GetDelete;
     property Insert: IGpSQLInsert read GetInsert;
@@ -743,7 +743,7 @@ begin
   FAlias := '';
 end; { TGpSQLName.Clear }
 
-function TGpSQLName.GetAlias: string;
+function TGpSQLName.GetAlias: String;
 begin
   Result := FAlias;
 end; { TGpSQLName.GetAlias }
@@ -753,17 +753,17 @@ begin
   Result := FCase;
 end; { TGpSQLName.GetCase }
 
-function TGpSQLName.GetName: string;
+function TGpSQLName.GetName: String;
 begin
   Result := FName;
 end; { TGpSQLName.GetName }
 
-function TGpSQLName.IsEmpty: boolean;
+function TGpSQLName.IsEmpty: Boolean;
 begin
   Result := (FName = '') and (FAlias = '');
 end; { TGpSQLName.IsEmpty }
 
-procedure TGpSQLName.SetAlias(const value: string);
+procedure TGpSQLName.SetAlias(const value: String);
 begin
   FAlias := value;
 end; { TGpSQLName.SetAlias }
@@ -773,7 +773,7 @@ begin
   FCase := value;
 end; { TGpSQLName.SetCase }
 
-procedure TGpSQLName.SetName(const value: string);
+procedure TGpSQLName.SetName(const value: String);
 begin
   FName := value;
 end; { TGpSQLName.SetName }
@@ -818,7 +818,7 @@ begin
   Result := FColumns[idx];
 end; { TGpSQLNames.GetColumns }
 
-function TGpSQLNames.IsEmpty: boolean;
+function TGpSQLNames.IsEmpty: Boolean;
 begin
   Result := (Count = 0);
 end; { TGpSQLNames.IsEmpty }
@@ -831,27 +831,27 @@ begin
   FValue := '';
 end; { TGpSQLNameValue.Clear }
 
-function TGpSQLNameValue.GetName: string;
+function TGpSQLNameValue.GetName: String;
 begin
   Result := FName;
 end; { TGpSQLNameValue.GetName }
 
-function TGpSQLNameValue.GetValue: string;
+function TGpSQLNameValue.GetValue: String;
 begin
   Result := FValue;
 end; { TGpSQLNameValue.GetValue }
 
-function TGpSQLNameValue.IsEmpty: boolean;
+function TGpSQLNameValue.IsEmpty: Boolean;
 begin
   Result := (FName <> '');
 end; { TGpSQLNameValue.IsEmpty }
 
-procedure TGpSQLNameValue.SetName(const value: string);
+procedure TGpSQLNameValue.SetName(const value: String);
 begin
   FName := value;
 end; { TGpSQLNameValue.SetName }
 
-procedure TGpSQLNameValue.SetValue(const value: string);
+procedure TGpSQLNameValue.SetValue(const value: String);
 begin
   FValue := value;
 end; { TGpSQLNameValue.SetValue }
@@ -896,7 +896,7 @@ begin
   Result := FList[idx];
 end; { TGpSQLNameValuePairs.GetItem }
 
-function TGpSQLNameValuePairs.IsEmpty: boolean;
+function TGpSQLNameValuePairs.IsEmpty: Boolean;
 begin
   Result := (Count = 0);
 end; { TGpSQLNameValuePairs.IsEmpty }
@@ -934,12 +934,12 @@ begin
   Result := FRight;
 end; { TGpSQLExpression.GetRight }
 
-function TGpSQLExpression.GetTerm: string;
+function TGpSQLExpression.GetTerm: String;
 begin
   Result := FTerm;
 end; { TGpSQLExpression.GetTerm }
 
-function TGpSQLExpression.IsEmpty: boolean;
+function TGpSQLExpression.IsEmpty: Boolean;
 begin
   Result := (FOperation = opNone) and (FTerm = '');
 end; { TGpSQLExpression.IsEmpty }
@@ -959,7 +959,7 @@ begin
   FRight := value;
 end; { TGpSQLExpression.SetRight }
 
-procedure TGpSQLExpression.SetTerm(const value: string);
+procedure TGpSQLExpression.SetTerm(const value: String);
 begin
   FTerm := value;
 end; { TGpSQLExpression.SetTerm }
@@ -1075,13 +1075,13 @@ end; { TGpSQLCase.SetWhenList }
 
 { TGpSQLSection }
 
-constructor TGpSQLSection.Create(sectionName: string);
+constructor TGpSQLSection.Create(sectionName: String);
 begin
   inherited Create;
   FName := sectionName;
 end; { TGpSQLSection.Create }
 
-function TGpSQLSection.GetName: string;
+function TGpSQLSection.GetName: String;
 begin
   Result := FName;
 end; { TGpSQLSection.GetName }
@@ -1148,7 +1148,7 @@ begin
   Result := FQualifiers[idx];
 end; { TGpSQLSelectQualifiers.GetQualifier }
 
-function TGpSQLSelectQualifiers.IsEmpty: boolean;
+function TGpSQLSelectQualifiers.IsEmpty: Boolean;
 begin
   Result := (Count = 0);
 end; { TGpSQLSelectQualifiers.IsEmpty }
@@ -1184,7 +1184,7 @@ begin
   Result := FTableNames;
 end; { TGpSQLSelect.GetTableNames }
 
-function TGpSQLSelect.IsEmpty: boolean;
+function TGpSQLSelect.IsEmpty: Boolean;
 begin
   Result := Columns.IsEmpty and TableNames.IsEmpty;
 end; { TGpSQLSelect.IsEmpty }
@@ -1207,7 +1207,7 @@ begin
   Result := FTableNames;
 end; { TGpSQLDelete.GetTableNames }
 
-function TGpSQLDelete.IsEmpty: boolean;
+function TGpSQLDelete.IsEmpty: Boolean;
 begin
   Result := TableNames.IsEmpty;
 end; { TGpSQLDelete.IsEmpty }
@@ -1231,7 +1231,7 @@ begin
   Result := FColumns;
 end; { TGpSQLInsert.GetColumns }
 
-function TGpSQLInsert.GetTableName: string;
+function TGpSQLInsert.GetTableName: String;
 begin
   Result := FTableName;
 end; { TGpSQLInsert.GetTableName }
@@ -1241,12 +1241,12 @@ begin
   Result := FValues;
 end; { TGpSQLInsert.GetValues }
 
-function TGpSQLInsert.IsEmpty: boolean;
+function TGpSQLInsert.IsEmpty: Boolean;
 begin
   Result := (TableName = '');
 end; { TGpSQLInsert.IsEmpty }
 
-procedure TGpSQLInsert.SetTableName(const value: string);
+procedure TGpSQLInsert.SetTableName(const value: String);
 begin
   FTableName := value;
 end; { TGpSQLInsert.SetTableName }
@@ -1264,7 +1264,7 @@ begin
   TableName := '';
 end; { TGpSQLUpdate.Clear }
 
-function TGpSQLUpdate.GetTableName: string;
+function TGpSQLUpdate.GetTableName: String;
 begin
   Result := FTableName;
 end; { TGpSQLUpdate.GetTableName }
@@ -1274,12 +1274,12 @@ begin
   Result := FValues;
 end; { TGpSQLUpdate.GetValues }
 
-function TGpSQLUpdate.IsEmpty: boolean;
+function TGpSQLUpdate.IsEmpty: Boolean;
 begin
   Result := (TableName = '');
 end; { TGpSQLUpdate.IsEmpty }
 
-procedure TGpSQLUpdate.SetTableName(const value: string);
+procedure TGpSQLUpdate.SetTableName(const value: String);
 begin
   FTableName := value;
 end; { TGpSQLUpdate.SetTableName }
@@ -1314,7 +1314,7 @@ begin
   Result := FJoinType;
 end; { TGpSQLJoin.GetJoinType }
 
-function TGpSQLJoin.IsEmpty: boolean;
+function TGpSQLJoin.IsEmpty: Boolean;
 begin
   Result := Condition.IsEmpty and JoinedTable.IsEmpty;
 end; { TGpSQLJoin.IsEmpty }
@@ -1353,7 +1353,7 @@ begin
   inherited;
 end; { TGpSQLJoins.Destroy }
 
-function TGpSQLJoins.IsEmpty: boolean;
+function TGpSQLJoins.IsEmpty: Boolean;
 begin
   Result := (FJoins.Count = 0);
 end; { TGpSQLJoins.IsEmpty }
@@ -1402,7 +1402,7 @@ begin
   Result := FExpression;
 end; { TGpSQLWhere.GetExpression }
 
-function TGpSQLWhere.IsEmpty: boolean;
+function TGpSQLWhere.IsEmpty: Boolean;
 begin
   Result := Expression.IsEmpty;
 end; { TGpSQLWhere.IsEmpty }
@@ -1430,7 +1430,7 @@ begin
   Result := FColumns;
 end; { TGpSQLGroupBy.GetColumns }
 
-function TGpSQLGroupBy.IsEmpty: boolean;
+function TGpSQLGroupBy.IsEmpty: Boolean;
 begin
   Result := Columns.Isempty;
 end; { TGpSQLGroupBy.IsEmpty }
@@ -1453,7 +1453,7 @@ begin
   Result := FExpression;
 end; { TGpSQLHaving.GetExpression }
 
-function TGpSQLHaving.IsEmpty: boolean;
+function TGpSQLHaving.IsEmpty: Boolean;
 begin
   Result := Expression.IsEmpty;
 end; { TGpSQLHaving.IsEmpty }
@@ -1503,7 +1503,7 @@ begin
   Result := FColumns;
 end; { TGpSQLOrderBy.GetColumns }
 
-function TGpSQLOrderBy.IsEmpty: boolean;
+function TGpSQLOrderBy.IsEmpty: Boolean;
 begin
   Result := Columns.IsEmpty;
 end; { TGpSQLOrderBy.IsEmpty }
@@ -1582,7 +1582,7 @@ begin
   Result := FWhere;
 end; { TGpSQLAST.GetWhere }
 
-function TGpSQLAST.IsEmpty: boolean;
+function TGpSQLAST.IsEmpty: Boolean;
 begin
   Result :=
     FSelect.IsEmpty and

@@ -51,9 +51,33 @@ type
     property Expression: String read FExpression;
   end;
 
+  LiveBindingsGridMaster = class(TCustomAttribute)
+  private
+    FGridName: String;
+  public
+    constructor Create(const AGridName: String);
+    property GridName: String read FGridName;
+  end;
+
+  LiveBindingsGridDetail = class(TCustomAttribute)
+  private
+    FGridName: String;
+    FMasterField: String;
+  public
+    constructor Create(const AGridName, AMasterField: String);
+    property GridName: String read FGridName;
+    property MasterField: String read FMasterField;
+  end;
+
   TORMBrLivebindings = class
   private
     FBindingExpressions: TObjectList<TBindingExpression>;
+    procedure _GenerateLiveBindingsControls(const AAttribute: TCustomAttribute;
+      const AProperty: TRttiProperty);
+    procedure _GenerateLiveBindingsGridMaster(const AAttribute: TCustomAttribute;
+      const AProperty: TRttiProperty);
+    procedure _GenerateLiveBindingsGridDetail(
+      const AAttribute: TCustomAttribute; const AProperty: TRttiProperty);
   public
     constructor Create; virtual;
     destructor Destroy; override;
@@ -62,7 +86,7 @@ type
 implementation
 
 uses
-  Vcl.ComCtrls;
+  Vcl.ComCtrls, Vcl.Grids;
 
 constructor TORMBrLiveBindings.Create;
 var
@@ -70,11 +94,6 @@ var
   LType: TRttiType;
   LProperty: TRttiProperty;
   LCustomAttribute: TCustomAttribute;
-  LLiveBindingsControl: LiveBindingsControl;
-  LControl: TControl;
-  LExpression: String;
-  LBindingExpressionObject: TBindingExpression;
-  LBindingExpressionComponent: TBindingExpression;
 begin
   FBindingExpressions := TObjectList<TBindingExpression>.Create(True);
   LContext := TRttiContext.Create;
@@ -87,55 +106,123 @@ begin
     begin
       for LCustomAttribute in LProperty.GetAttributes do
       begin
-        if not (LCustomAttribute is LiveBindingsControl) then
-          Continue;
-
-        LLiveBindingsControl := LiveBindingsControl(LCustomAttribute);
-        // Get Component
-        LControl := TListControls.ListComponents.Items[LLiveBindingsControl.LinkControl] as TControl;
-        if LControl = nil then
-          raise Exception.Create('Component [' + LLiveBindingsControl.LinkControl + '] not found!');
-        // Expression do atributo
-        LExpression := LLiveBindingsControl.Expression;
-        if LExpression = '' then
-          LExpression := Self.ClassName + '.' + LProperty.Name;
-        // Add Components List
-        TListControls.ListFieldNames.AddOrSetValue(LLiveBindingsControl.LinkControl, LLiveBindingsControl.FieldName);
-
-        // Registro no LiveBindings
-        LBindingExpressionObject := TBindings.CreateManagedBinding(
-              [
-                        TBindings.CreateAssociationScope(
-                                  [Associate(Self, Self.ClassName)])
-              ],
-                                  LExpression,
-              [
-                        TBindings.CreateAssociationScope(
-                                  [Associate(LControl, LLiveBindingsControl.LinkControl)])
-              ],
-                                  LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
-                        nil);
-        // Component
-        LBindingExpressionComponent := TBindings.CreateManagedBinding(
-              [
-                        TBindings.CreateAssociationScope(
-                                  [Associate(LControl, LLiveBindingsControl.LinkControl)])
-              ],
-                                  LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
-              [
-                        TBindings.CreateAssociationScope(
-                                  [Associate(Self, Self.ClassName)])
-              ],
-                                  Self.ClassName + '.' + LProperty.Name,
-                        nil);
-        FBindingExpressions.Add(LBindingExpressionObject);
-        FBindingExpressions.Add(LBindingExpressionComponent);
+        if LCustomAttribute is LiveBindingsControl then
+          _GenerateLiveBindingsControls(LCustomAttribute, LProperty)
+        else if LCustomAttribute is LiveBindingsGridMaster then
+          _GenerateLiveBindingsGridMaster(LCustomAttribute, LProperty)
+        else if LCustomAttribute is LiveBindingsGridDetail then
+          _GenerateLiveBindingsGridDetail(LCustomAttribute, LProperty);
       end;
     end;
   finally
     LContext.Free;
   end;
 end;
+
+procedure TORMBrLivebindings._GenerateLiveBindingsControls(const AAttribute: TCustomAttribute;
+  const AProperty: TRttiProperty);
+var
+  LControl: TControl;
+  LExpression: String;
+  LLiveBindingsControl: LiveBindingsControl;
+  LBindingExpressionObject: TBindingExpression;
+  LBindingExpressionComponent: TBindingExpression;
+begin
+  LLiveBindingsControl := LiveBindingsControl(AAttribute);
+  // Get Component
+  LControl := TListControls.ListComponents.Items[LLiveBindingsControl.LinkControl] as TControl;
+  if LControl = nil then
+    raise Exception.Create('Component [' + LLiveBindingsControl.LinkControl + '] not found!');
+  // Expression do atributo
+  LExpression := LLiveBindingsControl.Expression;
+  if LExpression = '' then
+    LExpression := Self.ClassName + '.' + AProperty.Name;
+  // Add Components List
+  TListControls.ListFieldNames.AddOrSetValue(LLiveBindingsControl.LinkControl, LLiveBindingsControl.FieldName);
+
+  // Registro no LiveBindings
+  LBindingExpressionObject := TBindings.CreateManagedBinding(
+        [
+                  TBindings.CreateAssociationScope(
+                            [Associate(Self, Self.ClassName)])
+        ],
+                            LExpression,
+        [
+                  TBindings.CreateAssociationScope(
+                            [Associate(LControl, LLiveBindingsControl.LinkControl)])
+        ],
+                            LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
+                  nil);
+  // Component
+  LBindingExpressionComponent := TBindings.CreateManagedBinding(
+        [
+                  TBindings.CreateAssociationScope(
+                            [Associate(LControl, LLiveBindingsControl.LinkControl)])
+        ],
+                            LLiveBindingsControl.LinkControl + '.' + LLiveBindingsControl.FieldName,
+        [
+                  TBindings.CreateAssociationScope(
+                            [Associate(Self, Self.ClassName)])
+        ],
+                            Self.ClassName + '.' + AProperty.Name,
+                  nil);
+  FBindingExpressions.Add(LBindingExpressionObject);
+  FBindingExpressions.Add(LBindingExpressionComponent);
+end;
+
+procedure TORMBrLiveBindings._GenerateLiveBindingsGridMaster(const AAttribute: TCustomAttribute;
+  const AProperty: TRttiProperty);
+var
+  LGrid: TCustomGrid;
+  LExpression: String;
+  LMasterGrid: String;
+  LLiveBindingsGridMaster: LiveBindingsGridMaster;
+  LBindingExpressionGrid: TBindingExpression;
+begin
+  LLiveBindingsGridMaster := LiveBindingsGridMaster(AAttribute);
+  LMasterGrid := LLiveBindingsGridMaster.GridName;
+
+  LGrid := TListControls.ListComponents.Items[LMasterGrid] as TCustomGrid;
+  if LGrid = nil then
+    raise Exception.Create('Grid [' + LMasterGrid + '] not found!');
+
+  LExpression := Self.ClassName + '.' + AProperty.Name;
+  LBindingExpressionGrid := TBindings.CreateManagedBinding(
+    [TBindings.CreateAssociationScope([Associate(Self, Self.ClassName)])],
+    LExpression,
+    [TBindings.CreateAssociationScope([Associate(LGrid, LMasterGrid)])],
+    LMasterGrid + '.' + AProperty.Name,
+    nil);
+  FBindingExpressions.Add(LBindingExpressionGrid);
+end;
+
+procedure TORMBrLiveBindings._GenerateLiveBindingsGridDetail(const AAttribute: TCustomAttribute;
+  const AProperty: TRttiProperty);
+var
+  LGrid: TCustomGrid;
+  LExpression: String;
+  LMasterGrid: String;
+  LLiveBindingsGridMaster: LiveBindingsGridMaster;
+  LLiveBindingsGridDetail: LiveBindingsGridDetail;
+  LBindingExpressionGrid: TBindingExpression;
+begin
+  LLiveBindingsGridDetail := LiveBindingsGridDetail(AAttribute);
+  LMasterGrid := LLiveBindingsGridDetail.GridName;
+
+  LGrid := TListControls.ListComponents.Items[LMasterGrid] as TCustomGrid;
+  if LGrid = nil then
+    raise Exception.Create('Grid [' + LMasterGrid + '] not found!');
+
+  LExpression := Self.ClassName + '.' + AProperty.Name + '.' + LLiveBindingsGridDetail.MasterField;
+  LBindingExpressionGrid := TBindings.CreateManagedBinding(
+    [TBindings.CreateAssociationScope([Associate(Self, Self.ClassName)])],
+    LExpression,
+    [TBindings.CreateAssociationScope([Associate(LGrid, LMasterGrid)])],
+    LMasterGrid + '.' + LLiveBindingsGridDetail.GridName,
+    nil);
+  FBindingExpressions.Add(LBindingExpressionGrid);
+end;
+
 
 { LiveBindingControl }
 
@@ -155,6 +242,21 @@ destructor TORMBrLivebindings.Destroy;
 begin
   FBindingExpressions.Free;
   inherited;
+end;
+
+{ LiveBindingsGridMaster }
+
+constructor LiveBindingsGridMaster.Create(const AGridName: String);
+begin
+  FGridName := AGridName;
+end;
+
+{ LiveBindingsGridDetail }
+
+constructor LiveBindingsGridDetail.Create(const AGridName, AMasterField: String);
+begin
+  FGridName := AGridName;
+  FMasterField := AMasterField;
 end;
 
 end.

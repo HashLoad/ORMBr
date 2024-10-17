@@ -44,10 +44,10 @@ uses
 type
   TManagerClientDataSet = class
   private
-    FNestedList: TDictionary<string, TObjectList<TObject>>;
+    FNestedList: TDictionary<String, TObjectList<TObject>>;
     FOwnerNestedList: Boolean;
     FConnection: IDBConnection;
-    FRepository: TDictionary<string, TObject>;
+    FRepository: TDictionary<String, TObject>;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
   public
     constructor Create(const AConnection: IDBConnection);
@@ -55,16 +55,16 @@ type
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerClientDataSet; overload;
     function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerClientDataSet; overload;
-    function AddLookupField<T, M: class, constructor>(const AFieldName: string;
-                                                      const AKeyFields: string;
-                                                      const ALookupKeyFields: string;
-                                                      const ALookupResultField: string;
-                                                      const ADisplayLabel: string = ''): TManagerClientDataSet;
+    function AddLookupField<T, M: class, constructor>(const AFieldName: String;
+                                                      const AKeyFields: String;
+                                                      const ALookupKeyFields: String;
+                                                      const ALookupResultField: String;
+                                                      const ADisplayLabel: String = ''): TManagerClientDataSet;
     procedure RemoveAdapter<T: class>;
     procedure Open<T: class, constructor>; overload;
     procedure Open<T: class, constructor>(const AID: Integer); overload;
     procedure Open<T: class, constructor>(const AID: String); overload;
-    procedure OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere<T: class, constructor>(const AWhere: String; const AOrderBy: String = '');
     procedure Close<T: class, constructor>;
     procedure LoadLazy<T: class, constructor>(const AOwner: T);
     procedure RefreshRecord<T: class, constructor>;
@@ -77,8 +77,8 @@ type
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerClientDataSet;
     property OwnerNestedList: Boolean read FOwnerNestedList write FOwnerNestedList;
@@ -92,8 +92,8 @@ implementation
 constructor TManagerClientDataSet.Create(const AConnection: IDBConnection);
 begin
   FConnection := AConnection;
-  FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
-  FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
+  FRepository := TObjectDictionary<String, TObject>.Create([doOwnsValues]);
+  FNestedList := TObjectDictionary<String, TObjectList<TObject>>.Create([doOwnsValues]);
   FOwnerNestedList := False;
 end;
 
@@ -134,8 +134,8 @@ begin
   if AID.IsType<integer> then
     Result := Resolver<T>.Find(AID.AsType<integer>)
   else
-  if AID.IsType<string> then
-    Result := Resolver<T>.Find(AID.AsType<string>)
+  if AID.IsType<String> then
+    Result := Resolver<T>.Find(AID.AsType<String>)
 end;
 
 function TManagerClientDataSet.Find<T>: TObjectList<T>;
@@ -168,8 +168,8 @@ begin
   Resolver<T>.LoadLazy(AOwner);
 end;
 
-function TManagerClientDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields: string;
-  const ALookupKeyFields, ALookupResultField, ADisplayLabel: string): TManagerClientDataSet;
+function TManagerClientDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields: String;
+  const ALookupKeyFields, ALookupResultField, ADisplayLabel: String): TManagerClientDataSet;
 var
   LObject: TDataSetBaseAdapter<M>;
 begin
@@ -201,7 +201,7 @@ begin
 end;
 
 procedure TManagerClientDataSet.OpenWhere<T>(const AWhere,
-  AOrderBy: string);
+  AOrderBy: String);
 begin
   Resolver<T>.OpenWhereInternal(AWhere, AOrderBy);
 end;
@@ -248,7 +248,7 @@ begin
   Resolver<T>.Save(AObject);
 end;
 
-function TManagerClientDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TManagerClientDataSet.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin

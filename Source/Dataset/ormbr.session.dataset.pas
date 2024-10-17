@@ -17,12 +17,11 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.session.dataset;
@@ -49,7 +48,7 @@ type
   TSessionDataSet<M: class, constructor> = class(TSessionAbstract<M>)
   private
     FOwner: TDataSetBaseAdapter<M>;
-    procedure PopularDataSet(const ADBResultSet: IDBResultSet);
+    procedure _PopularDataSet(const ADBResultSet: IDBResultSet);
   protected
     FConnection: IDBConnection;
   public
@@ -57,8 +56,8 @@ type
       const AConnection: IDBConnection; const APageSize: Integer = -1); overload;
     destructor Destroy; override;
     procedure OpenID(const AID: TValue); override;
-    procedure OpenSQL(const ASQL: string); override;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQL(const ASQL: String); override;
+    procedure OpenWhere(const AWhere: String; const AOrderBy: String = ''); override;
     procedure NextPacket; override;
     procedure RefreshRecord(const AColumns: TParams); override;
     procedure RefreshRecordWhere(const AWhere: String); override;
@@ -99,10 +98,10 @@ var
 begin
   inherited;
   LDBResultSet := FCommandExecutor.SelectInternalID(AID);
-  PopularDataSet(LDBResultSet);
+  _PopularDataSet(LDBResultSet);
 end;
 
-procedure TSessionDataSet<M>.OpenSQL(const ASQL: string);
+procedure TSessionDataSet<M>.OpenSQL(const ASQL: String);
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -111,11 +110,11 @@ begin
     LDBResultSet := FCommandExecutor.SelectInternalAll
   else
     LDBResultSet := FCommandExecutor.SelectInternal(ASQL);
-  PopularDataSet(LDBResultSet);
+  _PopularDataSet(LDBResultSet);
 end;
 
-procedure TSessionDataSet<M>.OpenWhere(const AWhere: string;
-  const AOrderBy: string);
+procedure TSessionDataSet<M>.OpenWhere(const AWhere: String;
+  const AOrderBy: String);
 begin
   inherited;
   OpenSQL(FCommandExecutor.SelectInternalWhere(AWhere, AOrderBy));
@@ -165,12 +164,12 @@ begin
   inherited;
   LDBResultSet := FCommandExecutor.NextPacket;
   if LDBResultSet.RecordCount > 0 then
-    PopularDataSet(LDBResultSet)
+    _PopularDataSet(LDBResultSet)
   else
     FFetchingRecords := True;
 end;
 
-procedure TSessionDataSet<M>.PopularDataSet(const ADBResultSet: IDBResultSet);
+procedure TSessionDataSet<M>._PopularDataSet(const ADBResultSet: IDBResultSet);
 begin
 //  FOrmDataSet.Locate(KeyFiels, KeyValues, Options);
 //  { TODO -oISAQUE : Procurar forma de verificar se o registro não já está em memória

@@ -31,7 +31,7 @@ type
     FPosto: Integer;
     FAtendimento: Integer;
     FCorrel: Integer;
-    FMNEMONICO: string;
+    FMNEMONICO: String;
     FProcedimento: Lazy<TProcedimento>;
     function GetProcedimento: TProcedimento;
   public

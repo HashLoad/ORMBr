@@ -17,12 +17,11 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.command.factory;
@@ -45,7 +44,7 @@ uses
 type
   TDMLCommandFactoryAbstract = class abstract
   protected
-    FDMLCommand: string;
+    FDMLCommand: String;
   public
     constructor Create(const AObject: TObject; const AConnection: IDBConnection;
       const ADriverName: TDriverName); virtual; abstract;
@@ -59,20 +58,20 @@ type
       const AAssociation: TAssociationMapping): IDBResultSet; virtual; abstract;
     function GeneratorSelectOneToMany(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): IDBResultSet; virtual; abstract;
-    function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
-      const AOrderBy: string; const APageSize: Integer): string; virtual; abstract;
+    function GeneratorSelectWhere(const AClass: TClass; const AWhere: String;
+      const AOrderBy: String; const APageSize: Integer): String; virtual; abstract;
     function GeneratorNextPacket: IDBResultSet; overload; virtual; abstract;
     function GeneratorNextPacket(const AClass: TClass;
       const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
     function GeneratorNextPacket(const AClass: TClass;
       const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; virtual; abstract;
-    function GetDMLCommand: string; virtual; abstract;
+    function GetDMLCommand: String; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; virtual; abstract;
     procedure GeneratorUpdate(const AObject: TObject;
-      const AModifiedFields: TDictionary<string, string>); virtual; abstract;
+      const AModifiedFields: TDictionary<String, String>); virtual; abstract;
     procedure GeneratorInsert(const AObject: TObject); virtual; abstract;
     procedure GeneratorDelete(const AObject: TObject); virtual; abstract;
   end;
@@ -100,20 +99,20 @@ type
       const AAssociation: TAssociationMapping): IDBResultSet; override;
     function GeneratorSelectOneToMany(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): IDBResultSet; override;
-    function GeneratorSelectWhere(const AClass: TClass; const AWhere: string;
-      const AOrderBy: string; const APageSize: Integer): string; override;
+    function GeneratorSelectWhere(const AClass: TClass; const AWhere: String;
+      const AOrderBy: String; const APageSize: Integer): String; override;
     function GeneratorNextPacket: IDBResultSet; overload; override;
     function GeneratorNextPacket(const AClass: TClass;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
     function GeneratorNextPacket(const AClass: TClass;
       const AWhere, AOrderBy: String;
       const APageSize, APageNext: Integer): IDBResultSet; overload; override;
-    function GetDMLCommand: string; override;
+    function GetDMLCommand: String; override;
     function ExistSequence: Boolean; override;
     function GeneratorSelectAssociation(const AOwner: TObject; const AClass: TClass;
       const AAssociation: TAssociationMapping): String; override;
     procedure GeneratorUpdate(const AObject: TObject;
-      const AModifiedFields: TDictionary<string, string>); override;
+      const AModifiedFields: TDictionary<String, String>); override;
     procedure GeneratorInsert(const AObject: TObject); override;
     procedure GeneratorDelete(const AObject: TObject); override;
   end;
@@ -146,7 +145,7 @@ begin
   inherited;
 end;
 
-function TDMLCommandFactory.GetDMLCommand: string;
+function TDMLCommandFactory.GetDMLCommand: String;
 begin
   Result := FDMLCommand;
 end;
@@ -229,7 +228,7 @@ begin
 end;
 
 function TDMLCommandFactory.GeneratorSelectWhere(const AClass: TClass;
-  const AWhere: string; const AOrderBy: string; const APageSize: Integer): string;
+  const AWhere: String; const AOrderBy: String; const APageSize: Integer): String;
 begin
   FCommandSelecter.SetPageSize(APageSize);
   Result := FCommandSelecter.GeneratorSelectWhere(AClass, AWhere, AOrderBy);
@@ -251,7 +250,7 @@ begin
 end;
 
 procedure TDMLCommandFactory.GeneratorUpdate(const AObject: TObject;
-  const AModifiedFields: TDictionary<string, string>);
+  const AModifiedFields: TDictionary<String, String>);
 begin
   FDMLCommand := FCommandUpdater.GenerateUpdate(AObject, AModifiedFields);
   if FDMLCommand = '' then
@@ -264,7 +263,7 @@ procedure TDMLCommandFactory._SendCommandMonitor(const ACommand: String;
   const AParams: TParams);
 var
   LMonitorParam: TMonitorParam;
-  LProc: TProc<TMonitorParam>;
+  LProc: TMonitorProc;
 begin
   LMonitorParam.Command := ACommand;
   LMonitorParam.Params := AParams;

@@ -60,13 +60,13 @@ begin
       //default content charset
       Config[TMVCConfigKey.DefaultContentCharset] := TMVCConstants.DEFAULT_CONTENT_CHARSET;
       //unhandled actions are permitted?
-      Config[TMVCConfigKey.AllowUnhandledAction] := 'false';
+      Config[TMVCConfigKey.AllowUnhandledAction] := 'False';
       //default view file extension
       Config[TMVCConfigKey.DefaultViewFileExtension] := 'html';
       //view path
       Config[TMVCConfigKey.ViewPath] := 'templates';
       //Enable Server Signature in response
-      Config[TMVCConfigKey.ExposeServerSignature] := 'true';
+      Config[TMVCConfigKey.ExposeServerSignature] := 'True';
       // Define a default URL for requests that don't map to a route or a file (useful for client side web app)
       Config[TMVCConfigKey.FallbackResource] := 'index.html';
     end);

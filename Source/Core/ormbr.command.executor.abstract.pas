@@ -52,19 +52,19 @@ type
       const APageSize: Integer); virtual;
     procedure InsertInternal(const AObject: M); virtual; abstract;
     procedure UpdateInternal(const AObject: TObject;
-      const AModifiedFields: TDictionary<string, string>); virtual; abstract;
+      const AModifiedFields: TDictionary<String, String>); virtual; abstract;
     procedure DeleteInternal(const AObject: M); virtual; abstract;
-    function SelectInternalWhere(const AWhere: string;
-      const AOrderBy: string): string; virtual; abstract;
+    function SelectInternalWhere(const AWhere: String;
+      const AOrderBy: String): String; virtual; abstract;
     function SelectInternalAll: IDBResultSet; virtual; abstract;
     function SelectInternalID(const AID: TValue): IDBResultSet; virtual; abstract;
     function SelectInternal(const ASQL: String): IDBResultSet; virtual; abstract;
     function SelectInternalAssociation(const AObject: TObject): String; virtual; abstract;
-    function GetDMLCommand: string; virtual; abstract;
+    function GetDMLCommand: String; virtual; abstract;
     function Find: IDBResultSet; overload; virtual; abstract;
     function Find(const AID: TValue): M; overload; virtual; abstract;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): IDBResultSet; virtual; abstract;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String = ''): IDBResultSet; virtual; abstract;
     function ExistSequence: Boolean; virtual; abstract;
     function NextPacket: IDBResultSet; overload; virtual; abstract;
     function NextPacket(const APageSize,

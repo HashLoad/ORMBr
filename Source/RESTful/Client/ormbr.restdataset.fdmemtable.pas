@@ -79,9 +79,9 @@ type
   private
     FOrmDataSet: TFDMemTable;
     FMemTableEvents: TFDMemTableEvents;
-    procedure DoBeforeApplyUpdates(DataSet: TFDDataSet);
-    procedure DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
-    procedure FilterDataSetChilds;
+    procedure _DoBeforeApplyUpdates(DataSet: TFDDataSet);
+    procedure _DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+    procedure _FilterDataSetChilds;
   protected
     procedure PopularDataSetOneToOne(const AObject: TObject;
       const AAssociation: TAssociationMapping); override;
@@ -89,8 +89,8 @@ type
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
     procedure OpenIDInternal(const AID: TValue); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQLInternal(const ASQL: String); override;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
@@ -113,18 +113,12 @@ constructor TRESTFDMemTableAdapter<M>.Create(const AConnection: IRESTConnection;
   ADataSet: TDataSet; APageSize: Integer; AMasterObject: TObject);
 begin
   inherited Create(AConnection, ADataSet, APageSize, AMasterObject);
-  /// <summary>
-  /// Captura o component TFDMemTable da IDE passado como parâmetro
-  /// </summary>
+  // Captura o component TFDMemTable da IDE passado como parâmetro
   FOrmDataSet := ADataSet as TFDMemTable;
   FMemTableEvents := TFDMemTableEvents.Create;
-  /// <summary>
-  /// Captura e guarda os eventos do dataset
-  /// </summary>
+  // Captura e guarda os eventos do dataset
   GetDataSetEvents;
-  /// <summary>
-  /// Seta os eventos do ormbr no dataset, para que ele sejam disparados
-  /// </summary>
+  // Seta os eventos do ormbr no dataset, para que ele sejam disparados
   SetDataSetEvents;
   ///
   if not FOrmDataSet.Active then
@@ -147,13 +141,13 @@ begin
   inherited;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
+procedure TRESTFDMemTableAdapter<M>._DoAfterApplyUpdates(DataSet: TFDDataSet; AErrors: Integer);
 begin
   if Assigned(FMemTableEvents.AfterApplyUpdates) then
     FMemTableEvents.AfterApplyUpdates(DataSet, AErrors);
 end;
 
-procedure TRESTFDMemTableAdapter<M>.DoBeforeApplyUpdates(DataSet: TFDDataSet);
+procedure TRESTFDMemTableAdapter<M>._DoBeforeApplyUpdates(DataSet: TFDDataSet);
 begin
   if Assigned(FMemTableEvents.BeforeApplyUpdates) then
     FMemTableEvents.BeforeApplyUpdates(DataSet);
@@ -169,7 +163,7 @@ end;
 
 procedure TRESTFDMemTableAdapter<M>.EmptyDataSetChilds;
 var
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TFDMemTable;
 begin
   inherited;
@@ -184,15 +178,15 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.FilterDataSetChilds;
+procedure TRESTFDMemTableAdapter<M>._FilterDataSetChilds;
 var
   LRttiType: TRttiType;
   LAssociations: TAssociationMappingList;
   LAssociation: TAssociationMapping;
   LChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
-  LIndexFields: string;
-  LFields: string;
+  LIndexFields: String;
+  LFields: String;
   LClassName: String;
 begin
   if not FOrmDataSet.Active then
@@ -233,7 +227,7 @@ begin
     /// master de outros objetos.
     /// </summary>
     if LChild.FMasterObject.Count > 0 then
-      TRESTFDMemTableAdapter<M>(LChild).FilterDataSetChilds;
+      TRESTFDMemTableAdapter<M>(LChild)._FilterDataSetChilds;
   end;
 end;
 
@@ -258,14 +252,14 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    LObject := FSession.Find(AID.AsType<string>);
+    LObject := FSession.Find(AID.ToString);
     if LObject = nil then
       exit;
     try
       PopularDataSet(LObject);
       /// <summary> Filtra os registros nas sub-tabelas </summary>
       if FOwnerMasterObject = nil then
-        FilterDataSetChilds;
+        _FilterDataSetChilds;
     finally
       LObject.Free;
     end;
@@ -278,7 +272,7 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
+procedure TRESTFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -297,7 +291,7 @@ begin
         PopularDataSetList(LObjectList);
         // Filtra os registros nas sub-tabelas
         if FOwnerMasterObject = nil then
-          FilterDataSetChilds;
+          _FilterDataSetChilds;
       finally
         LObjectList.Clear;
         LObjectList.Free;
@@ -312,7 +306,7 @@ begin
   end;
 end;
 
-procedure TRESTFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+procedure TRESTFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -331,7 +325,7 @@ begin
         PopularDataSetList(LObjectList);
         /// <summary> Filtra os registros nas sub-tabelas </summary>
         if FOwnerMasterObject = nil then
-          FilterDataSetChilds;
+          _FilterDataSetChilds;
       finally
         LObjectList.Clear;
         LObjectList.Free;
@@ -351,9 +345,9 @@ procedure TRESTFDMemTableAdapter<M>.PopularDataSetOneToOne(
 var
   LRttiType: TRttiType;
   LChild: TDataSetBaseAdapter<M>;
-  LField: string;
-  LKeyFields: string;
-  LKeyValues: string;
+  LField: String;
+  LKeyFields: String;
+  LKeyValues: String;
 begin
   inherited;
   if not FMasterObject.TryGetValue(AObject.ClassName, LChild) then
@@ -413,9 +407,9 @@ procedure TRESTFDMemTableAdapter<M>.ApplyUpdates(const MaxErros: Integer);
 begin
   inherited;
   try
-    DoBeforeApplyUpdates(FOrmDataSet);
+    _DoBeforeApplyUpdates(FOrmDataSet);
     ApplyInternal(MaxErros);
-    DoAfterApplyUpdates(FOrmDataSet, MaxErros);
+    _DoAfterApplyUpdates(FOrmDataSet, MaxErros);
   finally
     if FSession.ModifiedFields.ContainsKey(M.ClassName) then
     begin
@@ -430,8 +424,8 @@ end;
 procedure TRESTFDMemTableAdapter<M>.SetDataSetEvents;
 begin
   inherited;
-  FOrmDataSet.BeforeApplyUpdates := DoBeforeApplyUpdates;
-  FOrmDataSet.AfterApplyUpdates  := DoAfterApplyUpdates;
+  FOrmDataSet.BeforeApplyUpdates := _DoBeforeApplyUpdates;
+  FOrmDataSet.AfterApplyUpdates  := _DoAfterApplyUpdates;
 end;
 
 end.

@@ -21,11 +21,8 @@
   @abstract(ormbr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
   @abstract(Telagram : https://t.me/ormbr)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.dataset.fdmemtable;
@@ -91,8 +88,8 @@ type
       APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
     procedure OpenIDInternal(const AID: TValue); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQLInternal(const ASQL: String); override;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
   end;
@@ -174,7 +171,7 @@ end;
 
 procedure TFDMemTableAdapter<M>.EmptyDataSetChilds;
 var
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TFDMemTable;
 begin
   inherited;
@@ -331,7 +328,7 @@ begin
       if TDataSetState(FOrmDataSet.Fields[FInternalIndex].AsInteger) in [dsEdit] then
       begin
         if (FSession.ModifiedFields.Items[M.ClassName].Count > 0) or
-           (FConnection.GetDriverName in [dnMongoDB]) then
+           (FConnection.GetDriverName in [TDriverName.dnMongoDB]) then
         begin
           LObject := M.Create;
           try
@@ -425,7 +422,7 @@ begin
   end;
 end;
 
-procedure TFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: string);
+procedure TFDMemTableAdapter<M>.OpenSQLInternal(const ASQL: String);
 var
   LIsConnected: Boolean;
 begin
@@ -459,7 +456,7 @@ begin
   end;
 end;
 
-procedure TFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+procedure TFDMemTableAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: String);
 var
   LIsConnected: Boolean;
   LOrderBy: String;

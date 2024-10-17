@@ -42,13 +42,13 @@ type
     destructor Destroy; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Int64): M; overload; override;
-    function Find(const AID: string): M; overload; override;
+    function Find(const AID: String): M; overload; override;
     {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; override;
+      const AParams: array of String): TObjectList<M>; overload; override;
     {$ENDIF}
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; overload; override;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String = ''): TObjectList<M>; overload; override;
     procedure Insert(const AObject: M); override;
     procedure Update(const AObject: M); override;
     procedure Delete(const AObject: M); override;
@@ -105,14 +105,14 @@ begin
   Result := FSession.Find(AID);
 end;
 
-function TRESTObjectSetAdapter<M>.Find(const AID: string): M;
+function TRESTObjectSetAdapter<M>.Find(const AID: String): M;
 begin
   inherited;
   Result := FSession.Find(AID);
 end;
 
 function TRESTObjectSetAdapter<M>.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<M>;
+  AOrderBy: String): TObjectList<M>;
 begin
   inherited;
   Result := FSession.FindWhere(AWhere, AOrderBy);
@@ -161,7 +161,7 @@ end;
 
 {$IFDEF DRIVERRESTFUL}
 function TRESTObjectSetAdapter<M>.Find(const AMethodName: String;
-  const AParams: array of string): TObjectList<M>;
+  const AParams: array of String): TObjectList<M>;
 begin
   inherited;
   Result := FSession.Find(AMethodName, AParams);

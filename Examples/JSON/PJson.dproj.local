@@ -12,7 +12,15 @@
     <Transaction>2020/12/27 11:02:16.000.148,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.builders.pas=</Transaction>
     <Transaction>2020/12/27 11:02:19.000.837,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.pas=</Transaction>
     <Transaction>2023/04/19 15:41:04.000.897,=D:\PROJETOS-Brasil\ORMBr\Examples\JSON\Unit1.pas</Transaction>
-    <Transaction>2023/04/19 15:41:47.000.030,D:\PROJETOS-Brasil\ORMBr\Examples\JSON\Unit1.pas=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.utils.pas</Transaction>
+    <Transaction>2023/04/19 15:41:47.000.030,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.utils.pas=D:\PROJETOS-Brasil\ORMBr\Examples\JSON\Unit1.pas</Transaction>
+    <Transaction>2024/04/30 16:24:11.000.099,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.builders.pas</Transaction>
+    <Transaction>2024/04/30 17:05:34.000.934,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.reader.pas</Transaction>
+    <Transaction>2024/04/30 17:05:34.000.950,=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.writer.pas</Transaction>
+    <Transaction>2024/04/30 17:21:59.000.292,=D:\PROJETOS-Brasil\ORMBr\Examples\JSON\Unit1.pas</Transaction>
+    <Transaction>2024/04/30 17:22:16.000.806,D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.types.pas=D:\PROJETOS-Brasil\ORMBr\Examples\JSON\Unit1.pas</Transaction>
+    <Transaction>2024/05/02 20:45:04.000.018,=D:\PROJETOS-Brasil\JSONBr\Source\jsonbr.pas</Transaction>
+    <Transaction>2024/05/03 06:38:21.000.632,D:\PROJETOS-Brasil\JSONBr\Source\Reader\jsonbr.reader.pas=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.reader.pas</Transaction>
+    <Transaction>2024/05/03 06:38:39.000.726,D:\PROJETOS-Brasil\JSONBr\Source\Writer\jsonbr.writer.pas=D:\PROJETOS-Brasil\JSONBr\Source\Core\jsonbr.writer.pas</Transaction>
   </Transactions>
 	<ProjectSortOrder AutoSort="0" SortType="0">
     <File Path="D:\PROJETOS-Brasil"/>
@@ -20,6 +28,13 @@
     <File Path="..\..\..\JSONBr\Source"/>
     <File Path="..\..\..\JSONBr\Source\Core"/>
     <File Path="..\..\..\JSONBr\Source\Core\jsonbr.utils.pas"/>
+    <File Path="..\..\..\JSONBr\Source\Core\jsonbr.builders.pas"/>
+    <File Path="..\..\..\JSONBr\Source\Core\jsonbr.types.pas"/>
+    <File Path="..\..\..\JSONBr\Source\Reader"/>
+    <File Path="..\..\..\JSONBr\Source\Reader\jsonbr.reader.pas"/>
+    <File Path="..\..\..\JSONBr\Source\Writer"/>
+    <File Path="..\..\..\JSONBr\Source\Writer\jsonbr.writer.pas"/>
+    <File Path="..\..\..\JSONBr\Source\jsonbr.pas"/>
     <File Path="ormbr.model.person.pas"/>
     <File Path="uJSON.pas"/>
     <File Path="uJSON.dfm"/>

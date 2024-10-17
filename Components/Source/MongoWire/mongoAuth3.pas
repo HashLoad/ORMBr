@@ -339,7 +339,7 @@ end;
 const
   HexCodes:array[0..15] of AnsiChar='0123456789abcdef';
 
-function HexEncode(const x: RawByteString): UTF8string;
+function HexEncode(const x: RawByteString): UTF8String;
 var
   i,l:integer;
 begin
@@ -482,7 +482,7 @@ begin
   ]));
   if VarIsNull(b['conversationId']) then
     raise EMongoAuthenticationFailed.CreateFmt(ErrMsg,[UserName]);
-  //assert b['done']=false
+  //assert b['done']=False
 
   //server-first message
   v:=b['payload'];
@@ -579,7 +579,7 @@ begin
   if t<>m4 then
     raise EMongoAuthenticationFailed.CreateFmt(ErrMsg,[UserName]);
 
-  if b['done']<>true then
+  if b['done']<>True then
    begin
     b:=MongoWire.Get('$cmd',JSON([
       'saslContinue',1,
@@ -587,7 +587,7 @@ begin
       'conversationId',b['conversationId']
     ]));
     //assert b['ok']=1
-    //assert b['done']=true
+    //assert b['done']=True
     //assert b['payload'] is an empty byte vararray
    end;
 end;

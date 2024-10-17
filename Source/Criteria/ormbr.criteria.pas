@@ -43,8 +43,8 @@
 ///     3.05: 2015-07-12
 ///       - [leledumbo] Added .Insert and .Into methods.
 ///       - Sorted TGpSQLBuilder implementation.
-///       - &Set(column, value: string) overload automatically adds quotes around the
-///         `value` parameter when converted to string. If you don't want that to
+///       - &Set(column, value: String) overload automatically adds quotes around the
+///         `value` parameter when converted to String. If you don't want that to
 ///         happen, you can use the other overload: &Set(column, [value]).
 ///     3.04a: 2015-06-30
 ///       - Fixed a bug when Where.&Or was called before Where.&And.
@@ -135,127 +135,127 @@ type
   ICriteria = interface;
 
   ICriteriaExpression = interface ['{CC7ED7A2-3B39-4341-9CBB-EE1C7851BBA9}']
-    function  GetAsString: string;
+    function  GetAsString: String;
     function  GetExpression: IGpSQLExpression;
   //
     function  &And(const expression: array of const): ICriteriaExpression; overload;
-    function  &And(const expression: string): ICriteriaExpression; overload;
+    function  &And(const expression: String): ICriteriaExpression; overload;
     function  &And(const expression: IGpSQLExpression): ICriteriaExpression; overload;
     function  &Or(const expression: array of const): ICriteriaExpression; overload;
-    function  &Or(const expression: string): ICriteriaExpression; overload;
+    function  &Or(const expression: String): ICriteriaExpression; overload;
     function  &Or(const expression: IGpSQLExpression): ICriteriaExpression; overload;
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
     property Expression: IGpSQLExpression read GetExpression;
   end; { ICriteriaExpression }
 
   ICriteriaCase = interface ['{1E379718-0959-455A-80AA-63BDA7C92F8C}']
-    function  GetAsString: string;
+    function  GetAsString: String;
     function  GetCase: IGpSQLCase;
   //
     function  &And(const expression: array of const): ICriteriaCase; overload;
-    function  &And(const expression: string): ICriteriaCase; overload;
+    function  &And(const expression: String): ICriteriaCase; overload;
     function  &And(const expression: ICriteriaExpression): ICriteriaCase; overload;
-    function  &Else(const value: string): ICriteriaCase; overload;
+    function  &Else(const value: String): ICriteriaCase; overload;
     function  &Else(const value: int64): ICriteriaCase; overload;
     function  &End: ICriteriaCase;
     function  &Or(const expression: array of const): ICriteriaCase; overload;
-    function  &Or(const expression: string): ICriteriaCase; overload;
+    function  &Or(const expression: String): ICriteriaCase; overload;
     function  &Or(const expression: ICriteriaExpression): ICriteriaCase; overload;
-    function  &Then(const value: string): ICriteriaCase; overload;
+    function  &Then(const value: String): ICriteriaCase; overload;
     function  &Then(const value: int64): ICriteriaCase; overload;
-    function  When(const condition: string): ICriteriaCase; overload;
+    function  When(const condition: String): ICriteriaCase; overload;
     function  When(const condition: array of const): ICriteriaCase; overload;
     function  When(const condition: ICriteriaExpression): ICriteriaCase; overload;
     property &Case: IGpSQLCase read GetCase;
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
   end; { ICriteriaCase }
 
   ICriteria = interface ['{43EA3E34-A8DB-4257-A19F-030F404646E7}']
-    function &And(const expression: string): ICriteria; overload;
+    function &And(const expression: String): ICriteria; overload;
   //
     function &And(const expression: array of const): ICriteria; overload;
     function &And(const expression: ICriteriaExpression): ICriteria; overload;
-    function &As(const alias: string): ICriteria;
-    function &Case(const expression: string = ''): ICriteriaCase; overload;
+    function &As(const alias: String): ICriteria;
+    function &Case(const expression: String = ''): ICriteriaCase; overload;
     function &Case(const expression: array of const): ICriteriaCase; overload;
     function &Case(const expression: ICriteriaExpression): ICriteriaCase; overload;
-    function &On(const expression: string): ICriteria; overload;
+    function &On(const expression: String): ICriteria; overload;
     function &On(const expression: array of const): ICriteria; overload;
-    function &Or(const expression: string): ICriteria; overload;
+    function &Or(const expression: String): ICriteria; overload;
     function &Or(const expression: array of const): ICriteria; overload;
     function &Or(const expression: ICriteriaExpression): ICriteria; overload;
     function All: ICriteria;
   //
     function Clear: ICriteria;
     function ClearAll: ICriteria;
-    function Column(const colName: string): ICriteria; overload;
-    function Column(const dbName, colName: string): ICriteria; overload;
+    function Column(const colName: String): ICriteria; overload;
+    function Column(const dbName, colName: String): ICriteria; overload;
     function Column(const colName: array of const): ICriteria; overload;
     function Column(const caseExpr: ICriteriaCase): ICriteria; overload;
     function Delete: ICriteria;
     function Desc: ICriteria;
     function Distinct: ICriteria;
-    function Expression(const term: string = ''): ICriteriaExpression; overload;
+    function Expression(const term: String = ''): ICriteriaExpression; overload;
     function Expression(const term: array of const): ICriteriaExpression; overload;
     function First(num: integer): ICriteria;
     function From(const expression: ICriteriaExpression): ICriteria; overload;
     function From(const query: ICriteria): ICriteria; overload;
-    function From(const dbName: string): ICriteria; overload;
-    function FullJoin(const dbName: string): ICriteria;
-    function GetAsString: string;
+    function From(const dbName: String): ICriteria; overload;
+    function FullJoin(const dbName: String): ICriteria;
+    function GetAsString: String;
     function GetAST: IGpSQLAST;
-    function GroupBy(const colName: string = ''): ICriteria;
-    function Having(const expression: string = ''): ICriteria; overload;
+    function GroupBy(const colName: String = ''): ICriteria;
+    function Having(const expression: String = ''): ICriteria; overload;
     function Having(const expression: array of const): ICriteria; overload;
     function Having(const expression: ICriteriaExpression): ICriteria; overload;
-    function InnerJoin(const dbName: string): ICriteria;
+    function InnerJoin(const dbName: String): ICriteria;
     function Insert: ICriteria;
-    function Into(const tableName: string): ICriteria;
-    function IsEmpty: boolean;
-    function LeftJoin(const dbName: string): ICriteria;
-    function OrderBy(const colName: string = ''): ICriteria; overload;
+    function Into(const tableName: String): ICriteria;
+    function IsEmpty: Boolean;
+    function LeftJoin(const dbName: String): ICriteria;
+    function OrderBy(const colName: String = ''): ICriteria; overload;
     function OrderBy(const caseExpr: ICriteriaCase): ICriteria; overload;
-    function RightJoin(const dbName: string): ICriteria;
-    function Select(const colName: string = ''): ICriteria; overload;
+    function RightJoin(const dbName: String): ICriteria;
+    function Select(const colName: String = ''): ICriteria; overload;
     function Select(const caseExpr: ICriteriaCase): ICriteria; overload;
-    function &Set(const colName, colValue: string): ICriteria; overload;
-    function &Set(const colName: string; const colValue: array of const): ICriteria; overload;
+    function &Set(const colName, colValue: String): ICriteria; overload;
+    function &Set(const colName: String; const colValue: array of const): ICriteria; overload;
     function Skip(num: integer): ICriteria;
-    function Update(const tableName: string): ICriteria;
-    function Where(const expression: string = ''): ICriteria; overload;
+    function Update(const tableName: String): ICriteria;
+    function Where(const expression: String = ''): ICriteria; overload;
     function Where(const expression: array of const): ICriteria; overload;
     function Where(const expression: ICriteriaExpression): ICriteria; overload;
     procedure SelectSection(section: TGpSQLSection);
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
     property AST: IGpSQLAST read GetAST;
   end; { ICriteria }
 
   SQL = class
-    class function Concat(const q: array of ICriteria): string;
-    class function Count(const s: string): string; overload;
-    class function Count(const s: ICriteria): string; overload;
-    class function Count(const s: ICriteriaExpression): string; overload;
-    class function Exists(const s: string): string; overload;
-    class function Exists(const s: ICriteria): string; overload;
-    class function Exists(const s: ICriteriaExpression): string; overload;
-    class function Lower(const s: string): string; overload;
-    class function Lower(const s: ICriteria): string; overload;
-    class function Lower(const s: ICriteriaExpression): string; overload;
-    class function Min(const s: string): string; overload;
-    class function Min(const s: ICriteria): string; overload;
-    class function Min(const s: ICriteriaExpression): string; overload;
-    class function Max(const s: string): string; overload;
-    class function Max(const s: ICriteria): string; overload;
-    class function Max(const s: ICriteriaExpression): string; overload;
-    class function &Not(const s: string): string; overload;
-    class function &Not(const s: ICriteria): string; overload;
-    class function &Not(const s: ICriteriaExpression): string; overload;
-    class function Upper(const s: string): string; overload;
-    class function Upper(const s: ICriteria): string; overload;
-    class function Upper(const s: ICriteriaExpression): string; overload;
-    class function Q(const s: string): string; overload;
-    class function Q(const s: ICriteria): string; overload;
-    class function Q(const s: ICriteriaExpression): string; overload;
+    class function Concat(const q: array of ICriteria): String;
+    class function Count(const s: String): String; overload;
+    class function Count(const s: ICriteria): String; overload;
+    class function Count(const s: ICriteriaExpression): String; overload;
+    class function Exists(const s: String): String; overload;
+    class function Exists(const s: ICriteria): String; overload;
+    class function Exists(const s: ICriteriaExpression): String; overload;
+    class function Lower(const s: String): String; overload;
+    class function Lower(const s: ICriteria): String; overload;
+    class function Lower(const s: ICriteriaExpression): String; overload;
+    class function Min(const s: String): String; overload;
+    class function Min(const s: ICriteria): String; overload;
+    class function Min(const s: ICriteriaExpression): String; overload;
+    class function Max(const s: String): String; overload;
+    class function Max(const s: ICriteria): String; overload;
+    class function Max(const s: ICriteriaExpression): String; overload;
+    class function &Not(const s: String): String; overload;
+    class function &Not(const s: ICriteria): String; overload;
+    class function &Not(const s: ICriteriaExpression): String; overload;
+    class function Upper(const s: String): String; overload;
+    class function Upper(const s: ICriteria): String; overload;
+    class function Upper(const s: ICriteriaExpression): String; overload;
+    class function Q(const s: String): String; overload;
+    class function Q(const s: ICriteria): String; overload;
+    class function Q(const s: ICriteriaExpression): String; overload;
   end; { SQL }
 
 function CreateCriteria: ICriteria;
@@ -273,18 +273,18 @@ type
     FLastAnd   : IGpSQLExpression;
   strict protected
     function  FindRightmostAnd(const expression: IGpSQLExpression): IGpSQLExpression;
-    function  GetAsString: string;
+    function  GetAsString: String;
     function  GetExpression: IGpSQLExpression;
   public
-    constructor Create(const expression: string = ''); overload;
+    constructor Create(const expression: String = ''); overload;
     constructor Create(const expression: IGpSQLExpression); overload;
     function  &And(const expression: array of const): ICriteriaExpression; overload;
-    function  &And(const expression: string): ICriteriaExpression; overload;
+    function  &And(const expression: String): ICriteriaExpression; overload;
     function  &And(const expression: IGpSQLExpression): ICriteriaExpression; overload;
     function  &Or(const expression: array of const): ICriteriaExpression; overload;
-    function  &Or(const expression: string): ICriteriaExpression; overload;
+    function  &Or(const expression: String): ICriteriaExpression; overload;
     function  &Or(const expression: IGpSQLExpression): ICriteriaExpression; overload;
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
     property Expression: IGpSQLExpression read GetExpression;
   end; { TGpSQLBuilderExpression }
 
@@ -293,27 +293,27 @@ type
     FCase    : IGpSQLCase;
     FLastExpr: ICriteriaExpression;
   strict protected
-    function  GetAsString: string;
+    function  GetAsString: String;
     function GetCase: IGpSQLCase;
   public
-    constructor Create(const expression: string);
+    constructor Create(const expression: String);
     function  &And(const expression: array of const): ICriteriaCase; overload;
-    function  &And(const expression: string): ICriteriaCase; overload;
+    function  &And(const expression: String): ICriteriaCase; overload;
     function  &And(const expression: ICriteriaExpression): ICriteriaCase; overload;
-    function  &Else(const value: string): ICriteriaCase; overload;
+    function  &Else(const value: String): ICriteriaCase; overload;
     function  &Else(const value: int64): ICriteriaCase; overload;
     function  &End: ICriteriaCase;
     function  Expression: ICriteriaExpression;
     function  &Or(const expression: array of const): ICriteriaCase; overload;
-    function  &Or(const expression: string): ICriteriaCase; overload;
+    function  &Or(const expression: String): ICriteriaCase; overload;
     function  &Or(const expression: ICriteriaExpression): ICriteriaCase; overload;
-    function  &Then(const value: string): ICriteriaCase; overload;
+    function  &Then(const value: String): ICriteriaCase; overload;
     function  &Then(const value: int64): ICriteriaCase; overload;
-    function  When(const condition: string): ICriteriaCase; overload;
+    function  When(const condition: String): ICriteriaCase; overload;
     function  When(const condition: array of const): ICriteriaCase; overload;
     function  When(const condition: ICriteriaExpression): ICriteriaCase; overload;
     property &Case: IGpSQLCase read GetCase;
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
   end; { TGpSQLBuilderCase }
 
   TGpSQLBuilder = class(TInterfacedObject, ICriteria)
@@ -328,67 +328,67 @@ type
     FASTName      : IGpSQLName;
     FTableNames   : IGpSQLNames;
   strict protected
-    function  AutoQuote(const s: string): string;
+    function  AutoQuote(const s: String): String;
     procedure AssertHaveName;
     procedure AssertSection(sections: TGpSQLSections);
-    function  CreateJoin(joinType: TGpSQLJoinType; const dbName: string): ICriteria;
-    function  GetAsString: string;
+    function  CreateJoin(joinType: TGpSQLJoinType; const dbName: String): ICriteria;
+    function  GetAsString: String;
     function  GetAST: IGpSQLAST;
-    function  InternalSet(const colName, colValue: string): ICriteria;
+    function  InternalSet(const colName, colValue: String): ICriteria;
   public
     constructor Create;
     function  &And(const expression: array of const): ICriteria; overload;
-    function  &And(const expression: string): ICriteria; overload;
+    function  &And(const expression: String): ICriteria; overload;
     function  &And(const expression: ICriteriaExpression): ICriteria; overload;
     function  All: ICriteria;
-    function  &As(const alias: string): ICriteria;
-    function  &Case(const expression: string = ''): ICriteriaCase; overload;
+    function  &As(const alias: String): ICriteria;
+    function  &Case(const expression: String = ''): ICriteriaCase; overload;
     function  &Case(const expression: array of const): ICriteriaCase; overload;
     function  &Case(const expression: ICriteriaExpression): ICriteriaCase; overload;
     function  Clear: ICriteria;
     function  ClearAll: ICriteria;
-    function  Column(const colName: string): ICriteria; overload;
-    function  Column(const dbName, colName: string): ICriteria; overload;
+    function  Column(const colName: String): ICriteria; overload;
+    function  Column(const dbName, colName: String): ICriteria; overload;
     function  Column(const colName: array of const): ICriteria; overload;
     function  Column(const caseExpr: ICriteriaCase): ICriteria; overload;
     function  Delete: ICriteria;
     function  Desc: ICriteria;
     function  Distinct: ICriteria;
-    function  Expression(const term: string = ''): ICriteriaExpression; overload;
+    function  Expression(const term: String = ''): ICriteriaExpression; overload;
     function  Expression(const term: array of const): ICriteriaExpression; overload;
     function  First(num: integer): ICriteria;
     function  From(const expression: ICriteriaExpression): ICriteria; overload;
     function  From(const query: ICriteria): ICriteria; overload;
-    function  From(const dbName: string): ICriteria; overload;
-    function  FullJoin(const dbName: string): ICriteria;
-    function  GroupBy(const colName: string = ''): ICriteria;
-    function  Having(const expression: string = ''): ICriteria; overload;
+    function  From(const dbName: String): ICriteria; overload;
+    function  FullJoin(const dbName: String): ICriteria;
+    function  GroupBy(const colName: String = ''): ICriteria;
+    function  Having(const expression: String = ''): ICriteria; overload;
     function  Having(const expression: array of const): ICriteria; overload;
     function  Having(const expression: ICriteriaExpression): ICriteria; overload;
     function  Insert: ICriteria;
-    function  Into(const tableName: string): ICriteria;
-    function  InnerJoin(const dbName: string): ICriteria;
-    function  IsEmpty: boolean;
-    function  LeftJoin(const dbName: string): ICriteria;
-    function  &On(const expression: string): ICriteria; overload;
+    function  Into(const tableName: String): ICriteria;
+    function  InnerJoin(const dbName: String): ICriteria;
+    function  IsEmpty: Boolean;
+    function  LeftJoin(const dbName: String): ICriteria;
+    function  &On(const expression: String): ICriteria; overload;
     function  &On(const expression: array of const): ICriteria; overload;
     function  &Or(const expression: array of const): ICriteria; overload;
-    function  &Or(const expression: string): ICriteria; overload;
+    function  &Or(const expression: String): ICriteria; overload;
     function  &Or(const expression: ICriteriaExpression): ICriteria; overload;
-    function  OrderBy(const colName: string = ''): ICriteria; overload;
+    function  OrderBy(const colName: String = ''): ICriteria; overload;
     function  OrderBy(const caseExpr: ICriteriaCase): ICriteria; overload;
-    function  RightJoin(const dbName: string): ICriteria;
-    function  Select(const colName: string = ''): ICriteria; overload;
+    function  RightJoin(const dbName: String): ICriteria;
+    function  Select(const colName: String = ''): ICriteria; overload;
     function  Select(const caseExpr: ICriteriaCase): ICriteria; overload;
-    function  &Set(const colName, colValue: string): ICriteria; overload;
-    function  &Set(const colName: string; const colValue: array of const): ICriteria; overload;
+    function  &Set(const colName, colValue: String): ICriteria; overload;
+    function  &Set(const colName: String; const colValue: array of const): ICriteria; overload;
     function  Skip(num: integer): ICriteria;
-    function  Update(const tableName: string): ICriteria;
-    function  Where(const expression: string = ''): ICriteria; overload;
+    function  Update(const tableName: String): ICriteria;
+    function  Where(const expression: String = ''): ICriteria; overload;
     function  Where(const expression: array of const): ICriteria; overload;
     function  Where(const expression: ICriteriaExpression): ICriteria; overload;
     procedure SelectSection(section: TGpSQLSection);
-    property AsString: string read GetAsString;
+    property AsString: String read GetAsString;
     property AST: IGpSQLAST read GetAST;
   end; { TGpSQLBuilder }
 
@@ -401,9 +401,9 @@ end; { CreateGpSQLBuilder }
 
 { globals }
 
-function VarRecToString(const vr: TVarRec): string;
+function VarRecToString(const vr: TVarRec): String;
 const
-  BoolChars: array [boolean] of string = ('F', 'T');
+  BoolChars: array [Boolean] of String = ('F', 'T');
 {$ifndef fpc}
 type
   PtrUInt = Integer;
@@ -415,35 +415,35 @@ begin
     vtChar:       Result := char(vr.VChar);
     vtExtended:   Result := FloatToStr(vr.VExtended^);
     {$IFNDEF NEXTGEN}
-    vtString:     Result := string(vr.VString^);
+    vtString:     Result := String(vr.VString^);
     {$ENDIF}
     vtPointer:    Result := IntToHex(PtrUInt(vr.VPointer),8);
-    vtPChar:      Result := string(vr.VPChar^);
+    vtPChar:      Result := String(vr.VPChar^);
     {$IFDEF AUTOREFCOUNT}
     vtObject:     Result := TObject(vr.VObject).ClassName;
     {$ELSE}
     vtObject:     Result := vr.VObject.ClassName;
     {$ENDIF}
     vtClass:      Result := vr.VClass.ClassName;
-    vtWideChar:   Result := string(vr.VWideChar);
-    vtPWideChar:  Result := string(vr.VPWideChar^);
-    vtAnsiString: Result := string(vr.VAnsiString);
+    vtWideChar:   Result := String(vr.VWideChar);
+    vtPWideChar:  Result := String(vr.VPWideChar^);
+    vtAnsiString: Result := String(vr.VAnsiString);
     vtCurrency:   Result := CurrToStr(vr.VCurrency^);
-    vtVariant:    Result := string(vr.VVariant^);
-    vtWideString: Result := string(vr.VWideString);
+    vtVariant:    Result := String(vr.VVariant^);
+    vtWideString: Result := String(vr.VWideString);
     vtInt64:      Result := IntToStr(vr.VInt64^);
     {$IFDEF Unicode}
-    vtUnicodeString: Result := string(vr.VUnicodeString);
+    vtUnicodeString: Result := String(vr.VUnicodeString);
     {$ENDIF}
     else raise Exception.Create('VarRecToString: Unsupported parameter type');
   end;
 end; { VarRecToString }
 
-function SqlParamsToStr(const params: array of const): string;
+function SqlParamsToStr(const params: array of const): String;
 var
   iParam: integer;
   lastCh: char;
-  sParam: string;
+  sParam: String;
 begin
   Result := '';
   for iParam := Low(params) to High(params) do begin
@@ -462,7 +462,7 @@ end; { SqlParamsToStr }
 
 { TGpSQLBuilderCase }
 
-constructor TGpSQLBuilderCase.Create(const expression: string);
+constructor TGpSQLBuilderCase.Create(const expression: String);
 begin
   inherited Create;
   FCase := CreateSQLCase;
@@ -476,7 +476,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.&And }
 
-function TGpSQLBuilderCase.&And(const expression: string): ICriteriaCase;
+function TGpSQLBuilderCase.&And(const expression: String): ICriteriaCase;
 begin
   FLastExpr.&And(expression);
   Result := Self;
@@ -489,7 +489,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilderCase.&And }
 
-function TGpSQLBuilderCase.&Else(const value: string): ICriteriaCase;
+function TGpSQLBuilderCase.&Else(const value: String): ICriteriaCase;
 begin
   FLastExpr := TGpSQLBuilderExpression.Create(value);
   FCase.ElseExpression := FLastExpr.Expression;
@@ -506,7 +506,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilderCase.&End }
 
-function TGpSQLBuilderCase.GetAsString: string;
+function TGpSQLBuilderCase.GetAsString: String;
 begin
   Result := CreateSQLSerializer(FCase).AsString;
 end; { TGpSQLBuilderCase.GetAsString }
@@ -517,7 +517,7 @@ begin
   Result := Self;
 end; {  TGpSQLBuilder.&Or}
 
-function TGpSQLBuilderCase.&Or(const expression: string): ICriteriaCase;
+function TGpSQLBuilderCase.&Or(const expression: String): ICriteriaCase;
 begin
   FLastExpr.&Or(expression);
   Result := Self;
@@ -530,7 +530,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilderCase.&Or }
 
-function TGpSQLBuilderCase.&Then(const value: string): ICriteriaCase;
+function TGpSQLBuilderCase.&Then(const value: String): ICriteriaCase;
 begin
   Assert(FCase.WhenList.Count > 0, 'TGpSQLBuilderCase.&Then: Missing When');
   FLastExpr := TGpSQLBuilderExpression.Create(value);
@@ -558,7 +558,7 @@ begin
   Result := When(SqlParamsToStr(condition));
 end; { TGpSQLBuilderCase.When }
 
-function TGpSQLBuilderCase.When(const condition: string): ICriteriaCase;
+function TGpSQLBuilderCase.When(const condition: String): ICriteriaCase;
 begin
   Result := When(TGpSQLBuilderExpression.Create(condition));
 end; { TGpSQLBuilderCase.When }
@@ -576,7 +576,7 @@ end; { TGpSQLBuilderCase.When }
 
 { TGpSQLBuilderExpression }
 
-constructor TGpSQLBuilderExpression.Create(const expression: string);
+constructor TGpSQLBuilderExpression.Create(const expression: String);
 begin
   inherited Create;
   FExpression := CreateSQLExpression;
@@ -591,7 +591,7 @@ begin
   FLastAnd := FindRightmostAnd(expression);
 end; { TGpSQLBuilderExpression.Create }
 
-function TGpSQLBuilderExpression.&And(const expression: string): ICriteriaExpression;
+function TGpSQLBuilderExpression.&And(const expression: String): ICriteriaExpression;
 var
   node: IGpSQLExpression;
 begin
@@ -639,7 +639,7 @@ begin
     Result := FindRightmostAnd(expression.Right);
 end; { TGpSQLBuilderExpression.FindRightmostAnd }
 
-function TGpSQLBuilderExpression.&Or(const expression: string): ICriteriaExpression;
+function TGpSQLBuilderExpression.&Or(const expression: String): ICriteriaExpression;
 var
   node: IGpSQLExpression;
 begin
@@ -669,7 +669,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilderExpression.&Or }
 
-function TGpSQLBuilderExpression.GetAsString: string;
+function TGpSQLBuilderExpression.GetAsString: String;
 begin
   Result := CreateSQLSerializer(Expression).AsString;
 end; { TGpSQLBuilderExpression.GetAsString }
@@ -697,7 +697,7 @@ begin
   Result := &And(SqlParamsToStr(expression));
 end; { TGpSQLBuilder.&And }
 
-function TGpSQLBuilder.&And(const expression: string): ICriteria;
+function TGpSQLBuilder.&And(const expression: String): ICriteria;
 begin
   FActiveExpr.&And(expression);
   Result := Self;
@@ -709,7 +709,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.&And }
 
-function TGpSQLBuilder.&As(const alias: string): ICriteria;
+function TGpSQLBuilder.&As(const alias: String): ICriteria;
 begin
   AssertSection([secSelect, secDelete, secJoin]);
   AssertHaveName;
@@ -730,7 +730,7 @@ begin
     raise Exception.Create('TGpSQLBuilder: Not supported in this section');
 end; { TGpSQLBuilder.AssertSection }
 
-function TGpSQLBuilder.AutoQuote(const s: string): string;
+function TGpSQLBuilder.AutoQuote(const s: String): String;
 begin
   if (s <> '') and (s[1] = '''') and (s[Length(s)] = '''') then
     Result := s
@@ -738,7 +738,7 @@ begin
     Result := '''' + s + '''';
 end; { TGpSQLBuilder.AutoQuote }
 
-function TGpSQLBuilder.&Case(const expression: string = ''): ICriteriaCase;
+function TGpSQLBuilder.&Case(const expression: String = ''): ICriteriaCase;
 begin
   Result := TGpSQLBuilderCase.Create(expression);
 end; { TGpSQLBuilder.&Case }
@@ -767,7 +767,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.ClearAll }
 
-function TGpSQLBuilder.Column(const colName: string): ICriteria;
+function TGpSQLBuilder.Column(const colName: String): ICriteria;
 begin
   if assigned(FASTColumns) then begin
     FASTName := FASTColumns.Add;
@@ -779,7 +779,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.Column }
 
-function TGpSQLBuilder.Column(const dbName, colName: string): ICriteria;
+function TGpSQLBuilder.Column(const dbName, colName: String): ICriteria;
 begin
   Result := Column(dbName + '.' + colName);
 end; { TGpSQLBuilder.Column }
@@ -801,7 +801,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.Column }
 
-function TGpSQLBuilder.CreateJoin(joinType: TGpSQLJoinType; const dbName: string):
+function TGpSQLBuilder.CreateJoin(joinType: TGpSQLJoinType; const dbName: String):
   ICriteria;
 var
   join: IGpSQLJoin;
@@ -841,7 +841,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.Distinct }
 
-function TGpSQLBuilder.Expression(const term: string): ICriteriaExpression;
+function TGpSQLBuilder.Expression(const term: String): ICriteriaExpression;
 begin
   Result := TGpSQLBuilderExpression.Create(term);
 end; { TGpSQLBuilder.Expression }
@@ -862,7 +862,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.First }
 
-function TGpSQLBuilder.From(const dbName: string): ICriteria;
+function TGpSQLBuilder.From(const dbName: String): ICriteria;
 begin
   AssertSection([secSelect, secDelete]);
   FASTName := FTableNames.Add;
@@ -870,12 +870,12 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.From }
 
-function TGpSQLBuilder.FullJoin(const dbName: string): ICriteria;
+function TGpSQLBuilder.FullJoin(const dbName: String): ICriteria;
 begin
   Result := CreateJoin(jtFull, dbName);
 end; { TGpSQLBuilder.FullJoin }
 
-function TGpSQLBuilder.GetAsString: string;
+function TGpSQLBuilder.GetAsString: String;
 begin
   Result := CreateSQLSerializer(AST).AsString;
 end; { TGpSQLBuilder.GetAsString }
@@ -885,7 +885,7 @@ begin
   Result := FAST;
 end; { TGpSQLBuilder.GetAST }
 
-function TGpSQLBuilder.GroupBy(const colName: string): ICriteria;
+function TGpSQLBuilder.GroupBy(const colName: String): ICriteria;
 begin
   SelectSection(secGroupBy);
   if colName = '' then
@@ -894,7 +894,7 @@ begin
     Result := Column(colName);
 end; { TGpSQLBuilder.GroupBy }
 
-function TGpSQLBuilder.Having(const expression: string): ICriteria;
+function TGpSQLBuilder.Having(const expression: String): ICriteria;
 begin
   SelectSection(secHaving);
   if expression = '' then
@@ -914,7 +914,7 @@ begin
   Result := &And(expression);
 end; { TGpSQLBuilder.Having }
 
-function TGpSQLBuilder.InnerJoin(const dbName: string): ICriteria;
+function TGpSQLBuilder.InnerJoin(const dbName: String): ICriteria;
 begin
   Result := CreateJoin(jtInner, dbName);
 end; { TGpSQLBuilder.InnerJoin }
@@ -925,7 +925,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.Insert }
 
-function TGpSQLBuilder.InternalSet(const colName, colValue: string): ICriteria;
+function TGpSQLBuilder.InternalSet(const colName, colValue: String): ICriteria;
 var
   pair: IGpSQLNameValue;
 begin
@@ -936,24 +936,24 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.InternalSet }
 
-function TGpSQLBuilder.Into(const tableName: string): ICriteria;
+function TGpSQLBuilder.Into(const tableName: String): ICriteria;
 begin
   AssertSection([secInsert]);
   (FASTSection as IGpSQLInsert).TableName := tableName;
   Result := Self;
 end; { TGpSQLBuilder.Into }
 
-function TGpSQLBuilder.IsEmpty: boolean;
+function TGpSQLBuilder.IsEmpty: Boolean;
 begin
   Result := FASTSection.IsEmpty;
 end; { TGpSQLBuilder.IsEmpty }
 
-function TGpSQLBuilder.LeftJoin(const dbName: string): ICriteria;
+function TGpSQLBuilder.LeftJoin(const dbName: String): ICriteria;
 begin
   Result := CreateJoin(jtLeft, dbName);
 end; { TGpSQLBuilder.LeftJoin }
 
-function TGpSQLBuilder.&On(const expression: string): ICriteria;
+function TGpSQLBuilder.&On(const expression: String): ICriteria;
 begin
   Result := &And(expression);
 end; { TGpSQLBuilder.&On }
@@ -963,7 +963,7 @@ begin
   Result := &On(SqlParamsToStr(expression));
 end; { TGpSQLBuilder.&On }
 
-function TGpSQLBuilder.OrderBy(const colName: string): ICriteria;
+function TGpSQLBuilder.OrderBy(const colName: String): ICriteria;
 begin
   SelectSection(secOrderBy);
   if colName = '' then
@@ -978,7 +978,7 @@ begin
   Result := Column(caseExpr);
 end; { TGpSQLBuilder.OrderBy }
 
-function TGpSQLBuilder.RightJoin(const dbName: string): ICriteria;
+function TGpSQLBuilder.RightJoin(const dbName: String): ICriteria;
 begin
   Result := CreateJoin(jtRight, dbName);
 end; { TGpSQLBuilder.RightJoin }
@@ -988,7 +988,7 @@ begin
   Result := &Or(SqlParamsToStr(expression));
 end; { TGpSQLBuilder.&Or }
 
-function TGpSQLBuilder.&Or(const expression: string): ICriteria;
+function TGpSQLBuilder.&Or(const expression: String): ICriteria;
 begin
   FActiveExpr.&Or(expression);
   Result := Self;
@@ -1000,7 +1000,7 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.&Or }
 
-function TGpSQLBuilder.Select(const colName: string): ICriteria;
+function TGpSQLBuilder.Select(const colName: String): ICriteria;
 begin
   SelectSection(secSelect);
   if colName = '' then
@@ -1088,14 +1088,14 @@ begin
   FActiveSection := section;
 end; { TGpSQLBuilder.SelectSection }
 
-function TGpSQLBuilder.&Set(const colName, colValue: string): ICriteria;
+function TGpSQLBuilder.&Set(const colName, colValue: String): ICriteria;
 begin
   { TODO -oISAQUE : Comentado por Isaque ao invés de 'valor' estava saindo ''valor'' }
 //  Result := InternalSet(colName, AutoQuote(colValue));
   Result := InternalSet(colName, colValue);
 end; { TGpSQLBuilder }
 
-function TGpSQLBuilder.&Set(const colName: string; const colValue: array of const):
+function TGpSQLBuilder.&Set(const colName: String; const colValue: array of const):
   ICriteria;
 begin
   Result := InternalSet(colName, SqlParamsToStr(colValue));
@@ -1122,14 +1122,14 @@ begin
   Result := Self;
 end; { TGpSQLBuilder.Skip }
 
-function TGpSQLBuilder.Update(const tableName: string): ICriteria;
+function TGpSQLBuilder.Update(const tableName: String): ICriteria;
 begin
   SelectSection(secUpdate);
   (FASTSection as IGpSQLUpdate).TableName := tableName;
   Result := Self;
 end; { TGpSQLBuilder.Update }
 
-function TGpSQLBuilder.Where(const expression: string): ICriteria;
+function TGpSQLBuilder.Where(const expression: String): ICriteria;
 begin
   SelectSection(secWhere);
   if expression = '' then
@@ -1151,22 +1151,22 @@ end; { TGpSQLBuilder.Where }
 
 { SQL }
 
-class function SQL.&Not(const s: string): string;
+class function SQL.&Not(const s: String): String;
 begin
   Result := 'not ' + s;
 end; { SQL }
 
-class function SQL.&Not(const s: ICriteria): string;
+class function SQL.&Not(const s: ICriteria): String;
 begin
   Result := &Not(s.AsString);
 end; { SQL }
 
-class function SQL.&Not(const s: ICriteriaExpression): string;
+class function SQL.&Not(const s: ICriteriaExpression): String;
 begin
   Result := &Not(s.AsString);
 end; { SQL }
 
-class function SQL.Concat(const q: array of ICriteria): string;
+class function SQL.Concat(const q: array of ICriteria): String;
 var
   i: integer;
 begin
@@ -1178,107 +1178,107 @@ begin
   end;
 end; { SQL.Concat }
 
-class function SQL.Count(const s: string): string;
+class function SQL.Count(const s: String): String;
 begin
   Result := 'Count(' + s + ')';
 end; { SQL.Count }
 
-class function SQL.Count(const s: ICriteriaExpression): string;
+class function SQL.Count(const s: ICriteriaExpression): String;
 begin
   Result := Count(s.AsString);
 end; { SQL.Count }
 
-class function SQL.Count(const s: ICriteria): string;
+class function SQL.Count(const s: ICriteria): String;
 begin
   Result := Count(s.AsString);
 end; { SQL.Count }
 
-class function SQL.Exists(const s: string): string;
+class function SQL.Exists(const s: String): String;
 begin
   Result := 'exists (' + s + ')';
 end; { SQL.Exists }
 
-class function SQL.Exists(const s: ICriteria): string;
+class function SQL.Exists(const s: ICriteria): String;
 begin
   Result := Exists(s.AsString);
 end; { SQL.Exists }
 
-class function SQL.Exists(const s: ICriteriaExpression): string;
+class function SQL.Exists(const s: ICriteriaExpression): String;
 begin
   Result := Exists(s.AsString);
 end; { SQL.Exists }
 
-class function SQL.Lower(const s: string): string;
+class function SQL.Lower(const s: String): String;
 begin
   Result := 'Lower(' + s + ')';
 end; { SQL.Lower }
 
-class function SQL.Lower(const s: ICriteria): string;
+class function SQL.Lower(const s: ICriteria): String;
 begin
   Result := Lower(s.AsString);
 end; { SQL.Lower }
 
-class function SQL.Lower(const s: ICriteriaExpression): string;
+class function SQL.Lower(const s: ICriteriaExpression): String;
 begin
   Result := Lower(s.AsString);
 end; { SQL.Lower }
 
-class function SQL.Max(const s: string): string;
+class function SQL.Max(const s: String): String;
 begin
   Result := 'Max(' + s + ')';
 end; { SQL.Max }
 
-class function SQL.Max(const s: ICriteria): string;
+class function SQL.Max(const s: ICriteria): String;
 begin
   Result := Max(s.AsString);
 end; { SQL.Max }
 
-class function SQL.Max(const s: ICriteriaExpression): string;
+class function SQL.Max(const s: ICriteriaExpression): String;
 begin
   Result := Max(s.AsString);
 end; { SQL.Max }
 
-class function SQL.Min(const s: string): string;
+class function SQL.Min(const s: String): String;
 begin
   Result := 'Min(' + s + ')';
 end; { SQL.Min }
 
-class function SQL.Min(const s: ICriteriaExpression): string;
+class function SQL.Min(const s: ICriteriaExpression): String;
 begin
   Result := Min(s.AsString);
 end; { SQL.Min }
 
-class function SQL.Min(const s: ICriteria): string;
+class function SQL.Min(const s: ICriteria): String;
 begin
   Result := Min(s.AsString);
 end; { SQL.Min }
 
-class function SQL.Upper(const s: string): string;
+class function SQL.Upper(const s: String): String;
 begin
   Result := 'Upper(' + s + ')';
 end; { SQL.Upper }
 
-class function SQL.Upper(const s: ICriteria): string;
+class function SQL.Upper(const s: ICriteria): String;
 begin
   Result := Upper(s.AsString);
 end; { SQL.Upper }
 
-class function SQL.Upper(const s: ICriteriaExpression): string;
+class function SQL.Upper(const s: ICriteriaExpression): String;
 begin
   Result := Upper(s.AsString);
 end; { SQL.Upper }
 
-class function SQL.Q(const s: string): string;
+class function SQL.Q(const s: String): String;
 begin
   Result := '''' + s + '''';
 end; { SQL.Q }
 
-class function SQL.Q(const s: ICriteria): string;
+class function SQL.Q(const s: ICriteria): String;
 begin
   Result := Q(s.AsString);
 end; { SQL.Q }
 
-class function SQL.Q(const s: ICriteriaExpression): string;
+class function SQL.Q(const s: ICriteriaExpression): String;
 begin
   Result := Q(s.AsString);
 end; { SQL.Q }

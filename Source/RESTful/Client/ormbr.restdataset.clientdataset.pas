@@ -80,8 +80,8 @@ type
     procedure GetDataSetEvents; override;
     procedure SetDataSetEvents; override;
     procedure OpenIDInternal(const AID: TValue); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQLInternal(const ASQL: String); override;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); override;
     procedure ApplyInternal(const MaxErros: Integer); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
@@ -157,7 +157,7 @@ end;
 
 procedure TRESTClientDataSetAdapter<M>.EmptyDataSetChilds;
 var
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TClientDataSet;
 begin
   inherited;
@@ -179,8 +179,8 @@ var
   LAssociation: TAssociationMapping;
   LChild: TDataSetBaseAdapter<M>;
   LFor: Integer;
-  LFields: string;
-  LIndexFields: string;
+  LFields: String;
+  LIndexFields: String;
   LClassName: String;
 begin
   if not FOrmDataSet.Active then
@@ -234,7 +234,7 @@ begin
     FClientDataSetEvents.AfterApplyUpdates  := FOrmDataSet.AfterApplyUpdates;
 end;
 
-procedure TRESTClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: string);
+procedure TRESTClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -274,7 +274,7 @@ begin
     /// <summary> Limpa os registro do dataset antes de garregar os novos dados </summary>
     EmptyDataSet;
     inherited;
-    FSession.Find(AID.AsType<string>);
+    FSession.Find(AID.ToString);
     if LObject <> nil then
     begin
       try
@@ -293,7 +293,7 @@ begin
   end;
 end;
 
-procedure TRESTClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+procedure TRESTClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: String);
 var
   LObjectList: TObjectList<M>;
 begin
@@ -328,9 +328,9 @@ procedure TRESTClientDataSetAdapter<M>.PopularDataSetOneToOne(
 var
   LRttiType: TRttiType;
   LChild: TDataSetBaseAdapter<M>;
-  LField: string;
-  LKeyFields: string;
-  LKeyValues: string;
+  LField: String;
+  LKeyFields: String;
+  LKeyValues: String;
 begin
   inherited;
   if not FMasterObject.TryGetValue(AObject.ClassName, LChild) then

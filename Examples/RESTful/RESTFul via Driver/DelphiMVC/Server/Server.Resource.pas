@@ -34,9 +34,9 @@ type
     FConnection: IDBConnection;
     FLookup: IContainerObjectSet<Tlookup>;
   protected
-    procedure OnBeforeAction(Context: TWebContext; const AActionName: string;
+    procedure OnBeforeAction(Context: TWebContext; const AActionName: String;
       var Handled: Boolean); override;
-    procedure OnAfterAction(Context: TWebContext; const AActionName: string); override;
+    procedure OnAfterAction(Context: TWebContext; const AActionName: String); override;
   public
     constructor Create;
     destructor Destroy; override;
@@ -52,9 +52,9 @@ type
     FConnection: IDBConnection;
     FMaster: IContainerObjectSet<Tmaster>;
   protected
-    procedure OnBeforeAction(Context: TWebContext; const AActionName: string;
+    procedure OnBeforeAction(Context: TWebContext; const AActionName: String;
       var Handled: Boolean); override;
-    procedure OnAfterAction(Context: TWebContext; const AActionName: string); override;
+    procedure OnAfterAction(Context: TWebContext; const AActionName: String); override;
   public
     [MVCPath]
     [MVCHTTPMethod([httpGET])]
@@ -258,14 +258,14 @@ begin
 end;
 
 procedure TMasterController.OnAfterAction(Context: TWebContext;
-  const AActionName: string);
+  const AActionName: String);
 begin
   { Executed after each action }
   inherited;
 end;
 
 procedure TMasterController.OnBeforeAction(Context: TWebContext;
-  const AActionName: string; var Handled: Boolean);
+  const AActionName: String; var Handled: Boolean);
 begin
   FConnection := TFactoryFireDAC.Create(ServerDataModule.FDConnection1, dnSQLite);
   Fmaster := TContainerObjectSet<Tmaster>.Create(FConnection);
@@ -286,14 +286,14 @@ begin
 end;
 
 procedure TLookupController.OnAfterAction(Context: TWebContext;
-  const AActionName: string);
+  const AActionName: String);
 begin
   inherited;
 
 end;
 
 procedure TLookupController.OnBeforeAction(Context: TWebContext;
-  const AActionName: string; var Handled: Boolean);
+  const AActionName: String; var Handled: Boolean);
 begin
   FConnection := TFactoryFireDAC.Create(ServerDataModule.FDConnection1, dnSQLite);
   FLookup := TContainerObjectSet<Tlookup>.Create(FConnection);

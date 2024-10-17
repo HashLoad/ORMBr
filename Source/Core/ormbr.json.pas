@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -53,11 +53,9 @@ uses
 
 type
   TORMBrJson = class
-  private
-    class var
-    FJSONObject: TJSONBrObject;
-    class procedure DoGetValue({const Sender: TJSONBrObject;}
-                               const AInstance: TObject;
+  strict private
+    class var FJsonBuilder: TJsonBuilder;
+    class procedure DoGetValue(const AInstance: TObject;
                                const AProperty: TRttiProperty;
                                var AResult: Variant;
                                var ABreak: Boolean);
@@ -73,22 +71,22 @@ type
     class constructor Create;
     class destructor Destroy;
     class function ObjectToJsonString(AObject: TObject;
-      AStoreClassName: Boolean = False): string;
+      AStoreClassName: Boolean = False): String;
     class function ObjectListToJsonString(AObjectList: TObjectList<TObject>;
-      AStoreClassName: Boolean = False): string; overload;
+      AStoreClassName: Boolean = False): String; overload;
     class function ObjectListToJsonString<T: class, constructor>(AObjectList: TObjectList<T>;
-      AStoreClassName: Boolean = False): string; overload;
-    class function JsonToObject<T: class, constructor>(const AJson: string): T; overload;
+      AStoreClassName: Boolean = False): String; overload;
+    class function JsonToObject<T: class, constructor>(const AJson: String): T; overload;
     class function JsonToObject<T: class>(AObject: T;
-      const AJson: string): Boolean; overload;
-    class function JsonToObjectList<T: class, constructor>(const AJson: string): TObjectList<T>;
-    class procedure JsonToObject(const AJson: string; AObject: TObject); overload;
+      const AJson: String): Boolean; overload;
+    class function JsonToObjectList<T: class, constructor>(const AJson: String): TObjectList<T>;
+    class procedure JsonToObject(const AJson: String; AObject: TObject); overload;
     //
-    class function JSONStringToJSONValue(const AJson: string): TJSONValue;
+    class function JSONStringToJSONValue(const AJson: String): TJSONValue;
     class function JSONObjectToJSONValue(const AObject: TObject): TJSONValue;
-    class function JSONStringToJSONArray(const AJson: string): TJSONArray;
+    class function JSONStringToJSONArray(const AJson: String): TJSONArray;
     class function JSONObjectListToJSONArray<T: class>(const AObjectList: TObjectList<T>): TJSONArray;
-    class function JSONStringToJSONObject(const AJson: string): TJSONObject;
+    class function JSONStringToJSONObject(const AJson: String): TJSONObject;
     class property FormatSettings: TFormatSettings read GetFormatSettings write SetFormatSettings;
     class property UseISO8601DateFormat: Boolean read GetUseISO8601DateFormat write SetUseISO8601DateFormat;
   end;
@@ -102,16 +100,16 @@ uses
 
 class constructor TORMBrJson.Create;
 begin
-  FJSONObject := TJSONBrObject.Create;
-  FJSONObject.OnGetValue := DoGetValue;
-  FJSONObject.OnSetValue := DoSetValue;
-  FJSONObject.UseISO8601DateFormat := True;
-  FormatSettings := JsonBrFormatSettings;
+  FJsonBuilder := TJsonBuilder.Create;
+  FJsonBuilder.OnGetValue := DoGetValue;
+  FJsonBuilder.OnSetValue := DoSetValue;
+  FJsonBuilder.UseISO8601DateFormat := True;
+  FormatSettings := GJsonBrFormatSettings;
 end;
 
 class destructor TORMBrJson.Destroy;
 begin
-  FJSONObject.Free;
+  FJsonBuilder.Free;
   inherited;
 end;
 
@@ -249,39 +247,39 @@ begin
   Result := JSONStringToJSONValue(TORMBrJson.ObjectToJsonString(AObject));
 end;
 
-class function TORMBrJson.JSONStringToJSONArray(const AJson: string): TJSONArray;
+class function TORMBrJson.JSONStringToJSONArray(const AJson: String): TJSONArray;
 begin
   Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0) as TJSONArray;
 end;
 
-class function TORMBrJson.JSONStringToJSONObject(const AJson: string): TJSONObject;
+class function TORMBrJson.JSONStringToJSONObject(const AJson: String): TJSONObject;
 begin
   Result := JSONStringToJSONValue(AJson) as TJSONObject;
 end;
 
-class function TORMBrJson.JSONStringToJSONValue(const AJson: string): TJSONValue;
+class function TORMBrJson.JSONStringToJSONValue(const AJson: String): TJSONValue;
 begin
   Result := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(AJson), 0);
 end;
 
-class procedure TORMBrJson.JsonToObject(const AJson: string; AObject: TObject);
+class procedure TORMBrJson.JsonToObject(const AJson: String; AObject: TObject);
 begin
-  FJSONObject.JSONToObject(AObject, AJson);
+  FJsonBuilder.JSONToObject(AObject, AJson);
 end;
 
 class function TORMBrJson.JsonToObject<T>(AObject: T;
-  const AJson: string): Boolean;
+  const AJson: String): Boolean;
 begin
-  Result := FJSONObject.JSONToObject(TObject(AObject), AJson);
+  Result := FJsonBuilder.JSONToObject(TObject(AObject), AJson);
 end;
 
-class function TORMBrJson.JsonToObject<T>(const AJson: string): T;
+class function TORMBrJson.JsonToObject<T>(const AJson: String): T;
 begin
-  Result := FJSONObject.JSONToObject<T>(AJson);
+  Result := FJsonBuilder.JSONToObject<T>(AJson);
 end;
 
 class function TORMBrJson.ObjectListToJsonString(AObjectList: TObjectList<TObject>;
-  AStoreClassName: Boolean): string;
+  AStoreClassName: Boolean): String;
 var
   LFor: Integer;
 begin
@@ -296,7 +294,7 @@ begin
 end;
 
 class function TORMBrJson.ObjectListToJsonString<T>(AObjectList: TObjectList<T>;
-  AStoreClassName: Boolean): string;
+  AStoreClassName: Boolean): String;
 var
   LFor: Integer;
 begin
@@ -311,34 +309,34 @@ begin
 end;
 
 class function TORMBrJson.ObjectToJsonString(AObject: TObject;
-  AStoreClassName: Boolean): string;
+  AStoreClassName: Boolean): String;
 begin
-  Result := FJSONObject.ObjectToJSON(AObject, AStoreClassName);
+  Result := FJsonBuilder.ObjectToJSON(AObject, AStoreClassName);
 end;
 
 class procedure TORMBrJson.SetFormatSettings(const Value: TFormatSettings);
 begin
-  JsonBrFormatSettings := Value;
+  GJsonBrFormatSettings := Value;
 end;
 
 class procedure TORMBrJson.SetUseISO8601DateFormat(const Value: Boolean);
 begin
-  FJSONObject.UseISO8601DateFormat := Value;
+  FJsonBuilder.UseISO8601DateFormat := Value;
 end;
 
 class function TORMBrJson.GetFormatSettings: TFormatSettings;
 begin
-  Result := JsonBrFormatSettings;
+  Result := GJsonBrFormatSettings;
 end;
 
 class function TORMBrJson.GetUseISO8601DateFormat: Boolean;
 begin
-  Result := FJSONObject.UseISO8601DateFormat;
+  Result := FJsonBuilder.UseISO8601DateFormat;
 end;
 
-class function TORMBrJson.JsonToObjectList<T>(const AJson: string): TObjectList<T>;
+class function TORMBrJson.JsonToObjectList<T>(const AJson: String): TObjectList<T>;
 begin
-  Result := FJSONObject.JSONToObjectList<T>(AJson);
+  Result := FJsonBuilder.JSONToObjectList<T>(AJson);
 end;
 
 end.

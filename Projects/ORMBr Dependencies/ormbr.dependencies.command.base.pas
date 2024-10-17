@@ -14,16 +14,16 @@ type TORMBrDependenciesCommandBase = class(TInterfacedObject, IORMBrDependencies
 
   protected
     FLog : TLog;
-    FTag : string;
+    FTag : String;
 
     procedure writeLog(AText: String);
 
     procedure MoveDirectories(ARootPath: String);
     procedure MoveFiles(ARootPath: String);
 
-    function GetPath: string; virtual; abstract;
-    function UrlDownloadFile: string; virtual; abstract;
-    function ZipFileName: string; virtual; abstract;
+    function GetPath: String; virtual; abstract;
+    function UrlDownloadFile: String; virtual; abstract;
+    function ZipFileName: String; virtual; abstract;
 
     procedure Download; virtual;
     procedure Extract; virtual;
@@ -74,7 +74,7 @@ end;
 procedure TORMBrDependenciesCommandBase.Extract;
 var
   zip : TZipFile;
-  rootPath : string;
+  rootPath : String;
 begin
   zip := TZipFile.Create;
   try

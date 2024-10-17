@@ -38,22 +38,19 @@ type
 
   IUtilSingleton = interface
     ['{D41BA6C1-EFDB-4C58-937A-59B864A8F0F4}']
-    function ParseCommandNoSQL(const ASubStr, ACommandText: string;
-      const ADefault: String = ''): string;
+    function ParseCommandNoSQL(const ASubStr, ACommandText: String;
+      const ADefault: String = ''): String;
 
   end;
 
   TUtilSingleton = class sealed(TInterfacedObject, IUtilSingleton)
   private
-  class var
-    FInstance: IUtilSingleton;
-  protected
-    constructor Create;
+    class var FInstance: IUtilSingleton;
   public
     { Public declarations }
     class function GetInstance: IUtilSingleton;
-    function ParseCommandNoSQL(const ASubStr, ASQL: string;
-      const ADefault: String): string;
+    function ParseCommandNoSQL(const ASubStr, ASQL: String;
+      const ADefault: String): String;
     function IfThen<T>(ACondition: Boolean; ATrue: T; AFalse: T): T;
     procedure SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
   end;
@@ -65,11 +62,6 @@ implementation
 procedure TUtilSingleton.SetWeak(AInterfaceField: PIInterface; const AValue: IInterface);
 begin
   PPointer(AInterfaceField)^ := Pointer(AValue);
-end;
-
-constructor TUtilSingleton.Create;
-begin
-
 end;
 
 class function TUtilSingleton.GetInstance: IUtilSingleton;
@@ -86,8 +78,8 @@ begin
     Result := ATrue;
 end;
 
-function TUtilSingleton.ParseCommandNoSQL(const ASubStr, ASQL: string;
-  const ADefault: String): string;
+function TUtilSingleton.ParseCommandNoSQL(const ASubStr, ASQL: String;
+  const ADefault: String): String;
 var
   LFor: Integer;
   LPosI: Integer;

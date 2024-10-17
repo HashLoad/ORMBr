@@ -62,7 +62,7 @@ type
     FServerUse: Boolean;
     function _NextPacketMethod: TObjectList<M>; overload;
     function _NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>; overload;
-    function _ParseOperator(AParams: String): string;
+    function _ParseOperator(AParams: String): String;
   public
     constructor Create(const AConnection: IRESTConnection;
       const AOwner: TRESTDataSetAdapter<M>; const APageSize: Integer = -1); overload;
@@ -77,11 +77,11 @@ type
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Int64): M; overload; override;
     function Find(const AID: String): M; overload; override;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>; override;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>; override;
     function ExistSequence: Boolean; override;
     {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; override;
+      const AParams: array of String): TObjectList<M>; overload; override;
     {$ENDIF}
   end;
 
@@ -198,7 +198,7 @@ var
   LResource: String;
 begin
   LResource := FResource;
-  // Só concatena o ID na URI se a propriedade ServerUse for igual a TRUE,
+  // Só concatena o ID na URI se a propriedade ServerUse for igual a True,
   // caso contrário será passado como parâmetro
   if FServerUse then
     LResource := LResource + '(' + IntToStr(AID) + ')';
@@ -225,10 +225,10 @@ begin
   end;
 end;
 
-function TSessionRestFul<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TSessionRestFul<M>.FindWhere(const AWhere, AOrderBy: String): TObjectList<M>;
 var
   LSubResource: String;
-  LJSON: string;
+  LJSON: String;
   LURL: String;
 begin
   FFindWhereUsed := True;
@@ -287,7 +287,7 @@ begin
   Result := Find(IntToStr(AID));
 end;
 
-function TSessionRestFul<M>.Find(const AID: string): M;
+function TSessionRestFul<M>.Find(const AID: String): M;
 var
   LResource: String;
   LSubResource: String;
@@ -330,7 +330,7 @@ end;
 
 function TSessionRestFul<M>.Find: TObjectList<M>;
 var
-  LJSON: string;
+  LJSON: String;
   LSubResource: String;
   LURL: String;
 begin
@@ -466,7 +466,7 @@ end;
 
 function TSessionRestFul<M>._NextPacketMethod(AWhere, AOrderBy: String): TObjectList<M>;
 var
-  LJSON: string;
+  LJSON: String;
   LSubResource: String;
   LURL: String;
 begin
@@ -506,7 +506,7 @@ end;
 
 function TSessionRestFul<M>._NextPacketMethod: TObjectList<M>;
 var
-  LJSON: string;
+  LJSON: String;
   LSubResource: String;
   LURL: String;
 begin
@@ -615,11 +615,11 @@ end;
 
 {$IFDEF DRIVERRESTFUL}
 function TSessionRestFul<M>.Find(const AMethodName: String;
-  const AParams: array of string): TObjectList<M>;
+  const AParams: array of String): TObjectList<M>;
 var
   LJSONArray: TJSONArray;
   LFor: Integer;
-  LJSON: string;
+  LJSON: String;
   LURL: String;
 begin
   FFindWhereUsed := False;
@@ -659,24 +659,24 @@ begin
 end;
 {$ENDIF}
 
-function TSessionRestFul<M>._ParseOperator(AParams: String): string;
+function TSessionRestFul<M>._ParseOperator(AParams: String): String;
 const
-  OPERATORMAP: array[0..9, 0..1] of string = ( (' = ', ' eq '),
-                                               (' <> ', ' ne '),
-                                               (' > ', ' gt '),
-                                               (' >= ', ' ge '),
-                                               (' < ', ' lt '),
-                                               (' <= ', ' le '),
-                                               (' + ', ' add '),
-                                               (' - ', ' sub '),
-                                               (' * ', ' mul '),
-                                               (' / ', ' div ') );
+  C_OPERATORMAP: array[0..9, 0..1] of String = ( (' = ', ' eq '),
+                                                 (' <> ', ' ne '),
+                                                 (' > ', ' gt '),
+                                                 (' >= ', ' ge '),
+                                                 (' < ', ' lt '),
+                                                 (' <= ', ' le '),
+                                                 (' + ', ' add '),
+                                                 (' - ', ' sub '),
+                                                 (' * ', ' mul '),
+                                                 (' / ', ' div ') );
 var
-  iFor: Integer;
+  LFor: Integer;
 begin
   Result := AParams;
-  for iFor := Low(OPERATORMAP) to High(OPERATORMAP) do
-    Result := StringReplace(Result, OPERATORMAP[iFor, 0], OPERATORMAP[iFor, 1], [rfReplaceAll]);
+  for LFor := Low(C_OPERATORMAP) to High(C_OPERATORMAP) do
+    Result := StringReplace(Result, C_OPERATORMAP[LFor, 0], C_OPERATORMAP[LFor, 1], [rfReplaceAll]);
 end;
 
 end.

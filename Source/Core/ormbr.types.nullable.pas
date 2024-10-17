@@ -17,12 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.types.nullable;
@@ -66,7 +64,7 @@ type
     class operator NotEqual(const a, b: Nullable<T>) : Boolean;
   end;
 
-  NullString = Nullable<string>;
+  NullString = Nullable<String>;
   NullBoolean = Nullable<Boolean>;
   NullInteger = Nullable<Integer>;
   NullInt64 = Nullable<Int64>;
@@ -84,7 +82,7 @@ const
 constructor Nullable<T>.Create(const Value: T);
 begin
   FValue := Value;
-  FHasValue := true;
+  FHasValue := True;
 end;
 
 constructor Nullable<T>.Create(const Value: Variant);
@@ -95,7 +93,7 @@ begin
   begin
     LValue := TValue.FromVariant(Value);
     FValue := LValue.AsType<T>;
-    FHasValue := true;
+    FHasValue := True;
   end
   else
     Clear;
@@ -103,7 +101,7 @@ end;
 
 procedure Nullable<T>.Clear;
 begin
-  FHasValue := false;
+  FHasValue := False;
   FValue := Default(T);
 end;
 

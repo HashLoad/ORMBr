@@ -58,48 +58,49 @@ type
   // Classe de conexões abstract
   TDMLGeneratorAbstract = class abstract(TInterfacedObject, IDMLGeneratorCommand)
   private
-    function GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
+    function _GetPropertyValue(AObject: TObject; AProperty: TRttiProperty;
       AFieldType: TFieldType): Variant;
-    procedure GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
+    procedure _GenerateJoinColumn(AClass: TClass; ATable: TTableMapping;
       var ACriteria: ICriteria);
+    function _IsType(const AID: TValue): Boolean;
   protected
     FConnection: IDBConnection;
     FQueryCache: TQueryCache;
-    FDateFormat: string;
-    FTimeFormat: string;
+    FDateFormat: String;
+    FTimeFormat: String;
     function GetCriteriaSelect(AClass: TClass; AID: TValue): ICriteria; virtual;
     function GetGeneratorSelect(const ACriteria: ICriteria;
-      AOrderBy: string = ''): string; virtual;
+      AOrderBy: String = ''): String; virtual;
     function GetGeneratorWhere(const AClass: TClass; const ATableName: String;
       const AID: TValue): String;
     function GetGeneratorOrderBy(const AClass: TClass; const ATableName: String;
       const AID: TValue): String;
     function GetGeneratorQueryScopeWhere(const AClass: TClass): String;
     function GetGeneratorQueryScopeOrderBy(const AClass: TClass): String;
-    function ExecuteSequence(const ASQL: string): Int64; virtual;
+    function ExecuteSequence(const ASQL: String): Int64; virtual;
   public
     constructor Create; virtual;
     destructor Destroy; override;
     procedure SetConnection(const AConnaction: IDBConnection); virtual;
     function GeneratorSelectAll(AClass: TClass; APageSize: Integer;
-      AID: TValue): string; virtual; abstract;
-    function GeneratorSelectWhere(AClass: TClass; AWhere: string;
-      AOrderBy: string; APageSize: Integer): string; virtual; abstract;
+      AID: TValue): String; virtual; abstract;
+    function GeneratorSelectWhere(AClass: TClass; AWhere: String;
+      AOrderBy: String; APageSize: Integer): String; virtual; abstract;
     function GenerateSelectOneToOne(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; virtual;
+      AAssociation: TAssociationMapping): String; virtual;
     function GenerateSelectOneToOneMany(AOwner: TObject; AClass: TClass;
-      AAssociation: TAssociationMapping): string; virtual;
+      AAssociation: TAssociationMapping): String; virtual;
     function GeneratorUpdate(AObject: TObject; AParams: TParams;
-      AModifiedFields: TDictionary<string, string>): string; virtual;
-    function GeneratorInsert(AObject: TObject): string; virtual;
+      AModifiedFields: TDictionary<String, String>): String; virtual;
+    function GeneratorInsert(AObject: TObject): String; virtual;
     function GeneratorDelete(AObject: TObject;
-      AParams: TParams): string; virtual;
+      AParams: TParams): String; virtual;
     function GeneratorAutoIncCurrentValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
     function GeneratorAutoIncNextValue(AObject: TObject;
       AAutoInc: TDMLCommandAutoInc): Int64; virtual; abstract;
-    function GeneratorPageNext(const ACommandSelect: string;
-      APageSize, APageNext: Integer): string; virtual;
+    function GeneratorPageNext(const ACommandSelect: String;
+      APageSize, APageNext: Integer): String; virtual;
   end;
 
 implementation
@@ -117,7 +118,7 @@ begin
   inherited;
 end;
 
-function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: string): Int64;
+function TDMLGeneratorAbstract.ExecuteSequence(const ASQL: String): Int64;
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -132,7 +133,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 
   function GetValue(AIndex: Integer): Variant;
   var
@@ -143,7 +144,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOne(AOwner: TObject;
     LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[AIndex] then
-        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
+        Exit(_GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -189,7 +190,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
-  AClass: TClass; AAssociation: TAssociationMapping): string;
+  AClass: TClass; AAssociation: TAssociationMapping): String;
 
   function GetValue(Aindex: Integer): Variant;
   var
@@ -200,7 +201,7 @@ function TDMLGeneratorAbstract.GenerateSelectOneToOneMany(AOwner: TObject;
     LColumns := TMappingExplorer.GetMappingColumn(AOwner.ClassType);
     for LColumn in LColumns do
       if LColumn.ColumnName = AAssociation.ColumnsName[Aindex] then
-        Exit(GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
+        Exit(_GetPropertyValue(AOwner, LColumn.ColumnProperty, LColumn.FieldType));
   end;
 
 var
@@ -247,7 +248,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GeneratorDelete(AObject: TObject;
-  AParams: TParams): string;
+  AParams: TParams): String;
 var
   LFor: Integer;
   LTable: TTableMapping;
@@ -264,7 +265,7 @@ begin
   Result := LCriteria.AsString;
 end;
 
-function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): string;
+function TDMLGeneratorAbstract.GeneratorInsert(AObject: TObject): String;
 var
   LTable: TTableMapping;
   LColumn: TColumnMapping;
@@ -295,8 +296,8 @@ begin
   FQueryCache.AddOrSetValue(LKey, Result);
 end;
 
-function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: string;
-  APageSize, APageNext: Integer): string;
+function TDMLGeneratorAbstract.GeneratorPageNext(const ACommandSelect: String;
+  APageSize, APageNext: Integer): String;
 begin
   if APageSize > -1 then
     Result := Format(ACommandSelect, [IntToStr(APageSize), IntToStr(APageNext)])
@@ -377,7 +378,7 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GetGeneratorSelect(const ACriteria: ICriteria;
-  AOrderBy: string): string;
+  AOrderBy: String): String;
 begin
   Result := '';
 end;
@@ -389,36 +390,13 @@ var
   LColumnName: String;
   LFor: Integer;
   LScopeWhere: String;
-  LIntValue: Int64;
-//  LID: string;
 begin
   Result := '';
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
   if LScopeWhere <> '' then
     Result := ' WHERE ' + LScopeWhere;
-  if AID.IsType<UInt64> then
-  begin
-    if AID.TryAsType<Int64>(LIntValue) and (LIntValue = -1)  then
-      Exit;
-  end
-  else
-  if AID.IsType<Int64> then
-  begin
-    if AID.AsInt64 = -1 then
-      Exit;
-  end
-  else
-  if AID.IsType<integer> then
-  begin
-    if AID.AsInteger = -1 then
-      Exit;
-  end
-  else
-  if AID.IsType<string> then
-  begin
-    if AID.AsString = '-1' then
-      Exit;
-  end;
+  if _IsType(AID) then
+    Exit;
   LPrimaryKey := TMappingExplorer.GetMappingPrimaryKey(AClass);
   if LPrimaryKey <> nil then
   begin
@@ -428,14 +406,10 @@ begin
       if LFor > 0 then
        Continue;
       LColumnName := ATableName + '.' + LPrimaryKey.Columns[LFor];
-      if AID.IsType<UInt64> then
-        Result := Result + LColumnName + ' = ' + UIntToStr(AID.AsUInt64)
-      else if AID.IsType<Int64> then
-        Result := Result + LColumnName + ' = ' + IntToStr(AID.AsInt64)
-      else if AID.IsType<Integer> then
-        Result := Result + LColumnName + ' = ' + AID.AsType<string>
+      if (AID.IsType<Integer>) or (AID.IsType<Int64>) or (AID.IsType<UInt64>) then
+        Result := Result + LColumnName + ' = ' + AID.ToString
       else
-        Result := Result + LColumnName + ' = ' + QuotedStr(AID.AsType<string>);
+        Result := Result + LColumnName + ' = ' + QuotedStr(AID.ToString);
 
         { TODO -oISAQUE -cREVISÃO :
           Se você sentiu falta desse trecho de código, entre em contato,
@@ -455,6 +429,28 @@ begin
 //      end;
     end;
   end;
+end;
+
+function TDMLGeneratorAbstract._IsType(const AID: TValue): Boolean;
+var
+  LIntValue: Int64;
+begin
+  Result := False;
+  if AID.IsType<UInt64> then
+    if AID.TryAsType<Int64>(LIntValue) and (LIntValue = -1)  then
+      Result := True
+  else
+  if AID.IsType<Int64> then
+    if AID.AsInt64 = -1 then
+      Result := True
+  else
+  if AID.IsType<Integer> then
+    if AID.AsInteger = -1 then
+      Result := True
+  else
+  if AID.IsType<String> then
+    if AID.AsString = '-1' then
+      Result := True;
 end;
 
 function TDMLGeneratorAbstract.GetCriteriaSelect(AClass: TClass;
@@ -478,14 +474,14 @@ begin
       Result.Column(LTable.Name + '.' + LColumn.ColumnName);
     end;
     // Joins - INNERJOIN, LEFTJOIN, RIGHTJOIN, FULLJOIN
-    GenerateJoinColumn(AClass, LTable, Result);
+    _GenerateJoinColumn(AClass, LTable, Result);
   finally
     Result.Where.Clear;
     Result.OrderBy.Clear;
   end;
 end;
 
-function TDMLGeneratorAbstract.GetPropertyValue(AObject: TObject;
+function TDMLGeneratorAbstract._GetPropertyValue(AObject: TObject;
   AProperty: TRttiProperty; AFieldType: TFieldType): Variant;
 begin
   case AFieldType of
@@ -525,14 +521,14 @@ begin
   FConnection := AConnaction;
 end;
 
-procedure TDMLGeneratorAbstract.GenerateJoinColumn(AClass: TClass;
+procedure TDMLGeneratorAbstract._GenerateJoinColumn(AClass: TClass;
   ATable: TTableMapping; var ACriteria: ICriteria);
 var
   LJoinList: TJoinColumnMappingList;
   LJoin: TJoinColumnMapping;
-  LJoinExist: TList<string>;
+  LJoinExist: TList<String>;
 begin
-  LJoinExist := TList<string>.Create;
+  LJoinExist := TList<String>.Create;
   try
     // JoinColumn
     LJoinList := TMappingExplorer.GetMappingJoinColumn(AClass);
@@ -554,33 +550,40 @@ begin
         Continue;
       LJoinExist.Add(LJoin.RefTableName);
       // Join Inner, Left, Right, Full
-      if LJoin.Join = TJoin.InnerJoin then
-        ACriteria.InnerJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.LeftJoin then
-        ACriteria.LeftJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.RightJoin then
-        ACriteria.RightJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName])
-      else
-      if LJoin.Join = TJoin.FullJoin then
-        ACriteria.FullJoin(LJoin.RefTableName)
-                   .&As(LJoin.AliasRefTable)
-                   .&On([LJoin.AliasRefTable + '.' +
-                         LJoin.RefColumnName,' = ',ATable.Name + '.' +
-                         LJoin.ColumnName]);
+      case LJoin.Join of
+        TJoin.InnerJoin:
+          begin
+            ACriteria.InnerJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.LeftJoin:
+          begin
+            ACriteria.LeftJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.RightJoin:
+          begin
+            ACriteria.RightJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName])
+          end;
+        TJoin.FullJoin:
+          begin
+            ACriteria.FullJoin(LJoin.RefTableName)
+                       .&As(LJoin.AliasRefTable)
+                       .&On([LJoin.AliasRefTable + '.' +
+                             LJoin.RefColumnName,' = ',ATable.Name + '.' +
+                             LJoin.ColumnName]);
+          end;
+      end;
     end;
   finally
     LJoinExist.Free;
@@ -588,12 +591,12 @@ begin
 end;
 
 function TDMLGeneratorAbstract.GeneratorUpdate(AObject: TObject;
-  AParams: TParams; AModifiedFields: TDictionary<string, string>): string;
+  AParams: TParams; AModifiedFields: TDictionary<String, String>): String;
 var
   LFor: Integer;
   LTable: TTableMapping;
   LCriteria: ICriteria;
-  LColumnName: string;
+  LColumnName: String;
 begin
   Result := '';
   if AModifiedFields.Count = 0 then

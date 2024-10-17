@@ -35,7 +35,7 @@ object FrmPrincipal: TFrmPrincipal
     Height = 169
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1086
+    ExplicitWidth = 1084
     object pnCONN: TPanel
       Left = 624
       Top = 1
@@ -47,7 +47,7 @@ object FrmPrincipal: TFrmPrincipal
       Color = clWhite
       ParentBackground = False
       TabOrder = 1
-      ExplicitLeft = 620
+      ExplicitLeft = 618
       object Panel9: TPanel
         Left = 5
         Top = 5
@@ -200,7 +200,7 @@ object FrmPrincipal: TFrmPrincipal
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 619
+      ExplicitWidth = 617
       object Label1: TLabel
         Left = 8
         Top = 30
@@ -249,7 +249,7 @@ object FrmPrincipal: TFrmPrincipal
         Color = clSilver
         ParentBackground = False
         TabOrder = 0
-        ExplicitWidth = 609
+        ExplicitWidth = 607
       end
       object edtPath: TEdit
         Left = 8
@@ -294,8 +294,8 @@ object FrmPrincipal: TFrmPrincipal
     Width = 1090
     Height = 19
     Panels = <>
-    ExplicitTop = 620
-    ExplicitWidth = 1086
+    ExplicitTop = 612
+    ExplicitWidth = 1084
   end
   object pnDisplayCode: TPanel
     Left = 270
@@ -308,8 +308,8 @@ object FrmPrincipal: TFrmPrincipal
     BorderWidth = 5
     ParentBackground = False
     TabOrder = 2
-    ExplicitWidth = 816
-    ExplicitHeight = 451
+    ExplicitWidth = 814
+    ExplicitHeight = 443
     object Panel5: TPanel
       Left = 5
       Top = 5
@@ -319,7 +319,7 @@ object FrmPrincipal: TFrmPrincipal
       BevelOuter = bvNone
       Caption = 'Classes Modelos'
       TabOrder = 0
-      ExplicitWidth = 806
+      ExplicitWidth = 804
     end
     object PageControl1: TPageControl
       Left = 5
@@ -329,8 +329,8 @@ object FrmPrincipal: TFrmPrincipal
       ActivePage = tabModel
       Align = alClient
       TabOrder = 1
-      ExplicitWidth = 806
-      ExplicitHeight = 425
+      ExplicitWidth = 804
+      ExplicitHeight = 417
       object tabModel: TTabSheet
         Caption = 'Modelo Classe'
         TabVisible = False
@@ -348,8 +348,8 @@ object FrmPrincipal: TFrmPrincipal
           ParentFont = False
           ScrollBars = ssBoth
           TabOrder = 0
-          ExplicitWidth = 798
-          ExplicitHeight = 415
+          ExplicitWidth = 796
+          ExplicitHeight = 407
         end
       end
     end
@@ -366,7 +366,7 @@ object FrmPrincipal: TFrmPrincipal
     Padding.Right = 5
     Padding.Bottom = 5
     TabOrder = 1
-    ExplicitHeight = 451
+    ExplicitHeight = 443
     object Splitter1: TSplitter
       Left = 5
       Top = 281
@@ -393,7 +393,7 @@ object FrmPrincipal: TFrmPrincipal
       ParentCtl3D = False
       TabOrder = 1
       OnClick = lstTabelasClick
-      ExplicitHeight = 259
+      ExplicitHeight = 251
     end
     object Panel4: TPanel
       Left = 5
@@ -403,7 +403,7 @@ object FrmPrincipal: TFrmPrincipal
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 285
+      ExplicitTop = 277
       object lstCampos: TListBox
         Left = 0
         Top = 16

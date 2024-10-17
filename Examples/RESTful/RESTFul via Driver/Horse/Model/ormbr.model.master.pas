@@ -34,7 +34,7 @@ type
     Fregisterdate: TDateTime;
     Fupdatedate: TDate;
     Fclient_id: Integer;
-    Fclient_name: string;
+    Fclient_name: String;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
 //    FEnumer: TMyEnum;
@@ -73,7 +73,7 @@ type
     [Column('client_name', ftString, 60)]
     [JoinColumn('client_id', 'client', 'client_id', 'client_name', TJoin.InnerJoin)]
     [Dictionary('Nome do Cliente', '')]
-    property client_name: string read fclient_name write fclient_name;
+    property client_name: String read fclient_name write fclient_name;
 
     [Association(TMultiplicity.OneToOne, 'client_id', 'client', 'client_id')]
     property client: Tclient read Fclient write Fclient;

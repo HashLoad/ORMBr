@@ -28,11 +28,13 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    Button5: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
     FJSON: String;
@@ -47,69 +49,66 @@ implementation
 
 uses
   ormbr.model.person,
-  ormbr.json;
+  ormbr.json, jsonbr.reader;
 
 {$R *.dfm}
 
 procedure TForm4.Button1Click(Sender: TObject);
 var
-  Person: TPerson;
-  Person1: TpersonSub;
-  Person2: TpersonSub;
-
-  oL: TListEnumerator;
+  LPerson: TPerson;
+  LPerson1: TpersonSub;
+  LPerson2: TpersonSub;
 begin
-  Person := TPerson.Create;
+  LPerson := TPerson.Create;
   try
-    Person.Id := 1;
-    Person.FirstName := null;
-    Person.LastName := 'Pinheiro';
-    Person.Age := 10;
-    Person.Salary := 100.10;
-    Person.Date := null;
+    LPerson.Id := 1;
+    LPerson.FirstName := null;
+    LPerson.LastName := 'Pinheiro';
+    LPerson.Age := 10;
+    LPerson.Salary := 100.10;
+    LPerson.Date := null;
 
-    Person.Pessoa.Id := 2;
-    Person.Pessoa.FirstName := 'Isaque 2';
-    Person.Pessoa.LastName := 'Pinheiro 2';
-    Person.Pessoa.Age := 20;
-    Person.Pessoa.Salary := 200.20;
-    Person.Imagem.ToStringBytes('12345678901234567890');
+    LPerson.Pessoa.Id := 2;
+    LPerson.Pessoa.FirstName := 'Isaque 2';
+    LPerson.Pessoa.LastName := 'Pinheiro 2';
+    LPerson.Pessoa.Age := 20;
+    LPerson.Pessoa.Salary := 200.20;
+    LPerson.Imagem.ToStringBytes('12345678901234567890');
 
-    Person1 := TPersonSub.Create;
-    Person1.Id := 3;
-    Person1.FirstName := 'Isaque 3';
-    Person1.LastName := 'Pinheiro 3';
-    Person1.Age := 30;
-    Person1.Salary := 300.30;
+    LPerson1 := TPersonSub.Create;
+    LPerson1.Id := 3;
+    LPerson1.FirstName := 'Isaque 3';
+    LPerson1.LastName := 'Pinheiro 3';
+    LPerson1.Age := 30;
+    LPerson1.Salary := 300.30;
 
-    Person2 := TPersonSub.Create;
-    Person2.Id := 4;
-    Person2.FirstName := 'Isaque 4';
-    Person2.LastName := 'Pinheiro 4';
-    Person2.Age := 40;
-    Person2.Salary := 400.40;
+    LPerson2 := TPersonSub.Create;
+    LPerson2.Id := 4;
+    LPerson2.FirstName := 'Isaque 4';
+    LPerson2.LastName := 'Pinheiro 4';
+    LPerson2.Age := 40;
+    LPerson2.Salary := 400.40;
 
-    Person.Pessoas.Add(Person1);
-    Person.Pessoas.Add(Person2);
+    LPerson.Pessoas.Add(LPerson1);
+    LPerson.Pessoas.Add(LPerson2);
 
     // Guarda para executar os outros comandos
-    FJSON := TORMBrJson.ObjectToJsonString(Person);
+    FJSON := TORMBrJson.ObjectToJsonString(LPerson);
     Memo1.Lines.Text := FJSON;
 //    Memo1.Lines.Text := ObjectToJSON(Person);
   finally
-    Person.Free;
+    LPerson.Free;
   end;
-
 end;
 
 procedure TForm4.Button2Click(Sender: TObject);
 var
-  Person: TPerson;
-  JsonToPerson: TPerson;
+  LPerson: TPerson;
+  LJsonToPerson: TPerson;
 begin
   Memo1.Lines.Text := FJSON;
 
-  Person := TORMBrJson.JSONToObject<TPerson>(FJSON);
+  LPerson := TORMBrJson.JSONToObject<TPerson>(FJSON);
   Memo1.Lines.Add(' ');
   Memo1.Lines.Add('RECRIADO O OBJECT ATRAVÉS DO JSON ACIMA, MUDADOS ALGUMAS INFORMAÇÕES A GERADO NOVO JSON PARA TESTAR.');
   Memo1.Lines.Add('Person.Salary := 200.20');
@@ -117,52 +116,79 @@ begin
   Memo1.Lines.Add('Person.Pessoas[1].Salary := 555.55');
   Memo1.Lines.Add(' ');
   try
-    Person.Salary := 200.20;
-    Person.Date := Date;
-    Person.Pessoas[1].Salary := 555.55;
+    LPerson.Salary := 200.20;
+    LPerson.Date := Date;
+    LPerson.Pessoas[1].Salary := 555.55;
 
-    FJSON := TORMBrJson.ObjectToJsonString(Person);
-    JsonToPerson := TORMBrJson.JSONToObject<TPerson>(FJSON);
+    FJSON := TORMBrJson.ObjectToJsonString(LPerson);
+    LJsonToPerson := TORMBrJson.JSONToObject<TPerson>(FJSON);
 
     Memo1.Lines.Add(FJSON);
     Memo1.Lines.Add('');
-    Memo1.Lines.Add(TORMBrJson.ObjectToJsonString(JsonToPerson));
+    Memo1.Lines.Add(TORMBrJson.ObjectToJsonString(LJsonToPerson));
   finally
-    Person.Free;
-    JsonToPerson.Free;
+    LPerson.Free;
+    LJsonToPerson.Free;
   end;
 end;
 
 procedure TForm4.Button3Click(Sender: TObject);
 var
- jObject: TJSONObject;
+ LObject: TJSONObject;
 begin
   Memo1.Clear;
 
-  jObject := TORMBrJSON.JSONStringToJSONObject(FJSON);
+  LObject := TORMBrJSON.JSONStringToJSONObject(FJSON);
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONObject **********');
-    Memo1.Lines.Add(jObject.ToString);
+    Memo1.Lines.Add(LObject.ToString);
   finally
-    jObject.Free;
+    LObject.Free;
   end;
 end;
 
 procedure TForm4.Button4Click(Sender: TObject);
 var
- jArray: TJSONArray;
+ LArray: TJSONArray;
 begin
   Memo1.Clear;
 
-  jArray := TORMBrJSON.JSONStringToJSONArray('[' + FJSON + ']');
+  LArray := TORMBrJSON.JSONStringToJSONArray('[' + FJSON + ']');
   try
     Memo1.Lines.Add(' ');
     Memo1.Lines.Add('************ JSONArray **********');
-    Memo1.Lines.Add(jArray.ToString);
+    Memo1.Lines.Add(LArray.ToString);
   finally
-    jArray.Free;
+    LArray.Free;
   end;
+end;
+
+procedure TForm4.Button5Click(Sender: TObject);
+var
+  LReader: IJsonReader;
+  LResult: IJsonNode;
+begin
+  LReader := TJsonReader.Create;
+  LReader.ParseFromFile('data.json');
+
+  LResult := LReader.GetValue('/Pessoas/1/LastName');
+  Memo1.Lines.Add( LResult.ToString );
+  Memo1.Lines.Add('');
+
+  LResult := LReader.GetValue('/Opcoes/1');
+  Memo1.Lines.Add( LResult.ToString );
+  Memo1.Lines.Add('');
+
+  LResult := LReader.GetValue('/Pessoa');
+  Memo1.Lines.Add( LResult.ToString );
+
+  Memo1.Lines.Add('');
+  LResult := LReader.GetValue('/Pessoas');
+  Memo1.Lines.Add( LResult.ToString );
+
+  Memo1.Lines.Add('');
+  Memo1.Lines.Add( LReader.ToJson );
 end;
 
 procedure TForm4.FormCreate(Sender: TObject);

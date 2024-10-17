@@ -53,16 +53,16 @@ type
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerClientDataSet; overload;
     function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerClientDataSet; overload;
-    function AddLookupField<T, M: class, constructor>(const AFieldName: string;
-                                                      const AKeyFields: string;
-                                                      const ALookupKeyFields: string;
-                                                      const ALookupResultField: string;
-                                                      const ADisplayLabel: string = ''): TManagerClientDataSet;
+    function AddLookupField<T, M: class, constructor>(const AFieldName: String;
+                                                      const AKeyFields: String;
+                                                      const ALookupKeyFields: String;
+                                                      const ALookupResultField: String;
+                                                      const ADisplayLabel: String = ''): TManagerClientDataSet;
     procedure RemoveAdapter<T: class>;
     procedure Open<T: class, constructor>; overload;
     procedure Open<T: class, constructor>(const AID: Integer); overload;
     procedure Open<T: class, constructor>(const AID: String); overload;
-    procedure OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere<T: class, constructor>(const AWhere: String; const AOrderBy: String = '');
     procedure Close<T: class, constructor>;
     procedure LoadLazy<T: class, constructor>(const AOwner: T);
     procedure RefreshRecord<T: class, constructor>;
@@ -75,8 +75,8 @@ type
     /// ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerClientDataSet;
     property OwnerNestedList: Boolean read GetOwnerNestedList write SetOwnerNestedList;
@@ -113,7 +113,7 @@ begin
 end;
 
 function TORMBrManagerClientDataSet.AddLookupField<T, M>(const AFieldName, AKeyFields,
-  ALookupKeyFields, ALookupResultField, ADisplayLabel: string): TManagerClientDataSet;
+  ALookupKeyFields, ALookupResultField, ADisplayLabel: String): TManagerClientDataSet;
 begin
   Result := FManagerDataSet.AddLookupField<T, M>(AFieldName, AKeyFields,
                                                  ALookupKeyFields, ALookupResultField, ADisplayLabel);
@@ -164,7 +164,7 @@ begin
   Result := FManagerDataSet.Find<T>;
 end;
 
-function TORMBrManagerClientDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TORMBrManagerClientDataSet.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 begin
   Result := FManagerDataSet.FindWhere<T>(AWhere, AOrderBy);
 end;
@@ -204,7 +204,7 @@ begin
   FManagerDataSet.Open<T>(AID);
 end;
 
-procedure TORMBrManagerClientDataSet.OpenWhere<T>(const AWhere, AOrderBy: string);
+procedure TORMBrManagerClientDataSet.OpenWhere<T>(const AWhere, AOrderBy: String);
 begin
   FManagerDataSet.OpenWhere<T>(AWhere, AOrderBy);
 end;

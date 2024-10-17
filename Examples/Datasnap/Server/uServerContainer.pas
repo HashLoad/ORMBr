@@ -25,11 +25,11 @@ type
   private
     { Private declarations }
     FSessionID: TDSSession;
-    class var FSession: TDictionary<string, TObject>;
+    class var FSession: TDictionary<String, TObject>;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    class function GetDictionary: TDictionary<string, TObject>;
+    class function GetDictionary: TDictionary<String, TObject>;
   end;
 
 function DSServer: TDSServer;
@@ -58,7 +58,7 @@ end;
 
 procedure TServerContainer1.DataModuleCreate(Sender: TObject);
 begin
-  FSession := TDictionary<string, TObject>.Create;
+  FSession := TDictionary<String, TObject>.Create;
 end;
 
 procedure TServerContainer1.DataModuleDestroy(Sender: TObject);
@@ -85,7 +85,7 @@ begin
   PersistentClass := uServerModule.TORMBr;
 end;
 
-class function TServerContainer1.GetDictionary: TDictionary<string, TObject>;
+class function TServerContainer1.GetDictionary: TDictionary<String, TObject>;
 begin
   Result := FSession;
 end;

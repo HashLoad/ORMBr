@@ -59,7 +59,7 @@ type
     property NestedList: TObjectList<TObject> read FNestedList write FNestedList;
   end;
   // Lista de Container
-  TRepositoryList = TObjectDictionary<string, TRepository>;
+  TRepositoryList = TObjectDictionary<String, TRepository>;
   {$IFDEF DRIVERRESTFUL}
     IMOConnection = IRESTConnection
   {$ELSE}
@@ -88,13 +88,13 @@ type
     // ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
     {$IFDEF DRIVERRESTFUL}
     function Find<T: class, constructor>(const AMethodName: String;
-      const AParams: array of string): TObjectList<T>; overload;
+      const AParams: array of String): TObjectList<T>; overload;
     {$ENDIF}
-    function ModifiedFields<T: class, constructor>: TDictionary<string, TDictionary<string, string>>;
+    function ModifiedFields<T: class, constructor>: TDictionary<String, TDictionary<String, String>>;
     function ExistSequence<T: class, constructor>: Boolean;
     procedure LoadLazy<T: class, constructor>(const AObject: TObject); overload;
     // Métodos para serem usados com a propriedade OwnerNestedList := False;
@@ -277,7 +277,7 @@ begin
   if AID.IsType<integer> then
     Result := Resolver<T>.Find(AID.AsType<integer>)
   else
-    Result := Resolver<T>.Find(AID.AsType<string>);
+    Result := Resolver<T>.Find(AID.ToString);
   FCurrentIndex := 0;
 end;
 
@@ -351,7 +351,7 @@ begin
     LAfterInsert(AObject);
 end;
 
-function TManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TManagerObjectSet.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin
@@ -463,7 +463,7 @@ begin
   Resolver<T>.LoadLazy(AOwner, AObject);
 end;
 
-function TManagerObjectSet.ModifiedFields<T>: TDictionary<string, TDictionary<string, string>>;
+function TManagerObjectSet.ModifiedFields<T>: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := Resolver<T>.ModifiedFields;
 end;
@@ -518,7 +518,7 @@ end;
 
 {$IFDEF DRIVERRESTFUL}
 function TManagerObjectSet.Find<T>(const AMethodName: String;
-  const AParams: array of string): TObjectList<T>;
+  const AParams: array of String): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin

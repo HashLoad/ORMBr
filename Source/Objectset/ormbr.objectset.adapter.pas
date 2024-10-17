@@ -52,9 +52,9 @@ type
     destructor Destroy; override;
     function Find: TObjectList<M>; overload; override;
     function Find(const AID: Int64): M; overload; override;
-    function Find(const AID: string): M; overload; override;
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string = ''): TObjectList<M>; overload; override;
+    function Find(const AID: String): M; overload; override;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String = ''): TObjectList<M>; overload; override;
     procedure Insert(const AObject: M); override;
     procedure Update(const AObject: M); override;
     procedure Delete(const AObject: M); override;
@@ -119,7 +119,7 @@ begin
   end;
 end;
 
-function TObjectSetAdapter<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TObjectSetAdapter<M>.FindWhere(const AWhere, AOrderBy: String): TObjectList<M>;
 var
   LIsConnected: Boolean;
 begin
@@ -219,7 +219,7 @@ var
   LRttiType: TRttiType;
   LProperty: TRttiProperty;
   LObjectKey: TObject;
-  LKey: string;
+  LKey: String;
   LInTransaction: Boolean;
   LIsConnected: Boolean;
 begin
@@ -272,7 +272,7 @@ begin
   end;
 end;
 
-function TObjectSetAdapter<M>.Find(const AID: string): M;
+function TObjectSetAdapter<M>.Find(const AID: String): M;
 var
   LIsConnected: Boolean;
 begin

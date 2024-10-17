@@ -38,7 +38,7 @@ uses
 type
   ICommandMonitor = interface
     ['{20B090BF-182F-43F9-B748-AE4DC87AE819}']
-    procedure Command(const ASQL: string; AParams: TParams);
+    procedure Command(const ASQL: String; AParams: TParams);
     procedure Show;
   end;
 

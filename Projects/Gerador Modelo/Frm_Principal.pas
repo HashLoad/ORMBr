@@ -127,8 +127,8 @@ type
     procedure CreateBodyClassUnit(index: Integer);
     //Gera Class
     procedure GenerateClassUnit;
-    procedure Conectar(Driver: string; Conn: TFDConnection;
-      Server, Database, User, Pass: string; Port: Integer = 0);
+    procedure Conectar(Driver: String; Conn: TFDConnection;
+      Server, Database, User, Pass: String; Port: Integer = 0);
     procedure GetPK(index: Integer);
     function DriverCatalogExists: Boolean;
   public
@@ -182,12 +182,12 @@ begin
    CDS_CNN.Locate('CNN_NAME',Combo_Connection.Text,[]);
 end;
 
-procedure TFrmPrincipal.Conectar(Driver: string; Conn: TFDConnection;
-  Server, Database, User, Pass: string; Port: Integer = 0);
+procedure TFrmPrincipal.Conectar(Driver: String; Conn: TFDConnection;
+  Server, Database, User, Pass: String; Port: Integer = 0);
 const
   DBOracle = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=%s)(PORT=%s))(CONNECT_DATA=(SERVICE_NAME=XE)))';
 begin
-  Conn.Connected := false;
+  Conn.Connected := False;
   if (Driver = 'MSSQL') then
   begin
     Conn.Params.Clear;
@@ -286,7 +286,7 @@ begin
      Conn.Params.Values['User_Name']     := User;
      Conn.Params.Values['Password']      := Pass;
   end;
-  Conn.Connected                         := true;
+  Conn.Connected                         := True;
   Metadata.Connection                    := Conn;
 end;
 
@@ -515,9 +515,9 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
   end;
 
   //Cria o Corpo das Propriedades e Fields
-  procedure CreateBodyProperty(_ListIndex: Integer; _Campo, _Tipo, _ReadWrite, _Align, _Default: string; _Index: Integer; _Size: Integer = 0; _Precision: Integer = 0; _Scale: Integer = 0; _Mask: string = '''''');
+  procedure CreateBodyProperty(_ListIndex: Integer; _Campo, _Tipo, _ReadWrite, _Align, _Default: String; _Index: Integer; _Size: Integer = 0; _Precision: Integer = 0; _Scale: Integer = 0; _Mask: String = '''''');
   var
-    NullableTipo: string;
+    NullableTipo: String;
     sKey: TPair<String,String>;
     iPos: Integer;
   begin
@@ -561,7 +561,7 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
                          {' index ' + IntToStr(_Index) +} _ReadWrite);
   end;
 
-  function GetRule(_Index: Integer): string;
+  function GetRule(_Index: Integer): String;
   begin
     if _Index = 0 then Result := 'None'
     else
@@ -574,9 +574,9 @@ procedure  TFrmPrincipal.LoadPropertys(Index : Integer);
 
 var
   I: Integer;
-  ReadWrite, Campo:string;
+  ReadWrite, Campo:String;
   L, P, S: Integer;
-  sUses: string;
+  sUses: String;
   FK: Integer;
 begin
   /// ForeignKeys

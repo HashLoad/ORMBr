@@ -17,7 +17,8 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
@@ -57,18 +58,18 @@ type
     FFetchingRecords: Boolean;
     FWhere: String;
     FOrderBy: String;
-    FModifiedFields: TDictionary<string, TDictionary<string, string>>;
+    FModifiedFields: TDictionary<String, TDictionary<String, String>>;
     FCommandExecutor: TSQLCommandExecutorAbstract<M>;
     function PopularObjectSet(const ADBResultSet: IDBResultSet): TObjectList<M>;
   public
     constructor Create(const APageSize: Integer = -1); overload; virtual;
     destructor Destroy; override;
     function ExistSequence: Boolean; virtual;
-    function ModifiedFields: TDictionary<string, TDictionary<string, string>>; virtual;
+    function ModifiedFields: TDictionary<String, TDictionary<String, String>>; virtual;
     // ObjectSet
     procedure Insert(const AObject: M); overload; virtual;
     procedure Insert(const AObjectList: TObjectList<M>); overload; virtual; abstract;
-    procedure Update(const AObject: M; const AKey: string); overload; virtual;
+    procedure Update(const AObject: M; const AKey: String); overload; virtual;
     procedure Update(const AObjectList: TObjectList<M>); overload; virtual; abstract;
     procedure Delete(const AObject: M); overload; virtual;
     procedure Delete(const AID: Integer); overload; virtual; abstract;
@@ -82,25 +83,25 @@ type
     // DataSet
     procedure Open; virtual;
     procedure OpenID(const AID: TValue); virtual;
-    procedure OpenSQL(const ASQL: string); virtual;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = ''); virtual;
+    procedure OpenSQL(const ASQL: String); virtual;
+    procedure OpenWhere(const AWhere: String; const AOrderBy: String = ''); virtual;
     procedure NextPacket; overload; virtual;
     procedure RefreshRecord(const AColumns: TParams); virtual;
     procedure RefreshRecordWhere(const AWhere: String); virtual;
     function SelectAssociation(const AObject: TObject): String; virtual;
     function ResultParams: TParams;
     // DataSet e ObjectSet
-    procedure ModifyFieldsCompare(const AKey: string; const AObjectSource,
+    procedure ModifyFieldsCompare(const AKey: String; const AObjectSource,
       AObjectUpdate: TObject); virtual;
     function Find: TObjectList<M>; overload; virtual;
     function Find(const AID: Int64): M; overload; virtual;
-    function Find(const AID: string): M; overload; virtual;
+    function Find(const AID: String): M; overload; virtual;
     {$IFDEF DRIVERRESTFUL}
     function Find(const AMethodName: String;
-      const AParams: array of string): TObjectList<M>; overload; virtual; abstract;
+      const AParams: array of String): TObjectList<M>; overload; virtual; abstract;
     {$ENDIF}
-    function FindWhere(const AWhere: string;
-      const AOrderBy: string): TObjectList<M>; virtual;
+    function FindWhere(const AWhere: String;
+      const AOrderBy: String): TObjectList<M>; virtual;
     function DeleteList: TObjectList<M>; virtual;
     //
     property FetchingRecords: Boolean read FFetchingRecords write FFetchingRecords;
@@ -118,14 +119,14 @@ uses
 constructor TSessionAbstract<M>.Create(const APageSize: Integer = -1);
 begin
   FPageSize := APageSize;
-  FModifiedFields := TObjectDictionary<string, TDictionary<string, string>>.Create([doOwnsValues]);
+  FModifiedFields := TObjectDictionary<String, TDictionary<String, String>>.Create([doOwnsValues]);
   FDeleteList := TObjectList<M>.Create;
   FResultParams := TParams.Create;
   FFetchingRecords := False;
   // Inicia uma lista interna para gerenciar campos alterados
   FModifiedFields.Clear;
   FModifiedFields.TrimExcess;
-  FModifiedFields.Add(M.ClassName, TDictionary<string, string>.Create);
+  FModifiedFields.Add(M.ClassName, TDictionary<String, String>.Create);
 end;
 
 destructor TSessionAbstract<M>.Destroy;
@@ -139,7 +140,7 @@ begin
   inherited;
 end;
 
-function TSessionAbstract<M>.ModifiedFields: TDictionary<string, TDictionary<string, string>>;
+function TSessionAbstract<M>.ModifiedFields: TDictionary<String, TDictionary<String, String>>;
 begin
   Result := FModifiedFields;
 end;
@@ -159,7 +160,7 @@ begin
   Result := FCommandExecutor.ExistSequence;
 end;
 
-function TSessionAbstract<M>.Find(const AID: string): M;
+function TSessionAbstract<M>.Find(const AID: String): M;
 begin
   FFindWhereUsed := False;
   FFetchingRecords := False;
@@ -167,7 +168,7 @@ begin
 end;
 
 function TSessionAbstract<M>.FindWhere(const AWhere,
-  AOrderBy: string): TObjectList<M>;
+  AOrderBy: String): TObjectList<M>;
 var
   LDBResultSet: IDBResultSet;
 begin
@@ -208,7 +209,7 @@ begin
   FCommandExecutor.InsertInternal(AObject);
 end;
 
-procedure TSessionAbstract<M>.ModifyFieldsCompare(const AKey: string;
+procedure TSessionAbstract<M>.ModifyFieldsCompare(const AKey: String;
   const AObjectSource, AObjectUpdate: TObject);
 var
   LColumn: TColumnMapping;
@@ -226,7 +227,7 @@ begin
     if LProperty.PropertyType.TypeKind in cPROPERTYTYPES_1 then
       Continue;
     if not FModifiedFields.ContainsKey(AKey) then
-      FModifiedFields.Add(AKey, TDictionary<string, string>.Create);
+      FModifiedFields.Add(AKey, TDictionary<String, String>.Create);
     // Se o tipo da property for tkRecord provavelmente tem Nullable nela
     // Se não for tkRecord entra no ELSE e pega o valor de forma direta
     if LProperty.PropertyType.TypeKind in [tkRecord] then // Nullable ou TBlob
@@ -327,12 +328,12 @@ begin
   FFetchingRecords := False;
 end;
 
-procedure TSessionAbstract<M>.OpenSQL(const ASQL: string);
+procedure TSessionAbstract<M>.OpenSQL(const ASQL: String);
 begin
   FFetchingRecords := False;
 end;
 
-procedure TSessionAbstract<M>.OpenWhere(const AWhere, AOrderBy: string);
+procedure TSessionAbstract<M>.OpenWhere(const AWhere, AOrderBy: String);
 begin
   FFetchingRecords := False;
 end;
@@ -380,7 +381,7 @@ begin
   Result := ''
 end;
 
-procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: string);
+procedure TSessionAbstract<M>.Update(const AObject: M; const AKey: String);
 begin
   FCommandExecutor.UpdateInternal(AObject, FModifiedFields.Items[AKey]);
 end;

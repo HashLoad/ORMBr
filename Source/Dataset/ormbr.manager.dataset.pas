@@ -22,8 +22,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 {$INCLUDE ..\ormbr.inc}
@@ -73,8 +71,8 @@ type
   TManagerDataSet = class
   private
     FConnection: IMDConnection;
-    FRepository: TDictionary<string, TObject>;
-    FNestedList: TDictionary<string, TObjectList<TObject>>;
+    FRepository: TDictionary<String, TObject>;
+    FNestedList: TDictionary<String, TObjectList<TObject>>;
     FOwnerNestedList: Boolean;
     function Resolver<T: class, constructor>: TDataSetBaseAdapter<T>;
     procedure ResolverDataSetType(const ADataSet: TDataSet);
@@ -90,15 +88,15 @@ type
     function AddAdapter<T: class, constructor>(const ADataSet: TDataSet;
       const APageSize: Integer = -1): TManagerDataSet; overload;
     function AddAdapter<T, M: class, constructor>(const ADataSet: TDataSet): TManagerDataSet; overload;
-    function AddLookupField<T, M: class, constructor>(const AFieldName: string;
-                                                      const AKeyFields: string;
-                                                      const ALookupKeyFields: string;
-                                                      const ALookupResultField: string;
-                                                      const ADisplayLabel: string = ''): TManagerDataSet;
+    function AddLookupField<T, M: class, constructor>(const AFieldName: String;
+                                                      const AKeyFields: String;
+                                                      const ALookupKeyFields: String;
+                                                      const ALookupResultField: String;
+                                                      const ADisplayLabel: String = ''): TManagerDataSet;
     procedure Open<T: class, constructor>; overload;
     procedure Open<T: class, constructor>(const AID: Integer); overload;
     procedure Open<T: class, constructor>(const AID: String); overload;
-    procedure OpenWhere<T: class, constructor>(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere<T: class, constructor>(const AWhere: String; const AOrderBy: String = '');
     procedure Close<T: class, constructor>;
     procedure LoadLazy<T: class, constructor>(const AOwner: T);
     procedure RefreshRecord<T: class, constructor>;
@@ -111,8 +109,8 @@ type
     // ObjectSet
     function Find<T: class, constructor>: TObjectList<T>; overload;
     function Find<T: class, constructor>(const AID: TValue): T; overload;
-    function FindWhere<T: class, constructor>(const AWhere: string;
-                                              const AOrderBy: string = ''): TObjectList<T>;
+    function FindWhere<T: class, constructor>(const AWhere: String;
+                                              const AOrderBy: String = ''): TObjectList<T>;
     function NestedList<T: class>: TObjectList<T>;
     function AutoNextPacket<T: class, constructor>(const AValue: Boolean): TManagerDataSet;
     property OwnerNestedList: Boolean read FOwnerNestedList write FOwnerNestedList;
@@ -125,8 +123,8 @@ implementation
 constructor TManagerDataSet.Create(const AConnection: IMDConnection);
 begin
   FConnection := AConnection;
-  FRepository := TObjectDictionary<string, TObject>.Create([doOwnsValues]);
-  FNestedList := TObjectDictionary<string, TObjectList<TObject>>.Create([doOwnsValues]);
+  FRepository := TObjectDictionary<String, TObject>.Create([doOwnsValues]);
+  FNestedList := TObjectDictionary<String, TObjectList<TObject>>.Create([doOwnsValues]);
   FOwnerNestedList := False;
 end;
 
@@ -167,8 +165,8 @@ begin
   if AID.IsType<integer> then
     Result := Resolver<T>.Find(AID.AsType<integer>)
   else
-  if AID.IsType<string> then
-    Result := Resolver<T>.Find(AID.AsType<string>)
+  if AID.IsType<String> then
+    Result := Resolver<T>.Find(AID.ToString)
   else
     raise Exception.Create('Invalid parameter type');
 end;
@@ -279,8 +277,8 @@ begin
 end;
 
 function TManagerDataSet.AddLookupField<T, M>(
-  const AFieldName, AKeyFields: string;
-  const ALookupKeyFields, ALookupResultField, ADisplayLabel: string): TManagerDataSet;
+  const AFieldName, AKeyFields: String;
+  const ALookupKeyFields, ALookupResultField, ADisplayLabel: String): TManagerDataSet;
 var
   LObject: TDataSetBaseAdapter<M>;
 begin
@@ -312,7 +310,7 @@ begin
 end;
 
 procedure TManagerDataSet.OpenWhere<T>(const AWhere,
-  AOrderBy: string);
+  AOrderBy: String);
 begin
   Resolver<T>.OpenWhereInternal(AWhere, AOrderBy);
 end;
@@ -374,7 +372,7 @@ begin
   Resolver<T>.Save(AObject);
 end;
 
-function TManagerDataSet.FindWhere<T>(const AWhere, AOrderBy: string): TObjectList<T>;
+function TManagerDataSet.FindWhere<T>(const AWhere, AOrderBy: String): TObjectList<T>;
 var
   LObjectList: TObjectList<T>;
 begin

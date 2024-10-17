@@ -210,7 +210,7 @@ end;
 procedure TForm3.DetailStringGridFill(ADetailList: TObjectList<Tdetail>);
 var
   LDetail: Tdetail;
-  LPrice: string;
+  LPrice: String;
 begin
   StringGridDetail.RowCount := 1;
   for LDetail in ADetailList do

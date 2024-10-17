@@ -17,12 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
-
-  ORM Brasil é um ORM simples e descomplicado para quem utiliza Delphi.
 }
 
 unit ormbr.container.dataset;
@@ -54,7 +52,7 @@ type
     procedure Open; overload;
     procedure Open(const AID: Integer); overload;
     procedure Open(const AID: String); overload;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere(const AWhere: String; const AOrderBy: String = '');
     procedure OpenSQL(const ASQL: String);
     procedure Insert;
     procedure Append;
@@ -64,17 +62,17 @@ type
     procedure Close;
     procedure Cancel;
     procedure RefreshRecord;
-    procedure RefreshRecordWhere(const AWhere: string);
+    procedure RefreshRecordWhere(const AWhere: String);
     procedure EmptyDataSet;
     procedure CancelUpdates;
     procedure Save(AObject: M);
     procedure ApplyUpdates(MaxErros: Integer);
-    procedure AddLookupField(AFieldName: string;
-                             AKeyFields: string;
+    procedure AddLookupField(AFieldName: String;
+                             AKeyFields: String;
                              ALookupDataSet: TObject;
-                             ALookupKeyFields: string;
-                             ALookupResultField: string;
-                             ADisplayLabel: string = '');
+                             ALookupKeyFields: String;
+                             ALookupResultField: String;
+                             ADisplayLabel: String = '');
     procedure NextPacket; virtual;
     function DataSet: TDataSet;
     function MasterObject: TDataSetBaseAdapter<M>;
@@ -84,18 +82,16 @@ type
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
-    //
-    property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>;
   end;
 
 implementation
 
 { TContainerDataSet<M> }
 
-procedure TContainerDataSet<M>.AddLookupField(AFieldName, AKeyFields: string;
-  ALookupDataSet: TObject; ALookupKeyFields, ALookupResultField: string;
-  ADisplayLabel: string);
+procedure TContainerDataSet<M>.AddLookupField(AFieldName, AKeyFields: String;
+  ALookupDataSet: TObject; ALookupKeyFields, ALookupResultField: String;
+  ADisplayLabel: String);
 begin
   inherited;
   FDataSetAdapter.AddLookupField(AFieldName,
@@ -171,7 +167,7 @@ begin
   Result := FDataSetAdapter.Find(AID);
 end;
 
-function TContainerDataSet<M>.FindWhere(const AWhere, AOrderBy: string): TObjectList<M>;
+function TContainerDataSet<M>.FindWhere(const AWhere, AOrderBy: String): TObjectList<M>;
 begin
   Result := FDataSetAdapter.FindWhere(AWhere, AOrderBy);
 end;
@@ -212,7 +208,7 @@ begin
   FDataSetAdapter.OpenSQLInternal('');
 end;
 
-procedure TContainerDataSet<M>.OpenWhere(const AWhere, AOrderBy: string);
+procedure TContainerDataSet<M>.OpenWhere(const AWhere, AOrderBy: String);
 begin
   FDataSetAdapter.OpenWhereInternal(AWhere, AOrderBy);
 end;
@@ -242,7 +238,7 @@ begin
   FDataSetAdapter.RefreshRecord;
 end;
 
-procedure TContainerDataSet<M>.RefreshRecordWhere(const AWhere: string);
+procedure TContainerDataSet<M>.RefreshRecordWhere(const AWhere: String);
 begin
   FDataSetAdapter.RefreshRecordWhere(AWhere);
 end;

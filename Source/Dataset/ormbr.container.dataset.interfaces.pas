@@ -17,10 +17,10 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
 }
 
 unit ormbr.container.dataset.interfaces;
@@ -45,7 +45,7 @@ type
     procedure Open; overload;
     procedure Open(const AID: Integer); overload;
     procedure Open(const AID: String); overload;
-    procedure OpenWhere(const AWhere: string; const AOrderBy: string = '');
+    procedure OpenWhere(const AWhere: String; const AOrderBy: String = '');
     procedure Insert;
     procedure Append;
     procedure Post;
@@ -54,17 +54,17 @@ type
     procedure Close;
     procedure Cancel;
     procedure RefreshRecord;
-    procedure RefreshRecordWhere(const AWhere: string);
+    procedure RefreshRecordWhere(const AWhere: String);
     procedure EmptyDataSet;
     procedure CancelUpdates;
     procedure Save(AObject: M);
     procedure ApplyUpdates(MaxErros: Integer);
-    procedure AddLookupField(AFieldName: string;
-                             AKeyFields: string;
+    procedure AddLookupField(AFieldName: String;
+                             AKeyFields: String;
                              ALookupDataSet: TObject;
-                             ALookupKeyFields: string;
-                             ALookupResultField: string;
-                             ADisplayLabel: string = '');
+                             ALookupKeyFields: String;
+                             ALookupResultField: String;
+                             ADisplayLabel: String = '');
     procedure NextPacket;
     function DataSet: TDataSet;
     function MasterObject: TDataSetBaseAdapter<M>; deprecated 'Use This';
@@ -74,7 +74,7 @@ type
     function Find: TObjectList<M>; overload;
     function Find(const AID: Integer): M; overload;
     function Find(const AID: String): M; overload;
-    function FindWhere(const AWhere: string; const AOrderBy: string = ''): TObjectList<M>;
+    function FindWhere(const AWhere: String; const AOrderBy: String = ''): TObjectList<M>;
     /// DataSet
     property AutoNextPacket: Boolean read _GetAutoNextPacket write _SetAutoNextPacket;
   end;

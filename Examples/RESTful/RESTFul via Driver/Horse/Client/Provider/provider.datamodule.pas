@@ -28,10 +28,10 @@ type
     FDClient: TFDMemTable;
     FDLookup: TFDMemTable;
     procedure RESTClientHorse1AfterCommand(AStatusCode: Integer;
-      var AResponseString: string; ARequestMethod: string);
-    procedure RESTClientHorse1BeforeCommand(ARequestMethod: string);
+      var AResponseString: String; ARequestMethod: String);
+    procedure RESTClientHorse1BeforeCommand(ARequestMethod: String);
     procedure RESTClientHorse1ErrorCommand(const AURLBase, AResource,
-      ASubResource, ARequestMethod, AMessage: string;
+      ASubResource, ARequestMethod, AMessage: String;
       const AResponseCode: Integer);
     procedure RESTClientHorse1Authentication;
     procedure DataModuleCreate(Sender: TObject);
@@ -70,7 +70,7 @@ begin
 end;
 
 procedure TProviderDM.RESTClientHorse1AfterCommand(AStatusCode: Integer;
-  var AResponseString: string; ARequestMethod: string);
+  var AResponseString: String; ARequestMethod: String);
 begin
   //
 end;
@@ -84,13 +84,13 @@ begin
   //  RESTClientHorse1.Authenticator.Token := GetToken();
 end;
 
-procedure TProviderDM.RESTClientHorse1BeforeCommand(ARequestMethod: string);
+procedure TProviderDM.RESTClientHorse1BeforeCommand(ARequestMethod: String);
 begin
   // Pega aqui os erros e criei seu proprio log.
 end;
 
 procedure TProviderDM.RESTClientHorse1ErrorCommand(const AURLBase, AResource,
-  ASubResource, ARequestMethod, AMessage: string; const AResponseCode: Integer);
+  ASubResource, ARequestMethod, AMessage: String; const AResponseCode: Integer);
 begin
   //
 end;

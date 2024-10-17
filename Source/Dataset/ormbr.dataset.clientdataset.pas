@@ -17,12 +17,11 @@
        arquivo LICENSE na pasta principal.
 }
 
-{ @abstract(ORMBr Framework.)
+{
+  @abstract(ORMBr Framework.)
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
-  @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
-  @abstract(Telagram : https://t.me/ormbr)
 }
 
 unit ormbr.dataset.clientdataset;
@@ -76,8 +75,8 @@ type
       TDataSet; APageSize: Integer; AMasterObject: TObject); overload;
     destructor Destroy; override;
     procedure OpenIDInternal(const AID: TValue); override;
-    procedure OpenSQLInternal(const ASQL: string); override;
-    procedure OpenWhereInternal(const AWhere: string; const AOrderBy: string = ''); override;
+    procedure OpenSQLInternal(const ASQL: String); override;
+    procedure OpenWhereInternal(const AWhere: String; const AOrderBy: String = ''); override;
     procedure ApplyUpdates(const MaxErros: Integer); override;
     procedure EmptyDataSet; override;
   end;
@@ -145,7 +144,7 @@ end;
 
 procedure TClientDataSetAdapter<M>.EmptyDataSetChilds;
 var
-  LChild: TPair<string, TDataSetBaseAdapter<M>>;
+  LChild: TPair<String, TDataSetBaseAdapter<M>>;
   LDataSet: TClientDataSet;
 begin
   inherited;
@@ -223,7 +222,7 @@ begin
   end;
 end;
 
-procedure TClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: string);
+procedure TClientDataSetAdapter<M>.OpenSQLInternal(const ASQL: String);
 var
   LIsConnected: Boolean;
 begin
@@ -255,7 +254,7 @@ begin
   end;
 end;
 
-procedure TClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: string);
+procedure TClientDataSetAdapter<M>.OpenWhereInternal(const AWhere, AOrderBy: String);
 var
   LIsConnected: Boolean;
 begin

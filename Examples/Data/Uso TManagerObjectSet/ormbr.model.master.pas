@@ -36,7 +36,7 @@ type
     Fregisterdate: TDateTime;
     Fupdatedate: TDate;
     Fclient_id: Integer;
-    Fclient_name: string;
+    Fclient_name: String;
     FEnumer: TMyEnum;
     Fdetail: TObjectList<Tdetail>;
     Fclient: Tclient;
@@ -75,7 +75,7 @@ type
     [Column('client_name', ftString, 60)]
     [JoinColumn('client_id', 'client', 'client_id', 'client_name', TJoin.InnerJoin)]
     [Dictionary('Nome do Cliente', '')]
-    property client_name: string read fclient_name write fclient_name;
+    property client_name: String read fclient_name write fclient_name;
 
     [Enumeration(TEnumType.etInteger, '0, 1, 2, 9')]
     [Column('MyEnum', ftInteger)]
