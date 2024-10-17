@@ -20,3 +20,16 @@ Lib/
 # Examples/Data/
 # Examples/JSON/
 /modules
+/Source/Dependencies/CQLBr/Core
+/Source/Dependencies/CQLBr/Drivers
+/Source/Dependencies/CQLBr/cqlbr.inc
+/Source/Dependencies/DBCBr/Core
+/Source/Dependencies/DBCBr/Drivers
+/Source/Dependencies/DBCBr/dbcbr.inc
+/Source/Dependencies/DBEBr/Core
+/Source/Dependencies/DBEBr/Drivers
+/Source/Dependencies/DBEBr/dbebr.inc
+/Source/Dependencies/JSONBr/Core
+/Source/Dependencies/JSONBr/Middleware-Horse
+/Source/Dependencies/JSONBr/jsonbr.inc
+/Source/Dependencies/JSONBr/jsonbr.pas

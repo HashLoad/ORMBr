@@ -107,9 +107,9 @@ begin
   //
   if not FOrmDataSet.Active then
   begin
-     FOrmDataSet.CreateDataSet;
-     FOrmDataSet.LogChanges := False;
      FOrmDataSet.DisableStringTrim := True;
+     FOrmDataSet.CreateDataSet;
+     FOrmDataSet.LogChanges := False;     
   end;
 end;
 

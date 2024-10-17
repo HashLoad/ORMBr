@@ -136,17 +136,21 @@ function TDMLGeneratorMSSql.GeneratorSelectAll(AClass: TClass;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
-  LOrderBy: String;
+  LOrderBy: string;
+  LKey: string;
 begin
   LTable := TMappingExplorer.GetMappingTable(AClass);
   LOrderBy := GetGeneratorOrderBy(AClass, LTable.Name, AID);
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria, LOrderBy);
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   // Where
   Result := Result + GetGeneratorWhere(AClass, LTable.Name, AID);
@@ -160,14 +164,18 @@ var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
+  LKey: string;
 begin
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
     if APageSize > -1 then
       Result := GetGeneratorSelect(LCriteria, AOrderBy);
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   // Scope Where
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
