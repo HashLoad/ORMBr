@@ -409,23 +409,6 @@ begin
         Result := Result + LColumnName + ' = ' + AID.ToString
       else
         Result := Result + LColumnName + ' = ' + QuotedStr(AID.ToString);
-
-        { TODO -oISAQUE -cREVISÃO :
-          Se você sentiu falta desse trecho de código, entre em contato,
-          precisamos discutir sobre ele, pois ele quebra regras de SOLID
-          e está em um lugar genérico o qual não atende a todos os bancos. }
-
-//      else
-//      begin
-//        if LPrimaryKey.GuidIncrement and FConnection.DBOptions.StoreGUIDAsOctet then
-//        begin
-//          LID := AID;
-//          LID := LID.Trim(['{', '}']);
-//          Result := Result + Format('UUID_TO_CHAR(%s) = %s', [LColumnName, QuotedStr(LID)])
-//        end
-//        else
-//          Result := Result + LColumnName + ' = ' + QuotedStr(AID);
-//      end;
     end;
   end;
 end;
