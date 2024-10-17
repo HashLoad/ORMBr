@@ -95,8 +95,12 @@ function TDMLGeneratorFirebird.GeneratorSelectAll(AClass: TClass;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
+  LKey: string;
 begin
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     LCriteria.AST.Select
@@ -105,7 +109,7 @@ begin
                                                      .Columns
                                                      .Columns[0].Name;
     Result := GetGeneratorSelect(LCriteria, APageSize);
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   LTable := TMappingExplorer.GetMappingTable(AClass);
   // Where
@@ -120,8 +124,12 @@ var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
+  LKey: string;
 begin
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     LCriteria.AST.Select
@@ -130,7 +138,7 @@ begin
                                                      .Columns
                                                      .Columns[0].Name;
     Result := GetGeneratorSelect(LCriteria, APageSize);
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   // Scope Where
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);

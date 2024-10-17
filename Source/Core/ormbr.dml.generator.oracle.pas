@@ -97,12 +97,16 @@ function TDMLGeneratorOracle.GeneratorSelectAll(AClass: TClass;
 var
   LCriteria: ICriteria;
   LTable: TTableMapping;
+  LKey: string;
 begin
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, AID);
     Result := LCriteria.AsString;
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   if APageSize > -1 then
     Result := Format(SELECTROW, [Result]);
@@ -122,14 +126,18 @@ var
   LCriteria: ICriteria;
   LScopeWhere: String;
   LScopeOrderBy: String;
+  LKey: string;
 begin
-  if not FQueryCache.TryGetValue(AClass.ClassName, Result) then
+  LKey := AClass.ClassName + '-SELECT';
+  if APageSize > -1 then
+    LKey := LKey + '-PAGINATE';
+  if not FQueryCache.TryGetValue(LKey, Result) then
   begin
     LCriteria := GetCriteriaSelect(AClass, -1);
     Result := LCriteria.AsString;
     if APageSize > -1 then
       Result := Format(SELECTROW, [Result]);
-    FQueryCache.AddOrSetValue(AClass.ClassName, Result);
+    FQueryCache.AddOrSetValue(LKey, Result);
   end;
   // Scope Where
   LScopeWhere := GetGeneratorQueryScopeWhere(AClass);
