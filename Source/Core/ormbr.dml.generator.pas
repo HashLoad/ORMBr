@@ -22,7 +22,6 @@
   @created(20 Jul 2016)
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @abstract(Website : http://www.ormbr.com.br)
-  @abstract(Telagram : https://t.me/ormbr)
 }
 
 {$INCLUDE ..\ormbr.inc}
