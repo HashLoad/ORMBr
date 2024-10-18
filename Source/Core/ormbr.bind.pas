@@ -872,7 +872,11 @@ begin
     ftInteger:
       LProperty.SetValue(AObject, LProperty.GetEnumIntegerValue(AObject, AField.Value));
     ftBoolean:
-      LProperty.SetValue(AObject, TValue.From<Variant>(AField.Value).AsType<Boolean>);
+      begin
+        if AField.Value = Null then
+          Exit;
+        LProperty.SetValue(AObject, TValue.From<Variant>(AField.Value).AsType<Boolean>);
+      end;
   else
     raise Exception.Create(cENUMERATIONSTYPEERROR);
   end;
