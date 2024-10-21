@@ -22,7 +22,6 @@
   @author(Isaque Pinheiro <isaquepsp@gmail.com>)
   @author(Skype : ispinheiro)
   @abstract(Website : http://www.ormbr.com.br)
-  @abstract(Telagram : https://t.me/ormbr)
 }
 
 unit ormbr.bind;
@@ -418,8 +417,12 @@ begin
       ADataSet.FieldByName(LFieldName).EditMask := LDictionary.EditMask;
 
     // Alignment
-    if LDictionary.Alignment in [taLeftJustify,taRightJustify,taCenter] then
+    if LDictionary.Alignment in [taLeftJustify, taRightJustify, taCenter] then
       ADataSet.FieldByName(LFieldName).Alignment := LDictionary.Alignment;
+
+    // Hidden the restriction
+    if LCalcField.IsHidden then
+      ADataSet.FieldByName(LFieldName).Visible := False;
   end;
 end;
 
